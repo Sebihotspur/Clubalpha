@@ -14,9 +14,24 @@ These foundations combine into a simple Football Intelligence Snapshot for each 
 ## Project documents
 
 - [Architecture](docs/architecture.md)
+- [FotMob data pipeline](docs/data-pipeline.md)
 - [Player quality](docs/player-grade-spec.md)
 - [Data-source bakeoff](research/data-source-bakeoff.md)
 
+## Pull the foundation
+
+No API key or paid account is required.
+
+```bash
+python3 scripts/pull_fotmob_foundation.py
+```
+
+The command caches FotMob responses, normalizes the local datasets under
+`data/processed/foundation`, and writes a compact, reviewable coverage audit to
+`reports/foundation-coverage.json`. Raw and normalized provider data are not
+committed to this public repository.
+
 ## Status
 
-Foundation research. Clubalpha does not yet produce deployment-ready probabilities or recommendations.
+The first PL, UCL, and preseason foundation pull is operational. Clubalpha does
+not yet produce deployment-ready probabilities or recommendations.

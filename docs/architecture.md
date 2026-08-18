@@ -20,9 +20,12 @@ Purpose: supply trustworthy and traceable football data.
 
 Initial source roles:
 
-- A primary data provider for repeatable historical and current statistics.
-- FotMob for enrichment and cross-checking.
+- FotMob as the primary free source for repeatable historical and current statistics.
 - Official competition and club information when verification is needed.
+
+FotMob is undocumented. Its web and statistics-CDN access live behind one thin,
+cached client so an endpoint change has one repair point. Missing coverage is
+recorded; it is never interpreted as a zero.
 
 Every stored observation must identify its source, retrieval time, match, player, team, competition, and season. Raw source data must remain separate from calculated grades.
 

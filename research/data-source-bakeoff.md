@@ -1,23 +1,38 @@
 # Data-Source Bakeoff
 
+## Decision
+
+Decision date: 2026-08-18
+
+```text
+Primary source: FotMob public web data
+Verification: Premier League and UEFA official pages
+Fallback source: None in v0.1
+Historical depth: Previous PL and UCL seasons first
+Preseason coverage: Fixture registry broad; player detail varies by match
+Known metric gaps: SCA, progressive carries, pace, and versatility
+Estimated monthly cost: $0
+Decision: Proceed with a cached, source-aware FotMob collector
+```
+
+Clubalpha must remain a zero-license-cost project. The original paid-provider
+bakeoff is closed. The evaluation questions below remain as ongoing source
+health checks because FotMob's web feeds are undocumented.
+
 ## Goal
 
-Choose the smallest reliable data stack that supports Clubalpha's three intelligence outputs:
+Maintain the smallest data stack that supports Clubalpha's three intelligence outputs:
 
 1. Player Quality
 2. Squad Form
 3. Historical Fixtures
 
-This is a source evaluation, not an ingestion implementation.
+This document now acts as the ongoing source-health contract for the FotMob ingestion pipeline.
 
-## Candidates
+## Sources
 
-- Primary-provider candidate: Sportmonks
-- Primary/fallback candidate: API-Football
-- Enrichment and cross-check: FotMob
+- Primary: FotMob
 - Verification: official competition and club sources
-
-Candidates may be added or removed as access, licensing, and coverage are confirmed.
 
 ## Required coverage
 
@@ -78,19 +93,8 @@ The sample should expose both the strongest and weakest parts of each provider.
 7. Are rate limits, pricing, and update timing suitable for regular use?
 8. How does the source behave when data is missing or corrected?
 
-## Deliverable
+## Reconsideration trigger
 
-The bakeoff ends with one decision record:
-
-```text
-Primary source:
-FotMob role:
-Fallback source:
-Historical depth:
-Preseason coverage:
-Known metric gaps:
-Estimated monthly cost:
-Decision:
-```
-
-No production data pipeline should be built until this decision is recorded.
+Reopen the source decision only if FotMob becomes inaccessible, loses a metric
+required by the Alpha formula, or a genuinely free and more stable source
+becomes available.
