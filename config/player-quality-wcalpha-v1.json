@@ -1,0 +1,97 @@
+{
+  "version": "wcalpha_player_quality_v1",
+  "source_engine": "WCALPHA alpha_scoring_engine.py hard-locked 2026-06-12",
+  "peer_method": {
+    "standard_deviation": "sample",
+    "z_score_clamp": 3.0,
+    "minimum_population": 2,
+    "fullbacks_share_population": true,
+    "centre_backs_separate_from_fullbacks": true
+  },
+  "coverage": {
+    "high_minimum_pct": 80.0,
+    "medium_minimum_pct": 60.0,
+    "positive_score_full_reliability_pct": 60.0,
+    "positive_score_minimum_weight": 0.35
+  },
+  "minutes_reliability_bands": [
+    {"minimum_minutes": 1700, "weight": 1.0},
+    {"minimum_minutes": 1200, "weight": 0.92},
+    {"minimum_minutes": 700, "weight": 0.84},
+    {"minimum_minutes": 0, "weight": 0.76}
+  ],
+  "formulas": {
+    "FW": {
+      "npg90": {"weight": 3.0, "direction": "positive", "label": "Non-penalty goals per 90"},
+      "xg90": {"weight": 2.8, "direction": "positive", "label": "Non-penalty xG per 90"},
+      "sca90": {"weight": 2.5, "direction": "positive", "label": "Shot-creating actions per 90"},
+      "axa90": {"weight": 2.2, "direction": "positive", "label": "Assists plus xA per 90"},
+      "bt90": {"weight": 2.0, "direction": "positive", "label": "Opposition-box touches per 90"},
+      "sot90": {"weight": 1.8, "direction": "positive", "label": "Shots on target per 90"},
+      "kp90": {"weight": 1.6, "direction": "positive", "label": "Chances created per 90"},
+      "drib90": {"weight": 1.4, "direction": "positive", "label": "Successful dribbles per 90"},
+      "pc90": {"weight": 1.2, "direction": "positive", "label": "Progressive carries per 90"},
+      "press90": {"weight": 1.0, "direction": "positive", "label": "Possessions won in attacking third per 90"}
+    },
+    "CB": {
+      "err": {"weight": 3.0, "direction": "inverted", "label": "Errors leading to goals per 90"},
+      "v1v1": {"weight": 2.8, "direction": "positive", "label": "Tackles per 90"},
+      "aer": {"weight": 2.5, "direction": "positive", "label": "Aerial duel win percentage"},
+      "int90": {"weight": 2.2, "direction": "positive", "label": "Interceptions per 90"},
+      "gnd": {"weight": 2.0, "direction": "positive", "label": "Ground duel win percentage"},
+      "drp": {"weight": 1.8, "direction": "inverted", "label": "Times dribbled past per 90"},
+      "pace": {"weight": 1.5, "direction": "positive", "label": "Pace or recovery measure"},
+      "clrblk": {"weight": 1.3, "direction": "positive", "label": "Clearances plus blocks per 90"},
+      "passpct": {"weight": 1.2, "direction": "positive", "label": "Pass completion percentage"},
+      "vers": {"weight": 1.0, "direction": "positive", "label": "Versatility"}
+    },
+    "FB": {
+      "inherits": "CB"
+    }
+  },
+  "league_quality": {
+    "version": "league_quality_v3_round6",
+    "default_key": "Other",
+    "default": 0.7,
+    "tiers": {
+      "PL": 1.15,
+      "La Liga": 1.12,
+      "Bundesliga": 1.1,
+      "Serie A": 1.08,
+      "Ligue 1": 1.05,
+      "Primeira": 0.96,
+      "Eredivisie": 0.95,
+      "Jupiler Pro": 0.9,
+      "Scottish PL": 0.85,
+      "Super Lig": 0.82,
+      "Czech First League": 0.8,
+      "Greek Super League": 0.8,
+      "Austrian Bundesliga": 0.8,
+      "Croatian HNL": 0.76,
+      "Norway": 0.76,
+      "Other Europe": 0.72,
+      "Other": 0.7
+    },
+    "fotmob_league_id_to_key": {
+      "38": "Austrian Bundesliga",
+      "40": "Jupiler Pro",
+      "47": "PL",
+      "53": "Ligue 1",
+      "54": "Bundesliga",
+      "55": "Serie A",
+      "57": "Eredivisie",
+      "59": "Norway",
+      "61": "Primeira",
+      "64": "Scottish PL",
+      "71": "Super Lig",
+      "87": "La Liga",
+      "122": "Czech First League",
+      "135": "Greek Super League",
+      "252": "Croatian HNL"
+    }
+  },
+  "ranking_eligibility": {
+    "minimum_minutes": 700,
+    "minimum_coverage_pct": 60.0
+  }
+}

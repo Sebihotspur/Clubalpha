@@ -31,7 +31,21 @@ The command caches FotMob responses, normalizes the local datasets under
 `reports/foundation-coverage.json`. Raw and normalized provider data are not
 committed to this public repository.
 
+## Build Player Quality
+
+Once the foundation pull is present:
+
+```bash
+python3 scripts/build_player_quality.py
+```
+
+This aggregates match rows into traceable per-90 features and runs the locked
+WCALPHA v1 attacker, centre-back, and fullback Alpha Ability formulas. Generated
+rows stay under `data/processed/player_quality`; the tracked summary is
+`reports/player-quality-audit.json`.
+
 ## Status
 
-The first PL, UCL, and preseason foundation pull is operational. Clubalpha does
-not yet produce deployment-ready probabilities or recommendations.
+The first PL, UCL, and preseason foundation pull is operational, and the first
+attacker/defender Player Quality engine passes WCALPHA formula-parity tests.
+Clubalpha does not yet produce deployment-ready probabilities or recommendations.

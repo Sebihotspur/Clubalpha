@@ -27,6 +27,11 @@ alpha_ability_z =
 
 Only confirmed or calculated metrics are usable. Estimated metrics are excluded. Positive grades with thin metric coverage are dampened.
 
+The public Player Quality value is the raw `alpha_ability_z`. The engine also
+publishes `reliability_adjusted_z`, which applies the locked WCALPHA minutes and
+coverage weights. Neither score contains preseason form, injuries, expected
+lineups, or the next opponent.
+
 ## Attacker formula
 
 Version: `wcalpha_attacker_v1`
@@ -63,6 +68,25 @@ Version: `wcalpha_defender_v1`
 
 Fullbacks and center backs use the same metric weights but remain separate peer populations.
 
+## FotMob v1 mappings
+
+Previous-season Premier League and Champions League player-match rows are
+aggregated before scoring. Current club membership supplies the player's peer
+role and domestic-league quality multiplier.
+
+- `npg90`: match goals minus the penalty count preserved in FotMob's season goals row.
+- `xg90`: non-penalty xG when available, otherwise xG.
+- `axa90`: assists plus expected assists per 90.
+- `kp90`: FotMob `chances_created`; this is the canonical key-pass feature.
+- `v1v1`: tackles per 90, preserving the WCALPHA v1 proxy.
+- `aer` and `gnd`: attempt-weighted duel-win percentages.
+- `clrblk`: clearances plus one non-duplicated block field per match.
+
+FotMob's detailed match cards omit event keys when a player records zero. Once
+a match is known to have full player detail, those absent event counts are
+calculated as zero. Provider-level gaps remain missing. Every derived feature
+stores its numerator, minutes or attempts, source fields, and calculation note.
+
 ## Canonical metric rules
 
 - `chances_created` and `key_passes` are one canonical metric unless a provider documents a real distinction.
@@ -84,6 +108,10 @@ The grade records:
 
 The existing WCALPHA formulas must pass a parity test: the same inputs must reproduce the same scores before Clubalpha changes or extends them.
 
+The parity suite locks sample standard deviation, the ±3 clamp, league-quality
+multiplication, inverted defensive metrics, available-weight normalization,
+minutes bands, and positive-only coverage damping.
+
 ## Known source-mapping gaps
 
 The existing WCALPHA FotMob importer does not currently populate every weighted field:
@@ -94,3 +122,23 @@ The existing WCALPHA FotMob importer does not currently populate every weighted 
 - defender versatility.
 
 The data-source bakeoff must determine whether these fields can be mapped reliably. A future formula change requires a new version and comparison against the WCALPHA baseline.
+
+## Run
+
+After the FotMob foundation exists:
+
+```bash
+python3 scripts/build_player_quality.py
+```
+
+Generated player features and grades live under
+`data/processed/player_quality/` and remain out of Git. The compact coverage and
+leader audit is written to `reports/player-quality-audit.json`.
+
+## First-run boundary
+
+The first run grades current players who logged 2025/26 Premier League or
+Champions League minutes. It is not yet a complete current-squad universe:
+non-English UCL clubs only contribute their Champions League matches, while new
+PL/UCL entrants may have no evidence in either competition. Previous domestic
+league seasons are the next required source expansion.

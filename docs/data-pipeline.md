@@ -82,3 +82,11 @@ and 76 exposed player-match statistics (42.7%). Chances created and box touches
 were present in all 76 detailed matches, while xG and xA appeared in only 10.
 Squad Form must therefore apply metric-level coverage confidence rather than one
 blanket preseason weight.
+
+## Player Quality handoff
+
+`scripts/build_player_quality.py` consumes current squads, historical
+player-match rows, season leaderboards, and current-team domestic league IDs.
+It emits traceable per-90 features and versioned Alpha Ability grades without
+altering the source layer. The tracked player-quality audit makes the remaining
+domestic-history gap explicit.
