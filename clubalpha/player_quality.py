@@ -94,17 +94,25 @@ def _sum_preferred_event(
     rows: list[dict[str, Any]],
     preferred: str,
     fallback: str,
-    preferred_available_matches: set[int],
-) -> float:
+    preferred_available_competitions: set[tuple[Any, Any]],
+    fallback_available_competitions: set[tuple[Any, Any]],
+) -> tuple[float, float]:
     total = 0.0
+    minutes = 0.0
     for row in rows:
         metrics = row.get("metrics") or {}
-        match_id = int(row["match_id"])
-        aliases = (preferred,) if match_id in preferred_available_matches else (fallback,)
+        competition_key = (row.get("competition_id"), row.get("competition"))
+        if competition_key in preferred_available_competitions:
+            aliases = (preferred,)
+        elif competition_key in fallback_available_competitions:
+            aliases = (fallback,)
+        else:
+            continue
         item = _metric_item(metrics, aliases)
         if item:
             total += _number(item.get("value")) or 0.0
-    return total
+        minutes += _number((metrics.get("minutes_played") or {}).get("value")) or 0.0
+    return total, minutes
 
 
 def _ratio(rows: list[dict[str, Any]], key: str) -> tuple[float | None, float, float]:
@@ -236,28 +244,106 @@ def _attacker_features(
     rows: list[dict[str, Any]],
     season_rows: list[dict[str, Any]],
     minutes: float,
-    non_penalty_xg_matches: set[int],
+    metric_competitions: dict[str, set[tuple[Any, Any]]],
 ) -> tuple[dict[str, Any], list[str]]:
     flags: list[str] = []
     goals = _sum_event(rows, "goals")
     goal_leaderboard = [row for row in season_rows if row.get("metric") == "goals"]
     penalties = sum(_number(row.get("sub_value")) or 0.0 for row in goal_leaderboard)
     listed_goals = sum(_number(row.get("value")) or 0.0 for row in goal_leaderboard)
-    if goals > 0 and not goal_leaderboard:
+    goal_totals_mismatch = bool(
+        minutes > 0 and goal_leaderboard and abs(listed_goals - goals) > 0.01
+    )
+    if goal_totals_mismatch:
+        flags.append("match_goals_do_not_reconcile_to_season_leaderboard")
+
+    shotmap_npg_rows = [
+        row
+        for row in rows
+        if _number(
+            (((row.get("metrics") or {}).get("non_penalty_goals") or {}).get("value"))
+        )
+        is not None
+    ]
+    shotmap_npg = _sum_event(shotmap_npg_rows, "non_penalty_goals")
+    shotmap_npg_minutes = sum(
+        _number((((row.get("metrics") or {}).get("minutes_played") or {}).get("value"))) or 0.0
+        for row in shotmap_npg_rows
+    )
+    unclassified_npg_rows = [
+        row
+        for row in rows
+        if _number(
+            (((row.get("metrics") or {}).get("non_penalty_goals") or {}).get("value"))
+        )
+        is None
+    ]
+    unclassified_goals = _sum_event(unclassified_npg_rows, "goals")
+    if shotmap_npg_minutes > 0 and unclassified_goals <= 0:
+        npg = shotmap_npg
+        npg_minutes = minutes
+        npg_source_fields = [
+            "shotmap.eventType/situation",
+            "matchFacts.events goalDescriptionKey fallback",
+        ]
+        npg_note = (
+            "Derived from reconciled match shot maps, with match goal events as a "
+            "fallback; penalties, own goals, and shoot-out goals are excluded. A "
+            "match without a reconciled event source is included only when the "
+            "player's official goal count is zero."
+        )
+    elif shotmap_npg_minutes > 0 and unclassified_goals > 0:
         npg = None
+        npg_minutes = 0.0
+        npg_source_fields = []
+        npg_note = None
+        flags.append("non_penalty_goals_unreconciled_match_shotmap")
+    elif goals > 0 and not goal_leaderboard:
+        npg = None
+        npg_minutes = 0.0
+        npg_source_fields = []
+        npg_note = None
         flags.append("non_penalty_goals_missing_penalty_split")
+    elif goal_totals_mismatch:
+        npg = None
+        npg_minutes = 0.0
+        npg_source_fields = []
+        npg_note = None
     else:
         npg = max(0.0, goals - penalties)
-        if goal_leaderboard and abs(listed_goals - goals) > 0.01:
-            flags.append("match_goals_do_not_reconcile_to_season_leaderboard")
+        npg_minutes = minutes
+        npg_source_fields = ["goals", "season goals.sub_value (penalties)"]
+        npg_note = (
+            "Fallback used only when match shot maps are unavailable and the "
+            "match goal total reconciles to FotMob's season leaderboard."
+        )
 
-    non_penalty_xg = _sum_preferred_event(
+    non_penalty_xg, xg_minutes = _sum_preferred_event(
         rows,
         "expected_goals_non_penalty",
         "expected_goals",
-        non_penalty_xg_matches,
+        metric_competitions.get("expected_goals_non_penalty", set()),
+        metric_competitions.get("expected_goals", set()),
     )
-    assists_xa = _sum_event(rows, "assists") + _sum_event(rows, "expected_assists")
+    assists = _sum_event(rows, "assists")
+    xa_competitions = metric_competitions.get("expected_assists", set())
+    xa_rows = [
+        row
+        for row in rows
+        if (row.get("competition_id"), row.get("competition")) in xa_competitions
+    ]
+    expected_assists = _sum_event(xa_rows, "expected_assists")
+    xa_minutes = sum(
+        _number((((row.get("metrics") or {}).get("minutes_played")) or {}).get("value")) or 0.0
+        for row in xa_rows
+    )
+    assists_per90 = assists * 90.0 / minutes if minutes > 0 else None
+    xa_per90 = expected_assists * 90.0 / xa_minutes if xa_minutes > 0 else None
+    axa_value = (
+        (assists_per90 or 0.0) + (xa_per90 or 0.0)
+        if assists_per90 is not None or xa_per90 is not None
+        else None
+    )
     box_touches = _sum_event(rows, "touches_opp_box")
     shots_on_target = _sum_event(rows, "ShotsOnTarget")
     chances_created = _sum_event(rows, "chances_created")
@@ -271,29 +357,33 @@ def _attacker_features(
         "npg90": (
             _per90_feature(
                 npg,
-                minutes,
-                source_fields=["goals", "season goals.sub_value (penalties)"],
-                note=event_note,
+                npg_minutes,
+                source_fields=npg_source_fields,
+                note=npg_note,
             )
             if npg is not None
             else None
         ),
         "xg90": _per90_feature(
             non_penalty_xg,
-            minutes,
+            xg_minutes,
             source_fields=["expected_goals_non_penalty", "expected_goals fallback"],
             note=(
-                "Non-penalty xG is used whenever that field exists in the match schema; "
-                "a missing player key is then a zero event. xG is only the fallback when "
-                "the whole match lacks the non-penalty field."
+                "Non-penalty xG is used when its competition supplies the field; xG is "
+                "the fallback only for competitions that supply xG but not non-penalty xG. "
+                "Competitions without either field are excluded from this denominator."
             ),
         ),
         "sca90": None,
-        "axa90": _per90_feature(
-            assists_xa,
-            minutes,
+        "axa90": _feature(
+            axa_value,
+            unit="per90",
+            source=MATCH_SOURCE,
             source_fields=["assists", "expected_assists"],
-            note=event_note,
+            note=(
+                f"Assists use {round(minutes, 1)} available minutes; xA uses "
+                f"{round(xa_minutes, 1)} minutes from competitions where xA is supplied."
+            ),
         ),
         "bt90": _per90_feature(
             box_touches,
@@ -421,14 +511,12 @@ def build_player_features(
         if player_id is not None:
             season_by_player[int(player_id)].append(row)
 
-    non_penalty_xg_matches = {
-        int(row["match_id"])
-        for row in historical_rows
-        if _number(
-            ((row.get("metrics") or {}).get("expected_goals_non_penalty") or {}).get("value")
-        )
-        is not None
-    }
+    metric_competitions: dict[str, set[tuple[Any, Any]]] = defaultdict(set)
+    for row in historical_rows:
+        competition_key = (row.get("competition_id"), row.get("competition"))
+        for metric, item in (row.get("metrics") or {}).items():
+            if _number((item or {}).get("value")) is not None:
+                metric_competitions[metric].add(competition_key)
 
     teams_by_id = {int(row["team_id"]): row for row in teams}
     output: list[dict[str, Any]] = []
@@ -450,7 +538,7 @@ def build_player_features(
                 rows,
                 player_season_rows,
                 minutes,
-                non_penalty_xg_matches,
+                metric_competitions,
             )
         else:
             features, flags = _defender_features(rows, minutes)

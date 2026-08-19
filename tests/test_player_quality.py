@@ -260,6 +260,124 @@ class PlayerFeatureAggregationTests(unittest.TestCase):
         self.assertEqual(result["features"]["npg90"]["value"], 0.0)
         self.assertEqual(result["features"]["xg90"]["value"], 0.0)
 
+    def test_unavailable_xg_is_missing_and_xa_does_not_become_zero(self):
+        squads = [
+            {
+                "team_id": 10,
+                "team": "Club",
+                "player_id": 9,
+                "player": "Forward",
+                "squad_group": "attackers",
+                "position": "ST",
+            }
+        ]
+        teams = [{"team_id": 10, "primary_league_id": 47, "primary_league": "Premier League"}]
+        history = [
+            {
+                "match_id": 1,
+                "competition_id": 999,
+                "competition": "League Without xG",
+                "team_id": 10,
+                "team": "Club",
+                "player_id": 9,
+                "metrics": {
+                    "minutes_played": {"value": 90},
+                    "goals": {"value": 0},
+                    "assists": {"value": 1},
+                    "chances_created": {"value": 2},
+                },
+            }
+        ]
+        result = build_player_features(squads, teams, history, [], self.config)[0]
+        self.assertIsNone(result["features"]["xg90"])
+        self.assertEqual(result["features"]["axa90"]["value"], 1.0)
+
+    def test_match_shotmap_npg_is_not_distorted_by_different_leaderboard_scope(self):
+        squads = [
+            {
+                "team_id": 10,
+                "team": "New Club",
+                "player_id": 9,
+                "player": "Transferred Forward",
+                "squad_group": "attackers",
+                "position": "ST",
+            }
+        ]
+        teams = [{"team_id": 10, "primary_league_id": 47, "primary_league": "Premier League"}]
+        history = [
+            {
+                "match_id": 1,
+                "competition_id": 47,
+                "competition": "Premier League",
+                "team_id": 10,
+                "team": "New Club",
+                "player_id": 9,
+                "metrics": {
+                    "minutes_played": {"value": 90},
+                    "goals": {"value": 1},
+                    "non_penalty_goals": {"value": 1, "derived_from": "shotmap"},
+                },
+            }
+        ]
+        season = [
+            {
+                "participant_id": 9,
+                "competition": "Premier League",
+                "metric": "goals",
+                "value": 5,
+                "sub_value": 2,
+                "minutes": 1800,
+            }
+        ]
+        result = build_player_features(squads, teams, history, season, self.config)[0]
+        self.assertEqual(result["features"]["npg90"]["value"], 1.0)
+        self.assertEqual(result["features"]["npg90"]["denominator_minutes"], 90.0)
+        self.assertIn(
+            "match_goals_do_not_reconcile_to_season_leaderboard",
+            result["quality_flags"],
+        )
+
+    def test_partial_shotmap_npg_is_missing_when_unclassified_match_has_goal(self):
+        squads = [
+            {
+                "team_id": 10,
+                "team": "Club",
+                "player_id": 9,
+                "player": "Forward",
+                "squad_group": "attackers",
+                "position": "ST",
+            }
+        ]
+        teams = [{"team_id": 10, "primary_league_id": 47, "primary_league": "Premier League"}]
+        history = [
+            {
+                "match_id": 1,
+                "competition_id": 47,
+                "competition": "Premier League",
+                "team_id": 10,
+                "player_id": 9,
+                "metrics": {
+                    "minutes_played": {"value": 90},
+                    "goals": {"value": 0},
+                    "non_penalty_goals": {"value": 0, "derived_from": "shotmap"},
+                },
+            },
+            {
+                "match_id": 2,
+                "competition_id": 47,
+                "competition": "Premier League",
+                "team_id": 10,
+                "player_id": 9,
+                "metrics": {"minutes_played": {"value": 20}, "goals": {"value": 1}},
+            },
+        ]
+        result = build_player_features(squads, teams, history, [], self.config)[0]
+        self.assertIsNone(result["features"]["npg90"])
+        self.assertIn(
+            "non_penalty_goals_unreconciled_match_shotmap",
+            result["quality_flags"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

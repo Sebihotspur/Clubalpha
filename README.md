@@ -33,7 +33,14 @@ committed to this public repository.
 
 ## Build Player Quality
 
-Once the foundation pull is present:
+Once the foundation pull is present, add previous domestic history for the
+non-English UCL field and promoted PL clubs:
+
+```bash
+python3 scripts/pull_domestic_history.py
+```
+
+Then build Player Quality:
 
 ```bash
 python3 scripts/build_player_quality.py

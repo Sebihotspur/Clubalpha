@@ -57,6 +57,12 @@ def main() -> int:
         default=ROOT / "data/processed/player_quality",
     )
     parser.add_argument(
+        "--domestic-dir",
+        type=Path,
+        default=ROOT / "data/processed/domestic_history",
+        help="Optional club-filtered domestic-history layer.",
+    )
+    parser.add_argument(
         "--config",
         type=Path,
         default=ROOT / "config/player-quality-wcalpha-v1.json",
@@ -82,8 +88,19 @@ def main() -> int:
     config = load_json(args.config)
     squads = load_jsonl(required["squads"])
     teams = load_json(required["teams"])
-    historical_rows = load_jsonl(required["historical player-match stats"])
-    season_rows = load_jsonl(required["season player stats"])
+    foundation_historical_rows = load_jsonl(required["historical player-match stats"])
+    foundation_season_rows = load_jsonl(required["season player stats"])
+    domestic_match_path = args.domestic_dir / "match_player_stats.jsonl"
+    domestic_season_path = args.domestic_dir / "season_player_stats.jsonl"
+    domestic_historical_rows = load_jsonl(domestic_match_path) if domestic_match_path.exists() else []
+    domestic_season_rows = load_jsonl(domestic_season_path) if domestic_season_path.exists() else []
+    historical_rows = [*foundation_historical_rows, *domestic_historical_rows]
+    season_rows = [*foundation_season_rows, *domestic_season_rows]
+    if domestic_historical_rows:
+        print(
+            f"      Included domestic history: {len(domestic_historical_rows)} player-match rows "
+            f"and {len(domestic_season_rows)} season-stat rows"
+        )
 
     print("[2/4] Aggregate canonical current-player features")
     features = build_player_features(squads, teams, historical_rows, season_rows, config)
@@ -96,10 +113,20 @@ def main() -> int:
 
     print("[4/4] Write quality audit")
     audit = build_quality_audit(features, grades, config)
+    audit["scope"] = (
+        "Current 2026/27 PL, confirmed UCL, and UCL play-off squads; "
+        "2025/26 PL/UCL plus club-filtered domestic evidence"
+        if domestic_historical_rows
+        else "Current 2026/27 PL, confirmed UCL, and UCL play-off squads; 2025/26 PL/UCL evidence only"
+    )
     audit["generated_at_utc"] = datetime.now(timezone.utc).isoformat()
     audit["inputs"] = {
         "squad_rows": len(squads),
+        "foundation_historical_match_player_rows": len(foundation_historical_rows),
+        "domestic_historical_match_player_rows": len(domestic_historical_rows),
         "historical_match_player_rows": len(historical_rows),
+        "foundation_season_player_stat_rows": len(foundation_season_rows),
+        "domestic_season_player_stat_rows": len(domestic_season_rows),
         "season_player_stat_rows": len(season_rows),
     }
     write_json(args.audit, audit)

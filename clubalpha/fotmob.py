@@ -31,6 +31,15 @@ def normalize_name(value: Any) -> str:
     return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
 
 
+def _number(value: Any) -> float | None:
+    if value is None or isinstance(value, bool):
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
 class FotMobClient:
     """Read FotMob JSON with retries, rate limiting, and a filesystem cache."""
 
@@ -223,7 +232,49 @@ def normalize_fixture(row: dict[str, Any], *, source_scope: str) -> dict[str, An
 def flatten_match_player_stats(match_payload: dict[str, Any]) -> list[dict[str, Any]]:
     general = match_payload.get("general") or {}
     output: list[dict[str, Any]] = []
-    players = ((match_payload.get("content") or {}).get("playerStats") or {})
+    content = match_payload.get("content") or {}
+    players = content.get("playerStats") or {}
+    shots = (content.get("shotmap") or {}).get("shots")
+    shotmap_goals: dict[int, int] = {}
+    shotmap_non_penalty_goals: dict[int, int] = {}
+    if isinstance(shots, list):
+        for shot in shots:
+            if (
+                shot.get("eventType") != "Goal"
+                or shot.get("isOwnGoal") is True
+                or shot.get("playerId") is None
+                or shot.get("period") == "PenaltyShootout"
+            ):
+                continue
+            player_id = int(shot["playerId"])
+            shotmap_goals[player_id] = shotmap_goals.get(player_id, 0) + 1
+            if shot.get("situation") != "Penalty":
+                shotmap_non_penalty_goals[player_id] = (
+                    shotmap_non_penalty_goals.get(player_id, 0) + 1
+                )
+    match_events = (((content.get("matchFacts") or {}).get("events") or {}).get("events"))
+    event_goals: dict[int, int] = {}
+    event_non_penalty_goals: dict[int, int] = {}
+    if isinstance(match_events, list):
+        for event in match_events:
+            if (
+                event.get("type") != "Goal"
+                or event.get("ownGoal") is True
+                or event.get("playerId") is None
+                or event.get("isPenaltyShootoutEvent") is True
+            ):
+                continue
+            player_id = int(event["playerId"])
+            event_goals[player_id] = event_goals.get(player_id, 0) + 1
+            is_penalty = (
+                event.get("goalDescriptionKey") == "penalty"
+                or event.get("suffixKey") == "penalties_short"
+                or str(event.get("goalDescription") or "").lower() == "penalty"
+            )
+            if not is_penalty:
+                event_non_penalty_goals[player_id] = (
+                    event_non_penalty_goals.get(player_id, 0) + 1
+                )
     for player in players.values():
         metrics: dict[str, Any] = {}
         for section in player.get("stats") or []:
@@ -239,13 +290,36 @@ def flatten_match_player_stats(match_payload: dict[str, Any]) -> list[dict[str, 
                 }
         if not metrics:
             continue
+        player_id = int(player["id"])
+        listed_goals = _number((metrics.get("goals") or {}).get("value")) or 0.0
+        # The season leaderboard's penalty split can cover a different scope
+        # after an in-league transfer or a promotion play-off. Derive NPG from
+        # this match's shot map only when its goal count reconciles to the
+        # player's official match card.
+        if isinstance(shots, list) and abs(shotmap_goals.get(player_id, 0) - listed_goals) < 0.01:
+            metrics["non_penalty_goals"] = {
+                "value": shotmap_non_penalty_goals.get(player_id, 0),
+                "total": None,
+                "type": "integer",
+                "derived_from": "shotmap",
+            }
+        elif (
+            isinstance(match_events, list)
+            and abs(event_goals.get(player_id, 0) - listed_goals) < 0.01
+        ):
+            metrics["non_penalty_goals"] = {
+                "value": event_non_penalty_goals.get(player_id, 0),
+                "total": None,
+                "type": "integer",
+                "derived_from": "match_events",
+            }
         output.append(
             {
                 "match_id": int(general.get("matchId")),
                 "competition_id": general.get("leagueId"),
                 "competition": general.get("leagueName"),
                 "kickoff_utc": general.get("matchTimeUTCDate") or general.get("matchTimeUTC"),
-                "player_id": int(player["id"]),
+                "player_id": player_id,
                 "player": player.get("name"),
                 "team_id": int(player["teamId"]),
                 "team": player.get("teamName"),

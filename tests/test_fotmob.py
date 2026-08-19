@@ -89,13 +89,120 @@ class FotMobNormalizationTests(unittest.TestCase):
                                 },
                             }
                         ],
-                    }
+                    },
+                    "placeholder": {
+                        "id": 0,
+                        "name": "Unavailable player",
+                        "stats": [],
+                    },
                 }
             },
         }
         rows = flatten_match_player_stats(payload)
+        self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["metrics"]["minutes_played"]["value"], 61)
         self.assertEqual(rows[0]["metrics"]["chances_created"]["value"], 3)
+
+    def test_match_shotmap_derives_reconciled_non_penalty_goals(self):
+        payload = {
+            "general": {"matchId": 1, "leagueId": 47, "leagueName": "Premier League"},
+            "content": {
+                "playerStats": {
+                    "9": {
+                        "id": 9,
+                        "name": "Forward",
+                        "teamId": 10,
+                        "teamName": "Club",
+                        "stats": [
+                            {
+                                "stats": {
+                                    "Goals": {
+                                        "key": "goals",
+                                        "stat": {"value": 2, "type": "integer"},
+                                    }
+                                }
+                            }
+                        ],
+                    }
+                },
+                "shotmap": {
+                    "shots": [
+                        {
+                            "eventType": "Goal",
+                            "playerId": 9,
+                            "situation": "RegularPlay",
+                            "period": "FirstHalf",
+                            "isOwnGoal": False,
+                        },
+                        {
+                            "eventType": "Goal",
+                            "playerId": 9,
+                            "situation": "Penalty",
+                            "period": "SecondHalf",
+                            "isOwnGoal": False,
+                        },
+                    ]
+                },
+            },
+        }
+        rows = flatten_match_player_stats(payload)
+        self.assertEqual(rows[0]["metrics"]["non_penalty_goals"]["value"], 1)
+        self.assertEqual(
+            rows[0]["metrics"]["non_penalty_goals"]["derived_from"],
+            "shotmap",
+        )
+
+    def test_match_events_fill_non_penalty_goals_when_shotmap_is_empty(self):
+        payload = {
+            "general": {"matchId": 1, "leagueId": 127, "leagueName": "League"},
+            "content": {
+                "playerStats": {
+                    "9": {
+                        "id": 9,
+                        "name": "Forward",
+                        "teamId": 10,
+                        "teamName": "Club",
+                        "stats": [
+                            {
+                                "stats": {
+                                    "Goals": {
+                                        "key": "goals",
+                                        "stat": {"value": 2, "type": "integer"},
+                                    }
+                                }
+                            }
+                        ],
+                    }
+                },
+                "shotmap": {"shots": []},
+                "matchFacts": {
+                    "events": {
+                        "events": [
+                            {
+                                "type": "Goal",
+                                "playerId": 9,
+                                "ownGoal": None,
+                                "isPenaltyShootoutEvent": False,
+                                "goalDescriptionKey": None,
+                            },
+                            {
+                                "type": "Goal",
+                                "playerId": 9,
+                                "ownGoal": None,
+                                "isPenaltyShootoutEvent": False,
+                                "goalDescriptionKey": "penalty",
+                            },
+                        ]
+                    }
+                },
+            },
+        }
+        rows = flatten_match_player_stats(payload)
+        self.assertEqual(rows[0]["metrics"]["non_penalty_goals"]["value"], 1)
+        self.assertEqual(
+            rows[0]["metrics"]["non_penalty_goals"]["derived_from"],
+            "match_events",
+        )
 
 
 if __name__ == "__main__":

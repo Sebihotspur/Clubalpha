@@ -70,11 +70,14 @@ Fullbacks and center backs use the same metric weights but remain separate peer 
 
 ## FotMob v1 mappings
 
-Previous-season Premier League and Champions League player-match rows are
-aggregated before scoring. Current club membership supplies the player's peer
-role and domestic-league quality multiplier.
+Previous-season Premier League, Champions League, and target-club domestic
+player-match rows are aggregated before scoring. Current club membership
+supplies the player's peer role and domestic-league quality multiplier.
 
-- `npg90`: match goals minus the penalty count preserved in FotMob's season goals row.
+- `npg90`: goals classified from reconciled match shot maps, with match goal
+  events as a fallback, excluding penalties, own goals, and shoot-outs. The
+  season goals row is only a fallback when its scope reconciles to the match
+  sample.
 - `xg90`: non-penalty xG when available, otherwise xG.
 - `axa90`: assists plus expected assists per 90.
 - `kp90`: FotMob `chances_created`; this is the canonical key-pass feature.
@@ -135,10 +138,11 @@ Generated player features and grades live under
 `data/processed/player_quality/` and remain out of Git. The compact coverage and
 leader audit is written to `reports/player-quality-audit.json`.
 
-## First-run boundary
+## Current boundary
 
-The first run grades current players who logged 2025/26 Premier League or
-Champions League minutes. It is not yet a complete current-squad universe:
-non-English UCL clubs only contribute their Champions League matches, while new
-PL/UCL entrants may have no evidence in either competition. Previous domestic
-league seasons are the next required source expansion.
+The domestic-history layer has complete fixture registries for the target clubs
+and player detail for 90.5% of finished target fixtures. It is club-filtered
+rather than league-wide. A player who transferred from a non-target club may
+therefore still need a player-centric backfill. Four smaller leagues expose no
+player cards for their target fixtures; those gaps remain explicit in the
+coverage audit and must not be filled with partial opponent samples.
