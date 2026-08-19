@@ -90,3 +90,25 @@ player-match rows, season leaderboards, and current-team domestic league IDs.
 It emits traceable per-90 features and versioned Alpha Ability grades without
 altering the source layer. The tracked player-quality audit makes the remaining
 domestic-history gap explicit.
+
+## Domestic-history expansion
+
+```bash
+python3 scripts/pull_domestic_history.py
+```
+
+This second cached collector maps current non-English UCL clubs and promoted PL
+clubs to their previous domestic competitions. It selects only fixtures
+involving those clubs, then retains player-match rows only for the target side.
+Opponent-only rows are deliberately excluded: two matches against a target club
+must never masquerade as a complete player season.
+
+Outputs live under `data/processed/domestic_history/` and remain ignored by
+Git. `reports/domestic-history-coverage.json` records the league mapping,
+fixture coverage, metric coverage, errors, and any club without a complete
+fixture registry.
+
+The first version pulls match detail plus only two season leaderboards: goals as
+a reconciliation fallback and possessions won in the attacking third. The
+primary non-penalty-goal count is derived from reconciled match shot maps or
+match goal events; other canonical features are calculated from match detail.

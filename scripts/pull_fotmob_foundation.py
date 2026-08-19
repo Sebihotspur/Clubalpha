@@ -35,6 +35,7 @@ from clubalpha.fotmob import (  # noqa: E402
 MATCH_METRIC_AUDIT = {
     "minutes": ["minutes_played"],
     "goals": ["goals"],
+    "non_penalty_goals": ["non_penalty_goals"],
     "assists": ["assists"],
     "xg": ["expected_goals"],
     "xa": ["expected_assists"],
