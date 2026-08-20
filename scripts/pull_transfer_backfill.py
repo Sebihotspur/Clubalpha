@@ -31,6 +31,7 @@ from clubalpha.fotmob import FotMobClient, flatten_match_player_stats  # noqa: E
 from clubalpha.player_quality_v2 import scoring_position  # noqa: E402
 from clubalpha.transfer_backfill import (  # noqa: E402
     backfill_coverage,
+    build_competition_aliases,
     expected_ledger,
     filter_backfill_rows,
     find_gaps,
@@ -73,6 +74,12 @@ def main() -> int:
     parser.add_argument("--output-dir", type=Path, default=ROOT / "data/processed/transfer_backfill")
     parser.add_argument("--audit", type=Path, default=ROOT / "reports/transfer-backfill-coverage.json")
     parser.add_argument("--season", default="2025/2026")
+    parser.add_argument(
+        "--quality-config",
+        type=Path,
+        default=ROOT / "config/player-quality-clubalpha-v2.json",
+        help="Supplies the competition-id aliases used to compare ledger and held rows.",
+    )
     parser.add_argument("--refresh", action="store_true")
     parser.add_argument("--detect-only", action="store_true", help="Reconcile gaps without collecting.")
     parser.add_argument("--request-interval", type=float, default=0.25)
@@ -93,6 +100,9 @@ def main() -> int:
         raise SystemExit("Missing foundation squads.jsonl; run pull_fotmob_foundation.py first.")
 
     squads = load_jsonl(squads_path)
+    # FotMob reports a competition under one id in career history and another
+    # in match rows. Without collapsing them, complete data reads as absent.
+    aliases = build_competition_aliases(load_json(args.quality_config))
     held_rows = [
         *load_jsonl(args.foundation_dir / "historical_match_player_stats.jsonl"),
         *load_jsonl(args.domestic_dir / "match_player_stats.jsonl"),
@@ -139,7 +149,9 @@ def main() -> int:
         ledger = expected_ledger(payload, args.season)
         if not ledger:
             return None, None
-        gaps = find_gaps(ledger, held_appearances(held_by_player.get(player_id, [])))
+        gaps = find_gaps(
+            ledger, held_appearances(held_by_player.get(player_id, []), aliases), aliases
+        )
         return (
             player_gap_summary(player_id, squad.get("player"), squad.get("team_id"), gaps),
             None,

@@ -1,7 +1,10 @@
+import json
 import unittest
+from pathlib import Path
 
 from clubalpha.transfer_backfill import (
     backfill_coverage,
+    build_competition_aliases,
     expected_ledger,
     filter_backfill_rows,
     find_gaps,
@@ -138,6 +141,56 @@ class GapTests(unittest.TestCase):
         self.assertEqual(summary["coverage_pct"], 16.0)
         self.assertEqual(len(summary["collectable_gaps"]), 3)
         self.assertEqual(len(summary["unresolvable_gaps"]), 1)
+
+
+class CompetitionAliasTests(unittest.TestCase):
+    """FotMob names one competition with different ids in different feeds.
+
+    Career history reports the Champions League as league 42 while match rows
+    carry stage ids 904988 and 904995. Comparing them directly made 3,393
+    already-collected appearances read as absent, which would have sent the
+    backfill to re-fetch thousands of matches it already holds.
+    """
+
+    CONFIG = json.loads(
+        (
+            Path(__file__).resolve().parents[1]
+            / "config/player-quality-clubalpha-v2.json"
+        ).read_text(encoding="utf-8")
+    )
+
+    def test_stage_ids_collapse_onto_one_canonical_id(self):
+        aliases = build_competition_aliases(self.CONFIG)
+        self.assertEqual(aliases[904988], 42)
+        self.assertEqual(aliases[904995], 42)
+        self.assertEqual(aliases[42], 42)
+        self.assertEqual(aliases[47], 47)
+
+    def test_held_stage_id_rows_satisfy_a_ledger_league_id(self):
+        aliases = build_competition_aliases(self.CONFIG)
+        ledger = expected_ledger(
+            payload(entry(8455, "Chelsea", "2025/2026", (42, "Champions League", 3, False))),
+            "2025/2026",
+        )
+        rows = [
+            {"team_id": 8455, "competition_id": 904988, "match_id": 1},
+            {"team_id": 8455, "competition_id": 904988, "match_id": 2},
+            {"team_id": 8455, "competition_id": 904995, "match_id": 3},
+        ]
+        gaps = find_gaps(ledger, held_appearances(rows, aliases), aliases)
+        self.assertEqual(gaps[0]["status"], "complete")
+        self.assertEqual(gaps[0]["missing_appearances"], 0)
+
+    def test_without_aliases_the_same_data_looks_absent(self):
+        """Pins the bug so it cannot quietly return."""
+
+        ledger = expected_ledger(
+            payload(entry(8455, "Chelsea", "2025/2026", (42, "Champions League", 3, False))),
+            "2025/2026",
+        )
+        rows = [{"team_id": 8455, "competition_id": 904988, "match_id": index} for index in (1, 2, 3)]
+        gaps = find_gaps(ledger, held_appearances(rows))
+        self.assertEqual(gaps[0]["status"], "absent")
 
 
 class BatchingTests(unittest.TestCase):

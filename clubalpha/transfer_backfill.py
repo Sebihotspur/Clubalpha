@@ -77,12 +77,51 @@ def expected_ledger(player_payload: dict[str, Any], season: str) -> list[dict[st
     return ledger
 
 
-def held_appearances(rows: Iterable[dict[str, Any]]) -> dict[tuple[int | None, int | None], set[Any]]:
-    """Distinct match ids already held, keyed by (team, competition)."""
+def build_competition_aliases(config: dict[str, Any]) -> dict[int, int]:
+    """Collapse a competition's several FotMob ids onto one canonical id.
+
+    FotMob reports the Champions League as league 42 in career history but
+    stamps match rows with stage ids (904988, 904995). Comparing the two
+    directly makes complete data look absent, which would send the backfill to
+    re-collect thousands of matches it already holds.
+
+    Ids sharing a league-quality key are treated as the same competition, and
+    the lowest id becomes canonical.
+    """
+
+    by_key: dict[str, list[int]] = defaultdict(list)
+    for raw_id, key in (config["league_quality"]["fotmob_league_id_to_key"] or {}).items():
+        parsed = _int(raw_id)
+        if parsed is not None:
+            by_key[key].append(parsed)
+
+    aliases: dict[int, int] = {}
+    for ids in by_key.values():
+        canonical = min(ids)
+        for value in ids:
+            aliases[value] = canonical
+    return aliases
+
+
+def canonical_competition(league_id: Any, aliases: dict[int, int] | None) -> int | None:
+    parsed = _int(league_id)
+    if parsed is None or not aliases:
+        return parsed
+    return aliases.get(parsed, parsed)
+
+
+def held_appearances(
+    rows: Iterable[dict[str, Any]],
+    aliases: dict[int, int] | None = None,
+) -> dict[tuple[int | None, int | None], set[Any]]:
+    """Distinct match ids already held, keyed by (team, canonical competition)."""
 
     held: dict[tuple[int | None, int | None], set[Any]] = defaultdict(set)
     for row in rows:
-        key = (_int(row.get("team_id")), _int(row.get("competition_id")))
+        key = (
+            _int(row.get("team_id")),
+            canonical_competition(row.get("competition_id"), aliases),
+        )
         held[key].add(row.get("match_id"))
     return held
 
@@ -90,6 +129,7 @@ def held_appearances(rows: Iterable[dict[str, Any]]) -> dict[tuple[int | None, i
 def find_gaps(
     ledger: list[dict[str, Any]],
     held: dict[tuple[int | None, int | None], set[Any]],
+    aliases: dict[int, int] | None = None,
 ) -> list[dict[str, Any]]:
     """Compare the provider's ledger against what has actually been collected.
 
@@ -102,7 +142,7 @@ def find_gaps(
 
     gaps: list[dict[str, Any]] = []
     for entry in ledger:
-        key = (entry["team_id"], entry["league_id"])
+        key = (entry["team_id"], canonical_competition(entry["league_id"], aliases))
         held_count = len(held.get(key, ()))
         expected = entry["expected_appearances"]
         missing = max(0, expected - held_count)
