@@ -1,0 +1,190 @@
+{
+  "version": "clubalpha_player_quality_v2",
+  "derives_from": "wcalpha_player_quality_v1",
+  "source_engine": "WCALPHA alpha_scoring_engine.py hard-locked 2026-06-12",
+  "note": "WCALPHA attacker and defender formulas remain in player-quality-wcalpha-v1.json as the untouched parity baseline. This version adds midfielder and goalkeeper formulas, splits centre-backs from fullbacks, flattens all metric weights, and rebuilds the league-quality and reliability policies.",
+
+  "peer_method": {
+    "standard_deviation": "sample",
+    "z_score_clamp": 3.0,
+    "minimum_population": 2,
+    "peer_minimum_minutes": 700,
+    "peer_minimum_minutes_note": "Mean and SD are computed from the qualifying subset only; the resulting z-score is applied to every player, including short samples.",
+    "centre_backs_separate_from_fullbacks": true
+  },
+
+  "standardisation": {
+    "enabled": true,
+    "scope": "per_scoring_position",
+    "reference_minimum_minutes": 700,
+    "note": "standardised_z = (composite - position_mean) / position_sd. Applied so a +1.0 forward and a +1.0 goalkeeper are the same statement about quality. Without it, forward grades span roughly twice the range of centre-back grades and the roll-up weights amplify the artifact."
+  },
+
+  "shrinkage": {
+    "method": "minutes",
+    "constant": 900,
+    "formula": "final_z = standardised_z * minutes / (minutes + 900)",
+    "order": "after_standardisation",
+    "order_note": "Standardising first makes zero mean 'average for this position', so shrinkage pulls thin samples toward their positional average rather than toward an arbitrary point.",
+    "replaces": ["minutes_reliability_bands", "ranking_eligibility.minimum_minutes"]
+  },
+
+  "minimum_attempts": {
+    "note": "Percentage metrics below their attempt threshold are treated as missing and their weight leaves the denominator. Thresholds are set so measurement error sits below the population spread; they are starting values and should be retuned once real distributions exist.",
+    "aer": 50,
+    "gnd": 50,
+    "passpct": 300,
+    "dist": 200,
+    "crosspct": 30
+  },
+
+  "league_quality": {
+    "version": "league_quality_v4_offsets",
+    "method": "additive_z_offset",
+    "applied_to": "z_score",
+    "source": "per_match_opponent_league",
+    "aggregation": "minutes_weighted",
+    "formula": "league_offset = sum(offset_match * minutes_match) / sum(minutes_match)",
+    "conversion_from_v3": "offset = 3.0 * (multiplier - 1.0)",
+    "conversion_constant": 3.0,
+    "replaces_note": "v3 multiplied the raw metric value by a multiplier taken from the player's CURRENT club league. That ran backwards on inverted metrics (a weak-league defender scored better for identical errors) and moved percentage metrics roughly 2.5x harder than rate metrics. It also credited a transferred player's previous-league statistics to the league of the club they now play for.",
+    "cup_tie_rule": "A cup fixture takes the offset of the opponent's domestic league, which requires one cached team lookup per unknown opponent.",
+    "default_key": "Other",
+    "default_offset": -0.9,
+    "offsets": {
+      "PL": 0.45,
+      "La Liga": 0.36,
+      "Bundesliga": 0.3,
+      "Serie A": 0.24,
+      "Ligue 1": 0.15,
+      "Primeira": -0.12,
+      "Eredivisie": -0.15,
+      "Jupiler Pro": -0.3,
+      "Scottish PL": -0.45,
+      "Super Lig": -0.54,
+      "Czech First League": -0.6,
+      "Greek Super League": -0.6,
+      "Austrian Bundesliga": -0.6,
+      "Croatian HNL": -0.72,
+      "Norway": -0.72,
+      "Other Europe": -0.84,
+      "Other": -0.9
+    },
+    "fotmob_league_id_to_key": {
+      "38": "Austrian Bundesliga",
+      "40": "Jupiler Pro",
+      "47": "PL",
+      "53": "Ligue 1",
+      "54": "Bundesliga",
+      "55": "Serie A",
+      "57": "Eredivisie",
+      "59": "Norway",
+      "61": "Primeira",
+      "64": "Scottish PL",
+      "71": "Super Lig",
+      "87": "La Liga",
+      "122": "Czech First League",
+      "135": "Greek Super League",
+      "252": "Croatian HNL"
+    }
+  },
+
+  "weighting_policy": {
+    "mode": "flat",
+    "weight": 2.0,
+    "note": "Every metric inside a formula carries equal weight, so the composite is an unweighted mean of available z-scores and the listed order is display only. The WCALPHA 3.0-to-1.0 ladder was never fitted; flat is the honest prior and it removes the accidental concentration the ladder produced (centre-backs went from 57% of their grade on duels and mistakes to 40%)."
+  },
+
+  "formulas": {
+    "FW": {
+      "label": "Forwards and attacking midfielders",
+      "npg90":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Non-penalty goals per 90",                 "source": ["non_penalty_goals"]},
+      "xg90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Non-penalty expected goals per 90",        "source": ["expected_goals_non_penalty", "expected_goals"]},
+      "sca90":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Shot-creating actions per 90",             "source": [], "unavailable": true},
+      "kp90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Chances created per 90",                   "source": ["chances_created"]},
+      "axa90":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Assists plus expected assists per 90",     "source": ["assists", "expected_assists"]},
+      "bt90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Touches in opposition box per 90",         "source": ["touches_opp_box"]},
+      "sot90":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Shots on target per 90",                   "source": ["ShotsOnTarget"]},
+      "drib90":  {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Successful dribbles per 90",               "source": ["dribbles_succeeded"]},
+      "pc90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Progressive carries per 90",               "source": [], "unavailable": true},
+      "press90": {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Possessions won in attacking third per 90","source": ["poss_won_att_3rd"], "source_layer": "season_leaderboard"}
+    },
+
+    "CM": {
+      "label": "Central and defensive midfielders",
+      "gxg90":  {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Goals plus expected goals per 90",         "source": ["goals", "expected_goals"]},
+      "axa90":  {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Assists plus expected assists per 90",     "source": ["assists", "expected_assists"]},
+      "kp90":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Chances created per 90",                   "source": ["chances_created"]},
+      "pf390":  {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Passes into final third per 90",           "source": ["passes_into_final_third"]},
+      "lbp90":  {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Line-breaking passes per 90",              "source": ["line_breaking_passes"]},
+      "bt90":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Touches in opposition box per 90",         "source": ["touches_opp_box"]},
+      "drib90": {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Successful dribbles per 90",               "source": ["dribbles_succeeded"]},
+      "gnd":    {"weight": 2.0, "direction": "positive", "form": "percentage", "label": "Ground duel win percentage",               "source": ["ground_duels_won"], "minimum_attempts": 50},
+      "disp90": {"weight": 2.0, "direction": "inverted", "form": "per90",      "label": "Dispossessed per 90",                      "source": ["dispossessed"]},
+      "aer":    {"weight": 2.0, "direction": "positive", "form": "percentage", "label": "Aerial duel win percentage",               "source": ["aerials_won"], "minimum_attempts": 50},
+      "rec90":  {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Ball recoveries per 90",                   "source": ["recoveries"]}
+    },
+
+    "CB": {
+      "label": "Centre-backs",
+      "err90":    {"weight": 2.0, "direction": "inverted", "form": "per90",      "label": "Errors leading to goal per 90",          "source": ["errors_led_to_goal"]},
+      "aer":      {"weight": 2.0, "direction": "positive", "form": "percentage", "label": "Aerial duel win percentage",             "source": ["aerials_won"], "minimum_attempts": 50},
+      "tkl90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Tackles per 90",                         "source": ["matchstats.headers.tackles"]},
+      "int90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Interceptions per 90",                   "source": ["interceptions"]},
+      "gnd":      {"weight": 2.0, "direction": "positive", "form": "percentage", "label": "Ground duel win percentage",             "source": ["ground_duels_won"], "minimum_attempts": 50},
+      "drp90":    {"weight": 2.0, "direction": "inverted", "form": "per90",      "label": "Dribbled past per 90",                   "source": ["dribbled_past"]},
+      "clrblk90": {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Clearances plus blocks per 90",          "source": ["clearances", "shot_blocks"]},
+      "passpct":  {"weight": 2.0, "direction": "positive", "form": "percentage", "label": "Pass completion percentage",             "source": ["accurate_passes"], "minimum_attempts": 300},
+      "lbp90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Line-breaking passes per 90",            "source": ["line_breaking_passes"]},
+      "ga90":     {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Goals plus assists per 90",              "source": ["goals", "assists"]},
+      "pace":     {"weight": 2.0, "direction": "positive", "form": "physical",   "label": "Pace",                                   "source": ["physical_metrics_topspeed"], "pending_confirmation": true}
+    },
+
+    "FB": {
+      "label": "Fullbacks and wing-backs",
+      "err90":    {"weight": 2.0, "direction": "inverted", "form": "per90",      "label": "Errors leading to goal per 90",          "source": ["errors_led_to_goal"]},
+      "tkl90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Tackles per 90",                         "source": ["matchstats.headers.tackles"]},
+      "gnd":      {"weight": 2.0, "direction": "positive", "form": "percentage", "label": "Ground duel win percentage",             "source": ["ground_duels_won"], "minimum_attempts": 50},
+      "ga90":     {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Goals plus assists per 90",              "source": ["goals", "assists"]},
+      "int90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Interceptions per 90",                   "source": ["interceptions"]},
+      "drib90":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Successful dribbles per 90",             "source": ["dribbles_succeeded"]},
+      "lbp90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Line-breaking passes per 90",            "source": ["line_breaking_passes"]},
+      "drp90":    {"weight": 2.0, "direction": "inverted", "form": "per90",      "label": "Dribbled past per 90",                   "source": ["dribbled_past"]},
+      "crosspct": {"weight": 2.0, "direction": "positive", "form": "percentage", "label": "Accurate crosses percentage",            "source": ["accurate_crosses"], "minimum_attempts": 30},
+      "aer":      {"weight": 2.0, "direction": "positive", "form": "percentage", "label": "Aerial duel win percentage",             "source": ["aerials_won"], "minimum_attempts": 50}
+    },
+
+    "GK": {
+      "label": "Goalkeepers",
+      "gprev90":  {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Goals prevented per 90",                 "source": ["goals_prevented"], "derived_fallback": ["expected_goals_on_target_faced", "goals_conceded"]},
+      "claims90": {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Crosses claimed per 90",                 "source": ["keeper_high_claim"]},
+      "sweep90":  {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Sweeper actions per 90",                 "source": ["keeper_sweeper"]},
+      "dist":     {"weight": 2.0, "direction": "positive", "form": "percentage", "label": "Distribution accuracy percentage",       "source": ["accurate_passes"], "minimum_attempts": 200},
+      "err90":    {"weight": 2.0, "direction": "inverted", "form": "per90",      "label": "Errors leading to goal per 90",          "source": ["errors_led_to_goal"]}
+    }
+  },
+
+  "excluded_metrics": {
+    "avail": "Minutes played was a scored metric in the WCALPHA midfielder and goalkeeper formulas. Removed: availability belongs to Club Form, and scoring it here would count minutes twice and only for two of the five positions.",
+    "savepct": "Save percentage measures the same event set and outcome as goals prevented, without adjusting for shot quality. Retained only as a fallback source for gprev90.",
+    "defensive_actions": "An aggregate of tackles, clearances, interceptions, recoveries and blocks. Using it alongside its components would double count.",
+    "xg_and_xa": "An aggregate of expected_goals and expected_assists. Same reason.",
+    "gd": "Overall duel win percentage contains aerial duels, so pairing it with aer was whole-plus-part. Replaced by gnd, which partitions cleanly against aer.",
+    "tb90": "No through-balls key exists in FotMob match detail. line_breaking_passes is a broader measure and was adopted as its own slot rather than mapped as a substitute.",
+    "vers": "Versatility has no provider field. Calculable from usualPosition and positionId across match lineups; not yet built."
+  },
+
+  "roll_up": {
+    "note": "Position weights only. Starter/rotation/squad role and expected minutes belong to Club Form and multiply in at the roll-up, never inside Player Ratings.",
+    "attack":  {"FW": 3.0, "CM": 2.2, "FB": 1.2, "CB": 0.6, "GK": 0.1},
+    "defence": {"GK": 2.5, "CB": 2.5, "FB": 1.8, "CM": 1.5, "FW": 0.5},
+    "status": "prior_not_fitted",
+    "fitting_plan": "Regress goals scored and conceded in the 569 completed 2025/26 PL and UCL fixtures on the two ratings to replace these priors with measured values."
+  },
+
+  "coverage": {
+    "high_minimum_pct": 80.0,
+    "medium_minimum_pct": 60.0,
+    "redefinition_deferred": "Coverage currently reports structural formula gaps rather than per-player data quality, so every graded player reads the same value. Once standardisation and shrinkage land it no longer feeds the grade, so redefining it changes no ratings."
+  }
+}
