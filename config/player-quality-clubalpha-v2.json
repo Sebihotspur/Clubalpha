@@ -51,8 +51,10 @@
     "cup_tie_rule": "A cup fixture takes the offset of the opponent's domestic league, which requires one cached team lookup per unknown opponent.",
     "default_key": "Other",
     "default_offset": -0.9,
+    "champions_league_note": "FotMob match rows carry stage ids (904988, 904995), not the league id 42 used to fetch the competition. Mapping only 42 sent every Champions League minute to the -0.9 default, which graded the strongest club competition as the weakest. The opponent's domestic league still wins where the opponent is identifiable; this tier is only the fallback for opponents outside the current club universe, and it sits high because every Champions League opponent is one of its country's best sides.",
     "offsets": {
       "PL": 0.45,
+      "Champions League": 0.36,
       "La Liga": 0.36,
       "Bundesliga": 0.3,
       "Serie A": 0.24,
@@ -61,19 +63,24 @@
       "Eredivisie": -0.15,
       "Jupiler Pro": -0.3,
       "Scottish PL": -0.45,
+      "Championship": -0.42,
       "Super Lig": -0.54,
       "Czech First League": -0.6,
       "Greek Super League": -0.6,
       "Austrian Bundesliga": -0.6,
       "Croatian HNL": -0.72,
       "Norway": -0.72,
+      "Israeli Premier League": -0.78,
+      "Slovak First League": -0.84,
       "Other Europe": -0.84,
       "Other": -0.9
     },
     "fotmob_league_id_to_key": {
       "38": "Austrian Bundesliga",
       "40": "Jupiler Pro",
+      "42": "Champions League",
       "47": "PL",
+      "48": "Championship",
       "53": "Ligue 1",
       "54": "Bundesliga",
       "55": "Serie A",
@@ -84,8 +91,12 @@
       "71": "Super Lig",
       "87": "La Liga",
       "122": "Czech First League",
+      "127": "Israeli Premier League",
       "135": "Greek Super League",
-      "252": "Croatian HNL"
+      "176": "Slovak First League",
+      "252": "Croatian HNL",
+      "904988": "Champions League",
+      "904995": "Champions League"
     }
   },
 

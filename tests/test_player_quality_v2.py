@@ -132,8 +132,8 @@ class LeagueOffsetTests(unittest.TestCase):
         """A transferred player blends the leagues actually played in."""
 
         rows = [
-            match_row(1, 47, 100, minutes=90),   # opponent in the Premier League
-            match_row(2, 42, 100, minutes=30),   # opponent in a default-tier league
+            match_row(1, 47, 100, minutes=90),       # opponent in the Premier League
+            match_row(2, 999998, 100, minutes=30),   # neither opponent nor competition maps
         ]
         team_leagues = {200: 47, 300: 999999}
         result = player_league_offset(rows, self.index, team_leagues, CONFIG)
@@ -145,6 +145,53 @@ class LeagueOffsetTests(unittest.TestCase):
         rows = [match_row(9, 999999, 100, minutes=90)]
         result = player_league_offset(rows, {}, {}, CONFIG)
         self.assertAlmostEqual(result["offset"], CONFIG["league_quality"]["default_offset"])
+
+    def test_champions_league_stage_ids_are_mapped(self):
+        """Regression: match rows carry stage ids, not the league id used to fetch.
+
+        Mapping only 42 sent 375,008 minutes of Champions League football to the
+        -0.9 default, grading the strongest club competition as the weakest.
+        """
+
+        mapping = CONFIG["league_quality"]["fotmob_league_id_to_key"]
+        for league_id in ("42", "904988", "904995"):
+            self.assertEqual(mapping.get(league_id), "Champions League", league_id)
+
+        offsets = CONFIG["league_quality"]["offsets"]
+        self.assertGreater(offsets["Champions League"], offsets["Ligue 1"])
+        for stage_id in (904988, 904995):
+            rows = [match_row(9, stage_id, 100, minutes=90)]
+            result = player_league_offset(rows, {}, {}, CONFIG)
+            self.assertAlmostEqual(result["offset"], offsets["Champions League"])
+
+    def test_every_collected_competition_has_an_offset(self):
+        """Any competition carrying minutes must map, or its players are penalised."""
+
+        mapping = CONFIG["league_quality"]["fotmob_league_id_to_key"]
+        collected = {
+            47: "Premier League",
+            48: "Championship",
+            53: "Ligue 1",
+            54: "Bundesliga",
+            55: "Serie A",
+            57: "Eredivisie",
+            59: "Eliteserien",
+            61: "Liga Portugal",
+            64: "Scottish Premiership",
+            71: "Super Lig",
+            87: "LaLiga",
+            122: "Czech First League",
+            127: "Israeli Premier League",
+            135: "Greek Super League",
+            176: "Slovak First Football League",
+            252: "Croatian HNL",
+            38: "Austrian Bundesliga",
+            40: "Belgian Pro League",
+            904988: "Champions League",
+            904995: "Champions League",
+        }
+        unmapped = [name for key, name in collected.items() if str(key) not in mapping]
+        self.assertEqual(unmapped, [], f"unmapped competitions carrying minutes: {unmapped}")
 
 
 class LeagueDirectionRegressionTests(unittest.TestCase):
