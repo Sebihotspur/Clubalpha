@@ -146,3 +146,168 @@ rather than league-wide. A player who transferred from a non-target club may
 therefore still need a player-centric backfill. Four smaller leagues expose no
 player cards for their target fixtures; those gaps remain explicit in the
 coverage audit and must not be filled with partial opponent samples.
+
+---
+
+# Player Quality v2
+
+Version: `clubalpha_player_quality_v2` — `config/player-quality-clubalpha-v2.json`
+
+v1 above remains in the repository untouched as the parity baseline. v2 does
+not modify it; the two engines run side by side and every rating change is
+reported as a delta.
+
+## What v2 changes
+
+v1 graded three positions. A team rating needs eleven, so v2 adds the
+midfielder and goalkeeper formulas WCALPHA already had but Clubalpha never
+ported, and splits centre-backs from fullbacks so fullbacks can carry the
+attacking work their role actually involves.
+
+| Position | Metrics | Available | Share each |
+|---|---:|---:|---:|
+| FW | 10 | 8 | 12.5% |
+| CM | 11 | 11 | 9.1% |
+| CB | 11 | 10 | 10.0% |
+| FB | 10 | 10 | 10.0% |
+| GK | 5 | 5 | 20.0% |
+
+47 slots, 44 sourced. `sca90` and `pc90` have no FotMob source; `pace` awaits
+confirmation that `physical_metrics_topspeed` holds across the full season.
+
+## Flat weights
+
+Every metric inside a formula carries equal weight, so a composite is an
+unweighted mean of available z-scores and the listed order is presentation
+only. The WCALPHA 3.0-to-1.0 ladder was never fitted against outcomes, and
+flattening removes concentration nobody chose: a centre-back's grade was 57%
+duels and mistakes and is now 40%.
+
+This is a judgement, not a measured improvement. The 569 completed 2025/26
+PL and UCL fixtures are enough to test flat against laddered by which better
+predicts goals scored, and that comparison has not been run.
+
+## Minutes are not a scored metric
+
+WCALPHA scored `avail` inside the midfielder and goalkeeper formulas. v2 drops
+it. Availability belongs to Squad Form, and scoring it here would count minutes
+twice — once as a metric, once through the reliability policy — and only for
+two of the five positions.
+
+`savepct` is dropped for a different reason: it measures the same event set and
+the same outcome as goals prevented, without adjusting for shot quality. It
+survives only as a fallback source when goals prevented is unavailable.
+
+## League quality
+
+v1 multiplied the raw metric value by a tier multiplier read from the player's
+**current club's** league. That was wrong three ways.
+
+- It used the wrong league. A player who spent last season at Strasbourg and
+  now plays for Chelsea had the Premier League's 1.15 applied to Ligue 1
+  statistics.
+- It ran backwards on inverted metrics. After the sign flip, 0.10 errors per 90
+  scored −0.115 in the Premier League against −0.070 in a default league, so
+  the weaker league graded better for an identical error rate.
+- It moved bounded percentages roughly 2.5× harder than rates, because
+  multiplying a 60% aerial rate by tier produces a 27-point swing against a
+  population spread near 8.
+
+v2 applies league quality as an additive offset on the finished z-score:
+
+```text
+z = clamp(((sign × raw − peer_mean) / peer_sd) + league_offset, −3, +3)
+
+league_offset = Σ(offset_match × minutes_match) / Σ(minutes_match)
+```
+
+Each match takes the offset of the **opponent's** domestic league, so a
+Champions League tie inherits the strength of who was actually faced and a cup
+tie against a lower-division side is not scored as though it were a league
+fixture. Offsets convert from the v1 tiers as `3.0 × (multiplier − 1.0)`,
+preserving the existing ordering. The conversion constant is a prior.
+
+## Standardisation and shrinkage
+
+Raw composites were not comparable across positions. Forward grades ran to
+1.655 while centre-backs topped out at 0.763 — not a football fact, but the
+consequence of attacking metrics having fat right tails while defensive metrics
+are bounded percentages. Any position weighting applied on top would have
+amplified the artifact.
+
+```text
+standardised_z = (composite − position_mean) / position_sd
+final_z        = standardised_z × minutes / (minutes + 900)
+```
+
+Standardisation comes first so that zero means "average for this position", and
+shrinkage therefore pulls a thin sample toward its own positional average
+rather than toward an arbitrary point. Together these replace the 700-minute
+eligibility cliff and the reliability bands, whose 0.76 floor let a 90-minute
+player keep three-quarters of their grade.
+
+Peer means and standard deviations are computed from players with 700+ minutes
+only. Every player is still scored against that reference; short samples simply
+stop widening the spread everyone else is measured by.
+
+## Two denominators, two rules
+
+Thirty-six slots are per-90 rates and nine are percentages. Each has its own
+small-sample protection because each has a different denominator.
+
+| Metric | Minimum attempts |
+|---|---:|
+| Aerial duel win % | 50 |
+| Ground duel win % | 50 |
+| Pass completion % (CB) | 300 |
+| Distribution accuracy % (GK) | 200 |
+| Accurate crosses % (FB) | 30 |
+
+Below its floor a percentage is treated as missing and its weight leaves the
+denominator. Without this, a fullback completing two of three crosses reads 67%
+and outranks one completing forty of eighty.
+
+Per-90 rates are protected by minutes shrinkage instead, since minutes are a
+property of the player rather than of an individual metric.
+
+## Position mapping
+
+`scoring_position()` resolves five populations. A fullback primary position wins
+over the listed squad group, because FotMob files at least one wing-back under
+`midfielders` and grading a wing-back against central midfielders measures them
+on work their role never asks for. CAM continues to resolve to FW, matching
+WCALPHA.
+
+## Team roll-up
+
+Player Ratings produces per-player grades. The roll-up produces two ratings per
+club, because goals scored and goals conceded are different questions answered
+by different players and a single blended number cannot price a total.
+
+| Position | Attack | Defence |
+|---|---:|---:|
+| FW | 3.0 | 0.5 |
+| CM | 2.2 | 1.5 |
+| FB | 1.2 | 1.8 |
+| CB | 0.6 | 2.5 |
+| GK | 0.1 | 2.5 |
+
+These are position weights only. Starter, rotation and squad role belong to
+Squad Form and multiply in above this layer; putting them here would leak
+availability into the ability model.
+
+The weights are a prior, not a result. Regressing actual goals scored and
+conceded in the 569 completed fixtures on the two ratings would replace them
+with measured values.
+
+## Run
+
+```bash
+python3 scripts/pull_transfer_backfill.py --detect-only   # size the gap first
+python3 scripts/pull_transfer_backfill.py
+python3 scripts/build_player_quality_v2.py
+```
+
+Generated rows live under `data/processed/player_quality_v2/` and stay out of
+Git. The tracked audits are `reports/player-quality-v2-audit.json` and
+`reports/transfer-backfill-coverage.json`.

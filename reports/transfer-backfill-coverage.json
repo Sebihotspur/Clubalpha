@@ -1,0 +1,1583 @@
+{
+  "version": "transfer_backfill_v1",
+  "generated_at_utc": "2026-08-20T23:02:03.570185+00:00",
+  "season": "2025/2026",
+  "source": "FotMob public web data",
+  "source_status": "unofficial_undocumented",
+  "sampling_policy": "Every competition a current squad player appeared in last season, including domestic cups; collected rows are filtered to the backfilled players only.",
+  "detect_only": true,
+  "truncated_by_max_matches": false,
+  "counts": {
+    "match_player_rows": 0,
+    "fixtures_selected": 0,
+    "gap_summaries": 1330
+  },
+  "coverage": {
+    "players_examined": 1330,
+    "multi_club_players": 216,
+    "players_with_gaps": 1278,
+    "expected_appearances": 43046,
+    "held_before": 27741,
+    "rows_collected": 0,
+    "players_backfilled": 0,
+    "players_still_incomplete": 1278,
+    "unresolvable_gap_players": 149,
+    "largest_gaps": [
+      {
+        "player_id": 288880,
+        "player": "Jack Butland",
+        "expected": 55,
+        "held": 0,
+        "missing": 55,
+        "clubs": 1
+      },
+      {
+        "player_id": 1186978,
+        "player": "Lukás Hornícek",
+        "expected": 55,
+        "held": 0,
+        "missing": 55,
+        "clubs": 1
+      },
+      {
+        "player_id": 1319972,
+        "player": "Mike Penders",
+        "expected": 52,
+        "held": 0,
+        "missing": 52,
+        "clubs": 1
+      },
+      {
+        "player_id": 1270718,
+        "player": "Danijel Sturm",
+        "expected": 51,
+        "held": 0,
+        "missing": 51,
+        "clubs": 2
+      },
+      {
+        "player_id": 1282008,
+        "player": "Santiago Castro",
+        "expected": 51,
+        "held": 0,
+        "missing": 51,
+        "clubs": 1
+      },
+      {
+        "player_id": 1035643,
+        "player": "Sven Mijnans",
+        "expected": 50,
+        "held": 0,
+        "missing": 50,
+        "clubs": 1
+      },
+      {
+        "player_id": 1523822,
+        "player": "Gjivai Zechiël",
+        "expected": 50,
+        "held": 0,
+        "missing": 50,
+        "clubs": 1
+      },
+      {
+        "player_id": 1232253,
+        "player": "Han-Beom Lee",
+        "expected": 49,
+        "held": 0,
+        "missing": 49,
+        "clubs": 1
+      },
+      {
+        "player_id": 1536436,
+        "player": "Konstantinos Karetsas",
+        "expected": 49,
+        "held": 0,
+        "missing": 49,
+        "clubs": 1
+      },
+      {
+        "player_id": 1407250,
+        "player": "Mikey Moore",
+        "expected": 47,
+        "held": 0,
+        "missing": 47,
+        "clubs": 1
+      },
+      {
+        "player_id": 1070776,
+        "player": "Rodrigo Zalazar",
+        "expected": 47,
+        "held": 0,
+        "missing": 47,
+        "clubs": 1
+      },
+      {
+        "player_id": 952095,
+        "player": "Óscar Mingueza",
+        "expected": 47,
+        "held": 0,
+        "missing": 47,
+        "clubs": 1
+      },
+      {
+        "player_id": 1520063,
+        "player": "Johan Manzambi",
+        "expected": 47,
+        "held": 0,
+        "missing": 47,
+        "clubs": 1
+      },
+      {
+        "player_id": 264190,
+        "player": "Thorgan Hazard",
+        "expected": 46,
+        "held": 0,
+        "missing": 46,
+        "clubs": 1
+      },
+      {
+        "player_id": 538112,
+        "player": "Matt Targett",
+        "expected": 46,
+        "held": 0,
+        "missing": 46,
+        "clubs": 1
+      },
+      {
+        "player_id": 1344892,
+        "player": "Everton Bala",
+        "expected": 45,
+        "held": 0,
+        "missing": 45,
+        "clubs": 1
+      },
+      {
+        "player_id": 1101043,
+        "player": "Raphael Borges Rodrigues",
+        "expected": 47,
+        "held": 2,
+        "missing": 45,
+        "clubs": 2
+      },
+      {
+        "player_id": 988805,
+        "player": "Pep Chavarría",
+        "expected": 44,
+        "held": 0,
+        "missing": 44,
+        "clubs": 1
+      },
+      {
+        "player_id": 547454,
+        "player": "Kaan Kairinen",
+        "expected": 44,
+        "held": 0,
+        "missing": 44,
+        "clubs": 1
+      },
+      {
+        "player_id": 1251029,
+        "player": "Gasper Trdin",
+        "expected": 44,
+        "held": 0,
+        "missing": 44,
+        "clubs": 1
+      },
+      {
+        "player_id": 1477878,
+        "player": "Anan Khalaili",
+        "expected": 52,
+        "held": 8,
+        "missing": 44,
+        "clubs": 1
+      },
+      {
+        "player_id": 1265626,
+        "player": "Abdul Fatawu",
+        "expected": 44,
+        "held": 0,
+        "missing": 44,
+        "clubs": 1
+      },
+      {
+        "player_id": 1574106,
+        "player": "Jayden Meghoma",
+        "expected": 44,
+        "held": 0,
+        "missing": 44,
+        "clubs": 1
+      },
+      {
+        "player_id": 952057,
+        "player": "Charles Vanhoutte",
+        "expected": 44,
+        "held": 0,
+        "missing": 44,
+        "clubs": 2
+      },
+      {
+        "player_id": 1272440,
+        "player": "Valentín Barco",
+        "expected": 43,
+        "held": 0,
+        "missing": 43,
+        "clubs": 1
+      }
+    ]
+  },
+  "competition_batches": [
+    {
+      "league_id": 85,
+      "league": "1. Division",
+      "season": "2025/2026",
+      "team_ids": [
+        9907
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 136,
+      "league": "1. Division",
+      "season": "2025/2026",
+      "team_ids": [
+        2137,
+        7797
+      ],
+      "players": 2
+    },
+    {
+      "league_id": 122,
+      "league": "1. Liga",
+      "season": "2025/2026",
+      "team_ids": [
+        1712,
+        2021,
+        2406,
+        6033,
+        6461,
+        10245,
+        10247,
+        88657,
+        143833
+      ],
+      "players": 11
+    },
+    {
+      "league_id": 14,
+      "league": "1. SNL",
+      "season": "2025/2026",
+      "team_ids": [
+        4622,
+        8340
+      ],
+      "players": 2
+    },
+    {
+      "league_id": 176,
+      "league": "1. liga",
+      "season": "2025/2026",
+      "team_ids": [
+        6022,
+        6496,
+        8010,
+        103598,
+        611956
+      ],
+      "players": 5
+    },
+    {
+      "league_id": 146,
+      "league": "2. Bundesliga",
+      "season": "2025/2026",
+      "team_ids": [
+        8165,
+        8177,
+        8350,
+        8460,
+        9904
+      ],
+      "players": 6
+    },
+    {
+      "league_id": 8973,
+      "league": "2. Liga",
+      "season": "2025/2026",
+      "team_ids": [
+        9900
+      ],
+      "players": 5
+    },
+    {
+      "league_id": 119,
+      "league": "2. Liga",
+      "season": "2025/2026",
+      "team_ids": [
+        1915
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 208,
+      "league": "3. Liga",
+      "season": "2025/2026",
+      "team_ids": [
+        8398,
+        8458
+      ],
+      "players": 6
+    },
+    {
+      "league_id": 113,
+      "league": "A-League",
+      "season": "2025/2026",
+      "team_ids": [
+        8118
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 525,
+      "league": "AFC Champions League Elite",
+      "season": "2025/2026",
+      "team_ids": [
+        8577,
+        102122
+      ],
+      "players": 2
+    },
+    {
+      "league_id": 54,
+      "league": "Bundesliga",
+      "season": "2025/2026",
+      "team_ids": [
+        8178,
+        8226,
+        8358,
+        8697,
+        8721,
+        9788,
+        9790,
+        9810,
+        94937
+      ],
+      "players": 24
+    },
+    {
+      "league_id": 38,
+      "league": "Bundesliga",
+      "season": "2025/2026",
+      "team_ids": [
+        1954,
+        10008,
+        10013,
+        10015
+      ],
+      "players": 9
+    },
+    {
+      "league_id": 9081,
+      "league": "Bundesliga Qualification",
+      "season": "2025/2026",
+      "team_ids": [
+        8460,
+        8721
+      ],
+      "players": 5
+    },
+    {
+      "league_id": 179,
+      "league": "Challenge Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        1266921
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 163,
+      "league": "Challenge League",
+      "season": "2025/2026",
+      "team_ids": [
+        6447
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 42,
+      "league": "Champions League",
+      "season": "2025/2026",
+      "team_ids": [
+        2137,
+        6019,
+        6033,
+        8222,
+        8342,
+        8391,
+        8548,
+        8687,
+        8695,
+        9772,
+        9777,
+        9831,
+        9925,
+        10013,
+        10162,
+        10200,
+        10235
+      ],
+      "players": 73
+    },
+    {
+      "league_id": 48,
+      "league": "Championship",
+      "season": "2025/2026",
+      "team_ids": [
+        8197,
+        8411,
+        8427,
+        8462,
+        8466,
+        8549,
+        8653,
+        8655,
+        8657,
+        8658,
+        8659,
+        9817,
+        9841,
+        9850,
+        10003,
+        10004,
+        10163,
+        10170,
+        10194
+      ],
+      "players": 33
+    },
+    {
+      "league_id": 247,
+      "league": "Community Shield",
+      "season": "2025/2026",
+      "team_ids": [
+        8650,
+        9826
+      ],
+      "players": 29
+    },
+    {
+      "league_id": 10216,
+      "league": "Conference League",
+      "season": "2025/2026",
+      "team_ids": [
+        1567,
+        1954,
+        4622,
+        5755,
+        6019,
+        6022,
+        6461,
+        7797,
+        7998,
+        8370,
+        8478,
+        8563,
+        8595,
+        8632,
+        8635,
+        8673,
+        9728,
+        9754,
+        9777,
+        9826,
+        9848,
+        9986,
+        10015,
+        10162,
+        10188,
+        10229,
+        10247
+      ],
+      "players": 104
+    },
+    {
+      "league_id": 138,
+      "league": "Copa del Rey",
+      "season": "2025/2026",
+      "team_ids": [
+        4032,
+        7732,
+        8302,
+        8305,
+        8370,
+        8371,
+        8394,
+        8560,
+        8581,
+        8603,
+        8633,
+        8634,
+        8661,
+        9865,
+        9906,
+        9910,
+        10205,
+        10267,
+        10268
+      ],
+      "players": 114
+    },
+    {
+      "league_id": 141,
+      "league": "Coppa Italia",
+      "season": "2025/2026",
+      "team_ids": [
+        6106,
+        6479,
+        7801,
+        7881,
+        7943,
+        8529,
+        8534,
+        8543,
+        8564,
+        8636,
+        8686,
+        9804,
+        9857,
+        9875,
+        9876,
+        9878,
+        9882,
+        9885,
+        9887,
+        9891,
+        9976,
+        10168,
+        10171,
+        208932
+      ],
+      "players": 98
+    },
+    {
+      "league_id": 134,
+      "league": "Coupe de France",
+      "season": "2025/2026",
+      "team_ids": [
+        7819,
+        8583,
+        8588,
+        8592,
+        8639,
+        8682,
+        9748,
+        9829,
+        9831,
+        9847,
+        9848,
+        9851,
+        9941
+      ],
+      "players": 94
+    },
+    {
+      "league_id": 275,
+      "league": "Croatian Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        6038,
+        10156,
+        10162
+      ],
+      "players": 18
+    },
+    {
+      "league_id": 174,
+      "league": "Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        4622
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 183,
+      "league": "Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        6654
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 149,
+      "league": "Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        7947,
+        7978,
+        8342,
+        8635,
+        9985,
+        9986,
+        9987,
+        9988,
+        9991,
+        10001
+      ],
+      "players": 22
+    },
+    {
+      "league_id": 206,
+      "league": "Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8402,
+        8478
+      ],
+      "players": 4
+    },
+    {
+      "league_id": 164,
+      "league": "Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        9931
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 9516,
+      "league": "Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        7981
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 330,
+      "league": "Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        2137
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 254,
+      "league": "Czech Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        2406,
+        6033,
+        7787,
+        10245,
+        10247,
+        88657,
+        143833
+      ],
+      "players": 17
+    },
+    {
+      "league_id": 242,
+      "league": "DBU Pokalen",
+      "season": "2025/2026",
+      "team_ids": [
+        8113,
+        8391,
+        8595,
+        9907,
+        10202
+      ],
+      "players": 5
+    },
+    {
+      "league_id": 209,
+      "league": "DFB Pokal",
+      "season": "2025/2026",
+      "team_ids": [
+        8177,
+        8178,
+        8226,
+        8350,
+        8358,
+        8398,
+        8721,
+        9788,
+        9789,
+        9790,
+        9810,
+        9823,
+        10269,
+        94937,
+        178475
+      ],
+      "players": 105
+    },
+    {
+      "league_id": 133,
+      "league": "EFL Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8191,
+        8197,
+        8411,
+        8427,
+        8455,
+        8456,
+        8463,
+        8466,
+        8472,
+        8528,
+        8549,
+        8559,
+        8586,
+        8602,
+        8647,
+        8650,
+        8654,
+        8657,
+        8658,
+        8667,
+        8668,
+        8669,
+        8678,
+        9798,
+        9825,
+        9826,
+        9841,
+        9850,
+        9879,
+        9902,
+        9937,
+        10003,
+        10004,
+        10170,
+        10203,
+        10204,
+        10252,
+        10260,
+        10261
+      ],
+      "players": 349
+    },
+    {
+      "league_id": 142,
+      "league": "EFL Trophy",
+      "season": "2025/2026",
+      "team_ids": [
+        8175,
+        8528,
+        8559,
+        8647,
+        9796
+      ],
+      "players": 5
+    },
+    {
+      "league_id": 111,
+      "league": "Eerste Divisie",
+      "season": "2025/2026",
+      "team_ids": [
+        6631,
+        8277,
+        163363,
+        455494
+      ],
+      "players": 4
+    },
+    {
+      "league_id": 196,
+      "league": "Ekstraklasa",
+      "season": "2025/2026",
+      "team_ids": [
+        5769,
+        8024,
+        8243,
+        8673
+      ],
+      "players": 4
+    },
+    {
+      "league_id": 57,
+      "league": "Eredivisie",
+      "season": "2025/2026",
+      "team_ids": [
+        6413,
+        6422,
+        6601,
+        8593,
+        9908,
+        10229
+      ],
+      "players": 10
+    },
+    {
+      "league_id": 73,
+      "league": "Europa League",
+      "season": "2025/2026",
+      "team_ids": [
+        1954,
+        4622,
+        6019,
+        6033,
+        7855,
+        7998,
+        8113,
+        8222,
+        8358,
+        8548,
+        8603,
+        8619,
+        8632,
+        8635,
+        8639,
+        8673,
+        8686,
+        8695,
+        9728,
+        9748,
+        9754,
+        9773,
+        9777,
+        9831,
+        9857,
+        9908,
+        9910,
+        9925,
+        9987,
+        10013,
+        10156,
+        10162,
+        10188,
+        10200,
+        10203,
+        10235,
+        10252,
+        10264,
+        10269
+      ],
+      "players": 285
+    },
+    {
+      "league_id": 132,
+      "league": "FA Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8175,
+        8191,
+        8197,
+        8346,
+        8411,
+        8427,
+        8455,
+        8456,
+        8463,
+        8466,
+        8472,
+        8528,
+        8549,
+        8559,
+        8586,
+        8602,
+        8650,
+        8654,
+        8655,
+        8657,
+        8658,
+        8667,
+        8668,
+        8669,
+        8678,
+        9798,
+        9825,
+        9826,
+        9841,
+        9879,
+        9902,
+        9937,
+        10003,
+        10004,
+        10170,
+        10194,
+        10203,
+        10204,
+        10252,
+        10260,
+        10261
+      ],
+      "players": 383
+    },
+    {
+      "league_id": 78,
+      "league": "FIFA Club World Cup",
+      "season": "2025",
+      "team_ids": [
+        8455,
+        8456,
+        8633,
+        8636,
+        9772,
+        9773,
+        9789,
+        9823,
+        9847,
+        9906,
+        10013
+      ],
+      "players": 132
+    },
+    {
+      "league_id": 10703,
+      "league": "FIFA Intercontinental Cup",
+      "season": "2025",
+      "team_ids": [
+        9847
+      ],
+      "players": 16
+    },
+    {
+      "league_id": 253,
+      "league": "FNL",
+      "season": "2025/2026",
+      "team_ids": [
+        1151541
+      ],
+      "players": 3
+    },
+    {
+      "league_id": 40,
+      "league": "First Division A",
+      "season": "2025/2026",
+      "team_ids": [
+        7947,
+        7978,
+        8635,
+        9985,
+        9986,
+        9987,
+        9988,
+        9991,
+        10001
+      ],
+      "players": 13
+    },
+    {
+      "league_id": 264,
+      "league": "First Division B",
+      "season": "2025/2026",
+      "team_ids": [
+        6351,
+        9992,
+        1173026
+      ],
+      "players": 5
+    },
+    {
+      "league_id": 9209,
+      "league": "First National Division VV",
+      "season": "2025/2026",
+      "team_ids": [
+        -1
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 145,
+      "league": "Greece Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8563,
+        8619,
+        8638,
+        10200
+      ],
+      "players": 24
+    },
+    {
+      "league_id": 252,
+      "league": "HNL",
+      "season": "2025/2026",
+      "team_ids": [
+        6038,
+        10162,
+        45228
+      ],
+      "players": 3
+    },
+    {
+      "league_id": 235,
+      "league": "KNVB Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        6413,
+        6422,
+        6601,
+        8277,
+        8464,
+        8593,
+        8640,
+        9908,
+        10229,
+        10235
+      ],
+      "players": 42
+    },
+    {
+      "league_id": 9942,
+      "league": "King's Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8577,
+        550433,
+        1523707
+      ],
+      "players": 3
+    },
+    {
+      "league_id": 87,
+      "league": "LaLiga",
+      "season": "2025/2026",
+      "team_ids": [
+        7732,
+        8302,
+        8305,
+        8370,
+        8371,
+        8558,
+        8560,
+        8581,
+        8661,
+        9910,
+        10267,
+        10268
+      ],
+      "players": 28
+    },
+    {
+      "league_id": 140,
+      "league": "LaLiga2",
+      "season": "2025/2026",
+      "team_ids": [
+        4032,
+        7878,
+        8306,
+        8394,
+        9865,
+        9869
+      ],
+      "players": 6
+    },
+    {
+      "league_id": 187,
+      "league": "League Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        1567,
+        9768,
+        9772,
+        9773,
+        10264
+      ],
+      "players": 29
+    },
+    {
+      "league_id": 11027,
+      "league": "League Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        102122
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 180,
+      "league": "League Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8548,
+        9925
+      ],
+      "players": 19
+    },
+    {
+      "league_id": 108,
+      "league": "League One",
+      "season": "2025/2026",
+      "team_ids": [
+        8346,
+        8351,
+        8528,
+        8559,
+        9796,
+        9798
+      ],
+      "players": 6
+    },
+    {
+      "league_id": 109,
+      "league": "League Two",
+      "season": "2025/2026",
+      "team_ids": [
+        8175,
+        8647
+      ],
+      "players": 2
+    },
+    {
+      "league_id": 230,
+      "league": "Liga MX",
+      "season": "2025/2026",
+      "team_ids": [
+        6576
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 61,
+      "league": "Liga Portugal",
+      "season": "2025/2026",
+      "team_ids": [
+        1567,
+        7841,
+        7842,
+        8348,
+        9764,
+        9772,
+        10264,
+        212821
+      ],
+      "players": 14
+    },
+    {
+      "league_id": 185,
+      "league": "Liga Portugal 2",
+      "season": "2025/2026",
+      "team_ids": [
+        9765,
+        9774,
+        338301,
+        338304
+      ],
+      "players": 5
+    },
+    {
+      "league_id": 127,
+      "league": "Ligat ha'Al",
+      "season": "2025/2026",
+      "team_ids": [
+        2095,
+        7855,
+        8301,
+        9755
+      ],
+      "players": 6
+    },
+    {
+      "league_id": 53,
+      "league": "Ligue 1",
+      "season": "2025/2026",
+      "team_ids": [
+        8550,
+        8583,
+        8592,
+        9746,
+        9829,
+        9831,
+        9848,
+        9851,
+        9941
+      ],
+      "players": 32
+    },
+    {
+      "league_id": 110,
+      "league": "Ligue 2",
+      "season": "2025/2026",
+      "team_ids": [
+        8682,
+        9837,
+        293352
+      ],
+      "players": 5
+    },
+    {
+      "league_id": 63,
+      "league": "Premier League",
+      "season": "2025/2026",
+      "team_ids": [
+        168719,
+        1068353
+      ],
+      "players": 2
+    },
+    {
+      "league_id": 9333,
+      "league": "Premier League Qualification",
+      "season": "2025/2026",
+      "team_ids": [
+        1068353
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 64,
+      "league": "Premiership",
+      "season": "2025/2026",
+      "team_ids": [
+        8548,
+        10251
+      ],
+      "players": 7
+    },
+    {
+      "league_id": 538,
+      "league": "Pro League",
+      "season": "2025/2026",
+      "team_ids": [
+        102122
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 9114,
+      "league": "Prva Liga",
+      "season": "2025/2026",
+      "team_ids": [
+        6654
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 512,
+      "league": "Regionalliga",
+      "season": "2025/2026",
+      "team_ids": [
+        8162,
+        8167,
+        8264,
+        8395,
+        94943
+      ],
+      "players": 18
+    },
+    {
+      "league_id": 193,
+      "league": "Russian Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        168719,
+        1068353
+      ],
+      "players": 2
+    },
+    {
+      "league_id": 536,
+      "league": "Saudi Pro League",
+      "season": "2025/2026",
+      "team_ids": [
+        8577,
+        550433,
+        1523707
+      ],
+      "players": 3
+    },
+    {
+      "league_id": 137,
+      "league": "Scottish Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8548,
+        9925
+      ],
+      "players": 18
+    },
+    {
+      "league_id": 55,
+      "league": "Serie A",
+      "season": "2025/2026",
+      "team_ids": [
+        6479,
+        7801,
+        7943,
+        8524,
+        8529,
+        8543,
+        8564,
+        9804,
+        9857,
+        9876,
+        9885,
+        9888
+      ],
+      "players": 20
+    },
+    {
+      "league_id": 86,
+      "league": "Serie B",
+      "season": "2025/2026",
+      "team_ids": [
+        6106,
+        6488,
+        6500,
+        6722,
+        7881,
+        8534,
+        9878,
+        9882,
+        9887,
+        9891,
+        9976,
+        10168,
+        208932
+      ],
+      "players": 15
+    },
+    {
+      "league_id": 147,
+      "league": "Serie C",
+      "season": "2025/2026",
+      "team_ids": [
+        -1,
+        8537,
+        145016,
+        212660,
+        474521
+      ],
+      "players": 10
+    },
+    {
+      "league_id": 266,
+      "league": "Super Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        7978,
+        8342
+      ],
+      "players": 9
+    },
+    {
+      "league_id": 188,
+      "league": "Super Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        9768,
+        9772
+      ],
+      "players": 15
+    },
+    {
+      "league_id": 166,
+      "league": "Super Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8637,
+        8695,
+        9752
+      ],
+      "players": 21
+    },
+    {
+      "league_id": 139,
+      "league": "Super Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8633,
+        8634,
+        9906
+      ],
+      "players": 47
+    },
+    {
+      "league_id": 222,
+      "league": "Super Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8564,
+        8636,
+        9857,
+        9875
+      ],
+      "players": 30
+    },
+    {
+      "league_id": 237,
+      "league": "Super Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8640
+      ],
+      "players": 11
+    },
+    {
+      "league_id": 200,
+      "league": "Super Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8673
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 10074,
+      "league": "Super Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8577
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 9862,
+      "league": "Super Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        9754
+      ],
+      "players": 9
+    },
+    {
+      "league_id": 8924,
+      "league": "Super Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        9823,
+        10269
+      ],
+      "players": 29
+    },
+    {
+      "league_id": 521,
+      "league": "Super Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        2137
+      ],
+      "players": 1
+    },
+    {
+      "league_id": 69,
+      "league": "Super League",
+      "season": "2025/2026",
+      "team_ids": [
+        9777,
+        9931,
+        10192
+      ],
+      "players": 3
+    },
+    {
+      "league_id": 135,
+      "league": "Super League 1",
+      "season": "2025/2026",
+      "team_ids": [
+        8619,
+        8638,
+        10200
+      ],
+      "players": 4
+    },
+    {
+      "league_id": 71,
+      "league": "Super Lig",
+      "season": "2025/2026",
+      "team_ids": [
+        1925,
+        1931,
+        2088,
+        2166,
+        4081,
+        4681,
+        4685,
+        9752,
+        10188
+      ],
+      "players": 13
+    },
+    {
+      "league_id": 182,
+      "league": "Super Liga",
+      "season": "2025/2026",
+      "team_ids": [
+        7998,
+        8687
+      ],
+      "players": 2
+    },
+    {
+      "league_id": 46,
+      "league": "Superligaen",
+      "season": "2025/2026",
+      "team_ids": [
+        8113,
+        8391,
+        8595,
+        10202
+      ],
+      "players": 7
+    },
+    {
+      "league_id": 186,
+      "league": "Taca de Portugal",
+      "season": "2025/2026",
+      "team_ids": [
+        1567,
+        7842,
+        9764,
+        9768,
+        9772,
+        9773,
+        9774,
+        10264,
+        212821
+      ],
+      "players": 39
+    },
+    {
+      "league_id": 207,
+      "league": "Trophée des champions",
+      "season": "2025/2026",
+      "team_ids": [
+        8592,
+        9847
+      ],
+      "players": 17
+    },
+    {
+      "league_id": 151,
+      "league": "Turkish Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        1931,
+        2088,
+        2166,
+        4081,
+        8637,
+        8695,
+        9752,
+        10188
+      ],
+      "players": 34
+    },
+    {
+      "league_id": 74,
+      "league": "UEFA Super Cup",
+      "season": "2025/2026",
+      "team_ids": [
+        8586,
+        9847
+      ],
+      "players": 29
+    }
+  ],
+  "detection_errors": [],
+  "detection_error_count": 0,
+  "competition_errors": [],
+  "match_detail_errors": [],
+  "match_detail_error_count": 0,
+  "warnings": [
+    "Collected rows are player-filtered; opponents in a backfilled match are deliberately discarded.",
+    "Competitions FotMob reports without a league id cannot be resolved to a fixture list and remain missing.",
+    "Career-history appearance counts come from the same provider as the match sample and are not independent verification."
+  ]
+}

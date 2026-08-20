@@ -112,3 +112,42 @@ The first version pulls match detail plus only two season leaderboards: goals as
 a reconciliation fallback and possessions won in the attacking third. The
 primary non-penalty-goal count is derived from reconciled match shot maps or
 match goal events; other canonical features are calculated from match detail.
+
+## Transfer backfill
+
+```bash
+python3 scripts/pull_transfer_backfill.py --detect-only
+python3 scripts/pull_transfer_backfill.py
+```
+
+Both collectors above are club-filtered, so a player who spent part of last
+season outside the PL/UCL universe is graded on a fragment — and the fragment
+is biased, because it is usually their settling-in minutes at the new club.
+
+FotMob's `careerHistory.seasonEntries` returns one entry per club per season
+with per-competition appearance counts, so the shortfall is an exact
+reconciliation rather than an estimate. Detection reads that ledger for every
+squad player and compares it against the rows already held. `--detect-only`
+sizes the problem without spending a collection request.
+
+Collection then fetches only the fixtures needed to close the gaps, batched one
+request per competition-season since players frequently share a missing club.
+
+Three properties matter for data integrity:
+
+- **Rows are player-filtered, not club-filtered.** Opponents in a backfilled
+  match are discarded. Keeping them would hand the grading population thousands
+  of players represented by one or two games, which is the partial-sample
+  problem the club-filtered collectors exist to prevent.
+- **`(match_id, player_id)` keys already held are skipped**, and newly kept rows
+  join that set as collection proceeds, so a player appearing in two batches
+  cannot be written twice.
+- **Competitions without a league id remain missing.** FotMob reports some
+  one-off ties with no league identifier, which cannot be resolved to a fixture
+  list. They are recorded as unresolvable in the audit rather than dropped.
+
+Outputs live under `data/processed/transfer_backfill/`; the tracked audit is
+`reports/transfer-backfill-coverage.json`.
+
+Career-history appearance counts come from the same provider as the match
+sample, so this is reconciliation and not independent verification.
