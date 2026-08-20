@@ -38,10 +38,10 @@
     "CB": {
       "graded": 207,
       "reference_players": 167,
-      "standardised_min": -2.726,
-      "standardised_max": 3.136,
-      "graded_min": -1.852,
-      "graded_max": 1.356
+      "standardised_min": -2.59,
+      "standardised_max": 3.142,
+      "graded_min": -1.86,
+      "graded_max": 1.316
     },
     "FB": {
       "graded": 186,
@@ -191,7 +191,7 @@
         "players": 263
       },
       "pace": {
-        "players_with_value": 90,
+        "players_with_value": 0,
         "players": 263
       }
     },
@@ -517,41 +517,19 @@
         "player_id": 789066,
         "player": "Cristian Romero",
         "team": "Atletico Madrid",
-        "alpha_ability_z": 1.356,
-        "standardised_z": 1.831,
+        "alpha_ability_z": 1.316,
+        "standardised_z": 1.778,
         "shrinkage_weight": 0.74,
         "minutes": 2566.0,
-        "coverage_pct": 100.0,
-        "league_offset": 0.382518
-      },
-      {
-        "player_id": 1362998,
-        "player": "Abdukodir Khusanov",
-        "team": "Manchester City",
-        "alpha_ability_z": 1.3,
-        "standardised_z": 1.902,
-        "shrinkage_weight": 0.684,
-        "minutes": 1944.0,
         "coverage_pct": 90.9,
-        "league_offset": 0.328935
-      },
-      {
-        "player_id": 820140,
-        "player": "Ibrahima Konaté",
-        "team": "Real Madrid",
-        "alpha_ability_z": 1.205,
-        "standardised_z": 1.478,
-        "shrinkage_weight": 0.815,
-        "minutes": 3971.0,
-        "coverage_pct": 100.0,
-        "league_offset": 0.347066
+        "league_offset": 0.382518
       },
       {
         "player_id": 420568,
         "player": "Diego Llorente",
         "team": "Real Betis",
-        "alpha_ability_z": 1.137,
-        "standardised_z": 1.971,
+        "alpha_ability_z": 1.138,
+        "standardised_z": 1.974,
         "shrinkage_weight": 0.577,
         "minutes": 1226.0,
         "coverage_pct": 90.9,
@@ -561,8 +539,8 @@
         "player_id": 950485,
         "player": "Maxence Lacroix",
         "team": "Chelsea",
-        "alpha_ability_z": 1.13,
-        "standardised_z": 1.459,
+        "alpha_ability_z": 1.131,
+        "standardised_z": 1.46,
         "shrinkage_weight": 0.774,
         "minutes": 3087.0,
         "coverage_pct": 90.9,
@@ -572,45 +550,67 @@
         "player_id": 209405,
         "player": "Virgil van Dijk",
         "team": "Liverpool",
-        "alpha_ability_z": 1.112,
-        "standardised_z": 1.334,
+        "alpha_ability_z": 1.085,
+        "standardised_z": 1.302,
         "shrinkage_weight": 0.833,
         "minutes": 4500.0,
-        "coverage_pct": 100.0,
+        "coverage_pct": 90.9,
         "league_offset": 0.3534
-      },
-      {
-        "player_id": 917802,
-        "player": "Wesley Fofana",
-        "team": "Chelsea",
-        "alpha_ability_z": 1.038,
-        "standardised_z": 1.462,
-        "shrinkage_weight": 0.71,
-        "minutes": 2207.0,
-        "coverage_pct": 100.0,
-        "league_offset": 0.416928
       },
       {
         "player_id": 956682,
         "player": "Sven Botman",
         "team": "Newcastle United",
-        "alpha_ability_z": 0.973,
-        "standardised_z": 1.34,
+        "alpha_ability_z": 1.068,
+        "standardised_z": 1.471,
         "shrinkage_weight": 0.726,
         "minutes": 2382.0,
-        "coverage_pct": 100.0,
+        "coverage_pct": 90.9,
         "league_offset": 0.402242
+      },
+      {
+        "player_id": 917802,
+        "player": "Wesley Fofana",
+        "team": "Chelsea",
+        "alpha_ability_z": 1.061,
+        "standardised_z": 1.493,
+        "shrinkage_weight": 0.71,
+        "minutes": 2207.0,
+        "coverage_pct": 90.9,
+        "league_offset": 0.416928
+      },
+      {
+        "player_id": 833219,
+        "player": "Juan Foyth",
+        "team": "Villarreal",
+        "alpha_ability_z": 0.992,
+        "standardised_z": 1.702,
+        "shrinkage_weight": 0.583,
+        "minutes": 1258.0,
+        "coverage_pct": 81.8,
+        "league_offset": 0.370397
       },
       {
         "player_id": 795179,
         "player": "Gabriel",
         "team": "Arsenal",
-        "alpha_ability_z": 0.896,
-        "standardised_z": 1.111,
+        "alpha_ability_z": 0.971,
+        "standardised_z": 1.204,
         "shrinkage_weight": 0.807,
         "minutes": 3753.0,
-        "coverage_pct": 100.0,
+        "coverage_pct": 90.9,
         "league_offset": 0.372734
+      },
+      {
+        "player_id": 1362998,
+        "player": "Abdukodir Khusanov",
+        "team": "Manchester City",
+        "alpha_ability_z": 0.96,
+        "standardised_z": 1.405,
+        "shrinkage_weight": 0.684,
+        "minutes": 1944.0,
+        "coverage_pct": 81.8,
+        "league_offset": 0.328935
       },
       {
         "player_id": 290410,
@@ -855,39 +855,39 @@
     "top_attack": [
       {
         "team": "Bayern München",
-        "attack_rating": 0.7243
+        "attack_rating": 0.723
       },
       {
         "team": "Manchester City",
-        "attack_rating": 0.5977
-      },
-      {
-        "team": "Real Madrid",
-        "attack_rating": 0.5956
+        "attack_rating": 0.5941
       },
       {
         "team": "Barcelona",
-        "attack_rating": 0.5924
+        "attack_rating": 0.5881
+      },
+      {
+        "team": "Real Madrid",
+        "attack_rating": 0.5869
       },
       {
         "team": "Paris Saint-Germain",
-        "attack_rating": 0.5751
+        "attack_rating": 0.5743
       },
       {
         "team": "Arsenal",
-        "attack_rating": 0.529
+        "attack_rating": 0.5256
       },
       {
         "team": "Inter",
-        "attack_rating": 0.4167
+        "attack_rating": 0.4138
       },
       {
         "team": "Atletico Madrid",
-        "attack_rating": 0.2998
+        "attack_rating": 0.2968
       },
       {
         "team": "VfB Stuttgart",
-        "attack_rating": 0.2658
+        "attack_rating": 0.2657
       },
       {
         "team": "Manchester United",
@@ -897,43 +897,43 @@
     "top_defence": [
       {
         "team": "Manchester City",
-        "defence_rating": 0.642
+        "defence_rating": 0.6208
       },
       {
         "team": "Barcelona",
-        "defence_rating": 0.574
+        "defence_rating": 0.5514
       },
       {
         "team": "Arsenal",
-        "defence_rating": 0.4951
-      },
-      {
-        "team": "Real Madrid",
-        "defence_rating": 0.4563
+        "defence_rating": 0.4736
       },
       {
         "team": "Fulham",
-        "defence_rating": 0.4201
+        "defence_rating": 0.42
       },
       {
         "team": "Manchester United",
-        "defence_rating": 0.4125
+        "defence_rating": 0.4124
+      },
+      {
+        "team": "Real Madrid",
+        "defence_rating": 0.4124
       },
       {
         "team": "Bayern München",
-        "defence_rating": 0.3577
+        "defence_rating": 0.3517
       },
       {
         "team": "Atletico Madrid",
-        "defence_rating": 0.3549
+        "defence_rating": 0.3432
       },
       {
         "team": "Chelsea",
-        "defence_rating": 0.3054
+        "defence_rating": 0.3341
       },
       {
-        "team": "Paris Saint-Germain",
-        "defence_rating": 0.2983
+        "team": "Villarreal",
+        "defence_rating": 0.3295
       }
     ]
   },
@@ -942,8 +942,8 @@
     "compared_players": 755,
     "v1_only_players": 0,
     "v2_only_players": 353,
-    "mean_absolute_delta": 0.315,
-    "median_absolute_delta": 0.222,
+    "mean_absolute_delta": 0.3139,
+    "median_absolute_delta": 0.226,
     "largest_moves": [
       {
         "player_id": 1282015,
@@ -963,8 +963,8 @@
         "team": "Hull City",
         "scoring_position": "CB",
         "v1_alpha_ability_z": 0.29,
-        "v2_alpha_ability_z": -1.124,
-        "delta": -1.414,
+        "v2_alpha_ability_z": -1.13,
+        "delta": -1.42,
         "minutes": 3689.0,
         "v1_league_multiplier": 1.15,
         "v2_league_offset": -0.381559
@@ -1011,8 +1011,8 @@
         "team": "Coventry City",
         "scoring_position": "CB",
         "v1_alpha_ability_z": 0.006,
-        "v2_alpha_ability_z": -1.295,
-        "delta": -1.301,
+        "v2_alpha_ability_z": -1.301,
+        "delta": -1.307,
         "minutes": 3339.0,
         "v1_league_multiplier": 1.15,
         "v2_league_offset": -0.326199
@@ -1071,8 +1071,8 @@
         "team": "Ipswich Town",
         "scoring_position": "CB",
         "v1_alpha_ability_z": 0.12,
-        "v2_alpha_ability_z": -1.085,
-        "delta": -1.205,
+        "v2_alpha_ability_z": -1.09,
+        "delta": -1.21,
         "minutes": 4230.0,
         "v1_league_multiplier": 1.15,
         "v2_league_offset": -0.345957
@@ -1131,8 +1131,8 @@
         "team": "Coventry City",
         "scoring_position": "CB",
         "v1_alpha_ability_z": 0.089,
-        "v2_alpha_ability_z": -1.048,
-        "delta": -1.137,
+        "v2_alpha_ability_z": -1.054,
+        "delta": -1.143,
         "minutes": 2924.0,
         "v1_league_multiplier": 1.15,
         "v2_league_offset": -0.366443
@@ -1143,8 +1143,8 @@
         "team": "Hull City",
         "scoring_position": "CB",
         "v1_alpha_ability_z": 0.413,
-        "v2_alpha_ability_z": -0.721,
-        "delta": -1.134,
+        "v2_alpha_ability_z": -0.725,
+        "delta": -1.138,
         "minutes": 3459.0,
         "v1_league_multiplier": 1.15,
         "v2_league_offset": -0.35209
@@ -1155,8 +1155,8 @@
         "team": "LASK",
         "scoring_position": "CB",
         "v1_alpha_ability_z": -0.723,
-        "v2_alpha_ability_z": -1.852,
-        "delta": -1.129,
+        "v2_alpha_ability_z": -1.86,
+        "delta": -1.137,
         "minutes": 2697.0,
         "v1_league_multiplier": 0.8,
         "v2_league_offset": -0.6
@@ -1167,8 +1167,8 @@
         "team": "Aston Villa",
         "scoring_position": "CB",
         "v1_alpha_ability_z": 0.465,
-        "v2_alpha_ability_z": -0.653,
-        "delta": -1.118,
+        "v2_alpha_ability_z": -0.658,
+        "delta": -1.123,
         "minutes": 2271.0,
         "v1_league_multiplier": 1.15,
         "v2_league_offset": -0.6
@@ -1234,21 +1234,21 @@
         "v2_league_offset": -0.42
       },
       {
-        "player_id": 1029063,
-        "player": "Michael Olise",
-        "team": "Bayern München",
-        "scoring_position": "FW",
-        "v1_alpha_ability_z": 1.394,
-        "v2_alpha_ability_z": 2.433,
-        "delta": 1.039,
-        "minutes": 3398.0,
-        "v1_league_multiplier": 1.1,
-        "v2_league_offset": 0.273328
+        "player_id": 863822,
+        "player": "Joel Latibeaudiere",
+        "team": "Coventry City",
+        "scoring_position": "CB",
+        "v1_alpha_ability_z": -0.096,
+        "v2_alpha_ability_z": -1.136,
+        "delta": -1.04,
+        "minutes": 1275.0,
+        "v1_league_multiplier": 1.15,
+        "v2_league_offset": -0.358588
       }
     ],
     "note": "v1 and v2 are on different scales by design: v2 standardises each position to mean 0 and SD 1, so a delta reflects both the formula change and the rescaling."
   },
-  "generated_at_utc": "2026-08-20T18:34:12.247178+00:00",
+  "generated_at_utc": "2026-08-20T18:40:19.270073+00:00",
   "inputs": {
     "squad_rows": 1425,
     "foundation_match_player_rows": 17342,
