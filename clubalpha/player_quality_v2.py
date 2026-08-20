@@ -225,29 +225,76 @@ def _competitions_supplying(rows: list[dict[str, Any]], key: str) -> set[tuple[A
     }
 
 
-def _rate_over_supplying_competitions(
-    rows: list[dict[str, Any]],
-    key: str,
-) -> tuple[float | None, float, float]:
-    """Per-90 rate restricted to competitions that actually supply the field.
+def build_metric_competitions(
+    rows: Iterable[dict[str, Any]],
+) -> dict[str, set[tuple[Any, Any]]]:
+    """Which competitions publish each field, measured across the whole sample.
 
-    A competition that never reports xG must not dilute an xG rate by
-    contributing minutes with no possible numerator.
+    This has to be global. FotMob omits zero-valued event cards, so absence is
+    a per-player fact: a defender who never made an error carries no error key
+    in any of their own rows. Deriving field availability from one player's
+    rows would therefore mark every clean defender as unmeasured instead of
+    flawless — the exact inverse of the bug it is meant to prevent.
     """
 
-    competitions = _competitions_supplying(rows, key)
+    found: dict[str, set[tuple[Any, Any]]] = defaultdict(set)
+    for row in rows:
+        competition = (row.get("competition_id"), row.get("competition"))
+        for key, item in (row.get("metrics") or {}).items():
+            if _number((item or {}).get("value")) is not None:
+                found[key].add(competition)
+    return dict(found)
+
+
+def _summed_rate(
+    rows: list[dict[str, Any]],
+    keys: list[str],
+    metric_competitions: dict[str, set[tuple[Any, Any]]] | None = None,
+) -> tuple[float | None, float, float]:
+    """Per-90 rate over the sum of one or more fields.
+
+    Two distinct absences have to stay distinguishable. FotMob omits a
+    zero-valued event card, so a defender with no errors simply has no error
+    key — that is a genuine zero. But a field the provider does not publish at
+    all is missing, and treating it as zero collapses the metric's variance to
+    nothing, at which point it contributes only the league offset while
+    presenting itself as evidence.
+
+    Restricting to competitions that publish at least one of the fields keeps
+    both cases right: absent-within-a-publishing-competition counts as zero,
+    while a field absent from every competition yields no feature.
+    """
+
+    competitions: set[tuple[Any, Any]] = set()
+    for key in keys:
+        if metric_competitions is None:
+            competitions |= _competitions_supplying(rows, key)
+        else:
+            competitions |= metric_competitions.get(key, set())
     if not competitions:
         return None, 0.0, 0.0
+
     total = minutes = 0.0
     for row in rows:
         if (row.get("competition_id"), row.get("competition")) not in competitions:
             continue
         metrics = row.get("metrics") or {}
-        total += _number((metrics.get(key) or {}).get("value")) or 0.0
+        for key in keys:
+            total += _number((metrics.get(key) or {}).get("value")) or 0.0
         minutes += _number((metrics.get("minutes_played") or {}).get("value")) or 0.0
     if minutes <= 0:
         return None, total, minutes
     return total * 90.0 / minutes, total, minutes
+
+
+def _rate_over_supplying_competitions(
+    rows: list[dict[str, Any]],
+    key: str,
+    metric_competitions: dict[str, set[tuple[Any, Any]]] | None = None,
+) -> tuple[float | None, float, float]:
+    """Per-90 rate for a single field, restricted to competitions publishing it."""
+
+    return _summed_rate(rows, [key], metric_competitions)
 
 
 def _non_penalty_goals(rows: list[dict[str, Any]]) -> tuple[float | None, list[str]]:
@@ -317,8 +364,15 @@ def build_features(
     season_rows: list[dict[str, Any]],
     scoring_pos: str,
     config: dict[str, Any],
+    metric_competitions: dict[str, set[tuple[Any, Any]]] | None = None,
 ) -> tuple[dict[str, Any], list[str]]:
-    """Aggregate one player's match rows into the features their formula needs."""
+    """Aggregate one player's match rows into the features their formula needs.
+
+    ``metric_competitions`` should come from ``build_metric_competitions`` over
+    the whole sample. Passing None derives it from this player's rows alone,
+    which is only safe when the caller knows those rows represent the full
+    field availability — true in tests, false in production.
+    """
 
     formula = resolved_formula(scoring_pos, config)
     minutes = _minutes(rows)
@@ -375,9 +429,9 @@ def build_features(
             )
 
         elif key == "xg90":
-            rate, total, denom = _rate_over_supplying_competitions(rows, source[0])
+            rate, total, denom = _rate_over_supplying_competitions(rows, source[0], metric_competitions)
             if rate is None and len(source) > 1:
-                rate, total, denom = _rate_over_supplying_competitions(rows, source[1])
+                rate, total, denom = _rate_over_supplying_competitions(rows, source[1], metric_competitions)
             features[key] = _feature(
                 rate,
                 unit="per90",
@@ -389,11 +443,16 @@ def build_features(
             )
 
         elif key in {"axa90", "gxg90", "ga90"}:
-            features[key] = _composite_rate(rows, key, source, minutes)
+            features[key] = _composite_rate(rows, key, source, metric_competitions)
 
         elif key == "gprev90":
             total = _sum_event(rows, source[0])
-            if not _competitions_supplying(rows, source[0]):
+            supplying = (
+                metric_competitions.get(source[0], set())
+                if metric_competitions is not None
+                else _competitions_supplying(rows, source[0])
+            )
+            if not supplying:
                 fallback = spec.get("derived_fallback") or []
                 if len(fallback) == 2:
                     total = _sum_event(rows, fallback[0]) - _sum_event(rows, fallback[1])
@@ -411,11 +470,18 @@ def build_features(
             features[key] = _leaderboard_rate(season_rows, source[0])
 
         else:
-            features[key] = _per90_feature(
-                _sum_event(rows, *source),
-                minutes,
+            rate, total, denom = _summed_rate(rows, source, metric_competitions)
+            features[key] = _feature(
+                rate,
+                unit="per90",
+                source=MATCH_SOURCE,
                 source_fields=source,
-                note=EVENT_NOTE,
+                numerator=total,
+                denominator_minutes=denom,
+                note=(
+                    EVENT_NOTE
+                    + " A field no competition publishes yields no feature rather than a zero."
+                ),
             )
 
     return features, flags
@@ -425,7 +491,7 @@ def _composite_rate(
     rows: list[dict[str, Any]],
     key: str,
     source: list[str],
-    minutes: float,
+    metric_competitions: dict[str, set[tuple[Any, Any]]] | None = None,
 ) -> dict[str, Any] | None:
     """Combine an actual-event rate with a matching expected-value rate.
 
@@ -436,12 +502,22 @@ def _composite_rate(
     """
 
     if key == "ga90":
-        total = _sum_event(rows, source[0]) + _sum_event(rows, source[1])
-        return _per90_feature(total, minutes, source_fields=source, note=EVENT_NOTE)
+        rate, total, denom = _summed_rate(rows, source, metric_competitions)
+        return _feature(
+            rate,
+            unit="per90",
+            source=MATCH_SOURCE,
+            source_fields=source,
+            numerator=total,
+            denominator_minutes=denom,
+            note=EVENT_NOTE,
+        )
 
     base_key, expected_key = source[0], source[1]
-    base_rate = (_sum_event(rows, base_key) * 90.0 / minutes) if minutes > 0 else None
-    expected_rate, _, expected_minutes = _rate_over_supplying_competitions(rows, expected_key)
+    base_rate, _, base_minutes = _rate_over_supplying_competitions(rows, base_key, metric_competitions)
+    expected_rate, _, expected_minutes = _rate_over_supplying_competitions(
+        rows, expected_key, metric_competitions
+    )
     if base_rate is None and expected_rate is None:
         return None
     return _feature(
@@ -449,9 +525,9 @@ def _composite_rate(
         unit="per90",
         source=MATCH_SOURCE,
         source_fields=source,
-        denominator_minutes=minutes,
+        denominator_minutes=base_minutes,
         note=(
-            f"{base_key} over {round(minutes, 1)} minutes; {expected_key} over "
+            f"{base_key} over {round(base_minutes, 1)} minutes; {expected_key} over "
             f"{round(expected_minutes, 1)} minutes from competitions supplying it."
         ),
     )

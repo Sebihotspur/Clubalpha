@@ -25,6 +25,7 @@ if str(ROOT) not in sys.path:
 from clubalpha.player_quality_v2 import (  # noqa: E402
     build_features,
     build_match_index,
+    build_metric_competitions,
     player_league_offset,
     resolved_formula,
     score_population,
@@ -181,6 +182,13 @@ def main() -> int:
         if row.get("participant_id") is not None:
             season_by_player[int(row["participant_id"])].append(row)
 
+    # Which competitions publish each field, measured across the whole sample.
+    # This must be global: FotMob omits zero-valued event cards, so a defender
+    # who never erred carries no error key in any of their own rows, and a
+    # per-player view would mark every clean defender unmeasured.
+    metric_competitions = build_metric_competitions(historical_rows)
+    print(f"      {len(metric_competitions)} distinct metric keys across the sample")
+
     teams_by_id = {int(team["team_id"]): team for team in teams}
     features: list[dict[str, Any]] = []
     unmapped_roles: dict[str, int] = defaultdict(int)
@@ -194,7 +202,7 @@ def main() -> int:
         rows = rows_by_player.get(player_id, [])
         league = player_league_offset(rows, match_index, team_leagues, config)
         feature_values, flags = build_features(
-            rows, season_by_player.get(player_id, []), spos, config
+            rows, season_by_player.get(player_id, []), spos, config, metric_competitions
         )
         current_team = teams_by_id.get(int(squad["team_id"]), {})
         features.append(

@@ -288,6 +288,65 @@ class StandardisationAndShrinkageTests(unittest.TestCase):
         self.assertTrue(any(row["player_id"] == 99 for row in grades))
 
 
+class AbsentFieldTests(unittest.TestCase):
+    """Two absences must stay distinguishable.
+
+    FotMob omits zero-valued event cards, so a defender with no errors has no
+    error key and that is a genuine zero. A field the provider does not publish
+    at all is missing — and treating it as zero collapses the metric's variance
+    to nothing, at which point it contributes only the league offset while
+    presenting itself as evidence.
+    """
+
+    def test_field_no_competition_publishes_yields_no_feature(self):
+        """Regression: line_breaking_passes was absent from all 38,193 rows."""
+
+        rows = [
+            match_row(index, 47, 100, minutes=90, recoveries=5)
+            for index in range(1, 6)
+        ]
+        features, _ = build_features(rows, [], "CM", CONFIG)
+        self.assertIsNone(features["lbp90"], "an unpublished field must not read as zero")
+        self.assertIsNotNone(features["rec90"])
+
+    def test_absent_key_within_a_supplying_competition_is_zero(self):
+        rows = [
+            match_row(1, 47, 100, minutes=90, errors_led_to_goal=1),
+            match_row(2, 47, 100, minutes=90),  # no error card: a real zero
+        ]
+        features, _ = build_features(rows, [], "CB", CONFIG)
+        self.assertIsNotNone(features["err90"])
+        self.assertAlmostEqual(features["err90"]["numerator"], 1.0)
+        self.assertAlmostEqual(features["err90"]["denominator_minutes"], 180.0)
+
+    def test_zero_variance_metric_cannot_become_a_league_bonus(self):
+        """With no signal the metric must drop out, not pass the offset through."""
+
+        def defender(pid, offset):
+            keys = resolved_formula("CB", CONFIG)
+            values = {key: 1.0 for key in keys}
+            values["lbp90"] = None
+            return player(pid, "CB", 3000, offset, values)
+
+        squad = [defender(index, 0.45 if index % 2 else -0.9) for index in range(12)]
+        grades = score_population(squad, CONFIG)
+        for row in grades:
+            self.assertIsNone(row["metrics"]["lbp90"]["z"])
+            self.assertEqual(row["metrics"]["lbp90"]["confidence"], "missing")
+
+    def test_multi_source_metric_sums_rather_than_falling_back(self):
+        """Regression: clearances plus blocks only counted clearances.
+
+        _sum_event treats extra keys as fallbacks, so the second addend was
+        never reached while the first was present in every row.
+        """
+
+        rows = [match_row(1, 47, 100, minutes=90, clearances=4, shot_blocks=2)]
+        features, _ = build_features(rows, [], "CB", CONFIG)
+        self.assertAlmostEqual(features["clrblk90"]["numerator"], 6.0)
+        self.assertAlmostEqual(features["clrblk90"]["value"], 6.0)
+
+
 class NonPenaltyGoalTests(unittest.TestCase):
     def test_unreconciled_goal_leaves_the_feature_missing(self):
         rows = [
