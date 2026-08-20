@@ -148,7 +148,7 @@
       "passpct":  {"weight": 2.0, "direction": "positive", "form": "percentage", "label": "Pass completion percentage",             "source": ["accurate_passes"], "minimum_attempts": 300},
       "lbp90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Line-breaking passes per 90",            "source": ["line_breaking_passes"]},
       "ga90":     {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Goals plus assists per 90",              "source": ["goals", "assists"]},
-      "pace":     {"weight": 2.0, "direction": "positive", "form": "physical",   "label": "Pace",                                   "source": ["physical_metrics_topspeed"], "pending_confirmation": true}
+      "pace":     {"weight": 2.0, "direction": "positive", "form": "physical",   "label": "Pace",                                   "source": ["physical_metrics_topspeed"], "unavailable": true, "unavailable_reason": "physical_metrics_topspeed reaches only 90 of 263 centre-backs (34%). Coverage is concentrated in the Premier League and Champions League while the domestic leagues largely omit it, so populating it would give centre-backs with continental minutes an eleventh metric their domestic-only peers cannot have, inside the same peer population. A clean shared gap is safer than an uneven one."}
     },
 
     "FB": {
@@ -182,7 +182,8 @@
     "xg_and_xa": "An aggregate of expected_goals and expected_assists. Same reason.",
     "gd": "Overall duel win percentage contains aerial duels, so pairing it with aer was whole-plus-part. Replaced by gnd, which partitions cleanly against aer.",
     "tb90": "No through-balls key exists in FotMob match detail. line_breaking_passes is a broader measure and was adopted as its own slot rather than mapped as a substitute.",
-    "vers": "Versatility has no provider field. Calculable from usualPosition and positionId across match lineups; not yet built."
+    "vers": "Versatility has no provider field. Calculable from usualPosition and positionId across match lineups; not yet built.",
+    "pace": "physical_metrics_topspeed exists but reaches only 34% of centre-backs, concentrated in the Premier League and Champions League. Asymmetric coverage inside one peer population is worse than a shared gap, so pace stays missing and its weight leaves the denominator, matching the WCALPHA baseline."
   },
 
   "roll_up": {
