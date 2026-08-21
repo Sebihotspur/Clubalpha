@@ -1,0 +1,46 @@
+{
+  "version": "clubalpha_reep_identity_pilot_v1",
+  "source": {
+    "repository": "https://github.com/withqwerty/reep",
+    "commit": "0ec59faa5d81615b7a8200ae6121023a3bc14ce3",
+    "release": "2026.25",
+    "status": "frozen_v0",
+    "license": "CC0-1.0",
+    "files": {
+      "people.csv": "https://raw.githubusercontent.com/withqwerty/reep/0ec59faa5d81615b7a8200ae6121023a3bc14ce3/data/people.csv",
+      "teams.csv": "https://raw.githubusercontent.com/withqwerty/reep/0ec59faa5d81615b7a8200ae6121023a3bc14ce3/data/teams.csv",
+      "meta.json": "https://raw.githubusercontent.com/withqwerty/reep/0ec59faa5d81615b7a8200ae6121023a3bc14ce3/data/meta.json"
+    },
+    "v1": {
+      "release_stamp": "20260820T103440Z",
+      "schema_version": "bridge-register-v1",
+      "license": "CC0-1.0",
+      "files": {
+        "bridges.csv.gz": "https://data.reep.football/releases/20260820T103440Z/csv/bridges.csv.gz",
+        "entities.csv.gz": "https://data.reep.football/releases/20260820T103440Z/csv/entities.csv.gz",
+        "redirects.csv.gz": "https://data.reep.football/releases/20260820T103440Z/csv/redirects.csv.gz"
+      },
+      "handoff_provider": "transfermarkt",
+      "namespaces": {
+        "player": ["spieler"],
+        "team": ["verein"]
+      }
+    }
+  },
+  "policy": {
+    "operational_identity": "FotMob IDs remain canonical inside Clubalpha",
+    "reep_role": "Frozen v0 bridge seed and coverage audit only",
+    "matching": "Exact FotMob provider IDs only; no fuzzy or name-only fallback",
+    "quarantine": "Duplicate provider IDs and date-of-birth conflicts never resolve",
+    "v1_boundary": "REEP v0 and v1 IDs are not interchangeable; v1 currently has no published first-class FotMob bridge"
+  },
+  "provider_fields": {
+    "transfermarkt": "key_transfermarkt",
+    "fbref": "key_fbref",
+    "sofascore": "key_sofascore",
+    "opta": "key_opta",
+    "premier_league": "key_premier_league",
+    "uefa": "key_uefa",
+    "understat": "key_understat"
+  }
+}
