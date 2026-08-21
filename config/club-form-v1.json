@@ -1,0 +1,63 @@
+{
+  "version": "clubalpha_club_form_v1",
+  "source": "FotMob match details and normalized Clubalpha fixtures",
+  "question": "What condition and configuration is this club in now?",
+  "form_metrics": [
+    {"key": "goals", "label": "Goals"},
+    {"key": "expected_goals", "label": "Expected goals"},
+    {"key": "shots_on_target", "label": "Shots on target"},
+    {"key": "big_chances", "label": "Big chances"}
+  ],
+  "weighting_policy": {
+    "mode": "flat",
+    "note": "Goals, xG, shots on target, and big chances have equal weight when present. No fitted superiority has yet been demonstrated."
+  },
+  "diagnostic_metrics": ["total_shots", "touches_opp_box"],
+  "normalisation": {
+    "method": "competition peer sample z-score",
+    "minimum_peer_team_rows": 20,
+    "z_cap": 3.0,
+    "champions_league_group": "champions_league",
+    "preseason_group": "preseason"
+  },
+  "opponent_adjustment": {
+    "enabled": true,
+    "method": "leave-one-match-out opponent attack and defence baseline",
+    "prior_matches": 5.0,
+    "adjustment_cap": 0.75
+  },
+  "recency": {
+    "half_life_days": 60.0,
+    "formula": "0.5 ** (age_days / half_life_days)"
+  },
+  "source_weights": {
+    "default": 1.0,
+    "preseason_2026": 0.25
+  },
+  "scope_classes": {
+    "premier_league_current": "current_competitive",
+    "champions_league_qualification_2026_27": "current_competitive",
+    "preseason_2026": "preseason",
+    "default": "previous_competitive"
+  },
+  "preseason": {
+    "maximum_weight_share": 0.2,
+    "note": "Preseason can describe current condition but cannot dominate competitive evidence."
+  },
+  "reliability": {
+    "prior_weighted_matches": 5.0,
+    "formula": "confidence = evidence / (evidence + prior); final_z = standardised_z * confidence"
+  },
+  "team_standardisation": {
+    "method": "sample z-score across the current PL/UCL target universe",
+    "timing": "after recency, source, coverage, and opponent adjustments; before reliability shrinkage"
+  },
+  "opponent_context": {
+    "note": "Competition normalisation and a shrunk leave-one-out opponent adjustment are applied before aggregation. Historical matchup effects remain in Historical Fixtures."
+  },
+  "availability": {
+    "questionable_terms": ["doubtful", "day to day", "back in training"],
+    "changes_form_score": false,
+    "note": "FotMob injury flags are surfaced with Alpha Ability context. They do not change Club Form until a projected lineup and expected-minutes layer exists."
+  }
+}

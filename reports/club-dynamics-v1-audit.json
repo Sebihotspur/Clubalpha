@@ -1,0 +1,1002 @@
+{
+  "dynamics_version": "clubalpha_club_dynamics_v1",
+  "generated_at_utc": "2026-08-21T21:48:13.998472+00:00",
+  "as_of": "2026-08-18",
+  "counts": {
+    "target_teams": 58,
+    "teams_with_any_style": 56,
+    "teams_with_complete_style": 32,
+    "teams_with_strength_profile": 56,
+    "teams_with_current_manager": 55,
+    "detected_manager_changes": 18,
+    "confirmed_transfer_events_in_window": 828,
+    "transfer_events_with_alpha": 207,
+    "transfer_alpha_coverage_pct": 25.0,
+    "team_match_observations": 4288
+  },
+  "coverage": {
+    "style_axes": {
+      "control": {
+        "teams_with_value": 56,
+        "target_teams": 58
+      },
+      "territory": {
+        "teams_with_value": 55,
+        "target_teams": 58
+      },
+      "directness": {
+        "teams_with_value": 55,
+        "target_teams": 58
+      },
+      "crossing": {
+        "teams_with_value": 55,
+        "target_teams": 58
+      },
+      "set_piece_reliance": {
+        "teams_with_value": 53,
+        "target_teams": 58
+      },
+      "high_pressing": {
+        "teams_with_value": 32,
+        "target_teams": 58
+      }
+    },
+    "strength_axes": {
+      "chance_creation": {
+        "teams_with_value": 53,
+        "target_teams": 58
+      },
+      "shot_quality": {
+        "teams_with_value": 53,
+        "target_teams": 58
+      },
+      "finishing": {
+        "teams_with_value": 53,
+        "target_teams": 58
+      },
+      "box_access": {
+        "teams_with_value": 55,
+        "target_teams": 58
+      },
+      "set_piece_attack": {
+        "teams_with_value": 53,
+        "target_teams": 58
+      },
+      "chance_prevention": {
+        "teams_with_value": 53,
+        "target_teams": 58
+      },
+      "shot_suppression": {
+        "teams_with_value": 56,
+        "target_teams": 58
+      },
+      "box_defense": {
+        "teams_with_value": 55,
+        "target_teams": 58
+      },
+      "set_piece_defense": {
+        "teams_with_value": 53,
+        "target_teams": 58
+      }
+    }
+  },
+  "quality_flags": {
+    "first_squad_snapshot": 58,
+    "manager_identity_missing": 3,
+    "no_style_profile": 2,
+    "partial_style_profile": 24
+  },
+  "style_extremes": {
+    "control": {
+      "high": [
+        {
+          "team": "Barcelona",
+          "team_id": 8634,
+          "z": 0.9598
+        },
+        {
+          "team": "Bayern München",
+          "team_id": 9823,
+          "z": 0.8869
+        },
+        {
+          "team": "Paris Saint-Germain",
+          "team_id": 9847,
+          "z": 0.8092
+        }
+      ],
+      "low": [
+        {
+          "team": "Everton",
+          "team_id": 8668,
+          "z": -0.3621
+        },
+        {
+          "team": "Hull City",
+          "team_id": 8667,
+          "z": -0.3405
+        },
+        {
+          "team": "Leeds United",
+          "team_id": 8463,
+          "z": -0.2906
+        }
+      ]
+    },
+    "territory": {
+      "high": [
+        {
+          "team": "Manchester City",
+          "team_id": 8456,
+          "z": 0.7868
+        },
+        {
+          "team": "Bayern München",
+          "team_id": 9823,
+          "z": 0.7683
+        },
+        {
+          "team": "Arsenal",
+          "team_id": 9825,
+          "z": 0.5288
+        }
+      ],
+      "low": [
+        {
+          "team": "Brentford",
+          "team_id": 9937,
+          "z": -0.321
+        },
+        {
+          "team": "Leeds United",
+          "team_id": 8463,
+          "z": -0.2962
+        },
+        {
+          "team": "Villarreal",
+          "team_id": 10205,
+          "z": -0.2867
+        }
+      ]
+    },
+    "directness": {
+      "high": [
+        {
+          "team": "Hull City",
+          "team_id": 8667,
+          "z": 0.5795
+        },
+        {
+          "team": "Brentford",
+          "team_id": 9937,
+          "z": 0.4121
+        },
+        {
+          "team": "Everton",
+          "team_id": 8668,
+          "z": 0.2791
+        }
+      ],
+      "low": [
+        {
+          "team": "Manchester City",
+          "team_id": 8456,
+          "z": -0.8176
+        },
+        {
+          "team": "Barcelona",
+          "team_id": 8634,
+          "z": -0.6686
+        },
+        {
+          "team": "Chelsea",
+          "team_id": 8455,
+          "z": -0.5613
+        }
+      ]
+    },
+    "crossing": {
+      "high": [
+        {
+          "team": "Leeds United",
+          "team_id": 8463,
+          "z": 0.4632
+        },
+        {
+          "team": "Brentford",
+          "team_id": 9937,
+          "z": 0.3886
+        },
+        {
+          "team": "Slavia Prague",
+          "team_id": 7787,
+          "z": 0.3263
+        }
+      ],
+      "low": [
+        {
+          "team": "Manchester City",
+          "team_id": 8456,
+          "z": -0.7847
+        },
+        {
+          "team": "Paris Saint-Germain",
+          "team_id": 9847,
+          "z": -0.7726
+        },
+        {
+          "team": "Bayern München",
+          "team_id": 9823,
+          "z": -0.7614
+        }
+      ]
+    },
+    "set_piece_reliance": {
+      "high": [
+        {
+          "team": "Viking",
+          "team_id": 8478,
+          "z": 0.4051
+        },
+        {
+          "team": "Tottenham Hotspur",
+          "team_id": 8586,
+          "z": 0.2885
+        },
+        {
+          "team": "Brentford",
+          "team_id": 9937,
+          "z": 0.2491
+        }
+      ],
+      "low": [
+        {
+          "team": "Celtic",
+          "team_id": 9925,
+          "z": -0.2294
+        },
+        {
+          "team": "Brighton & Hove Albion",
+          "team_id": 10204,
+          "z": -0.2232
+        },
+        {
+          "team": "Manchester City",
+          "team_id": 8456,
+          "z": -0.2165
+        }
+      ]
+    },
+    "high_pressing": {
+      "high": [
+        {
+          "team": "Brighton & Hove Albion",
+          "team_id": 10204,
+          "z": 1.743
+        },
+        {
+          "team": "Arsenal",
+          "team_id": 9825,
+          "z": 1.2538
+        },
+        {
+          "team": "AFC Bournemouth",
+          "team_id": 8678,
+          "z": 1.1314
+        }
+      ],
+      "low": [
+        {
+          "team": "Fulham",
+          "team_id": 9879,
+          "z": -1.4372
+        },
+        {
+          "team": "Villarreal",
+          "team_id": 10205,
+          "z": -0.805
+        },
+        {
+          "team": "Sunderland",
+          "team_id": 8472,
+          "z": -0.7033
+        }
+      ]
+    }
+  },
+  "strength_extremes": {
+    "chance_creation": {
+      "high": [
+        {
+          "team": "Bayern München",
+          "team_id": 9823,
+          "z": 0.5681
+        },
+        {
+          "team": "Club Brugge",
+          "team_id": 8342,
+          "z": 0.3902
+        },
+        {
+          "team": "PSV Eindhoven",
+          "team_id": 8640,
+          "z": 0.3013
+        }
+      ],
+      "low": [
+        {
+          "team": "Hull City",
+          "team_id": 8667,
+          "z": -0.1487
+        },
+        {
+          "team": "Sunderland",
+          "team_id": 8472,
+          "z": -0.1476
+        },
+        {
+          "team": "Tottenham Hotspur",
+          "team_id": 8586,
+          "z": -0.1427
+        }
+      ]
+    },
+    "shot_quality": {
+      "high": [
+        {
+          "team": "Roma",
+          "team_id": 8686,
+          "z": 0.2459
+        },
+        {
+          "team": "Bayern München",
+          "team_id": 9823,
+          "z": 0.2388
+        },
+        {
+          "team": "PSV Eindhoven",
+          "team_id": 8640,
+          "z": 0.2304
+        }
+      ],
+      "low": [
+        {
+          "team": "Levski Sofia",
+          "team_id": 8632,
+          "z": -0.1624
+        },
+        {
+          "team": "Tottenham Hotspur",
+          "team_id": 8586,
+          "z": -0.1536
+        },
+        {
+          "team": "NEC Nijmegen",
+          "team_id": 8464,
+          "z": -0.1204
+        }
+      ]
+    },
+    "finishing": {
+      "high": [
+        {
+          "team": "Sporting CP",
+          "team_id": 9768,
+          "z": 0.1994
+        },
+        {
+          "team": "Villarreal",
+          "team_id": 10205,
+          "z": 0.1951
+        },
+        {
+          "team": "Inter",
+          "team_id": 8636,
+          "z": 0.1835
+        }
+      ],
+      "low": [
+        {
+          "team": "Crystal Palace",
+          "team_id": 9826,
+          "z": -0.2175
+        },
+        {
+          "team": "Feyenoord",
+          "team_id": 10235,
+          "z": -0.1532
+        },
+        {
+          "team": "Levski Sofia",
+          "team_id": 8632,
+          "z": -0.1496
+        }
+      ]
+    },
+    "box_access": {
+      "high": [
+        {
+          "team": "Manchester City",
+          "team_id": 8456,
+          "z": 0.7603
+        },
+        {
+          "team": "Bayern München",
+          "team_id": 9823,
+          "z": 0.7003
+        },
+        {
+          "team": "Inter",
+          "team_id": 8636,
+          "z": 0.4519
+        }
+      ],
+      "low": [
+        {
+          "team": "Hull City",
+          "team_id": 8667,
+          "z": -0.1962
+        },
+        {
+          "team": "Viking",
+          "team_id": 8478,
+          "z": -0.1861
+        },
+        {
+          "team": "Real Betis",
+          "team_id": 8603,
+          "z": -0.1805
+        }
+      ]
+    },
+    "set_piece_attack": {
+      "high": [
+        {
+          "team": "Brentford",
+          "team_id": 9937,
+          "z": 0.3021
+        },
+        {
+          "team": "Bayern München",
+          "team_id": 9823,
+          "z": 0.2502
+        },
+        {
+          "team": "Borussia Dortmund",
+          "team_id": 9789,
+          "z": 0.2058
+        }
+      ],
+      "low": [
+        {
+          "team": "Hull City",
+          "team_id": 8667,
+          "z": -0.1613
+        },
+        {
+          "team": "Villarreal",
+          "team_id": 10205,
+          "z": -0.1471
+        },
+        {
+          "team": "Lyon",
+          "team_id": 9748,
+          "z": -0.1145
+        }
+      ]
+    },
+    "chance_prevention": {
+      "high": [
+        {
+          "team": "Arsenal",
+          "team_id": 9825,
+          "z": 0.3729
+        },
+        {
+          "team": "Lille",
+          "team_id": 8639,
+          "z": 0.3307
+        },
+        {
+          "team": "AEK Athens",
+          "team_id": 8563,
+          "z": 0.3175
+        }
+      ],
+      "low": [
+        {
+          "team": "Viking",
+          "team_id": 8478,
+          "z": -0.1111
+        },
+        {
+          "team": "Crystal Palace",
+          "team_id": 9826,
+          "z": -0.0854
+        },
+        {
+          "team": "Leeds United",
+          "team_id": 8463,
+          "z": -0.0827
+        }
+      ]
+    },
+    "shot_suppression": {
+      "high": [
+        {
+          "team": "Dinamo Zagreb",
+          "team_id": 10156,
+          "z": 0.4365
+        },
+        {
+          "team": "Barcelona",
+          "team_id": 8634,
+          "z": 0.3979
+        },
+        {
+          "team": "Como",
+          "team_id": 10171,
+          "z": 0.364
+        }
+      ],
+      "low": [
+        {
+          "team": "Viking",
+          "team_id": 8478,
+          "z": -0.2109
+        },
+        {
+          "team": "Brentford",
+          "team_id": 9937,
+          "z": -0.206
+        },
+        {
+          "team": "Nottingham Forest",
+          "team_id": 10203,
+          "z": -0.1887
+        }
+      ]
+    },
+    "box_defense": {
+      "high": [
+        {
+          "team": "Dinamo Zagreb",
+          "team_id": 10156,
+          "z": 0.4048
+        },
+        {
+          "team": "Manchester City",
+          "team_id": 8456,
+          "z": 0.375
+        },
+        {
+          "team": "Arsenal",
+          "team_id": 9825,
+          "z": 0.3714
+        }
+      ],
+      "low": [
+        {
+          "team": "AFC Bournemouth",
+          "team_id": 8678,
+          "z": -0.1956
+        },
+        {
+          "team": "Bodø/Glimt",
+          "team_id": 8402,
+          "z": -0.1628
+        },
+        {
+          "team": "Nottingham Forest",
+          "team_id": 10203,
+          "z": -0.1409
+        }
+      ]
+    },
+    "set_piece_defense": {
+      "high": [
+        {
+          "team": "Arsenal",
+          "team_id": 9825,
+          "z": 0.3293
+        },
+        {
+          "team": "AEK Athens",
+          "team_id": 8563,
+          "z": 0.2821
+        },
+        {
+          "team": "Lille",
+          "team_id": 8639,
+          "z": 0.2115
+        }
+      ],
+      "low": [
+        {
+          "team": "AFC Bournemouth",
+          "team_id": 8678,
+          "z": -0.2448
+        },
+        {
+          "team": "Leeds United",
+          "team_id": 8463,
+          "z": -0.1865
+        },
+        {
+          "team": "Dinamo Zagreb",
+          "team_id": 10156,
+          "z": -0.1214
+        }
+      ]
+    }
+  },
+  "examples": {
+    "Arsenal": {
+      "style_identity": [
+        {
+          "axis": "high_pressing",
+          "descriptor": "high-regain press",
+          "z": 1.2538
+        },
+        {
+          "axis": "territory",
+          "descriptor": "advanced territory",
+          "z": 0.5288
+        },
+        {
+          "axis": "crossing",
+          "descriptor": "mixed width",
+          "z": -0.3663
+        }
+      ],
+      "style_shift": [
+        {
+          "axis": "control",
+          "previous_raw_z": 0.2781,
+          "post_season_boundary_raw_z": 0.4423,
+          "delta_raw_z": 0.1642,
+          "confidence": 0.3057,
+          "direction": "broadly stable"
+        },
+        {
+          "axis": "territory",
+          "previous_raw_z": 0.6636,
+          "post_season_boundary_raw_z": 1.0092,
+          "delta_raw_z": 0.3456,
+          "confidence": 0.3057,
+          "direction": "broadly stable"
+        },
+        {
+          "axis": "directness",
+          "previous_raw_z": -0.3301,
+          "post_season_boundary_raw_z": -1.2039,
+          "delta_raw_z": -0.8738,
+          "confidence": 0.3057,
+          "direction": "moving toward shorter build-up"
+        },
+        {
+          "axis": "crossing",
+          "previous_raw_z": -0.4595,
+          "post_season_boundary_raw_z": -0.7001,
+          "delta_raw_z": -0.2406,
+          "confidence": 0.3057,
+          "direction": "broadly stable"
+        }
+      ],
+      "strengths": [
+        {
+          "axis": "chance_prevention",
+          "label": "Chance prevention",
+          "z": 0.3729
+        },
+        {
+          "axis": "box_defense",
+          "label": "Box defence",
+          "z": 0.3714
+        },
+        {
+          "axis": "shot_suppression",
+          "label": "Shot suppression",
+          "z": 0.3336
+        }
+      ],
+      "weaknesses": [],
+      "manager": {
+        "current": {
+          "coach_id": 24011,
+          "coach": "Mikel Arteta"
+        },
+        "previous_season": [
+          {
+            "coach_id": 24011,
+            "coach": "Mikel Arteta",
+            "matches": 38
+          }
+        ],
+        "changed_since_previous_season": false,
+        "state": "continuity",
+        "detection_method": "current coach compared with previous-season FotMob coach history",
+        "post_season_boundary_matches": 4,
+        "stability_confidence": 1.0,
+        "appointment_date": null
+      },
+      "transfers": {
+        "incoming": 4,
+        "outgoing": 6,
+        "alpha_coverage": 0.5,
+        "net_known_alpha_z": 3.146,
+        "minutes_weighted_known_incoming_alpha_z": 1.1975,
+        "incoming_integration_confidence": 0.3986,
+        "incoming_integration_coverage": 1.0
+      }
+    },
+    "Chelsea": {
+      "style_identity": [
+        {
+          "axis": "directness",
+          "descriptor": "shorter build-up",
+          "z": -0.5613
+        },
+        {
+          "axis": "crossing",
+          "descriptor": "mixed width",
+          "z": -0.4448
+        },
+        {
+          "axis": "control",
+          "descriptor": "balanced control",
+          "z": 0.3953
+        }
+      ],
+      "style_shift": [
+        {
+          "axis": "control",
+          "previous_raw_z": 0.5578,
+          "post_season_boundary_raw_z": 0.5757,
+          "delta_raw_z": 0.0179,
+          "confidence": 0.3098,
+          "direction": "broadly stable"
+        },
+        {
+          "axis": "territory",
+          "previous_raw_z": -0.2385,
+          "post_season_boundary_raw_z": 0.4125,
+          "delta_raw_z": 0.651,
+          "confidence": 0.3098,
+          "direction": "moving toward advanced territory"
+        },
+        {
+          "axis": "directness",
+          "previous_raw_z": -0.8115,
+          "post_season_boundary_raw_z": -0.733,
+          "delta_raw_z": 0.0785,
+          "confidence": 0.3098,
+          "direction": "broadly stable"
+        },
+        {
+          "axis": "crossing",
+          "previous_raw_z": -0.672,
+          "post_season_boundary_raw_z": -0.4569,
+          "delta_raw_z": 0.2151,
+          "confidence": 0.3098,
+          "direction": "broadly stable"
+        }
+      ],
+      "strengths": [],
+      "weaknesses": [],
+      "manager": {
+        "current": {
+          "coach_id": 30889,
+          "coach": "Xabi Alonso"
+        },
+        "previous_season": [
+          {
+            "coach_id": 34000,
+            "coach": "Enzo Maresca",
+            "matches": 19
+          },
+          {
+            "coach_id": 24105,
+            "coach": "Liam Rosenior",
+            "matches": 13
+          },
+          {
+            "coach_id": 1823023,
+            "coach": "Calum McFarlane",
+            "matches": 6
+          }
+        ],
+        "changed_since_previous_season": true,
+        "state": "developing_transition",
+        "detection_method": "current coach compared with previous-season FotMob coach history",
+        "post_season_boundary_matches": 6,
+        "stability_confidence": 0.5,
+        "appointment_date": null
+      },
+      "transfers": {
+        "incoming": 10,
+        "outgoing": 11,
+        "alpha_coverage": 0.4762,
+        "net_known_alpha_z": 0.178,
+        "minutes_weighted_known_incoming_alpha_z": 0.2024,
+        "incoming_integration_confidence": 0.1889,
+        "incoming_integration_coverage": 1.0
+      }
+    },
+    "Coventry City": {
+      "style_identity": [
+        {
+          "axis": "directness",
+          "descriptor": "mixed progression",
+          "z": -0.3414
+        },
+        {
+          "axis": "control",
+          "descriptor": "balanced control",
+          "z": 0.3391
+        },
+        {
+          "axis": "set_piece_reliance",
+          "descriptor": "balanced chance sources",
+          "z": 0.1765
+        }
+      ],
+      "style_shift": [],
+      "strengths": [],
+      "weaknesses": [],
+      "manager": {
+        "current": {
+          "coach_id": 30631,
+          "coach": "Frank Lampard"
+        },
+        "previous_season": [
+          {
+            "coach_id": 30631,
+            "coach": "Frank Lampard",
+            "matches": 46
+          }
+        ],
+        "changed_since_previous_season": false,
+        "state": "continuity",
+        "detection_method": "current coach compared with previous-season FotMob coach history",
+        "post_season_boundary_matches": 3,
+        "stability_confidence": 1.0,
+        "appointment_date": null
+      },
+      "transfers": {
+        "incoming": 7,
+        "outgoing": 3,
+        "alpha_coverage": 0.5,
+        "net_known_alpha_z": -1.427,
+        "minutes_weighted_known_incoming_alpha_z": null,
+        "incoming_integration_confidence": null,
+        "incoming_integration_coverage": 0.0
+      }
+    },
+    "Manchester City": {
+      "style_identity": [
+        {
+          "axis": "high_pressing",
+          "descriptor": "high-regain press",
+          "z": 1.1314
+        },
+        {
+          "axis": "directness",
+          "descriptor": "shorter build-up",
+          "z": -0.8176
+        },
+        {
+          "axis": "territory",
+          "descriptor": "advanced territory",
+          "z": 0.7868
+        }
+      ],
+      "style_shift": [
+        {
+          "axis": "control",
+          "previous_raw_z": 1.0002,
+          "post_season_boundary_raw_z": 0.7789,
+          "delta_raw_z": -0.2213,
+          "confidence": 0.1785,
+          "direction": "insufficient evidence"
+        },
+        {
+          "axis": "territory",
+          "previous_raw_z": 1.0829,
+          "post_season_boundary_raw_z": 1.7244,
+          "delta_raw_z": 0.6415,
+          "confidence": 0.1785,
+          "direction": "insufficient evidence"
+        },
+        {
+          "axis": "directness",
+          "previous_raw_z": -1.1972,
+          "post_season_boundary_raw_z": -1.1403,
+          "delta_raw_z": 0.0569,
+          "confidence": 0.1785,
+          "direction": "insufficient evidence"
+        },
+        {
+          "axis": "crossing",
+          "previous_raw_z": -1.1758,
+          "post_season_boundary_raw_z": -0.88,
+          "delta_raw_z": 0.2958,
+          "confidence": 0.1785,
+          "direction": "insufficient evidence"
+        }
+      ],
+      "strengths": [
+        {
+          "axis": "box_access",
+          "label": "Box access",
+          "z": 0.7603
+        },
+        {
+          "axis": "box_defense",
+          "label": "Box defence",
+          "z": 0.375
+        },
+        {
+          "axis": "shot_suppression",
+          "label": "Shot suppression",
+          "z": 0.2819
+        }
+      ],
+      "weaknesses": [],
+      "manager": {
+        "current": {
+          "coach_id": 34000,
+          "coach": "Enzo Maresca"
+        },
+        "previous_season": [
+          {
+            "coach_id": 41636,
+            "coach": "Pep Guardiola",
+            "matches": 38
+          }
+        ],
+        "changed_since_previous_season": true,
+        "state": "early_transition",
+        "detection_method": "current coach compared with previous-season FotMob coach history",
+        "post_season_boundary_matches": 3,
+        "stability_confidence": 0.3333,
+        "appointment_date": null
+      },
+      "transfers": {
+        "incoming": 5,
+        "outgoing": 18,
+        "alpha_coverage": 0.3478,
+        "net_known_alpha_z": 0.969,
+        "minutes_weighted_known_incoming_alpha_z": 0.0,
+        "incoming_integration_confidence": 0.0,
+        "incoming_integration_coverage": 0.8
+      }
+    }
+  },
+  "normalisation": {
+    "style": {
+      "groups": 22,
+      "axis_scales": 98,
+      "competition_scales": 98,
+      "global_fallback_scales": 0,
+      "global_fallbacks": []
+    },
+    "strength": {
+      "groups": 22,
+      "axis_scales": 158,
+      "competition_scales": 158,
+      "global_fallback_scales": 0,
+      "global_fallbacks": []
+    }
+  },
+  "warnings": [
+    "Style is descriptive and has no composite grade.",
+    "Strengths and weaknesses are competition-relative diagnostics and do not modify Club Form v1.",
+    "Cross and long-ball attempts are estimates from FotMob completions and rounded accuracy percentages.",
+    "High pressing uses previous-season possessions won in the attacking third; a manager-change flag identifies when it predates the current coach.",
+    "Season-boundary style shifts describe association, not manager causation, and low-confidence shifts are labelled insufficient evidence.",
+    "A first run cannot calculate true squad continuity; append-only dated snapshots enable it on later pulls.",
+    "Transfer fees and market values are preserved for traceability but never determine football impact.",
+    "Known-only transfer Alpha totals must always be read with Alpha and integration coverage."
+  ]
+}

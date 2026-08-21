@@ -6,7 +6,7 @@ Football intelligence for Premier League and Champions League analysis.
 
 1. **Data sources** — trustworthy, traceable football data.
 2. **Player quality** — position-aware Alpha Ability Grades.
-3. **Squad form** — previous season, World Cup, and preseason state.
+3. **Club form** — recent team performance, preseason state, and squad availability.
 4. **Historical fixtures** — evidence from Premier League and Champions League matches.
 
 These foundations combine into a simple Football Intelligence Snapshot for each team and fixture. Prediction, market, and capital layers will be added only after the foundation is trustworthy.
@@ -16,6 +16,9 @@ These foundations combine into a simple Football Intelligence Snapshot for each 
 - [Architecture](docs/architecture.md)
 - [FotMob data pipeline](docs/data-pipeline.md)
 - [Player quality](docs/player-grade-spec.md)
+- [Club Form](docs/club-form-spec.md)
+- [Club Dynamics](docs/club-dynamics-spec.md)
+- [Squad Selection Prior](docs/squad-selection-prior-spec.md)
 - [Data-source bakeoff](research/data-source-bakeoff.md)
 
 ## Pull the foundation
@@ -72,12 +75,80 @@ change rather than the locked rating formula.
 See [Player quality](docs/player-grade-spec.md) for the formulas, the league
 offset rebuild, standardisation, and shrinkage.
 
+## Club Form v1
+
+Refreshes of the foundation and domestic-history collectors now materialize
+team-match scores, xG, shots on target, big chances, total shots, and box
+touches. Completed current competitive matches are included automatically.
+
+Build Club Form after Player Quality:
+
+```bash
+python3 scripts/build_club_form.py
+```
+
+The output separates attack, defence, confidence, preseason, venue splits, and
+the dated availability snapshot. Preseason begins at one-quarter weight and is
+capped at 20%; injuries are annotated with Alpha Ability but do not move the
+score without a projected lineup.
+
+See [Club Form](docs/club-form-spec.md) for the exact formulas and boundaries.
+
+## Club Dynamics v1
+
+Club Dynamics explains how each team plays, where its recent strengths and
+weaknesses sit, and how manager or squad changes affect confidence. It uses
+normalized FotMob manager history, confirmed transfers, match style statistics,
+and Player Quality grades.
+
+```bash
+python3 scripts/build_club_dynamics.py
+```
+
+Style remains descriptive, transfer fees never enter the model, and manager or
+transfer changes do not modify Club Form without walk-forward validation. The
+first dated squad snapshot establishes the continuity baseline for later pulls.
+
+See [Club Dynamics](docs/club-dynamics-spec.md) for the exact axes and safeguards.
+
+## Squad Selection Prior v1
+
+The selection layer preserves FotMob's declared starters and formation, blends
+recent weighted minutes with a conservative previous-season workload prior,
+and produces an availability-adjusted 990-minute squad distribution plus a
+baseline XI:
+
+```bash
+python3 scripts/build_squad_selection_prior.py
+```
+
+Alpha Ability is attached to each player but never selects the XI. Known
+unavailable players receive zero expected minutes in the adjusted prior;
+questionable and unknown cases remain visible and are not silently ruled out.
+This is a dated squad hierarchy, not a fixture-specific or confirmed lineup.
+
+## Joined Club Form Snapshot
+
+Once the components are built, join Performance Form, Club Dynamics,
+Availability, and the Squad Selection Prior into one record per team:
+
+```bash
+python3 scripts/build_club_form_snapshot.py
+```
+
+The snapshot is an intelligence view, not a new grade. It validates that all
+components use the same team universe and date, preserves every confidence
+field, and records why the club is not yet fixture-projection ready.
+
 ## Status
 
-The PL, UCL, and preseason foundation pull is operational. The WCALPHA v1
-attacker and defender engine passes its formula-parity tests and remains the
-baseline. v2 extends grading to all eleven pitch positions.
+The PL, UCL, and preseason foundation pull is operational. Player Quality v2
+grades all eleven pitch positions. Club Form v1 builds attack, defence, and
+evidence confidence, while Club Dynamics v1 adds style, strengths/weaknesses,
+manager state, transfers, integration, and dated squad continuity. The joined
+Club Form Snapshot materializes the intelligence layers for 58 clubs; 55 have
+a complete baseline XI prior, with three FotMob squad-page gaps left explicit.
 
 Clubalpha does not yet produce deployment-ready probabilities or
-recommendations. Squad Form has a data foundation but no scoring model, and
-team-level attack and defence ratings remain deliberately unbuilt.
+recommendations. Historical Fixtures and the later probability layer remain
+separate work.
