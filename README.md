@@ -17,6 +17,7 @@ These foundations combine into a simple Football Intelligence Snapshot for each 
 - [FotMob data pipeline](docs/data-pipeline.md)
 - [Player quality](docs/player-grade-spec.md)
 - [Data-source bakeoff](research/data-source-bakeoff.md)
+- [REEP identity pilot](research/reep-identity-pilot.md)
 
 ## Pull the foundation
 
