@@ -1,6 +1,7 @@
 import unittest
 
 from clubalpha.fotmob import (
+    clip_fixture_to_as_of,
     flatten_match_player_stats,
     normalize_fixture,
     normalize_name,
@@ -25,6 +26,19 @@ class FotMobNormalizationTests(unittest.TestCase):
         self.assertEqual(result["match_id"], 4813374)
         self.assertEqual(result["home_team_id"], 8650)
         self.assertTrue(result["finished"])
+
+    def test_future_fixture_snapshot_does_not_leak_a_later_result(self):
+        row = {
+            "kickoff_utc": "2026-08-25T19:00:00Z",
+            "score": "3 - 0",
+            "started": True,
+            "finished": True,
+            "cancelled": False,
+        }
+        result = clip_fixture_to_as_of(row, "2026-08-18")
+        self.assertIsNone(result["score"])
+        self.assertFalse(result["started"])
+        self.assertFalse(result["finished"])
 
     def test_normalize_stat_rows_preserves_fotmob_ids_and_minutes(self):
         payload = {

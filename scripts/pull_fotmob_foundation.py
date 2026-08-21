@@ -21,7 +21,9 @@ if str(ROOT) not in sys.path:
 
 from clubalpha.fotmob import (  # noqa: E402
     FotMobClient,
+    clip_fixture_to_as_of,
     flatten_match_player_stats,
+    flatten_match_team_stats,
     league_matches,
     league_table_teams,
     normalize_fixture,
@@ -55,6 +57,15 @@ MATCH_METRIC_AUDIT = {
     "top_speed": ["physical_metrics_topspeed"],
 }
 
+TEAM_METRIC_AUDIT = [
+    "goals",
+    "expected_goals",
+    "shots_on_target",
+    "big_chances",
+    "total_shots",
+    "touches_opp_box",
+]
+
 
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -72,6 +83,13 @@ def write_jsonl(path: Path, rows: Iterable[dict[str, Any]]) -> int:
         for row in materialized:
             handle.write(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n")
     return len(materialized)
+
+
+def display_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
 
 
 def iso_day(timestamp: str | None) -> str | None:
@@ -116,6 +134,22 @@ def match_metric_coverage(rows: list[dict[str, Any]]) -> dict[str, Any]:
     return output
 
 
+def team_metric_coverage(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    output: dict[str, Any] = {}
+    for competition in sorted({str(row.get("competition") or "Unknown") for row in rows}):
+        members = [row for row in rows if str(row.get("competition") or "Unknown") == competition]
+        output[competition] = {
+            metric: {
+                "team_match_rows_with_value": sum(
+                    row.get(f"{metric}_for") is not None for row in members
+                ),
+                "team_match_rows": len(members),
+            }
+            for metric in TEAM_METRIC_AUDIT
+        }
+    return output
+
+
 def pull_stat_rows(
     client: FotMobClient,
     competition: dict[str, Any],
@@ -154,6 +188,13 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, default=ROOT / "config/foundation.json")
     parser.add_argument("--ucl", type=Path, default=ROOT / "config/ucl-2026-27.json")
+    parser.add_argument("--cache-dir", type=Path, default=ROOT / "data/cache/fotmob")
+    parser.add_argument(
+        "--output-dir", type=Path, default=ROOT / "data/processed/foundation"
+    )
+    parser.add_argument(
+        "--audit", type=Path, default=ROOT / "reports/foundation-coverage.json"
+    )
     parser.add_argument("--as-of", default=None, help="Inclusive YYYY-MM-DD snapshot date.")
     parser.add_argument("--refresh", action="store_true", help="Ignore cached responses.")
     parser.add_argument("--skip-match-details", action="store_true")
@@ -164,18 +205,19 @@ def main() -> int:
     config = load_json(args.config)
     ucl = load_json(args.ucl)
     as_of = args.as_of or date.today().isoformat()
-    cache_dir = ROOT / "data/cache/fotmob"
-    output_dir = ROOT / "data/processed/foundation"
+    cache_dir = args.cache_dir
+    output_dir = args.output_dir
     client = FotMobClient(
         cache_dir,
         refresh=args.refresh,
         request_interval=args.request_interval,
     )
 
-    print("[1/7] Competition snapshots")
+    print("[1/8] Competition snapshots")
     league_payloads: dict[str, dict[str, Any]] = {}
     fixture_index: dict[int, dict[str, Any]] = {}
     historical_match_ids: set[int] = set()
+    current_match_ids: set[int] = set()
     current_pl_teams: dict[int, dict[str, Any]] = {}
     for competition in config["competitions"]:
         payload = client.league(int(competition["fotmob_id"]), competition["season"])
@@ -186,12 +228,16 @@ def main() -> int:
             )
         league_payloads[competition["key"]] = payload
         for match in league_matches(payload):
-            normalized = normalize_fixture(match, source_scope=competition["key"])
+            normalized = clip_fixture_to_as_of(
+                normalize_fixture(match, source_scope=competition["key"]), as_of
+            )
             normalized["competition_id"] = int(competition["fotmob_id"])
             normalized["competition"] = competition["name"]
             fixture_index[normalized["match_id"]] = normalized
             if competition.get("pull_stats") and normalized["finished"]:
                 historical_match_ids.add(normalized["match_id"])
+            if competition["key"].endswith("_current") and normalized["finished"]:
+                current_match_ids.add(normalized["match_id"])
         if competition["key"] == "premier_league_current":
             for row in league_table_teams(payload):
                 current_pl_teams[int(row["id"])] = {
@@ -202,7 +248,7 @@ def main() -> int:
                     "ucl_status": None,
                 }
 
-    print("[2/7] UCL direct qualifiers and play-off field")
+    print("[2/8] UCL direct qualifiers and play-off field")
     team_index = dict(current_pl_teams)
     unresolved: list[str] = []
     for club in ucl["direct_qualifiers"]:
@@ -238,11 +284,16 @@ def main() -> int:
             if normalize_name(league.get("name")) != "champions league qualification":
                 continue
             for match in league.get("matches") or []:
-                normalized = normalize_fixture(
-                    {**match, "leagueId": league.get("primaryId") or league.get("id"), "leagueName": league.get("name")},
-                    source_scope="champions_league_qualification_2026_27",
+                normalized = clip_fixture_to_as_of(
+                    normalize_fixture(
+                        {**match, "leagueId": league.get("primaryId") or league.get("id"), "leagueName": league.get("name")},
+                        source_scope="champions_league_qualification_2026_27",
+                    ),
+                    as_of,
                 )
                 fixture_index[normalized["match_id"]] = normalized
+                if normalized["finished"]:
+                    current_match_ids.add(normalized["match_id"])
                 for side in ("home", "away"):
                     source_team = match.get(side) or {}
                     if not source_team.get("id"):
@@ -261,7 +312,7 @@ def main() -> int:
                     if not record.get("ucl_status"):
                         record["ucl_status"] = "playoff_contender"
 
-    print(f"[3/7] Team pages, squads, and preseason registry ({len(team_index)} clubs)")
+    print(f"[3/8] Team pages, squads, and preseason registry ({len(team_index)} clubs)")
     squad_rows: list[dict[str, Any]] = []
     preseason_match_ids: set[int] = set()
     team_errors: list[dict[str, Any]] = []
@@ -302,36 +353,65 @@ def main() -> int:
                 continue
             if not fixture_in_window(match, config["preseason"]["from"], as_of):
                 continue
-            normalized = normalize_fixture(match, source_scope="preseason_2026")
+            normalized = clip_fixture_to_as_of(
+                normalize_fixture(match, source_scope="preseason_2026"), as_of
+            )
             fixture_index[normalized["match_id"]] = normalized
             if normalized["finished"]:
                 preseason_match_ids.add(normalized["match_id"])
 
-    print(f"[4/7] Preseason player-match detail ({len(preseason_match_ids)} matches)")
+    print(f"[4/8] Preseason match detail ({len(preseason_match_ids)} matches)")
     match_player_rows: list[dict[str, Any]] = []
+    match_team_rows: list[dict[str, Any]] = []
     match_detail_errors: list[dict[str, Any]] = []
     if not args.skip_match_details:
         for number, match_id in enumerate(sorted(preseason_match_ids), 1):
             if number == 1 or number % 10 == 0 or number == len(preseason_match_ids):
                 print(f"  match {number:03d}/{len(preseason_match_ids):03d}")
             try:
-                match_player_rows.extend(flatten_match_player_stats(client.match(match_id)))
+                payload = client.match(match_id)
+                match_player_rows.extend(flatten_match_player_stats(payload))
+                match_team_rows.extend(
+                    flatten_match_team_stats(payload, fixture_index[match_id])
+                )
             except RuntimeError as exc:
                 match_detail_errors.append({"match_id": match_id, "error": str(exc)})
 
-    print(f"[5/7] Historical player-match detail ({len(historical_match_ids)} matches)")
+    print(f"[5/8] Current competitive match detail ({len(current_match_ids)} matches)")
+    current_match_player_rows: list[dict[str, Any]] = []
+    current_match_team_rows: list[dict[str, Any]] = []
+    current_match_detail_errors: list[dict[str, Any]] = []
+    if not args.skip_match_details:
+        for number, match_id in enumerate(sorted(current_match_ids), 1):
+            if number == 1 or number % 10 == 0 or number == len(current_match_ids):
+                print(f"  match {number:03d}/{len(current_match_ids):03d}")
+            try:
+                payload = client.match(match_id)
+                current_match_player_rows.extend(flatten_match_player_stats(payload))
+                current_match_team_rows.extend(
+                    flatten_match_team_stats(payload, fixture_index[match_id])
+                )
+            except RuntimeError as exc:
+                current_match_detail_errors.append({"match_id": match_id, "error": str(exc)})
+
+    print(f"[6/8] Historical match detail ({len(historical_match_ids)} matches)")
     historical_match_player_rows: list[dict[str, Any]] = []
+    historical_match_team_rows: list[dict[str, Any]] = []
     historical_match_detail_errors: list[dict[str, Any]] = []
     if not args.skip_historical_match_details:
         for number, match_id in enumerate(sorted(historical_match_ids), 1):
             if number == 1 or number % 25 == 0 or number == len(historical_match_ids):
                 print(f"  match {number:03d}/{len(historical_match_ids):03d}")
             try:
-                historical_match_player_rows.extend(flatten_match_player_stats(client.match(match_id)))
+                payload = client.match(match_id)
+                historical_match_player_rows.extend(flatten_match_player_stats(payload))
+                historical_match_team_rows.extend(
+                    flatten_match_team_stats(payload, fixture_index[match_id])
+                )
             except RuntimeError as exc:
                 historical_match_detail_errors.append({"match_id": match_id, "error": str(exc)})
 
-    print("[6/7] Previous-season PL and UCL leaderboards")
+    print("[7/8] Previous-season PL and UCL leaderboards")
     player_stat_rows: list[dict[str, Any]] = []
     team_stat_rows: list[dict[str, Any]] = []
     missing_stats: dict[str, dict[str, list[str]]] = {}
@@ -352,7 +432,7 @@ def main() -> int:
             "team": missing_team,
         }
 
-    print("[7/7] Normalized datasets and coverage audit")
+    print("[8/8] Normalized datasets and coverage audit")
     teams = sorted(team_index.values(), key=lambda row: (row.get("name") or "", row["team_id"]))
     fixtures = sorted(
         fixture_index.values(),
@@ -390,6 +470,16 @@ def main() -> int:
         "preseason_match_player_rows": write_jsonl(
             output_dir / "preseason_match_player_stats.jsonl", match_player_rows
         ),
+        "preseason_match_team_rows": write_jsonl(
+            output_dir / "preseason_match_team_stats.jsonl", match_team_rows
+        ),
+        "current_finished_fixtures": len(current_match_ids),
+        "current_match_player_rows": write_jsonl(
+            output_dir / "current_match_player_stats.jsonl", current_match_player_rows
+        ),
+        "current_match_team_rows": write_jsonl(
+            output_dir / "current_match_team_stats.jsonl", current_match_team_rows
+        ),
         "historical_finished_fixtures": len(historical_match_ids),
         "historical_matches_with_player_stats": len(detailed_historical_ids),
         "historical_matches_without_player_stats": len(missing_historical_detail_ids),
@@ -398,6 +488,9 @@ def main() -> int:
         ) if historical_match_ids else 0.0,
         "historical_match_player_rows": write_jsonl(
             output_dir / "historical_match_player_stats.jsonl", historical_match_player_rows
+        ),
+        "historical_match_team_rows": write_jsonl(
+            output_dir / "historical_match_team_stats.jsonl", historical_match_team_rows
         ),
         "season_player_stat_rows": write_jsonl(
             output_dir / "season_player_stats.jsonl", player_stat_rows
@@ -411,8 +504,8 @@ def main() -> int:
         "web_base": "https://www.fotmob.com/api/data",
         "stats_base": "https://data.fotmob.com/stats",
         "ucl_registry_source": ucl["source"],
-        "raw_cache": str(cache_dir.relative_to(ROOT)),
-        "processed_output": str(output_dir.relative_to(ROOT)),
+        "raw_cache": display_path(cache_dir),
+        "processed_output": display_path(output_dir),
     }
     coverage = {
         "as_of": as_of,
@@ -421,24 +514,32 @@ def main() -> int:
         "team_errors": team_errors,
         "teams_without_squad": teams_without_squad,
         "match_detail_errors": match_detail_errors,
+        "current_match_detail_errors": current_match_detail_errors,
         "historical_match_detail_errors": historical_match_detail_errors,
         "preseason_matches_without_player_stats_sample": missing_preseason_detail_ids[:20],
         "historical_matches_without_player_stats_sample": missing_historical_detail_ids[:20],
         "match_metric_coverage": {
             "historical": match_metric_coverage(historical_match_player_rows),
+            "current": match_metric_coverage(current_match_player_rows),
             "preseason": match_metric_coverage(match_player_rows),
+        },
+        "team_match_metric_coverage": {
+            "historical": team_metric_coverage(historical_match_team_rows),
+            "current": team_metric_coverage(current_match_team_rows),
+            "preseason": team_metric_coverage(match_team_rows),
         },
         "missing_requested_stats": missing_stats,
         "warnings": [
             "FotMob is an undocumented source; endpoint and field-shape tests are required.",
             "The 2026/27 UCL field remains provisional until seven play-off winners are known.",
             "A listed preseason fixture may have no player detail when FotMob coverage is incomplete.",
+            "Current competitive match cards are cached after every completed pull so Club Form can update without a separate provider.",
             "Metric presence counts show matches with at least one explicit value; an omitted zero may appear as missing.",
         ],
     }
     write_json(output_dir / "source_manifest.json", source_manifest)
     write_json(output_dir / "coverage.json", coverage)
-    write_json(ROOT / "reports/foundation-coverage.json", coverage)
+    write_json(args.audit, coverage)
 
     print(json.dumps(counts, indent=2))
     return 0 if not unresolved and not team_errors else 2

@@ -4,7 +4,7 @@
 
 Player Quality answers one question: **How good is this player?**
 
-It is a slow-moving, position-aware Alpha Ability Grade. Current squad role, opponent matchup, and projected minutes belong to Squad Form or future match layers.
+It is a slow-moving, position-aware Alpha Ability Grade. Current squad role, opponent matchup, and projected minutes belong to Club Form or future match layers.
 
 ## WCALPHA baseline
 
@@ -201,7 +201,7 @@ predicts goals scored, and that comparison has not been run.
 ## Minutes are not a scored metric
 
 WCALPHA scored `avail` inside the midfielder and goalkeeper formulas. v2 drops
-it. Availability belongs to Squad Form, and scoring it here would count minutes
+it. Availability belongs to Club Form, and scoring it here would count minutes
 twice — once as a metric, once through the reliability policy — and only for
 two of the five positions.
 

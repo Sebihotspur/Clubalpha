@@ -7,10 +7,10 @@ Simple is beautiful. Clubalpha begins with four foundations and adds new layers 
 ```text
 Data Sources
     ├── Player Quality
-    ├── Squad Form
+    ├── Club Form
     └── Historical Fixtures
 
-Player Quality + Squad Form + Historical Fixtures
+Player Quality + Club Form + Historical Fixtures
     → Football Intelligence
 ```
 
@@ -45,7 +45,7 @@ Inputs include:
 
 Player Quality does not include the next opponent or whether the player is expected to start the next match.
 
-## 3. Squad Form
+## 3. Club Form
 
 Question: **What condition and configuration is the team in now?**
 
@@ -58,6 +58,11 @@ Inputs include:
 - expected roles and tactical changes.
 
 Preseason can strongly change role, fitness, and tactical assessments. It should only modestly change underlying player ability.
+
+Club Form v1 begins with recency-weighted attack and defence, low-weight
+preseason evidence, and a separate availability snapshot. Projected roles,
+World Cup workload, and tactical changes remain explicit later inputs rather
+than undocumented adjustments.
 
 ## 4. Historical Fixtures
 
@@ -79,7 +84,7 @@ The first useful product is a Football Intelligence Snapshot:
 ```text
 Team
 ├── Player Quality
-├── Squad Form
+├── Club Form
 └── Relevant Historical Evidence
 ```
 

@@ -229,6 +229,137 @@ def normalize_fixture(row: dict[str, Any], *, source_scope: str) -> dict[str, An
     }
 
 
+def clip_fixture_to_as_of(row: dict[str, Any], as_of: str) -> dict[str, Any]:
+    """Keep known future schedules without leaking later scores or status."""
+
+    kickoff = str(row.get("kickoff_utc") or "")[:10]
+    if not kickoff or kickoff <= as_of:
+        return row
+    return {
+        **row,
+        "score": None,
+        "started": False,
+        "finished": False,
+        "cancelled": False,
+    }
+
+
+MATCH_TEAM_STAT_KEYS = {
+    "expected_goals": "expected_goals",
+    "shots_on_target": "ShotsOnTarget",
+    "big_chances": "big_chance",
+    "total_shots": "total_shots",
+    "touches_opp_box": "touches_opp_box",
+}
+
+
+def _match_score(value: Any) -> tuple[float | None, float | None]:
+    match = re.match(r"^\s*(\d+)\s*[-:]\s*(\d+)", str(value or ""))
+    if not match:
+        return None, None
+    return float(match.group(1)), float(match.group(2))
+
+
+def _match_team_stat_pairs(
+    payload: dict[str, Any],
+) -> dict[str, tuple[float | None, float | None]]:
+    output: dict[str, tuple[float | None, float | None]] = {}
+    periods = ((((payload.get("content") or {}).get("stats") or {}).get("Periods")) or {})
+    groups = (((periods.get("All") or {}).get("stats")) or [])
+    for group in groups:
+        for item in group.get("stats") or []:
+            key = item.get("key")
+            values = item.get("stats")
+            if not key or not isinstance(values, list) or len(values) < 2:
+                continue
+            pair = (_number(values[0]), _number(values[1]))
+            if pair == (None, None):
+                continue
+            current = output.get(str(key))
+            if current is None or sum(value is not None for value in pair) > sum(
+                value is not None for value in current
+            ):
+                output[str(key)] = pair
+    return output
+
+
+def flatten_match_team_stats(
+    match_payload: dict[str, Any], fixture: dict[str, Any]
+) -> list[dict[str, Any]]:
+    """Return one normalized team-stat row for each side of a fixture.
+
+    FotMob title rows can repeat a metric key with two null values, so only
+    numeric pairs replace an existing pair. A score-only card remains useful,
+    but all unavailable performance metrics stay explicitly missing.
+    """
+
+    general = match_payload.get("general") or {}
+    header_teams = ((match_payload.get("header") or {}).get("teams")) or []
+    stat_pairs = _match_team_stat_pairs(match_payload)
+    score_pair = _match_score(fixture.get("score"))
+    if len(header_teams) >= 2:
+        header_score = (
+            _number(header_teams[0].get("score")),
+            _number(header_teams[1].get("score")),
+        )
+        if header_score != (None, None):
+            score_pair = header_score
+
+    general_home = general.get("homeTeam") or {}
+    general_away = general.get("awayTeam") or {}
+    sides = [
+        {
+            "team_id": fixture.get("home_team_id") or general_home.get("id"),
+            "team": fixture.get("home_team") or general_home.get("name"),
+            "opponent_id": fixture.get("away_team_id") or general_away.get("id"),
+            "opponent": fixture.get("away_team") or general_away.get("name"),
+            "venue": "home",
+            "for_index": 0,
+            "against_index": 1,
+        },
+        {
+            "team_id": fixture.get("away_team_id") or general_away.get("id"),
+            "team": fixture.get("away_team") or general_away.get("name"),
+            "opponent_id": fixture.get("home_team_id") or general_home.get("id"),
+            "opponent": fixture.get("home_team") or general_home.get("name"),
+            "venue": "away",
+            "for_index": 1,
+            "against_index": 0,
+        },
+    ]
+    rows: list[dict[str, Any]] = []
+    for side in sides:
+        if side["team_id"] is None or side["opponent_id"] is None:
+            continue
+        row: dict[str, Any] = {
+            "match_id": int(fixture["match_id"]),
+            "source": "fotmob",
+            "source_scope": fixture.get("source_scope"),
+            "competition_id": fixture.get("competition_id") or general.get("leagueId"),
+            "competition": fixture.get("competition") or general.get("leagueName"),
+            "kickoff_utc": fixture.get("kickoff_utc")
+            or general.get("matchTimeUTCDate")
+            or general.get("matchTimeUTC"),
+            "team_id": int(side["team_id"]),
+            "team": side["team"],
+            "opponent_id": int(side["opponent_id"]),
+            "opponent": side["opponent"],
+            "venue": side["venue"],
+            "cache_detail_available": bool(match_payload),
+            "goals_for": score_pair[side["for_index"]],
+            "goals_against": score_pair[side["against_index"]],
+        }
+        for canonical, source_key in MATCH_TEAM_STAT_KEYS.items():
+            pair = stat_pairs.get(source_key, (None, None))
+            row[f"{canonical}_for"] = pair[side["for_index"]]
+            row[f"{canonical}_against"] = pair[side["against_index"]]
+        row["detailed_metric_count"] = sum(
+            row.get(f"{key}_for") is not None for key in MATCH_TEAM_STAT_KEYS
+        )
+        rows.append(row)
+    return rows
+
+
 def flatten_match_player_stats(match_payload: dict[str, Any]) -> list[dict[str, Any]]:
     general = match_payload.get("general") or {}
     output: list[dict[str, Any]] = []

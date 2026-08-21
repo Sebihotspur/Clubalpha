@@ -6,7 +6,7 @@ Football intelligence for Premier League and Champions League analysis.
 
 1. **Data sources** — trustworthy, traceable football data.
 2. **Player quality** — position-aware Alpha Ability Grades.
-3. **Squad form** — previous season, World Cup, and preseason state.
+3. **Club form** — recent team performance, preseason state, and squad availability.
 4. **Historical fixtures** — evidence from Premier League and Champions League matches.
 
 These foundations combine into a simple Football Intelligence Snapshot for each team and fixture. Prediction, market, and capital layers will be added only after the foundation is trustworthy.
@@ -16,6 +16,7 @@ These foundations combine into a simple Football Intelligence Snapshot for each 
 - [Architecture](docs/architecture.md)
 - [FotMob data pipeline](docs/data-pipeline.md)
 - [Player quality](docs/player-grade-spec.md)
+- [Club Form](docs/club-form-spec.md)
 - [Data-source bakeoff](research/data-source-bakeoff.md)
 
 ## Pull the foundation
@@ -72,12 +73,31 @@ change rather than the locked rating formula.
 See [Player quality](docs/player-grade-spec.md) for the formulas, the league
 offset rebuild, standardisation, and shrinkage.
 
+## Club Form v1
+
+Refreshes of the foundation and domestic-history collectors now materialize
+team-match scores, xG, shots on target, big chances, total shots, and box
+touches. Completed current competitive matches are included automatically.
+
+Build Club Form after Player Quality:
+
+```bash
+python3 scripts/build_club_form.py
+```
+
+The output separates attack, defence, confidence, preseason, venue splits, and
+the dated availability snapshot. Preseason begins at one-quarter weight and is
+capped at 20%; injuries are annotated with Alpha Ability but do not move the
+score without a projected lineup.
+
+See [Club Form](docs/club-form-spec.md) for the exact formulas and boundaries.
+
 ## Status
 
-The PL, UCL, and preseason foundation pull is operational. The WCALPHA v1
-attacker and defender engine passes its formula-parity tests and remains the
-baseline. v2 extends grading to all eleven pitch positions.
+The PL, UCL, and preseason foundation pull is operational. Player Quality v2
+grades all eleven pitch positions, and Club Form v1 builds attack, defence, and
+evidence confidence for the full target-club universe.
 
 Clubalpha does not yet produce deployment-ready probabilities or
-recommendations. Squad Form has a data foundation but no scoring model, and
-team-level attack and defence ratings remain deliberately unbuilt.
+recommendations. Historical Fixtures and the later probability layer remain
+separate work.

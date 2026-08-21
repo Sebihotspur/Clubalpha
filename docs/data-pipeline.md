@@ -19,7 +19,7 @@ FotMob web feeds + FotMob statistics CDN + UEFA qualifier registry
     -> cached source responses
     -> normalized local JSON/JSONL
     -> coverage audit
-    -> Player Quality / Squad Form / Historical Fixtures
+    -> Player Quality / Club Form / Historical Fixtures
 ```
 
 The client uses the current FotMob paths:
@@ -64,6 +64,7 @@ provider-data warehouse.
 
 - Missing means unavailable, not zero.
 - Player-match preseason detail is counted separately from fixture coverage.
+- Team-match rows preserve both sides of every match for Club Form and opponent adjustment.
 - Every observation keeps FotMob IDs so players, teams, and matches remain joinable.
 - The collector fails if FotMob silently returns the wrong requested league season.
 - UCL qualification status includes an `as_of` date because the field is still changing.
@@ -80,8 +81,13 @@ coverage was effectively absent.
 Preseason is thinner: FotMob listed 179 relevant friendlies, 178 were complete,
 and 76 exposed player-match statistics (42.7%). Chances created and box touches
 were present in all 76 detailed matches, while xG and xA appeared in only 10.
-Squad Form must therefore apply metric-level coverage confidence rather than one
+Club Form must therefore apply metric-level coverage confidence rather than one
 blanket preseason weight.
+
+Completed current competitive fixtures are pulled into current player- and
+team-match datasets on every foundation refresh. Future schedules may remain in
+the registry, but an `--as-of` snapshot clears later results and finished
+statuses to prevent leakage.
 
 ## Player Quality handoff
 
