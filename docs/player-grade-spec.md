@@ -159,7 +159,7 @@ reported as a delta.
 
 ## What v2 changes
 
-v1 graded three positions. A team rating needs eleven, so v2 adds the
+v1 graded three positions, covering only six places on a pitch. v2 adds the
 midfielder and goalkeeper formulas WCALPHA already had but Clubalpha never
 ported, and splits centre-backs from fullbacks so fullbacks can carry the
 attacking work their role actually involves.
@@ -293,36 +293,12 @@ players such as Federico Dimarco as `LM,LB`. A central midfielder carrying an
 occasional secondary fullback position remains CM. CAM continues to resolve to
 FW, matching WCALPHA.
 
-## Team roll-up
-
-Player Ratings produces per-player grades. The roll-up produces two ratings per
-club, because goals scored and goals conceded are different questions answered
-by different players and a single blended number cannot price a total.
-
-| Position | Attack | Defence |
-|---|---:|---:|
-| FW | 3.0 | 0.5 |
-| CM | 2.2 | 1.5 |
-| FB | 1.2 | 1.8 |
-| CB | 0.6 | 2.5 |
-| GK | 0.1 | 2.5 |
-
-These are position weights only. Starter, rotation and squad role belong to
-Squad Form and multiply in above this layer; putting them here would leak
-availability into the ability model.
-
-The weights are a prior, not a result. Regressing actual goals scored and
-conceded in the 569 completed fixtures on the two ratings would replace them
-with measured values.
-
 ## Run
 
 ```bash
-python3 scripts/pull_transfer_backfill.py --detect-only   # size the gap first
-python3 scripts/pull_transfer_backfill.py
 python3 scripts/build_player_quality_v2.py
 ```
 
 Generated rows live under `data/processed/player_quality_v2/` and stay out of
-Git. The tracked audits are `reports/player-quality-v2-audit.json` and
-`reports/transfer-backfill-coverage.json`.
+Git. The tracked audit is `reports/player-quality-v2-audit.json`. Data backfill
+and team-level aggregation are separate layers and do not alter this formula.

@@ -731,7 +731,7 @@ def score_population(
     fat right tails while defensive metrics are bounded percentages, so forward
     grades span roughly twice the range of centre-back grades. Standardising
     each position to mean 0 and SD 1 makes a +1.0 forward and a +1.0 keeper the
-    same statement, which is what the roll-up weights already assume.
+    same position-relative statement.
 
     Shrinkage follows standardisation rather than preceding it, so that zero
     means "average for this position" and a thin sample is pulled toward its
@@ -777,52 +777,3 @@ def score_population(
         grades.extend(scored)
 
     return grades
-
-
-# ---------------------------------------------------------------------------
-# Team roll-up
-# ---------------------------------------------------------------------------
-
-
-def team_ratings(
-    grades: list[dict[str, Any]],
-    config: dict[str, Any],
-) -> list[dict[str, Any]]:
-    """Weighted attack and defence ratings per club.
-
-    Two ratings rather than one blend: goals scored and goals conceded are
-    different questions answered by different players, and a single number
-    cannot price a total. Position weights only — starter, rotation and squad
-    role belong to Club Form and multiply in above this layer.
-    """
-
-    roll_up = config["roll_up"]
-    buckets: dict[tuple[int, str], list[dict[str, Any]]] = defaultdict(list)
-    for row in grades:
-        buckets[(row["current_team_id"], row["current_team"])].append(row)
-
-    output: list[dict[str, Any]] = []
-    for (team_id, team), members in buckets.items():
-        record: dict[str, Any] = {
-            "team_id": team_id,
-            "team": team,
-            "graded_players": len(members),
-        }
-        for side in ("attack", "defence"):
-            weights = roll_up[side]
-            weighted = total = 0.0
-            for row in members:
-                weight = float(weights.get(row["scoring_position"], 0.0))
-                if weight <= 0:
-                    continue
-                weighted += row["alpha_ability_z"] * weight
-                total += weight
-            record[f"{side}_rating"] = round(weighted / total, 4) if total > 0 else None
-            record[f"{side}_weight"] = round(total, 3)
-        record["by_position"] = {
-            pos: sum(1 for row in members if row["scoring_position"] == pos)
-            for pos in sorted({row["scoring_position"] for row in members})
-        }
-        output.append(record)
-
-    return sorted(output, key=lambda row: str(row["team"]))

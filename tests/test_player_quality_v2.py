@@ -9,7 +9,6 @@ from clubalpha.player_quality_v2 import (
     resolved_formula,
     score_population,
     scoring_position,
-    team_ratings,
 )
 
 CONFIG = json.loads(
@@ -462,25 +461,6 @@ class NonPenaltyGoalTests(unittest.TestCase):
         features, flags = build_features(rows, [], "FW", CONFIG)
         self.assertIsNotNone(features["npg90"])
         self.assertEqual(flags, [])
-
-
-class TeamRollUpTests(unittest.TestCase):
-    def test_attack_and_defence_weight_positions_differently(self):
-        keys_fw = resolved_formula("FW", CONFIG)
-        keys_gk = resolved_formula("GK", CONFIG)
-        squad = [
-            *[player(i, "FW", 3000, 0.0, {k: 1.0 + i * 0.1 for k in keys_fw}) for i in range(6)],
-            *[player(100 + i, "GK", 3000, 0.0, {k: 1.0 + i * 0.1 for k in keys_gk}) for i in range(6)],
-        ]
-        grades = score_population(squad, CONFIG)
-        ratings = team_ratings(grades, CONFIG)
-        self.assertEqual(len(ratings), 1)
-        record = ratings[0]
-        self.assertIsNotNone(record["attack_rating"])
-        self.assertIsNotNone(record["defence_rating"])
-        # Six forwards at 3.0 and six keepers at 0.1 for attack; reversed for defence.
-        self.assertAlmostEqual(record["attack_weight"], 6 * 3.0 + 6 * 0.1, places=3)
-        self.assertAlmostEqual(record["defence_weight"], 6 * 0.5 + 6 * 2.5, places=3)
 
 
 if __name__ == "__main__":

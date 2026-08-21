@@ -53,46 +53,31 @@ rows stay under `data/processed/player_quality`; the tracked summary is
 
 ## Player Ratings v2
 
-v1 grades three positions, which is six of the eleven on a pitch — not enough
-for a team rating. v2 adds midfielders and goalkeepers, splits centre-backs
-from fullbacks, and rebuilds the scoring layer. v1 stays in the repository
-untouched as the parity baseline, and every rating change is reported as a
-delta against it.
+v1 grades three positions, covering only six of the eleven places on a pitch.
+v2 adds midfielders and goalkeepers, splits centre-backs from fullbacks, and
+rebuilds the scoring layer. v1 stays in the repository untouched as the parity
+baseline, and every rating change is reported as a delta against it.
 
-First, close the transferred-player gap. The foundation and domestic collectors
-are club-filtered, so a player who spent part of last season elsewhere is
-graded on a fragment:
-
-```bash
-python3 scripts/pull_transfer_backfill.py --detect-only
-python3 scripts/pull_transfer_backfill.py
-```
-
-Detection reconciles each squad player's FotMob career history against the rows
-already held, so the shortfall is exact rather than estimated. `--detect-only`
-sizes the problem without spending collection requests.
-
-Then build:
+Build the five-position grades:
 
 ```bash
 python3 scripts/build_player_quality_v2.py
 ```
 
 Outputs land in `data/processed/player_quality_v2/` and stay out of Git. The
-tracked audits are `reports/player-quality-v2-audit.json` and
-`reports/transfer-backfill-coverage.json`.
+tracked audit is `reports/player-quality-v2-audit.json`. Transfer gaps remain
+explicit in the coverage fields; closing them belongs in a separate data-layer
+change rather than the locked rating formula.
 
 See [Player quality](docs/player-grade-spec.md) for the formulas, the league
-offset rebuild, standardisation, shrinkage, and the attack/defence roll-up.
+offset rebuild, standardisation, and shrinkage.
 
 ## Status
 
 The PL, UCL, and preseason foundation pull is operational. The WCALPHA v1
 attacker and defender engine passes its formula-parity tests and remains the
-baseline. v2 extends grading to all eleven pitch positions and produces team
-attack and defence ratings.
+baseline. v2 extends grading to all eleven pitch positions.
 
 Clubalpha does not yet produce deployment-ready probabilities or
-recommendations. Squad Form has a data foundation but no scoring model, Club
-Dynamic is designed but unbuilt, and the v2 roll-up weights are a prior that has
-not been fitted against outcomes.
+recommendations. Squad Form has a data foundation but no scoring model, and
+team-level attack and defence ratings remain deliberately unbuilt.

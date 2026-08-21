@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Clubalpha v2 Alpha Ability grades and team attack/defence ratings.
+"""Build Clubalpha v2 Alpha Ability grades.
 
 Reads the normalized foundation and domestic-history layers, aggregates each
 current squad player's previous-season evidence, scores all five positions, and
@@ -30,7 +30,6 @@ from clubalpha.player_quality_v2 import (  # noqa: E402
     resolved_formula,
     score_population,
     scoring_position,
-    team_ratings,
 )
 
 
@@ -142,7 +141,7 @@ def main() -> int:
             "Missing foundation inputs. Run pull_fotmob_foundation.py first:\n" + "\n".join(missing)
         )
 
-    print("[1/6] Load normalized layers")
+    print("[1/5] Load normalized layers")
     config = load_json(args.config)
     squads = load_jsonl(required["squads"])
     teams = load_json(required["teams"])
@@ -172,7 +171,7 @@ def main() -> int:
         f"{len(match_index)} indexed fixtures"
     )
 
-    print("[2/6] Aggregate features for the five populations")
+    print("[2/5] Aggregate features for the five populations")
     rows_by_player: dict[int, list[dict[str, Any]]] = defaultdict(list)
     for row in historical_rows:
         if row.get("player_id") is not None:
@@ -237,20 +236,16 @@ def main() -> int:
 
     feature_count = write_jsonl(args.output_dir / "player_features.jsonl", features)
 
-    print("[3/6] Score, standardise, and shrink")
+    print("[3/5] Score, standardise, and shrink")
     grades = score_population(features, config)
     grades.sort(key=lambda row: (row["scoring_position"], -row["alpha_ability_z"], row["player"]))
     grade_count = write_jsonl(args.output_dir / "player_grades.jsonl", grades)
 
-    print("[4/6] Team attack and defence ratings")
-    ratings = team_ratings(grades, config)
-    rating_count = write_jsonl(args.output_dir / "team_ratings.jsonl", ratings)
-
-    print("[5/6] Compare against the WCALPHA v1 baseline")
+    print("[4/5] Compare against the WCALPHA v1 baseline")
     comparison = build_comparison(grades, load_jsonl(args.v1_grades))
 
-    print("[6/6] Audit")
-    audit = build_audit(features, grades, ratings, config, comparison)
+    print("[5/5] Audit")
+    audit = build_audit(features, grades, config, comparison)
     audit["generated_at_utc"] = datetime.now(timezone.utc).isoformat()
     audit["inputs"] = {
         "squad_rows": len(squads),
@@ -267,7 +262,6 @@ def main() -> int:
 
     print(f"Features: {feature_count}")
     print(f"Grades: {grade_count}")
-    print(f"Team ratings: {rating_count}")
     print(f"Duplicate match-player keys: {len(duplicates)}")
     print(f"Audit: {args.audit}")
     return 0
@@ -324,7 +318,6 @@ def build_comparison(
 def build_audit(
     features: list[dict[str, Any]],
     grades: list[dict[str, Any]],
-    ratings: list[dict[str, Any]],
     config: dict[str, Any],
     comparison: dict[str, Any],
 ) -> dict[str, Any]:
@@ -391,7 +384,6 @@ def build_audit(
         for source in (row["league_quality"].get("resolution") or {}):
             league_resolution[source] += 1
 
-    rated = [row for row in ratings if row.get("attack_rating") is not None]
     return {
         "formula_version": config["version"],
         "scope": (
@@ -421,27 +413,6 @@ def build_audit(
             "league_quality_method": config["league_quality"]["method"],
         },
         "leaders": leaders,
-        "team_ratings": {
-            "teams": len(ratings),
-            "teams_with_ratings": len(rated),
-            "top_attack": sorted(
-                (
-                    {"team": row["team"], "attack_rating": row["attack_rating"]}
-                    for row in rated
-                ),
-                key=lambda row: row["attack_rating"],
-                reverse=True,
-            )[:10],
-            "top_defence": sorted(
-                (
-                    {"team": row["team"], "defence_rating": row["defence_rating"]}
-                    for row in rated
-                    if row.get("defence_rating") is not None
-                ),
-                key=lambda row: row["defence_rating"],
-                reverse=True,
-            )[:10],
-        },
         "v1_comparison": comparison,
     }
 

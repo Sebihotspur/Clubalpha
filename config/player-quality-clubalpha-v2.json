@@ -17,7 +17,7 @@
     "enabled": true,
     "scope": "per_scoring_position",
     "reference_minimum_minutes": 700,
-    "note": "standardised_z = (composite - position_mean) / position_sd. Applied so a +1.0 forward and a +1.0 goalkeeper are the same statement about quality. Without it, forward grades span roughly twice the range of centre-back grades and the roll-up weights amplify the artifact."
+    "note": "standardised_z = (composite - position_mean) / position_sd. Applied so a +1.0 forward and a +1.0 goalkeeper are the same position-relative statement about quality. Without it, forward grades span roughly twice the range of centre-back grades and cross-position comparisons amplify the artifact."
   },
 
   "shrinkage": {
@@ -188,14 +188,6 @@
     "tb90": "No through-balls key exists in FotMob match detail. line_breaking_passes is a broader measure and was adopted as its own slot rather than mapped as a substitute.",
     "vers": "Versatility has no provider field. Calculable from usualPosition and positionId across match lineups; not yet built.",
     "pace": "physical_metrics_topspeed exists but reaches only 34% of centre-backs, concentrated in the Premier League and Champions League. Asymmetric coverage inside one peer population is worse than a shared gap, so pace stays missing and its weight leaves the denominator, matching the WCALPHA baseline."
-  },
-
-  "roll_up": {
-    "note": "Position weights only. Starter/rotation/squad role and expected minutes belong to Club Form and multiply in at the roll-up, never inside Player Ratings.",
-    "attack":  {"FW": 3.0, "CM": 2.2, "FB": 1.2, "CB": 0.6, "GK": 0.1},
-    "defence": {"GK": 2.5, "CB": 2.5, "FB": 1.8, "CM": 1.5, "FW": 0.5},
-    "status": "prior_not_fitted",
-    "fitting_plan": "Regress goals scored and conceded in the 569 completed 2025/26 PL and UCL fixtures on the two ratings to replace these priors with measured values."
   },
 
   "coverage": {
