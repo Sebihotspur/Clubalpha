@@ -51,8 +51,33 @@ WCALPHA v1 attacker, centre-back, and fullback Alpha Ability formulas. Generated
 rows stay under `data/processed/player_quality`; the tracked summary is
 `reports/player-quality-audit.json`.
 
+## Player Ratings v2
+
+v1 grades three positions, covering only six of the eleven places on a pitch.
+v2 adds midfielders and goalkeepers, splits centre-backs from fullbacks, and
+rebuilds the scoring layer. v1 stays in the repository untouched as the parity
+baseline, and every rating change is reported as a delta against it.
+
+Build the five-position grades:
+
+```bash
+python3 scripts/build_player_quality_v2.py
+```
+
+Outputs land in `data/processed/player_quality_v2/` and stay out of Git. The
+tracked audit is `reports/player-quality-v2-audit.json`. Transfer gaps remain
+explicit in the coverage fields; closing them belongs in a separate data-layer
+change rather than the locked rating formula.
+
+See [Player quality](docs/player-grade-spec.md) for the formulas, the league
+offset rebuild, standardisation, and shrinkage.
+
 ## Status
 
-The first PL, UCL, and preseason foundation pull is operational, and the first
-attacker/defender Player Quality engine passes WCALPHA formula-parity tests.
-Clubalpha does not yet produce deployment-ready probabilities or recommendations.
+The PL, UCL, and preseason foundation pull is operational. The WCALPHA v1
+attacker and defender engine passes its formula-parity tests and remains the
+baseline. v2 extends grading to all eleven pitch positions.
+
+Clubalpha does not yet produce deployment-ready probabilities or
+recommendations. Squad Form has a data foundation but no scoring model, and
+team-level attack and defence ratings remain deliberately unbuilt.
