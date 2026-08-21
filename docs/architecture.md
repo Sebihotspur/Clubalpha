@@ -73,16 +73,19 @@ Club Form
 │   ├── Style — how the club plays
 │   ├── Strengths and weaknesses — where performance is created or conceded
 │   └── Change state — manager, transfers, integration, and continuity
-└── Availability — who may be available
+├── Availability — who may be available
+└── Squad Selection Prior — current hierarchy, baseline XI, and minute shares
 ```
 
 Club Dynamics has no composite score and does not modify Performance Form.
 Its first role is to make club condition explainable; its later role is to
 support opponent-specific style matchups after validation.
 
-The joined Club Form Snapshot materializes Performance Form, Club Dynamics,
-and Availability in one dated team record. It preserves the three components
-and their confidence independently; it is not another rating formula.
+The Squad Selection Prior is the bridge between Player Quality and Club Form.
+It uses official recent lineup evidence and workload to estimate opportunity;
+Alpha Ability remains an attached quality measure and never predicts the
+manager's selection. The joined Club Form Snapshot materializes every component
+in one dated team record without creating another rating formula.
 
 ## 4. Historical Fixtures
 
@@ -107,7 +110,8 @@ Team
 ├── Club Form Snapshot
 │   ├── Performance Form
 │   ├── Club Dynamics
-│   └── Availability
+│   ├── Availability
+│   └── Squad Selection Prior
 └── Relevant Historical Evidence
 ```
 

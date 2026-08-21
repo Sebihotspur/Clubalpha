@@ -18,6 +18,7 @@ These foundations combine into a simple Football Intelligence Snapshot for each 
 - [Player quality](docs/player-grade-spec.md)
 - [Club Form](docs/club-form-spec.md)
 - [Club Dynamics](docs/club-dynamics-spec.md)
+- [Squad Selection Prior](docs/squad-selection-prior-spec.md)
 - [Data-source bakeoff](research/data-source-bakeoff.md)
 
 ## Pull the foundation
@@ -110,10 +111,26 @@ first dated squad snapshot establishes the continuity baseline for later pulls.
 
 See [Club Dynamics](docs/club-dynamics-spec.md) for the exact axes and safeguards.
 
+## Squad Selection Prior v1
+
+The selection layer preserves FotMob's declared starters and formation, blends
+recent weighted minutes with a conservative previous-season workload prior,
+and produces an availability-adjusted 990-minute squad distribution plus a
+baseline XI:
+
+```bash
+python3 scripts/build_squad_selection_prior.py
+```
+
+Alpha Ability is attached to each player but never selects the XI. Known
+unavailable players receive zero expected minutes in the adjusted prior;
+questionable and unknown cases remain visible and are not silently ruled out.
+This is a dated squad hierarchy, not a fixture-specific or confirmed lineup.
+
 ## Joined Club Form Snapshot
 
-Once both components are built, join Performance Form, Club Dynamics, and
-Availability into one record per team:
+Once the components are built, join Performance Form, Club Dynamics,
+Availability, and the Squad Selection Prior into one record per team:
 
 ```bash
 python3 scripts/build_club_form_snapshot.py
@@ -129,7 +146,8 @@ The PL, UCL, and preseason foundation pull is operational. Player Quality v2
 grades all eleven pitch positions. Club Form v1 builds attack, defence, and
 evidence confidence, while Club Dynamics v1 adds style, strengths/weaknesses,
 manager state, transfers, integration, and dated squad continuity. The joined
-Club Form Snapshot materializes all three Club Form components for 58 clubs.
+Club Form Snapshot materializes the intelligence layers for 58 clubs; 55 have
+a complete baseline XI prior, with three FotMob squad-page gaps left explicit.
 
 Clubalpha does not yet produce deployment-ready probabilities or
 recommendations. Historical Fixtures and the later probability layer remain

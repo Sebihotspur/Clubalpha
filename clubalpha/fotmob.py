@@ -539,6 +539,21 @@ def flatten_match_player_stats(match_payload: dict[str, Any]) -> list[dict[str, 
     output: list[dict[str, Any]] = []
     content = match_payload.get("content") or {}
     players = content.get("playerStats") or {}
+    lineup = content.get("lineup") or {}
+    lineup_players: dict[int, dict[str, Any]] = {}
+    for side in ("homeTeam", "awayTeam"):
+        team_lineup = lineup.get(side) or {}
+        formation = team_lineup.get("formation")
+        for group, is_starter in (("starters", True), ("subs", False)):
+            for player in team_lineup.get(group) or []:
+                if player.get("id") is None:
+                    continue
+                lineup_players[int(player["id"])] = {
+                    "is_starter": is_starter,
+                    "lineup_position_id": player.get("positionId"),
+                    "team_formation": formation,
+                    "lineup_source": lineup.get("source"),
+                }
     shots = (content.get("shotmap") or {}).get("shots")
     shotmap_goals: dict[int, int] = {}
     shotmap_non_penalty_goals: dict[int, int] = {}
@@ -629,6 +644,16 @@ def flatten_match_player_stats(match_payload: dict[str, Any]) -> list[dict[str, 
                 "team_id": int(player["teamId"]),
                 "team": player.get("teamName"),
                 "is_goalkeeper": bool(player.get("isGoalkeeper")),
+                "is_starter": (lineup_players.get(player_id) or {}).get("is_starter"),
+                "lineup_position_id": (lineup_players.get(player_id) or {}).get(
+                    "lineup_position_id"
+                ),
+                "team_formation": (lineup_players.get(player_id) or {}).get(
+                    "team_formation"
+                ),
+                "lineup_source": (lineup_players.get(player_id) or {}).get(
+                    "lineup_source"
+                ),
                 "metrics": metrics,
             }
         )

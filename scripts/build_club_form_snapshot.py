@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Join Performance Form, Club Dynamics, and Availability by team."""
+"""Join dated Club Form, Dynamics, Availability, and Selection intelligence."""
 
 from __future__ import annotations
 
@@ -49,6 +49,7 @@ def _example(row: dict[str, Any]) -> dict[str, Any]:
     change = dynamics["change_state"] or {}
     transfers = change.get("transfers") or {}
     availability = row["availability"]
+    selection = row["squad_selection_prior"]
     declared_shifts = [
         {"axis": axis, **values}
         for axis, values in (((style.get("season_boundary_shift") or {}).get("axes")) or {}).items()
@@ -84,6 +85,14 @@ def _example(row: dict[str, Any]) -> dict[str, Any]:
             "questionable": availability.get("questionable"),
             "unknown": availability.get("unknown"),
         },
+        "selection_prior": {
+            "shape": selection.get("shape_prior"),
+            "evidence": selection.get("evidence"),
+            "expected_starting_xi_prior": selection.get("expected_starting_xi_prior"),
+            "lineup_prior_ready": (selection.get("decision_boundaries") or {}).get(
+                "lineup_prior_ready"
+            ),
+        },
         "quality_flags": row["quality_flags"],
         "projection_ready": row["decision_boundaries"]["projection_ready"],
     }
@@ -114,6 +123,15 @@ def build_audit(rows: list[dict[str, Any]]) -> dict[str, Any]:
                 float((row["club_dynamics"]["strengths_weaknesses"] or {}).get("coverage") or 0) > 0
                 for row in rows
             ),
+            "teams_with_lineup_prior": sum(
+                bool(
+                    (
+                        row["squad_selection_prior"].get("decision_boundaries")
+                        or {}
+                    ).get("lineup_prior_ready")
+                )
+                for row in rows
+            ),
             "projection_ready": sum(
                 row["decision_boundaries"]["projection_ready"] for row in rows
             ),
@@ -122,13 +140,15 @@ def build_audit(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "combined_score_created": False,
             "dynamics_modifier_applied": False,
             "availability_modifier_applied": False,
+            "selection_modifier_applied_to_performance": False,
             "transfer_fees_used": False,
             "fixture_specific": False,
         },
         "examples": examples,
         "next_requirements": [
-            "expected starting XI",
-            "expected minutes",
+            "fixture selection",
+            "fresh team news",
+            "confirmed or fixture-specific expected XI",
             "walk-forward validation of any dynamics modifier",
             "fixture-specific style matchup",
         ],
@@ -148,6 +168,11 @@ def main() -> int:
         default=ROOT / "data/processed/club_dynamics/club_dynamics.jsonl",
     )
     parser.add_argument(
+        "--selection-prior",
+        type=Path,
+        default=ROOT / "data/processed/squad_selection_prior/squad_selection_prior.jsonl",
+    )
+    parser.add_argument(
         "--output-dir",
         type=Path,
         default=ROOT / "data/processed/club_form_snapshot",
@@ -159,11 +184,12 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    print("[1/3] Load Performance Form and Club Dynamics")
+    print("[1/3] Load Performance Form, Club Dynamics, and Squad Selection Prior")
     forms = load_jsonl(args.club_form)
     dynamics = load_jsonl(args.club_dynamics)
+    selection_priors = load_jsonl(args.selection_prior)
     print("[2/3] Validate and join the team universe")
-    snapshots = join_club_form_snapshots(forms, dynamics)
+    snapshots = join_club_form_snapshots(forms, dynamics, selection_priors)
     print("[3/3] Write ignored snapshot and tracked audit")
     count = write_jsonl(args.output_dir / "club_form_snapshot.jsonl", snapshots)
     write_json(
@@ -174,6 +200,7 @@ def main() -> int:
             "inputs": {
                 "club_form": str(args.club_form),
                 "club_dynamics": str(args.club_dynamics),
+                "selection_prior": str(args.selection_prior),
             },
             "outputs": {"club_form_snapshot_rows": count},
             "combined_score_created": False,

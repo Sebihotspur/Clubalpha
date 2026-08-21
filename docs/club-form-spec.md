@@ -113,10 +113,12 @@ FotMob injury flags are classified conservatively:
 - `Doubtful`, `Day to day`, and `Back in training` are `questionable`;
 - the associated Alpha Ability Grade is shown when available.
 
-Availability does **not** modify Club Form v1. A projected lineup and expected
-minutes are required before an absence can be converted into a team impact.
-This prevents a stale injury flag or injured depth player from moving a club as
-if a confirmed starter were missing.
+Availability does **not** modify the Performance Form score. In the separate
+Squad Selection Prior, a known unavailable player can receive zero expected
+minutes and their opportunity can be redistributed within the squad. This
+still does not create a team-strength modifier: player impact requires a
+fixture-specific lineup and later validation. Questionable and unknown cases
+are never silently treated as unavailable.
 
 ## Time integrity
 
@@ -149,8 +151,9 @@ python3 scripts/build_club_form.py
 
 ### Joined Club Form Snapshot
 
-After Club Dynamics is built, one non-blended team record joins Performance
-Form, Club Dynamics, and Availability:
+After Club Dynamics and the Squad Selection Prior are built, one non-blended
+team record joins Performance Form, Club Dynamics, Availability, and selection
+evidence:
 
 ```bash
 python3 scripts/build_club_form_snapshot.py
@@ -169,6 +172,12 @@ does not calculate a combined score. Every record explicitly states that
 Dynamics and Availability do not change Performance Form and lists the missing
 requirements for fixture-level projections.
 
+The 2026-08-18 selection snapshot produces 55 complete XI priors from 58 clubs.
+Thirty-eight clubs have recent player-match detail and 37 have at least one
+exact FotMob-declared lineup. NK Celje, Sabah FK, and Shakhtar Donetsk remain
+empty because FotMob supplied no current squad page; the model does not invent
+their players.
+
 ## First real-data audit
 
 The 2026-08-18 snapshot produces:
@@ -183,7 +192,7 @@ The 2026-08-18 snapshot produces:
 
 ## Deliberately deferred
 
-- projected lineups and expected minutes;
+- fixture-specific lineups and locked expected minutes;
 - World Cup workload and recovery;
 - style matchup and head-to-head evidence;
 - conversion of Club Form into goal probabilities.

@@ -66,6 +66,9 @@ provider-data warehouse.
 
 - Missing means unavailable, not zero.
 - Player-match preseason detail is counted separately from fixture coverage.
+- Declared starter status, lineup position, team formation, and lineup source
+  are preserved from match cards. Missing lineup data remains unknown; a
+  90-minute appearance is never used to infer a start.
 - Team-match rows preserve both sides of every match for Club Form and opponent adjustment.
 - Decorated team values preserve their leading counts and percentages for style analysis.
 - Confirmed transfers retain effective and reported dates so `--as-of` builds can reject future information.
@@ -83,8 +86,9 @@ match. UCL physical top-speed data was also complete; Premier League top-speed
 coverage was effectively absent.
 
 Preseason is thinner: FotMob listed 179 relevant friendlies, 178 were complete,
-and 76 exposed player-match statistics (42.7%). Chances created and box touches
-were present in all 76 detailed matches, while xG and xA appeared in only 10.
+and 77 exposed player-match statistics (43.3%). Chances created and box touches
+were present throughout the detailed subset, while xG and xA appeared much less
+often.
 Club Form must therefore apply metric-level coverage confidence rather than one
 blanket preseason weight.
 

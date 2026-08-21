@@ -85,6 +85,14 @@ class FotMobNormalizationTests(unittest.TestCase):
                 "matchTimeUTCDate": "2026-08-12T18:30:00Z",
             },
             "content": {
+                "lineup": {
+                    "source": "provider",
+                    "homeTeam": {
+                        "formation": "4-3-3",
+                        "starters": [{"id": 9, "positionId": 105}],
+                        "subs": [],
+                    },
+                },
                 "playerStats": {
                     "9": {
                         "id": 9,
@@ -120,6 +128,40 @@ class FotMobNormalizationTests(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["metrics"]["minutes_played"]["value"], 61)
         self.assertEqual(rows[0]["metrics"]["chances_created"]["value"], 3)
+        self.assertTrue(rows[0]["is_starter"])
+        self.assertEqual(rows[0]["lineup_position_id"], 105)
+        self.assertEqual(rows[0]["team_formation"], "4-3-3")
+        self.assertEqual(rows[0]["lineup_source"], "provider")
+
+    def test_missing_lineup_remains_unknown_instead_of_inferred_from_minutes(self):
+        payload = {
+            "general": {"matchId": 1, "leagueId": 47, "leagueName": "Premier League"},
+            "content": {
+                "playerStats": {
+                    "9": {
+                        "id": 9,
+                        "name": "Forward",
+                        "teamId": 10,
+                        "teamName": "Club",
+                        "isGoalkeeper": False,
+                        "stats": [
+                            {
+                                "stats": {
+                                    "Minutes played": {
+                                        "key": "minutes_played",
+                                        "stat": {"value": 90, "type": "integer"},
+                                    }
+                                }
+                            }
+                        ],
+                    }
+                }
+            },
+        }
+        row = flatten_match_player_stats(payload)[0]
+        self.assertIsNone(row["is_starter"])
+        self.assertIsNone(row["lineup_position_id"])
+        self.assertIsNone(row["team_formation"])
 
     def test_decorated_team_stats_preserve_counts_rates_and_attempt_proxies(self):
         payload = {
