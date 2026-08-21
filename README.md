@@ -110,12 +110,26 @@ first dated squad snapshot establishes the continuity baseline for later pulls.
 
 See [Club Dynamics](docs/club-dynamics-spec.md) for the exact axes and safeguards.
 
+## Joined Club Form Snapshot
+
+Once both components are built, join Performance Form, Club Dynamics, and
+Availability into one record per team:
+
+```bash
+python3 scripts/build_club_form_snapshot.py
+```
+
+The snapshot is an intelligence view, not a new grade. It validates that all
+components use the same team universe and date, preserves every confidence
+field, and records why the club is not yet fixture-projection ready.
+
 ## Status
 
 The PL, UCL, and preseason foundation pull is operational. Player Quality v2
 grades all eleven pitch positions. Club Form v1 builds attack, defence, and
 evidence confidence, while Club Dynamics v1 adds style, strengths/weaknesses,
-manager state, transfers, integration, and dated squad continuity.
+manager state, transfers, integration, and dated squad continuity. The joined
+Club Form Snapshot materializes all three Club Form components for 58 clubs.
 
 Clubalpha does not yet produce deployment-ready probabilities or
 recommendations. Historical Fixtures and the later probability layer remain

@@ -126,6 +126,10 @@ minutes-weighted known Alpha total describes how much of the known incoming
 quality has appeared on the pitch. Fee and market value are retained for
 traceability but never enter the football model.
 
+If no transfer in a non-empty group joins to Player Quality, its Alpha total
+remains missing rather than becoming zero. Zero is reserved for a truly empty
+transfer group or a known minutes-weighted contribution of zero.
+
 Squad continuity requires two dated snapshots. The first run is correctly
 reported as `first_squad_snapshot`; later pulls calculate retained, added, and
 removed players against the most recent earlier snapshot.

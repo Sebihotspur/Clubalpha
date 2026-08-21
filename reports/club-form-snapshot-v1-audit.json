@@ -1,0 +1,455 @@
+{
+  "snapshot_version": "clubalpha_club_form_snapshot_v1",
+  "generated_at_utc": "2026-08-21T21:49:02.684510+00:00",
+  "as_of": "2026-08-18",
+  "counts": {
+    "teams": 58,
+    "teams_with_performance_form": 58,
+    "teams_with_style": 56,
+    "teams_with_strengths_weaknesses": 56,
+    "projection_ready": 0
+  },
+  "decision_boundaries": {
+    "combined_score_created": false,
+    "dynamics_modifier_applied": false,
+    "availability_modifier_applied": false,
+    "transfer_fees_used": false,
+    "fixture_specific": false
+  },
+  "examples": {
+    "Arsenal": {
+      "team_id": 9825,
+      "performance": {
+        "overall_form_z": 0.6377,
+        "attack_form_z": 0.1104,
+        "defense_form_z": 1.165,
+        "confidence": {
+          "attack": 0.5814,
+          "defense": 0.5814,
+          "average": 0.5814
+        }
+      },
+      "style_identity": [
+        {
+          "axis": "high_pressing",
+          "descriptor": "high-regain press",
+          "z": 1.2538
+        },
+        {
+          "axis": "territory",
+          "descriptor": "advanced territory",
+          "z": 0.5288
+        },
+        {
+          "axis": "crossing",
+          "descriptor": "mixed width",
+          "z": -0.3663
+        }
+      ],
+      "declared_style_shifts": [
+        {
+          "axis": "directness",
+          "previous_raw_z": -0.3301,
+          "post_season_boundary_raw_z": -1.2039,
+          "delta_raw_z": -0.8738,
+          "confidence": 0.3057,
+          "direction": "moving toward shorter build-up"
+        }
+      ],
+      "strengths": [
+        {
+          "axis": "chance_prevention",
+          "label": "Chance prevention",
+          "z": 0.3729
+        },
+        {
+          "axis": "box_defense",
+          "label": "Box defence",
+          "z": 0.3714
+        },
+        {
+          "axis": "shot_suppression",
+          "label": "Shot suppression",
+          "z": 0.3336
+        }
+      ],
+      "weaknesses": [],
+      "manager": {
+        "current": {
+          "coach_id": 24011,
+          "coach": "Mikel Arteta"
+        },
+        "previous_season": [
+          {
+            "coach_id": 24011,
+            "coach": "Mikel Arteta",
+            "matches": 38
+          }
+        ],
+        "changed_since_previous_season": false,
+        "state": "continuity",
+        "detection_method": "current coach compared with previous-season FotMob coach history",
+        "post_season_boundary_matches": 4,
+        "stability_confidence": 1.0,
+        "appointment_date": null
+      },
+      "transfers": {
+        "incoming": 4,
+        "outgoing": 6,
+        "alpha_coverage": 0.5,
+        "net_known_alpha_z": 3.146,
+        "minutes_weighted_known_incoming_alpha_z": 1.1975,
+        "incoming_integration_confidence": 0.3986,
+        "incoming_integration_coverage": 1.0
+      },
+      "availability": {
+        "unavailable": 2,
+        "questionable": 0,
+        "unknown": 0
+      },
+      "quality_flags": {
+        "performance": [],
+        "dynamics": [
+          "first_squad_snapshot"
+        ]
+      },
+      "projection_ready": false
+    },
+    "Chelsea": {
+      "team_id": 8455,
+      "performance": {
+        "overall_form_z": -0.3936,
+        "attack_form_z": -0.267,
+        "defense_form_z": -0.5203,
+        "confidence": {
+          "attack": 0.5299,
+          "defense": 0.5299,
+          "average": 0.5299
+        }
+      },
+      "style_identity": [
+        {
+          "axis": "directness",
+          "descriptor": "shorter build-up",
+          "z": -0.5613
+        },
+        {
+          "axis": "crossing",
+          "descriptor": "mixed width",
+          "z": -0.4448
+        },
+        {
+          "axis": "control",
+          "descriptor": "balanced control",
+          "z": 0.3953
+        }
+      ],
+      "declared_style_shifts": [
+        {
+          "axis": "territory",
+          "previous_raw_z": -0.2385,
+          "post_season_boundary_raw_z": 0.4125,
+          "delta_raw_z": 0.651,
+          "confidence": 0.3098,
+          "direction": "moving toward advanced territory"
+        }
+      ],
+      "strengths": [],
+      "weaknesses": [],
+      "manager": {
+        "current": {
+          "coach_id": 30889,
+          "coach": "Xabi Alonso"
+        },
+        "previous_season": [
+          {
+            "coach_id": 34000,
+            "coach": "Enzo Maresca",
+            "matches": 19
+          },
+          {
+            "coach_id": 24105,
+            "coach": "Liam Rosenior",
+            "matches": 13
+          },
+          {
+            "coach_id": 1823023,
+            "coach": "Calum McFarlane",
+            "matches": 6
+          }
+        ],
+        "changed_since_previous_season": true,
+        "state": "developing_transition",
+        "detection_method": "current coach compared with previous-season FotMob coach history",
+        "post_season_boundary_matches": 6,
+        "stability_confidence": 0.5,
+        "appointment_date": null
+      },
+      "transfers": {
+        "incoming": 10,
+        "outgoing": 11,
+        "alpha_coverage": 0.4762,
+        "net_known_alpha_z": 0.178,
+        "minutes_weighted_known_incoming_alpha_z": 0.2024,
+        "incoming_integration_confidence": 0.1889,
+        "incoming_integration_coverage": 1.0
+      },
+      "availability": {
+        "unavailable": 1,
+        "questionable": 4,
+        "unknown": 0
+      },
+      "quality_flags": {
+        "performance": [
+          "preseason_weight_capped"
+        ],
+        "dynamics": [
+          "first_squad_snapshot"
+        ]
+      },
+      "projection_ready": false
+    },
+    "Coventry City": {
+      "team_id": 8669,
+      "performance": {
+        "overall_form_z": 0.4567,
+        "attack_form_z": 0.3695,
+        "defense_form_z": 0.544,
+        "confidence": {
+          "attack": 0.4748,
+          "defense": 0.4748,
+          "average": 0.4748
+        }
+      },
+      "style_identity": [
+        {
+          "axis": "directness",
+          "descriptor": "mixed progression",
+          "z": -0.3414
+        },
+        {
+          "axis": "control",
+          "descriptor": "balanced control",
+          "z": 0.3391
+        },
+        {
+          "axis": "set_piece_reliance",
+          "descriptor": "balanced chance sources",
+          "z": 0.1765
+        }
+      ],
+      "declared_style_shifts": [],
+      "strengths": [],
+      "weaknesses": [],
+      "manager": {
+        "current": {
+          "coach_id": 30631,
+          "coach": "Frank Lampard"
+        },
+        "previous_season": [
+          {
+            "coach_id": 30631,
+            "coach": "Frank Lampard",
+            "matches": 46
+          }
+        ],
+        "changed_since_previous_season": false,
+        "state": "continuity",
+        "detection_method": "current coach compared with previous-season FotMob coach history",
+        "post_season_boundary_matches": 3,
+        "stability_confidence": 1.0,
+        "appointment_date": null
+      },
+      "transfers": {
+        "incoming": 7,
+        "outgoing": 3,
+        "alpha_coverage": 0.5,
+        "net_known_alpha_z": -1.427,
+        "minutes_weighted_known_incoming_alpha_z": null,
+        "incoming_integration_confidence": null,
+        "incoming_integration_coverage": 0.0
+      },
+      "availability": {
+        "unavailable": 1,
+        "questionable": 2,
+        "unknown": 0
+      },
+      "quality_flags": {
+        "performance": [
+          "low_form_confidence"
+        ],
+        "dynamics": [
+          "first_squad_snapshot",
+          "partial_style_profile"
+        ]
+      },
+      "projection_ready": false
+    },
+    "Manchester City": {
+      "team_id": 8456,
+      "performance": {
+        "overall_form_z": 0.4584,
+        "attack_form_z": 0.7282,
+        "defense_form_z": 0.1887,
+        "confidence": {
+          "attack": 0.5211,
+          "defense": 0.5211,
+          "average": 0.5211
+        }
+      },
+      "style_identity": [
+        {
+          "axis": "high_pressing",
+          "descriptor": "high-regain press",
+          "z": 1.1314
+        },
+        {
+          "axis": "directness",
+          "descriptor": "shorter build-up",
+          "z": -0.8176
+        },
+        {
+          "axis": "territory",
+          "descriptor": "advanced territory",
+          "z": 0.7868
+        }
+      ],
+      "declared_style_shifts": [],
+      "strengths": [
+        {
+          "axis": "box_access",
+          "label": "Box access",
+          "z": 0.7603
+        },
+        {
+          "axis": "box_defense",
+          "label": "Box defence",
+          "z": 0.375
+        },
+        {
+          "axis": "shot_suppression",
+          "label": "Shot suppression",
+          "z": 0.2819
+        }
+      ],
+      "weaknesses": [],
+      "manager": {
+        "current": {
+          "coach_id": 34000,
+          "coach": "Enzo Maresca"
+        },
+        "previous_season": [
+          {
+            "coach_id": 41636,
+            "coach": "Pep Guardiola",
+            "matches": 38
+          }
+        ],
+        "changed_since_previous_season": true,
+        "state": "early_transition",
+        "detection_method": "current coach compared with previous-season FotMob coach history",
+        "post_season_boundary_matches": 3,
+        "stability_confidence": 0.3333,
+        "appointment_date": null
+      },
+      "transfers": {
+        "incoming": 5,
+        "outgoing": 18,
+        "alpha_coverage": 0.3478,
+        "net_known_alpha_z": 0.969,
+        "minutes_weighted_known_incoming_alpha_z": 0.0,
+        "incoming_integration_confidence": 0.0,
+        "incoming_integration_coverage": 0.8
+      },
+      "availability": {
+        "unavailable": 2,
+        "questionable": 1,
+        "unknown": 0
+      },
+      "quality_flags": {
+        "performance": [],
+        "dynamics": [
+          "first_squad_snapshot"
+        ]
+      },
+      "projection_ready": false
+    },
+    "Shakhtar Donetsk": {
+      "team_id": 9728,
+      "performance": {
+        "overall_form_z": 0.2181,
+        "attack_form_z": 0.1009,
+        "defense_form_z": 0.3353,
+        "confidence": {
+          "attack": 0.273,
+          "defense": 0.273,
+          "average": 0.273
+        }
+      },
+      "style_identity": [
+        {
+          "axis": "control",
+          "descriptor": "possession-dominant",
+          "z": 0.5553
+        }
+      ],
+      "declared_style_shifts": [],
+      "strengths": [
+        {
+          "axis": "shot_suppression",
+          "label": "Shot suppression",
+          "z": 0.2573
+        }
+      ],
+      "weaknesses": [],
+      "manager": {
+        "current": null,
+        "previous_season": [
+          {
+            "coach_id": 39792,
+            "coach": "Arda Turan",
+            "matches": 30
+          }
+        ],
+        "changed_since_previous_season": null,
+        "state": "unknown",
+        "detection_method": "current coach compared with previous-season FotMob coach history",
+        "post_season_boundary_matches": 0,
+        "stability_confidence": null,
+        "appointment_date": null
+      },
+      "transfers": {
+        "incoming": 1,
+        "outgoing": 2,
+        "alpha_coverage": 0.0,
+        "net_known_alpha_z": null,
+        "minutes_weighted_known_incoming_alpha_z": null,
+        "incoming_integration_confidence": null,
+        "incoming_integration_coverage": 0.0
+      },
+      "availability": {
+        "unavailable": 0,
+        "questionable": 0,
+        "unknown": 0
+      },
+      "quality_flags": {
+        "performance": [
+          "low_form_confidence",
+          "partial_match_detail"
+        ],
+        "dynamics": [
+          "first_squad_snapshot",
+          "manager_identity_missing",
+          "partial_style_profile"
+        ]
+      },
+      "projection_ready": false
+    }
+  },
+  "next_requirements": [
+    "expected starting XI",
+    "expected minutes",
+    "walk-forward validation of any dynamics modifier",
+    "fixture-specific style matchup"
+  ]
+}

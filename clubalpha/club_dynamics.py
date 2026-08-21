@@ -468,6 +468,18 @@ def build_change_state(
         and row.get("integration")
         and row["integration"].get("minute_share") is not None
     ]
+    incoming_alpha_sum = sum(known_in) if known_in else (0.0 if not incoming else None)
+    outgoing_alpha_sum = sum(known_out) if known_out else (0.0 if not outgoing else None)
+    net_known_alpha = (
+        sum(known_in) - sum(known_out)
+        if known_in or known_out
+        else 0.0 if not transfer_details else None
+    )
+    minutes_weighted_alpha = (
+        sum(minutes_weighted_known_in)
+        if minutes_weighted_known_in
+        else 0.0 if not incoming else None
+    )
 
     continuity = None
     if snapshot and previous_snapshot:
@@ -498,10 +510,10 @@ def build_change_state(
             "incoming": len(incoming),
             "outgoing": len(outgoing),
             "alpha_coverage": round((len(known_in) + len(known_out)) / len(transfer_details), 4) if transfer_details else 1.0,
-            "incoming_alpha_z_sum": round(sum(known_in), 4),
-            "outgoing_alpha_z_sum": round(sum(known_out), 4),
-            "net_known_alpha_z": round(sum(known_in) - sum(known_out), 4),
-            "minutes_weighted_known_incoming_alpha_z": round(sum(minutes_weighted_known_in), 4),
+            "incoming_alpha_z_sum": round(incoming_alpha_sum, 4) if incoming_alpha_sum is not None else None,
+            "outgoing_alpha_z_sum": round(outgoing_alpha_sum, 4) if outgoing_alpha_sum is not None else None,
+            "net_known_alpha_z": round(net_known_alpha, 4) if net_known_alpha is not None else None,
+            "minutes_weighted_known_incoming_alpha_z": round(minutes_weighted_alpha, 4) if minutes_weighted_alpha is not None else None,
             "incoming_integration_confidence": round(statistics.mean(incoming_shares), 4) if incoming_shares else (1.0 if not incoming else None),
             "incoming_integration_coverage": round(len(incoming_shares) / len(incoming), 4) if incoming else 1.0,
             "events": transfer_details,

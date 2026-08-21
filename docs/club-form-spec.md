@@ -147,6 +147,28 @@ Run:
 python3 scripts/build_club_form.py
 ```
 
+### Joined Club Form Snapshot
+
+After Club Dynamics is built, one non-blended team record joins Performance
+Form, Club Dynamics, and Availability:
+
+```bash
+python3 scripts/build_club_form_snapshot.py
+```
+
+```text
+data/processed/club_form_snapshot/
+├── club_form_snapshot.jsonl
+└── manifest.json
+
+reports/club-form-snapshot-v1-audit.json
+```
+
+The join requires identical team universes, team names, and `as_of` dates. It
+does not calculate a combined score. Every record explicitly states that
+Dynamics and Availability do not change Performance Form and lists the missing
+requirements for fixture-level projections.
+
 ## First real-data audit
 
 The 2026-08-18 snapshot produces:

@@ -157,6 +157,32 @@ class ChangeStateTests(unittest.TestCase):
         self.assertEqual(change["squad_continuity"]["removed_since_snapshot"], 1)
         self.assertIsNone(change["score_modifier"])
 
+    def test_unknown_transfer_quality_remains_missing_not_zero(self):
+        change = build_change_state(
+            {"team_id": 10, "name": "Club"},
+            None,
+            None,
+            [],
+            [
+                {
+                    "team_id": 10,
+                    "direction": "in",
+                    "player_id": 9,
+                    "effective_date": "2026-07-01",
+                    "reported_at_utc": "2026-06-20T10:00:00Z",
+                }
+            ],
+            {},
+            [],
+            [],
+            date(2026, 8, 18),
+            CONFIG,
+        )
+        self.assertEqual(change["transfers"]["alpha_coverage"], 0.0)
+        self.assertIsNone(change["transfers"]["incoming_alpha_z_sum"])
+        self.assertIsNone(change["transfers"]["net_known_alpha_z"])
+        self.assertIsNone(change["transfers"]["minutes_weighted_known_incoming_alpha_z"])
+
 
 if __name__ == "__main__":
     unittest.main()

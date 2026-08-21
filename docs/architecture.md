@@ -80,6 +80,10 @@ Club Dynamics has no composite score and does not modify Performance Form.
 Its first role is to make club condition explainable; its later role is to
 support opponent-specific style matchups after validation.
 
+The joined Club Form Snapshot materializes Performance Form, Club Dynamics,
+and Availability in one dated team record. It preserves the three components
+and their confidence independently; it is not another rating formula.
+
 ## 4. Historical Fixtures
 
 Question: **What does real match evidence tell us?**
@@ -100,7 +104,10 @@ The first useful product is a Football Intelligence Snapshot:
 ```text
 Team
 ├── Player Quality
-├── Club Form
+├── Club Form Snapshot
+│   ├── Performance Form
+│   ├── Club Dynamics
+│   └── Availability
 └── Relevant Historical Evidence
 ```
 
