@@ -2,12 +2,13 @@
 
 ## Scope
 
-The first pull builds four local datasets from free FotMob web data:
+The first pull builds five local datasets from free FotMob web data:
 
 1. The 2026/27 Premier League club and fixture universe.
 2. The 29 confirmed 2026/27 Champions League league-phase clubs and 14 current play-off contenders.
 3. The previous Premier League and Champions League fixtures, player-match detail, and requested player and team season metrics.
 4. The 2026 preseason fixture registry and every player-match detail FotMob exposes for those clubs.
+5. Dated club snapshots, manager history, and confirmed transfer events for Club Dynamics.
 
 UEFA remains the authority for qualification status. The seven 2026/27 play-off
 winners are intentionally provisional until the second legs finish on 26 August.
@@ -19,7 +20,7 @@ FotMob web feeds + FotMob statistics CDN + UEFA qualifier registry
     -> cached source responses
     -> normalized local JSON/JSONL
     -> coverage audit
-    -> Player Quality / Club Form / Historical Fixtures
+    -> Player Quality / Club Form + Club Dynamics / Historical Fixtures
 ```
 
 The client uses the current FotMob paths:
@@ -55,6 +56,7 @@ and should be used sparingly.
 
 - `data/cache/fotmob`: source responses, ignored by Git.
 - `data/processed/foundation`: normalized datasets, ignored by Git.
+- `data/processed/club_dynamics/source_snapshots.jsonl`: append-only dated squad and manager identity, ignored by Git.
 - `reports/foundation-coverage.json`: compact counts, gaps, and errors; tracked.
 
 This keeps the public repository reproducible without turning Git into a raw
@@ -65,6 +67,8 @@ provider-data warehouse.
 - Missing means unavailable, not zero.
 - Player-match preseason detail is counted separately from fixture coverage.
 - Team-match rows preserve both sides of every match for Club Form and opponent adjustment.
+- Decorated team values preserve their leading counts and percentages for style analysis.
+- Confirmed transfers retain effective and reported dates so `--as-of` builds can reject future information.
 - Every observation keeps FotMob IDs so players, teams, and matches remain joinable.
 - The collector fails if FotMob silently returns the wrong requested league season.
 - UCL qualification status includes an `as_of` date because the field is still changing.
@@ -88,6 +92,11 @@ Completed current competitive fixtures are pulled into current player- and
 team-match datasets on every foundation refresh. Future schedules may remain in
 the registry, but an `--as-of` snapshot clears later results and finished
 statuses to prevent leakage.
+
+Team pages also produce `club_snapshots.jsonl`, `manager_history.jsonl`, and
+`transfer_events.jsonl`. The foundation contains the current normalized source
+state; Club Dynamics carries dated snapshots forward so squad continuity can be
+measured on later pulls.
 
 ## Player Quality handoff
 

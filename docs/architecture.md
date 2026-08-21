@@ -60,9 +60,25 @@ Inputs include:
 Preseason can strongly change role, fitness, and tactical assessments. It should only modestly change underlying player ability.
 
 Club Form v1 begins with recency-weighted attack and defence, low-weight
-preseason evidence, and a separate availability snapshot. Projected roles,
-World Cup workload, and tactical changes remain explicit later inputs rather
-than undocumented adjustments.
+preseason evidence, and a separate availability snapshot. Projected roles and
+World Cup workload remain explicit later inputs. Tactical changes are surfaced
+by Club Dynamics rather than hidden inside the performance score.
+
+Club Dynamics v1 now sits inside Club Form as a separate explanatory profile:
+
+```text
+Club Form
+├── Performance Form — how well the club is playing
+├── Club Dynamics
+│   ├── Style — how the club plays
+│   ├── Strengths and weaknesses — where performance is created or conceded
+│   └── Change state — manager, transfers, integration, and continuity
+└── Availability — who may be available
+```
+
+Club Dynamics has no composite score and does not modify Performance Form.
+Its first role is to make club condition explainable; its later role is to
+support opponent-specific style matchups after validation.
 
 ## 4. Historical Fixtures
 

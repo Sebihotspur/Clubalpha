@@ -27,8 +27,11 @@ from clubalpha.fotmob import (  # noqa: E402
     league_matches,
     league_table_teams,
     normalize_fixture,
+    normalize_manager_history,
     normalize_name,
     normalize_stat_rows,
+    normalize_team_snapshot,
+    normalize_transfer_events,
     team_fixtures,
     team_squad,
 )
@@ -64,6 +67,12 @@ TEAM_METRIC_AUDIT = [
     "big_chances",
     "total_shots",
     "touches_opp_box",
+    "possession_pct",
+    "passes",
+    "opposition_half_passes",
+    "long_balls_attempted_est",
+    "crosses_attempted_est",
+    "expected_goals_set_play",
 ]
 
 
@@ -312,8 +321,11 @@ def main() -> int:
                     if not record.get("ucl_status"):
                         record["ucl_status"] = "playoff_contender"
 
-    print(f"[3/8] Team pages, squads, and preseason registry ({len(team_index)} clubs)")
+    print(f"[3/8] Team pages, squads, dynamics, and preseason registry ({len(team_index)} clubs)")
     squad_rows: list[dict[str, Any]] = []
+    club_snapshot_rows: list[dict[str, Any]] = []
+    manager_history_rows: list[dict[str, Any]] = []
+    transfer_event_rows: list[dict[str, Any]] = []
     preseason_match_ids: set[int] = set()
     team_errors: list[dict[str, Any]] = []
     for number, team_id in enumerate(sorted(team_index), 1):
@@ -347,6 +359,24 @@ def main() -> int:
                     "injury": member.get("injury"),
                 }
             )
+        club_snapshot_rows.append(
+            normalize_team_snapshot(
+                payload,
+                team_id=team_id,
+                team=team_index[team_id]["name"],
+                snapshot_date=as_of,
+            )
+        )
+        manager_history_rows.extend(
+            normalize_manager_history(
+                payload, team_id=team_id, team=team_index[team_id]["name"]
+            )
+        )
+        transfer_event_rows.extend(
+            normalize_transfer_events(
+                payload, team_id=team_id, team=team_index[team_id]["name"]
+            )
+        )
         for match in team_fixtures(payload):
             tournament_name = str((match.get("tournament") or {}).get("name") or "")
             if tournament_name not in config["preseason"]["competition_names"]:
@@ -459,6 +489,15 @@ def main() -> int:
         "ucl_playoff_contenders": sum(1 for row in teams if row.get("ucl_status") == "playoff_contender"),
         "teams_without_squad": len(teams_without_squad),
         "squad_rows": write_jsonl(output_dir / "squads.jsonl", squad_rows),
+        "club_snapshots": write_jsonl(
+            output_dir / "club_snapshots.jsonl", club_snapshot_rows
+        ),
+        "manager_history_rows": write_jsonl(
+            output_dir / "manager_history.jsonl", manager_history_rows
+        ),
+        "transfer_event_rows": write_jsonl(
+            output_dir / "transfer_events.jsonl", transfer_event_rows
+        ),
         "fixtures": write_jsonl(output_dir / "fixtures.jsonl", fixtures),
         "preseason_fixtures": len(preseason_fixtures),
         "preseason_finished_fixtures": len(finished_preseason_ids),

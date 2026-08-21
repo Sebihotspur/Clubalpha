@@ -3,9 +3,13 @@ import unittest
 from clubalpha.fotmob import (
     clip_fixture_to_as_of,
     flatten_match_player_stats,
+    flatten_match_team_stats,
     normalize_fixture,
+    normalize_manager_history,
     normalize_name,
     normalize_stat_rows,
+    normalize_team_snapshot,
+    normalize_transfer_events,
 )
 
 
@@ -116,6 +120,82 @@ class FotMobNormalizationTests(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["metrics"]["minutes_played"]["value"], 61)
         self.assertEqual(rows[0]["metrics"]["chances_created"]["value"], 3)
+
+    def test_decorated_team_stats_preserve_counts_rates_and_attempt_proxies(self):
+        payload = {
+            "content": {
+                "stats": {
+                    "Periods": {
+                        "All": {
+                            "stats": [
+                                {
+                                    "stats": [
+                                        {"key": "passes", "stats": [531, 258]},
+                                        {"key": "accurate_passes", "stats": ["460 (87%)", "183 (71%)"]},
+                                        {"key": "long_balls_accurate", "stats": ["22 (46%)", "22 (40%)"]},
+                                        {"key": "accurate_crosses", "stats": ["9 (24%)", "3 (20%)"]},
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+        fixture = {
+            "match_id": 1,
+            "home_team_id": 10,
+            "home_team": "Home",
+            "away_team_id": 20,
+            "away_team": "Away",
+            "score": "1 - 0",
+        }
+        home = flatten_match_team_stats(payload, fixture)[0]
+        self.assertEqual(home["accurate_passes_for"], 460)
+        self.assertEqual(home["pass_accuracy_pct_for"], 87)
+        self.assertAlmostEqual(home["long_balls_attempted_est_for"], 47.8261, places=3)
+        self.assertEqual(home["crosses_attempted_est_for"], 37.5)
+
+    def test_team_page_normalizes_manager_history_and_confirmed_transfers(self):
+        payload = {
+            "squad": {
+                "squad": [
+                    {"title": "coach", "members": [{"id": 7, "name": "Coach", "excludeFromRanking": True}]},
+                    {"title": "attackers", "members": [{"id": 9, "name": "Forward"}]},
+                ]
+            },
+            "history": {
+                "coachHistory": [
+                    {"id": 6, "name": "Prior", "season": "2025/2026", "leagueId": 47, "win": 10, "draw": 5, "loss": 5}
+                ]
+            },
+            "transfers": {
+                "data": {
+                    "Players in": [
+                        {
+                            "playerId": 9,
+                            "name": "Forward",
+                            "position": {"label": "ST"},
+                            "fromDate": "2026-07-01T00:00:00Z",
+                            "transferDate": "2026-06-20T10:00:00Z",
+                            "fromClubId": 30,
+                            "fromClubFullName": "Other",
+                            "transferType": {"text": "contract"},
+                            "fee": {"value": 100},
+                        }
+                    ],
+                    "Players out": [],
+                }
+            },
+        }
+        snapshot = normalize_team_snapshot(payload, team_id=10, team="Club", snapshot_date="2026-08-18")
+        history = normalize_manager_history(payload, team_id=10, team="Club")
+        transfers = normalize_transfer_events(payload, team_id=10, team="Club")
+        self.assertEqual(snapshot["current_coach"]["coach_id"], 7)
+        self.assertEqual(snapshot["squad_player_ids"], [9])
+        self.assertEqual(history[0]["coach_id"], 6)
+        self.assertEqual(transfers[0]["effective_date"], "2026-07-01")
+        self.assertEqual(transfers[0]["counterparty_id"], 30)
 
     def test_match_shotmap_derives_reconciled_non_penalty_goals(self):
         payload = {

@@ -17,6 +17,7 @@ These foundations combine into a simple Football Intelligence Snapshot for each 
 - [FotMob data pipeline](docs/data-pipeline.md)
 - [Player quality](docs/player-grade-spec.md)
 - [Club Form](docs/club-form-spec.md)
+- [Club Dynamics](docs/club-dynamics-spec.md)
 - [Data-source bakeoff](research/data-source-bakeoff.md)
 
 ## Pull the foundation
@@ -92,11 +93,29 @@ score without a projected lineup.
 
 See [Club Form](docs/club-form-spec.md) for the exact formulas and boundaries.
 
+## Club Dynamics v1
+
+Club Dynamics explains how each team plays, where its recent strengths and
+weaknesses sit, and how manager or squad changes affect confidence. It uses
+normalized FotMob manager history, confirmed transfers, match style statistics,
+and Player Quality grades.
+
+```bash
+python3 scripts/build_club_dynamics.py
+```
+
+Style remains descriptive, transfer fees never enter the model, and manager or
+transfer changes do not modify Club Form without walk-forward validation. The
+first dated squad snapshot establishes the continuity baseline for later pulls.
+
+See [Club Dynamics](docs/club-dynamics-spec.md) for the exact axes and safeguards.
+
 ## Status
 
 The PL, UCL, and preseason foundation pull is operational. Player Quality v2
-grades all eleven pitch positions, and Club Form v1 builds attack, defence, and
-evidence confidence for the full target-club universe.
+grades all eleven pitch positions. Club Form v1 builds attack, defence, and
+evidence confidence, while Club Dynamics v1 adds style, strengths/weaknesses,
+manager state, transfers, integration, and dated squad continuity.
 
 Clubalpha does not yet produce deployment-ready probabilities or
 recommendations. Historical Fixtures and the later probability layer remain

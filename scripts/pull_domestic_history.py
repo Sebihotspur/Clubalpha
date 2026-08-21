@@ -91,7 +91,20 @@ def metric_coverage(rows: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def team_metric_coverage(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    metrics = ["goals", "expected_goals", "shots_on_target", "big_chances"]
+    metrics = [
+        "goals",
+        "expected_goals",
+        "shots_on_target",
+        "big_chances",
+        "total_shots",
+        "touches_opp_box",
+        "possession_pct",
+        "passes",
+        "opposition_half_passes",
+        "long_balls_attempted_est",
+        "crosses_attempted_est",
+        "expected_goals_set_play",
+    ]
     return {
         metric: {
             "team_match_rows_with_value": sum(

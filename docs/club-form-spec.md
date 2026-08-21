@@ -162,11 +162,13 @@ The 2026-08-18 snapshot produces:
 ## Deliberately deferred
 
 - projected lineups and expected minutes;
-- transfer and tactical-role effects;
 - World Cup workload and recovery;
-- manager changes;
 - style matchup and head-to-head evidence;
 - conversion of Club Form into goal probabilities.
+
+Manager identity, confirmed transfers, integration, tactical style, and team
+strengths/weaknesses are now surfaced by [Club Dynamics v1](club-dynamics-spec.md).
+They remain separate from this performance score until predictive validation.
 
 Those are additions to the foundation, not reasons to hide assumptions inside
 v1.

@@ -40,6 +40,29 @@ def _number(value: Any) -> float | None:
         return None
 
 
+def _display_number(value: Any) -> float | None:
+    """Read the leading number from a FotMob team-stat display value.
+
+    Team cards sometimes expose values such as ``"460 (87%)"`` instead of a
+    numeric JSON value. The player-stat feed keeps the numerator and
+    denominator separately, but the team feed does not, so preserving the
+    leading count is the least lossy normalization available.
+    """
+
+    numeric = _number(value)
+    if numeric is not None:
+        return numeric
+    match = re.match(r"^\s*(-?\d+(?:[.,]\d+)?)", str(value or ""))
+    if not match:
+        return None
+    return float(match.group(1).replace(",", "."))
+
+
+def _display_percentage(value: Any) -> float | None:
+    match = re.search(r"\((-?\d+(?:\.\d+)?)%\)", str(value or ""))
+    return float(match.group(1)) if match else None
+
+
 class FotMobClient:
     """Read FotMob JSON with retries, rate limiting, and a filesystem cache."""
 
@@ -250,6 +273,23 @@ MATCH_TEAM_STAT_KEYS = {
     "big_chances": "big_chance",
     "total_shots": "total_shots",
     "touches_opp_box": "touches_opp_box",
+    "possession_pct": "BallPossesion",
+    "passes": "passes",
+    "accurate_passes": "accurate_passes",
+    "own_half_passes": "own_half_passes",
+    "opposition_half_passes": "opposition_half_passes",
+    "long_balls_completed": "long_balls_accurate",
+    "crosses_completed": "accurate_crosses",
+    "expected_goals_open_play": "expected_goals_open_play",
+    "expected_goals_set_play": "expected_goals_set_play",
+    "tackles": "matchstats.headers.tackles",
+    "interceptions": "interceptions",
+}
+
+MATCH_TEAM_PERCENTAGE_KEYS = {
+    "pass_accuracy_pct": "accurate_passes",
+    "long_ball_accuracy_pct": "long_balls_accurate",
+    "cross_accuracy_pct": "accurate_crosses",
 }
 
 
@@ -272,7 +312,7 @@ def _match_team_stat_pairs(
             values = item.get("stats")
             if not key or not isinstance(values, list) or len(values) < 2:
                 continue
-            pair = (_number(values[0]), _number(values[1]))
+            pair = (_display_number(values[0]), _display_number(values[1]))
             if pair == (None, None):
                 continue
             current = output.get(str(key))
@@ -281,6 +321,33 @@ def _match_team_stat_pairs(
             ):
                 output[str(key)] = pair
     return output
+
+
+def _match_team_stat_percentage_pairs(
+    payload: dict[str, Any],
+) -> dict[str, tuple[float | None, float | None]]:
+    output: dict[str, tuple[float | None, float | None]] = {}
+    periods = ((((payload.get("content") or {}).get("stats") or {}).get("Periods")) or {})
+    groups = (((periods.get("All") or {}).get("stats")) or [])
+    for group in groups:
+        for item in group.get("stats") or []:
+            key = item.get("key")
+            values = item.get("stats")
+            if not key or not isinstance(values, list) or len(values) < 2:
+                continue
+            pair = (_display_percentage(values[0]), _display_percentage(values[1]))
+            if pair == (None, None):
+                continue
+            output[str(key)] = pair
+    return output
+
+
+def _estimated_attempts(completed: float | None, accuracy_pct: float | None) -> float | None:
+    """Approximate attempts when FotMob publishes only completions and a rounded rate."""
+
+    if completed is None or accuracy_pct is None or accuracy_pct <= 0:
+        return None
+    return completed * 100.0 / accuracy_pct
 
 
 def flatten_match_team_stats(
@@ -296,6 +363,7 @@ def flatten_match_team_stats(
     general = match_payload.get("general") or {}
     header_teams = ((match_payload.get("header") or {}).get("teams")) or []
     stat_pairs = _match_team_stat_pairs(match_payload)
+    percentage_pairs = _match_team_stat_percentage_pairs(match_payload)
     score_pair = _match_score(fixture.get("score"))
     if len(header_teams) >= 2:
         header_score = (
@@ -353,10 +421,116 @@ def flatten_match_team_stats(
             pair = stat_pairs.get(source_key, (None, None))
             row[f"{canonical}_for"] = pair[side["for_index"]]
             row[f"{canonical}_against"] = pair[side["against_index"]]
+        for canonical, source_key in MATCH_TEAM_PERCENTAGE_KEYS.items():
+            pair = percentage_pairs.get(source_key, (None, None))
+            row[f"{canonical}_for"] = pair[side["for_index"]]
+            row[f"{canonical}_against"] = pair[side["against_index"]]
+        for prefix, completed_key, accuracy_key in (
+            ("long_balls", "long_balls_completed", "long_ball_accuracy_pct"),
+            ("crosses", "crosses_completed", "cross_accuracy_pct"),
+        ):
+            for direction in ("for", "against"):
+                row[f"{prefix}_attempted_est_{direction}"] = _estimated_attempts(
+                    row.get(f"{completed_key}_{direction}"),
+                    row.get(f"{accuracy_key}_{direction}"),
+                )
         row["detailed_metric_count"] = sum(
             row.get(f"{key}_for") is not None for key in MATCH_TEAM_STAT_KEYS
         )
         rows.append(row)
+    return rows
+
+
+def normalize_team_snapshot(
+    payload: dict[str, Any], *, team_id: int, team: str | None, snapshot_date: str
+) -> dict[str, Any]:
+    """Normalize the current coach and squad identity from one team page."""
+
+    coach: dict[str, Any] | None = None
+    player_ids: list[int] = []
+    for group in ((payload.get("squad") or {}).get("squad") or []):
+        for member in group.get("members") or []:
+            if member.get("id") is None:
+                continue
+            if group.get("title") == "coach":
+                if coach is None:
+                    coach = {
+                        "coach_id": int(member["id"]),
+                        "coach": member.get("name"),
+                    }
+            elif member.get("excludeFromRanking") is not True:
+                player_ids.append(int(member["id"]))
+    return {
+        "source": "fotmob",
+        "snapshot_date": snapshot_date,
+        "team_id": int(team_id),
+        "team": team,
+        "current_coach": coach,
+        "squad_player_ids": sorted(set(player_ids)),
+    }
+
+
+def normalize_manager_history(
+    payload: dict[str, Any], *, team_id: int, team: str | None
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for item in ((payload.get("history") or {}).get("coachHistory") or []):
+        if item.get("id") is None:
+            continue
+        rows.append(
+            {
+                "source": "fotmob",
+                "team_id": int(team_id),
+                "team": team,
+                "coach_id": int(item["id"]),
+                "coach": item.get("name"),
+                "season": item.get("season"),
+                "competition_id": item.get("leagueId"),
+                "competition": item.get("leagueName"),
+                "wins": item.get("win"),
+                "draws": item.get("draw"),
+                "losses": item.get("loss"),
+                "points_per_game": item.get("pointsPerGame"),
+            }
+        )
+    return rows
+
+
+def normalize_transfer_events(
+    payload: dict[str, Any], *, team_id: int, team: str | None
+) -> list[dict[str, Any]]:
+    """Normalize confirmed incoming and outgoing transfers from a team page."""
+
+    rows: list[dict[str, Any]] = []
+    sections = ((payload.get("transfers") or {}).get("data") or {})
+    for section, direction in (("Players in", "in"), ("Players out", "out")):
+        for item in sections.get(section) or []:
+            if item.get("playerId") is None or item.get("contractExtension") is True:
+                continue
+            effective = item.get("fromDate") or item.get("transferDate")
+            counterparty_id = item.get("fromClubId") if direction == "in" else item.get("toClubId")
+            counterparty = item.get("fromClubFullName") if direction == "in" else item.get("toClubFullName")
+            fee = item.get("fee") or {}
+            transfer_type = item.get("transferType") or {}
+            rows.append(
+                {
+                    "source": "fotmob",
+                    "team_id": int(team_id),
+                    "team": team,
+                    "direction": direction,
+                    "player_id": int(item["playerId"]),
+                    "player": item.get("name"),
+                    "position": (item.get("position") or {}).get("label"),
+                    "effective_date": str(effective)[:10] if effective else None,
+                    "reported_at_utc": item.get("transferDate"),
+                    "counterparty_id": int(counterparty_id) if counterparty_id is not None else None,
+                    "counterparty": counterparty,
+                    "transfer_type": transfer_type.get("text") or transfer_type.get("localizationKey"),
+                    "on_loan": bool(item.get("onLoan")),
+                    "fee_eur": fee.get("value"),
+                    "market_value_eur": item.get("marketValue"),
+                }
+            )
     return rows
 
 
