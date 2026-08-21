@@ -32,6 +32,7 @@ from clubalpha.player_quality import (
 
 
 FULLBACK_POSITIONS = {"LB", "RB", "LWB", "RWB"}
+WIDE_MIDFIELD_POSITIONS = {"LM", "RM"}
 
 
 def scoring_position(position: Any, squad_group: Any) -> str | None:
@@ -39,19 +40,27 @@ def scoring_position(position: Any, squad_group: Any) -> str | None:
 
     Three differences from v1: goalkeepers and midfielders now resolve instead
     of being dropped, and a fullback primary position wins over the listed
-    squad group. FotMob files at least one wing-back under ``midfielders``, and
-    grading a wing-back against central midfielders would measure them on
-    metrics their role never asks for.
+    squad group. A wide-midfielder primary paired with a fullback or wing-back
+    secondary position also resolves to FB. FotMob represents players such as
+    Federico Dimarco as ``LM,LB`` and grading that role against central
+    midfielders would measure it on work it is not asked to perform.
 
     CAM continues to resolve to FW, matching WCALPHA.
     """
 
     primary = primary_position(position)
+    positions = {
+        token.strip().upper()
+        for token in str(position or "").split(",")
+        if token.strip()
+    }
     group = str(squad_group or "").lower()
 
     if group == "keepers" or primary == "GK":
         return "GK"
-    if primary in FULLBACK_POSITIONS:
+    if primary in FULLBACK_POSITIONS or (
+        primary in WIDE_MIDFIELD_POSITIONS and bool(positions & FULLBACK_POSITIONS)
+    ):
         return "FB"
     if group == "attackers" or primary == "CAM":
         return "FW"
@@ -353,6 +362,77 @@ def _leaderboard_rate(rows: list[dict[str, Any]], metric: str) -> dict[str, Any]
     )
 
 
+def _goal_prevention_feature(
+    rows: list[dict[str, Any]],
+    spec: dict[str, Any],
+    metric_competitions: dict[str, set[tuple[Any, Any]]] | None = None,
+) -> dict[str, Any] | None:
+    """Goals prevented over only the competitions that can measure it.
+
+    Prefer FotMob's direct ``goals_prevented`` field. When a competition does
+    not publish it, derive the same quantity as xGOT faced minus goals conceded
+    only if that competition publishes both fallback fields. This selection is
+    made competition by competition: global availability must never turn an
+    unsupported keeper's missing evidence into a zero.
+    """
+
+    source = list(spec.get("source") or [])
+    fallback = list(spec.get("derived_fallback") or [])
+    if not source:
+        return None
+
+    availability = (
+        metric_competitions
+        if metric_competitions is not None
+        else build_metric_competitions(rows)
+    )
+    direct_competitions = availability.get(source[0], set())
+    fallback_competitions: set[tuple[Any, Any]] = set()
+    if len(fallback) == 2:
+        fallback_competitions = availability.get(fallback[0], set()) & availability.get(
+            fallback[1], set()
+        )
+
+    total = minutes = direct_minutes = fallback_minutes = 0.0
+    for row in rows:
+        competition = (row.get("competition_id"), row.get("competition"))
+        row_minutes = _number(
+            ((row.get("metrics") or {}).get("minutes_played") or {}).get("value")
+        ) or 0.0
+        if row_minutes <= 0:
+            continue
+
+        metrics = row.get("metrics") or {}
+        if competition in direct_competitions:
+            total += _number((metrics.get(source[0]) or {}).get("value")) or 0.0
+            minutes += row_minutes
+            direct_minutes += row_minutes
+        elif competition in fallback_competitions:
+            total += (
+                (_number((metrics.get(fallback[0]) or {}).get("value")) or 0.0)
+                - (_number((metrics.get(fallback[1]) or {}).get("value")) or 0.0)
+            )
+            minutes += row_minutes
+            fallback_minutes += row_minutes
+
+    if minutes <= 0:
+        return None
+    return _feature(
+        total * 90.0 / minutes,
+        unit="per90",
+        source=MATCH_SOURCE,
+        source_fields=[*source, *fallback],
+        numerator=total,
+        denominator_minutes=minutes,
+        note=(
+            "Shot-quality adjusted: direct goals prevented over "
+            f"{round(direct_minutes, 1)} minutes and xGOT faced minus goals conceded "
+            f"over {round(fallback_minutes, 1)} fallback minutes. Unsupported "
+            "competitions are excluded rather than treated as zero."
+        ),
+    )
+
+
 EVENT_NOTE = (
     "FotMob omits zero-valued event cards; absent player event keys in a "
     "complete detailed match are calculated as zero."
@@ -446,25 +526,7 @@ def build_features(
             features[key] = _composite_rate(rows, key, source, metric_competitions)
 
         elif key == "gprev90":
-            total = _sum_event(rows, source[0])
-            supplying = (
-                metric_competitions.get(source[0], set())
-                if metric_competitions is not None
-                else _competitions_supplying(rows, source[0])
-            )
-            if not supplying:
-                fallback = spec.get("derived_fallback") or []
-                if len(fallback) == 2:
-                    total = _sum_event(rows, fallback[0]) - _sum_event(rows, fallback[1])
-            features[key] = _per90_feature(
-                total,
-                minutes,
-                source_fields=source,
-                note=(
-                    "Shot-quality adjusted. Save percentage is excluded because it measures the "
-                    "same events without that adjustment."
-                ),
-            )
+            features[key] = _goal_prevention_feature(rows, spec, metric_competitions)
 
         elif spec.get("source_layer") == "season_leaderboard":
             features[key] = _leaderboard_rate(season_rows, source[0])

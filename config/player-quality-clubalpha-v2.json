@@ -114,6 +114,8 @@
       "sca90":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Shot-creating actions per 90",             "source": [], "unavailable": true},
       "kp90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Chances created per 90",                   "source": ["chances_created"]},
       "axa90":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Assists plus expected assists per 90",     "source": ["assists", "expected_assists"]},
+      "pf390":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Passes into final third per 90",           "source": ["passes_into_final_third"]},
+      "lbp90":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Line-breaking passes per 90",              "source": ["line_breaking_passes"]},
       "bt90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Touches in opposition box per 90",         "source": ["touches_opp_box"]},
       "sot90":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Shots on target per 90",                   "source": ["ShotsOnTarget"]},
       "drib90":  {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Successful dribbles per 90",               "source": ["dribbles_succeeded"]},
@@ -156,7 +158,9 @@
       "err90":    {"weight": 2.0, "direction": "inverted", "form": "per90",      "label": "Errors leading to goal per 90",          "source": ["errors_led_to_goal"]},
       "tkl90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Tackles per 90",                         "source": ["matchstats.headers.tackles"]},
       "gnd":      {"weight": 2.0, "direction": "positive", "form": "percentage", "label": "Ground duel win percentage",             "source": ["ground_duels_won"], "minimum_attempts": 50},
-      "ga90":     {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Goals plus assists per 90",              "source": ["goals", "assists"]},
+      "gxg90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Goals plus expected goals per 90",       "source": ["goals", "expected_goals"]},
+      "axa90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Assists plus expected assists per 90",  "source": ["assists", "expected_assists"]},
+      "kp90":     {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Chances created per 90",                "source": ["chances_created"]},
       "int90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Interceptions per 90",                   "source": ["interceptions"]},
       "drib90":   {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Successful dribbles per 90",             "source": ["dribbles_succeeded"]},
       "lbp90":    {"weight": 2.0, "direction": "positive", "form": "per90",      "label": "Line-breaking passes per 90",            "source": ["line_breaking_passes"]},
@@ -177,7 +181,7 @@
 
   "excluded_metrics": {
     "avail": "Minutes played was a scored metric in the WCALPHA midfielder and goalkeeper formulas. Removed: availability belongs to Club Form, and scoring it here would count minutes twice and only for two of the five positions.",
-    "savepct": "Save percentage measures the same event set and outcome as goals prevented, without adjusting for shot quality. Retained only as a fallback source for gprev90.",
+    "savepct": "Save percentage measures the same event set and outcome as goals prevented, without adjusting for shot quality. Excluded rather than used as a fallback; when direct goals prevented is unavailable, gprev90 derives from expected goals on target faced minus goals conceded.",
     "defensive_actions": "An aggregate of tackles, clearances, interceptions, recoveries and blocks. Using it alongside its components would double count.",
     "xg_and_xa": "An aggregate of expected_goals and expected_assists. Same reason.",
     "gd": "Overall duel win percentage contains aerial duels, so pairing it with aer was whole-plus-part. Replaced by gnd, which partitions cleanly against aer.",

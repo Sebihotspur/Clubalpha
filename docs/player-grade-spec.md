@@ -164,16 +164,27 @@ midfielder and goalkeeper formulas WCALPHA already had but Clubalpha never
 ported, and splits centre-backs from fullbacks so fullbacks can carry the
 attacking work their role actually involves.
 
-| Position | Metrics | Available | Share each |
+| Position | Metrics | Source-defined | Observed now |
 |---|---:|---:|---:|
-| FW | 10 | 8 | 12.5% |
-| CM | 11 | 11 | 9.1% |
-| CB | 11 | 10 | 10.0% |
-| FB | 10 | 10 | 10.0% |
-| GK | 5 | 5 | 20.0% |
+| FW | 12 | 10 | 9 |
+| CM | 11 | 11 | 10 |
+| CB | 11 | 10 | 9 |
+| FB | 12 | 12 | 11 |
+| GK | 5 | 5 | 5 |
 
-47 slots, 44 sourced. `sca90` and `pc90` have no FotMob source; `pace` awaits
+51 slots, 48 sourced. `sca90` and `pc90` have no FotMob source; `pace` awaits
 confirmation that `physical_metrics_topspeed` holds across the full season.
+`line_breaking_passes` is source-defined for FW, CM, CB and FB but is absent
+from all 38,193 rows in the current snapshot, so its weight leaves every
+denominator until the dataset supplies it.
+
+Forwards include both passes into the final third and line-breaking passes so
+their grade recognises progression as well as finishing and creation.
+Fullbacks add chances created and assists plus expected assists; modern
+wing-backs must be measured on the chances they supply, not only their crossing
+accuracy and defensive events. Their scoring slot is goals plus expected goals,
+while their creation slot is assists plus expected assists, so assists are not
+counted twice.
 
 ## Flat weights
 
@@ -196,7 +207,10 @@ two of the five positions.
 
 `savepct` is dropped for a different reason: it measures the same event set and
 the same outcome as goals prevented, without adjusting for shot quality. It
-survives only as a fallback source when goals prevented is unavailable.
+is not used as a fallback. Where direct goals prevented is unavailable, v2
+derives it as expected goals on target faced minus goals conceded, and excludes
+competitions that publish neither measurement rather than treating them as
+zero.
 
 ## League quality
 
@@ -273,10 +287,11 @@ property of the player rather than of an individual metric.
 ## Position mapping
 
 `scoring_position()` resolves five populations. A fullback primary position wins
-over the listed squad group, because FotMob files at least one wing-back under
-`midfielders` and grading a wing-back against central midfielders measures them
-on work their role never asks for. CAM continues to resolve to FW, matching
-WCALPHA.
+over the listed squad group. A wide-midfielder primary paired with a fullback or
+wing-back secondary position also resolves to FB, because FotMob represents
+players such as Federico Dimarco as `LM,LB`. A central midfielder carrying an
+occasional secondary fullback position remains CM. CAM continues to resolve to
+FW, matching WCALPHA.
 
 ## Team roll-up
 

@@ -65,6 +65,18 @@ class PositionMappingTests(unittest.TestCase):
         self.assertEqual(scoring_position("LWB", "midfielders"), "FB")
         self.assertEqual(scoring_position("RB,CDM", "defenders"), "FB")
 
+    def test_wide_midfielder_with_fullback_secondary_scores_as_fullback(self):
+        """Dimarco- and Dumfries-style provider roles are wing-backs, not CMs."""
+
+        self.assertEqual(scoring_position("LM,LB", "midfielders"), "FB")
+        self.assertEqual(scoring_position("RM,RB", "midfielders"), "FB")
+
+    def test_central_midfielder_with_fullback_secondary_stays_central(self):
+        """Do not turn Kimmich- or Camavinga-style secondary roles into FBs."""
+
+        self.assertEqual(scoring_position("CDM,RB", "midfielders"), "CM")
+        self.assertEqual(scoring_position("CM,LM,LB", "midfielders"), "CM")
+
     def test_cam_still_routes_to_forwards_matching_wcalpha(self):
         self.assertEqual(scoring_position("CAM,RW", "midfielders"), "FW")
         self.assertEqual(scoring_position("CDM,CM,CAM", "midfielders"), "CM")
@@ -76,7 +88,7 @@ class PositionMappingTests(unittest.TestCase):
 
 class FormulaShapeTests(unittest.TestCase):
     def test_every_formula_is_flat_and_documented(self):
-        expected = {"FW": 10, "CM": 11, "CB": 11, "FB": 10, "GK": 5}
+        expected = {"FW": 12, "CM": 11, "CB": 11, "FB": 12, "GK": 5}
         for position, count in expected.items():
             formula = resolved_formula(position, CONFIG)
             self.assertEqual(len(formula), count, position)
@@ -85,6 +97,35 @@ class FormulaShapeTests(unittest.TestCase):
             for key, spec in formula.items():
                 self.assertIn(spec["direction"], {"positive", "inverted"}, f"{position}.{key}")
                 self.assertIn(spec["form"], {"per90", "percentage", "physical"}, f"{position}.{key}")
+
+    def test_progression_and_creation_metrics_are_in_the_requested_roles(self):
+        forward = resolved_formula("FW", CONFIG)
+        fullback = resolved_formula("FB", CONFIG)
+
+        self.assertIn("pf390", forward)
+        self.assertIn("lbp90", forward)
+        self.assertIn("kp90", fullback)
+        self.assertIn("axa90", fullback)
+        self.assertIn("gxg90", fullback)
+        self.assertNotIn("ga90", fullback)
+
+    def test_fullback_scoring_and_creation_do_not_double_count_assists(self):
+        rows = [
+            match_row(
+                1,
+                47,
+                100,
+                minutes=90,
+                goals=1,
+                assists=2,
+                expected_goals=0.5,
+                expected_assists=0.6,
+            )
+        ]
+        features, _ = build_features(rows, [], "FB", CONFIG)
+
+        self.assertAlmostEqual(features["gxg90"]["value"], 1.5)
+        self.assertAlmostEqual(features["axa90"]["value"], 2.6)
 
     def test_minutes_is_not_a_scored_metric_anywhere(self):
         """Availability belongs to Club Form, not to Player Ratings."""
@@ -345,6 +386,62 @@ class AbsentFieldTests(unittest.TestCase):
         features, _ = build_features(rows, [], "CB", CONFIG)
         self.assertAlmostEqual(features["clrblk90"]["numerator"], 6.0)
         self.assertAlmostEqual(features["clrblk90"]["value"], 6.0)
+
+
+class GoalPreventionCoverageTests(unittest.TestCase):
+    def test_global_direct_availability_does_not_create_false_zero(self):
+        """A keeper in an unsupported competition has no gprev evidence."""
+
+        rows = [match_row(1, 176, 100, minutes=90)]
+        availability = {"goals_prevented": {(47, "League 47")}}
+        features, _ = build_features(rows, [], "GK", CONFIG, availability)
+
+        self.assertIsNone(features["gprev90"])
+
+    def test_fallback_is_selected_for_the_players_competition(self):
+        rows = [
+            match_row(
+                1,
+                176,
+                100,
+                minutes=90,
+                expected_goals_on_target_faced=1.8,
+                goals_conceded=1,
+            )
+        ]
+        availability = {
+            "goals_prevented": {(47, "League 47")},
+            "expected_goals_on_target_faced": {(176, "League 176")},
+            "goals_conceded": {(176, "League 176")},
+        }
+        features, _ = build_features(rows, [], "GK", CONFIG, availability)
+
+        self.assertAlmostEqual(features["gprev90"]["value"], 0.8)
+        self.assertAlmostEqual(features["gprev90"]["denominator_minutes"], 90.0)
+
+    def test_direct_and_fallback_competitions_combine_without_dilution(self):
+        rows = [
+            match_row(1, 47, 100, minutes=90, goals_prevented=0.5),
+            match_row(
+                2,
+                176,
+                100,
+                minutes=90,
+                expected_goals_on_target_faced=1.8,
+                goals_conceded=1,
+            ),
+            match_row(3, 999, 100, minutes=90),
+        ]
+        availability = {
+            "goals_prevented": {(47, "League 47")},
+            "expected_goals_on_target_faced": {(176, "League 176")},
+            "goals_conceded": {(176, "League 176")},
+        }
+        features, _ = build_features(rows, [], "GK", CONFIG, availability)
+
+        self.assertAlmostEqual(features["gprev90"]["value"], 0.65)
+        self.assertAlmostEqual(features["gprev90"]["numerator"], 1.3)
+        self.assertAlmostEqual(features["gprev90"]["denominator_minutes"], 180.0)
 
 
 class NonPenaltyGoalTests(unittest.TestCase):
