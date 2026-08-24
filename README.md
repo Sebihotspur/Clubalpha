@@ -125,7 +125,9 @@ python3 scripts/build_squad_selection_prior.py
 Alpha Ability is attached to each player but never selects the XI. Known
 unavailable players receive zero expected minutes in the adjusted prior;
 questionable and unknown cases remain visible and are not silently ruled out.
-This is a dated squad hierarchy, not a fixture-specific or confirmed lineup.
+Alpha grading position is separate from tactical selection role, incomplete
+evidence is discounted, and no player can exceed 90 expected minutes. This is
+a dated squad hierarchy, not a fixture-specific or confirmed lineup.
 
 ## Joined Club Form Snapshot
 

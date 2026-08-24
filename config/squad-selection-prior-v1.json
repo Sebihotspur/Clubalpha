@@ -8,17 +8,18 @@
     "preseason_weight": 0.25,
     "half_life_days": 30.0,
     "historical_prior_equivalent_matches": 2.0,
-    "note": "Current competitive match evidence is full weight. Preseason informs selection but is discounted. Previous-season squad workload supplies a two-match prior."
+    "historical_full_coverage_players": 11,
+    "note": "Current competitive match evidence is full weight only when all 990 current-squad minutes are observed. Preseason informs selection but is discounted. Previous-season squad workload supplies at most a two-match prior and is discounted when fewer than eleven current players have history."
   },
   "default_role_slots": {
     "GK": 1,
-    "CB": 2,
-    "FB": 2,
-    "CM": 3,
-    "FW": 3
+    "DEF": 4,
+    "MID": 3,
+    "FWD": 3
   },
   "availability": {
     "questionable_terms": ["doubtful", "day to day", "back in training"],
+    "unknown_terms": ["unknown"],
     "hard_exclusion_statuses": ["unavailable"],
     "note": "Known unavailable players are removed from the availability-adjusted prior. Questionable and unknown cases remain visible and are not silently treated as out."
   },

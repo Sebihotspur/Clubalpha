@@ -38,17 +38,22 @@ match_weight = source_weight × 0.5 ** (age_days / 30)
 ```
 
 For each player, weighted minutes and declared starts are accumulated. Recent
-minutes are normalized into a 990-minute team distribution. Previous-season
-minutes for the current squad create a separate 990-minute workload
-distribution.
+minutes are converted into a 990-minute team distribution, with every player
+constrained to the physical 0–90 range. A match's evidence strength is
+multiplied by the share of its 990 current-squad minutes that was actually
+observed. Previous-season minutes for the current squad create a separate,
+coverage-aware workload distribution.
 
 ## Conservative workload prior
 
 Previous-season workload contributes the equivalent of two matches:
 
 ```text
-recent_strength     = sum(recent match weights)
-historical_strength = 2 when historical squad minutes exist
+match_minute_coverage = observed current-squad minutes / 990
+recent_strength       = sum(match weight × match minute coverage)
+
+historical_coverage = min(players with workload / 11, 1)
+historical_strength = 2 × historical_coverage
 
 baseline_minutes =
     (recent_distribution × recent_strength
@@ -56,24 +61,28 @@ baseline_minutes =
     / (recent_strength + historical_strength)
 ```
 
-Each team distribution sums to 990 minutes. This is an opportunity prior, not
-a promise that the selected eleven will each play 90 minutes. Substitutes retain
-their share of the total.
+Each usable team distribution sums to 990 minutes, while no player can exceed
+90. If partial evidence covers too few players, the known leaders reach their
+physical cap and residual opportunity is distributed neutrally rather than
+inflating one player into the missing team. Substitutes retain their share of
+the total.
 
 If neither recent nor historical evidence exists, the layer does not create a
 lineup from Alpha Ability. Provider-side squad gaps remain empty.
 
 ## Shape and XI
 
-The latest complete declared XI supplies the formation and the number of Alpha
-role slots actually used by that team. This keeps the locked position mapper:
-wing-backs such as Dimarco remain fullbacks, and CAMs remain in the forward
-Alpha population even when the tactical formation labels them as midfielders.
+The latest complete declared XI supplies the formation and tactical selection
+slots from FotMob's lineup-position IDs. Tactical selection role and Alpha
+grading position are deliberately separate: Dimarco can be a tactical
+midfielder or wing-back while remaining a fullback in the locked Alpha formula;
+a CAM can occupy a midfield selection slot while remaining in the Alpha forward
+population.
 
 When no complete usable XI exists, the transparent fallback is:
 
 ```text
-GK 1 · CB 2 · FB 2 · CM 3 · FW 3
+GK 1 · DEF 4 · MID 3 · FWD 3
 ```
 
 Players are selected within those role slots by expected-minute evidence,
@@ -88,8 +97,9 @@ selection input.
 - no injury: available.
 
 Removed opportunity is redistributed to available players, first within the
-same Alpha role and then across the eligible squad if a role has no cover. This
-changes expected opportunity, not Performance Form or team strength.
+same tactical selection role and then across the eligible squad if a role has
+no cover. The 90-minute cap remains enforced. This changes expected
+opportunity, not Performance Form or team strength.
 
 ## Outputs
 
@@ -115,7 +125,10 @@ The 2026-08-18 snapshot contains:
 - 55 complete baseline XI priors;
 - 38 teams with recent detailed player evidence;
 - 37 teams with at least one exact declared recent XI;
-- 77 known unavailable and 61 questionable players;
+- 75 known unavailable, 61 questionable, and 2 explicitly unknown players;
+- zero players above 90 expected minutes, down from 127 in the pre-merge audit;
+- 14 teams whose recent evidence is discounted for partial current-squad minute coverage;
+- 21 teams using the transparent default shape, exactly matching the teams without a complete recent XI;
 - zero unavailable players selected in a baseline XI;
 - zero future-match leakage.
 

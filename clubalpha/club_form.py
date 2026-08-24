@@ -330,6 +330,8 @@ def classify_availability(injury: Any, config: dict[str, Any]) -> str | None:
     expected = str((injury or {}).get("expectedReturn") or "").strip().lower()
     if not expected:
         return "unknown"
+    if any(term in expected for term in config["availability"].get("unknown_terms", [])):
+        return "unknown"
     if any(term in expected for term in config["availability"]["questionable_terms"]):
         return "questionable"
     return "unavailable"

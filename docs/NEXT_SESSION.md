@@ -1,6 +1,6 @@
 # Next session
 
-Updated: 2026-08-21
+Updated: 2026-08-24
 
 Working branch: `codex/club-form-v1`
 
@@ -8,15 +8,15 @@ Draft PR: [#6 — Build Club Form intelligence and squad selection priors](https
 
 ## Start here
 
-1. Audit PR #6 before merging.
-   - Re-run the full test suite: `python3 -m unittest discover -s tests`.
-   - Review the Club Form recency, opponent, confidence, and preseason weights.
-   - Confirm Club Dynamics remains descriptive and does not silently modify form.
-   - Confirm the Squad Selection Prior uses declared starts, totals 990 expected minutes, never selects by Alpha Ability, removes known unavailable players, and rejects future evidence.
-   - Inspect real outputs for Arsenal, Chelsea, Manchester City, Coventry City, and Shakhtar Donetsk rather than relying only on the aggregate audit.
-2. Resolve any issues found in the audit within PR #6.
-3. If the audit is clean, mark PR #6 ready and merge it into `main`.
-4. Create a new branch from the updated `main` for Fixture Intelligence v1.
+1. Perform the final review of the August 24 Squad Selection corrections.
+   - Re-run the 83-test suite: `python3 -m unittest discover -s tests`.
+   - Confirm no player exceeds 90 expected minutes and every usable team totals 990.
+   - Confirm tactical selection roles remain separate from locked Alpha grading positions.
+   - Confirm partial recent and historical evidence reduces prior strength.
+   - Confirm `Unknown` injury text remains unknown rather than becoming a hard exclusion.
+   - Reinspect Arsenal, Chelsea, Manchester City, Coventry City, and Shakhtar Donetsk.
+2. If the final audit is clean, mark PR #6 ready and merge it into `main`.
+3. Create a new branch from the updated `main` for Fixture Intelligence v1.
 
 ## Current Club Form checkpoint
 
@@ -26,8 +26,10 @@ Draft PR: [#6 — Build Club Form intelligence and squad selection priors](https
 - Recent detailed player evidence: 38 clubs.
 - Exact recent declared XI evidence: 37 clubs.
 - Squad players: 1,407.
-- Availability: 77 unavailable and 61 questionable.
-- Safeguards: no unavailable player selected, usable team priors total 990 minutes, and no future-match leakage.
+- Availability: 75 unavailable, 61 questionable, and 2 explicitly unknown.
+- Selection shapes: 37 exact recent lineups and 21 transparent default shapes.
+- Evidence controls: 14 teams carry partial recent-minute coverage and one carries partial historical-workload coverage.
+- Safeguards: no player exceeds 90 expected minutes, no unavailable player is selected, usable team priors total 990 minutes, and no future-match leakage.
 - Explicit FotMob squad-page gaps: NK Celje, Sabah FK, and Shakhtar Donetsk.
 - The joined snapshot intentionally remains `projection_ready=false`.
 

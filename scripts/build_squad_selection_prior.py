@@ -55,7 +55,8 @@ def _example(row: dict[str, Any]) -> dict[str, Any]:
             {
                 "player_id": player["player_id"],
                 "player": player["player"],
-                "scoring_position": player["scoring_position"],
+                "selection_role": player["selection_role"],
+                "alpha_position": player["alpha_position"],
                 "baseline_expected_minutes": player["baseline_expected_minutes"],
                 "expected_minutes_prior": player["expected_minutes_prior"],
             }
@@ -87,6 +88,18 @@ def build_audit(rows: list[dict[str, Any]], config: dict[str, Any]) -> dict[str,
             - float(config["expected_team_minutes"])
         )
         > 0.01
+    ]
+    physical_minute_violations = [
+        {
+            "team_id": row["team_id"],
+            "team": row["team"],
+            "player_id": player["player_id"],
+            "player": player["player"],
+            "expected_minutes_prior": player["expected_minutes_prior"],
+        }
+        for row in rows
+        for player in row["players"]
+        if not 0.0 <= float(player["expected_minutes_prior"]) <= 90.0
     ]
     examples = {
         row["team"]: _example(row)
@@ -129,6 +142,21 @@ def build_audit(rows: list[dict[str, Any]], config: dict[str, Any]) -> dict[str,
                 for row in rows
                 for player in row["players"]
             ),
+            "unknown_availability_players": sum(
+                player["availability_status"] == "unknown"
+                for row in rows
+                for player in row["players"]
+            ),
+            "players_over_90_expected_minutes": sum(
+                float(player["expected_minutes_prior"]) > 90.0
+                for row in rows
+                for player in row["players"]
+            ),
+            "teams_with_partial_recent_minute_coverage": sum(
+                row["evidence"]["recent_matches"] > 0
+                and row["evidence"]["current_squad_minute_coverage"] < 0.75
+                for row in rows
+            ),
             "teams_without_selection_evidence": sum(
                 "no_selection_evidence" in row["quality_flags"] for row in rows
             ),
@@ -139,6 +167,7 @@ def build_audit(rows: list[dict[str, Any]], config: dict[str, Any]) -> dict[str,
         },
         "quality_flags": dict(sorted(flags.items())),
         "expected_minute_sum_exceptions": minute_sum_failures,
+        "physical_minute_violations": physical_minute_violations,
         "decision_boundaries": config["decision_boundaries"],
         "examples": examples,
         "warnings": [
@@ -146,6 +175,9 @@ def build_audit(rows: list[dict[str, Any]], config: dict[str, Any]) -> dict[str,
             "Only FotMob-declared starter flags count as starts; minutes never infer starter status.",
             "Questionable and unknown injury cases remain available in the baseline and stay flagged.",
             "Alpha Ability is attached for downstream player-impact analysis and never selects the XI.",
+            "Alpha grading position and tactical selection role are separate fields.",
+            "Every player-level expected-minute prior is constrained to the physical 0-90 range.",
+            "Recent and historical prior strengths are discounted when their player coverage is incomplete.",
         ],
     }
 
@@ -202,6 +234,16 @@ def main() -> int:
     )
     if len(rows) != len(teams):
         raise RuntimeError(f"Selection prior emitted {len(rows)} rows for {len(teams)} teams")
+    invalid_minutes = [
+        (row["team"], player["player"], player["expected_minutes_prior"])
+        for row in rows
+        for player in row["players"]
+        if not 0.0 <= float(player["expected_minutes_prior"]) <= 90.0
+    ]
+    if invalid_minutes:
+        raise RuntimeError(
+            f"Selection prior emitted physically invalid player minutes: {invalid_minutes[:5]}"
+        )
 
     print("[3/4] Write ignored player-level snapshot")
     count = write_jsonl(args.output_dir / "squad_selection_prior.jsonl", rows)

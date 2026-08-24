@@ -111,6 +111,7 @@ FotMob injury flags are classified conservatively:
 
 - dated expected returns are `unavailable`;
 - `Doubtful`, `Day to day`, and `Back in training` are `questionable`;
+- provider text such as `Unknown` remains `unknown` and is never a hard exclusion;
 - the associated Alpha Ability Grade is shown when available.
 
 Availability does **not** modify the Performance Form score. In the separate

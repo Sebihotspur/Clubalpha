@@ -84,8 +84,11 @@ support opponent-specific style matchups after validation.
 The Squad Selection Prior is the bridge between Player Quality and Club Form.
 It uses official recent lineup evidence and workload to estimate opportunity;
 Alpha Ability remains an attached quality measure and never predicts the
-manager's selection. The joined Club Form Snapshot materializes every component
-in one dated team record without creating another rating formula.
+manager's selection. Alpha grading position remains separate from tactical
+selection role, player minutes are capped at 90, and incomplete lineup or
+historical coverage reduces evidence strength. The joined Club Form Snapshot
+materializes every component in one dated team record without creating another
+rating formula.
 
 ## 4. Historical Fixtures
 

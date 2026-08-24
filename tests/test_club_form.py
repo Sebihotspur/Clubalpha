@@ -175,6 +175,10 @@ class AvailabilityTests(unittest.TestCase):
             classify_availability({"expectedReturn": "Late October 2026"}, CONFIG),
             "unavailable",
         )
+        self.assertEqual(
+            classify_availability({"expectedReturn": "Unknown"}, CONFIG),
+            "unknown",
+        )
         self.assertIsNone(classify_availability(None, CONFIG))
 
     def test_availability_never_changes_club_form_score(self):

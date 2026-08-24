@@ -10,7 +10,8 @@ from clubalpha.player_quality_v2 import scoring_position
 
 
 SELECTION_PRIOR_VERSION = "clubalpha_squad_selection_prior_v1"
-ROLE_ORDER = ("GK", "CB", "FB", "CM", "FW")
+SELECTION_ROLE_ORDER = ("GK", "DEF", "MID", "FWD")
+MAX_PLAYER_MINUTES = 90.0
 
 
 def _number(value: Any) -> float:
@@ -35,21 +36,111 @@ def _availability_status(injury: Any, config: dict[str, Any]) -> str:
     expected = str((injury or {}).get("expectedReturn") or "").strip().lower()
     if not expected:
         return "unknown"
+    if any(term in expected for term in config["availability"].get("unknown_terms", [])):
+        return "unknown"
     if any(term in expected for term in config["availability"]["questionable_terms"]):
         return "questionable"
     return "unavailable"
 
 
-def _normalized_minutes(values: dict[int, float], total: float) -> dict[int, float]:
-    positive = {key: max(0.0, float(value)) for key, value in values.items()}
-    denominator = sum(positive.values())
-    if denominator <= 0:
-        return {key: 0.0 for key in positive}
-    result = {key: round(total * value / denominator, 3) for key, value in positive.items()}
-    if result:
-        largest = max(positive, key=positive.get)
-        result[largest] = round(result[largest] + total - sum(result.values()), 3)
-    return result
+def _capped_minutes(
+    values: dict[int, float], total: float, cap: float = MAX_PLAYER_MINUTES
+) -> dict[int, float]:
+    """Distribute team minutes without creating physically impossible players.
+
+    Positive evidence is preserved proportionally. Once an evidence leader
+    reaches the per-player cap, remaining opportunity flows to the rest of the
+    squad. If the supplied evidence covers too few players, the residual is
+    spread neutrally instead of inflating those few players above 90 minutes.
+    """
+
+    weights = {key: max(0.0, float(value)) for key, value in values.items()}
+    allocation = {key: 0.0 for key in weights}
+    target = min(max(0.0, float(total)), cap * len(weights))
+    active = set(weights)
+    remaining = target
+    while active and remaining > 1e-9:
+        positive_weight = sum(weights[key] for key in active)
+        effective = (
+            {key: weights[key] for key in active}
+            if positive_weight > 0
+            else {key: 1.0 for key in active}
+        )
+        denominator = sum(effective.values())
+        proposed = {
+            key: remaining * effective[key] / denominator for key in active
+        }
+        saturated = [
+            key
+            for key in active
+            if proposed[key] >= cap - allocation[key] - 1e-9
+        ]
+        if not saturated:
+            for key, value in proposed.items():
+                allocation[key] += value
+            remaining = 0.0
+            break
+        for key in saturated:
+            room = max(0.0, cap - allocation[key])
+            allocation[key] += room
+            remaining -= room
+            active.remove(key)
+
+    rounded = {key: round(value, 3) for key, value in allocation.items()}
+    delta = round(target - sum(rounded.values()), 3)
+    if delta > 0:
+        for key in sorted(rounded, key=lambda item: (cap - rounded[item], weights[item]), reverse=True):
+            addition = min(delta, round(cap - rounded[key], 3))
+            rounded[key] = round(rounded[key] + addition, 3)
+            delta = round(delta - addition, 3)
+            if delta <= 0:
+                break
+    elif delta < 0:
+        for key in sorted(rounded, key=rounded.get, reverse=True):
+            removal = min(-delta, rounded[key])
+            rounded[key] = round(rounded[key] - removal, 3)
+            delta = round(delta + removal, 3)
+            if delta >= 0:
+                break
+    return rounded
+
+
+def _lineup_selection_role(value: Any) -> str | None:
+    try:
+        position_id = int(value)
+    except (TypeError, ValueError):
+        return None
+    if 10 <= position_id < 20:
+        return "GK"
+    if 30 <= position_id < 60:
+        return "DEF"
+    if 60 <= position_id < 100:
+        return "MID"
+    if 100 <= position_id < 120:
+        return "FWD"
+    return None
+
+
+def _squad_selection_role(squad: dict[str, Any]) -> str | None:
+    group = str(squad.get("squad_group") or "").strip().lower()
+    by_group = {
+        "keepers": "GK",
+        "defenders": "DEF",
+        "midfielders": "MID",
+        "attackers": "FWD",
+    }
+    if group in by_group:
+        return by_group[group]
+    primary = str(squad.get("position") or "").split(",", 1)[0].strip().upper()
+    if primary == "GK":
+        return "GK"
+    if primary in {"CB", "LB", "LWB", "RB", "RWB"}:
+        return "DEF"
+    if primary in {"CDM", "CM", "CAM", "LM", "RM"}:
+        return "MID"
+    if primary in {"LW", "RW", "ST"}:
+        return "FWD"
+    return None
 
 
 def _recent_rows(
@@ -105,7 +196,6 @@ def _match_weight(row: dict[str, Any], as_of: date, config: dict[str, Any]) -> f
 
 def _latest_shape(
     match_groups: dict[int, list[dict[str, Any]]],
-    squad_by_player: dict[int, dict[str, Any]],
     default_slots: dict[str, int],
 ) -> tuple[str | None, dict[str, int], int | None, bool]:
     ordered = sorted(
@@ -117,17 +207,13 @@ def _latest_shape(
         starters = [row for row in rows if row.get("is_starter") is True]
         if len(starters) != 11:
             continue
-        roles: list[str] = []
-        for row in starters:
-            squad = squad_by_player.get(int(row["player_id"]))
-            if not squad:
-                break
-            role = scoring_position(squad.get("position"), squad.get("squad_group"))
-            if not role:
-                break
-            roles.append(role)
+        roles = [
+            _lineup_selection_role(row.get("lineup_position_id")) for row in starters
+        ]
         if len(roles) == 11 and roles.count("GK") == 1:
-            slots = {role: roles.count(role) for role in ROLE_ORDER}
+            if any(role is None for role in roles):
+                continue
+            slots = {role: roles.count(role) for role in SELECTION_ROLE_ORDER}
             formation = next((row.get("team_formation") for row in starters if row.get("team_formation")), None)
             return formation, slots, match_id, False
     return None, dict(default_slots), None, True
@@ -141,14 +227,14 @@ def _availability_adjusted(
 ) -> tuple[dict[int, float], list[str]]:
     adjusted = {player["player_id"]: 0.0 for player in players}
     flags: list[str] = []
-    for role in ROLE_ORDER:
-        members = [player for player in players if player["scoring_position"] == role]
+    for role in SELECTION_ROLE_ORDER:
+        members = [player for player in players if player["selection_role"] == role]
         target = sum(baseline[player["player_id"]] for player in members)
         eligible = [player for player in members if player["availability_status"] not in hard_exclusions]
         weights = {player["player_id"]: baseline[player["player_id"]] for player in eligible}
         if eligible and sum(weights.values()) <= 0:
             weights = {player["player_id"]: 1.0 for player in eligible}
-        allocation = _normalized_minutes(weights, target)
+        allocation = _capped_minutes(weights, target)
         adjusted.update(allocation)
         if target > 0 and not eligible:
             flags.append(f"no_available_{role.lower()}")
@@ -157,7 +243,7 @@ def _availability_adjusted(
         player for player in players if player["availability_status"] not in hard_exclusions
     ]
     if eligible_all and sum(adjusted.values()) < total - 0.001:
-        adjusted = _normalized_minutes(
+        adjusted = _capped_minutes(
             {player["player_id"]: adjusted[player["player_id"]] or 1.0 for player in eligible_all},
             total,
         ) | {
@@ -186,9 +272,9 @@ def _select_xi(
     ]
     selected: list[dict[str, Any]] = []
     flags: list[str] = []
-    for role in ROLE_ORDER:
+    for role in SELECTION_ROLE_ORDER:
         candidates = sorted(
-            (player for player in eligible if player["scoring_position"] == role),
+            (player for player in eligible if player["selection_role"] == role),
             key=rank_key,
         )
         wanted = int(slots.get(role, 0))
@@ -206,12 +292,14 @@ def _select_xi(
         selected.extend(fallback[: 11 - len(selected)])
         if fallback:
             flags.append("cross_role_xi_fill")
-    selected = sorted(selected[:11], key=lambda player: (ROLE_ORDER.index(player["scoring_position"]), rank_key(player)))
+    selected = sorted(selected[:11], key=lambda player: (SELECTION_ROLE_ORDER.index(player["selection_role"]), rank_key(player)))
     return [
         {
             "player_id": player["player_id"],
             "player": player["player"],
-            "scoring_position": player["scoring_position"],
+            "selection_role": player["selection_role"],
+            "alpha_position": player["alpha_position"],
+            "scoring_position": player["alpha_position"],
             "current_position": player["current_position"],
             "availability_status": player["availability_status"],
             "expected_minutes_prior": player["expected_minutes_prior"],
@@ -259,9 +347,13 @@ def build_squad_selection_priors(
             match_groups[int(row["match_id"])].append(row)
 
         weighted_match_count = 0.0
+        coverage_adjusted_match_count = 0.0
         weighted_lineup_match_count = 0.0
         weighted_minutes: dict[int, float] = defaultdict(float)
         weighted_starts: dict[int, float] = defaultdict(float)
+        weighted_selection_roles: dict[int, dict[str, float]] = defaultdict(
+            lambda: defaultdict(float)
+        )
         appearances: dict[int, set[int]] = defaultdict(set)
         exact_lineup_matches = 0
         source_matches: dict[str, set[int]] = defaultdict(set)
@@ -280,25 +372,57 @@ def build_squad_selection_priors(
             if exact:
                 exact_lineup_matches += 1
                 weighted_lineup_match_count += weight
+            observed_current_squad_minutes = 0.0
             for row in rows:
                 player_id = int(row["player_id"])
                 if player_id not in squad_by_player:
                     continue
                 minutes = min(90.0, max(0.0, _number(((row.get("metrics") or {}).get("minutes_played") or {}).get("value"))))
                 weighted_minutes[player_id] += weight * minutes
+                observed_current_squad_minutes += minutes
                 if minutes > 0:
                     appearances[player_id].add(match_id)
                 if exact and row.get("is_starter") is True:
                     weighted_starts[player_id] += weight
+                declared_role = _lineup_selection_role(row.get("lineup_position_id"))
+                if declared_role:
+                    role_weight = weight * (1.0 if row.get("is_starter") is True else 0.25)
+                    weighted_selection_roles[player_id][declared_role] += role_weight
+            match_minute_coverage = min(
+                1.0, observed_current_squad_minutes / expected_total
+            )
+            coverage_adjusted_match_count += weight * match_minute_coverage
 
-        recent_distribution = _normalized_minutes(dict(weighted_minutes), expected_total)
+        recent_distribution = _capped_minutes(
+            {
+                player_id: weighted_minutes.get(player_id, 0.0)
+                for player_id in squad_by_player
+            },
+            expected_total,
+        )
         historical_minutes = {
             player_id: _number((grades_by_player.get(player_id) or {}).get("minutes"))
             for player_id in squad_by_player
         }
-        historical_distribution = _normalized_minutes(historical_minutes, expected_total)
-        recent_strength = weighted_match_count if sum(weighted_minutes.values()) > 0 else 0.0
-        historical_strength = prior_matches if sum(historical_minutes.values()) > 0 else 0.0
+        historical_distribution = _capped_minutes(historical_minutes, expected_total)
+        recent_strength = (
+            coverage_adjusted_match_count if sum(weighted_minutes.values()) > 0 else 0.0
+        )
+        historical_players = sum(value > 0 for value in historical_minutes.values())
+        historical_full_coverage_players = float(
+            config["recent_evidence"].get("historical_full_coverage_players", 11)
+        )
+        historical_coverage = min(
+            1.0,
+            historical_players / historical_full_coverage_players
+            if historical_full_coverage_players > 0
+            else 0.0,
+        )
+        historical_strength = (
+            prior_matches * historical_coverage
+            if sum(historical_minutes.values()) > 0
+            else 0.0
+        )
 
         has_selection_evidence = bool(recent_strength or historical_strength)
         if has_selection_evidence:
@@ -312,13 +436,27 @@ def build_squad_selection_priors(
             }
         else:
             blended = {player_id: 0.0 for player_id in squad_by_player}
-        baseline = _normalized_minutes(blended, expected_total)
+        baseline = _capped_minutes(blended, expected_total)
 
         player_rows: list[dict[str, Any]] = []
         missing_roles = 0
         for player_id, squad in squad_by_player.items():
-            role = scoring_position(squad.get("position"), squad.get("squad_group"))
-            if role is None:
+            alpha_position = scoring_position(
+                squad.get("position"), squad.get("squad_group")
+            )
+            role_evidence = weighted_selection_roles.get(player_id) or {}
+            selection_role = (
+                max(
+                    role_evidence,
+                    key=lambda role: (
+                        role_evidence[role],
+                        -SELECTION_ROLE_ORDER.index(role),
+                    ),
+                )
+                if role_evidence
+                else _squad_selection_role(squad)
+            )
+            if selection_role is None:
                 missing_roles += 1
                 continue
             grade = grades_by_player.get(player_id) or {}
@@ -328,7 +466,9 @@ def build_squad_selection_priors(
                     "player": squad.get("player"),
                     "current_position": squad.get("position"),
                     "squad_group": squad.get("squad_group"),
-                    "scoring_position": role,
+                    "selection_role": selection_role,
+                    "alpha_position": alpha_position,
+                    "scoring_position": alpha_position,
                     "availability_status": _availability_status(squad.get("injury"), config),
                     "expected_return": (squad.get("injury") or {}).get("expectedReturn"),
                     "alpha_ability_z": grade.get("alpha_ability_z"),
@@ -367,9 +507,7 @@ def build_squad_selection_priors(
         )
 
         formation, slots, shape_match_id, used_default_shape = _latest_shape(
-            match_groups,
-            squad_by_player,
-            config["default_role_slots"],
+            match_groups, config["default_role_slots"]
         )
         if has_selection_evidence:
             xi, xi_flags = _select_xi(player_rows, slots, hard_exclusions)
@@ -386,6 +524,12 @@ def build_squad_selection_priors(
             else 0.0
         )
         quality_flags = [*availability_flags, *xi_flags]
+        assigned_minutes = sum(row["expected_minutes_prior"] for row in player_rows)
+        physically_valid_minutes = all(
+            0.0 <= float(row["expected_minutes_prior"]) <= MAX_PLAYER_MINUTES
+            for row in player_rows
+        )
+        complete_minute_distribution = abs(assigned_minutes - expected_total) <= 0.01
         if not match_groups:
             quality_flags.append("no_recent_match_detail")
         if exact_lineup_matches == 0:
@@ -396,8 +540,14 @@ def build_squad_selection_priors(
             quality_flags.append("default_role_shape")
         if grade_coverage < 1.0:
             quality_flags.append("partial_alpha_context")
+        if match_groups and minute_coverage < 0.75:
+            quality_flags.append("partial_recent_minute_coverage")
+        if 0 < historical_coverage < 1.0:
+            quality_flags.append("partial_historical_workload")
         if missing_roles:
-            quality_flags.append("unmapped_squad_roles")
+            quality_flags.append("unmapped_selection_roles")
+        if has_selection_evidence and not complete_minute_distribution:
+            quality_flags.append("expected_minute_capacity_shortfall")
         if any(row["availability_status"] == "unknown" for row in player_rows):
             quality_flags.append("unknown_availability")
 
@@ -423,13 +573,25 @@ def build_squad_selection_priors(
                     "preseason_matches": len(source_matches.get("preseason", set())),
                     "exact_lineup_matches": exact_lineup_matches,
                     "weighted_recent_matches": round(weighted_match_count, 4),
+                    "coverage_adjusted_recent_matches": round(
+                        coverage_adjusted_match_count, 4
+                    ),
                     "current_squad_minute_coverage": round(min(1.0, minute_coverage), 4),
+                    "historical_players_with_minutes": historical_players,
+                    "historical_workload_coverage": round(historical_coverage, 4),
+                    "historical_prior_strength": round(historical_strength, 4),
                     "alpha_context_coverage": round(grade_coverage, 4),
                     "latest_match_utc": latest_match_utc,
                 },
                 "decision_boundaries": {
-                    "lineup_prior_ready": len(xi) == 11,
+                    "lineup_prior_ready": (
+                        len(xi) == 11
+                        and physically_valid_minutes
+                        and complete_minute_distribution
+                    ),
                     "expected_team_minutes": expected_total,
+                    "assigned_team_minutes": round(assigned_minutes, 3),
+                    "maximum_player_minutes": MAX_PLAYER_MINUTES,
                     "availability_adjustment_applied": any(
                         row["availability_status"] in hard_exclusions
                         and row["baseline_expected_minutes"] > 0
