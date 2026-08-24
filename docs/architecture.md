@@ -132,6 +132,26 @@ also preserves goal/xG means, total-score variance, home-away covariance, home
 advantage, draw, over-2.5, and BTTS history for later calibrated simulations.
 These remain descriptive inputs until a walk-forward probability layer exists.
 
+## Fixture State v1
+
+The first composite remains a handoff rather than another club grade:
+
+```text
+Competition xG environment
+          +
+60% Club Form matchup
+30% expected-minute Player Quality lineup delta
+10% venue/direct Historical residual
+          ↓
+dated home and away Fixture State signals
+```
+
+The competition baseline sits outside the component weights. Club Form's
+released reliability shrinkage is applied once, lineup availability is measured
+against each club's normal expected-minute baseline, and direct history is
+capped at 1.5% of the complete signal. The calibration coefficient remains
+unset until dated walk-forward testing.
+
 ## First output
 
 The first useful product is a Football Intelligence Snapshot:
@@ -150,6 +170,5 @@ Team
 Goals, assists, totals, market prices, and capital deployment remain outside v0.1. They will be built later on top of trusted intelligence.
 
 The accepted minimal handoff into that later probability layer is documented
-in [Composite Model v1](composite-model-v1.md): 60% Club Form, 30% expected-
-lineup Player Quality delta, and 10% residual Historical Context, with the
-competition scoring environment establishing the baseline outside that mix.
+in [Composite Model v1](composite-model-v1.md) and implemented in
+[Fixture State v1](fixture-state-spec.md).

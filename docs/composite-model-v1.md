@@ -131,8 +131,9 @@ expected_goals =
 ```
 
 The calibration coefficient must be learned with dated walk-forward samples.
-The first Fixture State output contains home expected goals, away expected
-goals, component signals, evidence confidence, and uncertainty.
+The first Fixture State output contains competition baseline xG, home and away
+component signals, evidence confidence, and uncertainty. Calibrated home and
+away expected goals remain null until that coefficient is learned.
 
 ## Player events
 
@@ -180,12 +181,15 @@ walk-forward gates.
 - player props without expected minutes;
 - capital deployment before calibration and price tracking.
 
-## Implementation order
+## Implementation status and order
 
-1. Materialize a dated Fixture State from the three foundations.
-2. Fit and walk-forward-test home and away expected goals.
+1. **Complete:** materialize a dated Fixture State from the three foundations.
+2. **Next:** fit and walk-forward-test home and away expected goals.
 3. Validate totals and team totals.
 4. Add lineup scenarios and expected minutes.
 5. Allocate team goal mass to scorers and assist makers.
 6. Add no-vig market prices and a shadow ledger.
 7. Enable risk sizing only after calibration gates pass.
+
+The implemented handoff, confidence policy, coverage audit, and remaining
+decision boundaries are documented in [Fixture State v1](fixture-state-spec.md).

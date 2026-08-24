@@ -1,0 +1,27 @@
+{
+  "version": "clubalpha_fixture_state_v1",
+  "source_versions": {
+    "club_form": "clubalpha_club_form_v1",
+    "squad_selection_prior": "clubalpha_squad_selection_prior_v1",
+    "historical_fixtures": "clubalpha_historical_fixtures_v2_deep"
+  },
+  "component_weights": {
+    "club_form": 0.60,
+    "player_quality_lineup": 0.30,
+    "historical_residual": 0.10
+  },
+  "lineup_confidence": {
+    "evidence_prior": 2.0,
+    "method": "alpha-minute coverage multiplied by squad-selection evidence maturity"
+  },
+  "historical_fixtures_config": "config/historical-fixtures-v2.json",
+  "goal_engine": {
+    "calibration_coefficient": null,
+    "formula": "competition_xg_baseline * exp(calibration_coefficient * fixture_signal_z)"
+  },
+  "decision_boundaries": {
+    "probability_ready": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  }
+}

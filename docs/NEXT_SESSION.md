@@ -2,56 +2,35 @@
 
 Updated: 2026-08-24
 
-Working branch: `codex/club-form-v1`
+Working branch: `codex/fixture-state-v1`
 
-Draft PR: [#6 — Build Club Form intelligence and squad selection priors](https://github.com/Sebihotspur/Clubalpha/pull/6)
+## Current checkpoint
+
+- Player Quality v2 is locked and grades all five positional populations.
+- Club Form v1, Club Dynamics v1, and Squad Selection Prior v1 are merged.
+- Historical Fixtures v2 and the accepted Composite Model v1 are merged.
+- Fixture State v1 now implements the confidence-aware 60/30/10 handoff.
+- The frozen 2026-08-18 snapshot contains 31 upcoming fixtures.
+- All 31 have Club Form, historical residual, and competition xG inputs.
+- Twenty-seven have complete baseline lineup priors; four preserve neutral,
+  explicitly flagged selection gaps.
+- All 31 lineups remain dated priors rather than fixture-specific or confirmed.
+- The complete 107-test suite passes.
+- No calibration coefficient, probability, market edge, or staking output exists.
 
 ## Start here
 
-1. Perform the final review of the August 24 Squad Selection corrections.
-   - Re-run the 83-test suite: `python3 -m unittest discover -s tests`.
-   - Confirm no player exceeds 90 expected minutes and every usable team totals 990.
-   - Confirm tactical selection roles remain separate from locked Alpha grading positions.
-   - Confirm partial recent and historical evidence reduces prior strength.
-   - Confirm `Unknown` injury text remains unknown rather than becoming a hard exclusion.
-   - Reinspect Arsenal, Chelsea, Manchester City, Coventry City, and Shakhtar Donetsk.
-2. If the final audit is clean, mark PR #6 ready and merge it into `main`.
-3. Create a new branch from the updated `main` for Fixture Intelligence v1.
+1. Review Fixture State v1 and its tracked real-data audit.
+2. Merge only if the confidence treatment and residual definitions remain
+   accepted.
+3. Build dated historical Fixture State snapshots for walk-forward training.
+4. Fit and evaluate home and away xG coefficients strictly out of sample.
 
-## Current Club Form checkpoint
+## Preserve these boundaries
 
-- Performance Form: 58/58 clubs.
-- Style and strengths/weaknesses: 56/58 clubs.
-- Complete baseline XI priors: 55/58 clubs.
-- Recent detailed player evidence: 38 clubs.
-- Exact recent declared XI evidence: 37 clubs.
-- Squad players: 1,407.
-- Availability: 75 unavailable, 61 questionable, and 2 explicitly unknown.
-- Selection shapes: 37 exact recent lineups and 21 transparent default shapes.
-- Evidence controls: 14 teams carry partial recent-minute coverage and one carries partial historical-workload coverage.
-- Safeguards: no player exceeds 90 expected minutes, no unavailable player is selected, usable team priors total 990 minutes, and no future-match leakage.
-- Explicit FotMob squad-page gaps: NK Celje, Sabah FK, and Shakhtar Donetsk.
-- The joined snapshot intentionally remains `projection_ready=false`.
-
-## Keep outside PR #6
-
-Do not add fixture-specific expected lineups or minutes, opponent matchup logic, fresh team news, probabilities, market prices, or capital deployment rules to this PR. Club Form is complete at its current boundary.
-
-## Fixture Intelligence v1 — first scope
-
-Build the next layer around a selected fixture:
-
-1. fixture and opponent identity;
-2. home/away context;
-3. tactical style matchup;
-4. fresh team news and rotation context;
-5. fixture-specific expected XI;
-6. expected-minute scenarios for questionable players.
-
-Its eventual handoff should be:
-
-```text
-Player Quality × Expected Minutes × Fixture Context
-```
-
-Only after walk-forward validation should that feed goalscorer, assist-maker, team-goal, over/under, and capital-deployment probabilities.
+- Do not change the locked Player Quality formulas inside calibration work.
+- Do not shrink released Club Form scores a second time.
+- Do not replace the competition xG baseline with the 60/30/10 signal.
+- Do not allow direct history above 1.5% of the complete fixture adjustment.
+- Do not redistribute missing component weight.
+- Do not call an output a probability, edge, or wager before calibration passes.

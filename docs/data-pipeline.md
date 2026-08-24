@@ -200,3 +200,25 @@ python3 scripts/build_historical_fixtures.py \
 
 The build deduplicates overlapping one-season and deep-history rows by FotMob
 match/team ID before scoring them.
+
+## Fixture State handoff
+
+After Club Form, Squad Selection Prior, and Historical Fixtures v2 are built,
+materialize the dated composite input:
+
+```bash
+python3 scripts/build_fixture_state.py
+```
+
+```text
+data/processed/fixture_state/
+├── fixture_states.jsonl
+└── manifest.json
+
+reports/fixture-state-v1-audit.json
+```
+
+The generated fixture rows remain ignored by Git; the compact audit is tracked.
+The builder requires matching `as_of` dates and source versions. It preserves
+the competition xG baseline outside the 60/30/10 adjustment and emits no
+calibrated goal probability while the walk-forward coefficient is unset.

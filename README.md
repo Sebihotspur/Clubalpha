@@ -21,6 +21,7 @@ These foundations combine into a simple Football Intelligence Snapshot for each 
 - [Squad Selection Prior](docs/squad-selection-prior-spec.md)
 - [Historical Fixtures](docs/historical-fixtures-spec.md)
 - [Composite Model v1](docs/composite-model-v1.md)
+- [Fixture State v1](docs/fixture-state-spec.md)
 - [Data-source bakeoff](research/data-source-bakeoff.md)
 
 ## Pull the foundation
@@ -185,6 +186,26 @@ None of those values is a calibrated probability or a betting signal.
 See [Historical Fixtures](docs/historical-fixtures-spec.md) for the formulas,
 coverage, and decision boundaries.
 
+## Fixture State v1
+
+Build the first auditable 60/30/10 fixture handoff after the three foundations:
+
+```bash
+python3 scripts/build_fixture_state.py
+```
+
+Fixture State combines the released Club Form matchup (60%), the
+availability-adjusted expected-minute Player Quality delta (30%), and only the
+venue/direct residual from Historical Fixtures (10%). The competition home and
+away xG environment remains a separate baseline. Club Form reliability is not
+applied twice, direct history can contribute at most 1.5% of the complete
+signal, and missing lineup evidence stays neutral rather than transferring its
+weight elsewhere.
+
+The output is ready to become a dated walk-forward calibration input. It is not
+a probability, betting edge, or capital signal. See [Fixture State v1](docs/fixture-state-spec.md)
+for the exact handoff and safeguards.
+
 ## Status
 
 The PL, UCL, and preseason foundation pull is operational. Player Quality v2
@@ -197,6 +218,11 @@ Historical Fixtures v2 now materializes league-adjusted venue and direct-matchup
 context plus five-season competition baselines for the next dated Premier
 League and Champions League fixtures. The deep archive contains 2,653 matches
 and complete team-match detail for all of them.
+
+Fixture State v1 materializes 31 dated fixture inputs from those foundations.
+All 31 have Club Form, historical residual, and competition xG inputs; 27 have
+complete baseline lineup priors. The goal calibration coefficient is
+intentionally unset, so no output is presented as a probability or wager.
 
 Clubalpha does not yet produce deployment-ready probabilities or
 recommendations. Fixture-specific lineups, style-matchup validation, calibrated
