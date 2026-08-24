@@ -1,0 +1,56 @@
+{
+  "version": "clubalpha_club_dynamics_v1",
+  "source": "FotMob normalized team pages, match details, and previous-season team statistics",
+  "question": "How does this club play, where is it strong or weak, and how much is it changing?",
+  "previous_season": "2025/2026",
+  "change_window_start": "2026-06-01",
+  "normalisation": {
+    "method": "competition peer sample z-score",
+    "minimum_peer_team_rows": 20,
+    "z_cap": 3.0,
+    "champions_league_group": "champions_league",
+    "preseason_group": "preseason"
+  },
+  "style": {
+    "half_life_days": 90.0,
+    "prior_weighted_matches": 5.0,
+    "source_weights": {"default": 1.0, "preseason_2026": 0.6},
+    "maximum_preseason_weight_share": 0.45,
+    "descriptor_threshold_z": 0.5,
+    "minimum_shift_confidence": 0.2,
+    "axes": [
+      {"key": "control", "label": "Control", "high": "possession-dominant", "neutral": "balanced control", "low": "cedes possession"},
+      {"key": "territory", "label": "Territory", "high": "advanced territory", "neutral": "balanced territory", "low": "deeper circulation"},
+      {"key": "directness", "label": "Directness", "high": "more direct", "neutral": "mixed progression", "low": "shorter build-up"},
+      {"key": "crossing", "label": "Crossing", "high": "cross-oriented", "neutral": "mixed width", "low": "lower-cross attack"},
+      {"key": "set_piece_reliance", "label": "Set-piece reliance", "high": "set-piece reliant", "neutral": "balanced chance sources", "low": "open-play reliant"},
+      {"key": "high_pressing", "label": "High pressing", "high": "high-regain press", "neutral": "mid-range high regains", "low": "lower high-regain rate"}
+    ]
+  },
+  "strengths": {
+    "half_life_days": 60.0,
+    "prior_weighted_matches": 5.0,
+    "source_weights": {"default": 1.0, "preseason_2026": 0.25},
+    "maximum_preseason_weight_share": 0.2,
+    "classification_threshold_z": 0.5,
+    "minimum_classification_confidence": 0.35,
+    "axes": [
+      {"key": "chance_creation", "label": "Chance creation", "unit": "xG", "direction": "higher"},
+      {"key": "shot_quality", "label": "Shot quality", "unit": "xG per shot", "direction": "higher"},
+      {"key": "finishing", "label": "Finishing", "unit": "goals minus xG", "direction": "higher"},
+      {"key": "box_access", "label": "Box access", "unit": "opposition-box touches", "direction": "higher"},
+      {"key": "set_piece_attack", "label": "Set-piece attack", "unit": "set-play xG", "direction": "higher"},
+      {"key": "chance_prevention", "label": "Chance prevention", "unit": "xG conceded", "direction": "lower"},
+      {"key": "shot_suppression", "label": "Shot suppression", "unit": "shots conceded", "direction": "lower"},
+      {"key": "box_defense", "label": "Box defence", "unit": "box touches conceded", "direction": "lower"},
+      {"key": "set_piece_defense", "label": "Set-piece defence", "unit": "set-play xG conceded", "direction": "lower"}
+    ]
+  },
+  "change_state": {
+    "manager_evidence_prior_matches": 6.0,
+    "integration_match_scopes": ["preseason_2026", "premier_league_current", "champions_league_qualification_2026_27"],
+    "transfer_value_changes_score": false,
+    "composite_modifier_enabled": false,
+    "note": "Manager and transfer changes describe transition and uncertainty. They do not alter Club Form until walk-forward validation demonstrates predictive value."
+  }
+}

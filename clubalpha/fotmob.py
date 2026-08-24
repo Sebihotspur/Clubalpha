@@ -40,6 +40,29 @@ def _number(value: Any) -> float | None:
         return None
 
 
+def _display_number(value: Any) -> float | None:
+    """Read the leading number from a FotMob team-stat display value.
+
+    Team cards sometimes expose values such as ``"460 (87%)"`` instead of a
+    numeric JSON value. The player-stat feed keeps the numerator and
+    denominator separately, but the team feed does not, so preserving the
+    leading count is the least lossy normalization available.
+    """
+
+    numeric = _number(value)
+    if numeric is not None:
+        return numeric
+    match = re.match(r"^\s*(-?\d+(?:[.,]\d+)?)", str(value or ""))
+    if not match:
+        return None
+    return float(match.group(1).replace(",", "."))
+
+
+def _display_percentage(value: Any) -> float | None:
+    match = re.search(r"\((-?\d+(?:\.\d+)?)%\)", str(value or ""))
+    return float(match.group(1)) if match else None
+
+
 class FotMobClient:
     """Read FotMob JSON with retries, rate limiting, and a filesystem cache."""
 
@@ -229,11 +252,308 @@ def normalize_fixture(row: dict[str, Any], *, source_scope: str) -> dict[str, An
     }
 
 
+def clip_fixture_to_as_of(row: dict[str, Any], as_of: str) -> dict[str, Any]:
+    """Keep known future schedules without leaking later scores or status."""
+
+    kickoff = str(row.get("kickoff_utc") or "")[:10]
+    if not kickoff or kickoff <= as_of:
+        return row
+    return {
+        **row,
+        "score": None,
+        "started": False,
+        "finished": False,
+        "cancelled": False,
+    }
+
+
+MATCH_TEAM_STAT_KEYS = {
+    "expected_goals": "expected_goals",
+    "shots_on_target": "ShotsOnTarget",
+    "big_chances": "big_chance",
+    "total_shots": "total_shots",
+    "touches_opp_box": "touches_opp_box",
+    "possession_pct": "BallPossesion",
+    "passes": "passes",
+    "accurate_passes": "accurate_passes",
+    "own_half_passes": "own_half_passes",
+    "opposition_half_passes": "opposition_half_passes",
+    "long_balls_completed": "long_balls_accurate",
+    "crosses_completed": "accurate_crosses",
+    "expected_goals_open_play": "expected_goals_open_play",
+    "expected_goals_set_play": "expected_goals_set_play",
+    "tackles": "matchstats.headers.tackles",
+    "interceptions": "interceptions",
+}
+
+MATCH_TEAM_PERCENTAGE_KEYS = {
+    "pass_accuracy_pct": "accurate_passes",
+    "long_ball_accuracy_pct": "long_balls_accurate",
+    "cross_accuracy_pct": "accurate_crosses",
+}
+
+
+def _match_score(value: Any) -> tuple[float | None, float | None]:
+    match = re.match(r"^\s*(\d+)\s*[-:]\s*(\d+)", str(value or ""))
+    if not match:
+        return None, None
+    return float(match.group(1)), float(match.group(2))
+
+
+def _match_team_stat_pairs(
+    payload: dict[str, Any],
+) -> dict[str, tuple[float | None, float | None]]:
+    output: dict[str, tuple[float | None, float | None]] = {}
+    periods = ((((payload.get("content") or {}).get("stats") or {}).get("Periods")) or {})
+    groups = (((periods.get("All") or {}).get("stats")) or [])
+    for group in groups:
+        for item in group.get("stats") or []:
+            key = item.get("key")
+            values = item.get("stats")
+            if not key or not isinstance(values, list) or len(values) < 2:
+                continue
+            pair = (_display_number(values[0]), _display_number(values[1]))
+            if pair == (None, None):
+                continue
+            current = output.get(str(key))
+            if current is None or sum(value is not None for value in pair) > sum(
+                value is not None for value in current
+            ):
+                output[str(key)] = pair
+    return output
+
+
+def _match_team_stat_percentage_pairs(
+    payload: dict[str, Any],
+) -> dict[str, tuple[float | None, float | None]]:
+    output: dict[str, tuple[float | None, float | None]] = {}
+    periods = ((((payload.get("content") or {}).get("stats") or {}).get("Periods")) or {})
+    groups = (((periods.get("All") or {}).get("stats")) or [])
+    for group in groups:
+        for item in group.get("stats") or []:
+            key = item.get("key")
+            values = item.get("stats")
+            if not key or not isinstance(values, list) or len(values) < 2:
+                continue
+            pair = (_display_percentage(values[0]), _display_percentage(values[1]))
+            if pair == (None, None):
+                continue
+            output[str(key)] = pair
+    return output
+
+
+def _estimated_attempts(completed: float | None, accuracy_pct: float | None) -> float | None:
+    """Approximate attempts when FotMob publishes only completions and a rounded rate."""
+
+    if completed is None or accuracy_pct is None or accuracy_pct <= 0:
+        return None
+    return completed * 100.0 / accuracy_pct
+
+
+def flatten_match_team_stats(
+    match_payload: dict[str, Any], fixture: dict[str, Any]
+) -> list[dict[str, Any]]:
+    """Return one normalized team-stat row for each side of a fixture.
+
+    FotMob title rows can repeat a metric key with two null values, so only
+    numeric pairs replace an existing pair. A score-only card remains useful,
+    but all unavailable performance metrics stay explicitly missing.
+    """
+
+    general = match_payload.get("general") or {}
+    header_teams = ((match_payload.get("header") or {}).get("teams")) or []
+    stat_pairs = _match_team_stat_pairs(match_payload)
+    percentage_pairs = _match_team_stat_percentage_pairs(match_payload)
+    score_pair = _match_score(fixture.get("score"))
+    if len(header_teams) >= 2:
+        header_score = (
+            _number(header_teams[0].get("score")),
+            _number(header_teams[1].get("score")),
+        )
+        if header_score != (None, None):
+            score_pair = header_score
+
+    general_home = general.get("homeTeam") or {}
+    general_away = general.get("awayTeam") or {}
+    sides = [
+        {
+            "team_id": fixture.get("home_team_id") or general_home.get("id"),
+            "team": fixture.get("home_team") or general_home.get("name"),
+            "opponent_id": fixture.get("away_team_id") or general_away.get("id"),
+            "opponent": fixture.get("away_team") or general_away.get("name"),
+            "venue": "home",
+            "for_index": 0,
+            "against_index": 1,
+        },
+        {
+            "team_id": fixture.get("away_team_id") or general_away.get("id"),
+            "team": fixture.get("away_team") or general_away.get("name"),
+            "opponent_id": fixture.get("home_team_id") or general_home.get("id"),
+            "opponent": fixture.get("home_team") or general_home.get("name"),
+            "venue": "away",
+            "for_index": 1,
+            "against_index": 0,
+        },
+    ]
+    rows: list[dict[str, Any]] = []
+    for side in sides:
+        if side["team_id"] is None or side["opponent_id"] is None:
+            continue
+        row: dict[str, Any] = {
+            "match_id": int(fixture["match_id"]),
+            "source": "fotmob",
+            "source_scope": fixture.get("source_scope"),
+            "competition_id": fixture.get("competition_id") or general.get("leagueId"),
+            "competition": fixture.get("competition") or general.get("leagueName"),
+            "kickoff_utc": fixture.get("kickoff_utc")
+            or general.get("matchTimeUTCDate")
+            or general.get("matchTimeUTC"),
+            "team_id": int(side["team_id"]),
+            "team": side["team"],
+            "opponent_id": int(side["opponent_id"]),
+            "opponent": side["opponent"],
+            "venue": side["venue"],
+            "cache_detail_available": bool(match_payload),
+            "goals_for": score_pair[side["for_index"]],
+            "goals_against": score_pair[side["against_index"]],
+        }
+        for canonical, source_key in MATCH_TEAM_STAT_KEYS.items():
+            pair = stat_pairs.get(source_key, (None, None))
+            row[f"{canonical}_for"] = pair[side["for_index"]]
+            row[f"{canonical}_against"] = pair[side["against_index"]]
+        for canonical, source_key in MATCH_TEAM_PERCENTAGE_KEYS.items():
+            pair = percentage_pairs.get(source_key, (None, None))
+            row[f"{canonical}_for"] = pair[side["for_index"]]
+            row[f"{canonical}_against"] = pair[side["against_index"]]
+        for prefix, completed_key, accuracy_key in (
+            ("long_balls", "long_balls_completed", "long_ball_accuracy_pct"),
+            ("crosses", "crosses_completed", "cross_accuracy_pct"),
+        ):
+            for direction in ("for", "against"):
+                row[f"{prefix}_attempted_est_{direction}"] = _estimated_attempts(
+                    row.get(f"{completed_key}_{direction}"),
+                    row.get(f"{accuracy_key}_{direction}"),
+                )
+        row["detailed_metric_count"] = sum(
+            row.get(f"{key}_for") is not None for key in MATCH_TEAM_STAT_KEYS
+        )
+        rows.append(row)
+    return rows
+
+
+def normalize_team_snapshot(
+    payload: dict[str, Any], *, team_id: int, team: str | None, snapshot_date: str
+) -> dict[str, Any]:
+    """Normalize the current coach and squad identity from one team page."""
+
+    coach: dict[str, Any] | None = None
+    player_ids: list[int] = []
+    for group in ((payload.get("squad") or {}).get("squad") or []):
+        for member in group.get("members") or []:
+            if member.get("id") is None:
+                continue
+            if group.get("title") == "coach":
+                if coach is None:
+                    coach = {
+                        "coach_id": int(member["id"]),
+                        "coach": member.get("name"),
+                    }
+            elif member.get("excludeFromRanking") is not True:
+                player_ids.append(int(member["id"]))
+    return {
+        "source": "fotmob",
+        "snapshot_date": snapshot_date,
+        "team_id": int(team_id),
+        "team": team,
+        "current_coach": coach,
+        "squad_player_ids": sorted(set(player_ids)),
+    }
+
+
+def normalize_manager_history(
+    payload: dict[str, Any], *, team_id: int, team: str | None
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for item in ((payload.get("history") or {}).get("coachHistory") or []):
+        if item.get("id") is None:
+            continue
+        rows.append(
+            {
+                "source": "fotmob",
+                "team_id": int(team_id),
+                "team": team,
+                "coach_id": int(item["id"]),
+                "coach": item.get("name"),
+                "season": item.get("season"),
+                "competition_id": item.get("leagueId"),
+                "competition": item.get("leagueName"),
+                "wins": item.get("win"),
+                "draws": item.get("draw"),
+                "losses": item.get("loss"),
+                "points_per_game": item.get("pointsPerGame"),
+            }
+        )
+    return rows
+
+
+def normalize_transfer_events(
+    payload: dict[str, Any], *, team_id: int, team: str | None
+) -> list[dict[str, Any]]:
+    """Normalize confirmed incoming and outgoing transfers from a team page."""
+
+    rows: list[dict[str, Any]] = []
+    sections = ((payload.get("transfers") or {}).get("data") or {})
+    for section, direction in (("Players in", "in"), ("Players out", "out")):
+        for item in sections.get(section) or []:
+            if item.get("playerId") is None or item.get("contractExtension") is True:
+                continue
+            effective = item.get("fromDate") or item.get("transferDate")
+            counterparty_id = item.get("fromClubId") if direction == "in" else item.get("toClubId")
+            counterparty = item.get("fromClubFullName") if direction == "in" else item.get("toClubFullName")
+            fee = item.get("fee") or {}
+            transfer_type = item.get("transferType") or {}
+            rows.append(
+                {
+                    "source": "fotmob",
+                    "team_id": int(team_id),
+                    "team": team,
+                    "direction": direction,
+                    "player_id": int(item["playerId"]),
+                    "player": item.get("name"),
+                    "position": (item.get("position") or {}).get("label"),
+                    "effective_date": str(effective)[:10] if effective else None,
+                    "reported_at_utc": item.get("transferDate"),
+                    "counterparty_id": int(counterparty_id) if counterparty_id is not None else None,
+                    "counterparty": counterparty,
+                    "transfer_type": transfer_type.get("text") or transfer_type.get("localizationKey"),
+                    "on_loan": bool(item.get("onLoan")),
+                    "fee_eur": fee.get("value"),
+                    "market_value_eur": item.get("marketValue"),
+                }
+            )
+    return rows
+
+
 def flatten_match_player_stats(match_payload: dict[str, Any]) -> list[dict[str, Any]]:
     general = match_payload.get("general") or {}
     output: list[dict[str, Any]] = []
     content = match_payload.get("content") or {}
     players = content.get("playerStats") or {}
+    lineup = content.get("lineup") or {}
+    lineup_players: dict[int, dict[str, Any]] = {}
+    for side in ("homeTeam", "awayTeam"):
+        team_lineup = lineup.get(side) or {}
+        formation = team_lineup.get("formation")
+        for group, is_starter in (("starters", True), ("subs", False)):
+            for player in team_lineup.get(group) or []:
+                if player.get("id") is None:
+                    continue
+                lineup_players[int(player["id"])] = {
+                    "is_starter": is_starter,
+                    "lineup_position_id": player.get("positionId"),
+                    "team_formation": formation,
+                    "lineup_source": lineup.get("source"),
+                }
     shots = (content.get("shotmap") or {}).get("shots")
     shotmap_goals: dict[int, int] = {}
     shotmap_non_penalty_goals: dict[int, int] = {}
@@ -324,6 +644,16 @@ def flatten_match_player_stats(match_payload: dict[str, Any]) -> list[dict[str, 
                 "team_id": int(player["teamId"]),
                 "team": player.get("teamName"),
                 "is_goalkeeper": bool(player.get("isGoalkeeper")),
+                "is_starter": (lineup_players.get(player_id) or {}).get("is_starter"),
+                "lineup_position_id": (lineup_players.get(player_id) or {}).get(
+                    "lineup_position_id"
+                ),
+                "team_formation": (lineup_players.get(player_id) or {}).get(
+                    "team_formation"
+                ),
+                "lineup_source": (lineup_players.get(player_id) or {}).get(
+                    "lineup_source"
+                ),
                 "metrics": metrics,
             }
         )

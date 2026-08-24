@@ -1,0 +1,33 @@
+{
+  "version": "clubalpha_squad_selection_prior_v1",
+  "source": "FotMob declared lineups, current squad pages, player-match minutes, and Alpha Ability",
+  "question": "Which players currently hold the strongest evidence for minutes and a starting place?",
+  "expected_team_minutes": 990.0,
+  "recent_evidence": {
+    "current_competitive_weight": 1.0,
+    "preseason_weight": 0.25,
+    "half_life_days": 30.0,
+    "historical_prior_equivalent_matches": 2.0,
+    "historical_full_coverage_players": 11,
+    "note": "Current competitive match evidence is full weight only when all 990 current-squad minutes are observed. Preseason informs selection but is discounted. Previous-season squad workload supplies at most a two-match prior and is discounted when fewer than eleven current players have history."
+  },
+  "default_role_slots": {
+    "GK": 1,
+    "DEF": 4,
+    "MID": 3,
+    "FWD": 3
+  },
+  "availability": {
+    "questionable_terms": ["doubtful", "day to day", "back in training"],
+    "unknown_terms": ["unknown"],
+    "hard_exclusion_statuses": ["unavailable"],
+    "note": "Known unavailable players are removed from the availability-adjusted prior. Questionable and unknown cases remain visible and are not silently treated as out."
+  },
+  "decision_boundaries": {
+    "uses_alpha_to_select_players": false,
+    "fixture_specific": false,
+    "confirmed_lineup": false,
+    "projection_ready": false,
+    "note": "Alpha Ability is attached as player context, not used to predict manager selection. A dated squad prior is not a matchday XI."
+  }
+}

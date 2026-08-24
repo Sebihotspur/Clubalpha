@@ -26,6 +26,7 @@ from clubalpha.domestic_history import (  # noqa: E402
 from clubalpha.fotmob import (  # noqa: E402
     FotMobClient,
     flatten_match_player_stats,
+    flatten_match_team_stats,
     league_matches,
     normalize_stat_rows,
 )
@@ -89,6 +90,32 @@ def metric_coverage(rows: list[dict[str, Any]]) -> dict[str, Any]:
     return output
 
 
+def team_metric_coverage(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    metrics = [
+        "goals",
+        "expected_goals",
+        "shots_on_target",
+        "big_chances",
+        "total_shots",
+        "touches_opp_box",
+        "possession_pct",
+        "passes",
+        "opposition_half_passes",
+        "long_balls_attempted_est",
+        "crosses_attempted_est",
+        "expected_goals_set_play",
+    ]
+    return {
+        metric: {
+            "team_match_rows_with_value": sum(
+                row.get(f"{metric}_for") is not None for row in rows
+            ),
+            "team_match_rows": len(rows),
+        }
+        for metric in metrics
+    }
+
+
 def pull_stat_rows(
     client: FotMobClient,
     competition: dict[str, Any],
@@ -140,6 +167,7 @@ def main() -> int:
         type=Path,
         default=ROOT / "reports/domestic-history-coverage.json",
     )
+    parser.add_argument("--cache-dir", type=Path, default=ROOT / "data/cache/fotmob")
     parser.add_argument("--refresh", action="store_true")
     parser.add_argument("--skip-match-details", action="store_true")
     parser.add_argument("--skip-stats", action="store_true")
@@ -160,7 +188,7 @@ def main() -> int:
         wanted_ids = set(args.league_ids)
         competitions = [row for row in competitions if row["league_id"] in wanted_ids]
 
-    cache_dir = ROOT / "data/cache/fotmob"
+    cache_dir = args.cache_dir
     client = FotMobClient(
         cache_dir,
         refresh=args.refresh,
@@ -245,12 +273,15 @@ def main() -> int:
 
     print(f"[3/4] Target-club player-match detail ({len(match_context)} matches)")
     match_player_rows: list[dict[str, Any]] = []
+    match_team_rows: list[dict[str, Any]] = []
     detail_errors: list[dict[str, Any]] = []
     detailed_ids: set[int] = set()
     if not args.skip_match_details:
         worker_state = threading.local()
 
-        def fetch_match(match_id: int) -> tuple[int, list[dict[str, Any]], str | None]:
+        def fetch_match(
+            match_id: int,
+        ) -> tuple[int, list[dict[str, Any]], list[dict[str, Any]], str | None]:
             worker_client = getattr(worker_state, "client", None)
             if worker_client is None:
                 worker_client = FotMobClient(
@@ -260,23 +291,27 @@ def main() -> int:
                 )
                 worker_state.client = worker_client
             try:
-                rows = filter_target_player_rows(
-                    flatten_match_player_stats(worker_client.match(match_id)),
+                payload = worker_client.match(match_id)
+                player_rows = filter_target_player_rows(
+                    flatten_match_player_stats(payload),
                     match_context[match_id],
                 )
-                return match_id, rows, None
+                team_rows = flatten_match_team_stats(payload, fixtures_by_id[match_id])
+                return match_id, player_rows, team_rows, None
             except RuntimeError as exc:
-                return match_id, [], str(exc)
+                return match_id, [], [], str(exc)
 
         match_ids = sorted(match_context)
         with ThreadPoolExecutor(max_workers=args.workers) as executor:
             results = executor.map(fetch_match, match_ids)
-            for number, (match_id, rows, error) in enumerate(results, 1):
+            for number, (match_id, player_rows, team_rows, error) in enumerate(results, 1):
                 if error:
                     detail_errors.append({"match_id": match_id, "error": error})
-                elif rows:
-                    detailed_ids.add(match_id)
-                    match_player_rows.extend(rows)
+                else:
+                    match_team_rows.extend(team_rows)
+                    if player_rows:
+                        detailed_ids.add(match_id)
+                        match_player_rows.extend(player_rows)
                 if number == 1 or number % 25 == 0 or number == len(match_context):
                     print(f"  match {number:04d}/{len(match_context):04d}")
 
@@ -313,6 +348,9 @@ def main() -> int:
             round(100 * len(detailed_ids) / len(expected_ids), 1) if expected_ids and not args.skip_match_details else None
         ),
         "match_player_rows": write_jsonl(args.output_dir / "match_player_stats.jsonl", match_player_rows),
+        "match_team_rows": write_jsonl(
+            args.output_dir / "match_team_stats.jsonl", match_team_rows
+        ),
         "season_player_stat_rows": write_jsonl(args.output_dir / "season_player_stats.jsonl", player_stat_rows),
     }
     manifest = {
@@ -331,6 +369,7 @@ def main() -> int:
         "match_detail_errors": detail_errors,
         "matches_without_target_player_stats_sample": missing_detail_ids[:30],
         "metric_coverage": metric_coverage(match_player_rows),
+        "team_metric_coverage": team_metric_coverage(match_team_rows),
         "warnings": [
             "Domestic match detail is club-filtered; opponent-only rows are excluded to prevent partial-season player grades.",
             "Players transferred from a non-target club may still require a player-centric backfill.",

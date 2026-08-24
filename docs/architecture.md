@@ -7,10 +7,10 @@ Simple is beautiful. Clubalpha begins with four foundations and adds new layers 
 ```text
 Data Sources
     ├── Player Quality
-    ├── Squad Form
+    ├── Club Form
     └── Historical Fixtures
 
-Player Quality + Squad Form + Historical Fixtures
+Player Quality + Club Form + Historical Fixtures
     → Football Intelligence
 ```
 
@@ -45,7 +45,7 @@ Inputs include:
 
 Player Quality does not include the next opponent or whether the player is expected to start the next match.
 
-## 3. Squad Form
+## 3. Club Form
 
 Question: **What condition and configuration is the team in now?**
 
@@ -58,6 +58,37 @@ Inputs include:
 - expected roles and tactical changes.
 
 Preseason can strongly change role, fitness, and tactical assessments. It should only modestly change underlying player ability.
+
+Club Form v1 begins with recency-weighted attack and defence, low-weight
+preseason evidence, and a separate availability snapshot. Projected roles and
+World Cup workload remain explicit later inputs. Tactical changes are surfaced
+by Club Dynamics rather than hidden inside the performance score.
+
+Club Dynamics v1 now sits inside Club Form as a separate explanatory profile:
+
+```text
+Club Form
+├── Performance Form — how well the club is playing
+├── Club Dynamics
+│   ├── Style — how the club plays
+│   ├── Strengths and weaknesses — where performance is created or conceded
+│   └── Change state — manager, transfers, integration, and continuity
+├── Availability — who may be available
+└── Squad Selection Prior — current hierarchy, baseline XI, and minute shares
+```
+
+Club Dynamics has no composite score and does not modify Performance Form.
+Its first role is to make club condition explainable; its later role is to
+support opponent-specific style matchups after validation.
+
+The Squad Selection Prior is the bridge between Player Quality and Club Form.
+It uses official recent lineup evidence and workload to estimate opportunity;
+Alpha Ability remains an attached quality measure and never predicts the
+manager's selection. Alpha grading position remains separate from tactical
+selection role, player minutes are capped at 90, and incomplete lineup or
+historical coverage reduces evidence strength. The joined Club Form Snapshot
+materializes every component in one dated team record without creating another
+rating formula.
 
 ## 4. Historical Fixtures
 
@@ -79,7 +110,11 @@ The first useful product is a Football Intelligence Snapshot:
 ```text
 Team
 ├── Player Quality
-├── Squad Form
+├── Club Form Snapshot
+│   ├── Performance Form
+│   ├── Club Dynamics
+│   ├── Availability
+│   └── Squad Selection Prior
 └── Relevant Historical Evidence
 ```
 
