@@ -20,6 +20,7 @@ These foundations combine into a simple Football Intelligence Snapshot for each 
 - [Club Dynamics](docs/club-dynamics-spec.md)
 - [Squad Selection Prior](docs/squad-selection-prior-spec.md)
 - [Historical Fixtures](docs/historical-fixtures-spec.md)
+- [Composite Model v1](docs/composite-model-v1.md)
 - [Data-source bakeoff](research/data-source-bakeoff.md)
 
 ## Pull the foundation

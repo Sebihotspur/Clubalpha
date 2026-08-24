@@ -148,3 +148,8 @@ Team
 ```
 
 Goals, assists, totals, market prices, and capital deployment remain outside v0.1. They will be built later on top of trusted intelligence.
+
+The accepted minimal handoff into that later probability layer is documented
+in [Composite Model v1](composite-model-v1.md): 60% Club Form, 30% expected-
+lineup Player Quality delta, and 10% residual Historical Context, with the
+competition scoring environment establishing the baseline outside that mix.
