@@ -405,6 +405,7 @@ def flatten_match_team_stats(
             "source_scope": fixture.get("source_scope"),
             "competition_id": fixture.get("competition_id") or general.get("leagueId"),
             "competition": fixture.get("competition") or general.get("leagueName"),
+            "season": fixture.get("season"),
             "kickoff_utc": fixture.get("kickoff_utc")
             or general.get("matchTimeUTCDate")
             or general.get("matchTimeUTC"),

@@ -131,3 +131,72 @@ The first version pulls match detail plus only two season leaderboards: goals as
 a reconciliation fallback and possessions won in the attacking third. The
 primary non-penalty-goal count is derived from reconciled match shot maps or
 match goal events; other canonical features are calculated from match detail.
+
+## Historical Fixtures handoff
+
+After the foundation and domestic-history pulls are present, build the dated
+fixture context:
+
+```bash
+python3 scripts/build_historical_fixtures.py
+```
+
+The builder consumes normalized competitive team-match rows only. It rejects
+matches after the `as_of` date, selects unplayed Premier League and active
+Champions League qualifying fixtures inside a 14-day horizon, and writes:
+
+```text
+data/processed/historical_fixtures/
+├── historical_fixture_intelligence.jsonl
+├── scored_history_observations.jsonl
+└── manifest.json
+
+reports/historical-fixtures-v1-audit.json
+```
+
+Generated rows remain ignored by Git. The compact audit is tracked. Direct
+head-to-head evidence is recency-weighted, receives a small same-venue boost,
+and can never supply more than 25% of a historical attack signal. Missing xG is
+preserved as missing rather than converted to zero.
+
+## Five-season historical expansion
+
+The simulation-oriented archive is a separate cached pull:
+
+```bash
+python3 scripts/pull_deep_history.py --as-of 2026-08-18
+```
+
+It requests Premier League and Champions League seasons 2021/22 through
+2025/26, validates that FotMob returned the requested season, excludes future,
+cancelled, and abandoned matches, and pulls team-match detail only. Player
+Quality keeps its own versioned player evidence; duplicating five seasons of
+player rows here would add cost without strengthening the historical-fixture
+layer.
+
+```text
+data/processed/deep_history/
+├── fixtures.jsonl
+├── match_team_stats.jsonl
+├── manifest.json
+└── coverage.json
+
+reports/deep-history-coverage.json
+```
+
+The dated 2026-08-18 archive contains 2,653 matches and 5,306 team-match rows,
+with detail for 100% of matches. Goals, xG, shots on target, big chances, and
+total shots are complete across both competitions. Source and processed rows
+stay ignored by Git; the compact coverage report is tracked.
+
+Build the deeper fixture snapshot explicitly so v1 remains reproducible:
+
+```bash
+python3 scripts/build_historical_fixtures.py \
+  --config config/historical-fixtures-v2.json \
+  --output-dir data/processed/historical_fixtures_v2 \
+  --audit reports/historical-fixtures-v2-audit.json
+```
+
+The build deduplicates overlapping one-season and deep-history rows by FotMob
+match/team ID before scoring them.
