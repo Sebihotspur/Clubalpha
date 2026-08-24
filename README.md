@@ -19,6 +19,7 @@ These foundations combine into a simple Football Intelligence Snapshot for each 
 - [Club Form](docs/club-form-spec.md)
 - [Club Dynamics](docs/club-dynamics-spec.md)
 - [Squad Selection Prior](docs/squad-selection-prior-spec.md)
+- [Historical Fixtures](docs/historical-fixtures-spec.md)
 - [Data-source bakeoff](research/data-source-bakeoff.md)
 
 ## Pull the foundation
@@ -142,6 +143,47 @@ The snapshot is an intelligence view, not a new grade. It validates that all
 components use the same team universe and date, preserves every confidence
 field, and records why the club is not yet fixture-projection ready.
 
+## Historical Fixtures
+
+Historical Fixtures turns the existing competitive match archive into dated,
+fixture-specific context:
+
+```bash
+python3 scripts/build_historical_fixtures.py
+```
+
+For every Premier League or active Champions League qualifying fixture inside
+the 14-day snapshot horizon, it compares the home club's historical home
+performance with the away club's historical away performance. It also surfaces
+direct meetings, but caps their influence at 25%. Attack and defence context is
+competition-normalized and reuses the locked Player Quality league ladder so a
+strong Championship season is not treated as equivalent to the same relative
+performance in the Premier League.
+
+v1 remains the frozen one-season baseline. The deeper v2 archive adds five
+complete Premier League and Champions League seasons without pulling duplicate
+historical player detail:
+
+```bash
+python3 scripts/pull_deep_history.py --as-of 2026-08-18
+python3 scripts/build_historical_fixtures.py \
+  --config config/historical-fixtures-v2.json \
+  --output-dir data/processed/historical_fixtures_v2 \
+  --audit reports/historical-fixtures-v2-audit.json
+```
+
+v2 uses separate evidence clocks: five seasons with a 730-day half-life for
+the competition scoring environment, at most three seasons with a 180-day
+half-life for team/venue history, and at most three seasons with a 270-day
+half-life for direct matchups. Direct influence is capped at 15%.
+
+The output includes descriptive xG, over-2.5, and both-teams-to-score history,
+plus competition score variance and covariance for later simulation design.
+None of those values is a calibrated probability or a betting signal.
+
+See [Historical Fixtures](docs/historical-fixtures-spec.md) for the formulas,
+coverage, and decision boundaries.
+
 ## Status
 
 The PL, UCL, and preseason foundation pull is operational. Player Quality v2
@@ -150,7 +192,11 @@ evidence confidence, while Club Dynamics v1 adds style, strengths/weaknesses,
 manager state, transfers, integration, and dated squad continuity. The joined
 Club Form Snapshot materializes the intelligence layers for 58 clubs; 55 have
 a complete baseline XI prior, with three FotMob squad-page gaps left explicit.
+Historical Fixtures v2 now materializes league-adjusted venue and direct-matchup
+context plus five-season competition baselines for the next dated Premier
+League and Champions League fixtures. The deep archive contains 2,653 matches
+and complete team-match detail for all of them.
 
 Clubalpha does not yet produce deployment-ready probabilities or
-recommendations. Historical Fixtures and the later probability layer remain
-separate work.
+recommendations. Fixture-specific lineups, style-matchup validation, calibrated
+probabilities, market prices, and capital deployment remain separate work.

@@ -1,0 +1,57 @@
+{
+  "version": "clubalpha_historical_fixtures_v1",
+  "source": "FotMob normalized competitive match details",
+  "purpose": "Conservative fixture-specific historical context; never a probability or betting decision",
+  "target_fixtures": {
+    "source_scopes": [
+      "premier_league_current",
+      "champions_league_qualification_2026_27"
+    ],
+    "horizon_days": 14
+  },
+  "performance_metrics": [
+    "goals",
+    "expected_goals",
+    "shots_on_target",
+    "big_chances"
+  ],
+  "normalisation": {
+    "method": "competition peer sample z-score plus locked league-quality offset",
+    "minimum_peer_values": 20,
+    "z_cap": 3.0
+  },
+  "league_strength": {
+    "config_path": "config/player-quality-clubalpha-v2.json",
+    "policy_key": "league_quality",
+    "note": "Reuse the locked Player Quality v2 league ladder so promoted and cross-league clubs are not treated as equivalent competition environments."
+  },
+  "recency": {
+    "half_life_days": 180
+  },
+  "source_weights": {
+    "premier_league_previous": 1.0,
+    "champions_league_previous": 1.0,
+    "domestic_history_previous": 1.0,
+    "premier_league_current": 1.0,
+    "champions_league_qualification_2026_27": 1.0,
+    "default": 1.0
+  },
+  "venue_history": {
+    "prior_weighted_matches": 5.0
+  },
+  "direct_history": {
+    "prior_weighted_matches": 3.0,
+    "same_venue_multiplier": 1.25,
+    "maximum_signal_share": 0.25,
+    "recent_meetings_limit": 5
+  },
+  "quality": {
+    "minimum_venue_confidence": 0.5,
+    "minimum_direct_confidence": 0.2
+  },
+  "decision_boundaries": {
+    "probability_ready": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  }
+}

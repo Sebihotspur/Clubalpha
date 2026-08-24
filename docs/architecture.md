@@ -103,6 +103,35 @@ The historical record begins with:
 
 Each match should preserve the information needed to study lineups, minutes, player statistics, team performance, opponent strength, venue, and result without using information that was unavailable at the time.
 
+Historical Fixtures v1 converts that archive into a dated fixture record with:
+
+- the home team's recency-weighted home history;
+- the away team's recency-weighted away history;
+- competition-normalized attack and defence context;
+- the locked league-strength ladder shared with Player Quality;
+- direct meetings with extra same-venue weight and a hard 25% influence cap;
+- descriptive xG, over-2.5, and both-teams-to-score history;
+- explicit evidence confidence and missing-data flags.
+
+The layer does not modify Club Form and does not create probabilities. Raw xG
+history remains visibly unadjusted across competition environments; the
+dimensionless attack and defence signals carry the league-strength adjustment.
+
+Historical Fixtures v2 adds depth without adding another intelligence pillar:
+
+```text
+Historical Fixtures
+├── Competition environment — five seasons, slow 730-day half-life
+├── Team/venue context — maximum three seasons, 180-day half-life
+└── Direct matchup context — maximum three seasons, 270-day half-life, 15% cap
+```
+
+Competition-season normalization prevents changes in the league scoring
+environment from being mistaken for team strength. The competition baseline
+also preserves goal/xG means, total-score variance, home-away covariance, home
+advantage, draw, over-2.5, and BTTS history for later calibrated simulations.
+These remain descriptive inputs until a walk-forward probability layer exists.
+
 ## First output
 
 The first useful product is a Football Intelligence Snapshot:

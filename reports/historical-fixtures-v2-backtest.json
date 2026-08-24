@@ -1,0 +1,502 @@
+{
+  "generated_at_utc": "2026-08-24T20:07:44.808924+00:00",
+  "observed_matches": 9,
+  "evaluations": {
+    "v1": {
+      "historical_fixtures_version": "clubalpha_historical_fixtures_v1",
+      "snapshot_as_of": "2026-08-18",
+      "metrics": {
+        "evaluated_matches": 9,
+        "xg_direction_correct": 8,
+        "xg_direction_evaluable": 9,
+        "meaningful_edge_threshold": 0.1,
+        "meaningful_xg_direction_correct": 5,
+        "meaningful_xg_direction_evaluable": 5,
+        "home_edge_z_to_actual_xg_edge_pearson": 0.4393,
+        "goal_environment_z_to_actual_total_xg_pearson": 0.1123,
+        "descriptive_total_xg_mae": 0.8952,
+        "descriptive_side_xg_mae": 0.7803
+      },
+      "fixtures": [
+        {
+          "match_id": 5795363,
+          "kickoff_utc": "2026-08-21T19:00:00.000Z",
+          "fixture": "Arsenal vs Coventry City",
+          "score": "3-0",
+          "actual_xg": {
+            "home": 1.88,
+            "away": 0.2,
+            "total": 2.08,
+            "home_edge": 1.68
+          },
+          "prediction": {
+            "home_edge_z": 0.8657,
+            "total_goal_environment_z": -0.083,
+            "descriptive_xg_baseline": {
+              "home": 1.558,
+              "away": 1.116,
+              "total": 2.674,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.0
+          },
+          "direction_correct": true,
+          "meaningful_edge": true
+        },
+        {
+          "match_id": 5795364,
+          "kickoff_utc": "2026-08-22T11:30:00.000Z",
+          "fixture": "Hull City vs Manchester United",
+          "score": "2-0",
+          "actual_xg": {
+            "home": 1.01,
+            "away": 1.83,
+            "total": 2.84,
+            "home_edge": -0.82
+          },
+          "prediction": {
+            "home_edge_z": -0.6577,
+            "total_goal_environment_z": -0.0618,
+            "descriptive_xg_baseline": {
+              "home": 1.371,
+              "away": 1.393,
+              "total": 2.764,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.0
+          },
+          "direction_correct": true,
+          "meaningful_edge": true
+        },
+        {
+          "match_id": 5795365,
+          "kickoff_utc": "2026-08-22T14:00:00.000Z",
+          "fixture": "Everton vs Crystal Palace",
+          "score": "2-0",
+          "actual_xg": {
+            "home": 1.12,
+            "away": 1.96,
+            "total": 3.08,
+            "home_edge": -0.84
+          },
+          "prediction": {
+            "home_edge_z": -0.0328,
+            "total_goal_environment_z": 0.3582,
+            "descriptive_xg_baseline": {
+              "home": 1.482,
+              "away": 1.517,
+              "total": 2.999,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.25
+          },
+          "direction_correct": true,
+          "meaningful_edge": false
+        },
+        {
+          "match_id": 5795366,
+          "kickoff_utc": "2026-08-22T14:00:00.000Z",
+          "fixture": "Ipswich Town vs Sunderland",
+          "score": "2-1",
+          "actual_xg": {
+            "home": 1.8,
+            "away": 0.66,
+            "total": 2.46,
+            "home_edge": 1.14
+          },
+          "prediction": {
+            "home_edge_z": 0.0258,
+            "total_goal_environment_z": -0.0274,
+            "descriptive_xg_baseline": {
+              "home": 1.814,
+              "away": 0.921,
+              "total": 2.735,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.0
+          },
+          "direction_correct": true,
+          "meaningful_edge": false
+        },
+        {
+          "match_id": 5795367,
+          "kickoff_utc": "2026-08-22T14:00:00.000Z",
+          "fixture": "Nottingham Forest vs Leeds United",
+          "score": "0-1",
+          "actual_xg": {
+            "home": 0.66,
+            "away": 0.47,
+            "total": 1.13,
+            "home_edge": 0.19
+          },
+          "prediction": {
+            "home_edge_z": 0.127,
+            "total_goal_environment_z": 0.2047,
+            "descriptive_xg_baseline": {
+              "home": 1.634,
+              "away": 1.387,
+              "total": 3.021,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.2303
+          },
+          "direction_correct": true,
+          "meaningful_edge": true
+        },
+        {
+          "match_id": 5795368,
+          "kickoff_utc": "2026-08-22T16:30:00.000Z",
+          "fixture": "Brentford vs Tottenham Hotspur",
+          "score": "3-0",
+          "actual_xg": {
+            "home": 3.87,
+            "away": 0.57,
+            "total": 4.44,
+            "home_edge": 3.3
+          },
+          "prediction": {
+            "home_edge_z": -0.0094,
+            "total_goal_environment_z": -0.0328,
+            "descriptive_xg_baseline": {
+              "home": 1.5,
+              "away": 1.235,
+              "total": 2.735,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.2292
+          },
+          "direction_correct": false,
+          "meaningful_edge": false
+        },
+        {
+          "match_id": 5795369,
+          "kickoff_utc": "2026-08-23T13:00:00.000Z",
+          "fixture": "Brighton & Hove Albion vs Aston Villa",
+          "score": "4-0",
+          "actual_xg": {
+            "home": 3.77,
+            "away": 0.29,
+            "total": 4.06,
+            "home_edge": 3.48
+          },
+          "prediction": {
+            "home_edge_z": 0.0273,
+            "total_goal_environment_z": 0.1654,
+            "descriptive_xg_baseline": {
+              "home": 1.481,
+              "away": 1.249,
+              "total": 2.73,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.2401
+          },
+          "direction_correct": true,
+          "meaningful_edge": false
+        },
+        {
+          "match_id": 5795370,
+          "kickoff_utc": "2026-08-23T13:00:00.000Z",
+          "fixture": "Manchester City vs AFC Bournemouth",
+          "score": "2-1",
+          "actual_xg": {
+            "home": 2.25,
+            "away": 0.65,
+            "total": 2.9,
+            "home_edge": 1.6
+          },
+          "prediction": {
+            "home_edge_z": 0.4779,
+            "total_goal_environment_z": 0.2577,
+            "descriptive_xg_baseline": {
+              "home": 1.925,
+              "away": 1.431,
+              "total": 3.356,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.25
+          },
+          "direction_correct": true,
+          "meaningful_edge": true
+        },
+        {
+          "match_id": 5795371,
+          "kickoff_utc": "2026-08-23T15:30:00.000Z",
+          "fixture": "Newcastle United vs Liverpool",
+          "score": "2-2",
+          "actual_xg": {
+            "home": 1.58,
+            "away": 2.98,
+            "total": 4.56,
+            "home_edge": -1.4
+          },
+          "prediction": {
+            "home_edge_z": -0.2192,
+            "total_goal_environment_z": 0.245,
+            "descriptive_xg_baseline": {
+              "home": 1.438,
+              "away": 1.473,
+              "total": 2.911,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.2063
+          },
+          "direction_correct": true,
+          "meaningful_edge": true
+        }
+      ]
+    },
+    "v2": {
+      "historical_fixtures_version": "clubalpha_historical_fixtures_v2_deep",
+      "snapshot_as_of": "2026-08-18",
+      "metrics": {
+        "evaluated_matches": 9,
+        "xg_direction_correct": 8,
+        "xg_direction_evaluable": 9,
+        "meaningful_edge_threshold": 0.1,
+        "meaningful_xg_direction_correct": 5,
+        "meaningful_xg_direction_evaluable": 5,
+        "home_edge_z_to_actual_xg_edge_pearson": 0.4461,
+        "goal_environment_z_to_actual_total_xg_pearson": 0.3055,
+        "descriptive_total_xg_mae": 0.8562,
+        "descriptive_side_xg_mae": 0.7749
+      },
+      "fixtures": [
+        {
+          "match_id": 5795363,
+          "kickoff_utc": "2026-08-21T19:00:00.000Z",
+          "fixture": "Arsenal vs Coventry City",
+          "score": "3-0",
+          "actual_xg": {
+            "home": 1.88,
+            "away": 0.2,
+            "total": 2.08,
+            "home_edge": 1.68
+          },
+          "prediction": {
+            "home_edge_z": 0.8919,
+            "total_goal_environment_z": -0.0901,
+            "descriptive_xg_baseline": {
+              "home": 1.532,
+              "away": 1.13,
+              "total": 2.662,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.0
+          },
+          "direction_correct": true,
+          "meaningful_edge": true
+        },
+        {
+          "match_id": 5795364,
+          "kickoff_utc": "2026-08-22T11:30:00.000Z",
+          "fixture": "Hull City vs Manchester United",
+          "score": "2-0",
+          "actual_xg": {
+            "home": 1.01,
+            "away": 1.83,
+            "total": 2.84,
+            "home_edge": -0.82
+          },
+          "prediction": {
+            "home_edge_z": -0.6423,
+            "total_goal_environment_z": -0.0668,
+            "descriptive_xg_baseline": {
+              "home": 1.399,
+              "away": 1.373,
+              "total": 2.772,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.0
+          },
+          "direction_correct": true,
+          "meaningful_edge": true
+        },
+        {
+          "match_id": 5795365,
+          "kickoff_utc": "2026-08-22T14:00:00.000Z",
+          "fixture": "Everton vs Crystal Palace",
+          "score": "2-0",
+          "actual_xg": {
+            "home": 1.12,
+            "away": 1.96,
+            "total": 3.08,
+            "home_edge": -0.84
+          },
+          "prediction": {
+            "home_edge_z": 0.0465,
+            "total_goal_environment_z": 0.1417,
+            "descriptive_xg_baseline": {
+              "home": 1.427,
+              "away": 1.396,
+              "total": 2.823,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.15
+          },
+          "direction_correct": false,
+          "meaningful_edge": false
+        },
+        {
+          "match_id": 5795366,
+          "kickoff_utc": "2026-08-22T14:00:00.000Z",
+          "fixture": "Ipswich Town vs Sunderland",
+          "score": "2-1",
+          "actual_xg": {
+            "home": 1.8,
+            "away": 0.66,
+            "total": 2.46,
+            "home_edge": 1.14
+          },
+          "prediction": {
+            "home_edge_z": 0.0046,
+            "total_goal_environment_z": -0.0299,
+            "descriptive_xg_baseline": {
+              "home": 1.719,
+              "away": 1.004,
+              "total": 2.723,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.0
+          },
+          "direction_correct": true,
+          "meaningful_edge": false
+        },
+        {
+          "match_id": 5795367,
+          "kickoff_utc": "2026-08-22T14:00:00.000Z",
+          "fixture": "Nottingham Forest vs Leeds United",
+          "score": "0-1",
+          "actual_xg": {
+            "home": 0.66,
+            "away": 0.47,
+            "total": 1.13,
+            "home_edge": 0.19
+          },
+          "prediction": {
+            "home_edge_z": 0.1809,
+            "total_goal_environment_z": 0.1091,
+            "descriptive_xg_baseline": {
+              "home": 1.596,
+              "away": 1.338,
+              "total": 2.934,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.15
+          },
+          "direction_correct": true,
+          "meaningful_edge": true
+        },
+        {
+          "match_id": 5795368,
+          "kickoff_utc": "2026-08-22T16:30:00.000Z",
+          "fixture": "Brentford vs Tottenham Hotspur",
+          "score": "3-0",
+          "actual_xg": {
+            "home": 3.87,
+            "away": 0.57,
+            "total": 4.44,
+            "home_edge": 3.3
+          },
+          "prediction": {
+            "home_edge_z": 0.0911,
+            "total_goal_environment_z": 0.0312,
+            "descriptive_xg_baseline": {
+              "home": 1.624,
+              "away": 1.288,
+              "total": 2.912,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.15
+          },
+          "direction_correct": true,
+          "meaningful_edge": false
+        },
+        {
+          "match_id": 5795369,
+          "kickoff_utc": "2026-08-23T13:00:00.000Z",
+          "fixture": "Brighton & Hove Albion vs Aston Villa",
+          "score": "4-0",
+          "actual_xg": {
+            "home": 3.77,
+            "away": 0.29,
+            "total": 4.06,
+            "home_edge": 3.48
+          },
+          "prediction": {
+            "home_edge_z": 0.1364,
+            "total_goal_environment_z": 0.0796,
+            "descriptive_xg_baseline": {
+              "home": 1.524,
+              "away": 1.216,
+              "total": 2.74,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.15
+          },
+          "direction_correct": true,
+          "meaningful_edge": true
+        },
+        {
+          "match_id": 5795370,
+          "kickoff_utc": "2026-08-23T13:00:00.000Z",
+          "fixture": "Manchester City vs AFC Bournemouth",
+          "score": "2-1",
+          "actual_xg": {
+            "home": 2.25,
+            "away": 0.65,
+            "total": 2.9,
+            "home_edge": 1.6
+          },
+          "prediction": {
+            "home_edge_z": 0.4876,
+            "total_goal_environment_z": 0.2076,
+            "descriptive_xg_baseline": {
+              "home": 1.898,
+              "away": 1.379,
+              "total": 3.277,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.15
+          },
+          "direction_correct": true,
+          "meaningful_edge": true
+        },
+        {
+          "match_id": 5795371,
+          "kickoff_utc": "2026-08-23T15:30:00.000Z",
+          "fixture": "Newcastle United vs Liverpool",
+          "score": "2-2",
+          "actual_xg": {
+            "home": 1.58,
+            "away": 2.98,
+            "total": 4.56,
+            "home_edge": -1.4
+          },
+          "prediction": {
+            "home_edge_z": -0.0669,
+            "total_goal_environment_z": 0.2045,
+            "descriptive_xg_baseline": {
+              "home": 1.517,
+              "away": 1.536,
+              "total": 3.053,
+              "league_strength_adjusted": false
+            },
+            "direct_signal_share": 0.15
+          },
+          "direction_correct": true,
+          "meaningful_edge": false
+        }
+      ]
+    }
+  },
+  "metric_definitions": {
+    "direction": "Sign of home_edge_z versus sign of observed home xG minus away xG.",
+    "meaningful_edge": "Predeclared absolute home_edge_z threshold; default 0.10.",
+    "mae": "Mean absolute error against observed FotMob xG; descriptive, not calibrated probability loss."
+  },
+  "warnings": [
+    "Nine matches are a smoke test, not a model validation sample.",
+    "These outcomes were already known from the v1 review, so the v2 comparison is not a clean out-of-sample test; no coefficient was optimized against the sample.",
+    "This audit does not test odds, calibration, closing-line value, or capital deployment."
+  ]
+}
