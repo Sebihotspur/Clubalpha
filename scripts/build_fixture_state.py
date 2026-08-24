@@ -65,7 +65,12 @@ def build_audit(
     scopes = Counter(str(state["fixture"].get("source_scope")) for state in states)
 
     def side_values(field: str) -> list[float]:
-        return [float(state[side][field]) for state in states for side in ("home", "away")]
+        return [
+            float(state[side][field])
+            for state in states
+            for side in ("home", "away")
+            if state[side][field] is not None
+        ]
 
     def component_values(component: str) -> list[float]:
         return [
@@ -84,7 +89,7 @@ def build_audit(
                     f"{state['fixture']['home_team']} vs "
                     f"{state['fixture']['away_team']}"
                 ),
-                "competition_baseline_xg": state["goal_engine_input"][
+                "competition_baseline_xg": state["goal_model_handoff"][
                     "competition_baseline"
                 ],
                 "home_fixture_signal_z": state["home"]["fixture_signal_z"],
@@ -107,11 +112,12 @@ def build_audit(
         "counts": {
             "fixtures": len(states),
             "fixture_scopes": dict(sorted(scopes.items())),
-            "walk_forward_input_ready": sum(
-                state["decision_boundaries"][
-                    "input_ready_for_walk_forward_calibration"
-                ]
+            "raw_components_ready_for_scale_fitting": sum(
+                state["decision_boundaries"]["raw_components_ready_for_scale_fitting"]
                 for state in states
+            ),
+            "composite_ready": sum(
+                state["decision_boundaries"]["composite_ready"] for state in states
             ),
             "lineup_priors_complete": sum(
                 state["decision_boundaries"]["lineup_priors_complete"]
@@ -122,15 +128,14 @@ def build_audit(
                 for state in states
             ),
             "competition_xg_baselines": sum(
-                state["goal_engine_input"]["competition_baseline"]["home_xg"]
+                state["goal_model_handoff"]["competition_baseline"]["home_xg"]
                 is not None
-                and state["goal_engine_input"]["competition_baseline"]["away_xg"]
+                and state["goal_model_handoff"]["competition_baseline"]["away_xg"]
                 is not None
                 for state in states
             ),
-            "calibrated_goal_outputs": sum(
-                state["goal_engine_input"]["home_calibrated_xg"] is not None
-                for state in states
+            "component_scale_artifacts": sum(
+                state["component_scaling"]["ready"] for state in states
             ),
         },
         "signal_distributions": {
@@ -156,15 +161,19 @@ def build_audit(
                 4,
             ),
             "missing_component_weight_redistributed": False,
-            "calibration_coefficient_fitted": False,
+            "component_weights_active_without_past_scale_artifact": False,
+            "goal_calibration_owned_by_fixture_state": False,
+            "historical_manifest_and_row_dates_validated": True,
         },
         "warnings": [
             "Fixture State is an auditable calibration input, not a probability or wager.",
             "Club Form v1 released z-scores already contain reliability shrinkage and are not shrunk a second time.",
-            "Player Quality changes the fixture only through availability-adjusted expected minutes versus each club's baseline XI.",
+            "Player Quality uses absolute expected-minute projected-XI Alpha quality; availability changes minutes and the own-baseline delta remains diagnostic.",
             "Squad Selection Prior v1 is dated but not fixture-specific or confirmed.",
             "Historical Context contributes only venue and capped direct-matchup residuals.",
             "Competition xG is a separate starting environment and does not consume any of the 60/30/10 weights.",
+            "The final composite remains null until a frozen past-only component-scale artifact exists.",
+            "Fixture State never fits or applies a goal-calibration coefficient.",
         ],
     }
 
@@ -198,6 +207,12 @@ def main() -> int:
         / "data/processed/historical_fixtures_v2/scored_history_observations.jsonl",
     )
     parser.add_argument(
+        "--historical-manifest",
+        type=Path,
+        default=ROOT / "data/processed/historical_fixtures_v2/manifest.json",
+    )
+    parser.add_argument("--component-scales", type=Path, default=None)
+    parser.add_argument(
         "--output-dir",
         type=Path,
         default=ROOT / "data/processed/fixture_state",
@@ -217,8 +232,14 @@ def main() -> int:
     selection_priors = load_jsonl(args.selection_prior)
     historical_fixtures = load_jsonl(args.historical_fixtures)
     history_rows = load_jsonl(args.scored_history)
+    historical_manifest = load_json(args.historical_manifest)
+    configured_scale_path = config["component_scaling"].get("artifact_path")
+    scale_path = args.component_scales or (
+        ROOT / configured_scale_path if configured_scale_path else None
+    )
+    scaling_artifact = load_json(scale_path) if scale_path is not None else None
 
-    print("[2/4] Build confidence-aware 60/30/10 fixture states")
+    print("[2/4] Build dated raw components and apply only past-trained scales")
     states = build_fixture_states(
         historical_fixtures,
         club_forms,
@@ -226,6 +247,8 @@ def main() -> int:
         history_rows,
         config,
         historical_config,
+        historical_manifest,
+        scaling_artifact,
     )
 
     print("[3/4] Materialize ignored dated fixture inputs")
@@ -237,6 +260,11 @@ def main() -> int:
             "as_of": states[0]["as_of"] if states else None,
             "source_versions": config["source_versions"],
             "component_weights": config["component_weights"],
+            "component_scaling": {
+                "method": config["component_scaling"]["method"],
+                "artifact": str(scale_path) if scale_path is not None else None,
+                "ready": scaling_artifact is not None,
+            },
             "outputs": {"fixture_states": count},
             "decision_boundaries": config["decision_boundaries"],
         },

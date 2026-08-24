@@ -195,16 +195,23 @@ python3 scripts/build_fixture_state.py
 ```
 
 Fixture State combines the released Club Form matchup (60%), the
-availability-adjusted expected-minute Player Quality delta (30%), and only the
-venue/direct residual from Historical Fixtures (10%). The competition home and
-away xG environment remains a separate baseline. Club Form reliability is not
-applied twice, direct history can contribute at most 1.5% of the complete
-signal, and missing lineup evidence stays neutral rather than transferring its
-weight elsewhere.
+absolute expected-minute projected-XI Player Quality edge (30%), and only the
+venue/direct residual from Historical Fixtures (10%). Availability changes the
+projected minutes; the projected-minus-normal-XI delta remains diagnostic. The
+competition home and away xG environment remains a separate baseline. Club Form
+reliability is not applied twice, direct history can contribute at most 1.5% of
+the complete signal, and missing lineup evidence stays neutral rather than
+transferring its weight elsewhere.
 
-The output is ready to become a dated walk-forward calibration input. It is not
-a probability, betting edge, or capital signal. See [Fixture State v1](docs/fixture-state-spec.md)
-for the exact handoff and safeguards.
+The weights activate only after a frozen, past-only artifact places all three
+components on comparable historical scales. Until then the builder emits raw
+components and keeps the final fixture signal null. It also validates historical
+manifest dates and never fits or applies a goal-calibration coefficient.
+
+The raw output is ready to join dated scale-fitting snapshots. It is not a
+calibrated fixture signal, probability, betting edge, or capital signal. See
+[Fixture State v1](docs/fixture-state-spec.md) for the exact handoff and
+safeguards.
 
 ## Status
 
@@ -221,8 +228,9 @@ and complete team-match detail for all of them.
 
 Fixture State v1 materializes 31 dated fixture inputs from those foundations.
 All 31 have Club Form, historical residual, and competition xG inputs; 27 have
-complete baseline lineup priors. The goal calibration coefficient is
-intentionally unset, so no output is presented as a probability or wager.
+complete projected-XI lineup priors. No past-only scale artifact exists yet, so
+the final composites remain null. Goal calibration belongs to a later layer and
+no output is presented as a probability or wager.
 
 Clubalpha does not yet produce deployment-ready probabilities or
 recommendations. Fixture-specific lineups, style-matchup validation, calibrated

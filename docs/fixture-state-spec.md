@@ -23,9 +23,9 @@ For each side:
 
 ```text
 fixture_signal_z =
-    0.60 × released_club_form_matchup_z
-  + 0.30 × confidence_adjusted_lineup_delta_z
-  + 0.10 × confidence_adjusted_historical_residual_z
+    0.60 × normalized_released_club_form_matchup_z
+  + 0.30 × normalized_projected_lineup_quality_edge_z
+  + 0.10 × normalized_historical_residual_z
 ```
 
 Weak or missing evidence pulls only its own component toward neutral. Weight is
@@ -33,6 +33,12 @@ never reassigned to another foundation.
 
 The competition home and away xG means remain outside this 60/30/10 mix. They
 are the starting scoring environment, not another team-quality opinion.
+
+Before the weights activate, every confidence-adjusted component must be divided
+by a frozen standard deviation fitted from strictly earlier Fixture State
+snapshots. The current snapshot does not invent these scales from its own slate.
+Without that artifact, raw components remain visible while normalized values,
+weighted contributions, and the final fixture signal remain `null`.
 
 ## Club Form: 60%
 
@@ -53,26 +59,29 @@ hypothesis. Fixture State v1 consumes the implemented and tested v1 output.
 ## Player Quality lineup delta: 30%
 
 The locked position-aware Alpha Ability formulas remain unchanged. Fixture
-State computes each club's expected-minute-weighted Alpha quality twice:
+State computes each club's expected-minute-weighted Alpha quality:
 
 ```text
 baseline_quality_z =
     sum(baseline_expected_minutes × alpha_ability_z) / 990
 
-adjusted_quality_z =
+projected_quality_z =
     sum(availability_adjusted_minutes × alpha_ability_z) / 990
 
-team_lineup_delta_z = adjusted_quality_z − baseline_quality_z
+availability_delta_z = projected_quality_z − baseline_quality_z
 ```
 
 An ungraded player's Alpha contribution is neutral zero on the common scale;
 their minutes reduce coverage rather than inflating the average of covered
 players. Alpha never selects the XI.
 
-For home scoring:
+The projected quality—not only the availability delta—enters the model. For
+home scoring:
 
 ```text
-lineup_matchup_z = home_team_delta_z − away_team_delta_z
+lineup_quality_edge_z =
+    confidence_adjusted_home_projected_quality_z
+  − confidence_adjusted_away_projected_quality_z
 ```
 
 Each team delta receives its own confidence before subtraction. Confidence is
@@ -90,6 +99,28 @@ lineup_confidence = alpha_minute_coverage × evidence_maturity
 
 The current selection prior is dated and availability-aware but not
 fixture-specific or confirmed. Those limitations remain flags on every output.
+If either club lacks a usable lineup prior, the entire Player Quality matchup is
+neutral; the model does not construct half an edge from only one club.
+
+The v1 edge is an overall projected team-strength comparison. It does not claim
+that losing a forward and losing a centre-back have the same effect on totals.
+Attack/defence lineup channels require validated role-specific player profiles
+and remain a later goal-model extension.
+
+## Frozen component scaling
+
+The 60/30/10 weights act only on comparable historical units:
+
+```text
+normalized_component =
+    confidence_adjusted_component / past_only_training_sd
+```
+
+The scale artifact records a version, method, training cutoff, snapshot and
+fixture-side sample counts, and one positive scale for each component. Its
+`trained_through` date must be strictly earlier than the Fixture State `as_of`
+date. Scale fitting uses no match outcomes, but the past-only rule keeps the
+entire walk-forward pipeline reproducible.
 
 ## Historical residual: 10%
 
@@ -124,10 +155,10 @@ expected_goals =
   × exp(calibration_coefficient × fixture_signal_z)
 ```
 
-Fixture State v1 deliberately sets the coefficient and calibrated xG outputs to
-`null`. A coefficient must be learned from dated walk-forward samples; choosing
-one by intuition would turn a transparent signal into an unvalidated
-probability model.
+Fixture State never accepts or applies this coefficient. A separate versioned
+goal-model artifact must record its training cutoff and validation evidence.
+Choosing a number in configuration can never make Fixture State call itself
+calibrated.
 
 ## Outputs
 
@@ -159,7 +190,8 @@ Fixture State
 │   └── weighted contributions and fixture signal
 ├── Away side — mirrored structure
 ├── Competition home/away xG baseline
-├── uncalibrated goal-engine handoff
+├── optional past-only component-scale artifact
+├── uncalibrated goal-model handoff
 └── decision boundaries and quality flags
 ```
 
@@ -169,17 +201,18 @@ The frozen 2026-08-18 build contains:
 
 - 31 upcoming fixtures: 20 Premier League and 11 Champions League qualifiers;
 - complete Club Form, historical residual, and competition xG inputs for all 31;
-- complete baseline lineup priors for 27 fixtures;
+- complete projected-XI Player Quality inputs for 27 fixtures;
 - four fixtures carrying an explicit neutral lineup contribution where a club
   has no usable FotMob squad-selection prior;
-- fixture signals from −0.9719 to +1.0128 z;
+- projected-XI Player Quality edges from −0.6799 to +0.6799 z before scaling;
 - historical residuals from −0.2768 to +0.1779 z before their 10% weight;
+- zero normalized composites because no past-only scale artifact exists;
 - zero calibrated goal outputs, probabilities, markets, or wagers.
 
-All 31 selection priors remain non-fixture-specific. This is the most important
-next evidence gap, but it does not block building a dated walk-forward
-calibration dataset because missing contribution weights stay neutral and are
-never redistributed.
+All 31 selection priors remain non-fixture-specific. Twenty-seven fixtures are
+ready to enter a past-only component-scale training sample; the four incomplete
+lineup matchups remain neutral and are never used to estimate the Player Quality
+scale.
 
 ## Deliberately deferred
 

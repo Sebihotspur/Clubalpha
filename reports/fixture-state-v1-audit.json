@@ -1,6 +1,6 @@
 {
   "fixture_state_version": "clubalpha_fixture_state_v1",
-  "generated_at_utc": "2026-08-24T21:49:44.115041+00:00",
+  "generated_at_utc": "2026-08-24T22:25:42.229532+00:00",
   "as_of": "2026-08-18",
   "counts": {
     "fixtures": 31,
@@ -8,21 +8,22 @@
       "champions_league_qualification_2026_27": 11,
       "premier_league_current": 20
     },
-    "walk_forward_input_ready": 31,
+    "raw_components_ready_for_scale_fitting": 27,
+    "composite_ready": 0,
     "lineup_priors_complete": 27,
     "fixture_specific_lineups": 0,
     "competition_xg_baselines": 31,
-    "calibrated_goal_outputs": 0
+    "component_scale_artifacts": 0
   },
   "signal_distributions": {
     "fixture_signal_z": {
-      "minimum": -0.9719,
-      "mean": 0.0038,
-      "maximum": 1.0128
+      "minimum": null,
+      "mean": null,
+      "maximum": null
     },
     "evidence_confidence": {
-      "minimum": 0.2629,
-      "mean": 0.4736,
+      "minimum": 0.1879,
+      "mean": 0.464,
       "maximum": 0.57
     },
     "club_form_effective_z": {
@@ -31,9 +32,9 @@
       "maximum": 1.6922
     },
     "player_quality_lineup_effective_z": {
-      "minimum": -0.0892,
+      "minimum": -0.6799,
       "mean": 0.0,
-      "maximum": 0.0892
+      "maximum": 0.6799
     },
     "historical_residual_effective_z": {
       "minimum": -0.2768,
@@ -43,9 +44,9 @@
   },
   "quality_flags": {
     "competition_baseline_proxy": 11,
+    "component_scaling_artifact_missing": 31,
     "cross_role_xi_fill": 4,
     "default_role_shape": 19,
-    "goal_engine_not_calibrated": 31,
     "insufficient_def_depth": 2,
     "insufficient_fwd_depth": 2,
     "lineup_not_confirmed": 31,
@@ -84,26 +85,26 @@
         "away_xg": 1.3389,
         "total_xg": 3.1282
       },
-      "home_fixture_signal_z": -0.126004,
-      "away_fixture_signal_z": 0.044606,
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
       "home_contributions_z": {
-        "club_form": -0.1398,
-        "player_quality_lineup": 0.0,
-        "historical_residual": 0.013796
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "away_contributions_z": {
-        "club_form": 0.05658,
-        "player_quality_lineup": -0.0,
-        "historical_residual": -0.011974
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "home_evidence_confidence": 0.483,
       "away_evidence_confidence": 0.483,
       "lineup_priors_complete": true,
       "quality_flags": [
         "competition_baseline_proxy",
+        "component_scaling_artifact_missing",
         "cross_role_xi_fill",
         "default_role_shape",
-        "goal_engine_not_calibrated",
         "insufficient_fwd_depth",
         "lineup_not_confirmed",
         "lineup_not_fixture_specific",
@@ -130,25 +131,25 @@
         "away_xg": 1.3389,
         "total_xg": 3.1282
       },
-      "home_fixture_signal_z": -0.365792,
-      "away_fixture_signal_z": -0.062362,
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
       "home_contributions_z": {
-        "club_form": -0.36366,
-        "player_quality_lineup": 0.0,
-        "historical_residual": -0.002132
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "away_contributions_z": {
-        "club_form": -0.06612,
-        "player_quality_lineup": -0.0,
-        "historical_residual": 0.003758
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
-      "home_evidence_confidence": 0.2629,
-      "away_evidence_confidence": 0.2629,
+      "home_evidence_confidence": 0.1879,
+      "away_evidence_confidence": 0.1879,
       "lineup_priors_complete": false,
       "quality_flags": [
         "competition_baseline_proxy",
+        "component_scaling_artifact_missing",
         "default_role_shape",
-        "goal_engine_not_calibrated",
         "lineup_not_confirmed",
         "lineup_not_fixture_specific",
         "lineup_prior_not_ready",
@@ -177,25 +178,25 @@
         "away_xg": 1.3389,
         "total_xg": 3.1282
       },
-      "home_fixture_signal_z": 0.120194,
-      "away_fixture_signal_z": -0.033472,
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
       "home_contributions_z": {
-        "club_form": 0.10398,
-        "player_quality_lineup": 0.013676,
-        "historical_residual": 0.002538
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "away_contributions_z": {
-        "club_form": -0.0258,
-        "player_quality_lineup": -0.013676,
-        "historical_residual": 0.006005
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
-      "home_evidence_confidence": 0.2935,
-      "away_evidence_confidence": 0.2935,
+      "home_evidence_confidence": 0.2185,
+      "away_evidence_confidence": 0.2185,
       "lineup_priors_complete": false,
       "quality_flags": [
         "competition_baseline_proxy",
+        "component_scaling_artifact_missing",
         "default_role_shape",
-        "goal_engine_not_calibrated",
         "lineup_not_confirmed",
         "lineup_not_fixture_specific",
         "lineup_prior_not_ready",
@@ -225,26 +226,26 @@
         "away_xg": 1.3389,
         "total_xg": 3.1282
       },
-      "home_fixture_signal_z": 0.241469,
-      "away_fixture_signal_z": 0.230247,
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
       "home_contributions_z": {
-        "club_form": 0.19746,
-        "player_quality_lineup": 0.026755,
-        "historical_residual": 0.017254
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "away_contributions_z": {
-        "club_form": 0.26436,
-        "player_quality_lineup": -0.026755,
-        "historical_residual": -0.007358
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "home_evidence_confidence": 0.3972,
       "away_evidence_confidence": 0.3972,
       "lineup_priors_complete": true,
       "quality_flags": [
         "competition_baseline_proxy",
+        "component_scaling_artifact_missing",
         "cross_role_xi_fill",
         "default_role_shape",
-        "goal_engine_not_calibrated",
         "insufficient_def_depth",
         "lineup_not_confirmed",
         "lineup_not_fixture_specific",
@@ -270,24 +271,24 @@
         "away_xg": 1.306,
         "total_xg": 2.8938
       },
-      "home_fixture_signal_z": -0.248121,
-      "away_fixture_signal_z": -0.495249,
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
       "home_contributions_z": {
-        "club_form": -0.26016,
-        "player_quality_lineup": 0.003193,
-        "historical_residual": 0.008846
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "away_contributions_z": {
-        "club_form": -0.4773,
-        "player_quality_lineup": -0.003193,
-        "historical_residual": -0.014756
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "home_evidence_confidence": 0.5464,
       "away_evidence_confidence": 0.5464,
       "lineup_priors_complete": true,
       "quality_flags": [
+        "component_scaling_artifact_missing",
         "default_role_shape",
-        "goal_engine_not_calibrated",
         "lineup_not_confirmed",
         "lineup_not_fixture_specific",
         "low_form_confidence",
@@ -313,24 +314,24 @@
         "away_xg": 1.306,
         "total_xg": 2.8938
       },
-      "home_fixture_signal_z": -0.696698,
-      "away_fixture_signal_z": 0.547055,
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
       "home_contributions_z": {
-        "club_form": -0.69696,
-        "player_quality_lineup": -0.00061,
-        "historical_residual": 0.000872
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "away_contributions_z": {
-        "club_form": 0.56274,
-        "player_quality_lineup": 0.00061,
-        "historical_residual": -0.016295
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "home_evidence_confidence": 0.5401,
       "away_evidence_confidence": 0.5401,
       "lineup_priors_complete": true,
       "quality_flags": [
+        "component_scaling_artifact_missing",
         "default_role_shape",
-        "goal_engine_not_calibrated",
         "lineup_not_confirmed",
         "lineup_not_fixture_specific",
         "low_form_confidence",
@@ -357,23 +358,23 @@
         "away_xg": 1.306,
         "total_xg": 2.8938
       },
-      "home_fixture_signal_z": 0.340789,
-      "away_fixture_signal_z": 0.189035,
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
       "home_contributions_z": {
-        "club_form": 0.32718,
-        "player_quality_lineup": 0.0,
-        "historical_residual": 0.013609
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "away_contributions_z": {
-        "club_form": 0.18162,
-        "player_quality_lineup": -0.0,
-        "historical_residual": 0.007415
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "home_evidence_confidence": 0.5112,
       "away_evidence_confidence": 0.5112,
       "lineup_priors_complete": true,
       "quality_flags": [
-        "goal_engine_not_calibrated",
+        "component_scaling_artifact_missing",
         "lineup_not_confirmed",
         "lineup_not_fixture_specific",
         "low_form_confidence",
@@ -395,24 +396,24 @@
         "away_xg": 1.306,
         "total_xg": 2.8938
       },
-      "home_fixture_signal_z": 0.325044,
-      "away_fixture_signal_z": -0.563116,
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
       "home_contributions_z": {
-        "club_form": 0.30948,
-        "player_quality_lineup": 0.0,
-        "historical_residual": 0.015564
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "away_contributions_z": {
-        "club_form": -0.55464,
-        "player_quality_lineup": -0.0,
-        "historical_residual": -0.008476
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "home_evidence_confidence": 0.5091,
       "away_evidence_confidence": 0.5091,
       "lineup_priors_complete": true,
       "quality_flags": [
+        "component_scaling_artifact_missing",
         "default_role_shape",
-        "goal_engine_not_calibrated",
         "lineup_not_confirmed",
         "lineup_not_fixture_specific",
         "low_form_confidence",
@@ -440,24 +441,24 @@
         "away_xg": 1.306,
         "total_xg": 2.8938
       },
-      "home_fixture_signal_z": 0.186809,
-      "away_fixture_signal_z": 0.143656,
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
       "home_contributions_z": {
-        "club_form": 0.17202,
-        "player_quality_lineup": 0.001195,
-        "historical_residual": 0.013594
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "away_contributions_z": {
-        "club_form": 0.14622,
-        "player_quality_lineup": -0.001195,
-        "historical_residual": -0.001368
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "home_evidence_confidence": 0.501,
       "away_evidence_confidence": 0.501,
       "lineup_priors_complete": true,
       "quality_flags": [
+        "component_scaling_artifact_missing",
         "default_role_shape",
-        "goal_engine_not_calibrated",
         "lineup_not_confirmed",
         "lineup_not_fixture_specific",
         "low_form_confidence",
@@ -481,23 +482,23 @@
         "away_xg": 1.306,
         "total_xg": 2.8938
       },
-      "home_fixture_signal_z": -0.037898,
-      "away_fixture_signal_z": 0.045126,
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
       "home_contributions_z": {
-        "club_form": -0.03108,
-        "player_quality_lineup": -0.001516,
-        "historical_residual": -0.005303
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "away_contributions_z": {
-        "club_form": 0.04764,
-        "player_quality_lineup": 0.001516,
-        "historical_residual": -0.00403
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "home_evidence_confidence": 0.5207,
       "away_evidence_confidence": 0.5207,
       "lineup_priors_complete": true,
       "quality_flags": [
-        "goal_engine_not_calibrated",
+        "component_scaling_artifact_missing",
         "lineup_not_confirmed",
         "lineup_not_fixture_specific",
         "low_form_confidence",
@@ -521,23 +522,23 @@
         "away_xg": 1.306,
         "total_xg": 2.8938
       },
-      "home_fixture_signal_z": 0.420733,
-      "away_fixture_signal_z": -0.075653,
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
       "home_contributions_z": {
-        "club_form": 0.417,
-        "player_quality_lineup": 0.00179,
-        "historical_residual": 0.001942
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "away_contributions_z": {
-        "club_form": -0.0723,
-        "player_quality_lineup": -0.00179,
-        "historical_residual": -0.001563
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "home_evidence_confidence": 0.5058,
       "away_evidence_confidence": 0.5058,
       "lineup_priors_complete": true,
       "quality_flags": [
-        "goal_engine_not_calibrated",
+        "component_scaling_artifact_missing",
         "lineup_not_confirmed",
         "lineup_not_fixture_specific",
         "low_form_confidence",
@@ -560,24 +561,24 @@
         "away_xg": 1.306,
         "total_xg": 2.8938
       },
-      "home_fixture_signal_z": 0.532587,
-      "away_fixture_signal_z": -0.061545,
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
       "home_contributions_z": {
-        "club_form": 0.51768,
-        "player_quality_lineup": -0.002879,
-        "historical_residual": 0.017786
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "away_contributions_z": {
-        "club_form": -0.05928,
-        "player_quality_lineup": 0.002879,
-        "historical_residual": -0.005143
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
       },
       "home_evidence_confidence": 0.5151,
       "away_evidence_confidence": 0.5151,
       "lineup_priors_complete": true,
       "quality_flags": [
+        "component_scaling_artifact_missing",
         "default_role_shape",
-        "goal_engine_not_calibrated",
         "lineup_not_confirmed",
         "lineup_not_fixture_specific",
         "low_form_confidence",
@@ -598,14 +599,18 @@
     "club_form_source_confidence_applied_once": true,
     "direct_history_maximum_complete_signal_share": 0.015,
     "missing_component_weight_redistributed": false,
-    "calibration_coefficient_fitted": false
+    "component_weights_active_without_past_scale_artifact": false,
+    "goal_calibration_owned_by_fixture_state": false,
+    "historical_manifest_and_row_dates_validated": true
   },
   "warnings": [
     "Fixture State is an auditable calibration input, not a probability or wager.",
     "Club Form v1 released z-scores already contain reliability shrinkage and are not shrunk a second time.",
-    "Player Quality changes the fixture only through availability-adjusted expected minutes versus each club's baseline XI.",
+    "Player Quality uses absolute expected-minute projected-XI Alpha quality; availability changes minutes and the own-baseline delta remains diagnostic.",
     "Squad Selection Prior v1 is dated but not fixture-specific or confirmed.",
     "Historical Context contributes only venue and capped direct-matchup residuals.",
-    "Competition xG is a separate starting environment and does not consume any of the 60/30/10 weights."
+    "Competition xG is a separate starting environment and does not consume any of the 60/30/10 weights.",
+    "The final composite remains null until a frozen past-only component-scale artifact exists.",
+    "Fixture State never fits or applies a goal-calibration coefficient."
   ]
 }

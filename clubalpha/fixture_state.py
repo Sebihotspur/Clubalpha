@@ -2,16 +2,17 @@
 
 Fixture State v1 deliberately stops before probabilities. It preserves the
 competition expected-goal environment as the baseline and materializes the
-confidence-aware 60/30/10 adjustment that a later walk-forward calibration
-will translate into home and away goal expectations.
+three confidence-aware component inputs. The 60/30/10 adjustment activates only
+with a frozen scale artifact trained from strictly earlier snapshots.
 """
 
 from __future__ import annotations
 
-import math
 import statistics
+from datetime import date
 from typing import Any, Iterable
 
+from clubalpha.club_form import parse_datetime
 from clubalpha.historical_fixtures import aggregate_history
 
 
@@ -27,6 +28,86 @@ def _number(value: Any, default: float = 0.0) -> float:
 
 def _round(value: float | None, places: int = 6) -> float | None:
     return round(float(value), places) if value is not None else None
+
+
+def _snapshot_date(value: Any) -> date:
+    try:
+        return date.fromisoformat(str(value))
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"Invalid or missing Fixture State as-of date: {value}") from exc
+
+
+def validate_history_rows(
+    history_rows: Iterable[dict[str, Any]], as_of: date
+) -> list[dict[str, Any]]:
+    """Reject historical observations that cannot prove time integrity."""
+
+    validated: list[dict[str, Any]] = []
+    for index, row in enumerate(history_rows):
+        kickoff = parse_datetime(row.get("kickoff_utc"))
+        if kickoff is None:
+            raise ValueError(f"Historical row {index} has no valid kickoff_utc")
+        if kickoff.date() > as_of:
+            raise ValueError(
+                f"Historical row {index} occurs after Fixture State as-of {as_of}"
+            )
+        if row.get("age_days") is None:
+            raise ValueError(f"Historical row {index} has no age_days")
+        try:
+            age_days = int(row["age_days"])
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"Historical row {index} has invalid age_days") from exc
+        expected_age = (as_of - kickoff.date()).days
+        if age_days < 0 or age_days != expected_age:
+            raise ValueError(
+                f"Historical row {index} age_days {age_days} does not match "
+                f"snapshot age {expected_age}"
+            )
+        validated.append(row)
+    return validated
+
+
+def validate_scaling_artifact(
+    artifact: dict[str, Any] | None,
+    as_of: date,
+    config: dict[str, Any],
+) -> dict[str, float] | None:
+    """Accept only a complete component-scale artifact trained in the past."""
+
+    if artifact is None:
+        return None
+    policy = config["component_scaling"]
+    if not str(artifact.get("version") or "").strip():
+        raise ValueError("Component scaling artifact requires a version")
+    for field in ("training_snapshot_count", "training_fixture_sides"):
+        try:
+            value = int(artifact.get(field))
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                f"Component scaling artifact requires positive {field}"
+            ) from exc
+        if value <= 0:
+            raise ValueError(f"Component scaling artifact requires positive {field}")
+    if artifact.get("method") != policy["method"]:
+        raise ValueError(
+            f"Expected component scaling method {policy['method']}, "
+            f"found {artifact.get('method')}"
+        )
+    trained_through = _snapshot_date(artifact.get("trained_through"))
+    if policy.get("require_trained_before_as_of", True) and trained_through >= as_of:
+        raise ValueError(
+            "Component scaling artifact must be trained strictly before Fixture State as-of"
+        )
+    required = set(policy["required_components"])
+    supplied = artifact.get("scales") or {}
+    if set(supplied) != required:
+        raise ValueError(
+            f"Component scale artifact requires exactly {sorted(required)}"
+        )
+    scales = {key: float(value) for key, value in supplied.items()}
+    if any(value <= 0 for value in scales.values()):
+        raise ValueError("Every component scale must be positive")
+    return scales
 
 
 def _pair_signal(
@@ -61,8 +142,8 @@ def lineup_quality(selection: dict[str, Any] | None, config: dict[str, Any]) -> 
         return {
             "available": False,
             "baseline_quality_z": 0.0,
-            "availability_adjusted_quality_z": 0.0,
-            "quality_delta_z": 0.0,
+            "projected_quality_z": 0.0,
+            "availability_delta_z": 0.0,
             "baseline_alpha_minute_coverage": 0.0,
             "adjusted_alpha_minute_coverage": 0.0,
             "alpha_minute_coverage": 0.0,
@@ -130,8 +211,8 @@ def lineup_quality(selection: dict[str, Any] | None, config: dict[str, Any]) -> 
     return {
         "available": True,
         "baseline_quality_z": _round(baseline_quality),
-        "availability_adjusted_quality_z": _round(adjusted_quality),
-        "quality_delta_z": _round(adjusted_quality - baseline_quality),
+        "projected_quality_z": _round(adjusted_quality),
+        "availability_delta_z": _round(adjusted_quality - baseline_quality),
         "baseline_alpha_minute_coverage": _round(baseline_coverage, 4),
         "adjusted_alpha_minute_coverage": _round(adjusted_coverage, 4),
         "alpha_minute_coverage": _round(alpha_coverage, 4),
@@ -195,18 +276,27 @@ def historical_residuals(
     historical_fixture: dict[str, Any],
     history_rows: Iterable[dict[str, Any]],
     historical_config: dict[str, Any],
+    as_of: date | None = None,
+    *,
+    rows_validated: bool = False,
 ) -> dict[str, dict[str, Any]]:
     """Return side-specific venue and capped direct-matchup residuals."""
 
     fixture = historical_fixture["fixture"]
+    snapshot_date = as_of or _snapshot_date(historical_fixture.get("as_of"))
     home_id = int(fixture["home_team_id"])
     away_id = int(fixture["away_team_id"])
     max_age = int(
         historical_config.get("recency", {}).get("team_max_age_days", 10**9)
     )
+    source_rows = (
+        list(history_rows)
+        if rows_validated
+        else validate_history_rows(history_rows, snapshot_date)
+    )
     rows = [
         row
-        for row in history_rows
+        for row in source_rows
         if int(row.get("age_days") or 0) <= max_age
         and int(row.get("team_id") or -1) in {home_id, away_id}
     ]
@@ -324,6 +414,9 @@ def build_fixture_state(
     history_rows: Iterable[dict[str, Any]],
     config: dict[str, Any],
     historical_config: dict[str, Any],
+    scaling_artifact: dict[str, Any] | None = None,
+    *,
+    history_rows_validated: bool = False,
 ) -> dict[str, Any]:
     """Join the three foundations into one auditable fixture state."""
 
@@ -334,35 +427,56 @@ def build_fixture_state(
     away_form = form_matchup(forms_by_team.get(away_id), forms_by_team.get(home_id))
     home_lineup = lineup_quality(selections_by_team.get(home_id), config)
     away_lineup = lineup_quality(selections_by_team.get(away_id), config)
-    history = historical_residuals(historical_fixture, history_rows, historical_config)
+    snapshot_date = _snapshot_date(historical_fixture.get("as_of"))
+    history = historical_residuals(
+        historical_fixture,
+        history_rows,
+        historical_config,
+        snapshot_date,
+        rows_validated=history_rows_validated,
+    )
+    component_scales = validate_scaling_artifact(
+        scaling_artifact, snapshot_date, config
+    )
 
-    home_lineup_raw = float(home_lineup["quality_delta_z"]) - float(
-        away_lineup["quality_delta_z"]
+    lineup_pair_ready = bool(
+        home_lineup["lineup_prior_ready"] and away_lineup["lineup_prior_ready"]
+    )
+    home_lineup_raw = float(home_lineup["projected_quality_z"]) - float(
+        away_lineup["projected_quality_z"]
     )
     away_lineup_raw = -home_lineup_raw
-    home_lineup_effective = float(home_lineup["quality_delta_z"]) * float(
-        home_lineup["confidence"]
-    ) - float(away_lineup["quality_delta_z"]) * float(away_lineup["confidence"])
+    home_lineup_effective = (
+        float(home_lineup["projected_quality_z"]) * float(home_lineup["confidence"])
+        - float(away_lineup["projected_quality_z"])
+        * float(away_lineup["confidence"])
+        if lineup_pair_ready
+        else 0.0
+    )
     away_lineup_effective = -home_lineup_effective
-    lineup_pair_confidence = statistics.mean(
-        [float(home_lineup["confidence"]), float(away_lineup["confidence"])]
+    lineup_pair_confidence = (
+        statistics.mean(
+            [float(home_lineup["confidence"]), float(away_lineup["confidence"])]
+        )
+        if lineup_pair_ready
+        else 0.0
     )
 
     lineup_components = {
         "home": {
-            "available": home_lineup["available"] and away_lineup["available"],
+            "available": lineup_pair_ready,
             "home_team": home_lineup,
             "away_team": away_lineup,
-            "raw_matchup_delta_z": _round(home_lineup_raw),
+            "raw_projected_quality_edge_z": _round(home_lineup_raw),
             "confidence": _round(lineup_pair_confidence, 4),
             "effective_signal_z": _round(home_lineup_effective),
             "team_confidence_applied_independently": True,
         },
         "away": {
-            "available": home_lineup["available"] and away_lineup["available"],
+            "available": lineup_pair_ready,
             "away_team": away_lineup,
             "home_team": home_lineup,
-            "raw_matchup_delta_z": _round(away_lineup_raw),
+            "raw_projected_quality_edge_z": _round(away_lineup_raw),
             "confidence": _round(lineup_pair_confidence, 4),
             "effective_signal_z": _round(away_lineup_effective),
             "team_confidence_applied_independently": True,
@@ -374,13 +488,24 @@ def build_fixture_state(
     def side_state(
         form: dict[str, Any], lineup: dict[str, Any], historical: dict[str, Any]
     ) -> dict[str, Any]:
-        contributions = {
-            "club_form": float(weights["club_form"]) * float(form["effective_signal_z"]),
-            "player_quality_lineup": float(weights["player_quality_lineup"])
-            * float(lineup["effective_signal_z"]),
-            "historical_residual": float(weights["historical_residual"])
-            * float(historical["effective_signal_z"]),
+        raw_components = {
+            "club_form": float(form["effective_signal_z"]),
+            "player_quality_lineup": float(lineup["effective_signal_z"]),
+            "historical_residual": float(historical["effective_signal_z"]),
         }
+        normalized = (
+            {
+                key: value / float(component_scales[key])
+                for key, value in raw_components.items()
+            }
+            if component_scales is not None
+            else None
+        )
+        contributions = (
+            {key: float(weights[key]) * value for key, value in normalized.items()}
+            if normalized is not None
+            else None
+        )
         confidence = sum(
             float(weights[key]) * float(value["confidence"])
             for key, value in (
@@ -395,10 +520,21 @@ def build_fixture_state(
                 "player_quality_lineup": lineup,
                 "historical_residual": historical,
             },
-            "weighted_contributions_z": {
-                key: _round(value) for key, value in contributions.items()
-            },
-            "fixture_signal_z": _round(sum(contributions.values())),
+            "normalized_components_z": (
+                {key: _round(value) for key, value in normalized.items()}
+                if normalized is not None
+                else {key: None for key in raw_components}
+            ),
+            "weighted_contributions_z": (
+                {key: _round(value) for key, value in contributions.items()}
+                if contributions is not None
+                else {key: None for key in raw_components}
+            ),
+            "fixture_signal_z": (
+                _round(sum(contributions.values()))
+                if contributions is not None
+                else None
+            ),
             "evidence_confidence": _round(confidence, 4),
         }
 
@@ -407,22 +543,8 @@ def build_fixture_state(
 
     baseline = historical_fixture.get("competition_baseline") or {}
     baseline_xg = baseline.get("expected_goals") or {}
-    coefficient = config["goal_engine"].get("calibration_coefficient")
     home_baseline = baseline_xg.get("home_mean")
     away_baseline = baseline_xg.get("away_mean")
-    calibration_ready = coefficient is not None
-    home_calibrated_xg = (
-        float(home_baseline)
-        * math.exp(float(coefficient) * float(home_state["fixture_signal_z"]))
-        if calibration_ready and home_baseline is not None
-        else None
-    )
-    away_calibrated_xg = (
-        float(away_baseline)
-        * math.exp(float(coefficient) * float(away_state["fixture_signal_z"]))
-        if calibration_ready and away_baseline is not None
-        else None
-    )
     lineup_fixture_specific = bool(
         home_lineup["fixture_specific"] and away_lineup["fixture_specific"]
     )
@@ -436,14 +558,15 @@ def build_fixture_state(
     flags.extend(history["away"]["quality_flags"])
     if not baseline_xg or home_baseline is None or away_baseline is None:
         flags.append("missing_competition_xg_baseline")
-    if not calibration_ready:
-        flags.append("goal_engine_not_calibrated")
+    if component_scales is None:
+        flags.append("component_scaling_artifact_missing")
 
     input_ready = bool(
         home_baseline is not None
         and away_baseline is not None
         and home_form["available"]
         and away_form["available"]
+        and lineup_pair_ready
         and history["home"]["available"]
         and history["away"]["available"]
     )
@@ -454,8 +577,18 @@ def build_fixture_state(
         "component_weights": dict(weights),
         "home": home_state,
         "away": away_state,
-        "goal_engine_input": {
-            "formula": config["goal_engine"]["formula"],
+        "component_scaling": {
+            "method": config["component_scaling"]["method"],
+            "ready": component_scales is not None,
+            "artifact_version": (
+                scaling_artifact.get("version") if scaling_artifact else None
+            ),
+            "trained_through": (
+                scaling_artifact.get("trained_through") if scaling_artifact else None
+            ),
+            "scales": component_scales,
+        },
+        "goal_model_handoff": {
             "competition_baseline": {
                 "competition_family": baseline.get("competition_family"),
                 "proxy_used": baseline.get("proxy_used"),
@@ -464,12 +597,14 @@ def build_fixture_state(
                 "away_xg": away_baseline,
                 "total_xg": baseline_xg.get("total_mean"),
             },
-            "calibration_coefficient": coefficient,
-            "home_calibrated_xg": _round(home_calibrated_xg, 4),
-            "away_calibrated_xg": _round(away_calibrated_xg, 4),
+            "home_fixture_signal_z": home_state["fixture_signal_z"],
+            "away_fixture_signal_z": away_state["fixture_signal_z"],
+            "calibration_owned_by_separate_layer": True,
         },
         "decision_boundaries": {
-            "input_ready_for_walk_forward_calibration": input_ready,
+            "raw_components_ready_for_scale_fitting": input_ready,
+            "component_scaling_ready": component_scales is not None,
+            "composite_ready": input_ready and component_scales is not None,
             "lineup_priors_complete": bool(
                 home_lineup["lineup_prior_ready"] and away_lineup["lineup_prior_ready"]
             ),
@@ -477,7 +612,6 @@ def build_fixture_state(
             "lineups_confirmed": bool(
                 home_lineup["confirmed_lineup"] and away_lineup["confirmed_lineup"]
             ),
-            "goal_engine_calibrated": calibration_ready,
             **config["decision_boundaries"],
         },
         "quality_flags": sorted(set(flags)),
@@ -491,6 +625,8 @@ def build_fixture_states(
     history_rows: Iterable[dict[str, Any]],
     config: dict[str, Any],
     historical_config: dict[str, Any],
+    historical_manifest: dict[str, Any],
+    scaling_artifact: dict[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     """Materialize all fixtures after validating dated source versions."""
 
@@ -508,13 +644,13 @@ def build_fixture_states(
         raise ValueError("Fixture State requires three non-negative component weights")
     if abs(sum(float(value) for value in weights.values()) - 1.0) > 1e-9:
         raise ValueError("Fixture State component weights must sum to 1.0")
-    dates = {
-        str(row.get("as_of"))
-        for row in [*fixtures, *forms, *selections]
-        if row.get("as_of") is not None
-    }
-    if len(dates) > 1:
+    dated_rows = [*fixtures, *forms, *selections]
+    if any(row.get("as_of") is None for row in dated_rows):
+        raise ValueError("Every Fixture State source row must carry an as-of date")
+    dates = {str(row.get("as_of")) for row in dated_rows}
+    if len(dates) != 1:
         raise ValueError(f"Fixture State inputs use different as-of dates: {sorted(dates)}")
+    as_of = _snapshot_date(next(iter(dates)))
 
     expected = config.get("source_versions") or {}
     version_fields = (
@@ -531,6 +667,25 @@ def build_fixture_states(
             raise ValueError(
                 f"Expected {source} version {wanted}, found {sorted(versions)}"
             )
+
+    expected_history_version = expected.get("historical_fixtures")
+    if historical_config.get("version") != expected_history_version:
+        raise ValueError(
+            "Historical Fixtures config version does not match Fixture State source version"
+        )
+    if historical_manifest.get("historical_fixtures_version") != expected_history_version:
+        raise ValueError(
+            "Historical Fixtures manifest version does not match Fixture State source version"
+        )
+    if historical_manifest.get("as_of") != as_of.isoformat():
+        raise ValueError("Historical Fixtures manifest as-of does not match Fixture State")
+    manifest_outputs = historical_manifest.get("outputs") or {}
+    if manifest_outputs.get("fixtures") != len(fixtures):
+        raise ValueError("Historical Fixtures manifest fixture count does not match rows")
+    if manifest_outputs.get("historical_team_match_rows") != len(scored_rows):
+        raise ValueError("Historical Fixtures manifest history-row count does not match rows")
+    scored_rows = validate_history_rows(scored_rows, as_of)
+    validate_scaling_artifact(scaling_artifact, as_of, config)
 
     def index_unique(rows: list[dict[str, Any]], source: str) -> dict[int, dict[str, Any]]:
         output: dict[int, dict[str, Any]] = {}
@@ -551,6 +706,8 @@ def build_fixture_states(
             scored_rows,
             config,
             historical_config,
+            scaling_artifact,
+            history_rows_validated=True,
         )
         for fixture in fixtures
     ]

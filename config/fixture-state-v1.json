@@ -15,9 +15,15 @@
     "method": "alpha-minute coverage multiplied by squad-selection evidence maturity"
   },
   "historical_fixtures_config": "config/historical-fixtures-v2.json",
-  "goal_engine": {
-    "calibration_coefficient": null,
-    "formula": "competition_xg_baseline * exp(calibration_coefficient * fixture_signal_z)"
+  "component_scaling": {
+    "method": "past_only_training_standard_deviation",
+    "artifact_path": null,
+    "require_trained_before_as_of": true,
+    "required_components": [
+      "club_form",
+      "player_quality_lineup",
+      "historical_residual"
+    ]
   },
   "decision_boundaries": {
     "probability_ready": false,

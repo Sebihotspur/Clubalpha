@@ -219,6 +219,11 @@ reports/fixture-state-v1-audit.json
 ```
 
 The generated fixture rows remain ignored by Git; the compact audit is tracked.
-The builder requires matching `as_of` dates and source versions. It preserves
-the competition xG baseline outside the 60/30/10 adjustment and emits no
-calibrated goal probability while the walk-forward coefficient is unset.
+The builder requires matching `as_of` dates and source versions, validates the
+Historical Fixtures manifest, rejects future or age-inconsistent history rows,
+and preserves the competition xG baseline outside the 60/30/10 adjustment.
+
+The first snapshot writes raw components only. Normalized contributions and the
+fixture signal stay null until `--component-scales` points to a complete artifact
+trained strictly before the snapshot date. Fixture State never accepts a goal
+calibration coefficient or emits a calibrated goal probability.

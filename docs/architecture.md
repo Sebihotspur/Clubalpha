@@ -140,17 +140,22 @@ The first composite remains a handoff rather than another club grade:
 Competition xG environment
           +
 60% Club Form matchup
-30% expected-minute Player Quality lineup delta
+30% expected-minute projected-XI Player Quality edge
 10% venue/direct Historical residual
           ↓
 dated home and away Fixture State signals
 ```
 
 The competition baseline sits outside the component weights. Club Form's
-released reliability shrinkage is applied once, lineup availability is measured
-against each club's normal expected-minute baseline, and direct history is
-capped at 1.5% of the complete signal. The calibration coefficient remains
-unset until dated walk-forward testing.
+released reliability shrinkage is applied once. Player Quality compares the
+clubs' absolute expected-minute projected-XI quality; the own-baseline
+availability delta remains diagnostic. Direct history is capped at 1.5% of the
+complete signal.
+
+The three components must use frozen standard-deviation scales fitted only from
+earlier dated snapshots before 60/30/10 activates. Fixture State owns neither
+goal calibration nor probabilities. Those remain separate versioned layers
+after component scaling and walk-forward testing.
 
 ## First output
 

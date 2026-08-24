@@ -31,13 +31,19 @@ the confidence-adjusted signals required to estimate goals.
 
 ```text
 fixture_signal =
-    0.60 × club_form_matchup × form_confidence
-  + 0.30 × expected_lineup_delta × lineup_confidence
-  + 0.10 × historical_residual × historical_confidence
+    0.60 × normalized_club_form_matchup
+  + 0.30 × normalized_projected_lineup_quality_edge
+  + 0.10 × normalized_historical_residual
 ```
 
 Missing or weak evidence shrinks its own contribution toward neutral. Its
 weight is not redistributed to another layer.
+
+Each confidence-adjusted component is divided by a frozen standard deviation
+learned only from earlier dated snapshots before these weights activate. This
+makes 60/30/10 comparable sensitivities rather than multipliers on three
+different numerical scales. The weights do not promise the same realized share
+in every fixture; a genuinely neutral component should remain neutral.
 
 The competition home and away scoring environments are not part of the
 60/30/10 mix. They establish the starting expected-goal baselines.
@@ -48,14 +54,19 @@ The locked Player Quality formulas and every metric-level contribution remain
 unchanged. The fixture model uses them through expected minutes:
 
 ```text
-expected_lineup_delta =
-    expected-minute-weighted projected-XI quality
-  − expected-minute-weighted normal baseline-XI quality
+projected_lineup_quality =
+    sum(expected_minutes × alpha_ability_z) / 990
+
+projected_lineup_quality_edge =
+    confidence_adjusted_own_projected_quality
+  − confidence_adjusted_opponent_projected_quality
 ```
 
 Availability changes expected minutes and lineup scenarios. It does not create
-a separate form penalty. Direct line-breaking passes remain unavailable from
-FotMob and are never imputed as zero or fabricated from another statistic.
+a separate form penalty. The projected-minus-baseline quality delta remains a
+diagnostic for availability impact, but it is not the complete Player Quality
+component. Direct line-breaking passes remain unavailable from FotMob and are
+never imputed as zero or fabricated from another statistic.
 
 ## Club Form: 60%
 
@@ -130,10 +141,11 @@ expected_goals =
   × exp(calibration_coefficient × fixture_signal)
 ```
 
-The calibration coefficient must be learned with dated walk-forward samples.
-The first Fixture State output contains competition baseline xG, home and away
-component signals, evidence confidence, and uncertainty. Calibrated home and
-away expected goals remain null until that coefficient is learned.
+The calibration coefficient must be learned with dated walk-forward samples in
+a separate versioned goal-model layer. Fixture State never fits or applies it.
+Its first output contains competition baseline xG, raw home and away components,
+evidence confidence, and uncertainty. The weighted fixture signal also remains
+null until a past-only component-scale artifact exists.
 
 ## Player events
 
@@ -183,13 +195,14 @@ walk-forward gates.
 
 ## Implementation status and order
 
-1. **Complete:** materialize a dated Fixture State from the three foundations.
-2. **Next:** fit and walk-forward-test home and away expected goals.
-3. Validate totals and team totals.
-4. Add lineup scenarios and expected minutes.
-5. Allocate team goal mass to scorers and assist makers.
-6. Add no-vig market prices and a shadow ledger.
-7. Enable risk sizing only after calibration gates pass.
+1. **Complete:** materialize dated raw Fixture State components.
+2. **Next:** build earlier snapshots and fit frozen component scales.
+3. Fit and walk-forward-test home and away expected goals.
+4. Validate totals and team totals.
+5. Add fixture-specific lineup scenarios and expected minutes.
+6. Allocate team goal mass to scorers and assist makers.
+7. Add no-vig market prices and a shadow ledger.
+8. Enable risk sizing only after calibration gates pass.
 
 The implemented handoff, confidence policy, coverage audit, and remaining
 decision boundaries are documented in [Fixture State v1](fixture-state-spec.md).
