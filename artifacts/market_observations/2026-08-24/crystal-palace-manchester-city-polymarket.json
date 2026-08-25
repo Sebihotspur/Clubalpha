@@ -1,0 +1,66 @@
+{
+  "observation_version": "clubalpha_market_observation_v0",
+  "status": "observation_only",
+  "observed_at_utc": "2026-08-25T00:04:30Z",
+  "source": {
+    "name": "Polymarket",
+    "url": "https://polymarket.com/combos/sports/epl/epl-cry-mac-2026-08-28",
+    "collection_method": "manual_visible_page_review"
+  },
+  "fixture": {
+    "match_id": 5795429,
+    "competition": "Premier League",
+    "kickoff_utc": "2026-08-28T19:00:00Z",
+    "home_team": "Crystal Palace",
+    "away_team": "Manchester City"
+  },
+  "displayed_market": {
+    "total_volume_usd": 7620,
+    "moneyline": {
+      "volume_usd": 4700,
+      "crystal_palace_yes": 0.18,
+      "draw_yes": 0.23,
+      "manchester_city_yes": 0.61
+    },
+    "spread": {
+      "volume_usd": 2100,
+      "crystal_palace_plus_1_5": 0.65,
+      "manchester_city_minus_1_5": 0.36
+    },
+    "total_2_5": {
+      "volume_usd": 468,
+      "over": 0.58,
+      "under": 0.43
+    },
+    "both_teams_to_score": {
+      "volume_usd": 412,
+      "yes": 0.56,
+      "no": 0.45
+    }
+  },
+  "user_viewed_combo": {
+    "legs": [
+      "Manchester City to win in regulation",
+      "Over 2.5 total goals in regulation"
+    ],
+    "displayed_decimal_payout": 2.87,
+    "implied_probability": 0.348432
+  },
+  "frozen_model_comparison": {
+    "away_win_probability": 0.46584,
+    "over_2_5_probability": 0.60748,
+    "joint_away_win_and_over_2_5_probability": 0.324704,
+    "joint_fair_decimal": 3.0797,
+    "expected_roi_at_displayed_combo": -0.0681
+  },
+  "decision": {
+    "real_units": 0,
+    "action": "no_position",
+    "reason": "Displayed combo payout was below the frozen model's joint fair price."
+  },
+  "caveats": [
+    "Displayed prices and volumes can move after observation.",
+    "Volume is cumulative trading activity, not current order-book depth.",
+    "This observation cannot change the frozen prediction or train the model."
+  ]
+}

@@ -73,6 +73,8 @@ provider-data warehouse.
 - Decorated team values preserve their leading counts and percentages for style analysis.
 - Confirmed transfers retain effective and reported dates so `--as-of` builds can reject future information.
 - Every observation keeps FotMob IDs so players, teams, and matches remain joinable.
+- FotMob `excludeFromRanking` is ranking eligibility, not roster status; all
+  non-coach squad members are retained.
 - The collector fails if FotMob silently returns the wrong requested league season.
 - UCL qualification status includes an `as_of` date because the field is still changing.
 
@@ -227,3 +229,16 @@ The first snapshot writes raw components only. Normalized contributions and the
 fixture signal stay null until `--component-scales` points to a complete artifact
 trained strictly before the snapshot date. Fixture State never accepts a goal
 calibration coefficient or emits a calibrated goal probability.
+
+## Prediction Lab handoff
+
+Prediction Lab v0 consumes frozen Fixture States rather than reaching around
+them into the foundation layers. It fits an outcome-free component-scale
+artifact, then a separately versioned xG coefficient, and finally runs 50,000
+deterministic independent-Poisson simulations per future fixture. The first
+frozen outputs are tracked under `artifacts/prediction_lab/2026-08-24/`.
+
+The first scale snapshot reconstructs August 11 roster membership by reversing
+later effective-dated transfers and discards all later injury statuses. That
+provenance is embedded in the scale artifact. Predictions remain shadow-only;
+the goal layer cannot mark market or capital deployment ready.

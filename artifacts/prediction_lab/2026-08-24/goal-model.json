@@ -1,0 +1,50 @@
+{
+  "version": "clubalpha_goal_model_2026-08-24_v0",
+  "method": "ridge_log_xg_adjustment_without_intercept",
+  "target": "observed_fotmob_expected_goals",
+  "link": "competition_xg_baseline * exp(coefficient * fixture_signal_z)",
+  "trained_through": "2026-08-24",
+  "training_fixture_state_as_of_dates": [
+    "2026-08-18"
+  ],
+  "component_scale_artifact_version": "clubalpha_component_scales_2026-08-11_v0",
+  "training_matches": 10,
+  "training_sides": 20,
+  "training_match_ids": [
+    5795363,
+    5795364,
+    5795365,
+    5795366,
+    5795367,
+    5795368,
+    5795369,
+    5795370,
+    5795371,
+    5795372
+  ],
+  "ridge_lambda": 2.0,
+  "raw_coefficient": 0.513116594,
+  "point_coefficient": 0.445695839,
+  "coefficient": 0.146445877,
+  "coefficient_policy": "bootstrap_95_bound_closest_to_zero",
+  "bootstrap_95_interval": {
+    "lower": 0.146445877,
+    "upper": 0.795670995,
+    "samples": 5000,
+    "resampling_unit": "match"
+  },
+  "training_metrics": {
+    "competition_baseline_xg_mae": 0.8051,
+    "fitted_xg_mae": 0.683561,
+    "applied_conservative_xg_mae": 0.714002
+  },
+  "decision_boundaries": {
+    "shadow_prediction_ready": true,
+    "probability_validated": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  },
+  "quality_flags": [
+    "small_goal_calibration_sample"
+  ]
+}

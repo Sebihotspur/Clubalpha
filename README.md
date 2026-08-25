@@ -213,6 +213,32 @@ calibrated fixture signal, probability, betting edge, or capital signal. See
 [Fixture State v1](docs/fixture-state-spec.md) for the exact handoff and
 safeguards.
 
+## Prediction Lab v0
+
+Build the first frozen Premier League shadow-prediction experiment:
+
+```bash
+python3 research/aug24_shadow_test.py
+```
+
+Prediction Lab fits outcome-free component scales from the reconstructed
+2026-08-11 snapshot, fits a separate low-confidence goal coefficient from the
+10 opening Premier League matches, and runs 50,000 deterministic
+independent-Poisson simulations for each August 28–31 fixture. While the sample
+is small, simulations use the bootstrap coefficient bound closest to zero
+rather than the central estimate.
+
+Outputs include 1X2, Over/Under 2.5 and 3.5, BTTS, projected xG, and likely
+scorelines. They are frozen shadow probabilities—not market edges or capital
+signals. See [Prediction Lab v0](docs/prediction-lab-v0.md).
+
+## Web dashboard
+
+The read-only Clubalpha dashboard is live at
+[clubalpha-club-form-v1.vercel.app](https://clubalpha-club-form-v1.vercel.app/).
+It publishes the frozen shadow slate, ledger, and methodology without exposing
+capital controls. Build instructions live in [web/README.md](web/README.md).
+
 ## Status
 
 The PL, UCL, and preseason foundation pull is operational. Player Quality v2
@@ -228,9 +254,10 @@ and complete team-match detail for all of them.
 
 Fixture State v1 materializes 31 dated fixture inputs from those foundations.
 All 31 have Club Form, historical residual, and competition xG inputs; 27 have
-complete projected-XI lineup priors. No past-only scale artifact exists yet, so
-the final composites remain null. Goal calibration belongs to a later layer and
-no output is presented as a probability or wager.
+complete projected-XI lineup priors. Prediction Lab v0 now adds the first
+strictly chronological component-scale and goal-model artifacts plus a frozen
+10-match Premier League forecast. Its 34-side scale sample and 10-match goal
+sample are deliberately below validation gates.
 
 Clubalpha does not yet produce deployment-ready probabilities or
 recommendations. Fixture-specific lineups, style-matchup validation, calibrated

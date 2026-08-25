@@ -1,0 +1,42 @@
+{
+  "version": "clubalpha_prediction_lab_v0",
+  "status": "shadow_only",
+  "component_scaling": {
+    "artifact_version": "clubalpha_component_scales_2026-08-11_v0",
+    "method": "past_only_training_standard_deviation",
+    "minimum_training_fixture_sides": 30,
+    "minimum_validation_fixture_sides": 200
+  },
+  "goal_model": {
+    "artifact_version": "clubalpha_goal_model_2026-08-24_v0",
+    "method": "ridge_log_xg_adjustment_without_intercept",
+    "target": "observed_fotmob_expected_goals",
+    "observed_xg_floor": 0.05,
+    "ridge_lambda": 2.0,
+    "small_sample_coefficient_policy": "bootstrap_95_bound_closest_to_zero",
+    "minimum_shadow_training_matches": 10,
+    "minimum_validation_matches": 100,
+    "predicted_xg_bounds": {
+      "minimum": 0.05,
+      "maximum": 5.0
+    },
+    "bootstrap": {
+      "samples": 5000,
+      "seed": 20260824
+    }
+  },
+  "simulation": {
+    "draws": 50000,
+    "distribution": "independent_poisson",
+    "seed": 20260824,
+    "totals_lines": [
+      2.5,
+      3.5
+    ]
+  },
+  "decision_boundaries": {
+    "probability_validated": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  }
+}

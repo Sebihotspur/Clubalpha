@@ -196,13 +196,16 @@ walk-forward gates.
 ## Implementation status and order
 
 1. **Complete:** materialize dated raw Fixture State components.
-2. **Next:** build earlier snapshots and fit frozen component scales.
-3. Fit and walk-forward-test home and away expected goals.
-4. Validate totals and team totals.
-5. Add fixture-specific lineup scenarios and expected minutes.
-6. Allocate team goal mass to scorers and assist makers.
-7. Add no-vig market prices and a shadow ledger.
-8. Enable risk sizing only after calibration gates pass.
+2. **Shadow v0 complete:** fit an August 11 component-scale artifact.
+3. **Shadow v0 complete:** fit a conservative 10-match xG coefficient and
+   freeze the first 50,000-simulation Premier League slate.
+4. **Next:** expand strictly dated scale samples to 200 fixture sides and goal
+   calibration to at least 100 matches.
+5. Validate totals and team totals on fresh fixtures.
+6. Add fixture-specific lineup scenarios and expected minutes.
+7. Allocate team goal mass to scorers and assist makers.
+8. Add no-vig market prices and a shadow ledger.
+9. Enable risk sizing only after calibration gates pass.
 
 The implemented handoff, confidence policy, coverage audit, and remaining
 decision boundaries are documented in [Fixture State v1](fixture-state-spec.md).

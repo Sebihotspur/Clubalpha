@@ -157,6 +157,23 @@ earlier dated snapshots before 60/30/10 activates. Fixture State owns neither
 goal calibration nor probabilities. Those remain separate versioned layers
 after component scaling and walk-forward testing.
 
+## Prediction Lab v0
+
+The first probability experiment preserves those ownership boundaries:
+
+```text
+Earlier Fixture States → frozen component scales
+Frozen pre-match states + later observed xG → goal-model artifact
+Future Fixture State + both artifacts → 50,000 shadow simulations
+```
+
+The August 11 scale artifact precedes the August 18 opening-round states. The
+goal model then trains through August 24 and predicts only later fixtures.
+Small-sample simulations use the bootstrap coefficient bound closest to zero.
+The point estimate remains visible for audit, but cannot create false
+confidence. The complete contract is documented in
+[Prediction Lab v0](prediction-lab-v0.md).
+
 ## First output
 
 The first useful product is a Football Intelligence Snapshot:
@@ -172,7 +189,9 @@ Team
 └── Relevant Historical Evidence
 ```
 
-Goals, assists, totals, market prices, and capital deployment remain outside v0.1. They will be built later on top of trusted intelligence.
+Prediction Lab v0 now emits shadow 1X2, totals, and BTTS probabilities. They
+remain outside the trusted deployment product until chronological validation
+gates pass; scorer, assist, market-price, and capital layers remain deferred.
 
 The accepted minimal handoff into that later probability layer is documented
 in [Composite Model v1](composite-model-v1.md) and implemented in

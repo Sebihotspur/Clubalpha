@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Clubalpha — Premier League and Champions League football intelligence, shadow predictions, and public calibration ledger."
+    />
+    <meta name="theme-color" content="#080d0b" />
+    <title>Clubalpha — Football Intelligence</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="shell nav-wrap">
+        <a class="wordmark" href="/" aria-label="Clubalpha overview">
+          <span class="wordmark-mark">CA</span>
+          <span>CLUBALPHA</span>
+          <span class="wordmark-season">/ 26–27</span>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a data-route="overview" href="/">Overview</a>
+          <a data-route="predictions" href="/predictions/">Predictions</a>
+          <a data-route="ledger" href="/ledger/">Ledger</a>
+          <a data-route="methodology" href="/methodology/">Methodology</a>
+        </nav>
+        <div class="nav-status"><span></span> Shadow</div>
+      </div>
+    </header>
+
+    <main id="app" class="shell main" aria-live="polite">
+      <div class="loading">
+        <span class="loading-dot"></span>
+        Loading frozen intelligence…
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="shell footer-grid">
+        <p>CLUBALPHA · READ-ONLY SHADOW INTELLIGENCE</p>
+        <p>FotMob public data · 50,000 simulations · Zero capital authorized</p>
+      </div>
+    </footer>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

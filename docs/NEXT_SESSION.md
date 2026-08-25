@@ -18,18 +18,35 @@ Working branch: `codex/fixture-state-v1`
   availability delta remains diagnostic.
 - All 31 lineups remain dated priors rather than fixture-specific or confirmed.
 - Historical manifest, version, kickoff, age, and `as_of` integrity are enforced.
-- No past-only component-scale artifact exists, so all final composites are null.
-- Fixture State contains no goal-calibration coefficient or calibrated xG path.
-- The complete 113-test suite passes.
+- Prediction Lab v0 reconstructs an August 11 scale snapshot with 34 complete
+  fixture sides, reverses 50 later transfer events, clears later injuries, and
+  preserves the 200-side validation gate.
+- The separate August 24 goal artifact trains on 10 opening Premier League
+  matches and preserves the 100-match validation gate.
+- Small-sample simulations apply the bootstrap coefficient bound closest to
+  zero, not the more aggressive point estimate.
+- Ten August 28–31 Premier League shadow predictions are frozen with 50,000
+  deterministic simulations each.
+- A read-only Overview, Predictions, Shadow Ledger, and Methodology dashboard is
+  deployed at `https://clubalpha-club-form-v1.vercel.app/`.
+- The first manual Polymarket observation for Crystal Palace–Manchester City is
+  frozen separately from model artifacts. No price changed the forecast and no
+  real capital was authorized.
+- FotMob `excludeFromRanking` is correctly treated as ranking eligibility, not
+  squad membership.
+- The complete 121-test suite passes.
 
 ## Start here
 
-1. Review Fixture State v1 and its tracked real-data audit.
-2. Merge only if the confidence treatment and residual definitions remain
-   accepted.
-3. Build dated historical Fixture State snapshots and fit frozen component scales.
-4. Activate and verify 60/30/10 only with a past-only scale artifact.
-5. Fit and evaluate home and away xG coefficients in a separate layer.
+1. Review the frozen Prediction Lab v0 slate and audit.
+2. Keep every forecast immutable; append outcomes only after kickoff.
+3. Continue logging timestamped market observations only after forecasts are
+   frozen; never use them to refit the same slate.
+4. Add more earlier Fixture State snapshots until component scaling reaches 200
+   sides.
+5. Accumulate at least 100 chronological goal-calibration matches.
+6. Score the next slate on xG MAE, 1X2 Brier/log loss, totals calibration, and
+   probability reliability before changing any coefficient.
 
 ## Preserve these boundaries
 
@@ -42,3 +59,8 @@ Working branch: `codex/fixture-state-v1`
 - Do not redistribute missing component weight.
 - Do not put goal calibration inside Fixture State.
 - Do not call an output a probability, edge, or wager before calibration passes.
+- Do not use the point goal coefficient while the small-sample conservative
+  policy is active.
+- Market observations may be logged after a prediction is frozen, but they may
+  not alter the forecast, count as validation, or authorize capital before the
+  probability-validation gates pass.

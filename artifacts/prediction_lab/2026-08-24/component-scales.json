@@ -1,0 +1,37 @@
+{
+  "version": "clubalpha_component_scales_2026-08-11_v0",
+  "method": "past_only_training_standard_deviation",
+  "trained_through": "2026-08-11",
+  "training_snapshot_count": 1,
+  "training_fixture_count": 17,
+  "training_fixture_sides": 34,
+  "source_fixture_state_version": "clubalpha_fixture_state_v1",
+  "outcomes_used": false,
+  "scales": {
+    "club_form": 0.593986102,
+    "player_quality_lineup": 0.297703216,
+    "historical_residual": 0.102358703
+  },
+  "decision_boundaries": {
+    "shadow_scaling_ready": true,
+    "scale_validated": false
+  },
+  "quality_flags": [
+    "historical_roster_reconstructed_from_transfer_log",
+    "small_component_scale_sample"
+  ],
+  "input_provenance": {
+    "source_roster_manifest_as_of": "2026-08-18",
+    "reconstructed_to_as_of": "2026-08-11",
+    "later_transfer_events_reversed": 50,
+    "later_arrivals_removed": 21,
+    "later_departures_restored": 29,
+    "later_injury_snapshot_used": false,
+    "method": "reverse_effective_dated_transfer_events",
+    "player_grade_source": "/Users/sebasospina/Clubalpha/data/processed/player_quality_v2/player_grades.jsonl",
+    "player_grade_rows": 1108,
+    "post_cutoff_transfer_records_used_for_reconstruction": true,
+    "post_cutoff_match_rows_used": false,
+    "post_cutoff_outcomes_used": false
+  }
+}
