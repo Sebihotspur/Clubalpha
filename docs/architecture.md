@@ -132,6 +132,48 @@ also preserves goal/xG means, total-score variance, home-away covariance, home
 advantage, draw, over-2.5, and BTTS history for later calibrated simulations.
 These remain descriptive inputs until a walk-forward probability layer exists.
 
+## Fixture State v1
+
+The first composite remains a handoff rather than another club grade:
+
+```text
+Competition xG environment
+          +
+60% Club Form matchup
+30% expected-minute projected-XI Player Quality edge
+10% venue/direct Historical residual
+          ↓
+dated home and away Fixture State signals
+```
+
+The competition baseline sits outside the component weights. Club Form's
+released reliability shrinkage is applied once. Player Quality compares the
+clubs' absolute expected-minute projected-XI quality; the own-baseline
+availability delta remains diagnostic. Direct history is capped at 1.5% of the
+complete signal.
+
+The three components must use frozen standard-deviation scales fitted only from
+earlier dated snapshots before 60/30/10 activates. Fixture State owns neither
+goal calibration nor probabilities. Those remain separate versioned layers
+after component scaling and walk-forward testing.
+
+## Prediction Lab v0
+
+The first probability experiment preserves those ownership boundaries:
+
+```text
+Earlier Fixture States → frozen component scales
+Frozen pre-match states + later observed xG → goal-model artifact
+Future Fixture State + both artifacts → 50,000 shadow simulations
+```
+
+The August 11 scale artifact precedes the August 18 opening-round states. The
+goal model then trains through August 24 and predicts only later fixtures.
+Small-sample simulations use the bootstrap coefficient bound closest to zero.
+The point estimate remains visible for audit, but cannot create false
+confidence. The complete contract is documented in
+[Prediction Lab v0](prediction-lab-v0.md).
+
 ## First output
 
 The first useful product is a Football Intelligence Snapshot:
@@ -147,9 +189,10 @@ Team
 └── Relevant Historical Evidence
 ```
 
-Goals, assists, totals, market prices, and capital deployment remain outside v0.1. They will be built later on top of trusted intelligence.
+Prediction Lab v0 now emits shadow 1X2, totals, and BTTS probabilities. They
+remain outside the trusted deployment product until chronological validation
+gates pass; scorer, assist, market-price, and capital layers remain deferred.
 
 The accepted minimal handoff into that later probability layer is documented
-in [Composite Model v1](composite-model-v1.md): 60% Club Form, 30% expected-
-lineup Player Quality delta, and 10% residual Historical Context, with the
-competition scoring environment establishing the baseline outside that mix.
+in [Composite Model v1](composite-model-v1.md) and implemented in
+[Fixture State v1](fixture-state-spec.md).

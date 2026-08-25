@@ -1,0 +1,2043 @@
+{
+  "prediction_version": "clubalpha_prediction_lab_v0",
+  "generated_at_utc": "2026-08-24T23:16:35.044420+00:00",
+  "as_of": "2026-08-24",
+  "source": "FotMob live web data plus frozen Clubalpha historical evidence",
+  "counts": {
+    "live_pl_fixtures": 380,
+    "completed_pl_matches": 10,
+    "current_player_rows": 310,
+    "current_team_rows": 20,
+    "live_pl_squad_players": 576,
+    "historical_rows": 8120,
+    "fixture_states": 27,
+    "next_round_pl_fixtures": 10,
+    "scale_training_fixture_states": 20,
+    "scale_training_fixture_sides": 34,
+    "goal_training_matches": 10,
+    "shadow_predictions": 10,
+    "lineup_priors_complete": 10
+  },
+  "observed_opening_round": [
+    {
+      "match_id": 5795363,
+      "fixture": "Arsenal vs Coventry City",
+      "kickoff_utc": "2026-08-21T19:00:00Z",
+      "score": "3 - 0",
+      "home_xg": 1.88,
+      "away_xg": 0.2
+    },
+    {
+      "match_id": 5795364,
+      "fixture": "Hull City vs Manchester United",
+      "kickoff_utc": "2026-08-22T11:30:00Z",
+      "score": "2 - 0",
+      "home_xg": 1.01,
+      "away_xg": 1.83
+    },
+    {
+      "match_id": 5795365,
+      "fixture": "Everton vs Crystal Palace",
+      "kickoff_utc": "2026-08-22T14:00:00Z",
+      "score": "2 - 0",
+      "home_xg": 1.12,
+      "away_xg": 1.96
+    },
+    {
+      "match_id": 5795366,
+      "fixture": "Ipswich Town vs Sunderland",
+      "kickoff_utc": "2026-08-22T14:00:00Z",
+      "score": "2 - 1",
+      "home_xg": 1.8,
+      "away_xg": 0.66
+    },
+    {
+      "match_id": 5795367,
+      "fixture": "Nottingham Forest vs Leeds United",
+      "kickoff_utc": "2026-08-22T14:00:00Z",
+      "score": "0 - 1",
+      "home_xg": 0.66,
+      "away_xg": 0.47
+    },
+    {
+      "match_id": 5795368,
+      "fixture": "Brentford vs Tottenham Hotspur",
+      "kickoff_utc": "2026-08-22T16:30:00Z",
+      "score": "3 - 0",
+      "home_xg": 3.87,
+      "away_xg": 0.57
+    },
+    {
+      "match_id": 5795369,
+      "fixture": "Brighton & Hove Albion vs Aston Villa",
+      "kickoff_utc": "2026-08-23T13:00:00Z",
+      "score": "4 - 0",
+      "home_xg": 3.77,
+      "away_xg": 0.29
+    },
+    {
+      "match_id": 5795370,
+      "fixture": "Manchester City vs AFC Bournemouth",
+      "kickoff_utc": "2026-08-23T13:00:00Z",
+      "score": "2 - 1",
+      "home_xg": 2.25,
+      "away_xg": 0.65
+    },
+    {
+      "match_id": 5795371,
+      "fixture": "Newcastle United vs Liverpool",
+      "kickoff_utc": "2026-08-23T15:30:00Z",
+      "score": "2 - 2",
+      "home_xg": 1.58,
+      "away_xg": 2.98
+    },
+    {
+      "match_id": 5795372,
+      "fixture": "Fulham vs Chelsea",
+      "kickoff_utc": "2026-08-24T19:00:00.000Z",
+      "score": "2 - 3",
+      "home_xg": 1.34,
+      "away_xg": 1.7
+    }
+  ],
+  "team_scores": [
+    {
+      "team_id": 9825,
+      "team": "Arsenal",
+      "form_z": 0.7586,
+      "form_change": 0.1209,
+      "attack_z": 0.1886,
+      "defense_z": 1.3286,
+      "projected_xi_z": 0.571304,
+      "projected_xi_change": -0.0032,
+      "lineup_confidence": 0.6291,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 1,
+      "alpha_rank": 2,
+      "comparison_rank": 1.5
+    },
+    {
+      "team_id": 8456,
+      "team": "Manchester City",
+      "form_z": 0.604,
+      "form_change": 0.1456,
+      "attack_z": 0.8322,
+      "defense_z": 0.3759,
+      "projected_xi_z": 0.659761,
+      "projected_xi_change": 0.0124,
+      "lineup_confidence": 0.6156,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 3,
+      "alpha_rank": 1,
+      "comparison_rank": 2.0
+    },
+    {
+      "team_id": 10260,
+      "team": "Manchester United",
+      "form_z": 0.1341,
+      "form_change": -0.1572,
+      "attack_z": 0.2817,
+      "defense_z": -0.0136,
+      "projected_xi_z": 0.434832,
+      "projected_xi_change": 0.0427,
+      "lineup_confidence": 0.6433,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 6,
+      "alpha_rank": 3,
+      "comparison_rank": 4.5
+    },
+    {
+      "team_id": 10204,
+      "team": "Brighton & Hove Albion",
+      "form_z": 0.7208,
+      "form_change": 0.6266,
+      "attack_z": 0.7011,
+      "defense_z": 0.7406,
+      "projected_xi_z": 0.205599,
+      "projected_xi_change": 0.0334,
+      "lineup_confidence": 0.5929,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 2,
+      "alpha_rank": 8,
+      "comparison_rank": 5.0
+    },
+    {
+      "team_id": 9937,
+      "team": "Brentford",
+      "form_z": 0.2044,
+      "form_change": 0.4892,
+      "attack_z": 0.7948,
+      "defense_z": -0.3859,
+      "projected_xi_z": 0.167855,
+      "projected_xi_change": 0.0135,
+      "lineup_confidence": 0.6122,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 4,
+      "alpha_rank": 10,
+      "comparison_rank": 7.0
+    },
+    {
+      "team_id": 8650,
+      "team": "Liverpool",
+      "form_z": -0.0291,
+      "form_change": 0.1132,
+      "attack_z": 0.3832,
+      "defense_z": -0.4414,
+      "projected_xi_z": 0.213785,
+      "projected_xi_change": -0.0213,
+      "lineup_confidence": 0.6043,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 8,
+      "alpha_rank": 7,
+      "comparison_rank": 7.5
+    },
+    {
+      "team_id": 8455,
+      "team": "Chelsea",
+      "form_z": -0.3127,
+      "form_change": 0.0809,
+      "attack_z": 0.0225,
+      "defense_z": -0.6478,
+      "projected_xi_z": 0.328305,
+      "projected_xi_change": 0.0172,
+      "lineup_confidence": 0.6286,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 11,
+      "alpha_rank": 4,
+      "comparison_rank": 7.5
+    },
+    {
+      "team_id": 8678,
+      "team": "AFC Bournemouth",
+      "form_z": -0.2131,
+      "form_change": -0.1907,
+      "attack_z": -0.0925,
+      "defense_z": -0.3336,
+      "projected_xi_z": 0.201991,
+      "projected_xi_change": -0.002,
+      "lineup_confidence": 0.5935,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 9,
+      "alpha_rank": 9,
+      "comparison_rank": 9.0
+    },
+    {
+      "team_id": 10261,
+      "team": "Newcastle United",
+      "form_z": -0.4936,
+      "form_change": -0.0731,
+      "attack_z": -0.0475,
+      "defense_z": -0.9398,
+      "projected_xi_z": 0.261229,
+      "projected_xi_change": 0.0477,
+      "lineup_confidence": 0.621,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 13,
+      "alpha_rank": 6,
+      "comparison_rank": 9.5
+    },
+    {
+      "team_id": 8463,
+      "team": "Leeds United",
+      "form_z": -0.2803,
+      "form_change": 0.0947,
+      "attack_z": -0.562,
+      "defense_z": 0.0014,
+      "projected_xi_z": 0.156861,
+      "projected_xi_change": 0.0417,
+      "lineup_confidence": 0.5987,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 10,
+      "alpha_rank": 11,
+      "comparison_rank": 10.5
+    },
+    {
+      "team_id": 9879,
+      "team": "Fulham",
+      "form_z": -0.5939,
+      "form_change": -0.077,
+      "attack_z": -0.59,
+      "defense_z": -0.5979,
+      "projected_xi_z": 0.27325,
+      "projected_xi_change": 0.0095,
+      "lineup_confidence": 0.5951,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 17,
+      "alpha_rank": 5,
+      "comparison_rank": 11.0
+    },
+    {
+      "team_id": 8669,
+      "team": "Coventry City",
+      "form_z": 0.1545,
+      "form_change": -0.3022,
+      "attack_z": 0.0176,
+      "defense_z": 0.2914,
+      "projected_xi_z": -0.653627,
+      "projected_xi_change": 0.062,
+      "lineup_confidence": 0.5809,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 5,
+      "alpha_rank": 19,
+      "comparison_rank": 12.0
+    },
+    {
+      "team_id": 9902,
+      "team": "Ipswich Town",
+      "form_z": 0.0736,
+      "form_change": -0.0537,
+      "attack_z": 0.0308,
+      "defense_z": 0.1164,
+      "projected_xi_z": -0.574889,
+      "projected_xi_change": 0.0712,
+      "lineup_confidence": 0.5549,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 7,
+      "alpha_rank": 18,
+      "comparison_rank": 12.5
+    },
+    {
+      "team_id": 10203,
+      "team": "Nottingham Forest",
+      "form_z": -0.367,
+      "form_change": -0.0136,
+      "attack_z": -0.6847,
+      "defense_z": -0.0494,
+      "projected_xi_z": -0.00152,
+      "projected_xi_change": 0.0078,
+      "lineup_confidence": 0.5964,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 12,
+      "alpha_rank": 15,
+      "comparison_rank": 13.5
+    },
+    {
+      "team_id": 8668,
+      "team": "Everton",
+      "form_z": -0.4985,
+      "form_change": 0.0145,
+      "attack_z": -0.4316,
+      "defense_z": -0.5655,
+      "projected_xi_z": 0.064466,
+      "projected_xi_change": -0.0304,
+      "lineup_confidence": 0.5875,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 14,
+      "alpha_rank": 13,
+      "comparison_rank": 13.5
+    },
+    {
+      "team_id": 9826,
+      "team": "Crystal Palace",
+      "form_z": -0.5675,
+      "form_change": 0.0668,
+      "attack_z": -0.2871,
+      "defense_z": -0.8479,
+      "projected_xi_z": 0.076779,
+      "projected_xi_change": 0.025,
+      "lineup_confidence": 0.602,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 16,
+      "alpha_rank": 12,
+      "comparison_rank": 14.0
+    },
+    {
+      "team_id": 8586,
+      "team": "Tottenham Hotspur",
+      "form_z": -0.7471,
+      "form_change": -0.5279,
+      "attack_z": -0.7641,
+      "defense_z": -0.7302,
+      "projected_xi_z": 0.029465,
+      "projected_xi_change": -0.0057,
+      "lineup_confidence": 0.5943,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 19,
+      "alpha_rank": 14,
+      "comparison_rank": 16.5
+    },
+    {
+      "team_id": 8667,
+      "team": "Hull City",
+      "form_z": -0.5332,
+      "form_change": 0.2253,
+      "attack_z": -0.8623,
+      "defense_z": -0.204,
+      "projected_xi_z": -0.772086,
+      "projected_xi_change": 0.0729,
+      "lineup_confidence": 0.5517,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 15,
+      "alpha_rank": 20,
+      "comparison_rank": 17.5
+    },
+    {
+      "team_id": 8472,
+      "team": "Sunderland",
+      "form_z": -0.6276,
+      "form_change": -0.0348,
+      "attack_z": -0.8166,
+      "defense_z": -0.4386,
+      "projected_xi_z": -0.059298,
+      "projected_xi_change": -0.0037,
+      "lineup_confidence": 0.6006,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 18,
+      "alpha_rank": 17,
+      "comparison_rank": 17.5
+    },
+    {
+      "team_id": 10252,
+      "team": "Aston Villa",
+      "form_z": -0.9955,
+      "form_change": -0.6819,
+      "attack_z": -0.5169,
+      "defense_z": -1.4741,
+      "projected_xi_z": -0.018381,
+      "projected_xi_change": -0.0447,
+      "lineup_confidence": 0.6038,
+      "lineup_prior_ready": true,
+      "current_competitive_matches": 1,
+      "form_rank": 20,
+      "alpha_rank": 16,
+      "comparison_rank": 18.0
+    }
+  ],
+  "next_round": [
+    {
+      "match_id": 5795429,
+      "kickoff_utc": "2026-08-28T19:00:00Z",
+      "fixture": "Crystal Palace vs Manchester City",
+      "home_team": "Crystal Palace",
+      "away_team": "Manchester City",
+      "component_edges": {
+        "club_form": -2.3431,
+        "player_quality_lineup": -0.719856,
+        "historical_residual": -0.016326
+      },
+      "component_votes": {
+        "club_form": "Manchester City",
+        "player_quality_lineup": "Manchester City",
+        "historical_residual": "Manchester City"
+      },
+      "lean": "Manchester City",
+      "support": 3,
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9457,
+        "home_xg": 1.5917,
+        "away_xg": 1.304,
+        "total_xg": 2.8957
+      },
+      "lineup_priors_complete": true,
+      "old_lean": "Manchester City",
+      "old_support": 3,
+      "lean_changed": false,
+      "component_edge_changes": {
+        "club_form": -0.1576,
+        "player_quality_lineup": -0.086388,
+        "historical_residual": 0.002163
+      }
+    },
+    {
+      "match_id": 5795431,
+      "kickoff_utc": "2026-08-29T11:30:00Z",
+      "fixture": "Liverpool vs Nottingham Forest",
+      "home_team": "Liverpool",
+      "away_team": "Nottingham Forest",
+      "component_edges": {
+        "club_form": 0.6759,
+        "player_quality_lineup": 0.260194,
+        "historical_residual": 0.127652
+      },
+      "component_votes": {
+        "club_form": "Liverpool",
+        "player_quality_lineup": "Liverpool",
+        "historical_residual": "Liverpool"
+      },
+      "lean": "Liverpool",
+      "support": 3,
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9457,
+        "home_xg": 1.5917,
+        "away_xg": 1.304,
+        "total_xg": 2.8957
+      },
+      "lineup_priors_complete": true,
+      "old_lean": "Liverpool",
+      "old_support": 3,
+      "lean_changed": false,
+      "component_edge_changes": {
+        "club_form": 0.2537,
+        "player_quality_lineup": -0.0072,
+        "historical_residual": -0.004429
+      }
+    },
+    {
+      "match_id": 5795425,
+      "kickoff_utc": "2026-08-29T14:00:00Z",
+      "fixture": "AFC Bournemouth vs Everton",
+      "home_team": "AFC Bournemouth",
+      "away_team": "Everton",
+      "component_edges": {
+        "club_form": 0.571,
+        "player_quality_lineup": 0.164016,
+        "historical_residual": 0.086502
+      },
+      "component_votes": {
+        "club_form": "AFC Bournemouth",
+        "player_quality_lineup": "AFC Bournemouth",
+        "historical_residual": "AFC Bournemouth"
+      },
+      "lean": "AFC Bournemouth",
+      "support": 3,
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9457,
+        "home_xg": 1.5917,
+        "away_xg": 1.304,
+        "total_xg": 2.8957
+      },
+      "lineup_priors_complete": true,
+      "old_lean": "AFC Bournemouth",
+      "old_support": 3,
+      "lean_changed": false,
+      "component_edge_changes": {
+        "club_form": -0.4103,
+        "player_quality_lineup": 0.057906,
+        "historical_residual": 0.018397
+      }
+    },
+    {
+      "match_id": 5795428,
+      "kickoff_utc": "2026-08-29T14:00:00Z",
+      "fixture": "Coventry City vs Hull City",
+      "home_team": "Coventry City",
+      "away_team": "Hull City",
+      "component_edges": {
+        "club_form": 1.3753,
+        "player_quality_lineup": 0.092536,
+        "historical_residual": 0.018119
+      },
+      "component_votes": {
+        "club_form": "Coventry City",
+        "player_quality_lineup": "Coventry City",
+        "historical_residual": "Coventry City"
+      },
+      "lean": "Coventry City",
+      "support": 3,
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9457,
+        "home_xg": 1.5917,
+        "away_xg": 1.304,
+        "total_xg": 2.8957
+      },
+      "lineup_priors_complete": true,
+      "old_lean": "Coventry City",
+      "old_support": 2,
+      "lean_changed": false,
+      "component_edge_changes": {
+        "club_form": -1.0551,
+        "player_quality_lineup": -0.036756,
+        "historical_residual": 0.036582
+      }
+    },
+    {
+      "match_id": 5795434,
+      "kickoff_utc": "2026-08-29T16:30:00Z",
+      "fixture": "Tottenham Hotspur vs Newcastle United",
+      "home_team": "Tottenham Hotspur",
+      "away_team": "Newcastle United",
+      "component_edges": {
+        "club_form": -0.507,
+        "player_quality_lineup": -0.289424,
+        "historical_residual": 0.036426
+      },
+      "component_votes": {
+        "club_form": "Newcastle United",
+        "player_quality_lineup": "Newcastle United",
+        "historical_residual": "Tottenham Hotspur"
+      },
+      "lean": "Newcastle United",
+      "support": 2,
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9457,
+        "home_xg": 1.5917,
+        "away_xg": 1.304,
+        "total_xg": 2.8957
+      },
+      "lineup_priors_complete": true,
+      "old_lean": "Tottenham Hotspur",
+      "old_support": 2,
+      "lean_changed": true,
+      "component_edge_changes": {
+        "club_form": -0.9096,
+        "player_quality_lineup": -0.082978,
+        "historical_residual": 0.016206
+      }
+    },
+    {
+      "match_id": 5795427,
+      "kickoff_utc": "2026-08-30T13:00:00Z",
+      "fixture": "Chelsea vs Brighton & Hove Albion",
+      "home_team": "Chelsea",
+      "away_team": "Brighton & Hove Albion",
+      "component_edges": {
+        "club_form": -2.067,
+        "player_quality_lineup": 0.168946,
+        "historical_residual": -0.072369
+      },
+      "component_votes": {
+        "club_form": "Brighton & Hove Albion",
+        "player_quality_lineup": "Chelsea",
+        "historical_residual": "Brighton & Hove Albion"
+      },
+      "lean": "Brighton & Hove Albion",
+      "support": 2,
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9457,
+        "home_xg": 1.5917,
+        "away_xg": 1.304,
+        "total_xg": 2.8957
+      },
+      "lineup_priors_complete": true,
+      "old_lean": "Brighton & Hove Albion",
+      "old_support": 2,
+      "lean_changed": false,
+      "component_edge_changes": {
+        "club_form": -1.0914,
+        "player_quality_lineup": 0.003778,
+        "historical_residual": 0.034206
+      }
+    },
+    {
+      "match_id": 5795430,
+      "kickoff_utc": "2026-08-30T13:00:00Z",
+      "fixture": "Leeds United vs Brentford",
+      "home_team": "Leeds United",
+      "away_team": "Brentford",
+      "component_edges": {
+        "club_form": -0.9695,
+        "player_quality_lineup": -0.017696,
+        "historical_residual": 0.264484
+      },
+      "component_votes": {
+        "club_form": "Brentford",
+        "player_quality_lineup": "Brentford",
+        "historical_residual": "Leeds United"
+      },
+      "lean": "Brentford",
+      "support": 2,
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9457,
+        "home_xg": 1.5917,
+        "away_xg": 1.304,
+        "total_xg": 2.8957
+      },
+      "lineup_priors_complete": true,
+      "old_lean": "Brentford",
+      "old_support": 2,
+      "lean_changed": false,
+      "component_edge_changes": {
+        "club_form": -0.7892,
+        "player_quality_lineup": 0.021806,
+        "historical_residual": 0.021843
+      }
+    },
+    {
+      "match_id": 5795433,
+      "kickoff_utc": "2026-08-30T13:00:00Z",
+      "fixture": "Sunderland vs Fulham",
+      "home_team": "Sunderland",
+      "away_team": "Fulham",
+      "component_edges": {
+        "club_form": -0.0673,
+        "player_quality_lineup": -0.39645,
+        "historical_residual": -0.026607
+      },
+      "component_votes": {
+        "club_form": "Fulham",
+        "player_quality_lineup": "Fulham",
+        "historical_residual": "Fulham"
+      },
+      "lean": "Fulham",
+      "support": 3,
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9457,
+        "home_xg": 1.5917,
+        "away_xg": 1.304,
+        "total_xg": 2.8957
+      },
+      "lineup_priors_complete": true,
+      "old_lean": "Fulham",
+      "old_support": 3,
+      "lean_changed": false,
+      "component_edge_changes": {
+        "club_form": 0.0845,
+        "player_quality_lineup": -0.076232,
+        "historical_residual": -0.006553
+      }
+    },
+    {
+      "match_id": 5795432,
+      "kickoff_utc": "2026-08-30T15:30:00Z",
+      "fixture": "Manchester United vs Ipswich Town",
+      "home_team": "Manchester United",
+      "away_team": "Ipswich Town",
+      "component_edges": {
+        "club_form": 0.1209,
+        "player_quality_lineup": 1.197466,
+        "historical_residual": 0.152338
+      },
+      "component_votes": {
+        "club_form": "Manchester United",
+        "player_quality_lineup": "Manchester United",
+        "historical_residual": "Manchester United"
+      },
+      "lean": "Manchester United",
+      "support": 3,
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9457,
+        "home_xg": 1.5917,
+        "away_xg": 1.304,
+        "total_xg": 2.8957
+      },
+      "lineup_priors_complete": true,
+      "old_lean": "Manchester United",
+      "old_support": 3,
+      "lean_changed": false,
+      "component_edge_changes": {
+        "club_form": -0.2071,
+        "player_quality_lineup": 0.095428,
+        "historical_residual": 0.027432
+      }
+    },
+    {
+      "match_id": 5795426,
+      "kickoff_utc": "2026-08-31T19:00:00Z",
+      "fixture": "Aston Villa vs Arsenal",
+      "home_team": "Aston Villa",
+      "away_team": "Arsenal",
+      "component_edges": {
+        "club_form": -3.5082,
+        "player_quality_lineup": -0.741012,
+        "historical_residual": 0.157248
+      },
+      "component_votes": {
+        "club_form": "Arsenal",
+        "player_quality_lineup": "Arsenal",
+        "historical_residual": "Aston Villa"
+      },
+      "lean": "Arsenal",
+      "support": 2,
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9457,
+        "home_xg": 1.5917,
+        "away_xg": 1.304,
+        "total_xg": 2.8957
+      },
+      "lineup_priors_complete": true,
+      "old_lean": "Arsenal",
+      "old_support": 2,
+      "lean_changed": false,
+      "component_edge_changes": {
+        "club_form": -1.6056,
+        "player_quality_lineup": -0.124104,
+        "historical_residual": 0.046444
+      }
+    }
+  ],
+  "component_scale_artifact": {
+    "version": "clubalpha_component_scales_2026-08-11_v0",
+    "method": "past_only_training_standard_deviation",
+    "trained_through": "2026-08-11",
+    "training_snapshot_count": 1,
+    "training_fixture_count": 17,
+    "training_fixture_sides": 34,
+    "source_fixture_state_version": "clubalpha_fixture_state_v1",
+    "outcomes_used": false,
+    "scales": {
+      "club_form": 0.593986102,
+      "player_quality_lineup": 0.297703216,
+      "historical_residual": 0.102358703
+    },
+    "decision_boundaries": {
+      "shadow_scaling_ready": true,
+      "scale_validated": false
+    },
+    "quality_flags": [
+      "historical_roster_reconstructed_from_transfer_log",
+      "small_component_scale_sample"
+    ],
+    "input_provenance": {
+      "source_roster_manifest_as_of": "2026-08-18",
+      "reconstructed_to_as_of": "2026-08-11",
+      "later_transfer_events_reversed": 50,
+      "later_arrivals_removed": 21,
+      "later_departures_restored": 29,
+      "later_injury_snapshot_used": false,
+      "method": "reverse_effective_dated_transfer_events",
+      "player_grade_source": "/Users/sebasospina/Clubalpha/data/processed/player_quality_v2/player_grades.jsonl",
+      "player_grade_rows": 1108,
+      "post_cutoff_transfer_records_used_for_reconstruction": true,
+      "post_cutoff_match_rows_used": false,
+      "post_cutoff_outcomes_used": false
+    }
+  },
+  "goal_model_artifact": {
+    "version": "clubalpha_goal_model_2026-08-24_v0",
+    "method": "ridge_log_xg_adjustment_without_intercept",
+    "target": "observed_fotmob_expected_goals",
+    "link": "competition_xg_baseline * exp(coefficient * fixture_signal_z)",
+    "trained_through": "2026-08-24",
+    "training_fixture_state_as_of_dates": [
+      "2026-08-18"
+    ],
+    "component_scale_artifact_version": "clubalpha_component_scales_2026-08-11_v0",
+    "training_matches": 10,
+    "training_sides": 20,
+    "training_match_ids": [
+      5795363,
+      5795364,
+      5795365,
+      5795366,
+      5795367,
+      5795368,
+      5795369,
+      5795370,
+      5795371,
+      5795372
+    ],
+    "ridge_lambda": 2.0,
+    "raw_coefficient": 0.513116594,
+    "point_coefficient": 0.445695839,
+    "coefficient": 0.146445877,
+    "coefficient_policy": "bootstrap_95_bound_closest_to_zero",
+    "bootstrap_95_interval": {
+      "lower": 0.146445877,
+      "upper": 0.795670995,
+      "samples": 5000,
+      "resampling_unit": "match"
+    },
+    "training_metrics": {
+      "competition_baseline_xg_mae": 0.8051,
+      "fitted_xg_mae": 0.683561,
+      "applied_conservative_xg_mae": 0.714002
+    },
+    "decision_boundaries": {
+      "shadow_prediction_ready": true,
+      "probability_validated": false,
+      "market_ready": false,
+      "capital_deployment_ready": false
+    },
+    "quality_flags": [
+      "small_goal_calibration_sample"
+    ]
+  },
+  "predictions": [
+    {
+      "prediction_version": "clubalpha_prediction_lab_v0",
+      "status": "shadow_only",
+      "as_of": "2026-08-24",
+      "fixture": {
+        "match_id": 5795429,
+        "competition_id": 47,
+        "competition": "Premier League",
+        "source_scope": "premier_league_current",
+        "round": 2,
+        "kickoff_utc": "2026-08-28T19:00:00Z",
+        "home_team_id": 9826,
+        "home_team": "Crystal Palace",
+        "away_team_id": 8456,
+        "away_team": "Manchester City"
+      },
+      "artifacts": {
+        "component_scales": "clubalpha_component_scales_2026-08-11_v0",
+        "goal_model": "clubalpha_goal_model_2026-08-24_v0"
+      },
+      "fixture_intelligence": {
+        "home": {
+          "normalized_components_z": {
+            "club_form": -1.116188,
+            "player_quality_lineup": -1.209016,
+            "historical_residual": -0.003839
+          },
+          "weighted_contributions_z": {
+            "club_form": -0.669713,
+            "player_quality_lineup": -0.362705,
+            "historical_residual": -0.000384
+          },
+          "fixture_signal_z": -1.032801
+        },
+        "away": {
+          "normalized_components_z": {
+            "club_form": 2.828517,
+            "player_quality_lineup": 1.209016,
+            "historical_residual": 0.155658
+          },
+          "weighted_contributions_z": {
+            "club_form": 1.69711,
+            "player_quality_lineup": 0.362705,
+            "historical_residual": 0.015566
+          },
+          "fixture_signal_z": 2.075381
+        }
+      },
+      "predicted_xg": {
+        "home": 1.368278,
+        "away": 1.767149,
+        "total": 3.135427
+      },
+      "simulation": {
+        "draws": 50000,
+        "distribution": "independent_poisson",
+        "seed": 26056253,
+        "mean_simulated_goals": {
+          "home": 1.37332,
+          "away": 1.75972
+        }
+      },
+      "probabilities": {
+        "home_win": 0.30042,
+        "draw": 0.23374,
+        "away_win": 0.46584,
+        "over": {
+          "2.5": 0.60748,
+          "3.5": 0.38372
+        },
+        "under": {
+          "2.5": 0.39252,
+          "3.5": 0.61628
+        },
+        "btts_yes": 0.62082,
+        "btts_no": 0.37918
+      },
+      "most_likely_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.10638
+        },
+        {
+          "score": "1-2",
+          "probability": 0.09194
+        },
+        {
+          "score": "0-1",
+          "probability": 0.07678
+        },
+        {
+          "score": "2-1",
+          "probability": 0.073
+        },
+        {
+          "score": "0-2",
+          "probability": 0.06558
+        }
+      ],
+      "decision_boundaries": {
+        "shadow_prediction_ready": true,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      },
+      "quality_flags": [
+        "historical_roster_reconstructed_from_transfer_log",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "raw_xg_mixed_competition_context",
+        "small_component_scale_sample",
+        "small_goal_calibration_sample",
+        "unknown_availability"
+      ]
+    },
+    {
+      "prediction_version": "clubalpha_prediction_lab_v0",
+      "status": "shadow_only",
+      "as_of": "2026-08-24",
+      "fixture": {
+        "match_id": 5795431,
+        "competition_id": 47,
+        "competition": "Premier League",
+        "source_scope": "premier_league_current",
+        "round": 2,
+        "kickoff_utc": "2026-08-29T11:30:00Z",
+        "home_team_id": 8650,
+        "home_team": "Liverpool",
+        "away_team_id": 10203,
+        "away_team": "Nottingham Forest"
+      },
+      "artifacts": {
+        "component_scales": "clubalpha_component_scales_2026-08-11_v0",
+        "goal_model": "clubalpha_goal_model_2026-08-24_v0"
+      },
+      "fixture_intelligence": {
+        "home": {
+          "normalized_components_z": {
+            "club_form": 0.7283,
+            "player_quality_lineup": 0.437002,
+            "historical_residual": 0.770379
+          },
+          "weighted_contributions_z": {
+            "club_form": 0.43698,
+            "player_quality_lineup": 0.131101,
+            "historical_residual": 0.077038
+          },
+          "fixture_signal_z": 0.645119
+        },
+        "away": {
+          "normalized_components_z": {
+            "club_form": -0.409606,
+            "player_quality_lineup": -0.437002,
+            "historical_residual": -0.476725
+          },
+          "weighted_contributions_z": {
+            "club_form": -0.245763,
+            "player_quality_lineup": -0.131101,
+            "historical_residual": -0.047673
+          },
+          "fixture_signal_z": -0.424537
+        }
+      },
+      "predicted_xg": {
+        "home": 1.749408,
+        "away": 1.225397,
+        "total": 2.974805
+      },
+      "simulation": {
+        "draws": 50000,
+        "distribution": "independent_poisson",
+        "seed": 26056255,
+        "mean_simulated_goals": {
+          "home": 1.75226,
+          "away": 1.22788
+        }
+      },
+      "probabilities": {
+        "home_win": 0.49776,
+        "draw": 0.2345,
+        "away_win": 0.26774,
+        "over": {
+          "2.5": 0.57102,
+          "3.5": 0.35032
+        },
+        "under": {
+          "2.5": 0.42898,
+          "3.5": 0.64968
+        },
+        "btts_yes": 0.585,
+        "btts_no": 0.415
+      },
+      "most_likely_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.10978
+        },
+        {
+          "score": "2-1",
+          "probability": 0.0954
+        },
+        {
+          "score": "1-0",
+          "probability": 0.0898
+        },
+        {
+          "score": "2-0",
+          "probability": 0.0778
+        },
+        {
+          "score": "1-2",
+          "probability": 0.06526
+        }
+      ],
+      "decision_boundaries": {
+        "shadow_prediction_ready": true,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      },
+      "quality_flags": [
+        "historical_roster_reconstructed_from_transfer_log",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "preseason_weight_capped",
+        "raw_xg_mixed_competition_context",
+        "small_component_scale_sample",
+        "small_goal_calibration_sample"
+      ]
+    },
+    {
+      "prediction_version": "clubalpha_prediction_lab_v0",
+      "status": "shadow_only",
+      "as_of": "2026-08-24",
+      "fixture": {
+        "match_id": 5795425,
+        "competition_id": 47,
+        "competition": "Premier League",
+        "source_scope": "premier_league_current",
+        "round": 2,
+        "kickoff_utc": "2026-08-29T14:00:00Z",
+        "home_team_id": 8678,
+        "home_team": "AFC Bournemouth",
+        "away_team_id": 8668,
+        "away_team": "Everton"
+      },
+      "artifacts": {
+        "component_scales": "clubalpha_component_scales_2026-08-11_v0",
+        "goal_model": "clubalpha_goal_model_2026-08-24_v0"
+      },
+      "fixture_intelligence": {
+        "home": {
+          "normalized_components_z": {
+            "club_form": 0.796315,
+            "player_quality_lineup": 0.275469,
+            "historical_residual": -0.144179
+          },
+          "weighted_contributions_z": {
+            "club_form": 0.477789,
+            "player_quality_lineup": 0.082641,
+            "historical_residual": -0.014418
+          },
+          "fixture_signal_z": 0.546012
+        },
+        "away": {
+          "normalized_components_z": {
+            "club_form": -0.164987,
+            "player_quality_lineup": -0.275469,
+            "historical_residual": -0.989266
+          },
+          "weighted_contributions_z": {
+            "club_form": -0.098992,
+            "player_quality_lineup": -0.082641,
+            "historical_residual": -0.098927
+          },
+          "fixture_signal_z": -0.28056
+        }
+      },
+      "predicted_xg": {
+        "home": 1.724201,
+        "away": 1.251508,
+        "total": 2.97571
+      },
+      "simulation": {
+        "draws": 50000,
+        "distribution": "independent_poisson",
+        "seed": 26056249,
+        "mean_simulated_goals": {
+          "home": 1.72624,
+          "away": 1.25268
+        }
+      },
+      "probabilities": {
+        "home_win": 0.48504,
+        "draw": 0.23538,
+        "away_win": 0.27958,
+        "over": {
+          "2.5": 0.57276,
+          "3.5": 0.34864
+        },
+        "under": {
+          "2.5": 0.42724,
+          "3.5": 0.65136
+        },
+        "btts_yes": 0.58622,
+        "btts_no": 0.41378
+      },
+      "most_likely_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.10824
+        },
+        {
+          "score": "2-1",
+          "probability": 0.09338
+        },
+        {
+          "score": "1-0",
+          "probability": 0.08822
+        },
+        {
+          "score": "2-0",
+          "probability": 0.07748
+        },
+        {
+          "score": "1-2",
+          "probability": 0.07028
+        }
+      ],
+      "decision_boundaries": {
+        "shadow_prediction_ready": true,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      },
+      "quality_flags": [
+        "historical_roster_reconstructed_from_transfer_log",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "preseason_weight_capped",
+        "small_component_scale_sample",
+        "small_goal_calibration_sample"
+      ]
+    },
+    {
+      "prediction_version": "clubalpha_prediction_lab_v0",
+      "status": "shadow_only",
+      "as_of": "2026-08-24",
+      "fixture": {
+        "match_id": 5795428,
+        "competition_id": 47,
+        "competition": "Premier League",
+        "source_scope": "premier_league_current",
+        "round": 2,
+        "kickoff_utc": "2026-08-29T14:00:00Z",
+        "home_team_id": 8669,
+        "home_team": "Coventry City",
+        "away_team_id": 8667,
+        "away_team": "Hull City"
+      },
+      "artifacts": {
+        "component_scales": "clubalpha_component_scales_2026-08-11_v0",
+        "goal_model": "clubalpha_goal_model_2026-08-24_v0"
+      },
+      "fixture_intelligence": {
+        "home": {
+          "normalized_components_z": {
+            "club_form": 0.373073,
+            "player_quality_lineup": 0.155417,
+            "historical_residual": -0.784164
+          },
+          "weighted_contributions_z": {
+            "club_form": 0.223844,
+            "player_quality_lineup": 0.046625,
+            "historical_residual": -0.078416
+          },
+          "fixture_signal_z": 0.192052
+        },
+        "away": {
+          "normalized_components_z": {
+            "club_form": -1.942301,
+            "player_quality_lineup": -0.155417,
+            "historical_residual": -0.961179
+          },
+          "weighted_contributions_z": {
+            "club_form": -1.165381,
+            "player_quality_lineup": -0.046625,
+            "historical_residual": -0.096118
+          },
+          "fixture_signal_z": -1.308124
+        }
+      },
+      "predicted_xg": {
+        "home": 1.637102,
+        "away": 1.076664,
+        "total": 2.713766
+      },
+      "simulation": {
+        "draws": 50000,
+        "distribution": "independent_poisson",
+        "seed": 26056252,
+        "mean_simulated_goals": {
+          "home": 1.63438,
+          "away": 1.0845
+        }
+      },
+      "probabilities": {
+        "home_win": 0.5022,
+        "draw": 0.24482,
+        "away_win": 0.25298,
+        "over": {
+          "2.5": 0.5107,
+          "3.5": 0.28962
+        },
+        "under": {
+          "2.5": 0.4893,
+          "3.5": 0.71038
+        },
+        "btts_yes": 0.5343,
+        "btts_no": 0.4657
+      },
+      "most_likely_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.11694
+        },
+        {
+          "score": "1-0",
+          "probability": 0.1088
+        },
+        {
+          "score": "2-1",
+          "probability": 0.09634
+        },
+        {
+          "score": "2-0",
+          "probability": 0.0869
+        },
+        {
+          "score": "0-1",
+          "probability": 0.07254
+        }
+      ],
+      "decision_boundaries": {
+        "shadow_prediction_ready": true,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      },
+      "quality_flags": [
+        "historical_roster_reconstructed_from_transfer_log",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "small_component_scale_sample",
+        "small_goal_calibration_sample",
+        "unknown_availability"
+      ]
+    },
+    {
+      "prediction_version": "clubalpha_prediction_lab_v0",
+      "status": "shadow_only",
+      "as_of": "2026-08-24",
+      "fixture": {
+        "match_id": 5795434,
+        "competition_id": 47,
+        "competition": "Premier League",
+        "source_scope": "premier_league_current",
+        "round": 2,
+        "kickoff_utc": "2026-08-29T16:30:00Z",
+        "home_team_id": 8586,
+        "home_team": "Tottenham Hotspur",
+        "away_team_id": 10261,
+        "away_team": "Newcastle United"
+      },
+      "artifacts": {
+        "component_scales": "clubalpha_component_scales_2026-08-11_v0",
+        "goal_model": "clubalpha_goal_model_2026-08-24_v0"
+      },
+      "fixture_intelligence": {
+        "home": {
+          "normalized_components_z": {
+            "club_form": 0.295798,
+            "player_quality_lineup": -0.486095,
+            "historical_residual": 0.018279
+          },
+          "weighted_contributions_z": {
+            "club_form": 0.177479,
+            "player_quality_lineup": -0.145828,
+            "historical_residual": 0.001828
+          },
+          "fixture_signal_z": 0.033478
+        },
+        "away": {
+          "normalized_components_z": {
+            "club_form": 1.149353,
+            "player_quality_lineup": 0.486095,
+            "historical_residual": -0.337587
+          },
+          "weighted_contributions_z": {
+            "club_form": 0.689612,
+            "player_quality_lineup": 0.145828,
+            "historical_residual": -0.033759
+          },
+          "fixture_signal_z": 0.801682
+        }
+      },
+      "predicted_xg": {
+        "home": 1.599523,
+        "away": 1.466443,
+        "total": 3.065965
+      },
+      "simulation": {
+        "draws": 50000,
+        "distribution": "independent_poisson",
+        "seed": 26056258,
+        "mean_simulated_goals": {
+          "home": 1.6062,
+          "away": 1.46252
+        }
+      },
+      "probabilities": {
+        "home_win": 0.41292,
+        "draw": 0.2366,
+        "away_win": 0.35048,
+        "over": {
+          "2.5": 0.59178,
+          "3.5": 0.3676
+        },
+        "under": {
+          "2.5": 0.40822,
+          "3.5": 0.6324
+        },
+        "btts_yes": 0.61202,
+        "btts_no": 0.38798
+      },
+      "most_likely_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.10744
+        },
+        {
+          "score": "2-1",
+          "probability": 0.08876
+        },
+        {
+          "score": "1-2",
+          "probability": 0.07886
+        },
+        {
+          "score": "1-0",
+          "probability": 0.07554
+        },
+        {
+          "score": "0-1",
+          "probability": 0.06932
+        }
+      ],
+      "decision_boundaries": {
+        "shadow_prediction_ready": true,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      },
+      "quality_flags": [
+        "historical_roster_reconstructed_from_transfer_log",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "small_component_scale_sample",
+        "small_goal_calibration_sample"
+      ]
+    },
+    {
+      "prediction_version": "clubalpha_prediction_lab_v0",
+      "status": "shadow_only",
+      "as_of": "2026-08-24",
+      "fixture": {
+        "match_id": 5795427,
+        "competition_id": 47,
+        "competition": "Premier League",
+        "source_scope": "premier_league_current",
+        "round": 2,
+        "kickoff_utc": "2026-08-30T13:00:00Z",
+        "home_team_id": 8455,
+        "home_team": "Chelsea",
+        "away_team_id": 10204,
+        "away_team": "Brighton & Hove Albion"
+      },
+      "artifacts": {
+        "component_scales": "clubalpha_component_scales_2026-08-11_v0",
+        "goal_model": "clubalpha_goal_model_2026-08-24_v0"
+      },
+      "fixture_intelligence": {
+        "home": {
+          "normalized_components_z": {
+            "club_form": -1.208951,
+            "player_quality_lineup": 0.283749,
+            "historical_residual": -0.107729
+          },
+          "weighted_contributions_z": {
+            "club_form": -0.725371,
+            "player_quality_lineup": 0.085125,
+            "historical_residual": -0.010773
+          },
+          "fixture_signal_z": -0.651019
+        },
+        "away": {
+          "normalized_components_z": {
+            "club_form": 2.270929,
+            "player_quality_lineup": -0.283749,
+            "historical_residual": 0.599285
+          },
+          "weighted_contributions_z": {
+            "club_form": 1.362557,
+            "player_quality_lineup": -0.085125,
+            "historical_residual": 0.059928
+          },
+          "fixture_signal_z": 1.337361
+        }
+      },
+      "predicted_xg": {
+        "home": 1.446958,
+        "away": 1.586115,
+        "total": 3.033073
+      },
+      "simulation": {
+        "draws": 50000,
+        "distribution": "independent_poisson",
+        "seed": 26056251,
+        "mean_simulated_goals": {
+          "home": 1.4577,
+          "away": 1.59104
+        }
+      },
+      "probabilities": {
+        "home_win": 0.35184,
+        "draw": 0.23966,
+        "away_win": 0.4085,
+        "over": {
+          "2.5": 0.5884,
+          "3.5": 0.3642
+        },
+        "under": {
+          "2.5": 0.4116,
+          "3.5": 0.6358
+        },
+        "btts_yes": 0.60844,
+        "btts_no": 0.39156
+      },
+      "most_likely_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.10848
+        },
+        {
+          "score": "1-2",
+          "probability": 0.0875
+        },
+        {
+          "score": "2-1",
+          "probability": 0.07892
+        },
+        {
+          "score": "0-1",
+          "probability": 0.07564
+        },
+        {
+          "score": "1-0",
+          "probability": 0.07018
+        }
+      ],
+      "decision_boundaries": {
+        "shadow_prediction_ready": true,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      },
+      "quality_flags": [
+        "historical_roster_reconstructed_from_transfer_log",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "raw_xg_mixed_competition_context",
+        "small_component_scale_sample",
+        "small_goal_calibration_sample"
+      ]
+    },
+    {
+      "prediction_version": "clubalpha_prediction_lab_v0",
+      "status": "shadow_only",
+      "as_of": "2026-08-24",
+      "fixture": {
+        "match_id": 5795430,
+        "competition_id": 47,
+        "competition": "Premier League",
+        "source_scope": "premier_league_current",
+        "round": 2,
+        "kickoff_utc": "2026-08-30T13:00:00Z",
+        "home_team_id": 8463,
+        "home_team": "Leeds United",
+        "away_team_id": 9937,
+        "away_team": "Brentford"
+      },
+      "artifacts": {
+        "component_scales": "clubalpha_component_scales_2026-08-11_v0",
+        "goal_model": "clubalpha_goal_model_2026-08-24_v0"
+      },
+      "fixture_intelligence": {
+        "home": {
+          "normalized_components_z": {
+            "club_form": -0.296472,
+            "player_quality_lineup": -0.029721,
+            "historical_residual": -0.133951
+          },
+          "weighted_contributions_z": {
+            "club_form": -0.177883,
+            "player_quality_lineup": -0.008916,
+            "historical_residual": -0.013395
+          },
+          "fixture_signal_z": -0.200194
+        },
+        "away": {
+          "normalized_components_z": {
+            "club_form": 1.335721,
+            "player_quality_lineup": 0.029721,
+            "historical_residual": -2.717844
+          },
+          "weighted_contributions_z": {
+            "club_form": 0.801433,
+            "player_quality_lineup": 0.008916,
+            "historical_residual": -0.271784
+          },
+          "fixture_signal_z": 0.538565
+        }
+      },
+      "predicted_xg": {
+        "home": 1.545713,
+        "away": 1.411012,
+        "total": 2.956724
+      },
+      "simulation": {
+        "draws": 50000,
+        "distribution": "independent_poisson",
+        "seed": 26056254,
+        "mean_simulated_goals": {
+          "home": 1.54938,
+          "away": 1.4165
+        }
+      },
+      "probabilities": {
+        "home_win": 0.40758,
+        "draw": 0.24588,
+        "away_win": 0.34654,
+        "over": {
+          "2.5": 0.5661,
+          "3.5": 0.34526
+        },
+        "under": {
+          "2.5": 0.4339,
+          "3.5": 0.65474
+        },
+        "btts_yes": 0.59886,
+        "btts_no": 0.40114
+      },
+      "most_likely_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.11586
+        },
+        {
+          "score": "2-1",
+          "probability": 0.08796
+        },
+        {
+          "score": "1-0",
+          "probability": 0.08062
+        },
+        {
+          "score": "1-2",
+          "probability": 0.07808
+        },
+        {
+          "score": "0-1",
+          "probability": 0.07394
+        }
+      ],
+      "decision_boundaries": {
+        "shadow_prediction_ready": true,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      },
+      "quality_flags": [
+        "historical_roster_reconstructed_from_transfer_log",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "small_component_scale_sample",
+        "small_goal_calibration_sample"
+      ]
+    },
+    {
+      "prediction_version": "clubalpha_prediction_lab_v0",
+      "status": "shadow_only",
+      "as_of": "2026-08-24",
+      "fixture": {
+        "match_id": 5795433,
+        "competition_id": 47,
+        "competition": "Premier League",
+        "source_scope": "premier_league_current",
+        "round": 2,
+        "kickoff_utc": "2026-08-30T13:00:00Z",
+        "home_team_id": 8472,
+        "home_team": "Sunderland",
+        "away_team_id": 9879,
+        "away_team": "Fulham"
+      },
+      "artifacts": {
+        "component_scales": "clubalpha_component_scales_2026-08-11_v0",
+        "goal_model": "clubalpha_goal_model_2026-08-24_v0"
+      },
+      "fixture_intelligence": {
+        "home": {
+          "normalized_components_z": {
+            "club_form": -0.36819,
+            "player_quality_lineup": -0.665848,
+            "historical_residual": -0.050255
+          },
+          "weighted_contributions_z": {
+            "club_form": -0.220914,
+            "player_quality_lineup": -0.199754,
+            "historical_residual": -0.005025
+          },
+          "fixture_signal_z": -0.425694
+        },
+        "away": {
+          "normalized_components_z": {
+            "club_form": -0.254888,
+            "player_quality_lineup": 0.665848,
+            "historical_residual": 0.209684
+          },
+          "weighted_contributions_z": {
+            "club_form": -0.152933,
+            "player_quality_lineup": 0.199754,
+            "historical_residual": 0.020968
+          },
+          "fixture_signal_z": 0.06779
+        }
+      },
+      "predicted_xg": {
+        "home": 1.495501,
+        "away": 1.31701,
+        "total": 2.812511
+      },
+      "simulation": {
+        "draws": 50000,
+        "distribution": "independent_poisson",
+        "seed": 26056257,
+        "mean_simulated_goals": {
+          "home": 1.49044,
+          "away": 1.31266
+        }
+      },
+      "probabilities": {
+        "home_win": 0.4169,
+        "draw": 0.24732,
+        "away_win": 0.33578,
+        "over": {
+          "2.5": 0.53062,
+          "3.5": 0.30824
+        },
+        "under": {
+          "2.5": 0.46938,
+          "3.5": 0.69176
+        },
+        "btts_yes": 0.564,
+        "btts_no": 0.436
+      },
+      "most_likely_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.1164
+        },
+        {
+          "score": "1-0",
+          "probability": 0.09022
+        },
+        {
+          "score": "2-1",
+          "probability": 0.08972
+        },
+        {
+          "score": "0-1",
+          "probability": 0.08166
+        },
+        {
+          "score": "1-2",
+          "probability": 0.0766
+        }
+      ],
+      "decision_boundaries": {
+        "shadow_prediction_ready": true,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      },
+      "quality_flags": [
+        "historical_roster_reconstructed_from_transfer_log",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "small_component_scale_sample",
+        "small_goal_calibration_sample"
+      ]
+    },
+    {
+      "prediction_version": "clubalpha_prediction_lab_v0",
+      "status": "shadow_only",
+      "as_of": "2026-08-24",
+      "fixture": {
+        "match_id": 5795432,
+        "competition_id": 47,
+        "competition": "Premier League",
+        "source_scope": "premier_league_current",
+        "round": 2,
+        "kickoff_utc": "2026-08-30T15:30:00Z",
+        "home_team_id": 10260,
+        "home_team": "Manchester United",
+        "away_team_id": 9902,
+        "away_team": "Ipswich Town"
+      },
+      "artifacts": {
+        "component_scales": "clubalpha_component_scales_2026-08-11_v0",
+        "goal_model": "clubalpha_goal_model_2026-08-24_v0"
+      },
+      "fixture_intelligence": {
+        "home": {
+          "normalized_components_z": {
+            "club_form": 0.278289,
+            "player_quality_lineup": 2.011174,
+            "historical_residual": 1.021301
+          },
+          "weighted_contributions_z": {
+            "club_form": 0.166974,
+            "player_quality_lineup": 0.603352,
+            "historical_residual": 0.10213
+          },
+          "fixture_signal_z": 0.872456
+        },
+        "away": {
+          "normalized_components_z": {
+            "club_form": 0.074749,
+            "player_quality_lineup": -2.011174,
+            "historical_residual": -0.466975
+          },
+          "weighted_contributions_z": {
+            "club_form": 0.04485,
+            "player_quality_lineup": -0.603352,
+            "historical_residual": -0.046698
+          },
+          "fixture_signal_z": -0.6052
+        }
+      },
+      "predicted_xg": {
+        "home": 1.808631,
+        "away": 1.193401,
+        "total": 3.002032
+      },
+      "simulation": {
+        "draws": 50000,
+        "distribution": "independent_poisson",
+        "seed": 26056256,
+        "mean_simulated_goals": {
+          "home": 1.81328,
+          "away": 1.18444
+        }
+      },
+      "probabilities": {
+        "home_win": 0.52002,
+        "draw": 0.2297,
+        "away_win": 0.25028,
+        "over": {
+          "2.5": 0.57676,
+          "3.5": 0.35246
+        },
+        "under": {
+          "2.5": 0.42324,
+          "3.5": 0.64754
+        },
+        "btts_yes": 0.58092,
+        "btts_no": 0.41908
+      },
+      "most_likely_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.10636
+        },
+        {
+          "score": "2-1",
+          "probability": 0.097
+        },
+        {
+          "score": "1-0",
+          "probability": 0.0895
+        },
+        {
+          "score": "2-0",
+          "probability": 0.08252
+        },
+        {
+          "score": "1-2",
+          "probability": 0.06426
+        }
+      ],
+      "decision_boundaries": {
+        "shadow_prediction_ready": true,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      },
+      "quality_flags": [
+        "historical_roster_reconstructed_from_transfer_log",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "low_direct_head_to_head_confidence",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "raw_xg_mixed_competition_context",
+        "small_component_scale_sample",
+        "small_goal_calibration_sample"
+      ]
+    },
+    {
+      "prediction_version": "clubalpha_prediction_lab_v0",
+      "status": "shadow_only",
+      "as_of": "2026-08-24",
+      "fixture": {
+        "match_id": 5795426,
+        "competition_id": 47,
+        "competition": "Premier League",
+        "source_scope": "premier_league_current",
+        "round": 2,
+        "kickoff_utc": "2026-08-31T19:00:00Z",
+        "home_team_id": 10252,
+        "home_team": "Aston Villa",
+        "away_team_id": 9825,
+        "away_team": "Arsenal"
+      },
+      "artifacts": {
+        "component_scales": "clubalpha_component_scales_2026-08-11_v0",
+        "goal_model": "clubalpha_goal_model_2026-08-24_v0"
+      },
+      "fixture_intelligence": {
+        "home": {
+          "normalized_components_z": {
+            "club_form": -3.106975,
+            "player_quality_lineup": -1.244548,
+            "historical_residual": 1.891163
+          },
+          "weighted_contributions_z": {
+            "club_form": -1.864185,
+            "player_quality_lineup": -0.373364,
+            "historical_residual": 0.189116
+          },
+          "fixture_signal_z": -2.048433
+        },
+        "away": {
+          "normalized_components_z": {
+            "club_form": 2.799224,
+            "player_quality_lineup": 1.244548,
+            "historical_residual": 0.354919
+          },
+          "weighted_contributions_z": {
+            "club_form": 1.679534,
+            "player_quality_lineup": 0.373364,
+            "historical_residual": 0.035492
+          },
+          "fixture_signal_z": 2.088391
+        }
+      },
+      "predicted_xg": {
+        "home": 1.179179,
+        "away": 1.770519,
+        "total": 2.949698
+      },
+      "simulation": {
+        "draws": 50000,
+        "distribution": "independent_poisson",
+        "seed": 26056250,
+        "mean_simulated_goals": {
+          "home": 1.17888,
+          "away": 1.76836
+        }
+      },
+      "probabilities": {
+        "home_win": 0.25206,
+        "draw": 0.23658,
+        "away_win": 0.51136,
+        "over": {
+          "2.5": 0.5633,
+          "3.5": 0.34076
+        },
+        "under": {
+          "2.5": 0.4367,
+          "3.5": 0.65924
+        },
+        "btts_yes": 0.57312,
+        "btts_no": 0.42688
+      },
+      "most_likely_scorelines": [
+        {
+          "score": "1-1",
+          "probability": 0.11028
+        },
+        {
+          "score": "1-2",
+          "probability": 0.09478
+        },
+        {
+          "score": "0-1",
+          "probability": 0.09394
+        },
+        {
+          "score": "0-2",
+          "probability": 0.0829
+        },
+        {
+          "score": "2-1",
+          "probability": 0.06428
+        }
+      ],
+      "decision_boundaries": {
+        "shadow_prediction_ready": true,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      },
+      "quality_flags": [
+        "historical_roster_reconstructed_from_transfer_log",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "small_component_scale_sample",
+        "small_goal_calibration_sample"
+      ]
+    }
+  ],
+  "decision_boundaries": {
+    "component_scale_artifact_present": true,
+    "goal_calibration_present": true,
+    "shadow_predictions_ready": true,
+    "probabilities_validated": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  }
+}

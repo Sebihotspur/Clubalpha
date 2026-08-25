@@ -2,56 +2,65 @@
 
 Updated: 2026-08-24
 
-Working branch: `codex/club-form-v1`
+Working branch: `codex/fixture-state-v1`
 
-Draft PR: [#6 — Build Club Form intelligence and squad selection priors](https://github.com/Sebihotspur/Clubalpha/pull/6)
+## Current checkpoint
+
+- Player Quality v2 is locked and grades all five positional populations.
+- Club Form v1, Club Dynamics v1, and Squad Selection Prior v1 are merged.
+- Historical Fixtures v2 and the accepted Composite Model v1 are merged.
+- Fixture State v1 now materializes the confidence-aware raw handoff.
+- The frozen 2026-08-18 snapshot contains 31 upcoming fixtures.
+- All 31 have Club Form, historical residual, and competition xG inputs.
+- Twenty-seven have complete projected-XI lineup priors; four preserve neutral,
+  explicitly flagged selection gaps.
+- Player Quality uses absolute projected-XI Alpha quality; the own-baseline
+  availability delta remains diagnostic.
+- All 31 lineups remain dated priors rather than fixture-specific or confirmed.
+- Historical manifest, version, kickoff, age, and `as_of` integrity are enforced.
+- Prediction Lab v0 reconstructs an August 11 scale snapshot with 34 complete
+  fixture sides, reverses 50 later transfer events, clears later injuries, and
+  preserves the 200-side validation gate.
+- The separate August 24 goal artifact trains on 10 opening Premier League
+  matches and preserves the 100-match validation gate.
+- Small-sample simulations apply the bootstrap coefficient bound closest to
+  zero, not the more aggressive point estimate.
+- Ten August 28–31 Premier League shadow predictions are frozen with 50,000
+  deterministic simulations each.
+- A read-only Overview, Predictions, Shadow Ledger, and Methodology dashboard is
+  deployed at `https://clubalpha-club-form-v1.vercel.app/`.
+- The first manual Polymarket observation for Crystal Palace–Manchester City is
+  frozen separately from model artifacts. No price changed the forecast and no
+  real capital was authorized.
+- FotMob `excludeFromRanking` is correctly treated as ranking eligibility, not
+  squad membership.
+- The complete 121-test suite passes.
 
 ## Start here
 
-1. Perform the final review of the August 24 Squad Selection corrections.
-   - Re-run the 83-test suite: `python3 -m unittest discover -s tests`.
-   - Confirm no player exceeds 90 expected minutes and every usable team totals 990.
-   - Confirm tactical selection roles remain separate from locked Alpha grading positions.
-   - Confirm partial recent and historical evidence reduces prior strength.
-   - Confirm `Unknown` injury text remains unknown rather than becoming a hard exclusion.
-   - Reinspect Arsenal, Chelsea, Manchester City, Coventry City, and Shakhtar Donetsk.
-2. If the final audit is clean, mark PR #6 ready and merge it into `main`.
-3. Create a new branch from the updated `main` for Fixture Intelligence v1.
+1. Review the frozen Prediction Lab v0 slate and audit.
+2. Keep every forecast immutable; append outcomes only after kickoff.
+3. Continue logging timestamped market observations only after forecasts are
+   frozen; never use them to refit the same slate.
+4. Add more earlier Fixture State snapshots until component scaling reaches 200
+   sides.
+5. Accumulate at least 100 chronological goal-calibration matches.
+6. Score the next slate on xG MAE, 1X2 Brier/log loss, totals calibration, and
+   probability reliability before changing any coefficient.
 
-## Current Club Form checkpoint
+## Preserve these boundaries
 
-- Performance Form: 58/58 clubs.
-- Style and strengths/weaknesses: 56/58 clubs.
-- Complete baseline XI priors: 55/58 clubs.
-- Recent detailed player evidence: 38 clubs.
-- Exact recent declared XI evidence: 37 clubs.
-- Squad players: 1,407.
-- Availability: 75 unavailable, 61 questionable, and 2 explicitly unknown.
-- Selection shapes: 37 exact recent lineups and 21 transparent default shapes.
-- Evidence controls: 14 teams carry partial recent-minute coverage and one carries partial historical-workload coverage.
-- Safeguards: no player exceeds 90 expected minutes, no unavailable player is selected, usable team priors total 990 minutes, and no future-match leakage.
-- Explicit FotMob squad-page gaps: NK Celje, Sabah FK, and Shakhtar Donetsk.
-- The joined snapshot intentionally remains `projection_ready=false`.
-
-## Keep outside PR #6
-
-Do not add fixture-specific expected lineups or minutes, opponent matchup logic, fresh team news, probabilities, market prices, or capital deployment rules to this PR. Club Form is complete at its current boundary.
-
-## Fixture Intelligence v1 — first scope
-
-Build the next layer around a selected fixture:
-
-1. fixture and opponent identity;
-2. home/away context;
-3. tactical style matchup;
-4. fresh team news and rotation context;
-5. fixture-specific expected XI;
-6. expected-minute scenarios for questionable players.
-
-Its eventual handoff should be:
-
-```text
-Player Quality × Expected Minutes × Fixture Context
-```
-
-Only after walk-forward validation should that feed goalscorer, assist-maker, team-goal, over/under, and capital-deployment probabilities.
+- Do not change the locked Player Quality formulas inside calibration work.
+- Do not shrink released Club Form scores a second time.
+- Do not replace the competition xG baseline with the 60/30/10 signal.
+- Do not reduce Player Quality back to only the own-baseline availability delta.
+- Do not activate weights without past-only component scales.
+- Do not allow direct history above 1.5% of the complete fixture adjustment.
+- Do not redistribute missing component weight.
+- Do not put goal calibration inside Fixture State.
+- Do not call an output a probability, edge, or wager before calibration passes.
+- Do not use the point goal coefficient while the small-sample conservative
+  policy is active.
+- Market observations may be logged after a prediction is frozen, but they may
+  not alter the forecast, count as validation, or authorize capital before the
+  probability-validation gates pass.

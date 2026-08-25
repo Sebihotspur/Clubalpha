@@ -21,6 +21,7 @@ These foundations combine into a simple Football Intelligence Snapshot for each 
 - [Squad Selection Prior](docs/squad-selection-prior-spec.md)
 - [Historical Fixtures](docs/historical-fixtures-spec.md)
 - [Composite Model v1](docs/composite-model-v1.md)
+- [Fixture State v1](docs/fixture-state-spec.md)
 - [Data-source bakeoff](research/data-source-bakeoff.md)
 
 ## Pull the foundation
@@ -185,6 +186,59 @@ None of those values is a calibrated probability or a betting signal.
 See [Historical Fixtures](docs/historical-fixtures-spec.md) for the formulas,
 coverage, and decision boundaries.
 
+## Fixture State v1
+
+Build the first auditable 60/30/10 fixture handoff after the three foundations:
+
+```bash
+python3 scripts/build_fixture_state.py
+```
+
+Fixture State combines the released Club Form matchup (60%), the
+absolute expected-minute projected-XI Player Quality edge (30%), and only the
+venue/direct residual from Historical Fixtures (10%). Availability changes the
+projected minutes; the projected-minus-normal-XI delta remains diagnostic. The
+competition home and away xG environment remains a separate baseline. Club Form
+reliability is not applied twice, direct history can contribute at most 1.5% of
+the complete signal, and missing lineup evidence stays neutral rather than
+transferring its weight elsewhere.
+
+The weights activate only after a frozen, past-only artifact places all three
+components on comparable historical scales. Until then the builder emits raw
+components and keeps the final fixture signal null. It also validates historical
+manifest dates and never fits or applies a goal-calibration coefficient.
+
+The raw output is ready to join dated scale-fitting snapshots. It is not a
+calibrated fixture signal, probability, betting edge, or capital signal. See
+[Fixture State v1](docs/fixture-state-spec.md) for the exact handoff and
+safeguards.
+
+## Prediction Lab v0
+
+Build the first frozen Premier League shadow-prediction experiment:
+
+```bash
+python3 research/aug24_shadow_test.py
+```
+
+Prediction Lab fits outcome-free component scales from the reconstructed
+2026-08-11 snapshot, fits a separate low-confidence goal coefficient from the
+10 opening Premier League matches, and runs 50,000 deterministic
+independent-Poisson simulations for each August 28–31 fixture. While the sample
+is small, simulations use the bootstrap coefficient bound closest to zero
+rather than the central estimate.
+
+Outputs include 1X2, Over/Under 2.5 and 3.5, BTTS, projected xG, and likely
+scorelines. They are frozen shadow probabilities—not market edges or capital
+signals. See [Prediction Lab v0](docs/prediction-lab-v0.md).
+
+## Web dashboard
+
+The read-only Clubalpha dashboard is live at
+[clubalpha-club-form-v1.vercel.app](https://clubalpha-club-form-v1.vercel.app/).
+It publishes the frozen shadow slate, ledger, and methodology without exposing
+capital controls. Build instructions live in [web/README.md](web/README.md).
+
 ## Status
 
 The PL, UCL, and preseason foundation pull is operational. Player Quality v2
@@ -197,6 +251,13 @@ Historical Fixtures v2 now materializes league-adjusted venue and direct-matchup
 context plus five-season competition baselines for the next dated Premier
 League and Champions League fixtures. The deep archive contains 2,653 matches
 and complete team-match detail for all of them.
+
+Fixture State v1 materializes 31 dated fixture inputs from those foundations.
+All 31 have Club Form, historical residual, and competition xG inputs; 27 have
+complete projected-XI lineup priors. Prediction Lab v0 now adds the first
+strictly chronological component-scale and goal-model artifacts plus a frozen
+10-match Premier League forecast. Its 34-side scale sample and 10-match goal
+sample are deliberately below validation gates.
 
 Clubalpha does not yet produce deployment-ready probabilities or
 recommendations. Fixture-specific lineups, style-matchup validation, calibrated

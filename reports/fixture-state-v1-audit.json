@@ -1,0 +1,616 @@
+{
+  "fixture_state_version": "clubalpha_fixture_state_v1",
+  "generated_at_utc": "2026-08-24T22:25:42.229532+00:00",
+  "as_of": "2026-08-18",
+  "counts": {
+    "fixtures": 31,
+    "fixture_scopes": {
+      "champions_league_qualification_2026_27": 11,
+      "premier_league_current": 20
+    },
+    "raw_components_ready_for_scale_fitting": 27,
+    "composite_ready": 0,
+    "lineup_priors_complete": 27,
+    "fixture_specific_lineups": 0,
+    "competition_xg_baselines": 31,
+    "component_scale_artifacts": 0
+  },
+  "signal_distributions": {
+    "fixture_signal_z": {
+      "minimum": null,
+      "mean": null,
+      "maximum": null
+    },
+    "evidence_confidence": {
+      "minimum": 0.1879,
+      "mean": 0.464,
+      "maximum": 0.57
+    },
+    "club_form_effective_z": {
+      "minimum": -1.6078,
+      "mean": 0.0068,
+      "maximum": 1.6922
+    },
+    "player_quality_lineup_effective_z": {
+      "minimum": -0.6799,
+      "mean": 0.0,
+      "maximum": 0.6799
+    },
+    "historical_residual_effective_z": {
+      "minimum": -0.2768,
+      "mean": -0.0026,
+      "maximum": 0.1779
+    }
+  },
+  "quality_flags": {
+    "competition_baseline_proxy": 11,
+    "component_scaling_artifact_missing": 31,
+    "cross_role_xi_fill": 4,
+    "default_role_shape": 19,
+    "insufficient_def_depth": 2,
+    "insufficient_fwd_depth": 2,
+    "lineup_not_confirmed": 31,
+    "lineup_not_fixture_specific": 31,
+    "lineup_prior_not_ready": 4,
+    "low_away_venue_confidence": 3,
+    "low_direct_head_to_head_confidence": 1,
+    "low_form_confidence": 29,
+    "low_home_venue_confidence": 3,
+    "missing_xg_baseline": 2,
+    "no_direct_head_to_head": 11,
+    "no_exact_recent_lineup": 19,
+    "no_recent_match_detail": 17,
+    "no_selection_evidence": 4,
+    "no_usable_direct_history": 11,
+    "partial_alpha_context": 31,
+    "partial_alpha_minute_coverage": 31,
+    "partial_historical_workload": 1,
+    "partial_match_detail": 5,
+    "partial_recent_minute_coverage": 9,
+    "preseason_only_recent_evidence": 21,
+    "preseason_weight_capped": 15,
+    "raw_xg_mixed_competition_context": 22,
+    "unknown_availability": 2
+  },
+  "examples": [
+    {
+      "match_id": 5987799,
+      "kickoff_utc": "2026-08-19T19:00:00.000Z",
+      "fixture": "Celtic vs LASK",
+      "competition_baseline_xg": {
+        "competition_family": "champions_league",
+        "proxy_used": true,
+        "confidence": 0.8801,
+        "home_xg": 1.7893,
+        "away_xg": 1.3389,
+        "total_xg": 3.1282
+      },
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
+      "home_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "away_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "home_evidence_confidence": 0.483,
+      "away_evidence_confidence": 0.483,
+      "lineup_priors_complete": true,
+      "quality_flags": [
+        "competition_baseline_proxy",
+        "component_scaling_artifact_missing",
+        "cross_role_xi_fill",
+        "default_role_shape",
+        "insufficient_fwd_depth",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "low_form_confidence",
+        "no_direct_head_to_head",
+        "no_exact_recent_lineup",
+        "no_usable_direct_history",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "partial_recent_minute_coverage",
+        "preseason_only_recent_evidence",
+        "raw_xg_mixed_competition_context"
+      ]
+    },
+    {
+      "match_id": 5987801,
+      "kickoff_utc": "2026-08-19T19:00:00.000Z",
+      "fixture": "Slovan Bratislava vs NK Celje",
+      "competition_baseline_xg": {
+        "competition_family": "champions_league",
+        "proxy_used": true,
+        "confidence": 0.8801,
+        "home_xg": 1.7893,
+        "away_xg": 1.3389,
+        "total_xg": 3.1282
+      },
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
+      "home_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "away_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "home_evidence_confidence": 0.1879,
+      "away_evidence_confidence": 0.1879,
+      "lineup_priors_complete": false,
+      "quality_flags": [
+        "competition_baseline_proxy",
+        "component_scaling_artifact_missing",
+        "default_role_shape",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "lineup_prior_not_ready",
+        "low_away_venue_confidence",
+        "low_form_confidence",
+        "no_direct_head_to_head",
+        "no_exact_recent_lineup",
+        "no_recent_match_detail",
+        "no_selection_evidence",
+        "no_usable_direct_history",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "partial_match_detail",
+        "raw_xg_mixed_competition_context"
+      ]
+    },
+    {
+      "match_id": 5987802,
+      "kickoff_utc": "2026-08-19T19:00:00.000Z",
+      "fixture": "Hapoel Beer Sheva vs Sabah FK",
+      "competition_baseline_xg": {
+        "competition_family": "champions_league",
+        "proxy_used": true,
+        "confidence": 0.8801,
+        "home_xg": 1.7893,
+        "away_xg": 1.3389,
+        "total_xg": 3.1282
+      },
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
+      "home_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "away_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "home_evidence_confidence": 0.2185,
+      "away_evidence_confidence": 0.2185,
+      "lineup_priors_complete": false,
+      "quality_flags": [
+        "competition_baseline_proxy",
+        "component_scaling_artifact_missing",
+        "default_role_shape",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "lineup_prior_not_ready",
+        "low_away_venue_confidence",
+        "low_form_confidence",
+        "missing_xg_baseline",
+        "no_direct_head_to_head",
+        "no_exact_recent_lineup",
+        "no_recent_match_detail",
+        "no_selection_evidence",
+        "no_usable_direct_history",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "partial_match_detail",
+        "raw_xg_mixed_competition_context"
+      ]
+    },
+    {
+      "match_id": 5987804,
+      "kickoff_utc": "2026-08-19T19:00:00.000Z",
+      "fixture": "NEC Nijmegen vs Bodø/Glimt",
+      "competition_baseline_xg": {
+        "competition_family": "champions_league",
+        "proxy_used": true,
+        "confidence": 0.8801,
+        "home_xg": 1.7893,
+        "away_xg": 1.3389,
+        "total_xg": 3.1282
+      },
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
+      "home_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "away_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "home_evidence_confidence": 0.3972,
+      "away_evidence_confidence": 0.3972,
+      "lineup_priors_complete": true,
+      "quality_flags": [
+        "competition_baseline_proxy",
+        "component_scaling_artifact_missing",
+        "cross_role_xi_fill",
+        "default_role_shape",
+        "insufficient_def_depth",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "low_form_confidence",
+        "no_direct_head_to_head",
+        "no_exact_recent_lineup",
+        "no_recent_match_detail",
+        "no_usable_direct_history",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "raw_xg_mixed_competition_context"
+      ]
+    },
+    {
+      "match_id": 5795363,
+      "kickoff_utc": "2026-08-21T19:00:00Z",
+      "fixture": "Arsenal vs Coventry City",
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9454,
+        "home_xg": 1.5878,
+        "away_xg": 1.306,
+        "total_xg": 2.8938
+      },
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
+      "home_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "away_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "home_evidence_confidence": 0.5464,
+      "away_evidence_confidence": 0.5464,
+      "lineup_priors_complete": true,
+      "quality_flags": [
+        "component_scaling_artifact_missing",
+        "default_role_shape",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "low_form_confidence",
+        "no_direct_head_to_head",
+        "no_exact_recent_lineup",
+        "no_recent_match_detail",
+        "no_usable_direct_history",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "preseason_only_recent_evidence",
+        "raw_xg_mixed_competition_context"
+      ]
+    },
+    {
+      "match_id": 5795364,
+      "kickoff_utc": "2026-08-22T11:30:00Z",
+      "fixture": "Hull City vs Manchester United",
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9454,
+        "home_xg": 1.5878,
+        "away_xg": 1.306,
+        "total_xg": 2.8938
+      },
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
+      "home_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "away_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "home_evidence_confidence": 0.5401,
+      "away_evidence_confidence": 0.5401,
+      "lineup_priors_complete": true,
+      "quality_flags": [
+        "component_scaling_artifact_missing",
+        "default_role_shape",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "low_form_confidence",
+        "no_direct_head_to_head",
+        "no_exact_recent_lineup",
+        "no_recent_match_detail",
+        "no_usable_direct_history",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "preseason_only_recent_evidence",
+        "preseason_weight_capped",
+        "raw_xg_mixed_competition_context"
+      ]
+    },
+    {
+      "match_id": 5795365,
+      "kickoff_utc": "2026-08-22T14:00:00Z",
+      "fixture": "Everton vs Crystal Palace",
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9454,
+        "home_xg": 1.5878,
+        "away_xg": 1.306,
+        "total_xg": 2.8938
+      },
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
+      "home_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "away_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "home_evidence_confidence": 0.5112,
+      "away_evidence_confidence": 0.5112,
+      "lineup_priors_complete": true,
+      "quality_flags": [
+        "component_scaling_artifact_missing",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "low_form_confidence",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "preseason_only_recent_evidence",
+        "preseason_weight_capped"
+      ]
+    },
+    {
+      "match_id": 5795366,
+      "kickoff_utc": "2026-08-22T14:00:00Z",
+      "fixture": "Ipswich Town vs Sunderland",
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9454,
+        "home_xg": 1.5878,
+        "away_xg": 1.306,
+        "total_xg": 2.8938
+      },
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
+      "home_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "away_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "home_evidence_confidence": 0.5091,
+      "away_evidence_confidence": 0.5091,
+      "lineup_priors_complete": true,
+      "quality_flags": [
+        "component_scaling_artifact_missing",
+        "default_role_shape",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "low_form_confidence",
+        "no_direct_head_to_head",
+        "no_exact_recent_lineup",
+        "no_recent_match_detail",
+        "no_usable_direct_history",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "partial_recent_minute_coverage",
+        "preseason_only_recent_evidence",
+        "preseason_weight_capped",
+        "raw_xg_mixed_competition_context"
+      ]
+    },
+    {
+      "match_id": 5795367,
+      "kickoff_utc": "2026-08-22T14:00:00Z",
+      "fixture": "Nottingham Forest vs Leeds United",
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9454,
+        "home_xg": 1.5878,
+        "away_xg": 1.306,
+        "total_xg": 2.8938
+      },
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
+      "home_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "away_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "home_evidence_confidence": 0.501,
+      "away_evidence_confidence": 0.501,
+      "lineup_priors_complete": true,
+      "quality_flags": [
+        "component_scaling_artifact_missing",
+        "default_role_shape",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "low_form_confidence",
+        "no_exact_recent_lineup",
+        "no_recent_match_detail",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "preseason_only_recent_evidence",
+        "preseason_weight_capped"
+      ]
+    },
+    {
+      "match_id": 5795368,
+      "kickoff_utc": "2026-08-22T16:30:00Z",
+      "fixture": "Brentford vs Tottenham Hotspur",
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9454,
+        "home_xg": 1.5878,
+        "away_xg": 1.306,
+        "total_xg": 2.8938
+      },
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
+      "home_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "away_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "home_evidence_confidence": 0.5207,
+      "away_evidence_confidence": 0.5207,
+      "lineup_priors_complete": true,
+      "quality_flags": [
+        "component_scaling_artifact_missing",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "low_form_confidence",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "partial_recent_minute_coverage",
+        "preseason_only_recent_evidence",
+        "raw_xg_mixed_competition_context",
+        "unknown_availability"
+      ]
+    },
+    {
+      "match_id": 5795369,
+      "kickoff_utc": "2026-08-23T13:00:00Z",
+      "fixture": "Brighton & Hove Albion vs Aston Villa",
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9454,
+        "home_xg": 1.5878,
+        "away_xg": 1.306,
+        "total_xg": 2.8938
+      },
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
+      "home_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "away_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "home_evidence_confidence": 0.5058,
+      "away_evidence_confidence": 0.5058,
+      "lineup_priors_complete": true,
+      "quality_flags": [
+        "component_scaling_artifact_missing",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "low_form_confidence",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "preseason_only_recent_evidence",
+        "preseason_weight_capped",
+        "raw_xg_mixed_competition_context"
+      ]
+    },
+    {
+      "match_id": 5795370,
+      "kickoff_utc": "2026-08-23T13:00:00Z",
+      "fixture": "Manchester City vs AFC Bournemouth",
+      "competition_baseline_xg": {
+        "competition_family": "premier_league",
+        "proxy_used": false,
+        "confidence": 0.9454,
+        "home_xg": 1.5878,
+        "away_xg": 1.306,
+        "total_xg": 2.8938
+      },
+      "home_fixture_signal_z": null,
+      "away_fixture_signal_z": null,
+      "home_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "away_contributions_z": {
+        "club_form": null,
+        "player_quality_lineup": null,
+        "historical_residual": null
+      },
+      "home_evidence_confidence": 0.5151,
+      "away_evidence_confidence": 0.5151,
+      "lineup_priors_complete": true,
+      "quality_flags": [
+        "component_scaling_artifact_missing",
+        "default_role_shape",
+        "lineup_not_confirmed",
+        "lineup_not_fixture_specific",
+        "low_form_confidence",
+        "no_exact_recent_lineup",
+        "no_recent_match_detail",
+        "partial_alpha_context",
+        "partial_alpha_minute_coverage",
+        "preseason_only_recent_evidence",
+        "raw_xg_mixed_competition_context"
+      ]
+    }
+  ],
+  "decision_boundaries": {
+    "probability_ready": false,
+    "market_ready": false,
+    "capital_deployment_ready": false,
+    "competition_baseline_outside_component_weights": true,
+    "club_form_source_confidence_applied_once": true,
+    "direct_history_maximum_complete_signal_share": 0.015,
+    "missing_component_weight_redistributed": false,
+    "component_weights_active_without_past_scale_artifact": false,
+    "goal_calibration_owned_by_fixture_state": false,
+    "historical_manifest_and_row_dates_validated": true
+  },
+  "warnings": [
+    "Fixture State is an auditable calibration input, not a probability or wager.",
+    "Club Form v1 released z-scores already contain reliability shrinkage and are not shrunk a second time.",
+    "Player Quality uses absolute expected-minute projected-XI Alpha quality; availability changes minutes and the own-baseline delta remains diagnostic.",
+    "Squad Selection Prior v1 is dated but not fixture-specific or confirmed.",
+    "Historical Context contributes only venue and capped direct-matchup residuals.",
+    "Competition xG is a separate starting environment and does not consume any of the 60/30/10 weights.",
+    "The final composite remains null until a frozen past-only component-scale artifact exists.",
+    "Fixture State never fits or applies a goal-calibration coefficient."
+  ]
+}

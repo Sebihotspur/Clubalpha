@@ -218,11 +218,17 @@ def team_fixtures(payload: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def team_squad(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    """Return the full registered squad, independent of ranking eligibility.
+
+    FotMob sets ``excludeFromRanking`` on players who have not accumulated
+    enough current-season ranking evidence. It is not a roster-status field.
+    """
+
     members: list[dict[str, Any]] = []
     for group in ((payload.get("squad") or {}).get("squad") or []):
         group_name = group.get("title")
         for member in group.get("members") or []:
-            if group_name == "coach" or member.get("excludeFromRanking") is True:
+            if group_name == "coach":
                 continue
             members.append({**member, "squadGroup": group_name})
     return members
@@ -459,7 +465,7 @@ def normalize_team_snapshot(
                         "coach_id": int(member["id"]),
                         "coach": member.get("name"),
                     }
-            elif member.get("excludeFromRanking") is not True:
+            else:
                 player_ids.append(int(member["id"]))
     return {
         "source": "fotmob",

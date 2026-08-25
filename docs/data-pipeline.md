@@ -73,6 +73,8 @@ provider-data warehouse.
 - Decorated team values preserve their leading counts and percentages for style analysis.
 - Confirmed transfers retain effective and reported dates so `--as-of` builds can reject future information.
 - Every observation keeps FotMob IDs so players, teams, and matches remain joinable.
+- FotMob `excludeFromRanking` is ranking eligibility, not roster status; all
+  non-coach squad members are retained.
 - The collector fails if FotMob silently returns the wrong requested league season.
 - UCL qualification status includes an `as_of` date because the field is still changing.
 
@@ -200,3 +202,43 @@ python3 scripts/build_historical_fixtures.py \
 
 The build deduplicates overlapping one-season and deep-history rows by FotMob
 match/team ID before scoring them.
+
+## Fixture State handoff
+
+After Club Form, Squad Selection Prior, and Historical Fixtures v2 are built,
+materialize the dated composite input:
+
+```bash
+python3 scripts/build_fixture_state.py
+```
+
+```text
+data/processed/fixture_state/
+├── fixture_states.jsonl
+└── manifest.json
+
+reports/fixture-state-v1-audit.json
+```
+
+The generated fixture rows remain ignored by Git; the compact audit is tracked.
+The builder requires matching `as_of` dates and source versions, validates the
+Historical Fixtures manifest, rejects future or age-inconsistent history rows,
+and preserves the competition xG baseline outside the 60/30/10 adjustment.
+
+The first snapshot writes raw components only. Normalized contributions and the
+fixture signal stay null until `--component-scales` points to a complete artifact
+trained strictly before the snapshot date. Fixture State never accepts a goal
+calibration coefficient or emits a calibrated goal probability.
+
+## Prediction Lab handoff
+
+Prediction Lab v0 consumes frozen Fixture States rather than reaching around
+them into the foundation layers. It fits an outcome-free component-scale
+artifact, then a separately versioned xG coefficient, and finally runs 50,000
+deterministic independent-Poisson simulations per future fixture. The first
+frozen outputs are tracked under `artifacts/prediction_lab/2026-08-24/`.
+
+The first scale snapshot reconstructs August 11 roster membership by reversing
+later effective-dated transfers and discards all later injury statuses. That
+provenance is embedded in the scale artifact. Predictions remain shadow-only;
+the goal layer cannot mark market or capital deployment ready.

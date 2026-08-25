@@ -10,6 +10,7 @@ from clubalpha.fotmob import (
     normalize_stat_rows,
     normalize_team_snapshot,
     normalize_transfer_events,
+    team_squad,
 )
 
 
@@ -203,7 +204,17 @@ class FotMobNormalizationTests(unittest.TestCase):
             "squad": {
                 "squad": [
                     {"title": "coach", "members": [{"id": 7, "name": "Coach", "excludeFromRanking": True}]},
-                    {"title": "attackers", "members": [{"id": 9, "name": "Forward"}]},
+                    {
+                        "title": "attackers",
+                        "members": [
+                            {"id": 9, "name": "Forward"},
+                            {
+                                "id": 10,
+                                "name": "Unranked Forward",
+                                "excludeFromRanking": True,
+                            },
+                        ],
+                    },
                 ]
             },
             "history": {
@@ -234,7 +245,11 @@ class FotMobNormalizationTests(unittest.TestCase):
         history = normalize_manager_history(payload, team_id=10, team="Club")
         transfers = normalize_transfer_events(payload, team_id=10, team="Club")
         self.assertEqual(snapshot["current_coach"]["coach_id"], 7)
-        self.assertEqual(snapshot["squad_player_ids"], [9])
+        self.assertEqual(snapshot["squad_player_ids"], [9, 10])
+        self.assertEqual(
+            [member["id"] for member in team_squad(payload)],
+            [9, 10],
+        )
         self.assertEqual(history[0]["coach_id"], 6)
         self.assertEqual(transfers[0]["effective_date"], "2026-07-01")
         self.assertEqual(transfers[0]["counterparty_id"], 30)
