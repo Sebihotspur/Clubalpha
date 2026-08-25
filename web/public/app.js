@@ -10,6 +10,7 @@ const esc = (value) =>
 
 const pct = (value) => `${(Number(value) * 100).toFixed(1)}%`;
 const dec = (value, places = 2) => Number(value).toFixed(places);
+const signed = (value, places = 2) => `${Number(value) >= 0 ? "+" : ""}${Number(value).toFixed(places)}`;
 const dateTime = (value) =>
   new Intl.DateTimeFormat("en-US", {
     weekday: "short",
@@ -124,6 +125,14 @@ function overview(data) {
       <div class="foundation-grid">
         ${data.methodology.components.map((component, index) => `<article class="foundation-card"><span class="foundation-num">0${index + 1} · ${component.weight}%</span><h3>${esc(component.name)}</h3><p>${esc(component.description)}</p><div class="weight-line"><span style="width:${component.weight}%"></span></div></article>`).join("")}
       </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Style Matchup v0</h2><a href="/matchups/">Explore vulnerabilities →</a></div>
+      <article class="matchup-teaser">
+        <div><span class="panel-label">New research challenger · zero composite weight</span><h3>How can one team make the next opponent vulnerable?</h3><p>Compare five attacking routes against the opponent’s measured exposure, then confirm whether the projected XI has the player quality to execute.</p></div>
+        <div class="teaser-flow"><span>STYLE ROUTE</span><i>×</i><span>OPPONENT EXPOSURE</span><i>×</i><span>PLAYER ALPHA</span></div>
+      </article>
     </section>`;
 }
 
@@ -163,6 +172,158 @@ function ledger(data) {
     <section class="section"><div class="section-head"><h2>Frozen Matchday 2 slate</h2><span class="panel-label">Results append after full time</span></div><div class="table-shell"><table><thead><tr><th>Fixture</th><th>Observation</th><th>Frozen probability</th><th>Price gate</th><th>Result</th></tr></thead><tbody>${slateRows}</tbody></table></div></section>`;
 }
 
+function signalMeter(value, kind) {
+  const bounded = Math.max(-1.5, Math.min(1.5, Number(value) || 0));
+  const width = (Math.abs(bounded) / 1.5) * 50;
+  const direction = bounded >= 0 ? "positive" : "negative";
+  return `<div class="signal-meter ${esc(kind)}"><span class="signal-fill ${direction}" style="width:${width.toFixed(1)}%"></span></div><span class="signal-value">${signed(value)}</span>`;
+}
+
+function xiExecutionEdge(channel, attacker, defender) {
+  const attack = attacker.projected_xi;
+  const defence = Number(defender.projected_xi.defensive_prevention) || 0;
+  if (channel.key === "box_pressure") {
+    return ((Number(attack.chance_creation) || 0) + (Number(attack.scoring_threat) || 0)) / 2 - defence;
+  }
+  if (channel.key === "wide_delivery") {
+    return (Number(attack.chance_creation) || 0) - defence;
+  }
+  if (channel.key === "high_press") {
+    return (Number(attack.defensive_prevention) || 0) - (Number(defender.projected_xi.chance_creation) || 0);
+  }
+  return (Number(attack.scoring_threat) || 0) - defence;
+}
+
+function matchupVerdict(value, boundaries) {
+  if (value >= boundaries.strong_route) return ["Strong route", "strong"];
+  if (value >= boundaries.leans_favorable) return ["Leans favorable", "favorable"];
+  if (value <= boundaries.likely_resisted) return ["Likely resisted", "resisted"];
+  return ["No clear edge", "neutral"];
+}
+
+function matchupRows(snapshot, attacker, defender) {
+  const boundaries = snapshot.method.decision_boundaries;
+  return snapshot.channels.map((channel) => {
+    const route = Number(attacker.route_expression[channel.key]) || 0;
+    const exposure = Number(defender.opponent_exposure[channel.key]) || 0;
+    const xi = xiExecutionEdge(channel, attacker, defender);
+    const routeFit = (route + exposure) / 2;
+    const score = 0.70 * routeFit + 0.30 * xi;
+    const [label, tone] = matchupVerdict(score, boundaries);
+    return { channel, route, exposure, xi, score, label, tone };
+  });
+}
+
+function renderMatchup(snapshot, roundRobin) {
+  const attackerName = document.querySelector("#matchup-attacker")?.value;
+  const defenderName = document.querySelector("#matchup-defender")?.value;
+  const attacker = snapshot.teams.find((team) => team.team === attackerName);
+  const defender = snapshot.teams.find((team) => team.team === defenderName);
+  if (!attacker || !defender) return;
+
+  document.querySelector("#attacker-name").textContent = attacker.team;
+  const attackerFlags = attacker.quality_flags.length ? " · evidence flagged" : "";
+  const defenderFlags = defender.quality_flags.length ? " · evidence flagged" : "";
+  document.querySelector("#attacker-type").textContent = `${attacker.archetype}${attackerFlags}`;
+  document.querySelector("#defender-name").textContent = defender.team;
+  document.querySelector("#defender-type").textContent = `${defender.archetype}${defenderFlags}`;
+
+  const rows = matchupRows(snapshot, attacker, defender);
+  const probability = roundRobin.fixtures.find(
+    (fixture) => fixture.home_team === attacker.team && fixture.away_team === defender.team,
+  );
+  if (probability) {
+    document.querySelector("#round-robin-probability").innerHTML = `
+      <div class="outcome-probability home"><span>${esc(attacker.team)} win</span><strong>${pct(probability.probabilities.home_win)}</strong></div>
+      <div class="outcome-probability draw"><span>Draw</span><strong>${pct(probability.probabilities.draw)}</strong></div>
+      <div class="outcome-probability away"><span>${esc(defender.team)} win</span><strong>${pct(probability.probabilities.away_win)}</strong></div>
+      <div class="matchup-xg"><span>Projected xG</span><strong>${dec(probability.predicted_xg.home)}–${dec(probability.predicted_xg.away)}</strong><small>${dec(probability.predicted_xg.total)} total</small></div>`;
+  } else {
+    document.querySelector("#round-robin-probability").innerHTML = `<div class="matchup-empty">Select two different clubs to load a fixture probability.</div>`;
+  }
+  document.querySelector("#matchup-route-rows").innerHTML = rows
+    .map(
+      (row) => `<div class="route-row">
+        <div class="route-name"><strong>${esc(row.channel.label)}</strong><span>${esc(row.channel.evidence_tier)} · ${row.channel.exposure_type === "style_invitation" ? "style invitation" : "defensive exposure"}</span></div>
+        <div class="route-signal" data-label="Attack expression">${signalMeter(row.route, "attack")}</div>
+        <div class="route-signal" data-label="Opponent exposure">${signalMeter(row.exposure, "exposure")}</div>
+        <div class="route-signal" data-label="XI execution edge">${signalMeter(row.xi, "xi")}</div>
+        <div class="route-verdict ${row.tone}">${esc(row.label)}</div>
+      </div>`,
+    )
+    .join("");
+  const best = rows.slice().sort((a, b) => b.score - a.score)[0];
+  document.querySelector("#matchup-best-route").innerHTML = `<span>Clearest current route</span><strong>${esc(best.channel.label)}</strong><small>${signed(best.score)} challenger signal</small>`;
+}
+
+function bindMatchups(snapshot, roundRobin) {
+  const attacker = document.querySelector("#matchup-attacker");
+  const defender = document.querySelector("#matchup-defender");
+  if (!attacker || !defender) return;
+  attacker.addEventListener("change", () => renderMatchup(snapshot, roundRobin));
+  defender.addEventListener("change", () => renderMatchup(snapshot, roundRobin));
+  document.querySelector("#matchup-swap").addEventListener("click", () => {
+    const previous = attacker.value;
+    attacker.value = defender.value;
+    defender.value = previous;
+    renderMatchup(snapshot, roundRobin);
+  });
+  renderMatchup(snapshot, roundRobin);
+}
+
+function archetypeCards(snapshot) {
+  const groups = new Map();
+  snapshot.teams.forEach((team) => {
+    if (!groups.has(team.archetype)) groups.set(team.archetype, []);
+    groups.get(team.archetype).push(team.team);
+  });
+  return [...groups.entries()]
+    .map(
+      ([archetype, teams]) => `<article class="archetype-card"><span class="panel-label">${String(teams.length).padStart(2, "0")} clubs</span><h3>${esc(archetype)}</h3><p>${teams.map(esc).join(" · ")}</p></article>`,
+    )
+    .join("");
+}
+
+function roundRobinTable(roundRobin) {
+  return roundRobin.league_table
+    .map(
+      (team) => `<tr>
+        <td>${team.rank}</td>
+        <td class="fixture-cell"><strong>${esc(team.team)}</strong><span>Average W/D/L · ${pct(team.average_probabilities.win)} / ${pct(team.average_probabilities.draw)} / ${pct(team.average_probabilities.loss)}</span></td>
+        <td>${dec(team.expected_wins)}</td>
+        <td>${dec(team.expected_draws)}</td>
+        <td>${dec(team.expected_losses)}</td>
+        <td class="prob-main">${dec(team.expected_points)}</td>
+        <td>${team.expected_goal_difference >= 0 ? "+" : ""}${dec(team.expected_goal_difference)}</td>
+      </tr>`,
+    )
+    .join("");
+}
+
+function matchups(data) {
+  const snapshot = data.style_matchup;
+  const options = snapshot.teams.map((team) => `<option value="${esc(team.team)}">${esc(team.team)}</option>`).join("");
+  return `<section class="page-head"><p class="eyebrow">380-fixture shadow round robin · ${esc(snapshot.as_of)}</p><h1>Matchup probabilities</h1><p>Choose any home and away team to see the current win/draw/loss probabilities, expected goals, and the route that can make the opponent vulnerable.</p><div class="notice">SHADOW BENCHMARK · Today’s form and projected squads are held constant for all 38 matches · Style Matchup remains zero weight in the locked 60/30/10 model</div></section>
+    <section class="matchup-lab">
+      <div class="matchup-controls">
+        <label><span>Home team</span><select id="matchup-attacker">${options}</select></label>
+        <button id="matchup-swap" type="button" aria-label="Reverse venue">⇄</button>
+        <label><span>Away team</span><select id="matchup-defender">${options}</select></label>
+      </div>
+      <div class="matchup-identities">
+        <div class="matchup-identity attack"><span class="panel-label">Home profile</span><strong id="attacker-name"></strong><small id="attacker-type"></small></div>
+        <div class="matchup-identity defence"><span class="panel-label">Away profile</span><strong id="defender-name"></strong><small id="defender-type"></small></div>
+        <div class="best-route" id="matchup-best-route"></div>
+      </div>
+      <div class="round-robin-probability" id="round-robin-probability"></div>
+      <div class="route-head"><span>Route</span><span>Attack expression</span><span>Opponent exposure</span><span>XI execution edge</span><span>Current read</span></div>
+      <div id="matchup-route-rows"></div>
+      <div class="matchup-foot"><span>Read = 70% route fit + 30% XI execution</span><span>Positive = favorable</span><span>Negative = resisted</span><span>Projected XI uses locked Player Alpha components</span></div>
+    </section>
+    <section class="section"><div class="section-head"><h2>Expected 38-match table</h2><span class="panel-label">${data.round_robin.meta.total_match_simulations.toLocaleString()} match simulations</span></div><div class="table-shell round-robin-table"><table><thead><tr><th>#</th><th>Club</th><th>W</th><th>D</th><th>L</th><th>Pts</th><th>xGD</th></tr></thead><tbody>${roundRobinTable(data.round_robin)}</tbody></table></div><p class="notice">This is a fixed-strength diagnostic table, not a season forecast: form, injuries, transfers and lineups do not evolve between fixtures.</p></section>
+    <section class="section"><div class="section-head"><h2>Current Premier League archetypes</h2><span class="panel-label">Recency-weighted through ${esc(snapshot.as_of)}</span></div><div class="archetype-grid">${archetypeCards(snapshot)}</div></section>`;
+}
+
 function methodology(data) {
   return `<section class="page-head"><p class="eyebrow">Transparent by design</p><h1>Methodology</h1><p>Simple foundations, strict chronology, and visible refusal rules. Player Quality remains locked; calibration sits downstream and cannot rewrite the intelligence after seeing a result.</p></section>
     <div class="method-stack">
@@ -180,12 +341,23 @@ async function start() {
     const response = await fetch("/data/site.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`Data request failed (${response.status})`);
     const data = await response.json();
-    const views = { overview, predictions, ledger, methodology };
+    const views = { overview, predictions, matchups, ledger, methodology };
     app.innerHTML = (views[route] || overview)(data);
+    if (route === "matchups") {
+      const attacker = document.querySelector("#matchup-attacker");
+      const defender = document.querySelector("#matchup-defender");
+      if (attacker && snapshotTeam(data.style_matchup, "Manchester City")) attacker.value = "Manchester City";
+      if (defender && snapshotTeam(data.style_matchup, "Crystal Palace")) defender.value = "Crystal Palace";
+      bindMatchups(data.style_matchup, data.round_robin);
+    }
     document.title = `${route === "overview" ? "Clubalpha" : route[0].toUpperCase() + route.slice(1)} — Clubalpha`;
   } catch (error) {
     app.innerHTML = `<div class="error">Clubalpha could not load its frozen artifact: ${esc(error.message)}</div>`;
   }
+}
+
+function snapshotTeam(snapshot, name) {
+  return snapshot.teams.some((team) => team.team === name);
 }
 
 start();

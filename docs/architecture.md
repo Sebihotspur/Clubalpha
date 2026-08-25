@@ -81,6 +81,12 @@ Club Dynamics has no composite score and does not modify Performance Form.
 Its first role is to make club condition explainable; its later role is to
 support opponent-specific style matchups after validation.
 
+Style Matchup v0 is now the zero-weight research implementation of that later
+role. It compares five named attacking routes with the next opponent's measured
+exposure or tactical invitation, then checks the route against the projected
+XI's locked scoring, creation, and prevention Alpha components. It remains
+outside Fixture State until chronological testing shows incremental value.
+
 The Squad Selection layer is the bridge between Player Quality and Club Form.
 Its fixture-specific v2 policy uses the latest five competitive matches to
 estimate start probability, appearance probability, and expected minutes. A

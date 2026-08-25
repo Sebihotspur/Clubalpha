@@ -213,6 +213,45 @@ calibrated fixture signal, probability, betting edge, or capital signal. See
 [Fixture State v1](docs/fixture-state-spec.md) for the exact handoff and
 safeguards.
 
+## Style Matchup v0
+
+Style Matchup v0 is a research challenger built from Club Dynamics and the
+projected-XI Player Alpha snapshot. It asks which attacking route can expose a
+specific opponent: box pressure, set pieces, wide delivery, high pressing, or
+direct transition.
+
+```bash
+python3 research/build_style_matchup_v0.py
+```
+
+The frozen artifact powers the website's `/matchups/` explorer. It has zero
+weight in the locked 60/30/10 Fixture State composite. Box and set-piece
+channels use measured defensive exposures; high-press and transition channels
+remain style hypotheses until they pass chronological walk-forward tests.
+
+The website also publishes a fixed-strength double round robin built from the
+same dated intelligence:
+
+```bash
+python3 research/build_round_robin_v0.py
+```
+
+It simulates all 380 home-and-away matchups 50,000 times each and publishes
+fixture W/D/L probabilities plus an expected 38-match table. Current form and
+projected squads are deliberately held constant, so the table is a model
+hierarchy diagnostic rather than a forecast of the evolving season.
+
+Freeze or verify the outcome-free 2026-08-25 baseline with:
+
+```bash
+python3 scripts/freeze_round_robin_archive.py
+```
+
+The manifest hash-locks all 380 predictions and their model inputs. Real
+fixtures are reconciled by `season|home_team_id|away_team_id` and appended to a
+separate result stream. Never rebuild a frozen date in place; model adjustments
+must create a new dated archive so walk-forward comparisons remain honest.
+
 ## Prediction Lab v0
 
 Build the first frozen Premier League shadow-prediction experiment:
@@ -236,8 +275,9 @@ signals. See [Prediction Lab v0](docs/prediction-lab-v0.md).
 
 The read-only Clubalpha dashboard is live at
 [clubalpha-club-form-v1.vercel.app](https://clubalpha-club-form-v1.vercel.app/).
-It publishes the frozen shadow slate, ledger, and methodology without exposing
-capital controls. Build instructions live in [web/README.md](web/README.md).
+It publishes the frozen shadow slate, vulnerability explorer, ledger, and
+methodology without exposing capital controls. Build instructions live in
+[web/README.md](web/README.md).
 
 ## Status
 

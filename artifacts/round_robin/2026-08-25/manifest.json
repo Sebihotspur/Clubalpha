@@ -1,0 +1,117 @@
+{
+  "archive_version": "clubalpha_round_robin_archive_v0",
+  "status": "frozen",
+  "as_of": "2026-08-25",
+  "frozen_at_utc": "2026-08-25T23:19:06.491268+00:00",
+  "experiment": {
+    "competition": "Premier League",
+    "format": "double_round_robin",
+    "season": "2026/2027",
+    "teams": 20,
+    "fixtures": 380,
+    "matches_per_team": 38,
+    "simulations_per_fixture": 50000,
+    "total_match_simulations": 19000000,
+    "outcomes_used_at_freeze": false
+  },
+  "model": {
+    "round_robin_version": "clubalpha_fixed_strength_round_robin_v0",
+    "probability_model": {
+      "fixture_components": {
+        "club_form": 0.6,
+        "player_quality_lineup": 0.3,
+        "historical_residual": 0.1
+      },
+      "component_scales": "clubalpha_component_scales_2026-08-11_v0",
+      "goal_model": "clubalpha_goal_model_2026-08-24_v0",
+      "style_matchup_composite_weight": 0
+    },
+    "decision_status": "shadow_only",
+    "style_matchup_probability_weight": 0
+  },
+  "reconciliation": {
+    "join_key": "season|home_team_id|away_team_id",
+    "join_fields": [
+      "season",
+      "home_team_id",
+      "away_team_id"
+    ],
+    "unique_join_keys": 380,
+    "synthetic_match_id_is_join_key": false,
+    "result_stream": "artifacts/round_robin/2026-08-25/results.jsonl",
+    "result_stream_policy": "append_only",
+    "required_result_fields": [
+      "result_version",
+      "recorded_at_utc",
+      "season",
+      "home_team_id",
+      "away_team_id",
+      "kickoff_utc",
+      "final_home_goals",
+      "final_away_goals",
+      "outcome",
+      "source",
+      "source_match_id"
+    ]
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "immutable_files": [
+      "artifacts/prediction_lab/2026-08-24/component-scales.json",
+      "artifacts/prediction_lab/2026-08-24/goal-model.json",
+      "artifacts/prediction_lab/2026-08-24/report.json",
+      "artifacts/round_robin/2026-08-25/README.md",
+      "artifacts/round_robin/2026-08-25/predictions.jsonl",
+      "artifacts/round_robin/2026-08-25/summary.json",
+      "artifacts/style_matchup/2026-08-25/style-matchups.json",
+      "clubalpha/fixture_state.py",
+      "clubalpha/prediction_lab.py",
+      "clubalpha/style_matchup.py",
+      "config/fixture-state-v1.json",
+      "config/historical-fixtures-v2.json",
+      "config/prediction-lab-v0.json",
+      "reports/premier-league-alpha-snapshot-2026-08-25.json",
+      "research/build_round_robin_v0.py",
+      "research/build_style_matchup_v0.py"
+    ],
+    "hashes": {
+      "artifacts/prediction_lab/2026-08-24/component-scales.json": "64ff9a93520649cdf893c1e9fcd5d81e58840252faec38b250f8d6b3ad86f0d9",
+      "artifacts/prediction_lab/2026-08-24/goal-model.json": "db1ad39c296423b54f2258a2514149bc9e63b15b86d95664bc39532b930e1f13",
+      "artifacts/prediction_lab/2026-08-24/report.json": "a087af8303bac91bfcc8dc1a4405afa54c6801da64fec7af16daa8974beacd01",
+      "artifacts/round_robin/2026-08-25/README.md": "eb9aab8f8dea5fd75cd6f52ed65503503fd50e2acecd06fc9f5381d15d2e8a24",
+      "artifacts/round_robin/2026-08-25/predictions.jsonl": "123f0576c9515c30d0c936a89d9b59c40c2632830a216c5874e6bfdd3800a94c",
+      "artifacts/round_robin/2026-08-25/summary.json": "3fb4356e2ee878b3e201f2c800fa77377d55ad2e8b36cb4b05c0d2a4b8742d06",
+      "artifacts/style_matchup/2026-08-25/style-matchups.json": "3c07a749c9d5ed97a7a579018b8d10c657f3d33dbd7dbc128feba27b3937bc70",
+      "clubalpha/fixture_state.py": "05338af5de5442a47a00e93f4ccbf2ff66dd99fc7353a55ee126c04f55e7974c",
+      "clubalpha/prediction_lab.py": "a393bb2eb566e0b12ac1ed29cba6821de714bea473f3865340e9d98ca564e494",
+      "clubalpha/style_matchup.py": "3245d363ff958b525738d700efee426f2c595ad7614094552b4270d682002a1e",
+      "config/fixture-state-v1.json": "018ab193d5a1ec025d62c8402e020822ef8d16eb4d3978fcf61647e7d13fd28e",
+      "config/historical-fixtures-v2.json": "36208395f5a078c3f669b6914223680698903c33d695195669f801fe4799194b",
+      "config/prediction-lab-v0.json": "a5e7caadf60c973fd0b9a94c919134c59c8540a540ec4a9a95454de25a3fac0c",
+      "reports/premier-league-alpha-snapshot-2026-08-25.json": "9a7f61b70782629c7376e690e211aa3ade7d8911b5021f6aa505d524c3cf5003",
+      "research/build_round_robin_v0.py": "8a3faecfdd8d49496a1b5dca3f5f5593454e0caf7dabf9f3da85962170f04e10",
+      "research/build_style_matchup_v0.py": "42cbf5251099f0f26c65edae410b9f50ae08b32e5a94505d58317c6943065922"
+    },
+    "manifest_self_hashed": false,
+    "append_only_result_stream_hashed": false
+  },
+  "evaluation_plan": {
+    "primary": [
+      "multiclass_brier_score",
+      "log_loss",
+      "calibration"
+    ],
+    "secondary": [
+      "1x2_accuracy",
+      "predicted_xg_mae"
+    ],
+    "challenger": "style_matchup_ablation_at_zero_live_weight"
+  },
+  "safeguards": [
+    "never_regenerate_this_dated_archive_in_place",
+    "create_a_new_dated_archive_after_model_adjustments",
+    "append_observed_results_without_mutating_predictions",
+    "keep_style_matchup_outside_probabilities_until_validated",
+    "do_not_deploy_capital_from_this_shadow_experiment"
+  ]
+}

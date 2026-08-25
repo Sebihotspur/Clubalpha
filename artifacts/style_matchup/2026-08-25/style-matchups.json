@@ -1,0 +1,645 @@
+{
+  "snapshot_version": "clubalpha_style_matchup_v0",
+  "as_of": "2026-08-25",
+  "generated_at_utc": "2026-08-25T22:45:48.614895+00:00",
+  "status": "research_challenger",
+  "composite_weight": 0,
+  "question": "By which route can one team make the next opponent vulnerable?",
+  "method": {
+    "matchup_read": "70% route fit plus 30% projected-XI execution edge",
+    "route_fit": "mean of attacking route expression and opponent exposure",
+    "decision_boundaries": {
+      "strong_route": 0.25,
+      "leans_favorable": 0.08,
+      "likely_resisted": -0.12
+    },
+    "safeguards": [
+      "No signal modifies the locked 60/30/10 composite.",
+      "High-press and direct-transition exposures are style invitations, not observed defensive failures.",
+      "Wide delivery is partial until aerial and cross-defending player evidence is joined.",
+      "Every route must pass chronological walk-forward validation before receiving model weight."
+    ]
+  },
+  "channels": [
+    {
+      "key": "box_pressure",
+      "label": "Box pressure",
+      "evidence_tier": "measured",
+      "exposure_type": "defensive_exposure",
+      "xi_execution": "chance creation plus scoring threat versus defensive prevention"
+    },
+    {
+      "key": "set_pieces",
+      "label": "Set pieces",
+      "evidence_tier": "measured",
+      "exposure_type": "defensive_exposure",
+      "xi_execution": "scoring threat versus defensive prevention"
+    },
+    {
+      "key": "wide_delivery",
+      "label": "Wide delivery",
+      "evidence_tier": "partial",
+      "exposure_type": "defensive_exposure",
+      "xi_execution": "chance creation versus defensive prevention"
+    },
+    {
+      "key": "high_press",
+      "label": "High press",
+      "evidence_tier": "hypothesis",
+      "exposure_type": "style_invitation",
+      "xi_execution": "defensive prevention versus opponent chance creation"
+    },
+    {
+      "key": "direct_transition",
+      "label": "Direct transition",
+      "evidence_tier": "hypothesis",
+      "exposure_type": "style_invitation",
+      "xi_execution": "scoring threat versus defensive prevention"
+    }
+  ],
+  "teams": [
+    {
+      "team_id": 8678,
+      "team": "AFC Bournemouth",
+      "archetype_key": "high_intensity_direct",
+      "archetype": "High-intensity direct",
+      "route_expression": {
+        "box_pressure": -0.021,
+        "set_pieces": -0.074,
+        "wide_delivery": -0.092,
+        "high_press": 1.131,
+        "direct_transition": 0.164
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.162,
+        "set_pieces": 0.393,
+        "wide_delivery": 0.237,
+        "high_press": -0.161,
+        "direct_transition": 0.003
+      },
+      "projected_xi": {
+        "attacking_unit": 0.125,
+        "scoring_threat": -0.126,
+        "chance_creation": -0.137,
+        "defensive_prevention": 0.445,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 9825,
+      "team": "Arsenal",
+      "archetype_key": "territorial_controller",
+      "archetype": "Territorial controller",
+      "route_expression": {
+        "box_pressure": 0.353,
+        "set_pieces": 0.084,
+        "wide_delivery": -0.036,
+        "high_press": 1.254,
+        "direct_transition": -0.135
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.459,
+        "set_pieces": -0.377,
+        "wide_delivery": -0.477,
+        "high_press": 0.33,
+        "direct_transition": 0.428
+      },
+      "projected_xi": {
+        "attacking_unit": 0.586,
+        "scoring_threat": 0.219,
+        "chance_creation": 0.299,
+        "defensive_prevention": 0.349,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 10252,
+      "team": "Aston Villa",
+      "archetype_key": "adaptive_hybrid",
+      "archetype": "Adaptive hybrid",
+      "route_expression": {
+        "box_pressure": -0.212,
+        "set_pieces": 0.068,
+        "wide_delivery": -0.252,
+        "high_press": -0.336,
+        "direct_transition": -0.228
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.214,
+        "set_pieces": -0.095,
+        "wide_delivery": 0.177,
+        "high_press": 0.141,
+        "direct_transition": -0.136
+      },
+      "projected_xi": {
+        "attacking_unit": 0.039,
+        "scoring_threat": -0.206,
+        "chance_creation": 0.264,
+        "defensive_prevention": 0.05,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 9937,
+      "team": "Brentford",
+      "archetype_key": "direct_wide_set_piece",
+      "archetype": "Direct / wide / set-piece",
+      "route_expression": {
+        "box_pressure": 0.072,
+        "set_pieces": 0.438,
+        "wide_delivery": 0.349,
+        "high_press": -0.703,
+        "direct_transition": 0.354
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.033,
+        "set_pieces": -0.202,
+        "wide_delivery": 0.013,
+        "high_press": -0.241,
+        "direct_transition": -0.238
+      },
+      "projected_xi": {
+        "attacking_unit": 0.151,
+        "scoring_threat": 0.111,
+        "chance_creation": -0.065,
+        "defensive_prevention": 0.074,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 10204,
+      "team": "Brighton & Hove Albion",
+      "archetype_key": "territorial_controller",
+      "archetype": "Territorial controller",
+      "route_expression": {
+        "box_pressure": 0.214,
+        "set_pieces": -0.057,
+        "wide_delivery": 0.165,
+        "high_press": 1.743,
+        "direct_transition": -0.036
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.262,
+        "set_pieces": -0.122,
+        "wide_delivery": -0.247,
+        "high_press": 0.447,
+        "direct_transition": 0.201
+      },
+      "projected_xi": {
+        "attacking_unit": 0.344,
+        "scoring_threat": 0.253,
+        "chance_creation": 0.308,
+        "defensive_prevention": 0.221,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8455,
+      "team": "Chelsea",
+      "archetype_key": "developing_possession",
+      "archetype": "Developing possession",
+      "route_expression": {
+        "box_pressure": 0.082,
+        "set_pieces": -0.087,
+        "wide_delivery": -0.147,
+        "high_press": -0.092,
+        "direct_transition": -0.156
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.105,
+        "set_pieces": -0.188,
+        "wide_delivery": -0.102,
+        "high_press": 0.381,
+        "direct_transition": 0.135
+      },
+      "projected_xi": {
+        "attacking_unit": 0.349,
+        "scoring_threat": 0.071,
+        "chance_creation": 0.203,
+        "defensive_prevention": 0.37,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 8669,
+      "team": "Coventry City",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": 0.004,
+        "set_pieces": 0.065,
+        "wide_delivery": -0.037,
+        "high_press": 0.0,
+        "direct_transition": -0.099
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.053,
+        "set_pieces": -0.199,
+        "wide_delivery": -0.054,
+        "high_press": 0.224,
+        "direct_transition": 0.088
+      },
+      "projected_xi": {
+        "attacking_unit": -0.422,
+        "scoring_threat": -0.304,
+        "chance_creation": -0.59,
+        "defensive_prevention": -0.411,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 9826,
+      "team": "Crystal Palace",
+      "archetype_key": "adaptive_hybrid",
+      "archetype": "Adaptive hybrid",
+      "route_expression": {
+        "box_pressure": -0.082,
+        "set_pieces": -0.003,
+        "wide_delivery": -0.049,
+        "high_press": -0.703,
+        "direct_transition": 0.161
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.104,
+        "set_pieces": 0.072,
+        "wide_delivery": 0.144,
+        "high_press": -0.045,
+        "direct_transition": -0.096
+      },
+      "projected_xi": {
+        "attacking_unit": 0.093,
+        "scoring_threat": -0.089,
+        "chance_creation": -0.163,
+        "defensive_prevention": 0.251,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8668,
+      "team": "Everton",
+      "archetype_key": "direct_wide_set_piece",
+      "archetype": "Direct / wide / set-piece",
+      "route_expression": {
+        "box_pressure": 0.077,
+        "set_pieces": 0.037,
+        "wide_delivery": -0.025,
+        "high_press": 0.398,
+        "direct_transition": 0.076
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.062,
+        "set_pieces": -0.009,
+        "wide_delivery": 0.016,
+        "high_press": -0.327,
+        "direct_transition": -0.011
+      },
+      "projected_xi": {
+        "attacking_unit": -0.104,
+        "scoring_threat": -0.096,
+        "chance_creation": -0.227,
+        "defensive_prevention": 0.231,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 9879,
+      "team": "Fulham",
+      "archetype_key": "adaptive_hybrid",
+      "archetype": "Adaptive hybrid",
+      "route_expression": {
+        "box_pressure": -0.074,
+        "set_pieces": -0.066,
+        "wide_delivery": -0.071,
+        "high_press": -1.437,
+        "direct_transition": -0.185
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.077,
+        "set_pieces": -0.022,
+        "wide_delivery": 0.084,
+        "high_press": 0.241,
+        "direct_transition": -0.039
+      },
+      "projected_xi": {
+        "attacking_unit": 0.028,
+        "scoring_threat": -0.111,
+        "chance_creation": 0.158,
+        "defensive_prevention": 0.403,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 8667,
+      "team": "Hull City",
+      "archetype_key": "direct_wide_set_piece",
+      "archetype": "Direct / wide / set-piece",
+      "route_expression": {
+        "box_pressure": -0.117,
+        "set_pieces": 0.001,
+        "wide_delivery": 0.053,
+        "high_press": 0.0,
+        "direct_transition": 0.294
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.144,
+        "set_pieces": -0.044,
+        "wide_delivery": 0.137,
+        "high_press": -0.565,
+        "direct_transition": -0.139
+      },
+      "projected_xi": {
+        "attacking_unit": -0.828,
+        "scoring_threat": -0.538,
+        "chance_creation": -0.866,
+        "defensive_prevention": -0.407,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 9902,
+      "team": "Ipswich Town",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": 0.091,
+        "set_pieces": -0.035,
+        "wide_delivery": -0.047,
+        "high_press": 0.0,
+        "direct_transition": -0.022
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.253,
+        "set_pieces": -0.21,
+        "wide_delivery": -0.28,
+        "high_press": 0.254,
+        "direct_transition": 0.08
+      },
+      "projected_xi": {
+        "attacking_unit": -0.37,
+        "scoring_threat": -0.279,
+        "chance_creation": -0.336,
+        "defensive_prevention": -0.317,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8463,
+      "team": "Leeds United",
+      "archetype_key": "high_intensity_direct",
+      "archetype": "High-intensity direct",
+      "route_expression": {
+        "box_pressure": -0.187,
+        "set_pieces": 0.063,
+        "wide_delivery": 0.12,
+        "high_press": 0.52,
+        "direct_transition": 0.081
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.02,
+        "set_pieces": 0.185,
+        "wide_delivery": 0.017,
+        "high_press": -0.31,
+        "direct_transition": -0.322
+      },
+      "projected_xi": {
+        "attacking_unit": 0.092,
+        "scoring_threat": 0.105,
+        "chance_creation": -0.208,
+        "defensive_prevention": 0.26,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8650,
+      "team": "Liverpool",
+      "archetype_key": "territorial_controller",
+      "archetype": "Territorial controller",
+      "route_expression": {
+        "box_pressure": 0.406,
+        "set_pieces": 0.163,
+        "wide_delivery": 0.054,
+        "high_press": 0.52,
+        "direct_transition": -0.089
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.11,
+        "set_pieces": -0.022,
+        "wide_delivery": -0.148,
+        "high_press": 0.361,
+        "direct_transition": 0.455
+      },
+      "projected_xi": {
+        "attacking_unit": 0.304,
+        "scoring_threat": 0.101,
+        "chance_creation": 0.309,
+        "defensive_prevention": 0.205,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8456,
+      "team": "Manchester City",
+      "archetype_key": "territorial_controller",
+      "archetype": "Territorial controller",
+      "route_expression": {
+        "box_pressure": 0.633,
+        "set_pieces": 0.136,
+        "wide_delivery": -0.011,
+        "high_press": 1.131,
+        "direct_transition": -0.268
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.333,
+        "set_pieces": -0.127,
+        "wide_delivery": -0.365,
+        "high_press": 0.763,
+        "direct_transition": 0.735
+      },
+      "projected_xi": {
+        "attacking_unit": 0.733,
+        "scoring_threat": 0.429,
+        "chance_creation": 0.711,
+        "defensive_prevention": 0.289,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 10260,
+      "team": "Manchester United",
+      "archetype_key": "developing_possession",
+      "archetype": "Developing possession",
+      "route_expression": {
+        "box_pressure": 0.237,
+        "set_pieces": -0.053,
+        "wide_delivery": -0.07,
+        "high_press": -0.336,
+        "direct_transition": -0.114
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.134,
+        "set_pieces": 0.159,
+        "wide_delivery": -0.139,
+        "high_press": 0.206,
+        "direct_transition": 0.237
+      },
+      "projected_xi": {
+        "attacking_unit": 0.463,
+        "scoring_threat": 0.079,
+        "chance_creation": 0.18,
+        "defensive_prevention": 0.425,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 10261,
+      "team": "Newcastle United",
+      "archetype_key": "adaptive_hybrid",
+      "archetype": "Adaptive hybrid",
+      "route_expression": {
+        "box_pressure": 0.057,
+        "set_pieces": 0.011,
+        "wide_delivery": 0.141,
+        "high_press": 0.031,
+        "direct_transition": 0.039
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.192,
+        "set_pieces": 0.115,
+        "wide_delivery": 0.133,
+        "high_press": 0.107,
+        "direct_transition": 0.098
+      },
+      "projected_xi": {
+        "attacking_unit": 0.113,
+        "scoring_threat": 0.174,
+        "chance_creation": 0.043,
+        "defensive_prevention": 0.171,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 10203,
+      "team": "Nottingham Forest",
+      "archetype_key": "direct_wide_set_piece",
+      "archetype": "Direct / wide / set-piece",
+      "route_expression": {
+        "box_pressure": -0.12,
+        "set_pieces": -0.023,
+        "wide_delivery": 0.044,
+        "high_press": 0.153,
+        "direct_transition": 0.045
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.028,
+        "set_pieces": -0.048,
+        "wide_delivery": -0.003,
+        "high_press": -0.23,
+        "direct_transition": -0.137
+      },
+      "projected_xi": {
+        "attacking_unit": 0.023,
+        "scoring_threat": -0.232,
+        "chance_creation": -0.167,
+        "defensive_prevention": 0.186,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 8472,
+      "team": "Sunderland",
+      "archetype_key": "adaptive_hybrid",
+      "archetype": "Adaptive hybrid",
+      "route_expression": {
+        "box_pressure": -0.145,
+        "set_pieces": -0.115,
+        "wide_delivery": -0.075,
+        "high_press": -0.703,
+        "direct_transition": -0.025
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.015,
+        "set_pieces": -0.134,
+        "wide_delivery": -0.002,
+        "high_press": -0.165,
+        "direct_transition": -0.085
+      },
+      "projected_xi": {
+        "attacking_unit": -0.154,
+        "scoring_threat": -0.19,
+        "chance_creation": -0.247,
+        "defensive_prevention": 0.153,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 8586,
+      "team": "Tottenham Hotspur",
+      "archetype_key": "developing_possession",
+      "archetype": "Developing possession",
+      "route_expression": {
+        "box_pressure": -0.133,
+        "set_pieces": 0.049,
+        "wide_delivery": 0.028,
+        "high_press": 0.275,
+        "direct_transition": -0.21
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.082,
+        "set_pieces": 0.186,
+        "wide_delivery": 0.035,
+        "high_press": 0.169,
+        "direct_transition": -0.02
+      },
+      "projected_xi": {
+        "attacking_unit": 0.147,
+        "scoring_threat": 0.216,
+        "chance_creation": 0.072,
+        "defensive_prevention": -0.004,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    }
+  ]
+}

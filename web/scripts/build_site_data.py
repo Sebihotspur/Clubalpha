@@ -10,6 +10,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 ARTIFACT_DIR = ROOT / "artifacts/prediction_lab/2026-08-24"
+STYLE_MATCHUP_ARTIFACT = ROOT / "artifacts/style_matchup/2026-08-25/style-matchups.json"
+ROUND_ROBIN_DIR = ROOT / "artifacts/round_robin/2026-08-25"
 PUBLIC_DIR = ROOT / "web/public"
 
 
@@ -28,6 +30,9 @@ def load_jsonl(path: Path):
 def build():
     report = load_json(ARTIFACT_DIR / "report.json")
     predictions = load_jsonl(ARTIFACT_DIR / "predictions.jsonl")
+    style_matchup = load_json(STYLE_MATCHUP_ARTIFACT)
+    round_robin_summary = load_json(ROUND_ROBIN_DIR / "summary.json")
+    round_robin_predictions = load_jsonl(ROUND_ROBIN_DIR / "predictions.jsonl")
     by_match = {int(row["match_id"]): row for row in report["next_round"]}
     official_match_id = 5795429
 
@@ -67,7 +72,7 @@ def build():
     fair_decimal = 1.0 / official["probabilities"]["over_2_5"]
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0",
+            "site_version": "clubalpha_web_v0_1",
             "prediction_version": report["prediction_version"],
             "as_of": report["as_of"],
             "generated_at_utc": report["generated_at_utc"],
@@ -95,6 +100,39 @@ def build():
             ],
         },
         "predictions": web_predictions,
+        "style_matchup": style_matchup,
+        "round_robin": {
+            "meta": {
+                key: round_robin_summary[key]
+                for key in (
+                    "round_robin_version",
+                    "as_of",
+                    "format",
+                    "teams",
+                    "fixtures",
+                    "matches_per_team",
+                    "simulations_per_fixture",
+                    "total_match_simulations",
+                    "decision_boundaries",
+                    "quality_flags",
+                )
+            },
+            "league_table": round_robin_summary["league_table"],
+            "fixtures": [
+                {
+                    "match_id": row["fixture"]["match_id"],
+                    "home_team": row["fixture"]["home_team"],
+                    "away_team": row["fixture"]["away_team"],
+                    "predicted_xg": row["predicted_xg"],
+                    "probabilities": {
+                        key: row["probabilities"][key]
+                        for key in ("home_win", "draw", "away_win")
+                    },
+                    "style_matchup": row["style_matchup"],
+                }
+                for row in round_robin_predictions
+            ],
+        },
         "ledger": {
             "status": "shadow_collection",
             "matches_logged": 0,
@@ -133,6 +171,7 @@ def build():
                 "Market prices are not yet an automated model input",
                 "Historical August 11 roster is reconstructed and flagged",
                 "Player scorer and assist heads remain deferred",
+                "Style Matchup v0 is a zero-weight research challenger",
             ],
         },
     }
@@ -143,7 +182,7 @@ def build():
         json.dumps(site, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    for route in ("predictions", "ledger", "methodology"):
+    for route in ("predictions", "matchups", "ledger", "methodology"):
         route_dir = PUBLIC_DIR / route
         route_dir.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(PUBLIC_DIR / "index.html", route_dir / "index.html")
