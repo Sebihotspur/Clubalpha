@@ -81,14 +81,19 @@ Club Dynamics has no composite score and does not modify Performance Form.
 Its first role is to make club condition explainable; its later role is to
 support opponent-specific style matchups after validation.
 
-The Squad Selection Prior is the bridge between Player Quality and Club Form.
-It uses official recent lineup evidence and workload to estimate opportunity;
-Alpha Ability remains an attached quality measure and never predicts the
-manager's selection. Alpha grading position remains separate from tactical
-selection role, player minutes are capped at 90, and incomplete lineup or
-historical coverage reduces evidence strength. The joined Club Form Snapshot
-materializes every component in one dated team record without creating another
-rating formula.
+The Squad Selection layer is the bridge between Player Quality and Club Form.
+Its fixture-specific v2 policy uses the latest five competitive matches to
+estimate start probability, appearance probability, and expected minutes. A
+three-match formation vote and the latest declared XI capture manager intent.
+Alpha Ability remains completely outside selection. Alpha grading position
+also stays separate from tactical selection role, player minutes are capped at
+90, and the team allocation is capped at 990.
+
+Only after the XI and minutes are frozen does Role-aware Alpha attach the
+locked player grades. It exposes scoring threat, chance creation, and defensive
+prevention as separate expected-minute-weighted contexts. These are inputs for
+later market models, not new player grades or probabilities. The original
+non-fixture-specific v1 prior remains the auditable baseline.
 
 ## 4. Historical Fixtures
 
@@ -185,7 +190,8 @@ Team
 │   ├── Performance Form
 │   ├── Club Dynamics
 │   ├── Availability
-│   └── Squad Selection Prior
+│   └── Fixture-specific Squad Selection
+│       └── Role-aware Alpha context
 └── Relevant Historical Evidence
 ```
 

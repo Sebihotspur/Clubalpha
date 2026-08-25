@@ -1,0 +1,121 @@
+{
+  "version": "clubalpha_squad_selection_v2_challenger",
+  "status": "activate",
+  "source": "historical_match_player_stats.jsonl",
+  "method": {
+    "chronological": true,
+    "future_rows_used": false,
+    "candidate_pool": "players previously observed for that club",
+    "unseen_target_starters_scored_as_misses": true,
+    "evidence_window_matches": 5,
+    "baseline": "v1-style recency-weighted minutes plus latest exact shape, on the same candidates and evidence window",
+    "development_share": 0.6,
+    "holdout_share": 0.4,
+    "activation_metrics_use_holdout_only": true
+  },
+  "coverage": {
+    "source_rows": 17342,
+    "source_matches": 569,
+    "source_teams": 50,
+    "evaluated_team_projections": 1088,
+    "evaluated_matches_with_both_sides": 541
+  },
+  "v1_minutes_policy": {
+    "team_projections": 1088,
+    "mean_xi_hits_of_11": 8.5,
+    "xi_hit_rate": 0.772727,
+    "xi_jaccard": 0.649494,
+    "start_brier": 0.184548,
+    "expected_minutes_mae": 22.789511,
+    "formation_accuracy": 0.686581,
+    "role_shape_accuracy": 0.738051,
+    "unseen_actual_starters": 547,
+    "candidate_starter_coverage": 0.954295
+  },
+  "v2_probability_policy": {
+    "team_projections": 1088,
+    "mean_xi_hits_of_11": 8.55239,
+    "xi_hit_rate": 0.77749,
+    "xi_jaccard": 0.657177,
+    "start_brier": 0.184548,
+    "expected_minutes_mae": 22.789511,
+    "formation_accuracy": 0.70864,
+    "role_shape_accuracy": 0.752757,
+    "unseen_actual_starters": 547,
+    "candidate_starter_coverage": 0.954295
+  },
+  "chronological_development": {
+    "target_count": 652,
+    "v1_minutes_policy": {
+      "team_projections": 652,
+      "mean_xi_hits_of_11": 8.515337,
+      "xi_hit_rate": 0.774122,
+      "xi_jaccard": 0.651203,
+      "start_brier": 0.19929,
+      "expected_minutes_mae": 24.112561,
+      "formation_accuracy": 0.682515,
+      "role_shape_accuracy": 0.736196,
+      "unseen_actual_starters": 462,
+      "candidate_starter_coverage": 0.935583
+    },
+    "v2_probability_policy": {
+      "team_projections": 652,
+      "mean_xi_hits_of_11": 8.547546,
+      "xi_hit_rate": 0.77705,
+      "xi_jaccard": 0.655959,
+      "start_brier": 0.19929,
+      "expected_minutes_mae": 24.112561,
+      "formation_accuracy": 0.697853,
+      "role_shape_accuracy": 0.742331,
+      "unseen_actual_starters": 462,
+      "candidate_starter_coverage": 0.935583
+    }
+  },
+  "chronological_holdout": {
+    "target_count": 436,
+    "v1_minutes_policy": {
+      "team_projections": 436,
+      "mean_xi_hits_of_11": 8.477064,
+      "xi_hit_rate": 0.770642,
+      "xi_jaccard": 0.646937,
+      "start_brier": 0.162503,
+      "expected_minutes_mae": 20.811006,
+      "formation_accuracy": 0.692661,
+      "role_shape_accuracy": 0.740826,
+      "unseen_actual_starters": 85,
+      "candidate_starter_coverage": 0.982277
+    },
+    "v2_probability_policy": {
+      "team_projections": 436,
+      "mean_xi_hits_of_11": 8.559633,
+      "xi_hit_rate": 0.778148,
+      "xi_jaccard": 0.658997,
+      "start_brier": 0.162503,
+      "expected_minutes_mae": 20.811006,
+      "formation_accuracy": 0.724771,
+      "role_shape_accuracy": 0.768349,
+      "unseen_actual_starters": 85,
+      "candidate_starter_coverage": 0.982277
+    },
+    "delta_v2_minus_v1": {
+      "xi_hit_rate": 0.007506,
+      "mean_xi_hits_of_11": 0.082569,
+      "expected_minutes_mae": 0.0,
+      "formation_accuracy": 0.03211
+    }
+  },
+  "delta_v2_minus_v1": {
+    "xi_hit_rate": 0.004763,
+    "mean_xi_hits_of_11": 0.05239,
+    "start_brier": 0.0,
+    "expected_minutes_mae": 0.0,
+    "formation_accuracy": 0.022059
+  },
+  "activation_gate": {
+    "requires_higher_xi_hit_rate": true,
+    "requires_no_worse_expected_minutes_mae": true,
+    "evaluated_on": "final_40_percent_chronological_holdout",
+    "passed": true,
+    "decision": "promote_v2"
+  }
+}

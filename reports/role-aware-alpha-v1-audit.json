@@ -1,0 +1,285 @@
+{
+  "version": "clubalpha_role_aware_alpha_v1",
+  "source": "player_grades.jsonl",
+  "player_grade_formula_versions": [
+    "clubalpha_player_quality_v2"
+  ],
+  "minimum_reference_minutes": 700.0,
+  "players": 1094,
+  "players_by_alpha_position": {
+    "CB": 201,
+    "CM": 235,
+    "FB": 187,
+    "FW": 390,
+    "GK": 81
+  },
+  "reference_players": 837,
+  "reference_players_by_alpha_position": {
+    "CB": 164,
+    "CM": 182,
+    "FB": 153,
+    "FW": 279,
+    "GK": 59
+  },
+  "pillars": {
+    "scoring_threat": {
+      "FW": {
+        "configured_metrics": [
+          "npg90",
+          "xg90",
+          "bt90",
+          "sot90"
+        ],
+        "players": 390,
+        "players_with_pillar": 390,
+        "reference_players": 279,
+        "reference_players_with_pillar": 279,
+        "metric_supply": {
+          "bt90": 390,
+          "npg90": 390,
+          "sot90": 390,
+          "xg90": 372
+        }
+      },
+      "CM": {
+        "configured_metrics": [
+          "gxg90",
+          "bt90"
+        ],
+        "players": 235,
+        "players_with_pillar": 235,
+        "reference_players": 182,
+        "reference_players_with_pillar": 182,
+        "metric_supply": {
+          "bt90": 235,
+          "gxg90": 235
+        }
+      },
+      "FB": {
+        "configured_metrics": [
+          "gxg90"
+        ],
+        "players": 187,
+        "players_with_pillar": 187,
+        "reference_players": 153,
+        "reference_players_with_pillar": 153,
+        "metric_supply": {
+          "gxg90": 187
+        }
+      },
+      "CB": {
+        "configured_metrics": [
+          "ga90"
+        ],
+        "players": 201,
+        "players_with_pillar": 201,
+        "reference_players": 164,
+        "reference_players_with_pillar": 164,
+        "metric_supply": {
+          "ga90": 201
+        }
+      },
+      "GK": {
+        "configured_metrics": [],
+        "players": 81,
+        "players_with_pillar": 0,
+        "reference_players": 59,
+        "reference_players_with_pillar": 0,
+        "metric_supply": {}
+      }
+    },
+    "chance_creation": {
+      "FW": {
+        "configured_metrics": [
+          "kp90",
+          "axa90",
+          "pf390",
+          "lbp90",
+          "drib90"
+        ],
+        "players": 390,
+        "players_with_pillar": 390,
+        "reference_players": 279,
+        "reference_players_with_pillar": 279,
+        "metric_supply": {
+          "axa90": 390,
+          "drib90": 390,
+          "kp90": 390,
+          "lbp90": 149,
+          "pf390": 390
+        }
+      },
+      "CM": {
+        "configured_metrics": [
+          "axa90",
+          "kp90",
+          "pf390",
+          "lbp90",
+          "drib90"
+        ],
+        "players": 235,
+        "players_with_pillar": 235,
+        "reference_players": 182,
+        "reference_players_with_pillar": 182,
+        "metric_supply": {
+          "axa90": 235,
+          "drib90": 235,
+          "kp90": 235,
+          "lbp90": 83,
+          "pf390": 235
+        }
+      },
+      "FB": {
+        "configured_metrics": [
+          "axa90",
+          "kp90",
+          "lbp90",
+          "drib90",
+          "crosspct"
+        ],
+        "players": 187,
+        "players_with_pillar": 187,
+        "reference_players": 153,
+        "reference_players_with_pillar": 153,
+        "metric_supply": {
+          "axa90": 187,
+          "crosspct": 121,
+          "drib90": 187,
+          "kp90": 187,
+          "lbp90": 60
+        }
+      },
+      "CB": {
+        "configured_metrics": [
+          "passpct",
+          "lbp90"
+        ],
+        "players": 201,
+        "players_with_pillar": 186,
+        "reference_players": 164,
+        "reference_players_with_pillar": 164,
+        "metric_supply": {
+          "lbp90": 73,
+          "passpct": 177
+        }
+      },
+      "GK": {
+        "configured_metrics": [
+          "dist"
+        ],
+        "players": 81,
+        "players_with_pillar": 62,
+        "reference_players": 59,
+        "reference_players_with_pillar": 59,
+        "metric_supply": {
+          "dist": 62
+        }
+      }
+    },
+    "defensive_prevention": {
+      "FW": {
+        "configured_metrics": [
+          "press90"
+        ],
+        "players": 390,
+        "players_with_pillar": 275,
+        "reference_players": 279,
+        "reference_players_with_pillar": 254,
+        "metric_supply": {
+          "press90": 275
+        }
+      },
+      "CM": {
+        "configured_metrics": [
+          "gnd",
+          "aer",
+          "rec90",
+          "disp90"
+        ],
+        "players": 235,
+        "players_with_pillar": 235,
+        "reference_players": 182,
+        "reference_players_with_pillar": 182,
+        "metric_supply": {
+          "aer": 64,
+          "disp90": 235,
+          "gnd": 185,
+          "rec90": 235
+        }
+      },
+      "FB": {
+        "configured_metrics": [
+          "err90",
+          "tkl90",
+          "gnd",
+          "int90",
+          "drp90",
+          "aer"
+        ],
+        "players": 187,
+        "players_with_pillar": 187,
+        "reference_players": 153,
+        "reference_players_with_pillar": 153,
+        "metric_supply": {
+          "aer": 65,
+          "drp90": 187,
+          "err90": 187,
+          "gnd": 156,
+          "int90": 187,
+          "tkl90": 187
+        }
+      },
+      "CB": {
+        "configured_metrics": [
+          "err90",
+          "aer",
+          "tkl90",
+          "int90",
+          "gnd",
+          "drp90",
+          "clrblk90"
+        ],
+        "players": 201,
+        "players_with_pillar": 201,
+        "reference_players": 164,
+        "reference_players_with_pillar": 164,
+        "metric_supply": {
+          "aer": 135,
+          "clrblk90": 201,
+          "drp90": 201,
+          "err90": 201,
+          "gnd": 138,
+          "int90": 201,
+          "tkl90": 201
+        }
+      },
+      "GK": {
+        "configured_metrics": [
+          "gprev90",
+          "claims90",
+          "sweep90",
+          "dist",
+          "err90"
+        ],
+        "players": 81,
+        "players_with_pillar": 81,
+        "reference_players": 59,
+        "reference_players_with_pillar": 59,
+        "metric_supply": {
+          "claims90": 81,
+          "dist": 62,
+          "err90": 81,
+          "gprev90": 78,
+          "sweep90": 81
+        }
+      }
+    }
+  },
+  "decision_boundaries": {
+    "locked_alpha_formula_changed": false,
+    "selection_policy_changed_by_alpha": false,
+    "pillar_metrics_are_existing_grade_metrics_only": true,
+    "missing_metric_treated_as_zero": false,
+    "market_probabilities_created": false
+  }
+}

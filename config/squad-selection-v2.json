@@ -1,0 +1,50 @@
+{
+  "version": "clubalpha_squad_selection_v2_challenger",
+  "status": "challenger_not_activated",
+  "question": "Who is likely to start this fixture, appear, and play how many minutes?",
+  "expected_team_minutes": 990.0,
+  "recent_evidence": {
+    "maximum_matches": 5,
+    "match_rank_decay": 0.75,
+    "same_competition_weight": 1.0,
+    "cross_competition_weight": 0.75,
+    "note": "The latest five completed competitive matches are used. The immediately previous match has full recency weight; each older match retains 75% of the next-newer match's weight. Cross-competition evidence is discounted but remains usable."
+  },
+  "shape": {
+    "maximum_matches": 3,
+    "method": "recency_weighted_declared_formation_vote",
+    "note": "Up to three exact declared XIs vote on the tactical role shape. Player Alpha Ability is not part of the vote."
+  },
+  "selection": {
+    "latest_declared_start_bonus_minutes": 15.0,
+    "tuning": {
+      "development_share": 0.6,
+      "candidate_bonus_minutes": [0.0, 2.5, 5.0, 7.5, 10.0, 15.0, 20.0, 30.0],
+      "selected_on": "mean exact-XI starter hits in the earlier chronological development sample"
+    },
+    "note": "The latest declared XI is the strongest manager-intent signal. The 15-minute persistence bonus won on the first 60% chronological development sample and is judged only on the untouched final 40%."
+  },
+  "minutes": {
+    "default_starter_minutes": 75.0,
+    "default_substitute_minutes": 20.0,
+    "formula": "P(start) * E(minutes | start) + (P(appear) - P(start)) * E(minutes | substitute)",
+    "note": "Raw expectations remain visible. A separate capped allocation is normalized to 990 team minutes for downstream team aggregation."
+  },
+  "default_role_slots": {
+    "GK": 1,
+    "DEF": 4,
+    "MID": 3,
+    "FWD": 3
+  },
+  "availability": {
+    "questionable_terms": ["doubtful", "day to day", "back in training"],
+    "unknown_terms": ["unknown"],
+    "hard_exclusion_statuses": ["unavailable"]
+  },
+  "decision_boundaries": {
+    "uses_alpha_to_select_players": false,
+    "confirmed_lineup": false,
+    "selection_probabilities_calibrated": false,
+    "activation_gate": "Must improve chronological XI hit rate and expected-minutes MAE against the minutes-only v1 policy emulation before replacing v1."
+  }
+}
