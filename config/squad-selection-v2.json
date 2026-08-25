@@ -8,7 +8,12 @@
     "match_rank_decay": 0.75,
     "same_competition_weight": 1.0,
     "cross_competition_weight": 0.75,
-    "note": "The latest five completed competitive matches are used. The immediately previous match has full recency weight; each older match retains 75% of the next-newer match's weight. Cross-competition evidence is discounted but remains usable."
+    "source_weights": {
+      "current_season": 2.0,
+      "preseason": 0.5,
+      "previous_season": 0.25
+    },
+    "note": "The latest five completed matches are used. During the season transition, the new season is the primary navigator, preseason confirms current personnel, and the old season becomes a fallback. Unlabelled historical backtests retain weight 1.0. Each older match retains 75% of the next-newer match's weight and cross-competition evidence is additionally discounted."
   },
   "shape": {
     "maximum_matches": 3,
@@ -17,12 +22,17 @@
   },
   "selection": {
     "latest_declared_start_bonus_minutes": 15.0,
+    "latest_declared_start_bonus_by_source": {
+      "current_season": 15.0,
+      "preseason": 0.0,
+      "previous_season": 15.0
+    },
     "tuning": {
       "development_share": 0.6,
       "candidate_bonus_minutes": [0.0, 2.5, 5.0, 7.5, 10.0, 15.0, 20.0, 30.0],
       "selected_on": "mean exact-XI starter hits in the earlier chronological development sample"
     },
-    "note": "The latest declared XI is the strongest manager-intent signal. The 15-minute persistence bonus won on the first 60% chronological development sample and is judged only on the untouched final 40%."
+    "note": "The latest competitive XI is the strongest manager-intent signal. The 15-minute persistence bonus won on the first 60% chronological development sample and is judged only on the untouched final 40%. Preseason receives no single-XI bonus because split squads and experimental lineups made its latest formation unreliable."
   },
   "minutes": {
     "default_starter_minutes": 75.0,

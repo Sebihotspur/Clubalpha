@@ -12,10 +12,24 @@ probabilities.
 
 ## Minimal model
 
-Only the five latest completed competitive matches before kickoff enter the
-projection. The latest match has full weight and each older match keeps 75% of
-the next-newer match's weight. A different competition receives 75% of the
+Only the five latest completed matches before kickoff enter the projection.
+The latest match has full rank weight and each older match keeps 75% of the
+next-newer match's weight. A different competition receives 75% of the
 same-competition weight.
+
+At the season boundary, evidence also carries a transparent source weight:
+
+```text
+current season    2.00
+preseason         0.50
+previous season   0.25
+```
+
+The current competitive lineup is therefore the primary navigator, preseason
+confirms the new personnel hierarchy, and the old season is a fallback. The
+latest-XI persistence bonus applies to competitive evidence only. Preseason
+receives no single-lineup bonus because split squads and experimental shapes
+made its latest XI unreliable.
 
 For each player:
 
@@ -59,6 +73,19 @@ The activation gate passes, but the gain is intentionally described as modest.
 The output is a stronger fixture prior, not a guarantee.
 The start and appearance values are recency-weighted empirical frequencies,
 not yet calibrated probabilities; the gate promotes the XI/minute policy only.
+
+## Early-season transition check
+
+The first 2026/27 Premier League round supplies a small, separate transition
+check. Using only previous-season competitive evidence found 6.10 opening-day
+starters per club. Adding the conservative source hierarchy above raised that
+to 6.35 across all twenty clubs and from 7.07 to 7.43 among the fourteen clubs
+with usable preseason player detail. This is useful directional evidence, not
+a large enough sample to fit another formula.
+
+Preseason formation reduced opening-day formation accuracy, so once a current
+competitive XI exists its shape wins. Preseason supports personnel continuity;
+it does not dictate the competitive formation.
 
 Run the reproducible backtest with an explicit normalized player-match source:
 

@@ -80,6 +80,7 @@ def _match_weight(
     competition_id: Any,
     target_competition_id: Any,
     config: dict[str, Any],
+    selection_source: Any = None,
 ) -> float:
     decay = float(config["recent_evidence"]["match_rank_decay"])
     same = float(config["recent_evidence"]["same_competition_weight"])
@@ -90,7 +91,9 @@ def _match_weight(
         and str(competition_id) == str(target_competition_id)
         else cross
     )
-    return (decay**rank) * competition_weight
+    source_weights = config["recent_evidence"].get("source_weights") or {}
+    source_weight = float(source_weights.get(str(selection_source), 1.0))
+    return (decay**rank) * competition_weight * source_weight
 
 
 def _weighted_shape(
@@ -242,6 +245,7 @@ def project_team_selection(
     )
     weighted_matches: list[tuple[int, list[dict[str, Any]], float]] = []
     latest_exact_starters: set[int] = set()
+    latest_exact_source: str | None = None
     total_match_weight = 0.0
     exact_lineup_weight = 0.0
     starts: dict[int, float] = defaultdict(float)
@@ -259,6 +263,7 @@ def project_team_selection(
             reference.get("competition_id"),
             target_competition_id,
             config,
+            reference.get("selection_source"),
         )
         total_match_weight += weight
         starters = [row for row in rows if row.get("is_starter") is True]
@@ -267,6 +272,7 @@ def project_team_selection(
             exact_lineup_weight += weight
             if not latest_exact_starters:
                 latest_exact_starters = {int(row["player_id"]) for row in starters}
+                latest_exact_source = str(reference.get("selection_source") or "default")
         for row in rows:
             player_id = int(row["player_id"])
             if player_id not in candidate_by_player:
@@ -360,10 +366,19 @@ def project_team_selection(
     }
     for row in player_rows:
         row["expected_minutes"] = allocated.get(row["player_id"], 0.0)
+        default_start_bonus = float(
+            config["selection"]["latest_declared_start_bonus_minutes"]
+        )
+        source_bonuses = config["selection"].get(
+            "latest_declared_start_bonus_by_source"
+        ) or {}
+        start_bonus = float(
+            source_bonuses.get(str(latest_exact_source), default_start_bonus)
+        )
         row["selection_score"] = round(
             float(row["expected_minutes"])
             + (
-                float(config["selection"]["latest_declared_start_bonus_minutes"])
+                start_bonus
                 if row["latest_declared_starter"]
                 else 0.0
             ),
@@ -421,6 +436,7 @@ def project_team_selection(
             "prior_match_ids": [match_id for match_id, _ in recent],
             "weighted_matches": round(total_match_weight, 6),
             "weighted_exact_lineups": round(exact_lineup_weight, 6),
+            "latest_exact_lineup_source": latest_exact_source,
             "candidate_players": len(candidate_rows),
         },
         "decision_boundaries": {
@@ -471,6 +487,7 @@ def minutes_only_baseline(
             rows[0].get("competition_id"),
             target_competition_id,
             config,
+            rows[0].get("selection_source"),
         )
         exact = len([row for row in rows if row.get("is_starter") is True]) == 11
         if exact:

@@ -171,6 +171,46 @@ class SquadSelectionV2Tests(unittest.TestCase):
         self.assertEqual(result["evidence"]["prior_matches"], 1)
         self.assertEqual(len(result["predicted_starting_xi"]), 11)
 
+    def test_transition_sources_receive_explicit_evidence_weights(self):
+        config = dict(CONFIG)
+        config["recent_evidence"] = {
+            **CONFIG["recent_evidence"],
+            "source_weights": {
+                "current_season": 2.0,
+                "preseason": 0.5,
+                "previous_season": 0.25,
+            },
+        }
+        config["selection"] = {
+            "latest_declared_start_bonus_minutes": 15.0,
+            "latest_declared_start_bonus_by_source": {
+                "current_season": 15.0,
+                "preseason": 0.0,
+            },
+        }
+        current = [
+            {**row, "selection_source": "current_season"}
+            for row in match_rows(2, "2026-08-23T15:00:00Z")
+        ]
+        preseason = [
+            {**row, "selection_source": "preseason", "competition_id": 489}
+            for row in match_rows(1, "2026-08-20T15:00:00Z")
+        ]
+        result = project_team_selection(
+            [*preseason, *current],
+            [candidate(player_id) for player_id in range(1, 17)],
+            "2026-08-26T15:00:00Z",
+            47,
+            config,
+            team_id=10,
+            team="Club",
+        )
+        expected_weight = 2.0 + 0.75 * 0.75 * 0.5
+        self.assertAlmostEqual(result["evidence"]["weighted_matches"], expected_weight)
+        self.assertEqual(
+            result["evidence"]["latest_exact_lineup_source"], "current_season"
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
