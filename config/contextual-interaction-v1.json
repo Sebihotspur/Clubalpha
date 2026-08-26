@@ -1,0 +1,35 @@
+{
+  "version": "clubalpha_contextual_interaction_v1_shadow",
+  "status": "shadow_sensitivity_not_validated",
+  "question": "How does this opponent-specific interaction change each team's base scoring environment?",
+  "channel_evidence_reliability": {
+    "measured": 1.0,
+    "partial": 0.7,
+    "hypothesis": 0.45
+  },
+  "projected_xi_confidence": {
+    "high": 1.0,
+    "medium": 0.75,
+    "low": 0.5
+  },
+  "route_preference_temperature": 1.0,
+  "signal_saturation_z": 0.35,
+  "maximum_absolute_log_xg_adjustment": 0.1,
+  "simulation": {
+    "draws": 50000,
+    "totals_lines": [2.5, 3.5]
+  },
+  "display_thresholds": {
+    "probability_change": 0.01,
+    "total_xg_change": 0.03
+  },
+  "decision_boundaries": {
+    "archetype_label_used_in_math": false,
+    "base_60_30_10_modified": false,
+    "coefficient_learned_from_residuals": false,
+    "probability_validated": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  },
+  "note": "This first live shadow uses a symmetric 10% maximum xG sensitivity as a safety rail, not a learned coefficient. The interaction is continuous, directional, reliability-shrunk, and applied after the locked base xG. It must be fitted to chronological out-of-sample base-model residuals before activation."
+}

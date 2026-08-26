@@ -1,0 +1,47 @@
+{
+  "archive_version": "clubalpha_contextual_interaction_archive_v1",
+  "status": "frozen_shadow",
+  "as_of": "2026-08-26",
+  "frozen_at_utc": "2026-08-26T15:36:26.853269+00:00",
+  "experiment": {
+    "fixtures": 10,
+    "unique_match_ids": 10,
+    "competition": "Premier League",
+    "simulations_per_fixture": 50000,
+    "outcomes_used_at_freeze": false
+  },
+  "model": {
+    "base_fixture_weights": {
+      "club_form": 0.6,
+      "projected_xi_player_quality": 0.3,
+      "historical_fixture_residual": 0.1
+    },
+    "context_directional": true,
+    "archetype_labels_used_in_math": false,
+    "context_coefficient_learned": false,
+    "capital_deployment_allowed": false
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "hashes": {
+      "artifacts/contextual_interaction/2026-08-26/README.md": "1e6098d7f8c42dc92805d011382ceb8573517eb90202baa24c71e1ed646d493e",
+      "artifacts/contextual_interaction/2026-08-26/predictions.jsonl": "f677838a26c7268998bb08444aa0a2e605a009bed19f42039e49454eb2807d50",
+      "artifacts/contextual_interaction/2026-08-26/report.json": "b15a6f38a450faeaa7681d743e8a800fbf3a288116ac59c32fa1678104855f62",
+      "artifacts/prediction_lab/2026-08-24/predictions.jsonl": "26a2922f6be6e960d3077e6116b51522ec7beabbfcdbb4823626736a95241e88",
+      "artifacts/style_matchup/2026-08-25/style-matchups.json": "3c07a749c9d5ed97a7a579018b8d10c657f3d33dbd7dbc128feba27b3937bc70",
+      "clubalpha/contextual_interaction.py": "c9de11e7052c5f3bbe3a31a91c1f4bcfa7d02c69f700c2cd7037fd25f55f6fe7",
+      "clubalpha/style_matchup.py": "3245d363ff958b525738d700efee426f2c595ad7614094552b4270d682002a1e",
+      "config/contextual-interaction-v1.json": "159888c285f53d7b29d9b9ebb4d0caf1ea593f899f61f971ec2dc9b716dbd924",
+      "research/run_contextual_next_round_v1.py": "03797378c06f7a4e9f8fd99228fa10dc914b3448c0c1ec688b22ad2433ac4bed",
+      "scripts/freeze_contextual_interaction_archive.py": "af99d9557dc08f7ce3de1a0eab86f4b2ae998d1584d2ea247b7ddd4a97961904"
+    },
+    "manifest_self_hashed": false,
+    "append_only_result_stream_hashed": false
+  },
+  "safeguards": [
+    "never_regenerate_this_dated_archive_in_place",
+    "append_observed_results_without_mutating_predictions",
+    "fit_context_only_on_earlier_residuals",
+    "do_not_deploy_capital_from_this_shadow_experiment"
+  ]
+}

@@ -196,6 +196,27 @@ The point estimate remains visible for audit, but cannot create false
 confidence. The complete contract is documented in
 [Prediction Lab v0](prediction-lab-v0.md).
 
+## Contextual Interaction v1
+
+Contextual Interaction sits after the locked 60/30/10 fixture foundation. It
+does not replace or reweight Club Form, Projected-XI Player Quality, or the
+Historical Fixture residual. Instead, it asks how each attack's continuously
+measured routes interact with the opponent's exposures and adjusts the two base
+expected-goal values independently:
+
+```text
+60/30/10 Fixture Intelligence -> base xG
+route expression + opponent exposure + XI execution -> bounded context signal
+base xG * exp(max sensitivity * context signal * reliability) -> contextual xG
+contextual xG -> 50,000 coherent simulations
+```
+
+Archetype names are display labels only. The first implementation is a frozen
+shadow sensitivity with zero capital weight because its maximum sensitivity is
+a safety rail, not a coefficient learned from chronological residuals. See
+[Contextual Interaction v1](contextual-interaction-v1.md) for the exact
+calculation, reliability shrinkage, and activation boundary.
+
 ## First output
 
 The first useful product is a Football Intelligence Snapshot:

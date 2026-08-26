@@ -236,6 +236,28 @@ weight in the locked 60/30/10 Fixture State composite. Box and set-piece
 channels use measured defensive exposures; high-press and transition channels
 remain style hypotheses until they pass chronological walk-forward tests.
 
+## Contextual Interaction v1
+
+Run the five-channel style interaction over the frozen upcoming fixture
+baseline without changing the locked 60/30/10 foundation:
+
+```bash
+python3 research/run_contextual_next_round_v1.py
+```
+
+The layer adjusts home and away base xG independently with a continuous,
+bounded, evidence-reliability-shrunk multiplier, then reruns 50,000 coherent
+simulations. Archetype names never enter the calculation. The dated output in
+`artifacts/contextual_interaction/2026-08-26/` is shadow sensitivity only; its
+context coefficient is not learned and it carries zero capital weight. See
+[`docs/contextual-interaction-v1.md`](docs/contextual-interaction-v1.md).
+
+Freeze or verify that archive with:
+
+```bash
+python3 scripts/freeze_contextual_interaction_archive.py
+```
+
 The website also publishes a fixed-strength double round robin built from the
 same dated intelligence:
 
