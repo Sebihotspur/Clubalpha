@@ -5,10 +5,17 @@ from __future__ import annotations
 
 import json
 import shutil
+import sys
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from clubalpha.round_robin_archive import validate_results  # noqa: E402
+
+
 ARTIFACT_DIR = ROOT / "artifacts/prediction_lab/2026-08-24"
 STYLE_MATCHUP_ARTIFACT = ROOT / "artifacts/style_matchup/2026-08-25/style-matchups.json"
 ROUND_ROBIN_DIR = ROOT / "artifacts/round_robin/2026-08-25"
@@ -33,6 +40,10 @@ def build():
     style_matchup = load_json(STYLE_MATCHUP_ARTIFACT)
     round_robin_summary = load_json(ROUND_ROBIN_DIR / "summary.json")
     round_robin_predictions = load_jsonl(ROUND_ROBIN_DIR / "predictions.jsonl")
+    round_robin_results = load_jsonl(ROUND_ROBIN_DIR / "results.jsonl")
+    result_validation = validate_results(
+        round_robin_predictions, round_robin_results
+    )
     by_match = {int(row["match_id"]): row for row in report["next_round"]}
     official_match_id = 5795429
 
@@ -135,7 +146,7 @@ def build():
         },
         "ledger": {
             "status": "shadow_collection",
-            "matches_logged": 0,
+            "matches_logged": result_validation["results"],
             "sample_gate": 100,
             "capital_deployment_ready": False,
             "scorecards": [

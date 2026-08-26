@@ -1,6 +1,6 @@
 {
-  "version": "clubalpha_squad_selection_v2_challenger",
-  "status": "challenger_not_activated",
+  "version": "clubalpha_squad_selection_v2_locked",
+  "status": "locked_2026-08-26",
   "question": "Who is likely to start this fixture, appear, and play how many minutes?",
   "expected_team_minutes": 990.0,
   "recent_evidence": {
@@ -21,18 +21,20 @@
     "note": "Up to three exact declared XIs vote on the tactical role shape. Player Alpha Ability is not part of the vote."
   },
   "selection": {
-    "latest_declared_start_bonus_minutes": 15.0,
+    "latest_declared_start_bonus_minutes": 30.0,
+    "suppress_latest_xi_bonus_after_competition_change": true,
     "latest_declared_start_bonus_by_source": {
-      "current_season": 15.0,
+      "current_season": 30.0,
       "preseason": 0.0,
-      "previous_season": 15.0
+      "previous_season": 30.0
     },
     "tuning": {
       "development_share": 0.6,
       "candidate_bonus_minutes": [0.0, 2.5, 5.0, 7.5, 10.0, 15.0, 20.0, 30.0],
+      "candidate_competition_switch_suppression": [false, true],
       "selected_on": "mean exact-XI starter hits in the earlier chronological development sample"
     },
-    "note": "The latest competitive XI is the strongest manager-intent signal. The 15-minute persistence bonus won on the first 60% chronological development sample and is judged only on the untouched final 40%. Preseason receives no single-XI bonus because split squads and experimental lineups made its latest formation unreliable."
+    "note": "The latest competitive XI is the strongest manager-intent signal within the same competition. The 30-minute persistence bonus with suppression after a competition switch won across the first 60% chronological development sample and is judged only on the untouched final 40%. All five-match evidence and the shape vote remain active after a switch; only the single-XI bonus is suppressed. Preseason receives no single-XI bonus because split squads and experimental lineups made its latest formation unreliable."
   },
   "minutes": {
     "default_starter_minutes": 75.0,
@@ -55,6 +57,6 @@
     "uses_alpha_to_select_players": false,
     "confirmed_lineup": false,
     "selection_probabilities_calibrated": false,
-    "activation_gate": "Must improve chronological XI hit rate and expected-minutes MAE against the minutes-only v1 policy emulation before replacing v1."
+    "activation_gate": "Passed on the final 40% chronological holdout: higher XI hit rate with no worse expected-minutes MAE, formation accuracy, or role-shape accuracy. Future changes require a new version and later holdout."
   }
 }

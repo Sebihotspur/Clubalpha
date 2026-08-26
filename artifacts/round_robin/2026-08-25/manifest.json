@@ -65,35 +65,58 @@
       "artifacts/round_robin/2026-08-25/summary.json",
       "artifacts/style_matchup/2026-08-25/style-matchups.json",
       "clubalpha/fixture_state.py",
+      "clubalpha/fotmob.py",
+      "clubalpha/historical_fixtures.py",
       "clubalpha/prediction_lab.py",
+      "clubalpha/round_robin_archive.py",
       "clubalpha/style_matchup.py",
       "config/fixture-state-v1.json",
       "config/historical-fixtures-v2.json",
+      "config/player-quality-clubalpha-v2.json",
       "config/prediction-lab-v0.json",
       "reports/premier-league-alpha-snapshot-2026-08-25.json",
       "research/build_round_robin_v0.py",
-      "research/build_style_matchup_v0.py"
+      "research/build_style_matchup_v0.py",
+      "scripts/append_round_robin_result.py",
+      "scripts/freeze_round_robin_archive.py"
     ],
     "hashes": {
       "artifacts/prediction_lab/2026-08-24/component-scales.json": "64ff9a93520649cdf893c1e9fcd5d81e58840252faec38b250f8d6b3ad86f0d9",
       "artifacts/prediction_lab/2026-08-24/goal-model.json": "db1ad39c296423b54f2258a2514149bc9e63b15b86d95664bc39532b930e1f13",
       "artifacts/prediction_lab/2026-08-24/report.json": "a087af8303bac91bfcc8dc1a4405afa54c6801da64fec7af16daa8974beacd01",
-      "artifacts/round_robin/2026-08-25/README.md": "eb9aab8f8dea5fd75cd6f52ed65503503fd50e2acecd06fc9f5381d15d2e8a24",
+      "artifacts/round_robin/2026-08-25/README.md": "a02de9573e11d21336fce95164b663ec0549036076c811b7c0580c7e7fffcfe7",
       "artifacts/round_robin/2026-08-25/predictions.jsonl": "123f0576c9515c30d0c936a89d9b59c40c2632830a216c5874e6bfdd3800a94c",
       "artifacts/round_robin/2026-08-25/summary.json": "3fb4356e2ee878b3e201f2c800fa77377d55ad2e8b36cb4b05c0d2a4b8742d06",
       "artifacts/style_matchup/2026-08-25/style-matchups.json": "3c07a749c9d5ed97a7a579018b8d10c657f3d33dbd7dbc128feba27b3937bc70",
       "clubalpha/fixture_state.py": "05338af5de5442a47a00e93f4ccbf2ff66dd99fc7353a55ee126c04f55e7974c",
+      "clubalpha/fotmob.py": "c88c22ffe7c91accf9d87aa7a80ad6c8f52f72a359cc495a931b60f1c319463a",
+      "clubalpha/historical_fixtures.py": "e22d1632fcb10e8405ed3073beb0122b4aee1c3fa52736fda5a62e6ff73c6a2a",
       "clubalpha/prediction_lab.py": "a393bb2eb566e0b12ac1ed29cba6821de714bea473f3865340e9d98ca564e494",
+      "clubalpha/round_robin_archive.py": "11428d79bd3b65724c83182dba73e3a6dcd239ec107f121ca41df5d8016b8b0c",
       "clubalpha/style_matchup.py": "3245d363ff958b525738d700efee426f2c595ad7614094552b4270d682002a1e",
       "config/fixture-state-v1.json": "018ab193d5a1ec025d62c8402e020822ef8d16eb4d3978fcf61647e7d13fd28e",
       "config/historical-fixtures-v2.json": "36208395f5a078c3f669b6914223680698903c33d695195669f801fe4799194b",
+      "config/player-quality-clubalpha-v2.json": "16c3666959d572d2e9b17f48b82d4504dae98066e46302c768c781b3d87099ea",
       "config/prediction-lab-v0.json": "a5e7caadf60c973fd0b9a94c919134c59c8540a540ec4a9a95454de25a3fac0c",
       "reports/premier-league-alpha-snapshot-2026-08-25.json": "9a7f61b70782629c7376e690e211aa3ade7d8911b5021f6aa505d524c3cf5003",
-      "research/build_round_robin_v0.py": "8a3faecfdd8d49496a1b5dca3f5f5593454e0caf7dabf9f3da85962170f04e10",
-      "research/build_style_matchup_v0.py": "42cbf5251099f0f26c65edae410b9f50ae08b32e5a94505d58317c6943065922"
+      "research/build_round_robin_v0.py": "38b8184b4e21cb713a712f02c3a03203b633fc0bbac52f4f5f2fa8b25ebc217b",
+      "research/build_style_matchup_v0.py": "5210508c633dc69c801dcab5d529af533c40c866030d61b44752c57c282d5f79",
+      "scripts/append_round_robin_result.py": "d1e66ac9b80384c3183d394f161a9c4d72fefc38d9ba6a174d5748080fc3fdfb",
+      "scripts/freeze_round_robin_archive.py": "5e1314eb3987a1185cca4f1adb268396238ea685cf2e9ef1a8225eb301e83bcc"
     },
     "manifest_self_hashed": false,
-    "append_only_result_stream_hashed": false
+    "append_only_result_stream_hashed": false,
+    "raw_input_provenance_complete": false
+  },
+  "audit_repair": {
+    "repaired_on": "2026-08-26",
+    "reason": "Added overwrite protection, result-stream validation, summary recomputation, and recoverable source coverage without regenerating predictions or summary.",
+    "prediction_sha256_unchanged": true,
+    "summary_sha256_unchanged": true,
+    "original_builder_sha256": "8a3faecfdd8d49496a1b5dca3f5f5593454e0caf7dabf9f3da85962170f04e10",
+    "original_style_builder_sha256": "42cbf5251099f0f26c65edae410b9f50ae08b32e5a94505d58317c6943065922",
+    "raw_history_and_fotmob_cache_hashes_recoverable": false,
+    "future_archives_require_inputs_json": true
   },
   "evaluation_plan": {
     "primary": [

@@ -1,7 +1,23 @@
 {
-  "version": "clubalpha_squad_selection_v2_challenger",
-  "status": "activate",
-  "source": "historical_match_player_stats.jsonl",
+  "version": "clubalpha_squad_selection_v2_locked",
+  "status": "lock_v2",
+  "source": {
+    "filename": "historical_match_player_stats.jsonl",
+    "sha256": "82af6759d38800f8b5c2f3d1bd915924e135889eaa550a962af2da91dab0832c",
+    "schema": {
+      "rows": 17342,
+      "starter_rows": 12518,
+      "lineup_position_rows": 12518,
+      "exact_team_lineups": 1138,
+      "required_field_missing_counts": {
+        "match_id": 0,
+        "competition_id": 0,
+        "kickoff_utc": 0,
+        "team_id": 0,
+        "player_id": 0
+      }
+    }
+  },
   "method": {
     "chronological": true,
     "future_rows_used": false,
@@ -11,6 +27,7 @@
     "baseline": "v1-style recency-weighted minutes plus latest exact shape, on the same candidates and evidence window",
     "development_share": 0.6,
     "holdout_share": 0.4,
+    "tuning_uses_development_only": true,
     "activation_metrics_use_holdout_only": true
   },
   "coverage": {
@@ -20,29 +37,151 @@
     "evaluated_team_projections": 1088,
     "evaluated_matches_with_both_sides": 541
   },
-  "v1_minutes_policy": {
-    "team_projections": 1088,
-    "mean_xi_hits_of_11": 8.5,
-    "xi_hit_rate": 0.772727,
-    "xi_jaccard": 0.649494,
-    "start_brier": 0.184548,
-    "expected_minutes_mae": 22.789511,
-    "formation_accuracy": 0.686581,
-    "role_shape_accuracy": 0.738051,
-    "unseen_actual_starters": 547,
-    "candidate_starter_coverage": 0.954295
+  "development_tuning": {
+    "metric": "mean exact-XI starter hits",
+    "tie_break": "smaller persistence bonus",
+    "candidates": [
+      {
+        "bonus_minutes": 0.0,
+        "suppress_bonus_after_competition_change": false,
+        "development_mean_xi_hits_of_11": 8.515337,
+        "development_xi_hit_rate": 0.774122
+      },
+      {
+        "bonus_minutes": 2.5,
+        "suppress_bonus_after_competition_change": false,
+        "development_mean_xi_hits_of_11": 8.519939,
+        "development_xi_hit_rate": 0.77454
+      },
+      {
+        "bonus_minutes": 5.0,
+        "suppress_bonus_after_competition_change": false,
+        "development_mean_xi_hits_of_11": 8.515337,
+        "development_xi_hit_rate": 0.774122
+      },
+      {
+        "bonus_minutes": 7.5,
+        "suppress_bonus_after_competition_change": false,
+        "development_mean_xi_hits_of_11": 8.523006,
+        "development_xi_hit_rate": 0.774819
+      },
+      {
+        "bonus_minutes": 10.0,
+        "suppress_bonus_after_competition_change": false,
+        "development_mean_xi_hits_of_11": 8.530675,
+        "development_xi_hit_rate": 0.775516
+      },
+      {
+        "bonus_minutes": 15.0,
+        "suppress_bonus_after_competition_change": false,
+        "development_mean_xi_hits_of_11": 8.547546,
+        "development_xi_hit_rate": 0.77705
+      },
+      {
+        "bonus_minutes": 20.0,
+        "suppress_bonus_after_competition_change": false,
+        "development_mean_xi_hits_of_11": 8.539877,
+        "development_xi_hit_rate": 0.776352
+      },
+      {
+        "bonus_minutes": 30.0,
+        "suppress_bonus_after_competition_change": false,
+        "development_mean_xi_hits_of_11": 8.519939,
+        "development_xi_hit_rate": 0.77454
+      },
+      {
+        "bonus_minutes": 0.0,
+        "suppress_bonus_after_competition_change": true,
+        "development_mean_xi_hits_of_11": 8.515337,
+        "development_xi_hit_rate": 0.774122
+      },
+      {
+        "bonus_minutes": 2.5,
+        "suppress_bonus_after_competition_change": true,
+        "development_mean_xi_hits_of_11": 8.516871,
+        "development_xi_hit_rate": 0.774261
+      },
+      {
+        "bonus_minutes": 5.0,
+        "suppress_bonus_after_competition_change": true,
+        "development_mean_xi_hits_of_11": 8.516871,
+        "development_xi_hit_rate": 0.774261
+      },
+      {
+        "bonus_minutes": 7.5,
+        "suppress_bonus_after_competition_change": true,
+        "development_mean_xi_hits_of_11": 8.526074,
+        "development_xi_hit_rate": 0.775098
+      },
+      {
+        "bonus_minutes": 10.0,
+        "suppress_bonus_after_competition_change": true,
+        "development_mean_xi_hits_of_11": 8.538344,
+        "development_xi_hit_rate": 0.776213
+      },
+      {
+        "bonus_minutes": 15.0,
+        "suppress_bonus_after_competition_change": true,
+        "development_mean_xi_hits_of_11": 8.555215,
+        "development_xi_hit_rate": 0.777747
+      },
+      {
+        "bonus_minutes": 20.0,
+        "suppress_bonus_after_competition_change": true,
+        "development_mean_xi_hits_of_11": 8.559816,
+        "development_xi_hit_rate": 0.778165
+      },
+      {
+        "bonus_minutes": 30.0,
+        "suppress_bonus_after_competition_change": true,
+        "development_mean_xi_hits_of_11": 8.564417,
+        "development_xi_hit_rate": 0.778583
+      }
+    ],
+    "selected_policy": {
+      "bonus_minutes": 30.0,
+      "suppress_bonus_after_competition_change": true
+    },
+    "configured_policy": {
+      "bonus_minutes": 30.0,
+      "suppress_bonus_after_competition_change": true
+    },
+    "configured_policy_won_development": true
   },
-  "v2_probability_policy": {
-    "team_projections": 1088,
-    "mean_xi_hits_of_11": 8.55239,
-    "xi_hit_rate": 0.77749,
-    "xi_jaccard": 0.657177,
-    "start_brier": 0.184548,
-    "expected_minutes_mae": 22.789511,
-    "formation_accuracy": 0.70864,
-    "role_shape_accuracy": 0.752757,
-    "unseen_actual_starters": 547,
-    "candidate_starter_coverage": 0.954295
+  "all_targets_descriptive_only": {
+    "target_count": 1088,
+    "v1_minutes_policy": {
+      "team_projections": 1088,
+      "mean_xi_hits_of_11": 8.5,
+      "xi_hit_rate": 0.772727,
+      "xi_jaccard": 0.649494,
+      "start_brier": 0.184548,
+      "expected_minutes_mae": 22.789511,
+      "formation_accuracy": 0.686581,
+      "role_shape_accuracy": 0.738051,
+      "unseen_actual_starters": 547,
+      "candidate_starter_coverage": 0.954295
+    },
+    "v2_probability_policy": {
+      "team_projections": 1088,
+      "mean_xi_hits_of_11": 8.584559,
+      "xi_hit_rate": 0.780414,
+      "xi_jaccard": 0.660983,
+      "start_brier": 0.184548,
+      "expected_minutes_mae": 22.789511,
+      "formation_accuracy": 0.70864,
+      "role_shape_accuracy": 0.752757,
+      "unseen_actual_starters": 547,
+      "candidate_starter_coverage": 0.954295
+    },
+    "delta_v2_minus_v1": {
+      "xi_hit_rate": 0.007687,
+      "mean_xi_hits_of_11": 0.084559,
+      "start_brier": 0.0,
+      "expected_minutes_mae": 0.0,
+      "formation_accuracy": 0.022059,
+      "role_shape_accuracy": 0.014706
+    }
   },
   "chronological_development": {
     "target_count": 652,
@@ -60,15 +199,23 @@
     },
     "v2_probability_policy": {
       "team_projections": 652,
-      "mean_xi_hits_of_11": 8.547546,
-      "xi_hit_rate": 0.77705,
-      "xi_jaccard": 0.655959,
+      "mean_xi_hits_of_11": 8.564417,
+      "xi_hit_rate": 0.778583,
+      "xi_jaccard": 0.65816,
       "start_brier": 0.19929,
       "expected_minutes_mae": 24.112561,
       "formation_accuracy": 0.697853,
       "role_shape_accuracy": 0.742331,
       "unseen_actual_starters": 462,
       "candidate_starter_coverage": 0.935583
+    },
+    "delta_v2_minus_v1": {
+      "xi_hit_rate": 0.004461,
+      "mean_xi_hits_of_11": 0.04908,
+      "start_brier": 0.0,
+      "expected_minutes_mae": 0.0,
+      "formation_accuracy": 0.015338,
+      "role_shape_accuracy": 0.006135
     }
   },
   "chronological_holdout": {
@@ -87,9 +234,9 @@
     },
     "v2_probability_policy": {
       "team_projections": 436,
-      "mean_xi_hits_of_11": 8.559633,
-      "xi_hit_rate": 0.778148,
-      "xi_jaccard": 0.658997,
+      "mean_xi_hits_of_11": 8.614679,
+      "xi_hit_rate": 0.783153,
+      "xi_jaccard": 0.665204,
       "start_brier": 0.162503,
       "expected_minutes_mae": 20.811006,
       "formation_accuracy": 0.724771,
@@ -98,24 +245,953 @@
       "candidate_starter_coverage": 0.982277
     },
     "delta_v2_minus_v1": {
-      "xi_hit_rate": 0.007506,
-      "mean_xi_hits_of_11": 0.082569,
+      "xi_hit_rate": 0.012511,
+      "mean_xi_hits_of_11": 0.137615,
+      "start_brier": 0.0,
       "expected_minutes_mae": 0.0,
-      "formation_accuracy": 0.03211
+      "formation_accuracy": 0.03211,
+      "role_shape_accuracy": 0.027523
     }
   },
-  "delta_v2_minus_v1": {
-    "xi_hit_rate": 0.004763,
-    "mean_xi_hits_of_11": 0.05239,
-    "start_brier": 0.0,
-    "expected_minutes_mae": 0.0,
-    "formation_accuracy": 0.022059
+  "holdout_robustness": {
+    "paired_match_bootstrap": {
+      "cluster_unit": "match_id",
+      "samples": 5000,
+      "seed": 20260826,
+      "mean_xi_hits_of_11_delta": {
+        "ci_95": [
+          0.052752,
+          0.220241
+        ],
+        "bootstrap_probability_above_zero": 0.9996
+      },
+      "formation_accuracy_delta": {
+        "ci_95": [
+          0.006881,
+          0.059633
+        ],
+        "bootstrap_probability_above_zero": 0.9894
+      },
+      "role_shape_accuracy_delta": {
+        "ci_95": [
+          0.002294,
+          0.052752
+        ],
+        "bootstrap_probability_above_zero": 0.9786
+      }
+    },
+    "by_competition": {
+      "Champions League": {
+        "target_count": 126,
+        "v1_minutes_policy": {
+          "team_projections": 126,
+          "mean_xi_hits_of_11": 8.365079,
+          "xi_hit_rate": 0.760462,
+          "xi_jaccard": 0.63474,
+          "start_brier": 0.172697,
+          "expected_minutes_mae": 23.115711,
+          "formation_accuracy": 0.738095,
+          "role_shape_accuracy": 0.761905,
+          "unseen_actual_starters": 42,
+          "candidate_starter_coverage": 0.969697
+        },
+        "v2_probability_policy": {
+          "team_projections": 126,
+          "mean_xi_hits_of_11": 8.468254,
+          "xi_hit_rate": 0.769841,
+          "xi_jaccard": 0.650798,
+          "start_brier": 0.172697,
+          "expected_minutes_mae": 23.115711,
+          "formation_accuracy": 0.777778,
+          "role_shape_accuracy": 0.801587,
+          "unseen_actual_starters": 42,
+          "candidate_starter_coverage": 0.969697
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.009379,
+          "mean_xi_hits_of_11": 0.103175,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.039683,
+          "role_shape_accuracy": 0.039682
+        }
+      },
+      "Premier League": {
+        "target_count": 310,
+        "v1_minutes_policy": {
+          "team_projections": 310,
+          "mean_xi_hits_of_11": 8.522581,
+          "xi_hit_rate": 0.77478,
+          "xi_jaccard": 0.651895,
+          "start_brier": 0.158359,
+          "expected_minutes_mae": 19.874255,
+          "formation_accuracy": 0.674194,
+          "role_shape_accuracy": 0.732258,
+          "unseen_actual_starters": 43,
+          "candidate_starter_coverage": 0.98739
+        },
+        "v2_probability_policy": {
+          "team_projections": 310,
+          "mean_xi_hits_of_11": 8.674194,
+          "xi_hit_rate": 0.788563,
+          "xi_jaccard": 0.67106,
+          "start_brier": 0.158359,
+          "expected_minutes_mae": 19.874255,
+          "formation_accuracy": 0.703226,
+          "role_shape_accuracy": 0.754839,
+          "unseen_actual_starters": 43,
+          "candidate_starter_coverage": 0.98739
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.013783,
+          "mean_xi_hits_of_11": 0.151613,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.029032,
+          "role_shape_accuracy": 0.022581
+        }
+      }
+    },
+    "by_time": {
+      "earlier_holdout_half": {
+        "target_count": 218,
+        "v1_minutes_policy": {
+          "team_projections": 218,
+          "mean_xi_hits_of_11": 8.545872,
+          "xi_hit_rate": 0.776897,
+          "xi_jaccard": 0.651818,
+          "start_brier": 0.164725,
+          "expected_minutes_mae": 21.438163,
+          "formation_accuracy": 0.706422,
+          "role_shape_accuracy": 0.752294,
+          "unseen_actual_starters": 66,
+          "candidate_starter_coverage": 0.972477
+        },
+        "v2_probability_policy": {
+          "team_projections": 218,
+          "mean_xi_hits_of_11": 8.62844,
+          "xi_hit_rate": 0.784404,
+          "xi_jaccard": 0.663942,
+          "start_brier": 0.164725,
+          "expected_minutes_mae": 21.438163,
+          "formation_accuracy": 0.711009,
+          "role_shape_accuracy": 0.756881,
+          "unseen_actual_starters": 66,
+          "candidate_starter_coverage": 0.972477
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.007507,
+          "mean_xi_hits_of_11": 0.082568,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.004587,
+          "role_shape_accuracy": 0.004587
+        }
+      },
+      "later_holdout_half": {
+        "target_count": 218,
+        "v1_minutes_policy": {
+          "team_projections": 218,
+          "mean_xi_hits_of_11": 8.408257,
+          "xi_hit_rate": 0.764387,
+          "xi_jaccard": 0.642057,
+          "start_brier": 0.160281,
+          "expected_minutes_mae": 20.183849,
+          "formation_accuracy": 0.678899,
+          "role_shape_accuracy": 0.729358,
+          "unseen_actual_starters": 19,
+          "candidate_starter_coverage": 0.992077
+        },
+        "v2_probability_policy": {
+          "team_projections": 218,
+          "mean_xi_hits_of_11": 8.600917,
+          "xi_hit_rate": 0.781902,
+          "xi_jaccard": 0.666467,
+          "start_brier": 0.160281,
+          "expected_minutes_mae": 20.183849,
+          "formation_accuracy": 0.738532,
+          "role_shape_accuracy": 0.779817,
+          "unseen_actual_starters": 19,
+          "candidate_starter_coverage": 0.992077
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.017515,
+          "mean_xi_hits_of_11": 0.19266,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.059633,
+          "role_shape_accuracy": 0.050459
+        }
+      }
+    },
+    "by_realized_lineup_volatility": {
+      "rotated_3_to_4_changes": {
+        "target_count": 142,
+        "v1_minutes_policy": {
+          "team_projections": 142,
+          "mean_xi_hits_of_11": 7.887324,
+          "xi_hit_rate": 0.717029,
+          "xi_jaccard": 0.569371,
+          "start_brier": 0.195127,
+          "expected_minutes_mae": 23.455115,
+          "formation_accuracy": 0.65493,
+          "role_shape_accuracy": 0.690141,
+          "unseen_actual_starters": 32,
+          "candidate_starter_coverage": 0.979513
+        },
+        "v2_probability_policy": {
+          "team_projections": 142,
+          "mean_xi_hits_of_11": 7.830986,
+          "xi_hit_rate": 0.711908,
+          "xi_jaccard": 0.558066,
+          "start_brier": 0.195127,
+          "expected_minutes_mae": 23.455115,
+          "formation_accuracy": 0.711268,
+          "role_shape_accuracy": 0.739437,
+          "unseen_actual_starters": 32,
+          "candidate_starter_coverage": 0.979513
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": -0.005121,
+          "mean_xi_hits_of_11": -0.056338,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.056338,
+          "role_shape_accuracy": 0.049296
+        }
+      },
+      "stable_0_to_2_changes": {
+        "target_count": 246,
+        "v1_minutes_policy": {
+          "team_projections": 246,
+          "mean_xi_hits_of_11": 9.243902,
+          "xi_hit_rate": 0.840355,
+          "xi_jaccard": 0.736053,
+          "start_brier": 0.114098,
+          "expected_minutes_mae": 17.15886,
+          "formation_accuracy": 0.747967,
+          "role_shape_accuracy": 0.796748,
+          "unseen_actual_starters": 27,
+          "candidate_starter_coverage": 0.990022
+        },
+        "v2_probability_policy": {
+          "team_projections": 246,
+          "mean_xi_hits_of_11": 9.573171,
+          "xi_hit_rate": 0.870288,
+          "xi_jaccard": 0.779434,
+          "start_brier": 0.114098,
+          "expected_minutes_mae": 17.15886,
+          "formation_accuracy": 0.743902,
+          "role_shape_accuracy": 0.784553,
+          "unseen_actual_starters": 27,
+          "candidate_starter_coverage": 0.990022
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.029933,
+          "mean_xi_hits_of_11": 0.329269,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": -0.004065,
+          "role_shape_accuracy": -0.012195
+        }
+      },
+      "volatile_5_plus_changes": {
+        "target_count": 48,
+        "v1_minutes_policy": {
+          "team_projections": 48,
+          "mean_xi_hits_of_11": 6.291667,
+          "xi_hit_rate": 0.57197,
+          "xi_jaccard": 0.419685,
+          "start_brier": 0.314064,
+          "expected_minutes_mae": 31.706096,
+          "formation_accuracy": 0.520833,
+          "role_shape_accuracy": 0.604167,
+          "unseen_actual_starters": 26,
+          "candidate_starter_coverage": 0.950758
+        },
+        "v2_probability_policy": {
+          "team_projections": 48,
+          "mean_xi_hits_of_11": 6.020833,
+          "xi_hit_rate": 0.547348,
+          "xi_jaccard": 0.39673,
+          "start_brier": 0.314064,
+          "expected_minutes_mae": 31.706096,
+          "formation_accuracy": 0.666667,
+          "role_shape_accuracy": 0.770833,
+          "unseen_actual_starters": 26,
+          "candidate_starter_coverage": 0.950758
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": -0.024622,
+          "mean_xi_hits_of_11": -0.270834,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.145834,
+          "role_shape_accuracy": 0.166666
+        }
+      }
+    },
+    "by_known_prior_lineup_volatility": {
+      "rotated_prior_xis_3_to_4_changes": {
+        "target_count": 146,
+        "v1_minutes_policy": {
+          "team_projections": 146,
+          "mean_xi_hits_of_11": 8.082192,
+          "xi_hit_rate": 0.734745,
+          "xi_jaccard": 0.598219,
+          "start_brier": 0.17563,
+          "expected_minutes_mae": 22.693191,
+          "formation_accuracy": 0.719178,
+          "role_shape_accuracy": 0.760274,
+          "unseen_actual_starters": 40,
+          "candidate_starter_coverage": 0.975093
+        },
+        "v2_probability_policy": {
+          "team_projections": 146,
+          "mean_xi_hits_of_11": 8.287671,
+          "xi_hit_rate": 0.753425,
+          "xi_jaccard": 0.625266,
+          "start_brier": 0.17563,
+          "expected_minutes_mae": 22.693191,
+          "formation_accuracy": 0.719178,
+          "role_shape_accuracy": 0.760274,
+          "unseen_actual_starters": 40,
+          "candidate_starter_coverage": 0.975093
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.01868,
+          "mean_xi_hits_of_11": 0.205479,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.0,
+          "role_shape_accuracy": 0.0
+        }
+      },
+      "stable_prior_xis_0_to_2_changes": {
+        "target_count": 239,
+        "v1_minutes_policy": {
+          "team_projections": 239,
+          "mean_xi_hits_of_11": 8.866109,
+          "xi_hit_rate": 0.80601,
+          "xi_jaccard": 0.695303,
+          "start_brier": 0.149158,
+          "expected_minutes_mae": 18.804508,
+          "formation_accuracy": 0.715481,
+          "role_shape_accuracy": 0.757322,
+          "unseen_actual_starters": 38,
+          "candidate_starter_coverage": 0.985546
+        },
+        "v2_probability_policy": {
+          "team_projections": 239,
+          "mean_xi_hits_of_11": 8.92887,
+          "xi_hit_rate": 0.811715,
+          "xi_jaccard": 0.704296,
+          "start_brier": 0.149158,
+          "expected_minutes_mae": 18.804508,
+          "formation_accuracy": 0.748954,
+          "role_shape_accuracy": 0.778243,
+          "unseen_actual_starters": 38,
+          "candidate_starter_coverage": 0.985546
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.005705,
+          "mean_xi_hits_of_11": 0.062761,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.033473,
+          "role_shape_accuracy": 0.020921
+        }
+      },
+      "volatile_prior_xis_5_plus_changes": {
+        "target_count": 51,
+        "v1_minutes_policy": {
+          "team_projections": 51,
+          "mean_xi_hits_of_11": 7.784314,
+          "xi_hit_rate": 0.707665,
+          "xi_jaccard": 0.559753,
+          "start_brier": 0.18746,
+          "expected_minutes_mae": 24.825792,
+          "formation_accuracy": 0.509804,
+          "role_shape_accuracy": 0.607843,
+          "unseen_actual_starters": 7,
+          "candidate_starter_coverage": 0.987522
+        },
+        "v2_probability_policy": {
+          "team_projections": 51,
+          "mean_xi_hits_of_11": 8.078431,
+          "xi_hit_rate": 0.734403,
+          "xi_jaccard": 0.596342,
+          "start_brier": 0.18746,
+          "expected_minutes_mae": 24.825792,
+          "formation_accuracy": 0.627451,
+          "role_shape_accuracy": 0.745098,
+          "unseen_actual_starters": 7,
+          "candidate_starter_coverage": 0.987522
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.026738,
+          "mean_xi_hits_of_11": 0.294117,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.117647,
+          "role_shape_accuracy": 0.137255
+        }
+      }
+    },
+    "by_known_rest_days": {
+      "long_rest_6_plus_days": {
+        "target_count": 298,
+        "v1_minutes_policy": {
+          "team_projections": 298,
+          "mean_xi_hits_of_11": 8.573826,
+          "xi_hit_rate": 0.779439,
+          "xi_jaccard": 0.658223,
+          "start_brier": 0.157765,
+          "expected_minutes_mae": 20.68741,
+          "formation_accuracy": 0.731544,
+          "role_shape_accuracy": 0.771812,
+          "unseen_actual_starters": 64,
+          "candidate_starter_coverage": 0.980476
+        },
+        "v2_probability_policy": {
+          "team_projections": 298,
+          "mean_xi_hits_of_11": 8.748322,
+          "xi_hit_rate": 0.795302,
+          "xi_jaccard": 0.680229,
+          "start_brier": 0.157765,
+          "expected_minutes_mae": 20.68741,
+          "formation_accuracy": 0.765101,
+          "role_shape_accuracy": 0.795302,
+          "unseen_actual_starters": 64,
+          "candidate_starter_coverage": 0.980476
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.015863,
+          "mean_xi_hits_of_11": 0.174496,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.033557,
+          "role_shape_accuracy": 0.02349
+        }
+      },
+      "medium_rest_4_to_5_days": {
+        "target_count": 72,
+        "v1_minutes_policy": {
+          "team_projections": 72,
+          "mean_xi_hits_of_11": 8.458333,
+          "xi_hit_rate": 0.768939,
+          "xi_jaccard": 0.646923,
+          "start_brier": 0.164463,
+          "expected_minutes_mae": 20.604743,
+          "formation_accuracy": 0.611111,
+          "role_shape_accuracy": 0.666667,
+          "unseen_actual_starters": 11,
+          "candidate_starter_coverage": 0.986111
+        },
+        "v2_probability_policy": {
+          "team_projections": 72,
+          "mean_xi_hits_of_11": 8.458333,
+          "xi_hit_rate": 0.768939,
+          "xi_jaccard": 0.651049,
+          "start_brier": 0.164463,
+          "expected_minutes_mae": 20.604743,
+          "formation_accuracy": 0.652778,
+          "role_shape_accuracy": 0.722222,
+          "unseen_actual_starters": 11,
+          "candidate_starter_coverage": 0.986111
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.0,
+          "mean_xi_hits_of_11": 0.0,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.041667,
+          "role_shape_accuracy": 0.055555
+        }
+      },
+      "short_rest_under_4_days": {
+        "target_count": 66,
+        "v1_minutes_policy": {
+          "team_projections": 66,
+          "mean_xi_hits_of_11": 8.060606,
+          "xi_hit_rate": 0.732782,
+          "xi_jaccard": 0.595996,
+          "start_brier": 0.181757,
+          "expected_minutes_mae": 21.594075,
+          "formation_accuracy": 0.606061,
+          "role_shape_accuracy": 0.681818,
+          "unseen_actual_starters": 10,
+          "candidate_starter_coverage": 0.986226
+        },
+        "v2_probability_policy": {
+          "team_projections": 66,
+          "mean_xi_hits_of_11": 8.181818,
+          "xi_hit_rate": 0.743802,
+          "xi_jaccard": 0.612807,
+          "start_brier": 0.181757,
+          "expected_minutes_mae": 21.594075,
+          "formation_accuracy": 0.621212,
+          "role_shape_accuracy": 0.69697,
+          "unseen_actual_starters": 10,
+          "candidate_starter_coverage": 0.986226
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.01102,
+          "mean_xi_hits_of_11": 0.121212,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.015151,
+          "role_shape_accuracy": 0.015152
+        }
+      }
+    },
+    "by_known_competition_transition": {
+      "competition_changed": {
+        "target_count": 72,
+        "v1_minutes_policy": {
+          "team_projections": 72,
+          "mean_xi_hits_of_11": 8.027778,
+          "xi_hit_rate": 0.729798,
+          "xi_jaccard": 0.594415,
+          "start_brier": 0.182687,
+          "expected_minutes_mae": 22.934663,
+          "formation_accuracy": 0.625,
+          "role_shape_accuracy": 0.652778,
+          "unseen_actual_starters": 17,
+          "candidate_starter_coverage": 0.978535
+        },
+        "v2_probability_policy": {
+          "team_projections": 72,
+          "mean_xi_hits_of_11": 8.069444,
+          "xi_hit_rate": 0.733586,
+          "xi_jaccard": 0.600648,
+          "start_brier": 0.182687,
+          "expected_minutes_mae": 22.934663,
+          "formation_accuracy": 0.666667,
+          "role_shape_accuracy": 0.694444,
+          "unseen_actual_starters": 17,
+          "candidate_starter_coverage": 0.978535
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.003788,
+          "mean_xi_hits_of_11": 0.041666,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.041667,
+          "role_shape_accuracy": 0.041666
+        }
+      },
+      "same_competition": {
+        "target_count": 364,
+        "v1_minutes_policy": {
+          "team_projections": 364,
+          "mean_xi_hits_of_11": 8.565934,
+          "xi_hit_rate": 0.778721,
+          "xi_jaccard": 0.657326,
+          "start_brier": 0.15851,
+          "expected_minutes_mae": 20.390942,
+          "formation_accuracy": 0.706044,
+          "role_shape_accuracy": 0.758242,
+          "unseen_actual_starters": 68,
+          "candidate_starter_coverage": 0.983017
+        },
+        "v2_probability_policy": {
+          "team_projections": 364,
+          "mean_xi_hits_of_11": 8.722527,
+          "xi_hit_rate": 0.792957,
+          "xi_jaccard": 0.677974,
+          "start_brier": 0.15851,
+          "expected_minutes_mae": 20.390942,
+          "formation_accuracy": 0.736264,
+          "role_shape_accuracy": 0.782967,
+          "unseen_actual_starters": 68,
+          "candidate_starter_coverage": 0.983017
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.014236,
+          "mean_xi_hits_of_11": 0.156593,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.03022,
+          "role_shape_accuracy": 0.024725
+        }
+      }
+    },
+    "by_candidate_coverage": {
+      "10_starters_previously_observed": {
+        "target_count": 58,
+        "v1_minutes_policy": {
+          "team_projections": 58,
+          "mean_xi_hits_of_11": 7.534483,
+          "xi_hit_rate": 0.684953,
+          "xi_jaccard": 0.541283,
+          "start_brier": 0.236266,
+          "expected_minutes_mae": 26.500883,
+          "formation_accuracy": 0.724138,
+          "role_shape_accuracy": 0.775862,
+          "unseen_actual_starters": 58,
+          "candidate_starter_coverage": 0.909091
+        },
+        "v2_probability_policy": {
+          "team_projections": 58,
+          "mean_xi_hits_of_11": 7.706897,
+          "xi_hit_rate": 0.700627,
+          "xi_jaccard": 0.560476,
+          "start_brier": 0.236266,
+          "expected_minutes_mae": 26.500883,
+          "formation_accuracy": 0.810345,
+          "role_shape_accuracy": 0.827586,
+          "unseen_actual_starters": 58,
+          "candidate_starter_coverage": 0.909091
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.015674,
+          "mean_xi_hits_of_11": 0.172414,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.086207,
+          "role_shape_accuracy": 0.051724
+        }
+      },
+      "9_or_fewer_starters_previously_observed": {
+        "target_count": 13,
+        "v1_minutes_policy": {
+          "team_projections": 13,
+          "mean_xi_hits_of_11": 6.692308,
+          "xi_hit_rate": 0.608392,
+          "xi_jaccard": 0.465538,
+          "start_brier": 0.309413,
+          "expected_minutes_mae": 32.772983,
+          "formation_accuracy": 0.615385,
+          "role_shape_accuracy": 0.692308,
+          "unseen_actual_starters": 27,
+          "candidate_starter_coverage": 0.811189
+        },
+        "v2_probability_policy": {
+          "team_projections": 13,
+          "mean_xi_hits_of_11": 6.692308,
+          "xi_hit_rate": 0.608392,
+          "xi_jaccard": 0.463291,
+          "start_brier": 0.309413,
+          "expected_minutes_mae": 32.772983,
+          "formation_accuracy": 0.615385,
+          "role_shape_accuracy": 0.692308,
+          "unseen_actual_starters": 27,
+          "candidate_starter_coverage": 0.811189
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.0,
+          "mean_xi_hits_of_11": 0.0,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.0,
+          "role_shape_accuracy": 0.0
+        }
+      },
+      "all_11_starters_previously_observed": {
+        "target_count": 365,
+        "v1_minutes_policy": {
+          "team_projections": 365,
+          "mean_xi_hits_of_11": 8.690411,
+          "xi_hit_rate": 0.790037,
+          "xi_jaccard": 0.670187,
+          "start_brier": 0.145549,
+          "expected_minutes_mae": 19.480818,
+          "formation_accuracy": 0.690411,
+          "role_shape_accuracy": 0.736986,
+          "unseen_actual_starters": 0,
+          "candidate_starter_coverage": 1.0
+        },
+        "v2_probability_policy": {
+          "team_projections": 365,
+          "mean_xi_hits_of_11": 8.827397,
+          "xi_hit_rate": 0.802491,
+          "xi_jaccard": 0.689037,
+          "start_brier": 0.145549,
+          "expected_minutes_mae": 19.480818,
+          "formation_accuracy": 0.715068,
+          "role_shape_accuracy": 0.761644,
+          "unseen_actual_starters": 0,
+          "candidate_starter_coverage": 1.0
+        },
+        "delta_v2_minus_v1": {
+          "xi_hit_rate": 0.012454,
+          "mean_xi_hits_of_11": 0.136986,
+          "start_brier": 0.0,
+          "expected_minutes_mae": 0.0,
+          "formation_accuracy": 0.024657,
+          "role_shape_accuracy": 0.024658
+        }
+      }
+    },
+    "team_concentration": {
+      "teams_improved": 25,
+      "teams_tied": 15,
+      "teams_worse": 10,
+      "team_deltas": [
+        {
+          "team": "Napoli",
+          "target_count": 1,
+          "mean_xi_hits_of_11_delta": 3.0
+        },
+        {
+          "team": "Ajax",
+          "target_count": 1,
+          "mean_xi_hits_of_11_delta": 1.0
+        },
+        {
+          "team": "Marseille",
+          "target_count": 1,
+          "mean_xi_hits_of_11_delta": 1.0
+        },
+        {
+          "team": "Barcelona",
+          "target_count": 5,
+          "mean_xi_hits_of_11_delta": 0.8
+        },
+        {
+          "team": "Fulham",
+          "target_count": 15,
+          "mean_xi_hits_of_11_delta": 0.733333
+        },
+        {
+          "team": "Sunderland",
+          "target_count": 15,
+          "mean_xi_hits_of_11_delta": 0.466666
+        },
+        {
+          "team": "Atl\u00e9tico de Madrid",
+          "target_count": 9,
+          "mean_xi_hits_of_11_delta": 0.444445
+        },
+        {
+          "team": "Everton",
+          "target_count": 16,
+          "mean_xi_hits_of_11_delta": 0.4375
+        },
+        {
+          "team": "Real Madrid",
+          "target_count": 7,
+          "mean_xi_hits_of_11_delta": 0.428571
+        },
+        {
+          "team": "Bayer 04 Leverkusen",
+          "target_count": 5,
+          "mean_xi_hits_of_11_delta": 0.4
+        },
+        {
+          "team": "Brentford",
+          "target_count": 16,
+          "mean_xi_hits_of_11_delta": 0.375
+        },
+        {
+          "team": "Benfica",
+          "target_count": 3,
+          "mean_xi_hits_of_11_delta": 0.333334
+        },
+        {
+          "team": "Club Brugge",
+          "target_count": 3,
+          "mean_xi_hits_of_11_delta": 0.333334
+        },
+        {
+          "team": "FK Qarabag",
+          "target_count": 3,
+          "mean_xi_hits_of_11_delta": 0.333333
+        },
+        {
+          "team": "Nottingham Forest",
+          "target_count": 16,
+          "mean_xi_hits_of_11_delta": 0.3125
+        },
+        {
+          "team": "Newcastle United",
+          "target_count": 21,
+          "mean_xi_hits_of_11_delta": 0.285714
+        },
+        {
+          "team": "Manchester United",
+          "target_count": 16,
+          "mean_xi_hits_of_11_delta": 0.25
+        },
+        {
+          "team": "Bod\u00f8/Glimt",
+          "target_count": 5,
+          "mean_xi_hits_of_11_delta": 0.2
+        },
+        {
+          "team": "Wolverhampton Wanderers",
+          "target_count": 15,
+          "mean_xi_hits_of_11_delta": 0.2
+        },
+        {
+          "team": "Burnley",
+          "target_count": 15,
+          "mean_xi_hits_of_11_delta": 0.133334
+        },
+        {
+          "team": "Leeds United",
+          "target_count": 16,
+          "mean_xi_hits_of_11_delta": 0.125
+        },
+        {
+          "team": "Tottenham Hotspur",
+          "target_count": 18,
+          "mean_xi_hits_of_11_delta": 0.055555
+        },
+        {
+          "team": "Chelsea",
+          "target_count": 19,
+          "mean_xi_hits_of_11_delta": 0.052631
+        },
+        {
+          "team": "Liverpool",
+          "target_count": 20,
+          "mean_xi_hits_of_11_delta": 0.05
+        },
+        {
+          "team": "Arsenal",
+          "target_count": 24,
+          "mean_xi_hits_of_11_delta": 0.041667
+        },
+        {
+          "team": "Atalanta",
+          "target_count": 5,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Athletic Club",
+          "target_count": 1,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Borussia Dortmund",
+          "target_count": 3,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Brighton and Hove Albion",
+          "target_count": 15,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Crystal Palace",
+          "target_count": 16,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Eintracht Frankfurt",
+          "target_count": 1,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "FC K\u00f8benhavn",
+          "target_count": 1,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Galatasaray",
+          "target_count": 5,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Juventus",
+          "target_count": 3,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Kairat",
+          "target_count": 1,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Manchester City",
+          "target_count": 18,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Olympiakos",
+          "target_count": 3,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Pafos",
+          "target_count": 1,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Slavia Prague",
+          "target_count": 1,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Union Saint-Gilloise",
+          "target_count": 1,
+          "mean_xi_hits_of_11_delta": 0.0
+        },
+        {
+          "team": "Paris Saint-Germain",
+          "target_count": 10,
+          "mean_xi_hits_of_11_delta": -0.1
+        },
+        {
+          "team": "Aston Villa",
+          "target_count": 16,
+          "mean_xi_hits_of_11_delta": -0.125
+        },
+        {
+          "team": "Bournemouth",
+          "target_count": 15,
+          "mean_xi_hits_of_11_delta": -0.133333
+        },
+        {
+          "team": "West Ham United",
+          "target_count": 15,
+          "mean_xi_hits_of_11_delta": -0.133333
+        },
+        {
+          "team": "Monaco",
+          "target_count": 3,
+          "mean_xi_hits_of_11_delta": -0.333333
+        },
+        {
+          "team": "FC Bayern M\u00fcnchen",
+          "target_count": 7,
+          "mean_xi_hits_of_11_delta": -0.428571
+        },
+        {
+          "team": "Internazionale",
+          "target_count": 3,
+          "mean_xi_hits_of_11_delta": -0.666667
+        },
+        {
+          "team": "Sporting Lisbon",
+          "target_count": 5,
+          "mean_xi_hits_of_11_delta": -0.8
+        },
+        {
+          "team": "PSV",
+          "target_count": 1,
+          "mean_xi_hits_of_11_delta": -1.0
+        },
+        {
+          "team": "Villarreal",
+          "target_count": 1,
+          "mean_xi_hits_of_11_delta": -1.0
+        }
+      ]
+    }
   },
   "activation_gate": {
-    "requires_higher_xi_hit_rate": true,
-    "requires_no_worse_expected_minutes_mae": true,
+    "checks": {
+      "configured_policy_won_development": true,
+      "higher_holdout_xi_hit_rate": true,
+      "no_worse_holdout_expected_minutes_mae": true,
+      "no_worse_holdout_formation_accuracy": true,
+      "no_worse_holdout_role_shape_accuracy": true
+    },
     "evaluated_on": "final_40_percent_chronological_holdout",
     "passed": true,
-    "decision": "promote_v2"
+    "decision": "lock_v2"
   }
 }

@@ -7,12 +7,15 @@ one for every ordered home/away pairing, with 50,000 simulations per fixture.
 ## Immutability contract
 
 - `predictions.jsonl`, `summary.json`, and `README.md` are frozen.
-- `manifest.json` records SHA-256 hashes for those artifacts and their exact
+- `manifest.json` records SHA-256 hashes for those artifacts and the recoverable
   model inputs and builders.
 - `results.jsonl` is the only mutable file here. It is append-only and begins
   empty because no result was used to build this baseline.
 - Never regenerate or tune this dated archive in place. Any adjusted model must
   write to a new dated directory and receive its own manifest.
+- This first archive predates the raw-input provenance file required for future
+  freezes. Its predictions and summary remain hash-locked, but exact raw cache
+  reconstruction is explicitly incomplete.
 
 Run the integrity check at any time:
 
@@ -33,6 +36,17 @@ rows exist only for deterministic simulation and must not be used for joining.
 Every result row must include `result_version`, `recorded_at_utc`, `season`,
 both team IDs, `kickoff_utc`, final goals, `outcome`, `source`, and the source's
 real match ID.
+
+Append through the validated command rather than editing the stream directly:
+
+```bash
+python3 scripts/append_round_robin_result.py \
+  --season 2026/2027 \
+  --home-team-id ID --away-team-id ID \
+  --kickoff-utc 2026-08-29T14:00:00Z \
+  --home-goals 2 --away-goals 1 \
+  --source FotMob --source-match-id MATCH_ID
+```
 
 ## Backtest plan
 

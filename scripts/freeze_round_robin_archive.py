@@ -16,9 +16,11 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from clubalpha.round_robin_archive import (
+    RESULT_FIELDS,
     hash_files,
     load_jsonl,
     validate_round_robin,
+    validate_results,
     verify_hashes,
 )
 
@@ -32,6 +34,7 @@ def relative_archive_files(archive_dir: str) -> list[str]:
         f"{archive_dir}/predictions.jsonl",
         f"{archive_dir}/summary.json",
         f"{archive_dir}/README.md",
+        f"{archive_dir}/inputs.json",
     ]
 
 
@@ -44,11 +47,17 @@ SOURCE_FILES = [
     "config/fixture-state-v1.json",
     "config/prediction-lab-v0.json",
     "config/historical-fixtures-v2.json",
+    "config/player-quality-clubalpha-v2.json",
     "research/build_round_robin_v0.py",
     "research/build_style_matchup_v0.py",
     "clubalpha/prediction_lab.py",
     "clubalpha/fixture_state.py",
+    "clubalpha/fotmob.py",
+    "clubalpha/historical_fixtures.py",
     "clubalpha/style_matchup.py",
+    "clubalpha/round_robin_archive.py",
+    "scripts/freeze_round_robin_archive.py",
+    "scripts/append_round_robin_result.py",
 ]
 
 
@@ -97,19 +106,7 @@ def build_manifest(
             "synthetic_match_id_is_join_key": False,
             "result_stream": results_path,
             "result_stream_policy": "append_only",
-            "required_result_fields": [
-                "result_version",
-                "recorded_at_utc",
-                "season",
-                "home_team_id",
-                "away_team_id",
-                "kickoff_utc",
-                "final_home_goals",
-                "final_away_goals",
-                "outcome",
-                "source",
-                "source_match_id",
-            ],
+            "required_result_fields": list(RESULT_FIELDS),
         },
         "integrity": {
             "algorithm": "sha256",
@@ -159,9 +156,14 @@ def main() -> None:
         verify_hashes(repo_root, manifest["integrity"]["hashes"])
         if not results_path.is_file():
             raise FileNotFoundError("append-only result stream is missing")
+        result_validation = validate_results(
+            load_jsonl(directory / "predictions.jsonl"),
+            load_jsonl(results_path),
+        )
         print(
             f'Verified frozen archive: {validation["fixtures"]} fixtures, '
-            f'{validation["unique_join_keys"]} unique join keys'
+            f'{validation["unique_join_keys"]} unique join keys, '
+            f'{result_validation["results"]} results'
         )
         return
 

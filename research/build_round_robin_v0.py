@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 from collections import defaultdict
@@ -29,6 +30,7 @@ from clubalpha.historical_fixtures import (  # noqa: E402
     score_history_rows,
 )
 from clubalpha.prediction_lab import simulate_fixture  # noqa: E402
+from clubalpha.round_robin_archive import sha256_file  # noqa: E402
 from clubalpha.style_matchup import evaluate_style_matchup  # noqa: E402
 
 
@@ -61,6 +63,38 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     with path.open("w", encoding="utf-8") as handle:
         for row in rows:
             handle.write(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n")
+
+
+def input_record(role: str, path: Path, *, required: bool = True) -> dict[str, Any]:
+    if not path.is_file():
+        if required:
+            raise FileNotFoundError(path)
+        return {"role": role, "filename": path.name, "used": False}
+    return {
+        "role": role,
+        "filename": path.name,
+        "bytes": path.stat().st_size,
+        "sha256": sha256_file(path),
+        "used": True,
+    }
+
+
+def cache_record(path: Path | None) -> dict[str, Any]:
+    if path is None:
+        return {"used": False}
+    if not path.is_dir():
+        raise FileNotFoundError(path)
+    files = sorted(item for item in path.rglob("*") if item.is_file())
+    digest_rows = [
+        f"{item.relative_to(path)}:{sha256_file(item)}" for item in files
+    ]
+    digest = hashlib.sha256("\n".join(digest_rows).encode("utf-8")).hexdigest()
+    return {
+        "used": True,
+        "directory_name": path.name,
+        "files": len(files),
+        "aggregate_sha256": digest,
+    }
 
 
 def current_team_rows(cache: Path | None, as_of: date) -> list[dict[str, Any]]:
@@ -251,10 +285,38 @@ def main() -> int:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=ROOT / "artifacts/round_robin/2026-08-25",
+        required=True,
+        help="new empty dated directory; frozen archives are never overwritten",
     )
     args = parser.parse_args()
     as_of = date.fromisoformat(args.as_of)
+    if args.output_dir.exists() and (
+        not args.output_dir.is_dir() or any(args.output_dir.iterdir())
+    ):
+        raise FileExistsError(
+            f"refusing to overwrite non-empty output directory: {args.output_dir}"
+        )
+
+    input_provenance = {
+        "version": "clubalpha_round_robin_input_provenance_v1",
+        "as_of": as_of.isoformat(),
+        "history_inputs": [
+            input_record("deep_history", args.deep_dir / "match_team_stats.jsonl"),
+            input_record(
+                "foundation_historical",
+                args.foundation_dir / "historical_match_team_stats.jsonl",
+            ),
+            input_record(
+                "foundation_current",
+                args.foundation_dir / "current_match_team_stats.jsonl",
+                required=False,
+            ),
+            input_record(
+                "domestic_history", args.domestic_dir / "match_team_stats.jsonl"
+            ),
+        ],
+        "fotmob_cache": cache_record(args.fotmob_cache),
+    }
 
     prediction_report = load_json(ROOT / "artifacts/prediction_lab/2026-08-24/report.json")
     alpha_report = load_json(ROOT / "reports/premier-league-alpha-snapshot-2026-08-25.json")
@@ -377,6 +439,7 @@ def main() -> int:
             "style_matchup_logged_but_zero_weight",
         ],
     }
+    write_json(args.output_dir / "inputs.json", input_provenance)
     write_jsonl(args.output_dir / "predictions.jsonl", predictions)
     write_json(args.output_dir / "summary.json", summary)
     print(

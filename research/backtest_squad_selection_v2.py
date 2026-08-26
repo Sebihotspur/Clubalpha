@@ -10,9 +10,13 @@ knowledge.
 from __future__ import annotations
 
 import argparse
+import copy
+import hashlib
 import json
+import random
 import sys
 from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -38,12 +42,58 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
     ]
 
 
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def mean(values: list[float]) -> float | None:
     return sum(values) / len(values) if values else None
 
 
 def rounded(value: float | None, digits: int = 6) -> float | None:
     return round(value, digits) if value is not None else None
+
+
+def timestamp(value: Any) -> datetime:
+    return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+
+
+def validate_source(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Reject lookalike files that cannot support a starting-XI backtest."""
+
+    if not rows:
+        raise ValueError("Player-match source is empty")
+    required = ("match_id", "competition_id", "kickoff_utc", "team_id", "player_id")
+    missing = {
+        field: sum(row.get(field) is None for row in rows) for field in required
+    }
+    if any(missing.values()):
+        raise ValueError(f"Player-match source has missing required fields: {missing}")
+
+    starter_rows = sum(row.get("is_starter") is True for row in rows)
+    lineup_position_rows = sum(row.get("lineup_position_id") is not None for row in rows)
+    exact_team_lineups: dict[tuple[int, int], int] = defaultdict(int)
+    for row in rows:
+        if row.get("is_starter") is True:
+            exact_team_lineups[(int(row["match_id"]), int(row["team_id"]))] += 1
+    exact_lineups = sum(value == 11 for value in exact_team_lineups.values())
+    if starter_rows == 0 or lineup_position_rows == 0 or exact_lineups == 0:
+        raise ValueError(
+            "Player-match source has no usable declared starting lineups "
+            f"(starter_rows={starter_rows}, lineup_position_rows={lineup_position_rows}, "
+            f"exact_team_lineups={exact_lineups})"
+        )
+    return {
+        "rows": len(rows),
+        "starter_rows": starter_rows,
+        "lineup_position_rows": lineup_position_rows,
+        "exact_team_lineups": exact_lineups,
+        "required_field_missing_counts": missing,
+    }
 
 
 def minutes(row: dict[str, Any]) -> float:
@@ -171,30 +221,68 @@ def summarize(rows: list[dict[str, Any]], key: str) -> dict[str, Any]:
     }
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--player-match-rows", type=Path, required=True)
-    parser.add_argument(
-        "--config", type=Path, default=ROOT / "config/squad-selection-v2.json"
-    )
-    parser.add_argument(
-        "--output",
-        type=Path,
-        default=ROOT / "reports/squad-selection-v2-backtest.json",
-    )
-    args = parser.parse_args()
+def metric_delta(
+    v1_summary: dict[str, Any], v2_summary: dict[str, Any]
+) -> dict[str, Any]:
+    return {
+        "xi_hit_rate": rounded(
+            float(v2_summary["xi_hit_rate"] or 0)
+            - float(v1_summary["xi_hit_rate"] or 0)
+        ),
+        "mean_xi_hits_of_11": rounded(
+            float(v2_summary["mean_xi_hits_of_11"] or 0)
+            - float(v1_summary["mean_xi_hits_of_11"] or 0)
+        ),
+        "start_brier": rounded(
+            float(v2_summary["start_brier"] or 0)
+            - float(v1_summary["start_brier"] or 0)
+        ),
+        "expected_minutes_mae": rounded(
+            float(v2_summary["expected_minutes_mae"] or 0)
+            - float(v1_summary["expected_minutes_mae"] or 0)
+        ),
+        "formation_accuracy": rounded(
+            float(v2_summary["formation_accuracy"] or 0)
+            - float(v1_summary["formation_accuracy"] or 0)
+        ),
+        "role_shape_accuracy": rounded(
+            float(v2_summary["role_shape_accuracy"] or 0)
+            - float(v1_summary["role_shape_accuracy"] or 0)
+        ),
+    }
 
-    config = load_json(args.config)
-    rows = load_jsonl(args.player_match_rows)
+
+def comparison(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    v1 = summarize(rows, "v1_minutes_policy")
+    v2 = summarize(rows, "v2_probability_policy")
+    return {
+        "target_count": len(rows),
+        "v1_minutes_policy": v1,
+        "v2_probability_policy": v2,
+        "delta_v2_minus_v1": metric_delta(v1, v2),
+    }
+
+
+def with_bonus(config: dict[str, Any], bonus: float) -> dict[str, Any]:
+    candidate = copy.deepcopy(config)
+    candidate["selection"]["latest_declared_start_bonus_minutes"] = float(bonus)
+    by_source = candidate["selection"].get("latest_declared_start_bonus_by_source")
+    if by_source is not None:
+        by_source["current_season"] = float(bonus)
+        by_source["previous_season"] = float(bonus)
+    return candidate
+
+
+def build_targets(
+    rows: list[dict[str, Any]], config: dict[str, Any]
+) -> tuple[list[dict[str, Any]], int, int, int]:
     by_team: dict[int, list[dict[str, Any]]] = defaultdict(list)
     match_ids = set()
     for row in rows:
-        if row.get("team_id") is None or row.get("match_id") is None:
-            continue
         by_team[int(row["team_id"])].append(row)
         match_ids.add(int(row["match_id"]))
 
-    targets = []
+    targets: list[dict[str, Any]] = []
     for team_id, team_rows in by_team.items():
         grouped: dict[int, list[dict[str, Any]]] = defaultdict(list)
         for row in team_rows:
@@ -204,9 +292,17 @@ def main() -> None:
             key=lambda item: str(item[1][0].get("kickoff_utc") or ""),
         )
         prior_rows: list[dict[str, Any]] = []
+        previous_exact_starters: set[int] | None = None
+        second_previous_exact_starters: set[int] | None = None
+        previous_match_kickoff: str | None = None
+        previous_competition_id: Any = None
         for match_id, target_rows in ordered_matches:
             target_kickoff = target_rows[0].get("kickoff_utc")
-            actual_starters = [row for row in target_rows if row.get("is_starter") is True]
+            actual_starters = {
+                int(row["player_id"])
+                for row in target_rows
+                if row.get("is_starter") is True
+            }
             if prior_rows and len(actual_starters) == 11:
                 candidates = candidate_pool(prior_rows)
                 target_competition_id = target_rows[0].get("competition_id")
@@ -231,45 +327,348 @@ def main() -> None:
                         "match_id": match_id,
                         "kickoff_utc": target_kickoff,
                         "competition_id": target_competition_id,
+                        "competition": target_rows[0].get("competition"),
                         "team_id": team_id,
                         "team": target_rows[0].get("team"),
+                        "days_since_previous_match": (
+                            round(
+                                (
+                                    timestamp(target_kickoff)
+                                    - timestamp(previous_match_kickoff)
+                                ).total_seconds()
+                                / 86400.0,
+                                3,
+                            )
+                            if previous_match_kickoff is not None
+                            else None
+                        ),
+                        "competition_changed_since_previous_match": (
+                            str(target_competition_id)
+                            != str(previous_competition_id)
+                            if previous_competition_id is not None
+                            else None
+                        ),
+                        "lineup_changes_from_previous_exact_xi": (
+                            11 - len(actual_starters & previous_exact_starters)
+                            if previous_exact_starters is not None
+                            else None
+                        ),
+                        "known_changes_between_two_previous_exact_xis": (
+                            11
+                            - len(
+                                previous_exact_starters
+                                & second_previous_exact_starters
+                            )
+                            if previous_exact_starters is not None
+                            and second_previous_exact_starters is not None
+                            else None
+                        ),
                         "v1_minutes_policy": score_projection(v1, target_rows),
                         "v2_probability_policy": score_projection(v2, target_rows),
                     }
                 )
+            if len(actual_starters) == 11:
+                second_previous_exact_starters = previous_exact_starters
+                previous_exact_starters = actual_starters
+            previous_match_kickoff = target_kickoff
+            previous_competition_id = target_rows[0].get("competition_id")
             prior_rows.extend(target_rows)
 
-    targets.sort(key=lambda row: (str(row["kickoff_utc"]), row["match_id"], row["team_id"]))
-    v1_summary = summarize(targets, "v1_minutes_policy")
-    v2_summary = summarize(targets, "v2_probability_policy")
+    targets.sort(
+        key=lambda row: (str(row["kickoff_utc"]), row["match_id"], row["team_id"])
+    )
+    return targets, len(match_ids), len(by_team), sum(
+        value == 2
+        for value in {
+            match_id: sum(row["match_id"] == match_id for row in targets)
+            for match_id in {row["match_id"] for row in targets}
+        }.values()
+    )
+
+
+def grouped_comparisons(
+    rows: list[dict[str, Any]], labeler: Any
+) -> dict[str, dict[str, Any]]:
+    groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        label = labeler(row)
+        if label is not None:
+            groups[str(label)].append(row)
+    return {label: comparison(group) for label, group in sorted(groups.items())}
+
+
+def percentile(values: list[float], probability: float) -> float:
+    ordered = sorted(values)
+    position = (len(ordered) - 1) * probability
+    lower = int(position)
+    upper = min(lower + 1, len(ordered) - 1)
+    fraction = position - lower
+    return ordered[lower] * (1.0 - fraction) + ordered[upper] * fraction
+
+
+def paired_match_bootstrap(
+    rows: list[dict[str, Any]], *, samples: int = 5000, seed: int = 20260826
+) -> dict[str, Any]:
+    by_match: dict[int, list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        by_match[int(row["match_id"])].append(row)
+    match_ids = sorted(by_match)
+    rng = random.Random(seed)
+    xi_deltas: list[float] = []
+    formation_deltas: list[float] = []
+    role_deltas: list[float] = []
+    for _ in range(samples):
+        sampled = [
+            row
+            for _match_id in range(len(match_ids))
+            for row in by_match[rng.choice(match_ids)]
+        ]
+        xi_deltas.append(
+            sum(
+                row["v2_probability_policy"]["xi_hits"]
+                - row["v1_minutes_policy"]["xi_hits"]
+                for row in sampled
+            )
+            / len(sampled)
+        )
+        formation_pairs = [
+            float(row["v2_probability_policy"]["formation_correct"])
+            - float(row["v1_minutes_policy"]["formation_correct"])
+            for row in sampled
+            if row["v2_probability_policy"]["formation_correct"] is not None
+            and row["v1_minutes_policy"]["formation_correct"] is not None
+        ]
+        role_pairs = [
+            float(row["v2_probability_policy"]["role_shape_correct"])
+            - float(row["v1_minutes_policy"]["role_shape_correct"])
+            for row in sampled
+        ]
+        formation_deltas.append(sum(formation_pairs) / len(formation_pairs))
+        role_deltas.append(sum(role_pairs) / len(role_pairs))
+
+    def interval(values: list[float]) -> dict[str, Any]:
+        return {
+            "ci_95": [
+                rounded(percentile(values, 0.025)),
+                rounded(percentile(values, 0.975)),
+            ],
+            "bootstrap_probability_above_zero": rounded(
+                sum(value > 0 for value in values) / len(values)
+            ),
+        }
+
+    return {
+        "cluster_unit": "match_id",
+        "samples": samples,
+        "seed": seed,
+        "mean_xi_hits_of_11_delta": interval(xi_deltas),
+        "formation_accuracy_delta": interval(formation_deltas),
+        "role_shape_accuracy_delta": interval(role_deltas),
+    }
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--player-match-rows", type=Path, required=True)
+    parser.add_argument(
+        "--config", type=Path, default=ROOT / "config/squad-selection-v2.json"
+    )
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=ROOT / "reports/squad-selection-v2-backtest.json",
+    )
+    args = parser.parse_args()
+
+    config = load_json(args.config)
+    rows = load_jsonl(args.player_match_rows)
+    source_schema = validate_source(rows)
     development_share = float(
         config.get("selection", {}).get("tuning", {}).get("development_share", 0.6)
     )
-    development_cut = max(1, min(len(targets) - 1, int(len(targets) * development_share)))
+    configured_bonus = float(
+        config["selection"]["latest_declared_start_bonus_minutes"]
+    )
+    configured_suppression = bool(
+        config["selection"].get(
+            "suppress_latest_xi_bonus_after_competition_change", False
+        )
+    )
+    bonuses = [
+        float(value)
+        for value in config["selection"]["tuning"]["candidate_bonus_minutes"]
+    ]
+    if configured_bonus not in bonuses:
+        raise ValueError(
+            f"Configured bonus {configured_bonus} is absent from tuning candidates"
+        )
+    suppression_candidates = [
+        bool(value)
+        for value in config["selection"]["tuning"].get(
+            "candidate_competition_switch_suppression", [False]
+        )
+    ]
+    if configured_suppression not in suppression_candidates:
+        raise ValueError(
+            "Configured competition-switch suppression is absent from tuning candidates"
+        )
+
+    candidate_targets: dict[tuple[float, bool], list[dict[str, Any]]] = {}
+    coverage: tuple[int, int, int] | None = None
+    for suppression in suppression_candidates:
+        for bonus in bonuses:
+            candidate_config = with_bonus(config, bonus)
+            candidate_config["selection"][
+                "suppress_latest_xi_bonus_after_competition_change"
+            ] = suppression
+            built, source_matches, source_teams, matches_both_sides = build_targets(
+                rows, candidate_config
+            )
+            if len(built) < 2:
+                raise ValueError(
+                    "Player-match source produced fewer than two eligible projections"
+                )
+            candidate_targets[(bonus, suppression)] = built
+            current_coverage = (source_matches, source_teams, matches_both_sides)
+            if coverage is None:
+                coverage = current_coverage
+            if current_coverage != coverage:
+                raise RuntimeError(
+                    "Tuning candidates produced inconsistent target coverage"
+                )
+
+    targets = candidate_targets[(configured_bonus, configured_suppression)]
+    development_cut = max(
+        1, min(len(targets) - 1, int(len(targets) * development_share))
+    )
+    tuning_results = []
+    for suppression in suppression_candidates:
+        for bonus in bonuses:
+            development_result = comparison(
+                candidate_targets[(bonus, suppression)][:development_cut]
+            )
+            tuning_results.append(
+                {
+                    "bonus_minutes": bonus,
+                    "suppress_bonus_after_competition_change": suppression,
+                    "development_mean_xi_hits_of_11": development_result[
+                        "v2_probability_policy"
+                    ]["mean_xi_hits_of_11"],
+                    "development_xi_hit_rate": development_result[
+                        "v2_probability_policy"
+                    ]["xi_hit_rate"],
+                }
+            )
+    selected_policy = max(
+        tuning_results,
+        key=lambda row: (
+            float(row["development_mean_xi_hits_of_11"] or 0),
+            -float(row["bonus_minutes"]),
+            not bool(row["suppress_bonus_after_competition_change"]),
+        ),
+    )
+    configured_policy_won_development = (
+        configured_bonus == selected_policy["bonus_minutes"]
+        and configured_suppression
+        == selected_policy["suppress_bonus_after_competition_change"]
+    )
+
     development = targets[:development_cut]
     holdout = targets[development_cut:]
-    development_v1 = summarize(development, "v1_minutes_policy")
-    development_v2 = summarize(development, "v2_probability_policy")
-    holdout_v1 = summarize(holdout, "v1_minutes_policy")
-    holdout_v2 = summarize(holdout, "v2_probability_policy")
-    eligible_sides_by_match: dict[int, int] = defaultdict(int)
-    for row in targets:
-        eligible_sides_by_match[row["match_id"]] += 1
-    matches_both_sides = sum(value == 2 for value in eligible_sides_by_match.values())
-    xi_improvement = float(holdout_v2["xi_hit_rate"] or 0) - float(
-        holdout_v1["xi_hit_rate"] or 0
-    )
-    minute_improvement = float(holdout_v1["expected_minutes_mae"] or 0) - float(
-        holdout_v2["expected_minutes_mae"] or 0
-    )
-    activation_passed = xi_improvement > 0 and minute_improvement >= 0
-    full_xi_improvement = float(v2_summary["xi_hit_rate"] or 0) - float(
-        v1_summary["xi_hit_rate"] or 0
-    )
+    full_result = comparison(targets)
+    development_result = comparison(development)
+    holdout_result = comparison(holdout)
+    holdout_delta = holdout_result["delta_v2_minus_v1"]
+    activation_checks = {
+        "configured_policy_won_development": configured_policy_won_development,
+        "higher_holdout_xi_hit_rate": float(holdout_delta["xi_hit_rate"] or 0) > 0,
+        "no_worse_holdout_expected_minutes_mae": float(
+            holdout_delta["expected_minutes_mae"] or 0
+        )
+        <= 0,
+        "no_worse_holdout_formation_accuracy": float(
+            holdout_delta["formation_accuracy"] or 0
+        )
+        >= 0,
+        "no_worse_holdout_role_shape_accuracy": float(
+            holdout_delta["role_shape_accuracy"] or 0
+        )
+        >= 0,
+    }
+    activation_passed = all(activation_checks.values())
+    source_matches, source_teams, matches_both_sides = coverage or (0, 0, 0)
+
+    half = max(1, len(holdout) // 2)
+    time_segments = {
+        "earlier_holdout_half": comparison(holdout[:half]),
+        "later_holdout_half": comparison(holdout[half:]),
+    }
+
+    def volatility(row: dict[str, Any]) -> str | None:
+        changes = row["lineup_changes_from_previous_exact_xi"]
+        if changes is None:
+            return None
+        if changes <= 2:
+            return "stable_0_to_2_changes"
+        if changes <= 4:
+            return "rotated_3_to_4_changes"
+        return "volatile_5_plus_changes"
+
+    def coverage_band(row: dict[str, Any]) -> str:
+        covered = round(
+            11 * row["v2_probability_policy"]["candidate_coverage"]
+        )
+        if covered == 11:
+            return "all_11_starters_previously_observed"
+        if covered >= 10:
+            return "10_starters_previously_observed"
+        return "9_or_fewer_starters_previously_observed"
+
+    def known_rotation(row: dict[str, Any]) -> str | None:
+        changes = row["known_changes_between_two_previous_exact_xis"]
+        if changes is None:
+            return None
+        if changes <= 2:
+            return "stable_prior_xis_0_to_2_changes"
+        if changes <= 4:
+            return "rotated_prior_xis_3_to_4_changes"
+        return "volatile_prior_xis_5_plus_changes"
+
+    def rest_band(row: dict[str, Any]) -> str | None:
+        days = row["days_since_previous_match"]
+        if days is None:
+            return None
+        if days < 4:
+            return "short_rest_under_4_days"
+        if days < 6:
+            return "medium_rest_4_to_5_days"
+        return "long_rest_6_plus_days"
+
+    def competition_transition(row: dict[str, Any]) -> str | None:
+        changed = row["competition_changed_since_previous_match"]
+        if changed is None:
+            return None
+        return "competition_changed" if changed else "same_competition"
+
+    team_results = grouped_comparisons(holdout, lambda row: row.get("team"))
+    team_deltas = [
+        {
+            "team": team,
+            "target_count": result["target_count"],
+            "mean_xi_hits_of_11_delta": result["delta_v2_minus_v1"][
+                "mean_xi_hits_of_11"
+            ],
+        }
+        for team, result in team_results.items()
+    ]
     report = {
         "version": config["version"],
-        "status": "activate" if activation_passed else "retain_v1",
-        "source": args.player_match_rows.name,
+        "status": "lock_v2" if activation_passed else "retain_v1",
+        "source": {
+            "filename": args.player_match_rows.name,
+            "sha256": sha256(args.player_match_rows),
+            "schema": source_schema,
+        },
         "method": {
             "chronological": True,
             "future_rows_used": False,
@@ -279,67 +678,79 @@ def main() -> None:
             "baseline": "v1-style recency-weighted minutes plus latest exact shape, on the same candidates and evidence window",
             "development_share": development_share,
             "holdout_share": round(1.0 - development_share, 3),
+            "tuning_uses_development_only": True,
             "activation_metrics_use_holdout_only": True,
         },
         "coverage": {
             "source_rows": len(rows),
-            "source_matches": len(match_ids),
-            "source_teams": len(by_team),
+            "source_matches": source_matches,
+            "source_teams": source_teams,
             "evaluated_team_projections": len(targets),
             "evaluated_matches_with_both_sides": matches_both_sides,
         },
-        "v1_minutes_policy": v1_summary,
-        "v2_probability_policy": v2_summary,
-        "chronological_development": {
-            "target_count": len(development),
-            "v1_minutes_policy": development_v1,
-            "v2_probability_policy": development_v2,
+        "development_tuning": {
+            "metric": "mean exact-XI starter hits",
+            "tie_break": "smaller persistence bonus",
+            "candidates": tuning_results,
+            "selected_policy": {
+                "bonus_minutes": selected_policy["bonus_minutes"],
+                "suppress_bonus_after_competition_change": selected_policy[
+                    "suppress_bonus_after_competition_change"
+                ],
+            },
+            "configured_policy": {
+                "bonus_minutes": configured_bonus,
+                "suppress_bonus_after_competition_change": configured_suppression,
+            },
+            "configured_policy_won_development": configured_policy_won_development,
         },
-        "chronological_holdout": {
-            "target_count": len(holdout),
-            "v1_minutes_policy": holdout_v1,
-            "v2_probability_policy": holdout_v2,
-            "delta_v2_minus_v1": {
-                "xi_hit_rate": rounded(xi_improvement),
-                "mean_xi_hits_of_11": rounded(
-                    float(holdout_v2["mean_xi_hits_of_11"] or 0)
-                    - float(holdout_v1["mean_xi_hits_of_11"] or 0)
+        "all_targets_descriptive_only": full_result,
+        "chronological_development": development_result,
+        "chronological_holdout": holdout_result,
+        "holdout_robustness": {
+            "paired_match_bootstrap": paired_match_bootstrap(holdout),
+            "by_competition": grouped_comparisons(
+                holdout, lambda row: row.get("competition")
+            ),
+            "by_time": time_segments,
+            "by_realized_lineup_volatility": grouped_comparisons(
+                holdout, volatility
+            ),
+            "by_known_prior_lineup_volatility": grouped_comparisons(
+                holdout, known_rotation
+            ),
+            "by_known_rest_days": grouped_comparisons(holdout, rest_band),
+            "by_known_competition_transition": grouped_comparisons(
+                holdout, competition_transition
+            ),
+            "by_candidate_coverage": grouped_comparisons(holdout, coverage_band),
+            "team_concentration": {
+                "teams_improved": sum(
+                    float(row["mean_xi_hits_of_11_delta"] or 0) > 0
+                    for row in team_deltas
                 ),
-                "expected_minutes_mae": rounded(
-                    float(holdout_v2["expected_minutes_mae"] or 0)
-                    - float(holdout_v1["expected_minutes_mae"] or 0)
+                "teams_tied": sum(
+                    float(row["mean_xi_hits_of_11_delta"] or 0) == 0
+                    for row in team_deltas
                 ),
-                "formation_accuracy": rounded(
-                    float(holdout_v2["formation_accuracy"] or 0)
-                    - float(holdout_v1["formation_accuracy"] or 0)
+                "teams_worse": sum(
+                    float(row["mean_xi_hits_of_11_delta"] or 0) < 0
+                    for row in team_deltas
+                ),
+                "team_deltas": sorted(
+                    team_deltas,
+                    key=lambda row: (
+                        -float(row["mean_xi_hits_of_11_delta"] or 0),
+                        row["team"],
+                    ),
                 ),
             },
         },
-        "delta_v2_minus_v1": {
-            "xi_hit_rate": rounded(full_xi_improvement),
-            "mean_xi_hits_of_11": rounded(
-                float(v2_summary["mean_xi_hits_of_11"] or 0)
-                - float(v1_summary["mean_xi_hits_of_11"] or 0)
-            ),
-            "start_brier": rounded(
-                float(v2_summary["start_brier"] or 0)
-                - float(v1_summary["start_brier"] or 0)
-            ),
-            "expected_minutes_mae": rounded(
-                float(v2_summary["expected_minutes_mae"] or 0)
-                - float(v1_summary["expected_minutes_mae"] or 0)
-            ),
-            "formation_accuracy": rounded(
-                float(v2_summary["formation_accuracy"] or 0)
-                - float(v1_summary["formation_accuracy"] or 0)
-            ),
-        },
         "activation_gate": {
-            "requires_higher_xi_hit_rate": True,
-            "requires_no_worse_expected_minutes_mae": True,
+            "checks": activation_checks,
             "evaluated_on": "final_40_percent_chronological_holdout",
             "passed": activation_passed,
-            "decision": "promote_v2" if activation_passed else "keep_v1_and_iterate",
+            "decision": "lock_v2" if activation_passed else "keep_v1_and_iterate",
         },
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)

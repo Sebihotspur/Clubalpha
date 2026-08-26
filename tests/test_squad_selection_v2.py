@@ -1,4 +1,5 @@
 import unittest
+from copy import deepcopy
 
 from clubalpha.squad_selection_v2 import project_team_selection
 
@@ -209,6 +210,48 @@ class SquadSelectionV2Tests(unittest.TestCase):
         self.assertAlmostEqual(result["evidence"]["weighted_matches"], expected_weight)
         self.assertEqual(
             result["evidence"]["latest_exact_lineup_source"], "current_season"
+        )
+
+    def test_competition_change_suppresses_only_latest_xi_bonus(self):
+        config = deepcopy(CONFIG)
+        config["selection"] = {
+            "latest_declared_start_bonus_minutes": 30.0,
+            "suppress_latest_xi_bonus_after_competition_change": True,
+        }
+        history = match_rows(1, "2026-08-23T15:00:00Z")
+        candidates = [candidate(player_id) for player_id in range(1, 17)]
+        same_competition = project_team_selection(
+            history,
+            candidates,
+            "2026-08-26T15:00:00Z",
+            47,
+            config,
+            team_id=10,
+            team="Club",
+        )
+        changed_competition = project_team_selection(
+            history,
+            candidates,
+            "2026-08-26T15:00:00Z",
+            904988,
+            config,
+            team_id=10,
+            team="Club",
+        )
+        same_player = next(
+            row for row in same_competition["players"] if row["player_id"] == 2
+        )
+        changed_player = next(
+            row for row in changed_competition["players"] if row["player_id"] == 2
+        )
+        self.assertEqual(
+            same_player["selection_score"], same_player["expected_minutes"] + 30.0
+        )
+        self.assertEqual(
+            changed_player["selection_score"], changed_player["expected_minutes"]
+        )
+        self.assertTrue(
+            changed_competition["evidence"]["latest_xi_bonus_suppressed"]
         )
 
 

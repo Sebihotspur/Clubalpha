@@ -1,4 +1,4 @@
-"""Fixture-specific squad selection challenger.
+"""Locked fixture-specific squad selection prior.
 
 The v2 policy deliberately keeps manager selection and player quality apart.
 Only prior match participation, declared lineups, tactical roles, formation,
@@ -24,7 +24,7 @@ from clubalpha.squad_selection import (
 )
 
 
-SELECTION_V2_VERSION = "clubalpha_squad_selection_v2_challenger"
+SELECTION_V2_VERSION = "clubalpha_squad_selection_v2_locked"
 
 
 def _timestamp(value: Any) -> datetime | None:
@@ -243,6 +243,20 @@ def project_team_selection(
         target,
         int(config["recent_evidence"]["maximum_matches"]),
     )
+    latest_match_competition_id = (
+        recent[0][1][0].get("competition_id") if recent else None
+    )
+    competition_changed = (
+        target_competition_id is not None
+        and latest_match_competition_id is not None
+        and str(target_competition_id) != str(latest_match_competition_id)
+    )
+    latest_xi_bonus_suppressed = bool(
+        config["selection"].get(
+            "suppress_latest_xi_bonus_after_competition_change", False
+        )
+        and competition_changed
+    )
     weighted_matches: list[tuple[int, list[dict[str, Any]], float]] = []
     latest_exact_starters: set[int] = set()
     latest_exact_source: str | None = None
@@ -375,6 +389,8 @@ def project_team_selection(
         start_bonus = float(
             source_bonuses.get(str(latest_exact_source), default_start_bonus)
         )
+        if latest_xi_bonus_suppressed:
+            start_bonus = 0.0
         row["selection_score"] = round(
             float(row["expected_minutes"])
             + (
@@ -433,6 +449,9 @@ def project_team_selection(
         "players": player_rows,
         "evidence": {
             "prior_matches": len(recent),
+            "latest_match_competition_id": latest_match_competition_id,
+            "competition_changed_since_latest_match": competition_changed,
+            "latest_xi_bonus_suppressed": latest_xi_bonus_suppressed,
             "prior_match_ids": [match_id for match_id, _ in recent],
             "weighted_matches": round(total_match_weight, 6),
             "weighted_exact_lineups": round(exact_lineup_weight, 6),

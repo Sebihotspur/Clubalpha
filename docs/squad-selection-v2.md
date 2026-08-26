@@ -48,9 +48,11 @@ Known unavailable players are set to zero before allocation; questionable and
 unknown players remain visible.
 
 Up to three exact recent formations vote on the projected shape. Players are
-ranked within its tactical slots by expected minutes, with a 15-minute
-persistence bonus for members of the latest declared XI. That bonus was chosen
-on the earlier 60% of the chronological development sample.
+ranked within its tactical slots by expected minutes. Within the same
+competition, members of the latest declared XI receive a 30-minute persistence
+bonus. When the target changes competition, that one-lineup bonus is switched
+off; all five-match evidence and the shape vote remain active. The complete
+policy was chosen on the earlier 60% of the chronological development sample.
 
 ## Honest historical test
 
@@ -59,13 +61,16 @@ Champions League matches. For every target, the model sees only earlier rows
 for that club. The candidate pool contains only players previously observed
 for the club, so a debuting or transferred starter is recorded as a miss.
 
-The final 40% of chronological team projections was untouched while choosing
-the persistence bonus:
+The source is pinned by SHA-256
+`82af6759d38800f8b5c2f3d1bd915924e135889eaa550a962af2da91dab0832c`.
+The runner rejects a lookalike source without starter and lineup-position
+fields. It searches the persistence bonus and competition-switch rule only on
+the first 60% of projections. The final 40% remains the evaluation holdout:
 
 | Holdout metric | v1 minutes policy | v2 | Change |
 |---|---:|---:|---:|
-| Mean starters found (of 11) | 8.477 | 8.560 | +0.083 |
-| XI hit rate | 77.06% | 77.81% | +0.75 pp |
+| Mean starters found (of 11) | 8.477 | 8.615 | +0.138 |
+| XI hit rate | 77.06% | 78.32% | +1.25 pp |
 | Formation accuracy | 69.27% | 72.48% | +3.21 pp |
 | Expected-minutes MAE | 20.811 | 20.811 | unchanged |
 
@@ -73,6 +78,15 @@ The activation gate passes, but the gain is intentionally described as modest.
 The output is a stronger fixture prior, not a guarantee.
 The start and appearance values are recency-weighted empirical frequencies,
 not yet calibrated probabilities; the gate promotes the XI/minute policy only.
+
+The improvement is positive when the holdout is split by competition: +0.152
+starters per Premier League projection and +0.103 per Champions League
+projection. A paired bootstrap resampling whole matches gives a 95% interval
+of +0.053 to +0.220 starters and a 99.96% probability of a positive gain.
+Realized rotations of five or more players remain the weakest segment, but the
+previous two lineups did not identify those rotations in advance. That is a
+confidence limitation for future team-news work, not permission to use the
+actual lineup retrospectively.
 
 ## Early-season transition check
 
@@ -127,5 +141,21 @@ context + opponent + calibrated goal model
     → probabilities (separate future layer)
 ```
 
+## Locked operating contract
+
+1. Build the candidate pool from the current squad and remove only explicit
+   hard unavailability.
+2. Use no match row at or after the target kickoff.
+3. Freeze start frequency, appearance frequency, raw minutes, the capped
+   990-minute allocation, tactical shape, and projected XI before attaching
+   any player grade.
+4. Treat the result as a pre-lineup prior. A verified confirmed XI replaces
+   the projected starters; it does not rewrite this model's historical output.
+5. Keep selection frequencies labeled uncalibrated until a later reliability
+   test supports probability language.
+6. Never tune this version on the 436-projection holdout. Any changed signal,
+   window, weight, or override becomes a new challenger with later data.
+
 Team news and a confirmed matchday XI can override this prior closer to
-kickoff. Alpha Ability cannot.
+kickoff. Alpha Ability cannot. This v2 policy is locked as the starting logic
+from 2026-08-26; changes require a new version and a later chronological test.

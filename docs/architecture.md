@@ -88,12 +88,23 @@ XI's locked scoring, creation, and prevention Alpha components. It remains
 outside Fixture State until chronological testing shows incremental value.
 
 The Squad Selection layer is the bridge between Player Quality and Club Form.
-Its fixture-specific v2 policy uses the latest five competitive matches to
-estimate start probability, appearance probability, and expected minutes. A
-three-match formation vote and the latest declared XI capture manager intent.
-Alpha Ability remains completely outside selection. Alpha grading position
-also stays separate from tactical selection role, player minutes are capped at
-90, and the team allocation is capped at 990.
+Its locked fixture-specific v2 policy is deliberately small:
+
+```text
+eligible squad + explicit availability
+    → latest five past matches
+    → start / appearance frequencies and expected minutes
+    → three-lineup formation vote
+    → tactical slots + latest-XI persistence within the same competition
+    → frozen projected XI and 990-minute allocation
+    → attach locked Player Alpha context
+```
+
+The latest-XI persistence signal is suppressed after a competition switch;
+the remaining evidence is not discarded. Alpha Ability remains completely
+outside selection. Alpha grading position also stays separate from tactical
+selection role, player minutes are capped at 90, and the team allocation is
+capped at 990. The frequencies are not described as calibrated probabilities.
 
 Only after the XI and minutes are frozen does Role-aware Alpha attach the
 locked player grades. It exposes scoring threat, chance creation, and defensive

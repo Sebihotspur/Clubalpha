@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 from collections import Counter
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -22,6 +23,15 @@ def fixture_join_key(prediction: dict[str, Any]) -> str:
     return (
         f'{fixture["season"]}|{int(fixture["home_team_id"])}|'
         f'{int(fixture["away_team_id"])}'
+    )
+
+
+def result_join_key(result: dict[str, Any]) -> str:
+    """Return the prediction join key declared by an observed result."""
+
+    return (
+        f'{result["season"]}|{int(result["home_team_id"])}|'
+        f'{int(result["away_team_id"])}'
     )
 
 
@@ -127,6 +137,10 @@ def validate_round_robin(
     if any(int(team.get("matches", -1)) != expected_matches_per_team for team in table):
         raise ValueError("summary league table contains an invalid match count")
 
+    expected_table = aggregate_expected_table(rows)
+    if table != expected_table:
+        raise ValueError("summary league table does not recompute from predictions")
+
     return {
         "season": next(iter(seasons)),
         "teams": team_count,
@@ -135,6 +149,151 @@ def validate_round_robin(
         "unique_join_keys": len(set(join_keys)),
         "team_ids": sorted(team_names),
     }
+
+
+def aggregate_expected_table(predictions: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Recompute the exact frozen expected table from prediction rows."""
+
+    totals: dict[str, dict[str, float]] = {}
+    for row in predictions:
+        fixture = row["fixture"]
+        probabilities = row["probabilities"]
+        for team in (fixture["home_team"], fixture["away_team"]):
+            totals.setdefault(
+                team,
+                {
+                    "matches": 0.0,
+                    "expected_wins": 0.0,
+                    "expected_draws": 0.0,
+                    "expected_losses": 0.0,
+                    "expected_points": 0.0,
+                    "expected_goals_for": 0.0,
+                    "expected_goals_against": 0.0,
+                },
+            )
+        home = totals[fixture["home_team"]]
+        away = totals[fixture["away_team"]]
+        home["matches"] += 1
+        away["matches"] += 1
+        home["expected_wins"] += probabilities["home_win"]
+        home["expected_draws"] += probabilities["draw"]
+        home["expected_losses"] += probabilities["away_win"]
+        away["expected_wins"] += probabilities["away_win"]
+        away["expected_draws"] += probabilities["draw"]
+        away["expected_losses"] += probabilities["home_win"]
+        home["expected_points"] += 3 * probabilities["home_win"] + probabilities["draw"]
+        away["expected_points"] += 3 * probabilities["away_win"] + probabilities["draw"]
+        home["expected_goals_for"] += row["predicted_xg"]["home"]
+        home["expected_goals_against"] += row["predicted_xg"]["away"]
+        away["expected_goals_for"] += row["predicted_xg"]["away"]
+        away["expected_goals_against"] += row["predicted_xg"]["home"]
+
+    table = []
+    for team, values in totals.items():
+        matches = int(values["matches"])
+        item = {
+            "team": team,
+            "matches": matches,
+            **{
+                key: round(value, 2)
+                for key, value in values.items()
+                if key != "matches"
+            },
+            "average_probabilities": {
+                "win": round(values["expected_wins"] / matches, 4),
+                "draw": round(values["expected_draws"] / matches, 4),
+                "loss": round(values["expected_losses"] / matches, 4),
+            },
+        }
+        item["expected_goal_difference"] = round(
+            values["expected_goals_for"] - values["expected_goals_against"], 2
+        )
+        table.append(item)
+    table.sort(
+        key=lambda item: (
+            -float(item["expected_points"]),
+            -float(item["expected_goal_difference"]),
+            item["team"],
+        )
+    )
+    for rank, item in enumerate(table, 1):
+        item["rank"] = rank
+    return table
+
+
+RESULT_FIELDS = (
+    "result_version",
+    "recorded_at_utc",
+    "season",
+    "home_team_id",
+    "away_team_id",
+    "kickoff_utc",
+    "final_home_goals",
+    "final_away_goals",
+    "outcome",
+    "source",
+    "source_match_id",
+)
+
+
+def validate_results(
+    predictions: Iterable[dict[str, Any]], results: Iterable[dict[str, Any]]
+) -> dict[str, Any]:
+    """Validate an append-only result stream against frozen predictions."""
+
+    prediction_keys = {fixture_join_key(row) for row in predictions}
+    rows = list(results)
+    join_keys: list[str] = []
+    source_match_ids: list[str] = []
+    for index, row in enumerate(rows, start=1):
+        missing = [field for field in RESULT_FIELDS if row.get(field) is None]
+        if missing:
+            raise ValueError(f"result row {index} is missing fields: {missing}")
+        try:
+            key = result_join_key(row)
+            if isinstance(row["final_home_goals"], bool) or isinstance(
+                row["final_away_goals"], bool
+            ):
+                raise ValueError
+            home_goals = int(row["final_home_goals"])
+            away_goals = int(row["final_away_goals"])
+            if (
+                home_goals != row["final_home_goals"]
+                or away_goals != row["final_away_goals"]
+            ):
+                raise ValueError
+            kickoff = datetime.fromisoformat(
+                str(row["kickoff_utc"]).replace("Z", "+00:00")
+            )
+            recorded = datetime.fromisoformat(
+                str(row["recorded_at_utc"]).replace("Z", "+00:00")
+            )
+            if kickoff.tzinfo is None or recorded.tzinfo is None:
+                raise ValueError
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"result row {index} has invalid field types") from exc
+        if key not in prediction_keys:
+            raise ValueError(f"result row {index} does not join a frozen prediction")
+        if home_goals < 0 or away_goals < 0:
+            raise ValueError(f"result row {index} contains negative goals")
+        expected_outcome = (
+            "home_win"
+            if home_goals > away_goals
+            else "away_win" if away_goals > home_goals else "draw"
+        )
+        if row["outcome"] != expected_outcome:
+            raise ValueError(f"result row {index} outcome does not match final goals")
+        if recorded < kickoff:
+            raise ValueError(f"result row {index} was recorded before kickoff")
+        if not str(row["source"]).strip() or not str(row["source_match_id"]).strip():
+            raise ValueError(f"result row {index} has an empty source identity")
+        join_keys.append(key)
+        source_match_ids.append(f'{row["source"]}|{row["source_match_id"]}')
+    if len(join_keys) != len(set(join_keys)):
+        raise ValueError("result stream contains duplicate prediction join keys")
+    if len(source_match_ids) != len(set(source_match_ids)):
+        raise ValueError("result stream contains duplicate source match IDs")
+    return {"results": len(rows), "unique_join_keys": len(set(join_keys))}
 
 
 def hash_files(repo_root: Path, relative_paths: Iterable[str]) -> dict[str, str]:

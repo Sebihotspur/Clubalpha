@@ -132,6 +132,13 @@ Alpha grading position is separate from tactical selection role, incomplete
 evidence is discounted, and no player can exceed 90 expected minutes. This is
 a dated squad hierarchy, not a fixture-specific or confirmed lineup.
 
+The locked fixture-specific v2 policy then uses only the latest five past
+matches, a three-lineup shape vote, and the current eligible squad. The latest
+declared XI receives a development-tuned persistence signal only when the
+target remains in the same competition; Player Alpha is attached after the XI
+and 990-minute allocation are frozen. Its full chronological audit and source
+hash are recorded in [Squad Selection v2](docs/squad-selection-v2.md).
+
 ## Joined Club Form Snapshot
 
 Once the components are built, join Performance Form, Club Dynamics,
