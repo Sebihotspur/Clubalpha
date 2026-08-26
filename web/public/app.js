@@ -11,6 +11,8 @@ const esc = (value) =>
 const pct = (value) => `${(Number(value) * 100).toFixed(1)}%`;
 const dec = (value, places = 2) => Number(value).toFixed(places);
 const signed = (value, places = 2) => `${Number(value) >= 0 ? "+" : ""}${Number(value).toFixed(places)}`;
+const pp = (value) => `${Number(value) >= 0 ? "+" : ""}${(Number(value) * 100).toFixed(1)} pp`;
+const signedPct = (value) => `${Number(value) >= 0 ? "+" : ""}${(Number(value) * 100).toFixed(1)}%`;
 const dateTime = (value) =>
   new Intl.DateTimeFormat("en-US", {
     weekday: "short",
@@ -73,6 +75,9 @@ function topMatchCards(matches) {
 
 function overview(data) {
   const pick = data.official_shadow_pick;
+  const strongestContext = data.holy_grail.predictions
+    .slice()
+    .sort((a, b) => Math.abs(b.favorite_probability_delta) - Math.abs(a.favorite_probability_delta))[0];
   return `
     <section class="hero">
       <div>
@@ -128,12 +133,125 @@ function overview(data) {
     </section>
 
     <section class="section">
+      <div class="section-head"><h2>Holy Grail v1</h2><a href="/holy-grail/">Open contextual slate →</a></div>
+      <article class="holy-teaser">
+        <div>
+          <span class="panel-label">Continuous opponent context · ${esc(data.holy_grail.as_of)}</span>
+          <h3>The foundation stays anchored. The matchup changes the scoring environment.</h3>
+          <p>Each attack is evaluated against the opponent’s route exposure, projected-XI execution, and evidence reliability before the 50,000-match simulation is rerun.</p>
+        </div>
+        <div class="holy-teaser-read">
+          <span>Largest current move</span>
+          <strong>${esc(strongestContext.favorite)}</strong>
+          <small>${esc(strongestContext.home_team)} vs ${esc(strongestContext.away_team)} · ${pp(strongestContext.favorite_probability_delta)}</small>
+        </div>
+      </article>
+    </section>
+
+    <section class="section">
       <div class="section-head"><h2>Style Matchup v0</h2><a href="/matchups/">Explore vulnerabilities →</a></div>
       <article class="matchup-teaser">
         <div><span class="panel-label">New research challenger · zero composite weight</span><h3>How can one team make the next opponent vulnerable?</h3><p>Compare five attacking routes against the opponent’s measured exposure, then confirm whether the projected XI has the player quality to execute.</p></div>
         <div class="teaser-flow"><span>STYLE ROUTE</span><i>×</i><span>OPPONENT EXPOSURE</span><i>×</i><span>PLAYER ALPHA</span></div>
       </article>
     </section>`;
+}
+
+function verdictLabel(value) {
+  const labels = {
+    baseline_reinforced: "Baseline reinforced",
+    baseline_supported: "Baseline supported",
+    baseline_fragile: "Baseline fragile",
+    no_clear_contextual_edge: "No clear contextual edge",
+  };
+  return labels[value] || value;
+}
+
+function contextTone(value) {
+  if (value === "baseline_reinforced") return "positive";
+  if (value === "baseline_fragile") return "negative";
+  return "neutral";
+}
+
+function directionRead(team, direction) {
+  const xgMove = Number(direction.xg_multiplier) - 1;
+  return `<div class="direction-read">
+    <span>${esc(team)} · ${esc(direction.archetype)}</span>
+    <strong>${esc(direction.preferred_route)}</strong>
+    <small>${signedPct(xgMove)} xG · ${pct(direction.reliability)} reliability</small>
+  </div>`;
+}
+
+function holyFixtureCards(matches) {
+  return matches
+    .map(
+      (match) => `<article class="holy-fixture-card">
+        <div class="holy-fixture-head">
+          <span>${esc(dateTime(match.kickoff_utc))}</span>
+          <span class="environment ${esc(match.goal_environment)}">${esc(match.goal_environment)}</span>
+        </div>
+        <div class="holy-teams">
+          <strong>${esc(match.home_team)}</strong><i>vs</i><strong>${esc(match.away_team)}</strong>
+        </div>
+        ${resultPills(match)}
+        <div class="holy-xg-bridge">
+          <div><span>Base xG</span><strong>${dec(match.baseline.predicted_xg.home)}–${dec(match.baseline.predicted_xg.away)}</strong></div>
+          <i>→</i>
+          <div><span>Context xG</span><strong>${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</strong></div>
+        </div>
+        <div class="context-verdict ${contextTone(match.verdict)}">
+          <span>${esc(verdictLabel(match.verdict))}</span>
+          <strong>${esc(match.favorite)} ${pp(match.favorite_probability_delta)}</strong>
+        </div>
+        <div class="direction-grid">
+          ${directionRead(match.home_team, match.directions.home)}
+          ${directionRead(match.away_team, match.directions.away)}
+        </div>
+        <div class="holy-markets">
+          <span>O2.5 <strong>${pct(match.probabilities.over_2_5)}</strong></span>
+          <span>BTTS <strong>${pct(match.probabilities.btts_yes)}</strong></span>
+          <span>Score mode <strong>${esc(match.top_scoreline)}</strong></span>
+        </div>
+      </article>`,
+    )
+    .join("");
+}
+
+function holyGrail(data) {
+  const model = data.holy_grail;
+  const largestMove = model.predictions
+    .slice()
+    .sort((a, b) => Math.abs(b.favorite_probability_delta) - Math.abs(a.favorite_probability_delta))[0];
+  return `<section class="page-head holy-page-head">
+      <p class="eyebrow">Clubalpha Contextual Interaction v1</p>
+      <h1>The Holy Grail</h1>
+      <p>A versatile fixture model: weighted intelligence establishes the baseline, then continuous opponent context bends each team’s scoring environment without overriding what the data already knows.</p>
+      <div class="notice">LIVE SHADOW · The relationship is operational, but its 0.10 sensitivity remains an unlearned safety rail · Zero capital authorized</div>
+    </section>
+
+    <section class="holy-summary">
+      ${metric("Frozen slate", `${model.fixtures} fixtures`, `As of ${model.as_of}`, "accent")}
+      ${metric("Simulation", model.total_simulations.toLocaleString(), "50,000 per fixture")}
+      ${metric("Largest move", pp(largestMove.favorite_probability_delta), largestMove.favorite, "accent")}
+      ${metric("Deployment", "SHADOW", "Coefficient not learned", "amber")}
+    </section>
+
+    <section class="holy-architecture">
+      <div class="holy-stage foundation-stage"><span>01 · Foundation</span><strong>60 / 30 / 10</strong><small>Form · XI Alpha · History</small></div>
+      <i>→</i>
+      <div class="holy-stage"><span>02 · Directional context</span><strong>Route × Exposure × XI</strong><small>Shrunk by evidence reliability</small></div>
+      <i>→</i>
+      <div class="holy-stage"><span>03 · xG bridge</span><strong>Base × exp(context)</strong><small>Home and away adjusted separately</small></div>
+      <i>→</i>
+      <div class="holy-stage"><span>04 · Simulation</span><strong>50,000 runs</strong><small>1X2 · Totals · BTTS</small></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Next Premier League fixtures</h2><span class="panel-label">Context compared with frozen baseline</span></div>
+      <div class="holy-fixture-grid">${holyFixtureCards(model.predictions)}</div>
+    </section>
+
+    <p class="notice">Archetype names explain the football but never enter the mathematics. Measured channels receive more trust than partial or hypothesis channels; uncertain projected XIs shrink the adjustment automatically.</p>`;
 }
 
 function predictions(data) {
@@ -153,7 +271,7 @@ function predictions(data) {
 
   return `<section class="page-head"><p class="eyebrow">Fixture probability slate</p><h1>Predictions</h1><p>Frozen 2026–27 Premier League Matchday 2 probabilities. Every number uses the same dated inputs and 50,000 simulations; none is a market recommendation.</p><div class="notice">SHADOW ONLY · Lineups are projected priors, not confirmed XIs · No price means no edge · No edge means no allocation</div></section>
     <div class="table-shell"><table><thead><tr><th>Fixture</th><th>Model xG</th><th>1X2 probability</th><th>O2.5</th><th>BTTS</th><th>Layer consensus</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div>
-    <p class="notice">Model probabilities are not bookmaker prices. The first slate remains below both validation gates: ${data.meta.scale_training_sides}/${data.meta.scale_validation_sides} component-scale sides and ${data.meta.goal_training_matches}/${data.meta.goal_validation_matches} goal-calibration matches.</p>`;
+    <p class="notice">Model probabilities are not bookmaker prices. This page preserves the locked baseline; <a class="text-link" href="/holy-grail/">open Holy Grail</a> to compare the directional contextual rerun. The first slate remains below both validation gates: ${data.meta.scale_training_sides}/${data.meta.scale_validation_sides} component-scale sides and ${data.meta.goal_training_matches}/${data.meta.goal_validation_matches} goal-calibration matches.</p>`;
 }
 
 function ledger(data) {
@@ -329,8 +447,9 @@ function methodology(data) {
     <div class="method-stack">
       <article class="method-card"><div class="step">01 · Intelligence</div><div><h2>Score the matchup from three foundations</h2><p>Club Form captures current attack and defence, Player Quality grades projected minutes using the locked positional Alpha formulas, and Historical Fixtures supplies a deliberately small venue and matchup residual.</p><div class="formula">fixture signal = 0.60 × club form\n               + 0.30 × projected-XI player quality\n               + 0.10 × historical residual</div></div></article>
       <article class="method-card"><div class="step">02 · Goal model</div><div><h2>Adjust the competition scoring environment</h2><p>The Premier League home and away xG baseline remains outside the composite. A separately versioned coefficient translates the normalized fixture signal into expected goals.</p><div class="formula">predicted xG = competition baseline xG × exp(β × fixture signal)</div></div></article>
-      <article class="method-card"><div class="step">03 · Simulation</div><div><h2>Run 50,000 transparent match simulations</h2><p>Independent Poisson is the conservative v0 baseline. It produces 1X2, totals, BTTS, and scoreline distributions. More complex correlation models must improve fresh chronological tests before adoption.</p></div></article>
-      <article class="method-card"><div class="step">04 · Ledger</div><div><h2>Freeze, observe, and earn capital readiness</h2><p>Forecasts are immutable. After full time, the ledger appends score, FotMob xG, lineups, closing price, and calibration metrics. Capital deployment remains false until the gates pass.</p><div class="caveats">${data.methodology.caveats.map((item) => `<div class="caveat">${esc(item)}</div>`).join("")}</div></div></article>
+      <article class="method-card holy-method"><div class="step">03 · Context</div><div><h2>Let the opponent bend the baseline</h2><p>Five attacking routes meet the opponent’s exposure and projected-XI execution. Evidence quality continuously shrinks the directional signal; archetype labels are explanatory only.</p><div class="formula">contextual xG = base xG × exp(max sensitivity × directional signal × reliability)</div></div></article>
+      <article class="method-card"><div class="step">04 · Simulation</div><div><h2>Run 50,000 transparent match simulations</h2><p>Independent Poisson is the conservative v0 baseline. It produces 1X2, totals, BTTS, and scoreline distributions. More complex correlation models must improve fresh chronological tests before adoption.</p></div></article>
+      <article class="method-card"><div class="step">05 · Ledger</div><div><h2>Freeze, observe, and earn capital readiness</h2><p>Forecasts are immutable. After full time, the ledger appends score, FotMob xG, lineups, closing price, and calibration metrics. Capital deployment remains false until the gates pass.</p><div class="caveats">${data.methodology.caveats.map((item) => `<div class="caveat">${esc(item)}</div>`).join("")}</div></div></article>
     </div>`;
 }
 
@@ -341,7 +460,7 @@ async function start() {
     const response = await fetch("/data/site.json", { cache: "no-store" });
     if (!response.ok) throw new Error(`Data request failed (${response.status})`);
     const data = await response.json();
-    const views = { overview, predictions, matchups, ledger, methodology };
+    const views = { overview, predictions, "holy-grail": holyGrail, matchups, ledger, methodology };
     app.innerHTML = (views[route] || overview)(data);
     if (route === "matchups") {
       const attacker = document.querySelector("#matchup-attacker");

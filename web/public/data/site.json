@@ -1,9 +1,11 @@
 {
   "meta": {
-    "site_version": "clubalpha_web_v0_1",
+    "site_version": "clubalpha_web_v0_2_holy_grail",
     "prediction_version": "clubalpha_prediction_lab_v0",
     "as_of": "2026-08-24",
     "generated_at_utc": "2026-08-24T23:16:35.044420+00:00",
+    "context_as_of": "2026-08-26",
+    "context_version": "clubalpha_contextual_next_round_2026_08_26_v1",
     "simulations": 50000,
     "fixture_count": 10,
     "scale_training_sides": 34,
@@ -348,6 +350,766 @@
       "status": "pending"
     }
   ],
+  "holy_grail": {
+    "name": "Holy Grail v1",
+    "status": "shadow_sensitivity_not_validated",
+    "as_of": "2026-08-26",
+    "fixtures": 10,
+    "simulations_per_fixture": 50000,
+    "total_simulations": 500000,
+    "base_weights": {
+      "club_form": 60,
+      "projected_xi_player_quality": 30,
+      "historical_fixture_residual": 10
+    },
+    "context_formula": "contextual xG = base xG × exp(max sensitivity × directional signal × reliability)",
+    "maximum_absolute_log_xg_adjustment": 0.1,
+    "archetype_labels_used_in_math": false,
+    "coefficient_learned": false,
+    "capital_deployment_ready": false,
+    "predictions": [
+      {
+        "match_id": 5795429,
+        "kickoff_utc": "2026-08-28T19:00:00Z",
+        "home_team": "Crystal Palace",
+        "away_team": "Manchester City",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.368278,
+            "away": 1.767149,
+            "total": 3.135427
+          },
+          "probabilities": {
+            "home_win": 0.30042,
+            "draw": 0.23374,
+            "away_win": 0.46584,
+            "over_2_5": 0.60748,
+            "btts_yes": 0.62082
+          }
+        },
+        "predicted_xg": {
+          "home": 1.335725,
+          "away": 1.833567,
+          "total": 3.169293
+        },
+        "probabilities": {
+          "home_win": 0.2812,
+          "draw": 0.22888,
+          "away_win": 0.48992,
+          "over_2_5": 0.6145,
+          "under_2_5": 0.3855,
+          "over_3_5": 0.3922,
+          "under_3_5": 0.6078,
+          "btts_yes": 0.62216
+        },
+        "probability_change": {
+          "home_win": -0.01922,
+          "draw": -0.00486,
+          "away_win": 0.02408,
+          "btts_yes": 0.00134,
+          "over_2.5": 0.00702,
+          "over_3.5": 0.00848
+        },
+        "xg_change": {
+          "home": -0.032553,
+          "away": 0.066418,
+          "total": 0.033866
+        },
+        "favorite": "Manchester City",
+        "favorite_probability_delta": 0.02408,
+        "verdict": "baseline_reinforced",
+        "goal_environment": "expansive",
+        "top_scoreline": "1-1",
+        "directions": {
+          "home": {
+            "archetype": "Adaptive hybrid",
+            "preferred_route": "Set pieces",
+            "signal": -0.378378,
+            "reliability": 0.636363,
+            "xg_multiplier": 0.976209
+          },
+          "away": {
+            "archetype": "Territorial controller",
+            "preferred_route": "Box pressure",
+            "signal": 0.615002,
+            "reliability": 0.599929,
+            "xg_multiplier": 1.037585
+          }
+        },
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795431,
+        "kickoff_utc": "2026-08-29T11:30:00Z",
+        "home_team": "Liverpool",
+        "away_team": "Nottingham Forest",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.749408,
+            "away": 1.225397,
+            "total": 2.974805
+          },
+          "probabilities": {
+            "home_win": 0.49776,
+            "draw": 0.2345,
+            "away_win": 0.26774,
+            "over_2_5": 0.57102,
+            "btts_yes": 0.585
+          }
+        },
+        "predicted_xg": {
+          "home": 1.775731,
+          "away": 1.207298,
+          "total": 2.983029
+        },
+        "probabilities": {
+          "home_win": 0.50794,
+          "draw": 0.23262,
+          "away_win": 0.25944,
+          "over_2_5": 0.5731,
+          "under_2_5": 0.4269,
+          "over_3_5": 0.3509,
+          "under_3_5": 0.6491,
+          "btts_yes": 0.58366
+        },
+        "probability_change": {
+          "home_win": 0.01018,
+          "draw": -0.00188,
+          "away_win": -0.0083,
+          "btts_yes": -0.00134,
+          "over_2.5": 0.00208,
+          "over_3.5": 0.00058
+        },
+        "xg_change": {
+          "home": 0.026323,
+          "away": -0.018099,
+          "total": 0.008224
+        },
+        "favorite": "Liverpool",
+        "favorite_probability_delta": 0.01018,
+        "verdict": "baseline_reinforced",
+        "goal_environment": "neutral",
+        "top_scoreline": "1-1",
+        "directions": {
+          "home": {
+            "archetype": "Territorial controller",
+            "preferred_route": "Box pressure",
+            "signal": 0.238085,
+            "reliability": 0.627305,
+            "xg_multiplier": 1.015047
+          },
+          "away": {
+            "archetype": "Direct / wide / set-piece",
+            "preferred_route": "Set pieces",
+            "signal": -0.245013,
+            "reliability": 0.607303,
+            "xg_multiplier": 0.98523
+          }
+        },
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795425,
+        "kickoff_utc": "2026-08-29T14:00:00Z",
+        "home_team": "AFC Bournemouth",
+        "away_team": "Everton",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.724201,
+            "away": 1.251508,
+            "total": 2.97571
+          },
+          "probabilities": {
+            "home_win": 0.48504,
+            "draw": 0.23538,
+            "away_win": 0.27958,
+            "over_2_5": 0.57276,
+            "btts_yes": 0.58622
+          }
+        },
+        "predicted_xg": {
+          "home": 1.73071,
+          "away": 1.24368,
+          "total": 2.97439
+        },
+        "probabilities": {
+          "home_win": 0.48814,
+          "draw": 0.23444,
+          "away_win": 0.27742,
+          "over_2_5": 0.57212,
+          "under_2_5": 0.42788,
+          "over_3_5": 0.34712,
+          "under_3_5": 0.65288,
+          "btts_yes": 0.58496
+        },
+        "probability_change": {
+          "home_win": 0.0031,
+          "draw": -0.00094,
+          "away_win": -0.00216,
+          "btts_yes": -0.00126,
+          "over_2.5": -0.00064,
+          "over_3.5": -0.00152
+        },
+        "xg_change": {
+          "home": 0.006509,
+          "away": -0.007828,
+          "total": -0.001319
+        },
+        "favorite": "AFC Bournemouth",
+        "favorite_probability_delta": 0.0031,
+        "verdict": "baseline_supported",
+        "goal_environment": "neutral",
+        "top_scoreline": "1-1",
+        "directions": {
+          "home": {
+            "archetype": "High-intensity direct",
+            "preferred_route": "High press",
+            "signal": 0.06907,
+            "reliability": 0.545585,
+            "xg_multiplier": 1.003775
+          },
+          "away": {
+            "archetype": "Direct / wide / set-piece",
+            "preferred_route": "Box pressure",
+            "signal": -0.103684,
+            "reliability": 0.605203,
+            "xg_multiplier": 0.993745
+          }
+        },
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795428,
+        "kickoff_utc": "2026-08-29T14:00:00Z",
+        "home_team": "Coventry City",
+        "away_team": "Hull City",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.637102,
+            "away": 1.076664,
+            "total": 2.713766
+          },
+          "probabilities": {
+            "home_win": 0.5022,
+            "draw": 0.24482,
+            "away_win": 0.25298,
+            "over_2_5": 0.5107,
+            "btts_yes": 0.5343
+          }
+        },
+        "predicted_xg": {
+          "home": 1.639762,
+          "away": 1.067186,
+          "total": 2.706948
+        },
+        "probabilities": {
+          "home_win": 0.5055,
+          "draw": 0.2444,
+          "away_win": 0.2501,
+          "over_2_5": 0.50906,
+          "under_2_5": 0.49094,
+          "over_3_5": 0.28842,
+          "under_3_5": 0.71158,
+          "btts_yes": 0.53288
+        },
+        "probability_change": {
+          "home_win": 0.0033,
+          "draw": -0.00042,
+          "away_win": -0.00288,
+          "btts_yes": -0.00142,
+          "over_2.5": -0.00164,
+          "over_3.5": -0.0012
+        },
+        "xg_change": {
+          "home": 0.00266,
+          "away": -0.009478,
+          "total": -0.006818
+        },
+        "favorite": "Coventry City",
+        "favorite_probability_delta": 0.0033,
+        "verdict": "baseline_supported",
+        "goal_environment": "neutral",
+        "top_scoreline": "1-1",
+        "directions": {
+          "home": {
+            "archetype": "Promoted / forming",
+            "preferred_route": "Set pieces",
+            "signal": 0.041555,
+            "reliability": 0.390846,
+            "xg_multiplier": 1.001625
+          },
+          "away": {
+            "archetype": "Direct / wide / set-piece",
+            "preferred_route": "Set pieces",
+            "signal": -0.236153,
+            "reliability": 0.374421,
+            "xg_multiplier": 0.991197
+          }
+        },
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "pressing_evidence_missing",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795434,
+        "kickoff_utc": "2026-08-29T16:30:00Z",
+        "home_team": "Tottenham Hotspur",
+        "away_team": "Newcastle United",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.599523,
+            "away": 1.466443,
+            "total": 3.065965
+          },
+          "probabilities": {
+            "home_win": 0.41292,
+            "draw": 0.2366,
+            "away_win": 0.35048,
+            "over_2_5": 0.59178,
+            "btts_yes": 0.61202
+          }
+        },
+        "predicted_xg": {
+          "home": 1.610576,
+          "away": 1.486598,
+          "total": 3.097173
+        },
+        "probabilities": {
+          "home_win": 0.4099,
+          "draw": 0.23536,
+          "away_win": 0.35474,
+          "over_2_5": 0.59892,
+          "under_2_5": 0.40108,
+          "over_3_5": 0.37562,
+          "under_3_5": 0.62438,
+          "btts_yes": 0.61878
+        },
+        "probability_change": {
+          "home_win": -0.00302,
+          "draw": -0.00124,
+          "away_win": 0.00426,
+          "btts_yes": 0.00676,
+          "over_2.5": 0.00714,
+          "over_3.5": 0.00802
+        },
+        "xg_change": {
+          "home": 0.011053,
+          "away": 0.020155,
+          "total": 0.031207
+        },
+        "favorite": "Tottenham Hotspur",
+        "favorite_probability_delta": -0.00302,
+        "verdict": "no_clear_contextual_edge",
+        "goal_environment": "expansive",
+        "top_scoreline": "1-1",
+        "directions": {
+          "home": {
+            "archetype": "Developing possession",
+            "preferred_route": "Set pieces",
+            "signal": 0.129503,
+            "reliability": 0.531779,
+            "xg_multiplier": 1.00691
+          },
+          "away": {
+            "archetype": "Adaptive hybrid",
+            "preferred_route": "Box pressure",
+            "signal": 0.252976,
+            "reliability": 0.539611,
+            "xg_multiplier": 1.013744
+          }
+        },
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795427,
+        "kickoff_utc": "2026-08-30T13:00:00Z",
+        "home_team": "Chelsea",
+        "away_team": "Brighton & Hove Albion",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.446958,
+            "away": 1.586115,
+            "total": 3.033073
+          },
+          "probabilities": {
+            "home_win": 0.35184,
+            "draw": 0.23966,
+            "away_win": 0.4085,
+            "over_2_5": 0.5884,
+            "btts_yes": 0.60844
+          }
+        },
+        "predicted_xg": {
+          "home": 1.428894,
+          "away": 1.616959,
+          "total": 3.045853
+        },
+        "probabilities": {
+          "home_win": 0.34002,
+          "draw": 0.23792,
+          "away_win": 0.42206,
+          "over_2_5": 0.59086,
+          "under_2_5": 0.40914,
+          "over_3_5": 0.3677,
+          "under_3_5": 0.6323,
+          "btts_yes": 0.61026
+        },
+        "probability_change": {
+          "home_win": -0.01182,
+          "draw": -0.00174,
+          "away_win": 0.01356,
+          "btts_yes": 0.00182,
+          "over_2.5": 0.00246,
+          "over_3.5": 0.0035
+        },
+        "xg_change": {
+          "home": -0.018064,
+          "away": 0.030844,
+          "total": 0.01278
+        },
+        "favorite": "Brighton & Hove Albion",
+        "favorite_probability_delta": 0.01356,
+        "verdict": "baseline_reinforced",
+        "goal_environment": "neutral",
+        "top_scoreline": "1-1",
+        "directions": {
+          "home": {
+            "archetype": "Developing possession",
+            "preferred_route": "Box pressure",
+            "signal": -0.197554,
+            "reliability": 0.635887,
+            "xg_multiplier": 0.987516
+          },
+          "away": {
+            "archetype": "Territorial controller",
+            "preferred_route": "High press",
+            "signal": 0.371299,
+            "reliability": 0.518698,
+            "xg_multiplier": 1.019446
+          }
+        },
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795430,
+        "kickoff_utc": "2026-08-30T13:00:00Z",
+        "home_team": "Leeds United",
+        "away_team": "Brentford",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.545713,
+            "away": 1.411012,
+            "total": 2.956724
+          },
+          "probabilities": {
+            "home_win": 0.40758,
+            "draw": 0.24588,
+            "away_win": 0.34654,
+            "over_2_5": 0.5661,
+            "btts_yes": 0.59886
+          }
+        },
+        "predicted_xg": {
+          "home": 1.543458,
+          "away": 1.420701,
+          "total": 2.964159
+        },
+        "probabilities": {
+          "home_win": 0.40354,
+          "draw": 0.24572,
+          "away_win": 0.35074,
+          "over_2_5": 0.56754,
+          "under_2_5": 0.43246,
+          "over_3_5": 0.34702,
+          "under_3_5": 0.65298,
+          "btts_yes": 0.6008
+        },
+        "probability_change": {
+          "home_win": -0.00404,
+          "draw": -0.00016,
+          "away_win": 0.0042,
+          "btts_yes": 0.00194,
+          "over_2.5": 0.00144,
+          "over_3.5": 0.00176
+        },
+        "xg_change": {
+          "home": -0.002255,
+          "away": 0.009689,
+          "total": 0.007434
+        },
+        "favorite": "Leeds United",
+        "favorite_probability_delta": -0.00404,
+        "verdict": "no_clear_contextual_edge",
+        "goal_environment": "neutral",
+        "top_scoreline": "1-1",
+        "directions": {
+          "home": {
+            "archetype": "High-intensity direct",
+            "preferred_route": "Set pieces",
+            "signal": -0.024833,
+            "reliability": 0.587776,
+            "xg_multiplier": 0.998541
+          },
+          "away": {
+            "archetype": "Direct / wide / set-piece",
+            "preferred_route": "Set pieces",
+            "signal": 0.105149,
+            "reliability": 0.650859,
+            "xg_multiplier": 1.006867
+          }
+        },
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795433,
+        "kickoff_utc": "2026-08-30T13:00:00Z",
+        "home_team": "Sunderland",
+        "away_team": "Fulham",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.495501,
+            "away": 1.31701,
+            "total": 2.812511
+          },
+          "probabilities": {
+            "home_win": 0.4169,
+            "draw": 0.24732,
+            "away_win": 0.33578,
+            "over_2_5": 0.53062,
+            "btts_yes": 0.564
+          }
+        },
+        "predicted_xg": {
+          "home": 1.438329,
+          "away": 1.288989,
+          "total": 2.727319
+        },
+        "probabilities": {
+          "home_win": 0.40886,
+          "draw": 0.25428,
+          "away_win": 0.33686,
+          "over_2_5": 0.51002,
+          "under_2_5": 0.48998,
+          "over_3_5": 0.28874,
+          "under_3_5": 0.71126,
+          "btts_yes": 0.54978
+        },
+        "probability_change": {
+          "home_win": -0.00804,
+          "draw": 0.00696,
+          "away_win": 0.00108,
+          "btts_yes": -0.01422,
+          "over_2.5": -0.0206,
+          "over_3.5": -0.0195
+        },
+        "xg_change": {
+          "home": -0.057172,
+          "away": -0.028021,
+          "total": -0.085192
+        },
+        "favorite": "Sunderland",
+        "favorite_probability_delta": -0.00804,
+        "verdict": "no_clear_contextual_edge",
+        "goal_environment": "suppressed",
+        "top_scoreline": "1-1",
+        "directions": {
+          "home": {
+            "archetype": "Adaptive hybrid",
+            "preferred_route": "Set pieces",
+            "signal": -0.527924,
+            "reliability": 0.738347,
+            "xg_multiplier": 0.961771
+          },
+          "away": {
+            "archetype": "Adaptive hybrid",
+            "preferred_route": "Set pieces",
+            "signal": -0.277277,
+            "reliability": 0.775616,
+            "xg_multiplier": 0.978724
+          }
+        },
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only"
+        ]
+      },
+      {
+        "match_id": 5795432,
+        "kickoff_utc": "2026-08-30T15:30:00Z",
+        "home_team": "Manchester United",
+        "away_team": "Ipswich Town",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.808631,
+            "away": 1.193401,
+            "total": 3.002032
+          },
+          "probabilities": {
+            "home_win": 0.52002,
+            "draw": 0.2297,
+            "away_win": 0.25028,
+            "over_2_5": 0.57676,
+            "btts_yes": 0.58092
+          }
+        },
+        "predicted_xg": {
+          "home": 1.827182,
+          "away": 1.165136,
+          "total": 2.992319
+        },
+        "probabilities": {
+          "home_win": 0.5298,
+          "draw": 0.22826,
+          "away_win": 0.24194,
+          "over_2_5": 0.57568,
+          "under_2_5": 0.42432,
+          "over_3_5": 0.35042,
+          "under_3_5": 0.64958,
+          "btts_yes": 0.57808
+        },
+        "probability_change": {
+          "home_win": 0.00978,
+          "draw": -0.00144,
+          "away_win": -0.00834,
+          "btts_yes": -0.00284,
+          "over_2.5": -0.00108,
+          "over_3.5": -0.00204
+        },
+        "xg_change": {
+          "home": 0.018551,
+          "away": -0.028265,
+          "total": -0.009713
+        },
+        "favorite": "Manchester United",
+        "favorite_probability_delta": 0.00978,
+        "verdict": "baseline_supported",
+        "goal_environment": "neutral",
+        "top_scoreline": "1-1",
+        "directions": {
+          "home": {
+            "archetype": "Developing possession",
+            "preferred_route": "Box pressure",
+            "signal": 0.209857,
+            "reliability": 0.486267,
+            "xg_multiplier": 1.010257
+          },
+          "away": {
+            "archetype": "Promoted / forming",
+            "preferred_route": "Box pressure",
+            "signal": -0.534115,
+            "reliability": 0.448766,
+            "xg_multiplier": 0.976316
+          }
+        },
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "pressing_evidence_missing",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795426,
+        "kickoff_utc": "2026-08-31T19:00:00Z",
+        "home_team": "Aston Villa",
+        "away_team": "Arsenal",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.179179,
+            "away": 1.770519,
+            "total": 2.949698
+          },
+          "probabilities": {
+            "home_win": 0.25206,
+            "draw": 0.23658,
+            "away_win": 0.51136,
+            "over_2_5": 0.5633,
+            "btts_yes": 0.57312
+          }
+        },
+        "predicted_xg": {
+          "home": 1.128609,
+          "away": 1.831145,
+          "total": 2.959754
+        },
+        "probabilities": {
+          "home_win": 0.23118,
+          "draw": 0.23116,
+          "away_win": 0.53766,
+          "over_2_5": 0.56688,
+          "under_2_5": 0.43312,
+          "over_3_5": 0.34268,
+          "under_3_5": 0.65732,
+          "btts_yes": 0.56774
+        },
+        "probability_change": {
+          "home_win": -0.02088,
+          "draw": -0.00542,
+          "away_win": 0.0263,
+          "btts_yes": -0.00538,
+          "over_2.5": 0.00358,
+          "over_3.5": 0.00192
+        },
+        "xg_change": {
+          "home": -0.05057,
+          "away": 0.060626,
+          "total": 0.010056
+        },
+        "favorite": "Arsenal",
+        "favorite_probability_delta": 0.0263,
+        "verdict": "baseline_reinforced",
+        "goal_environment": "neutral",
+        "top_scoreline": "1-1",
+        "directions": {
+          "home": {
+            "archetype": "Adaptive hybrid",
+            "preferred_route": "Set pieces",
+            "signal": -0.588633,
+            "reliability": 0.74466,
+            "xg_multiplier": 0.957114
+          },
+          "away": {
+            "archetype": "Territorial controller",
+            "preferred_route": "High press",
+            "signal": 0.512816,
+            "reliability": 0.656552,
+            "xg_multiplier": 1.034242
+          }
+        },
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only"
+        ]
+      }
+    ]
+  },
   "style_matchup": {
     "snapshot_version": "clubalpha_style_matchup_v0",
     "as_of": "2026-08-25",
@@ -15840,7 +16602,8 @@
       "Market prices are not yet an automated model input",
       "Historical August 11 roster is reconstructed and flagged",
       "Player scorer and assist heads remain deferred",
-      "Style Matchup v0 is a zero-weight research challenger"
+      "Style Matchup v0 is a zero-weight research challenger",
+      "Holy Grail context sensitivity is not yet learned from residuals"
     ]
   }
 }

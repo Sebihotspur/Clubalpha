@@ -178,6 +178,53 @@ button { font: inherit; }
 .teaser-flow span { padding: 8px 9px; border: 1px solid rgba(121, 184, 255, 0.18); border-radius: 6px; background: rgba(121, 184, 255, 0.04); }
 .teaser-flow i { color: var(--muted-2); font-style: normal; }
 
+.holy-teaser { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 34px; align-items: center; padding: 26px; overflow: hidden; border: 1px solid rgba(67, 245, 154, 0.26); border-radius: 14px; background: linear-gradient(120deg, rgba(16, 31, 24, 0.96), rgba(10, 18, 15, 0.86)); box-shadow: var(--shadow); }
+.holy-teaser h3 { max-width: 720px; margin: 10px 0 8px; font-size: 22px; letter-spacing: -0.025em; }
+.holy-teaser p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.holy-teaser-read { padding: 18px; border: 1px solid var(--border); border-radius: 10px; background: rgba(8, 13, 11, 0.52); }
+.holy-teaser-read span, .holy-stage span { display: block; color: var(--muted-2); font: 500 8px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.holy-teaser-read strong { display: block; margin-top: 9px; color: var(--accent); font: 600 19px var(--mono); }
+.holy-teaser-read small { display: block; margin-top: 7px; color: var(--muted); font: 9px/1.5 var(--mono); }
+
+.holy-page-head { border-bottom-color: rgba(67, 245, 154, 0.22); }
+.holy-summary { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 28px; overflow: hidden; border: 1px solid rgba(67, 245, 154, 0.2); border-radius: 12px; background: rgba(13, 21, 17, 0.78); }
+.holy-architecture { display: grid; grid-template-columns: 1fr auto 1.2fr auto 1.1fr auto 0.9fr; gap: 12px; align-items: center; margin-top: 18px; }
+.holy-architecture > i { color: var(--muted-2); font: 12px var(--mono); font-style: normal; }
+.holy-stage { min-height: 112px; padding: 17px; border: 1px solid var(--border); border-radius: 10px; background: rgba(13, 21, 17, 0.7); }
+.holy-stage.foundation-stage { border-color: rgba(67, 245, 154, 0.28); background: rgba(67, 245, 154, 0.035); }
+.holy-stage strong { display: block; margin-top: 14px; color: var(--text); font: 600 13px/1.35 var(--mono); }
+.holy-stage.foundation-stage strong { color: var(--accent); font-size: 20px; }
+.holy-stage small { display: block; margin-top: 7px; color: var(--muted); font: 9px/1.5 var(--mono); }
+.holy-fixture-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.holy-fixture-card { padding: 20px; border: 1px solid var(--border); border-radius: 13px; background: linear-gradient(145deg, rgba(15, 25, 20, 0.92), rgba(10, 17, 14, 0.78)); }
+.holy-fixture-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--muted-2); font: 8px var(--mono); text-transform: uppercase; }
+.environment { padding: 4px 6px; border: 1px solid var(--border); border-radius: 999px; }
+.environment.expansive { color: var(--accent); border-color: rgba(67, 245, 154, 0.24); }
+.environment.suppressed { color: var(--blue); border-color: rgba(121, 184, 255, 0.24); }
+.holy-teams { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; margin: 15px 0; font: 600 14px/1.3 var(--sans); }
+.holy-teams strong:last-child { text-align: right; }
+.holy-teams i { color: var(--muted-2); font: 8px var(--mono); font-style: normal; text-transform: uppercase; }
+.holy-fixture-card .result-pills { margin-top: 4px; }
+.holy-xg-bridge { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin-top: 15px; padding: 12px; border: 1px solid var(--border-soft); border-radius: 8px; background: rgba(8, 13, 11, 0.42); }
+.holy-xg-bridge div:last-child { text-align: right; }
+.holy-xg-bridge span { display: block; color: var(--muted-2); font: 8px var(--mono); text-transform: uppercase; }
+.holy-xg-bridge strong { display: block; margin-top: 4px; font: 600 13px var(--mono); }
+.holy-xg-bridge div:last-child strong { color: var(--accent); }
+.holy-xg-bridge i { color: var(--muted-2); font: 10px var(--mono); font-style: normal; }
+.context-verdict { display: flex; justify-content: space-between; gap: 14px; margin-top: 12px; padding: 9px 11px; border-left: 2px solid var(--muted-2); color: var(--muted); background: rgba(8, 13, 11, 0.35); font: 9px var(--mono); }
+.context-verdict.positive { border-color: var(--accent); }
+.context-verdict.positive strong { color: var(--accent); }
+.context-verdict.negative { border-color: var(--red); }
+.context-verdict.negative strong { color: var(--red); }
+.direction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.direction-read { padding: 11px; border: 1px solid var(--border-soft); border-radius: 8px; }
+.direction-read span { display: block; overflow: hidden; color: var(--muted-2); font: 8px var(--mono); text-overflow: ellipsis; white-space: nowrap; }
+.direction-read strong { display: block; margin-top: 6px; font: 500 10px var(--mono); }
+.direction-read small { display: block; margin-top: 4px; color: var(--muted); font: 8px var(--mono); }
+.holy-markets { display: flex; justify-content: space-between; gap: 10px; margin-top: 13px; padding-top: 11px; border-top: 1px solid var(--border-soft); color: var(--muted-2); font: 8px var(--mono); text-transform: uppercase; }
+.holy-markets strong { color: var(--text); font-weight: 500; }
+.holy-method { border-color: rgba(67, 245, 154, 0.25); box-shadow: inset 2px 0 0 var(--accent); }
+
 .page-head { padding: 8px 0 34px; border-bottom: 1px solid var(--border); }
 .page-head h1 { font-size: clamp(34px, 5vw, 52px); }
 .page-head p { max-width: 720px; margin: 15px 0 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
@@ -294,8 +341,13 @@ tbody tr:hover { background: rgba(23, 37, 31, 0.56); }
   .pick-card, .ledger-hero { grid-template-columns: 1fr; }
   .pick-numbers { border-left: 0; border-top: 1px solid var(--border); }
   .card-grid { grid-template-columns: 1fr 1fr; }
-  .matchup-teaser { grid-template-columns: 1fr; }
+  .matchup-teaser, .holy-teaser { grid-template-columns: 1fr; }
   .teaser-flow { justify-content: flex-start; }
+  .holy-summary { grid-template-columns: 1fr 1fr; }
+  .holy-summary .metric:nth-child(2) { border-right: 0; }
+  .holy-summary .metric:nth-child(-n + 2) { border-bottom: 1px solid var(--border); }
+  .holy-architecture { grid-template-columns: 1fr 1fr; }
+  .holy-architecture > i { display: none; }
   .matchup-identities { grid-template-columns: 1fr 1fr; }
   .best-route { grid-column: 1 / -1; border-top: 1px solid var(--border); }
   .round-robin-probability { grid-template-columns: repeat(2, 1fr); }
@@ -328,7 +380,10 @@ tbody tr:hover { background: rgba(23, 37, 31, 0.56); }
   .pick-reasons { grid-template-columns: 1fr; }
   .pick-number { min-height: 103px; padding: 19px; }
   .pick-number strong { font-size: 20px; }
-  .card-grid, .foundation-grid, .caveats { grid-template-columns: 1fr; }
+  .card-grid, .foundation-grid, .caveats, .holy-fixture-grid { grid-template-columns: 1fr; }
+  .holy-architecture { grid-template-columns: 1fr; }
+  .holy-stage { min-height: auto; }
+  .holy-markets { align-items: flex-start; flex-direction: column; }
   .matchup-controls { grid-template-columns: 1fr; padding: 15px; }
   .matchup-controls button { width: 100%; }
   .matchup-identities { grid-template-columns: 1fr; }

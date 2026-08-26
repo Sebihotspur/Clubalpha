@@ -11,7 +11,10 @@ python3 -m http.server 4173 --directory web/public
 ```
 
 The site deliberately contains no wager form, account state, or capital-sizing
-control. The `/matchups/` route exposes Style Matchup v0 as a zero-weight
+control. The `/holy-grail/` route exposes the frozen Contextual Interaction v1
+slate beside its immutable baseline, including directional routes, reliability,
+xG changes, and rerun probabilities. The `/matchups/` route exposes Style
+Matchup v0 as a zero-weight
 research challenger alongside the frozen 380-fixture W/D/L round robin:
 attacking route, opponent exposure, projected-XI Player Alpha, and official
 60/30/10 probabilities remain visually separate. Vercel serves `web/public` as a static
