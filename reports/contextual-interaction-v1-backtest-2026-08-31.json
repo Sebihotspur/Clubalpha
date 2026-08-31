@@ -1,6 +1,6 @@
 {
   "backtest_version": "clubalpha_contextual_interaction_v1_backtest",
-  "generated_at_utc": "2026-08-31T16:55:43.468795+00:00",
+  "generated_at_utc": "2026-08-31T23:36:50.387310+00:00",
   "prediction_freeze_date": "2026-08-26",
   "status": "partial_shadow_backtest",
   "sources": {
@@ -28,86 +28,86 @@
   },
   "validation": {
     "frozen_fixtures": 10,
-    "completed_results": 9,
-    "pending_results": 1,
-    "unique_match_ids": 9,
-    "complete": false
+    "completed_results": 10,
+    "pending_results": 0,
+    "unique_match_ids": 10,
+    "complete": true
   },
   "sample": {
-    "matches": 9,
-    "team_attack_directions": 18,
+    "matches": 10,
+    "team_attack_directions": 20,
     "xg_process_draw_threshold": 0.25,
     "sufficient_to_recalibrate": false
   },
   "metrics": {
     "baseline": {
-      "xg_side_mae": 0.661316,
-      "xg_side_rmse": 0.932707,
-      "xg_total_mae": 1.084478,
-      "goal_side_mae": 1.065723,
-      "one_x_two_brier": 0.679033,
-      "one_x_two_log_loss": 1.117772,
-      "one_x_two_top_pick_accuracy": 0.333333,
-      "over_2_5_brier": 0.247527,
-      "over_2_5_log_loss": 0.687985,
-      "btts_brier": 0.217246,
-      "btts_log_loss": 0.626752
+      "xg_side_mae": 0.674669,
+      "xg_side_rmse": 0.920151,
+      "xg_total_mae": 1.135,
+      "goal_side_mae": 1.056635,
+      "one_x_two_brier": 0.646957,
+      "one_x_two_log_loss": 1.073063,
+      "one_x_two_top_pick_accuracy": 0.4,
+      "over_2_5_brier": 0.254505,
+      "over_2_5_log_loss": 0.702037,
+      "btts_brier": 0.228368,
+      "btts_log_loss": 0.649202
     },
     "contextual": {
-      "xg_side_mae": 0.66386,
-      "xg_side_rmse": 0.933439,
-      "xg_total_mae": 1.098483,
-      "goal_side_mae": 1.054319,
-      "one_x_two_brier": 0.678773,
-      "one_x_two_log_loss": 1.117404,
-      "one_x_two_top_pick_accuracy": 0.333333,
-      "over_2_5_brier": 0.245076,
-      "over_2_5_log_loss": 0.683069,
-      "btts_brier": 0.216305,
-      "btts_log_loss": 0.624909
+      "xg_side_mae": 0.677462,
+      "xg_side_rmse": 0.920974,
+      "xg_total_mae": 1.14861,
+      "goal_side_mae": 1.046875,
+      "one_x_two_brier": 0.642959,
+      "one_x_two_log_loss": 1.067716,
+      "one_x_two_top_pick_accuracy": 0.4,
+      "over_2_5_brier": 0.252704,
+      "over_2_5_log_loss": 0.698436,
+      "btts_brier": 0.226907,
+      "btts_log_loss": 0.646291
     },
     "holy_grail_improvement_positive_is_better": {
-      "xg_side_mae": -0.002544,
-      "xg_side_rmse": -0.000732,
-      "xg_total_mae": -0.014005,
-      "goal_side_mae": 0.011404,
-      "one_x_two_brier": 0.00026,
-      "one_x_two_log_loss": 0.000368,
-      "over_2_5_brier": 0.002451,
-      "over_2_5_log_loss": 0.004916,
-      "btts_brier": 0.000941,
-      "btts_log_loss": 0.001843,
+      "xg_side_mae": -0.002793,
+      "xg_side_rmse": -0.000823,
+      "xg_total_mae": -0.01361,
+      "goal_side_mae": 0.00976,
+      "one_x_two_brier": 0.003998,
+      "one_x_two_log_loss": 0.005347,
+      "over_2_5_brier": 0.001801,
+      "over_2_5_log_loss": 0.003601,
+      "btts_brier": 0.001461,
+      "btts_log_loss": 0.002911,
       "one_x_two_top_pick_accuracy": 0.0
     }
   },
   "diagnostics": {
-    "outcome_hits": 3,
+    "outcome_hits": 4,
     "process_supported_outcome_variance": 3,
     "structural_misses": 3,
-    "context_improved_actual_outcome_probability": 3,
+    "context_improved_actual_outcome_probability": 4,
     "context_improved_side_xg_mae": 3,
     "goal_environment_dispersion": {
       "observed_xg_total": {
-        "minimum": 1.84,
+        "minimum": 1.36,
         "maximum": 6.83,
-        "mean": 3.56,
-        "population_sd": 1.418332
+        "mean": 3.34,
+        "population_sd": 1.498699
       },
       "baseline_predicted_xg_total": {
         "minimum": 2.713766,
         "maximum": 3.135427,
-        "mean": 2.963335,
-        "population_sd": 0.121047
+        "mean": 2.961971,
+        "population_sd": 0.114908
       },
       "contextual_predicted_xg_total": {
         "minimum": 2.706948,
         "maximum": 3.169293,
-        "mean": 2.962276,
-        "population_sd": 0.145266
+        "mean": 2.962024,
+        "population_sd": 0.137813
       }
     },
     "context_adjustment_scale": {
-      "mean_absolute_side_xg_shift": 0.021885,
+      "mean_absolute_side_xg_shift": 0.025257,
       "maximum_absolute_side_xg_shift": 0.066418
     },
     "preferred_route_coverage": {
@@ -132,24 +132,24 @@
       },
       {
         "preferred_route": "high_press",
-        "attack_directions": 2,
-        "movement_alignment_rate": 0.5,
-        "mean_xg_mae_improvement": -0.012167
+        "attack_directions": 3,
+        "movement_alignment_rate": 0.333333,
+        "mean_xg_mae_improvement": -0.02832
       },
       {
         "preferred_route": "set_pieces",
-        "attack_directions": 9,
-        "movement_alignment_rate": 0.555556,
-        "mean_xg_mae_improvement": -0.000776
+        "attack_directions": 10,
+        "movement_alignment_rate": 0.6,
+        "mean_xg_mae_improvement": 0.004358
       }
     ]
   },
   "lineup_projection": {
     "snapshot_version": "clubalpha_premier_league_projected_xi_alpha_2026_08_25",
-    "team_lineups": 18,
-    "mean_xi_hits_of_11": 9.055556,
-    "xi_hit_rate": 0.823233,
-    "formation_accuracy": 0.833333,
+    "team_lineups": 20,
+    "mean_xi_hits_of_11": 9.15,
+    "xi_hit_rate": 0.831818,
+    "formation_accuracy": 0.8,
     "rows": [
       {
         "match_id": 5795429,
@@ -624,6 +624,48 @@
         "unprojected_starter_ids": [],
         "missed_projected_players": [],
         "unprojected_starters": []
+      },
+      {
+        "match_id": 5795426,
+        "team_id": 10252,
+        "team": "Aston Villa",
+        "projected_starters": 11,
+        "xi_hits": 9,
+        "xi_hit_rate": 0.818182,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          195782,
+          1174672
+        ],
+        "unprojected_starter_ids": [
+          1053679,
+          1197347
+        ],
+        "missed_projected_players": [
+          "Marco Bizot",
+          "Jo\u00e3o Gomes"
+        ],
+        "unprojected_starters": [
+          "Zion Suzuki",
+          "Nicolas Jackson"
+        ]
+      },
+      {
+        "match_id": 5795426,
+        "team_id": 9825,
+        "team": "Arsenal",
+        "projected_starters": 11,
+        "xi_hits": 11,
+        "xi_hit_rate": 1.0,
+        "projected_formation": "4-3-3",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": false,
+        "missed_projected_player_ids": [],
+        "unprojected_starter_ids": [],
+        "missed_projected_players": [],
+        "unprojected_starters": []
       }
     ]
   },
@@ -724,7 +766,7 @@
             0.33572500000000005,
             2.166433
           ],
-          "one_x_two_brier": 0.3916411008,
+          "one_x_two_brier": 0.39164110080000003,
           "one_x_two_log_loss": 0.713513166512818,
           "one_x_two_top_pick": "away_win",
           "one_x_two_top_pick_correct": true,
@@ -808,7 +850,7 @@
             0.2505919999999999,
             0.7746029999999999
           ],
-          "one_x_two_brier": 0.9054399752000001,
+          "one_x_two_brier": 0.9054399752000002,
           "one_x_two_log_loss": 1.450299691095803,
           "one_x_two_top_pick": "home_win",
           "one_x_two_top_pick_correct": false,
@@ -940,7 +982,7 @@
             0.73071,
             0.2436799999999999
           ],
-          "one_x_two_brier": 0.9013246296000001,
+          "one_x_two_brier": 0.9013246296,
           "one_x_two_log_loss": 1.4505555873739084,
           "one_x_two_top_pick": "home_win",
           "one_x_two_top_pick_correct": false,
@@ -1599,6 +1641,114 @@
           "btts_log_loss": 0.5480430115828069
         }
       }
+    },
+    {
+      "match_id": 5795426,
+      "kickoff_utc": "2026-08-31T19:00:00Z",
+      "fixture": "Aston Villa vs Arsenal",
+      "score": "0-1",
+      "observed_xg": {
+        "home": 0.31,
+        "away": 1.05,
+        "total": 1.36
+      },
+      "actual_outcome": "away_win",
+      "xg_process_outcome": "away_win",
+      "review_class": "outcome_hit",
+      "baseline_top_pick": "away_win",
+      "contextual_top_pick": "away_win",
+      "baseline_actual_outcome_probability": 0.51136,
+      "contextual_actual_outcome_probability": 0.53766,
+      "actual_outcome_probability_improvement": 0.0263,
+      "base_predicted_xg": {
+        "home": 1.179179,
+        "away": 1.770519,
+        "total": 2.949698
+      },
+      "contextual_predicted_xg": {
+        "home": 1.128609,
+        "away": 1.831145,
+        "total": 2.959754
+      },
+      "xg_side_mae_improvement": -0.005028,
+      "directional_context_review": [
+        {
+          "side": "home",
+          "attacker": "Aston Villa",
+          "defender": "Arsenal",
+          "preferred_route": "set_pieces",
+          "continuous_signal": -0.588633,
+          "combined_reliability": 0.74466,
+          "base_xg": 1.179179,
+          "contextual_xg": 1.128609,
+          "observed_xg": 0.31,
+          "context_xg_mae_improvement": 0.05057,
+          "movement_aligned_with_observed_residual": true
+        },
+        {
+          "side": "away",
+          "attacker": "Arsenal",
+          "defender": "Aston Villa",
+          "preferred_route": "high_press",
+          "continuous_signal": 0.512816,
+          "combined_reliability": 0.656552,
+          "base_xg": 1.770519,
+          "contextual_xg": 1.831145,
+          "observed_xg": 1.05,
+          "context_xg_mae_improvement": -0.060626,
+          "movement_aligned_with_observed_residual": false
+        }
+      ],
+      "scores": {
+        "baseline": {
+          "xg_side_absolute_errors": [
+            0.8691789999999999,
+            0.7205189999999999
+          ],
+          "xg_side_squared_errors": [
+            0.7554721340409999,
+            0.5191476293609999
+          ],
+          "xg_total_absolute_error": 1.5896979999999996,
+          "goal_side_absolute_errors": [
+            1.179179,
+            0.770519
+          ],
+          "one_x_two_brier": 0.3582733896,
+          "one_x_two_log_loss": 0.6706814358442819,
+          "one_x_two_top_pick": "away_win",
+          "one_x_two_top_pick_correct": true,
+          "actual_outcome_probability": 0.51136,
+          "over_2_5_brier": 0.31730689,
+          "over_2_5_log_loss": 0.8285088184906219,
+          "btts_brier": 0.32846653439999995,
+          "btts_log_loss": 0.8512523356949327
+        },
+        "contextual": {
+          "xg_side_absolute_errors": [
+            0.8186089999999999,
+            0.781145
+          ],
+          "xg_side_squared_errors": [
+            0.6701206948809999,
+            0.610187511025
+          ],
+          "xg_total_absolute_error": 1.5997540000000001,
+          "goal_side_absolute_errors": [
+            1.128609,
+            0.831145
+          ],
+          "one_x_two_brier": 0.3206374136,
+          "one_x_two_log_loss": 0.6205288888579539,
+          "one_x_two_top_pick": "away_win",
+          "one_x_two_top_pick_correct": true,
+          "actual_outcome_probability": 0.53766,
+          "over_2_5_brier": 0.32135293440000007,
+          "over_2_5_log_loss": 0.8367404531161461,
+          "btts_brier": 0.32232870760000004,
+          "btts_log_loss": 0.8387280199263648
+        }
+      }
     }
   ],
   "pre_match_goal_coefficient_ablation": {
@@ -1611,9 +1761,9 @@
       {
         "candidate": "zero_coefficient",
         "coefficient": 0.0,
-        "side_xg_mae": 0.70535,
-        "side_xg_rmse": 0.97887,
-        "total_xg_mae": 1.101433,
+        "side_xg_mae": 0.7116,
+        "side_xg_rmse": 0.973515,
+        "total_xg_mae": 1.14486,
         "predicted_total_xg_distribution": {
           "minimum": 2.895699,
           "maximum": 2.895701,
@@ -1628,14 +1778,14 @@
       {
         "candidate": "applied_conservative",
         "coefficient": 0.146445877,
-        "side_xg_mae": 0.661316,
-        "side_xg_rmse": 0.932707,
-        "total_xg_mae": 1.084478,
+        "side_xg_mae": 0.674669,
+        "side_xg_rmse": 0.920151,
+        "total_xg_mae": 1.135,
         "predicted_total_xg_distribution": {
           "minimum": 2.713766,
           "maximum": 3.135427,
-          "mean": 2.963335,
-          "population_sd": 0.121047
+          "mean": 2.961971,
+          "population_sd": 0.114908
         },
         "reconstructed_competition_baseline": {
           "home": 1.5917,
@@ -1645,14 +1795,14 @@
       {
         "candidate": "frozen_point_estimate",
         "coefficient": 0.445695839,
-        "side_xg_mae": 0.734554,
-        "side_xg_rmse": 0.964421,
-        "total_xg_mae": 1.086302,
+        "side_xg_mae": 0.790418,
+        "side_xg_rmse": 1.04754,
+        "total_xg_mae": 1.236311,
         "predicted_total_xg_distribution": {
           "minimum": 2.461847,
           "maximum": 4.292977,
-          "mean": 3.254695,
-          "population_sd": 0.498669
+          "mean": 3.323865,
+          "population_sd": 0.516589
         },
         "reconstructed_competition_baseline": {
           "home": 1.5917,
@@ -1662,14 +1812,14 @@
       {
         "candidate": "frozen_raw_estimate",
         "coefficient": 0.513116594,
-        "side_xg_mae": 0.786982,
-        "side_xg_rmse": 1.016282,
-        "total_xg_mae": 1.10204,
+        "side_xg_mae": 0.858488,
+        "side_xg_rmse": 1.145786,
+        "total_xg_mae": 1.292244,
         "predicted_total_xg_distribution": {
           "minimum": 2.422997,
           "maximum": 4.719295,
-          "mean": 3.354519,
-          "population_sd": 0.625472
+          "mean": 3.455476,
+          "population_sd": 0.666202
         },
         "reconstructed_competition_baseline": {
           "home": 1.5917,
@@ -1685,8 +1835,8 @@
       "Leeds United vs Brentford"
     ],
     "evidence_findings": [
-      "The frozen XI averaged 9.06/11 starters; selection error still reaches Player Alpha before kickoff.",
-      "Observed match xG totals spanned 1.84-6.83, while the base forecast spanned only 2.71-3.14; the goal environment is over-compressed in this sample.",
+      "The frozen XI averaged 9.15/11 starters; selection error still reaches Player Alpha before kickoff.",
+      "Observed match xG totals spanned 1.36-6.83, while the base forecast spanned only 2.71-3.14; the goal environment is over-compressed in this sample.",
       "Only 3/5 route families became preferred; missing direct_transition, wide_delivery.",
       "The pre-kickoff applied conservative goal coefficient still has the best side-xG MAE among the artifact's frozen choices (applied_conservative); increasing sensitivity is not the fix."
     ],

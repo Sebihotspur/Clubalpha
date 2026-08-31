@@ -2,7 +2,7 @@
 
 Updated: 2026-08-31
 
-Model and website checkpoint: official Matchweek 3 slate pending this commit
+Model and website checkpoint: `8327fba`
 
 Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
 
@@ -44,15 +44,20 @@ Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
 - The website now publishes Overview, Predictions, Holy Grail, Matchups,
   Ledger, and Methodology routes. The production Holy Grail data reports ten
   fixtures and `capital_deployment_ready: false`.
-- Nine of the ten frozen fixtures are now recorded in the append-only result
-  stream. Aston Villa–Arsenal remains pending.
-- The partial backtest scores final-result calibration, observed xG, and the
+- All ten frozen fixtures are now recorded in the append-only result stream.
+  Arsenal beat Aston Villa 1–0 with FotMob xG of 1.05–0.31.
+- The completed backtest scores final-result calibration, observed xG, and the
   frozen projected XI separately. Holy Grail is effectively tied with the base:
-  it slightly improves 1X2 Brier/log loss, over 2.5, and BTTS, while side xG
-  MAE is 0.664 versus 0.661 for the base. Both top-pick accuracies are 3/9.
+  it slightly improves 1X2 Brier/log loss, over 2.5, BTTS, and goal-side MAE,
+  while side-xG MAE is 0.677 versus 0.675 for the base. Both top-pick
+  accuracies are 4/10.
+- Villa–Arsenal was an outcome hit for both models. Context raised Arsenal's
+  away-win probability from 51.1% to 53.8% and correctly suppressed Villa's
+  attack, but total xG remained over-projected at 2.96 versus 1.36 observed.
 - The strongest diagnostics are not a coefficient verdict. The projected XI
-  averaged 9.06/11 starters, and total-xG forecasts are over-compressed: the
-  base spanned 2.71–3.14 while observed match xG spanned 1.84–6.83.
+  averaged roughly nine correct starters, and total-xG forecasts are
+  over-compressed: the base spanned 2.71–3.14 while observed match xG spanned
+  1.36–6.83.
 - A no-leakage ablation of coefficient choices already frozen before kickoff
   shows that simply increasing sensitivity is not the fix. The applied 0.1464
   conservative coefficient has the best side-xG MAE (0.661); the frozen 0.4457
@@ -67,10 +72,11 @@ Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
   conservative team beliefs for attack creation, defensive exposure, match
   tempo, lineup reliability, finishing variance, and route hypotheses. It
   recomputes from every registered cycle and cannot learn the same match twice.
-- The first research checkpoint is frozen at
-  `artifacts/research_loop/2026-08-31-9-completed/`. Every team has only one new
-  match, so all signals remain tentative and zero adjustments passed the
-  five-match proposal gate.
+- The latest cumulative research checkpoint is frozen at
+  `artifacts/research_loop/2026-08-31-10-completed/`. Every team still has only
+  one new match, so all signals remain tentative and zero adjustments passed
+  the five-match proposal gate. The earlier nine-match checkpoint remains
+  preserved.
 - Manchester United, Chelsea, and Nottingham Forest produced the largest
   tentative attacking upside relative to the frozen base. Ipswich, Brighton,
   and Liverpool showed the largest tentative defensive exposure. These are
@@ -97,15 +103,9 @@ Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
 
 ## Start here
 
-1. After Aston Villa–Arsenal finishes, run the single cumulative research-cycle
-   command without touching the frozen official Matchweek 3 slate:
-
-   ```bash
-   python scripts/run_research_cycle.py --as-of 2026-08-31
-   ```
-
-   This appends the result, regenerates the backtest, and creates a new
-   ten-match research checkpoint without changing any prediction.
+1. Review the completed ten-match diagnostic, especially why the model placed
+   Villa–Arsenal in a roughly 2.95-xG environment when the observed total was
+   1.36. Keep the correct Arsenal direction separate from the totals error.
 2. After Matchweek 3 settles, append results to the official archive and rebuild
    the website. Score all ten fixtures; do not omit low-confidence calls or
    rewrite either audited override.
