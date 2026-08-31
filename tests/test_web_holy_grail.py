@@ -74,6 +74,23 @@ class WebHolyGrailTests(unittest.TestCase):
             'data-route="holy-grail"', route.read_text(encoding="utf-8")
         )
 
+    def test_official_matchweek_three_is_a_separate_scoring_stream(self):
+        slate = self.data["official_slate"]
+        self.assertEqual(slate["fixtures"], 10)
+        self.assertEqual(len(slate["predictions"]), 10)
+        self.assertEqual(slate["validation"]["model_overrides"], 2)
+        self.assertNotEqual(
+            {row["match_id"] for row in slate["predictions"]},
+            {row["match_id"] for row in self.data["predictions"]},
+        )
+
+    def test_official_ledger_opens_paper_review_only(self):
+        ledger = self.data["ledger"]
+        self.assertEqual(ledger["sample_gate"], 30)
+        self.assertEqual(ledger["hit_rate_gate"], 0.5)
+        self.assertEqual(ledger["next_stage"], "paper_allocation_and_price_validation")
+        self.assertFalse(ledger["capital_deployment_ready"])
+
 
 if __name__ == "__main__":
     unittest.main()

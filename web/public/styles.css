@@ -216,6 +216,9 @@ button { font: inherit; }
 .context-verdict.positive strong { color: var(--accent); }
 .context-verdict.negative { border-color: var(--red); }
 .context-verdict.negative strong { color: var(--red); }
+.override-note { display: grid; gap: 5px; margin-top: 9px; padding: 10px 11px; border: 1px solid rgba(245, 196, 81, 0.2); border-radius: 7px; background: rgba(245, 196, 81, 0.035); }
+.override-note strong { color: var(--amber); font: 600 9px var(--mono); text-transform: uppercase; }
+.override-note span { color: var(--muted); font: 9px/1.5 var(--mono); }
 .direction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
 .direction-read { padding: 11px; border: 1px solid var(--border-soft); border-radius: 8px; }
 .direction-read span { display: block; overflow: hidden; color: var(--muted-2); font: 8px var(--mono); text-overflow: ellipsis; white-space: nowrap; }
@@ -248,8 +251,14 @@ tbody tr:hover { background: rgba(23, 37, 31, 0.56); }
 .result-pill strong { display: block; margin-top: 2px; color: var(--text); font-size: 10px; }
 .result-pill.best { border-color: rgba(67, 245, 154, 0.28); background: rgba(67, 245, 154, 0.04); }
 .result-pill.best strong { color: var(--accent); }
+.result-pill.official-choice { box-shadow: inset 0 -2px 0 var(--blue); }
+.result-pill.official-choice span::after { margin-left: 3px; color: var(--blue); content: "•"; }
 .status-chip { display: inline-flex; align-items: center; padding: 5px 7px; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); font: 8px var(--mono); text-transform: uppercase; }
 .status-chip.official { color: var(--accent); border-color: rgba(67, 245, 154, 0.25); }
+.official-call strong { display: block; color: var(--accent); font: 600 10px var(--mono); }
+.official-call span { display: block; margin-top: 4px; color: var(--muted-2); font: 8px var(--mono); text-transform: uppercase; }
+.thesis-cell { min-width: 230px; max-width: 300px; color: var(--muted); font: 9px/1.5 var(--sans); text-align: left; white-space: normal; }
+.official-table th:nth-child(7) { text-align: left; }
 
 .ledger-hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 12px; margin-top: 28px; }
 .ledger-panel { padding: 24px; border: 1px solid var(--border); border-radius: 12px; background: rgba(13, 21, 17, 0.74); }

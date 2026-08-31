@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from clubalpha.official_shadow import score_results, validate_predictions  # noqa: E402
 from clubalpha.round_robin_archive import validate_results  # noqa: E402
 
 
@@ -20,6 +21,7 @@ ARTIFACT_DIR = ROOT / "artifacts/prediction_lab/2026-08-24"
 STYLE_MATCHUP_ARTIFACT = ROOT / "artifacts/style_matchup/2026-08-25/style-matchups.json"
 ROUND_ROBIN_DIR = ROOT / "artifacts/round_robin/2026-08-25"
 CONTEXTUAL_DIR = ROOT / "artifacts/contextual_interaction/2026-08-26"
+OFFICIAL_DIR = ROOT / "artifacts/official_shadow/2026-08-31-mw3"
 PUBLIC_DIR = ROOT / "web/public"
 
 
@@ -44,23 +46,97 @@ def build():
     round_robin_results = load_jsonl(ROUND_ROBIN_DIR / "results.jsonl")
     contextual_report = load_json(CONTEXTUAL_DIR / "report.json")
     contextual_predictions = load_jsonl(CONTEXTUAL_DIR / "predictions.jsonl")
+    official_report = load_json(OFFICIAL_DIR / "report.json")
+    official_predictions = load_jsonl(OFFICIAL_DIR / "predictions.jsonl")
+    official_results = load_jsonl(OFFICIAL_DIR / "results.jsonl")
     if contextual_report["decision_boundaries"]["capital_deployment_ready"]:
         raise ValueError("website refuses capital-ready contextual shadow data")
     if contextual_report["method"]["archetype_labels_used_in_math"]:
         raise ValueError("website refuses context that uses archetype labels in math")
+    official_validation = validate_predictions(
+        official_predictions,
+        expected_round=int(official_report["round"]),
+        expected_fixtures=10,
+        as_of_utc=official_report["as_of_utc"],
+    )
+    official_score = score_results(official_predictions, official_results)
     result_validation = validate_results(
         round_robin_predictions, round_robin_results
     )
-    by_match = {int(row["match_id"]): row for row in report["next_round"]}
-    official_match_id = 5795429
 
-    web_predictions = []
+    official_web_predictions = []
+    for row in official_predictions:
+        fixture = row["fixture"]
+        match_id = int(fixture["match_id"])
+        model = row["model"]
+        probabilities = model["probabilities"]
+        home_direction = model["context"]["home_attack"]
+        away_direction = model["context"]["away_attack"]
+        official_web_predictions.append(
+            {
+                "match_id": match_id,
+                "kickoff_utc": fixture["kickoff_utc"],
+                "home_team": fixture["home_team"],
+                "away_team": fixture["away_team"],
+                "baseline": {"predicted_xg": model["base_predicted_xg"]},
+                "predicted_xg": model["predicted_xg"],
+                "probabilities": probabilities,
+                "top_scoreline": model["most_likely_scorelines"][0]["score"],
+                "official_pick": row["official_pick"],
+                "translation_audit": row["translation_audit"],
+                "research_lens": row["research_lens"],
+                "verdict": model["context"]["verdict"],
+                "goal_environment": model["context"]["goal_environment"],
+                "directions": {
+                    "home": {
+                        "archetype": home_direction["attacker_archetype"],
+                        "preferred_route": home_direction["preferred_route"]["label"],
+                        "signal": home_direction["continuous_signal"],
+                        "reliability": home_direction["combined_reliability"],
+                        "xg_multiplier": home_direction["xg_multiplier"],
+                    },
+                    "away": {
+                        "archetype": away_direction["attacker_archetype"],
+                        "preferred_route": away_direction["preferred_route"]["label"],
+                        "signal": away_direction["continuous_signal"],
+                        "reliability": away_direction["combined_reliability"],
+                        "xg_multiplier": away_direction["xg_multiplier"],
+                    },
+                },
+                "status": "pending",
+                "quality_flags": row["quality_flags"],
+            }
+        )
+    official_web_predictions.sort(
+        key=lambda row: (row["kickoff_utc"], row["match_id"])
+    )
+    featured_match_id = int(official_report["featured_match_id"])
+    featured = next(
+        row
+        for row in official_web_predictions
+        if row["match_id"] == featured_match_id
+    )
+    featured_pick = featured["official_pick"]
+    promotion_gate = official_report["promotion_gate"]
+    hit_rate = official_score["hit_rate"]
+    review_ready = (
+        official_score["settled"] >= promotion_gate["minimum_settled_fixtures"]
+        and hit_rate is not None
+        and hit_rate > promotion_gate["threshold_exclusive"]
+    )
+
+    # Preserve the original Prediction Lab and Holy Grail records exactly as
+    # published. The official Matchweek 3 slate is a new scoring stream, not a
+    # rewrite of either earlier experiment.
+    by_match = {int(row["match_id"]): row for row in report["next_round"]}
+    original_pick_match_id = 5795429
+    legacy_predictions = []
     for row in predictions:
         fixture = row["fixture"]
         match_id = int(fixture["match_id"])
         context = by_match[match_id]
         probabilities = row["probabilities"]
-        web_predictions.append(
+        legacy_predictions.append(
             {
                 "match_id": match_id,
                 "kickoff_utc": fixture["kickoff_utc"],
@@ -81,12 +157,12 @@ def build():
                 "support": context["support"],
                 "component_votes": context["component_votes"],
                 "top_scoreline": row["most_likely_scorelines"][0]["score"],
-                "official_pick": match_id == official_match_id,
+                "official_pick": match_id == original_pick_match_id,
                 "status": "pending",
             }
         )
 
-    baseline_match_ids = {row["match_id"] for row in web_predictions}
+    baseline_match_ids = {row["match_id"] for row in legacy_predictions}
     contextual_match_ids = {
         int(row["fixture"]["match_id"]) for row in contextual_predictions
     }
@@ -160,41 +236,74 @@ def build():
     holy_grail_predictions.sort(
         key=lambda row: (row["kickoff_utc"], row["match_id"])
     )
+    original_pick = next(
+        row for row in legacy_predictions if row["official_pick"]
+    )
+    original_fair_decimal = 1.0 / original_pick["probabilities"]["over_2_5"]
 
-    official = next(row for row in web_predictions if row["official_pick"])
-    fair_decimal = 1.0 / official["probabilities"]["over_2_5"]
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_2_holy_grail",
-            "prediction_version": report["prediction_version"],
-            "as_of": report["as_of"],
-            "generated_at_utc": report["generated_at_utc"],
+            "site_version": "clubalpha_web_v0_3_official_mw3",
+            "prediction_version": official_report["report_version"],
+            "as_of": official_report["as_of_utc"],
+            "generated_at_utc": official_report["as_of_utc"],
             "context_as_of": "2026-08-26",
             "context_version": contextual_report["report_version"],
             "simulations": 50000,
-            "fixture_count": len(web_predictions),
+            "fixture_count": len(official_web_predictions),
             "scale_training_sides": report["counts"]["scale_training_fixture_sides"],
             "scale_validation_sides": 200,
             "goal_training_matches": report["counts"]["goal_training_matches"],
             "goal_validation_matches": 100,
         },
         "official_shadow_pick": {
-            "match_id": official_match_id,
-            "fixture": f"{official['home_team']} vs {official['away_team']}",
-            "kickoff_utc": official["kickoff_utc"],
+            "match_id": original_pick_match_id,
+            "fixture": f"{original_pick['home_team']} vs {original_pick['away_team']}",
+            "kickoff_utc": original_pick["kickoff_utc"],
             "market": "Over 2.5 total goals",
-            "model_probability": official["probabilities"]["over_2_5"],
-            "fair_decimal": round(fair_decimal, 3),
+            "model_probability": original_pick["probabilities"]["over_2_5"],
+            "fair_decimal": round(original_fair_decimal, 3),
             "minimum_price": 1.80,
             "shadow_units": 0.25,
             "real_units": 0.0,
             "reasons": [
                 {"value": "3 / 3", "label": "Intelligence layers favor City"},
-                {"value": f"{official['predicted_xg']['total']:.2f}", "label": "Projected total xG"},
-                {"value": f"{official['probabilities']['btts_yes'] * 100:.1f}%", "label": "Both teams to score"},
+                {
+                    "value": f"{original_pick['predicted_xg']['total']:.2f}",
+                    "label": "Projected total xG",
+                },
+                {
+                    "value": f"{original_pick['probabilities']['btts_yes'] * 100:.1f}%",
+                    "label": "Both teams to score",
+                },
             ],
         },
-        "predictions": web_predictions,
+        "featured_official_pick": {
+            "match_id": featured_match_id,
+            "fixture": f"{featured['home_team']} vs {featured['away_team']}",
+            "kickoff_utc": featured["kickoff_utc"],
+            "market": featured_pick["primary_read"],
+            "model_probability": featured_pick["model_probability"],
+            "confidence": featured_pick["confidence"],
+            "secondary_read": featured_pick["secondary_read"],
+            "projected_xg": featured["predicted_xg"],
+            "real_units": 0.0,
+            "reasons": [
+                {"value": "HIGH", "label": "Official conviction"},
+                {"value": f"{featured['predicted_xg']['home']:.2f}", "label": "City projected xG"},
+                {"value": "10 / 10", "label": "Fixtures frozen"},
+            ],
+        },
+        "predictions": legacy_predictions,
+        "official_slate": {
+            "report_version": official_report["report_version"],
+            "status": official_report["status"],
+            "round": official_report["round"],
+            "as_of": official_report["as_of_utc"],
+            "fixtures": len(official_web_predictions),
+            "validation": official_validation,
+            "predictions": official_web_predictions,
+        },
         "holy_grail": {
             "name": "Holy Grail v1",
             "status": contextual_report["status"],
@@ -262,17 +371,32 @@ def build():
             ],
         },
         "ledger": {
-            "status": "shadow_collection",
-            "matches_logged": result_validation["results"],
-            "sample_gate": 100,
+            "status": "official_shadow_collection",
+            "matches_logged": official_score["settled"],
+            "sample_gate": promotion_gate["minimum_settled_fixtures"],
+            "hits": official_score["hits"],
+            "misses": official_score["misses"],
+            "pending": official_score["pending"],
+            "hit_rate": hit_rate,
+            "hit_rate_gate": promotion_gate["threshold_exclusive"],
+            "review_ready": review_ready,
+            "next_stage": promotion_gate["next_stage"],
             "capital_deployment_ready": False,
             "scorecards": [
+                "Official 1X2 hit rate above 50%",
+                "Minimum 30 settled official fixtures",
                 "1X2 Brier + log loss",
                 "Expected-goals MAE",
                 "Totals calibration",
                 "Closing-line value",
                 "Lineup evidence coverage",
             ],
+        },
+        "historical_ledger": {
+            "status": "shadow_collection",
+            "matches_logged": result_validation["results"],
+            "sample_gate": 100,
+            "capital_deployment_ready": False,
         },
         "methodology": {
             "components": [
@@ -294,7 +418,8 @@ def build():
             ],
             "caveats": [
                 "34 of 200 component-scale sides collected",
-                "10 of 100 goal-calibration matches collected",
+                "Nine latest results are tentative research evidence",
+                "Official MW3 probabilities remain shadow-only",
                 "Projected lineups are not confirmed starting XIs",
                 "Market prices are not yet an automated model input",
                 "Historical August 11 roster is reconstructed and flagged",
@@ -330,8 +455,8 @@ if __name__ == "__main__":
         json.dumps(
             {
                 "site_version": payload["meta"]["site_version"],
-                "fixtures": len(payload["predictions"]),
-                "official_shadow_pick": payload["official_shadow_pick"]["fixture"],
+                "fixtures": payload["official_slate"]["fixtures"],
+                "featured_prediction": payload["featured_official_pick"]["fixture"],
             },
             indent=2,
         )

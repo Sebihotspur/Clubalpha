@@ -1,10 +1,10 @@
 # Next session
 
-Updated: 2026-08-26
+Updated: 2026-08-31
 
-Model and website checkpoint: `b077a72`
+Model and website checkpoint: official Matchweek 3 slate pending this commit
 
-Production: <https://clubalpha-club-form-v1.vercel.app/holy-grail/>
+Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
 
 ## Current checkpoint
 
@@ -44,29 +44,99 @@ Production: <https://clubalpha-club-form-v1.vercel.app/holy-grail/>
 - The website now publishes Overview, Predictions, Holy Grail, Matchups,
   Ledger, and Methodology routes. The production Holy Grail data reports ten
   fixtures and `capital_deployment_ready: false`.
-- All 156 tests pass. The model and production website were deployed from
-  `b077a72`; the latest `main` additionally contains this documentation-only
-  handoff.
+- Nine of the ten frozen fixtures are now recorded in the append-only result
+  stream. Aston Villa–Arsenal remains pending.
+- The partial backtest scores final-result calibration, observed xG, and the
+  frozen projected XI separately. Holy Grail is effectively tied with the base:
+  it slightly improves 1X2 Brier/log loss, over 2.5, and BTTS, while side xG
+  MAE is 0.664 versus 0.661 for the base. Both top-pick accuracies are 3/9.
+- The strongest diagnostics are not a coefficient verdict. The projected XI
+  averaged 9.06/11 starters, and total-xG forecasts are over-compressed: the
+  base spanned 2.71–3.14 while observed match xG spanned 1.84–6.83.
+- A no-leakage ablation of coefficient choices already frozen before kickoff
+  shows that simply increasing sensitivity is not the fix. The applied 0.1464
+  conservative coefficient has the best side-xG MAE (0.661); the frozen 0.4457
+  point estimate expands the range but worsens side-xG MAE to 0.735.
+- Liverpool–Forest, Chelsea–Brighton, and Leeds–Brentford are the structural
+  review queue. Bournemouth–Everton, Coventry–Hull, and Spurs–Newcastle were
+  outcome misses whose xG direction still supported the forecast.
+- Only box pressure, set pieces, and high pressing became preferred contextual
+  routes in this slate; wide delivery and direct transition never led after
+  evidence reliability was applied.
+- Research Loop v1 now turns the append-only results into cumulative,
+  conservative team beliefs for attack creation, defensive exposure, match
+  tempo, lineup reliability, finishing variance, and route hypotheses. It
+  recomputes from every registered cycle and cannot learn the same match twice.
+- The first research checkpoint is frozen at
+  `artifacts/research_loop/2026-08-31-9-completed/`. Every team has only one new
+  match, so all signals remain tentative and zero adjustments passed the
+  five-match proposal gate.
+- Manchester United, Chelsea, and Nottingham Forest produced the largest
+  tentative attacking upside relative to the frozen base. Ipswich, Brighton,
+  and Liverpool showed the largest tentative defensive exposure. These are
+  research beliefs, not forecast overrides.
+- The first official shadow slate is frozen at
+  `artifacts/official_shadow/2026-08-31-mw3/`: all ten Premier League
+  Matchweek 3 fixtures, frozen at 18:56:06 UTC before Aston Villa–Arsenal
+  kicked off. That final Matchweek 2 fixture is intentionally excluded from
+  the evidence set.
+- The official 1X2 calls are Liverpool, Newcastle, Brentford, Brighton,
+  Fulham, Manchester City, Nottingham Forest, Aston Villa, Manchester United,
+  and Arsenal. Liverpool at Ipswich and Aston Villa at Hull are explicit,
+  documented football-audit overrides of the raw top model outcome.
+- The archive stores immutable predictions, an append-only result stream,
+  source hashes, validation, and reproducible generation. Website Predictions,
+  Overview, Holy Grail, and Ledger now consume that official archive.
+- Advancement requires a strictly greater than 50% official 1X2 hit rate after
+  at least 30 settled fixtures. Passing it opens paper allocation and price
+  validation only. Real capital remains disabled and requires separate
+  calibration, price, lineup, availability, and drawdown gates.
+- All 172 tests pass, including regression guards proving the earlier Holy
+  Grail experiment and original ledger observation were not rewritten by the
+  new official scoring stream.
 
 ## Start here
 
-1. Let the frozen August 28–31 fixtures complete and append observed results
-   without regenerating either the base or contextual predictions.
-2. Score the locked baseline and Holy Grail challenger side by side on xG MAE,
-   1X2 Brier score, log loss, totals calibration, and BTTS calibration.
-3. Build a chronological residual-training set:
+1. After Aston Villa–Arsenal finishes, run the single cumulative research-cycle
+   command without touching the frozen official Matchweek 3 slate:
+
+   ```bash
+   python scripts/run_research_cycle.py --as-of 2026-08-31
+   ```
+
+   This appends the result, regenerates the backtest, and creates a new
+   ten-match research checkpoint without changing any prediction.
+2. After Matchweek 3 settles, append results to the official archive and rebuild
+   the website. Score all ten fixtures; do not omit low-confidence calls or
+   rewrite either audited override.
+
+   ```bash
+   python scripts/collect_official_shadow_results.py
+   python web/scripts/build_site_data.py
+   ```
+3. Audit projected-XI misses, beginning with Tottenham (6/11), Crystal Palace
+   (7/11), and Manchester United (7/11). Player Alpha is only as good as the
+   players and minutes passed into it.
+4. Audit the goal-environment compression and the three structural fixtures.
+   Do not solve compression by increasing one global coefficient. Test a richer
+   pre-match xG translation that can distinguish attack creation, opponent
+   prevention, lineup execution, and goal-environment volatility while leaving
+   the 60/30/10 intelligence weights unchanged.
+5. Audit why wide delivery and direct transition never become preferred routes;
+   improve measured evidence rather than increasing their weight blindly.
+6. Build a chronological residual-training set:
 
    ```text
    observed xG − locked base-model xG = context residual target
    ```
 
-4. Fit contextual sensitivity only on earlier fixtures and judge it on later
+7. Fit contextual sensitivity only on earlier fixtures and judge it on later
    fixtures. Compare full context against route-channel and reliability
    ablations before activating anything.
-5. Continue accumulating component-scale sides toward 200 and goal-calibration
+8. Continue accumulating component-scale sides toward 200 and goal-calibration
    matches toward 100. Matchday 4 or 5 remains a review checkpoint, not an
    automatic capital date.
-6. After fixture probability calibration is stable, extend the same expected-XI
+9. After fixture probability calibration is stable, extend the same expected-XI
    and goal-environment foundation to scorer and assist heads.
 
 ## Preserve these boundaries

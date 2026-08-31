@@ -42,15 +42,15 @@ function metric(label, value, note, tone = "") {
 
 function resultPills(match) {
   const results = [
-    ["H", match.probabilities.home_win],
-    ["D", match.probabilities.draw],
-    ["A", match.probabilities.away_win],
+    ["H", "home_win", match.probabilities.home_win],
+    ["D", "draw", match.probabilities.draw],
+    ["A", "away_win", match.probabilities.away_win],
   ];
-  const best = Math.max(...results.map(([, value]) => value));
+  const best = Math.max(...results.map(([, , value]) => value));
   return `<div class="result-pills">${results
     .map(
-      ([label, value]) =>
-        `<div class="result-pill ${value === best ? "best" : ""}"><span>${label}</span><strong>${pct(value)}</strong></div>`,
+      ([label, outcome, value]) =>
+        `<div class="result-pill ${value === best ? "best" : ""} ${match.official_pick?.outcome === outcome ? "official-choice" : ""}"><span>${label}</span><strong>${pct(value)}</strong></div>`,
     )
     .join("")}</div>`;
 }
@@ -66,7 +66,7 @@ function topMatchCards(matches) {
         <div class="match-teams"><span>${esc(match.home_team)}</span><span>${esc(match.away_team)}</span></div>
         <div class="xg-row">
           <div><span class="panel-label">Projected total xG</span><div class="xg-total">${dec(match.predicted_xg.total)}</div></div>
-          <div class="lean">Intelligence lean<strong>${esc(match.lean || "No consensus")} · ${match.support}/3</strong></div>
+          <div class="lean">Official prediction<strong>${esc(match.official_pick.primary_read)} · ${esc(match.official_pick.confidence)}</strong></div>
         </div>
       </article>`,
     )
@@ -74,10 +74,11 @@ function topMatchCards(matches) {
 }
 
 function overview(data) {
-  const pick = data.official_shadow_pick;
-  const strongestContext = data.holy_grail.predictions
-    .slice()
-    .sort((a, b) => Math.abs(b.favorite_probability_delta) - Math.abs(a.favorite_probability_delta))[0];
+  const pick = data.featured_official_pick;
+  const officialPredictions = data.official_slate.predictions;
+  const contextReinforcements = data.holy_grail.predictions.filter(
+    (match) => match.verdict === "baseline_reinforced",
+  ).length;
   return `
     <section class="hero">
       <div>
@@ -88,22 +89,22 @@ function overview(data) {
       <aside class="hero-note">
         <span class="label">Current operating state</span>
         <strong>OBSERVE · FREEZE · SCORE</strong>
-        <p>Matchdays 2–5 are evidence collection. The ledger evaluates the model; the model does not grade itself after the result.</p>
+        <p>Matchweek 3 is frozen as a complete official shadow slate. The ledger scores every 1X2 call after full time; nothing can be rewritten.</p>
       </aside>
     </section>
 
     <section class="metrics">
       ${metric("Deployment", "NO CAPITAL", "Shadow observations only", "amber")}
       ${metric("Simulation", data.meta.simulations.toLocaleString(), "Independent Poisson runs", "accent")}
-      ${metric("Frozen slate", `${data.meta.fixture_count} fixtures`, `As of ${data.meta.as_of}`)}
-      ${metric("Validation", `${data.ledger.matches_logged}/${data.ledger.sample_gate}`, "Goal-model match gate")}
+      ${metric("Official slate", `${data.meta.fixture_count} picks`, "One 1X2 call per fixture")}
+      ${metric("Promotion gate", `>${pct(data.ledger.hit_rate_gate)}`, `Minimum ${data.ledger.sample_gate} settled picks`)}
     </section>
 
     <section class="section">
-      <div class="section-head"><h2>Official shadow observation</h2><a href="/ledger/">Open ledger →</a></div>
+      <div class="section-head"><h2>Highest-conviction official prediction</h2><a href="/predictions/">Open full slate →</a></div>
       <article class="pick-card">
         <div class="pick-main">
-          <div class="pick-tag"><span></span> Frozen before kickoff · zero real units</div>
+          <div class="pick-tag"><span></span> Official shadow · frozen before kickoff</div>
           <p class="fixture-kicker">${esc(dateTime(pick.kickoff_utc))}</p>
           <h2 class="pick-title">${esc(pick.fixture)}</h2>
           <div class="pick-market">${esc(pick.market)}</div>
@@ -112,17 +113,17 @@ function overview(data) {
           </div>
         </div>
         <div class="pick-numbers">
-          <div class="pick-number"><span class="label">Model probability</span><strong class="green">${pct(pick.model_probability)}</strong><small>Shadow estimate</small></div>
-          <div class="pick-number"><span class="label">Model fair price</span><strong>${dec(pick.fair_decimal)}</strong><small>Before uncertainty buffer</small></div>
-          <div class="pick-number"><span class="label">Qualifying price</span><strong class="yellow">${dec(pick.minimum_price)}+</strong><small>Record only if observed</small></div>
-          <div class="pick-number"><span class="label">Shadow allocation</span><strong>${dec(pick.shadow_units)}u</strong><small>Real allocation: 0.00u</small></div>
+          <div class="pick-number"><span class="label">Model probability</span><strong class="green">${pct(pick.model_probability)}</strong><small>Contextual shadow estimate</small></div>
+          <div class="pick-number"><span class="label">Conviction</span><strong>${esc(pick.confidence.toUpperCase())}</strong><small>Evidence agreement</small></div>
+          <div class="pick-number"><span class="label">Projected xG</span><strong class="yellow">${dec(pick.projected_xg.home)}–${dec(pick.projected_xg.away)}</strong><small>${esc(pick.secondary_read)}</small></div>
+          <div class="pick-number"><span class="label">Real allocation</span><strong>${dec(pick.real_units)}u</strong><small>Locked until promotion review</small></div>
         </div>
       </article>
     </section>
 
     <section class="section">
       <div class="section-head"><h2>Highest projected goal environments</h2><a href="/predictions/">All predictions →</a></div>
-      <div class="card-grid">${topMatchCards(data.predictions)}</div>
+      <div class="card-grid">${topMatchCards(officialPredictions)}</div>
     </section>
 
     <section class="section">
@@ -136,14 +137,14 @@ function overview(data) {
       <div class="section-head"><h2>Holy Grail v1</h2><a href="/holy-grail/">Open contextual slate →</a></div>
       <article class="holy-teaser">
         <div>
-          <span class="panel-label">Continuous opponent context · ${esc(data.holy_grail.as_of)}</span>
+          <span class="panel-label">Frozen contextual experiment · ${esc(dateTime(data.holy_grail.as_of))}</span>
           <h3>The foundation stays anchored. The matchup changes the scoring environment.</h3>
           <p>Each attack is evaluated against the opponent’s route exposure, projected-XI execution, and evidence reliability before the 50,000-match simulation is rerun.</p>
         </div>
         <div class="holy-teaser-read">
-          <span>Largest current move</span>
-          <strong>${esc(strongestContext.favorite)}</strong>
-          <small>${esc(strongestContext.home_team)} vs ${esc(strongestContext.away_team)} · ${pp(strongestContext.favorite_probability_delta)}</small>
+          <span>Archived experiment</span>
+          <strong>${contextReinforcements} reinforced</strong>
+          <small>The original contextual slate and its baseline remain immutable.</small>
         </div>
       </article>
     </section>
@@ -201,8 +202,9 @@ function holyFixtureCards(matches) {
         </div>
         <div class="context-verdict ${contextTone(match.verdict)}">
           <span>${esc(verdictLabel(match.verdict))}</span>
-          <strong>${esc(match.favorite)} ${pp(match.favorite_probability_delta)}</strong>
+          <strong>${match.official_pick ? `${esc(match.official_pick.team)} · ${esc(match.official_pick.confidence)}` : `${esc(match.favorite)} · ${signedPct(match.favorite_probability_delta)}`}</strong>
         </div>
+        ${match.translation_audit?.official_overrides_probability_leader ? `<div class="override-note"><strong>Audited override</strong><span>${esc(match.official_pick.override_reason)}</span></div>` : ""}
         <div class="direction-grid">
           ${directionRead(match.home_team, match.directions.home)}
           ${directionRead(match.away_team, match.directions.away)}
@@ -219,21 +221,21 @@ function holyFixtureCards(matches) {
 
 function holyGrail(data) {
   const model = data.holy_grail;
-  const largestMove = model.predictions
-    .slice()
-    .sort((a, b) => Math.abs(b.favorite_probability_delta) - Math.abs(a.favorite_probability_delta))[0];
+  const reinforced = model.predictions.filter(
+    (match) => match.verdict === "baseline_reinforced",
+  ).length;
   return `<section class="page-head holy-page-head">
       <p class="eyebrow">Clubalpha Contextual Interaction v1</p>
       <h1>The Holy Grail</h1>
       <p>A versatile fixture model: weighted intelligence establishes the baseline, then continuous opponent context bends each team’s scoring environment without overriding what the data already knows.</p>
-      <div class="notice">LIVE SHADOW · The relationship is operational, but its 0.10 sensitivity remains an unlearned safety rail · Zero capital authorized</div>
+      <div class="notice">FROZEN CONTEXTUAL EXPERIMENT · Original ten-fixture slate preserved as of ${esc(dateTime(model.as_of))} · No later official call rewrites this record · Zero capital authorized</div>
     </section>
 
     <section class="holy-summary">
-      ${metric("Frozen slate", `${model.fixtures} fixtures`, `As of ${model.as_of}`, "accent")}
+      ${metric("Frozen slate", `${model.fixtures} fixtures`, `As of ${dateTime(model.as_of)}`, "accent")}
       ${metric("Simulation", model.total_simulations.toLocaleString(), "50,000 per fixture")}
-      ${metric("Largest move", pp(largestMove.favorite_probability_delta), largestMove.favorite, "accent")}
-      ${metric("Deployment", "SHADOW", "Coefficient not learned", "amber")}
+      ${metric("Baseline reinforced", String(reinforced), "Continuous opponent context", "accent")}
+      ${metric("Deployment", "NO CAPITAL", "Official backtest only", "amber")}
     </section>
 
     <section class="holy-architecture">
@@ -247,7 +249,7 @@ function holyGrail(data) {
     </section>
 
     <section class="section">
-      <div class="section-head"><h2>Next Premier League fixtures</h2><span class="panel-label">Context compared with frozen baseline</span></div>
+      <div class="section-head"><h2>Official Matchweek 3 fixtures</h2><span class="panel-label">One scored 1X2 call per match</span></div>
       <div class="holy-fixture-grid">${holyFixtureCards(model.predictions)}</div>
     </section>
 
@@ -255,39 +257,39 @@ function holyGrail(data) {
 }
 
 function predictions(data) {
-  const rows = data.predictions
+  const rows = data.official_slate.predictions
     .map(
       (match) => `<tr>
-        <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · ${esc(match.top_scoreline)}</span></td>
+        <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · model score mode ${esc(match.top_scoreline)}</span></td>
         <td>${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</td>
         <td>${resultPills(match)}</td>
         <td class="prob-over">${pct(match.probabilities.over_2_5)}</td>
         <td>${pct(match.probabilities.btts_yes)}</td>
-        <td>${esc(match.lean || "—")} · ${match.support}/3</td>
-        <td><span class="status-chip ${match.official_pick ? "official" : ""}">${match.official_pick ? "Official pick" : "Monitor"}</span></td>
+        <td class="official-call"><strong>${esc(match.official_pick.team)}</strong><span>${esc(match.official_pick.confidence)} conviction${match.translation_audit.official_overrides_probability_leader ? " · audited override" : ""}</span></td>
+        <td class="thesis-cell">${esc(match.official_pick.thesis)}</td>
       </tr>`,
     )
     .join("");
 
-  return `<section class="page-head"><p class="eyebrow">Fixture probability slate</p><h1>Predictions</h1><p>Frozen 2026–27 Premier League Matchday 2 probabilities. Every number uses the same dated inputs and 50,000 simulations; none is a market recommendation.</p><div class="notice">SHADOW ONLY · Lineups are projected priors, not confirmed XIs · No price means no edge · No edge means no allocation</div></section>
-    <div class="table-shell"><table><thead><tr><th>Fixture</th><th>Model xG</th><th>1X2 probability</th><th>O2.5</th><th>BTTS</th><th>Layer consensus</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table></div>
-    <p class="notice">Model probabilities are not bookmaker prices. This page preserves the locked baseline; <a class="text-link" href="/holy-grail/">open Holy Grail</a> to compare the directional contextual rerun. The first slate remains below both validation gates: ${data.meta.scale_training_sides}/${data.meta.scale_validation_sides} component-scale sides and ${data.meta.goal_training_matches}/${data.meta.goal_validation_matches} goal-calibration matches.</p>`;
+  return `<section class="page-head"><p class="eyebrow">Official shadow slate · Matchweek 3</p><h1>Predictions</h1><p>Ten immutable 1X2 calls, frozen before the final Matchweek 2 fixture kicked off. Model probabilities remain visible even when the football audit chooses a different official outcome.</p><div class="notice">SCORING STARTS HERE · Every fixture counts toward the hit rate · More than 50% after at least ${data.ledger.sample_gate} settled official fixtures opens paper allocation and price validation—not real capital</div></section>
+    <div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>Model xG</th><th>1X2 probability</th><th>O2.5</th><th>BTTS</th><th>Official call</th><th>Why</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="notice">Latest match evidence is attached as a tentative research lens, not a hidden formula adjustment. Lineups remain projected; prices are not yet an input; real allocation remains 0.00 units.</p>`;
 }
 
 function ledger(data) {
-  const pick = data.official_shadow_pick;
   const progress = Math.min(100, (data.ledger.matches_logged / data.ledger.sample_gate) * 100);
-  const slateRows = data.predictions
+  const displayedRate = data.ledger.hit_rate === null ? "—" : pct(data.ledger.hit_rate);
+  const slateRows = data.official_slate.predictions
     .map(
-      (match) => `<tr><td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))}</span></td><td>${match.official_pick ? esc(pick.market) : "Full forecast frozen"}</td><td>${match.official_pick ? pct(pick.model_probability) : `${pct(Math.max(match.probabilities.home_win, match.probabilities.draw, match.probabilities.away_win))} top 1X2`}</td><td>${match.official_pick ? `${dec(pick.minimum_price)}+` : "—"}</td><td><span class="status-chip ${match.official_pick ? "official" : ""}">Pending</span></td></tr>`,
+      (match) => `<tr><td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))}</span></td><td class="official-call"><strong>${esc(match.official_pick.team)}</strong><span>${esc(match.official_pick.confidence)}</span></td><td>${pct(match.official_pick.model_probability)}</td><td>${esc(match.official_pick.secondary_read)}</td><td><span class="status-chip official">Pending</span></td></tr>`,
     )
     .join("");
-  return `<section class="page-head"><p class="eyebrow">Immutable public record</p><h1>Shadow ledger</h1><p>We publish the observation before kickoff, append the result afterward, and measure whether Clubalpha improves on simple baselines. No selection can be added retroactively.</p></section>
+  return `<section class="page-head"><p class="eyebrow">Immutable public record</p><h1>Official prediction ledger</h1><p>Every Matchweek 3 outcome is published before kickoff. Results append after full time, and the original calls never change.</p></section>
     <div class="ledger-hero">
-      <article class="ledger-panel"><span class="panel-label">Capital readiness</span><h2>NO GO <span>· ${data.ledger.matches_logged}/${data.ledger.sample_gate}</span></h2><p>Matchday 4 or 5 is a review checkpoint—not an automatic authorization date. The evidence must earn the transition.</p><div class="progress"><span style="width:${progress}%"></span></div></article>
+      <article class="ledger-panel"><span class="panel-label">Promotion progress</span><h2>${displayedRate} <span>· ${data.ledger.matches_logged}/${data.ledger.sample_gate} settled</span></h2><p>The gate is strictly above ${pct(data.ledger.hit_rate_gate)} with at least ${data.ledger.sample_gate} official results. Passing opens paper allocation and price validation only; real capital remains locked.</p><div class="progress"><span style="width:${progress}%"></span></div></article>
       <article class="ledger-panel"><span class="panel-label">What will be scored</span><div class="gate-list">${data.ledger.scorecards.map((item) => `<div class="gate-row"><span>${esc(item)}</span><span>Pending</span></div>`).join("")}</div></article>
     </div>
-    <section class="section"><div class="section-head"><h2>Frozen Matchday 2 slate</h2><span class="panel-label">Results append after full time</span></div><div class="table-shell"><table><thead><tr><th>Fixture</th><th>Observation</th><th>Frozen probability</th><th>Price gate</th><th>Result</th></tr></thead><tbody>${slateRows}</tbody></table></div></section>`;
+    <section class="section"><div class="section-head"><h2>Frozen Matchweek 3 slate</h2><span class="panel-label">${data.ledger.hits} hits · ${data.ledger.misses} misses · ${data.ledger.pending} pending</span></div><div class="table-shell"><table><thead><tr><th>Fixture</th><th>Official 1X2 call</th><th>Model probability</th><th>Secondary read</th><th>Result</th></tr></thead><tbody>${slateRows}</tbody></table></div></section>`;
 }
 
 function signalMeter(value, kind) {
@@ -449,7 +451,7 @@ function methodology(data) {
       <article class="method-card"><div class="step">02 · Goal model</div><div><h2>Adjust the competition scoring environment</h2><p>The Premier League home and away xG baseline remains outside the composite. A separately versioned coefficient translates the normalized fixture signal into expected goals.</p><div class="formula">predicted xG = competition baseline xG × exp(β × fixture signal)</div></div></article>
       <article class="method-card holy-method"><div class="step">03 · Context</div><div><h2>Let the opponent bend the baseline</h2><p>Five attacking routes meet the opponent’s exposure and projected-XI execution. Evidence quality continuously shrinks the directional signal; archetype labels are explanatory only.</p><div class="formula">contextual xG = base xG × exp(max sensitivity × directional signal × reliability)</div></div></article>
       <article class="method-card"><div class="step">04 · Simulation</div><div><h2>Run 50,000 transparent match simulations</h2><p>Independent Poisson is the conservative v0 baseline. It produces 1X2, totals, BTTS, and scoreline distributions. More complex correlation models must improve fresh chronological tests before adoption.</p></div></article>
-      <article class="method-card"><div class="step">05 · Ledger</div><div><h2>Freeze, observe, and earn capital readiness</h2><p>Forecasts are immutable. After full time, the ledger appends score, FotMob xG, lineups, closing price, and calibration metrics. Capital deployment remains false until the gates pass.</p><div class="caveats">${data.methodology.caveats.map((item) => `<div class="caveat">${esc(item)}</div>`).join("")}</div></div></article>
+      <article class="method-card"><div class="step">05 · Ledger</div><div><h2>Freeze, observe, and earn the allocation review</h2><p>Forecasts are immutable. After full time, the ledger appends score, FotMob xG, lineups, closing price, and calibration metrics. A cumulative official 1X2 hit rate strictly above 50% after at least 30 fixtures opens paper allocation and price validation; it does not automatically authorize real capital.</p><div class="caveats">${data.methodology.caveats.map((item) => `<div class="caveat">${esc(item)}</div>`).join("")}</div></div></article>
     </div>`;
 }
 

@@ -1,0 +1,48 @@
+{
+  "report_version": "clubalpha_official_shadow_mw3_v1",
+  "status": "official_shadow",
+  "as_of_utc": "2026-08-31T18:56:06Z",
+  "competition": "Premier League",
+  "season": "2026/2027",
+  "round": 3,
+  "validation": {
+    "fixtures": 10,
+    "unique_match_ids": 10,
+    "confidence": {
+      "high": 1,
+      "low": 3,
+      "medium": 6
+    },
+    "model_overrides": 2
+  },
+  "promotion_gate": {
+    "metric": "official_1x2_hit_rate",
+    "threshold_exclusive": 0.5,
+    "minimum_settled_fixtures": 30,
+    "next_stage": "paper_allocation_and_price_validation",
+    "real_capital_authorized": false,
+    "supporting_checks": [
+      "probability_calibration_does_not_regress",
+      "closing_price_is_recorded_before_any_allocation",
+      "lineup_and_availability_gate_passes",
+      "maximum_drawdown_rule_is_defined"
+    ]
+  },
+  "score": {
+    "fixtures": 10,
+    "settled": 0,
+    "pending": 10,
+    "hits": 0,
+    "misses": 0,
+    "hit_rate": null
+  },
+  "decision_rules": [
+    "one official 1X2 outcome is frozen for every scheduled fixture",
+    "model probabilities remain visible when the official audit overrides them",
+    "tentative research beliefs inform confidence and thesis but do not alter xG",
+    "results append after full time and never mutate a prediction",
+    "passing the hit-rate gate opens paper allocation and price validation only"
+  ],
+  "featured_match_id": 5795442,
+  "capital_deployment_ready": false
+}

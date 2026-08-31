@@ -1,0 +1,32 @@
+{
+  "version": "clubalpha_research_loop_v1",
+  "status": "research_state_only",
+  "learning_target": "observed_fotmob_xg_residual_against_locked_base_forecast",
+  "xg_floor": 0.15,
+  "recency_half_life_days": 45.0,
+  "prior_match_equivalents": 3.0,
+  "minimum_observation_reliability": 0.5,
+  "lineup_prior_hit_rate": 0.8,
+  "neutral_log_residual": 0.05,
+  "promotion_gates": {
+    "minimum_team_matches": 5,
+    "minimum_route_observations": 5,
+    "minimum_effective_evidence": 3.0,
+    "minimum_absolute_posterior_log_residual": 0.08,
+    "minimum_direction_consistency": 0.6,
+    "mode": "propose_only"
+  },
+  "review_thresholds": {
+    "lineup_hit_rate_below": 0.75,
+    "formation_accuracy_below": 0.7
+  },
+  "locked_boundaries": {
+    "player_alpha_formulas_mutable": false,
+    "base_60_30_10_weights_mutable": false,
+    "historical_residual_cap_mutable": false,
+    "frozen_predictions_mutable": false,
+    "automatic_code_rewrite_allowed": false,
+    "automatic_capital_authorization_allowed": false,
+    "research_state_can_update_automatically": true
+  }
+}

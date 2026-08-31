@@ -1,0 +1,133 @@
+{
+  "slate_version": "clubalpha_official_shadow_mw3_v1",
+  "status": "official_shadow",
+  "competition": "Premier League",
+  "competition_id": 47,
+  "season": "2026/2027",
+  "round": 3,
+  "as_of_utc": "2026-08-31T18:56:06Z",
+  "inputs": {
+    "fixture_schedule": "data/cache/fotmob/league_47_2026-2027.json",
+    "base_predictions": "artifacts/round_robin/2026-08-25/predictions.jsonl",
+    "style_snapshot": "artifacts/style_matchup/2026-08-25/style-matchups.json",
+    "context_config": "config/contextual-interaction-v1.json",
+    "research_checkpoint": "artifacts/research_loop/2026-08-31-9-completed/state.json"
+  },
+  "promotion_gate": {
+    "metric": "official_1x2_hit_rate",
+    "threshold_exclusive": 0.5,
+    "minimum_settled_fixtures": 30,
+    "next_stage": "paper_allocation_and_price_validation",
+    "real_capital_authorized": false,
+    "supporting_checks": [
+      "probability_calibration_does_not_regress",
+      "closing_price_is_recorded_before_any_allocation",
+      "lineup_and_availability_gate_passes",
+      "maximum_drawdown_rule_is_defined"
+    ]
+  },
+  "decisions": [
+    {
+      "match_id": 5795441,
+      "home_team": "Ipswich Town",
+      "away_team": "Liverpool",
+      "outcome": "away_win",
+      "confidence": "medium",
+      "primary_read": "Liverpool win",
+      "secondary_read": "Ipswich to score / BTTS watch",
+      "thesis": "Liverpool hold the superior projected-XI Alpha, creation and prevention profile, while Ipswich's vertical transitions keep the fixture volatile.",
+      "override_reason": "The raw 1X2 leader is driven by the global home-xG baseline even though Liverpool own the stronger fixture signal and Player Alpha profile."
+    },
+    {
+      "match_id": 5795443,
+      "home_team": "Newcastle United",
+      "away_team": "AFC Bournemouth",
+      "outcome": "home_win",
+      "confidence": "medium",
+      "primary_read": "Newcastle win",
+      "secondary_read": "BTTS / Over 2.5 goals",
+      "thesis": "Newcastle's home edge and results lead the side call, but Bournemouth's high press and chance volume make the goal environment cleaner than the 1X2."
+    },
+    {
+      "match_id": 5795436,
+      "home_team": "Brentford",
+      "away_team": "Sunderland",
+      "outcome": "home_win",
+      "confidence": "medium",
+      "primary_read": "Brentford win",
+      "secondary_read": "Brentford team total watch",
+      "thesis": "Club Form, Player Alpha and the set-piece interaction support Brentford, with Sunderland's strong latest xG preventing a high-confidence label."
+    },
+    {
+      "match_id": 5795437,
+      "home_team": "Brighton & Hove Albion",
+      "away_team": "Leeds United",
+      "outcome": "home_win",
+      "confidence": "medium",
+      "primary_read": "Brighton win",
+      "secondary_read": "Brighton team total watch",
+      "thesis": "Brighton's territorial pressure and stronger projected attacking unit are reinforced by the matchup, while Leeds' early defensive resistance limits conviction."
+    },
+    {
+      "match_id": 5795439,
+      "home_team": "Fulham",
+      "away_team": "Crystal Palace",
+      "outcome": "home_win",
+      "confidence": "low",
+      "primary_read": "Fulham win",
+      "secondary_read": "Pass unless lineups strengthen the read",
+      "thesis": "Fulham receive the modest home and prevention edge, but neither attack owns a clean route and the context suppresses the goal environment."
+    },
+    {
+      "match_id": 5795442,
+      "home_team": "Manchester City",
+      "away_team": "Coventry City",
+      "outcome": "home_win",
+      "confidence": "high",
+      "primary_read": "Manchester City win",
+      "secondary_read": "City team total / Coventry under 1.5",
+      "thesis": "Every layer agrees: City own the largest Player Alpha mismatch, the stronger current process and a reinforced box-pressure route against Coventry."
+    },
+    {
+      "match_id": 5795444,
+      "home_team": "Nottingham Forest",
+      "away_team": "Tottenham Hotspur",
+      "outcome": "home_win",
+      "confidence": "medium",
+      "primary_read": "Nottingham Forest win",
+      "secondary_read": "Forest or draw",
+      "thesis": "Forest's Anfield chance creation and defensive prevention meet a Tottenham side still searching for its first league goal, although Spurs' latest xG was better than the scoreline."
+    },
+    {
+      "match_id": 5795440,
+      "home_team": "Hull City",
+      "away_team": "Aston Villa",
+      "outcome": "away_win",
+      "confidence": "low",
+      "primary_read": "Aston Villa win",
+      "secondary_read": "Pass until Villa availability is known",
+      "thesis": "Villa's projected-XI quality is materially stronger and Hull's two wins have outpaced their latest chance process, but Villa's August 31 fixture is outside this frozen evidence set.",
+      "override_reason": "The official pick favors the large Player Alpha gap over a low-confidence home-led raw probability."
+    },
+    {
+      "match_id": 5795438,
+      "home_team": "Everton",
+      "away_team": "Manchester United",
+      "outcome": "away_win",
+      "confidence": "low",
+      "primary_read": "Manchester United win",
+      "secondary_read": "Pass until lineups confirm the recovery",
+      "thesis": "United's Player Alpha and attacking ceiling lead the call after a 4.77-xG performance, but Everton's unbeaten start and stronger defensive profile make this fragile."
+    },
+    {
+      "match_id": 5795435,
+      "home_team": "Arsenal",
+      "away_team": "Chelsea",
+      "outcome": "home_win",
+      "confidence": "medium",
+      "primary_read": "Arsenal win",
+      "secondary_read": "Arsenal team total watch",
+      "thesis": "Arsenal's high press is a strong route and their defensive prevention resists Chelsea's box pressure, with the August 31 Villa match excluded by the pre-kickoff cutoff."
+    }
+  ]
+}

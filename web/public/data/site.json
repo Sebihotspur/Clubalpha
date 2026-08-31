@@ -1,9 +1,9 @@
 {
   "meta": {
-    "site_version": "clubalpha_web_v0_2_holy_grail",
-    "prediction_version": "clubalpha_prediction_lab_v0",
-    "as_of": "2026-08-24",
-    "generated_at_utc": "2026-08-24T23:16:35.044420+00:00",
+    "site_version": "clubalpha_web_v0_3_official_mw3",
+    "prediction_version": "clubalpha_official_shadow_mw3_v1",
+    "as_of": "2026-08-31T18:56:06Z",
+    "generated_at_utc": "2026-08-31T18:56:06Z",
     "context_as_of": "2026-08-26",
     "context_version": "clubalpha_contextual_next_round_2026_08_26_v1",
     "simulations": 50000,
@@ -35,6 +35,35 @@
       {
         "value": "62.1%",
         "label": "Both teams to score"
+      }
+    ]
+  },
+  "featured_official_pick": {
+    "match_id": 5795442,
+    "fixture": "Manchester City vs Coventry City",
+    "kickoff_utc": "2026-09-05T14:00:00Z",
+    "market": "Manchester City win",
+    "model_probability": 0.59438,
+    "confidence": "high",
+    "secondary_read": "City team total / Coventry under 1.5",
+    "projected_xg": {
+      "home": 2.00837,
+      "away": 1.061418,
+      "total": 3.069789
+    },
+    "real_units": 0.0,
+    "reasons": [
+      {
+        "value": "HIGH",
+        "label": "Official conviction"
+      },
+      {
+        "value": "2.01",
+        "label": "City projected xG"
+      },
+      {
+        "value": "10 / 10",
+        "label": "Fixtures frozen"
       }
     ]
   },
@@ -350,6 +379,1288 @@
       "status": "pending"
     }
   ],
+  "official_slate": {
+    "report_version": "clubalpha_official_shadow_mw3_v1",
+    "status": "official_shadow",
+    "round": 3,
+    "as_of": "2026-08-31T18:56:06Z",
+    "fixtures": 10,
+    "validation": {
+      "fixtures": 10,
+      "unique_match_ids": 10,
+      "confidence": {
+        "high": 1,
+        "low": 3,
+        "medium": 6
+      },
+      "model_overrides": 2
+    },
+    "predictions": [
+      {
+        "match_id": 5795441,
+        "kickoff_utc": "2026-09-04T19:00:00Z",
+        "home_team": "Ipswich Town",
+        "away_team": "Liverpool",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.646707,
+            "away": 1.407089,
+            "total": 3.053796
+          }
+        },
+        "predicted_xg": {
+          "home": 1.621229,
+          "away": 1.42796,
+          "total": 3.04919
+        },
+        "probabilities": {
+          "home_win": 0.42156,
+          "draw": 0.2397,
+          "away_win": 0.33874,
+          "over_2_5": 0.58628,
+          "under_2_5": 0.41372,
+          "over_3_5": 0.36288,
+          "under_3_5": 0.63712,
+          "btts_yes": 0.60682
+        },
+        "top_scoreline": "1-1",
+        "official_pick": {
+          "outcome": "away_win",
+          "team": "Liverpool",
+          "confidence": "medium",
+          "primary_read": "Liverpool win",
+          "secondary_read": "Ipswich to score / BTTS watch",
+          "thesis": "Liverpool hold the superior projected-XI Alpha, creation and prevention profile, while Ipswich's vertical transitions keep the fixture volatile.",
+          "override_reason": "The raw 1X2 leader is driven by the global home-xG baseline even though Liverpool own the stronger fixture signal and Player Alpha profile.",
+          "model_probability": 0.33874
+        },
+        "translation_audit": {
+          "probability_leader": "home_win",
+          "fixture_signal_leader": "away_win",
+          "projected_xi_alpha_leader": "away_win",
+          "official_overrides_probability_leader": true
+        },
+        "research_lens": {
+          "checkpoint_as_of": "2026-08-31",
+          "learned_through_kickoff_utc": "2026-08-30T15:30:00Z",
+          "home": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 1.130901,
+                "confidence": 0.247123,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 1.255603,
+                "confidence": 0.247123,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 1.209526,
+                "confidence": 0.247123,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.849425,
+            "research_flags": [
+              "small_team_sample"
+            ]
+          },
+          "away": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 1.000071,
+                "confidence": 0.227105,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 1.140103,
+                "confidence": 0.227105,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 1.066603,
+                "confidence": 0.227105,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.804129,
+            "research_flags": [
+              "small_team_sample"
+            ]
+          },
+          "tentative_only": true
+        },
+        "verdict": "no_clear_contextual_edge",
+        "goal_environment": "neutral",
+        "directions": {
+          "home": {
+            "archetype": "Promoted / forming",
+            "preferred_route": "Box pressure",
+            "signal": -0.401227,
+            "reliability": 0.388643,
+            "xg_multiplier": 0.984528
+          },
+          "away": {
+            "archetype": "Territorial controller",
+            "preferred_route": "Box pressure",
+            "signal": 0.397573,
+            "reliability": 0.370349,
+            "xg_multiplier": 1.014833
+          }
+        },
+        "status": "pending",
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "official_shadow_not_market_ready",
+          "pressing_evidence_missing",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795443,
+        "kickoff_utc": "2026-09-05T11:30:00Z",
+        "home_team": "Newcastle United",
+        "away_team": "AFC Bournemouth",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.695661,
+            "away": 1.47177,
+            "total": 3.16743
+          }
+        },
+        "predicted_xg": {
+          "home": 1.698445,
+          "away": 1.487362,
+          "total": 3.185807
+        },
+        "probabilities": {
+          "home_win": 0.42738,
+          "draw": 0.23594,
+          "away_win": 0.33668,
+          "over_2_5": 0.61762,
+          "under_2_5": 0.38238,
+          "over_3_5": 0.3937,
+          "under_3_5": 0.6063,
+          "btts_yes": 0.63582
+        },
+        "top_scoreline": "1-1",
+        "official_pick": {
+          "outcome": "home_win",
+          "team": "Newcastle United",
+          "confidence": "medium",
+          "primary_read": "Newcastle win",
+          "secondary_read": "BTTS / Over 2.5 goals",
+          "thesis": "Newcastle's home edge and results lead the side call, but Bournemouth's high press and chance volume make the goal environment cleaner than the 1X2.",
+          "override_reason": null,
+          "model_probability": 0.42738
+        },
+        "translation_audit": {
+          "probability_leader": "home_win",
+          "fixture_signal_leader": "away_win",
+          "projected_xi_alpha_leader": "away_win",
+          "official_overrides_probability_leader": false
+        },
+        "research_lens": {
+          "checkpoint_as_of": "2026-08-31",
+          "learned_through_kickoff_utc": "2026-08-30T15:30:00Z",
+          "home": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 0.868759,
+                "confidence": 0.227105,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 0.929835,
+                "confidence": 0.227105,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 0.902255,
+                "confidence": 0.227105,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.804129,
+            "research_flags": [
+              "small_team_sample"
+            ]
+          },
+          "away": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 1.052394,
+                "confidence": 0.244268,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 1.089411,
+                "confidence": 0.244268,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 1.068719,
+                "confidence": 0.244268,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.848854,
+            "research_flags": [
+              "small_team_sample"
+            ]
+          },
+          "tentative_only": true
+        },
+        "verdict": "no_clear_contextual_edge",
+        "goal_environment": "neutral",
+        "directions": {
+          "home": {
+            "archetype": "Adaptive hybrid",
+            "preferred_route": "Box pressure",
+            "signal": 0.02633,
+            "reliability": 0.623089,
+            "xg_multiplier": 1.001642
+          },
+          "away": {
+            "archetype": "High-intensity direct",
+            "preferred_route": "High press",
+            "signal": 0.193157,
+            "reliability": 0.545585,
+            "xg_multiplier": 1.010594
+          }
+        },
+        "status": "pending",
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "official_shadow_not_market_ready",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795436,
+        "kickoff_utc": "2026-09-05T14:00:00Z",
+        "home_team": "Brentford",
+        "away_team": "Sunderland",
+        "baseline": {
+          "predicted_xg": {
+            "home": 2.013527,
+            "away": 1.191227,
+            "total": 3.204754
+          }
+        },
+        "predicted_xg": {
+          "home": 2.032718,
+          "away": 1.154683,
+          "total": 3.1874
+        },
+        "probabilities": {
+          "home_win": 0.57446,
+          "draw": 0.21236,
+          "away_win": 0.21318,
+          "over_2_5": 0.61532,
+          "under_2_5": 0.38468,
+          "over_3_5": 0.39202,
+          "under_3_5": 0.60798,
+          "btts_yes": 0.5936
+        },
+        "top_scoreline": "2-1",
+        "official_pick": {
+          "outcome": "home_win",
+          "team": "Brentford",
+          "confidence": "medium",
+          "primary_read": "Brentford win",
+          "secondary_read": "Brentford team total watch",
+          "thesis": "Club Form, Player Alpha and the set-piece interaction support Brentford, with Sunderland's strong latest xG preventing a high-confidence label.",
+          "override_reason": null,
+          "model_probability": 0.57446
+        },
+        "translation_audit": {
+          "probability_leader": "home_win",
+          "fixture_signal_leader": "home_win",
+          "projected_xi_alpha_leader": "home_win",
+          "official_overrides_probability_leader": false
+        },
+        "research_lens": {
+          "checkpoint_as_of": "2026-08-31",
+          "learned_through_kickoff_utc": "2026-08-30T15:30:00Z",
+          "home": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 1.035908,
+                "confidence": 0.22982,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 0.98815,
+                "confidence": 0.22982,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 1.011985,
+                "confidence": 0.22982,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.804179,
+            "research_flags": [
+              "small_team_sample"
+            ]
+          },
+          "away": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 1.068235,
+                "confidence": 0.23857,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 0.933618,
+                "confidence": 0.23857,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 1.011845,
+                "confidence": 0.23857,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.826026,
+            "research_flags": [
+              "small_team_sample"
+            ]
+          },
+          "tentative_only": true
+        },
+        "verdict": "baseline_supported",
+        "goal_environment": "neutral",
+        "directions": {
+          "home": {
+            "archetype": "Direct / wide / set-piece",
+            "preferred_route": "Set pieces",
+            "signal": 0.126211,
+            "reliability": 0.751548,
+            "xg_multiplier": 1.009531
+          },
+          "away": {
+            "archetype": "Adaptive hybrid",
+            "preferred_route": "Set pieces",
+            "signal": -0.421996,
+            "reliability": 0.738347,
+            "xg_multiplier": 0.969322
+          }
+        },
+        "status": "pending",
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "official_shadow_not_market_ready"
+        ]
+      },
+      {
+        "match_id": 5795437,
+        "kickoff_utc": "2026-09-05T14:00:00Z",
+        "home_team": "Brighton & Hove Albion",
+        "away_team": "Leeds United",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.844473,
+            "away": 1.028372,
+            "total": 2.872845
+          }
+        },
+        "predicted_xg": {
+          "home": 1.884651,
+          "away": 1.023326,
+          "total": 2.907977
+        },
+        "probabilities": {
+          "home_win": 0.57796,
+          "draw": 0.21952,
+          "away_win": 0.20252,
+          "over_2_5": 0.5552,
+          "under_2_5": 0.4448,
+          "over_3_5": 0.33136,
+          "under_3_5": 0.66864,
+          "btts_yes": 0.54098
+        },
+        "top_scoreline": "1-1",
+        "official_pick": {
+          "outcome": "home_win",
+          "team": "Brighton & Hove Albion",
+          "confidence": "medium",
+          "primary_read": "Brighton win",
+          "secondary_read": "Brighton team total watch",
+          "thesis": "Brighton's territorial pressure and stronger projected attacking unit are reinforced by the matchup, while Leeds' early defensive resistance limits conviction.",
+          "override_reason": null,
+          "model_probability": 0.57796
+        },
+        "translation_audit": {
+          "probability_leader": "home_win",
+          "fixture_signal_leader": "home_win",
+          "projected_xi_alpha_leader": "home_win",
+          "official_overrides_probability_leader": false
+        },
+        "research_lens": {
+          "checkpoint_as_of": "2026-08-31",
+          "learned_through_kickoff_utc": "2026-08-30T15:30:00Z",
+          "home": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 0.976652,
+                "confidence": 0.220867,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 1.156123,
+                "confidence": 0.220867,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 1.075803,
+                "confidence": 0.220867,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.783937,
+            "research_flags": [
+              "lineup_projection_review",
+              "small_team_sample"
+            ]
+          },
+          "away": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 0.987702,
+                "confidence": 0.23857,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 1.0373,
+                "confidence": 0.23857,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 1.012444,
+                "confidence": 0.23857,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.826026,
+            "research_flags": [
+              "lineup_projection_review",
+              "small_team_sample"
+            ]
+          },
+          "tentative_only": true
+        },
+        "verdict": "baseline_reinforced",
+        "goal_environment": "expansive",
+        "directions": {
+          "home": {
+            "archetype": "Territorial controller",
+            "preferred_route": "High press",
+            "signal": 0.479728,
+            "reliability": 0.449205,
+            "xg_multiplier": 1.021783
+          },
+          "away": {
+            "archetype": "High-intensity direct",
+            "preferred_route": "Set pieces",
+            "signal": -0.096628,
+            "reliability": 0.509029,
+            "xg_multiplier": 0.995093
+          }
+        },
+        "status": "pending",
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "official_shadow_not_market_ready",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795439,
+        "kickoff_utc": "2026-09-05T14:00:00Z",
+        "home_team": "Fulham",
+        "away_team": "Crystal Palace",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.687197,
+            "away": 1.332465,
+            "total": 3.019661
+          }
+        },
+        "predicted_xg": {
+          "home": 1.660521,
+          "away": 1.299123,
+          "total": 2.959643
+        },
+        "probabilities": {
+          "home_win": 0.4573,
+          "draw": 0.24346,
+          "away_win": 0.29924,
+          "over_2_5": 0.5649,
+          "under_2_5": 0.4351,
+          "over_3_5": 0.34366,
+          "under_3_5": 0.65634,
+          "btts_yes": 0.58902
+        },
+        "top_scoreline": "1-1",
+        "official_pick": {
+          "outcome": "home_win",
+          "team": "Fulham",
+          "confidence": "low",
+          "primary_read": "Fulham win",
+          "secondary_read": "Pass unless lineups strengthen the read",
+          "thesis": "Fulham receive the modest home and prevention edge, but neither attack owns a clean route and the context suppresses the goal environment.",
+          "override_reason": null,
+          "model_probability": 0.4573
+        },
+        "translation_audit": {
+          "probability_leader": "home_win",
+          "fixture_signal_leader": "home_win",
+          "projected_xi_alpha_leader": "away_win",
+          "official_overrides_probability_leader": false
+        },
+        "research_lens": {
+          "checkpoint_as_of": "2026-08-31",
+          "learned_through_kickoff_utc": "2026-08-30T15:30:00Z",
+          "home": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 0.933618,
+                "confidence": 0.23857,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 1.068235,
+                "confidence": 0.23857,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 1.011845,
+                "confidence": 0.23857,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.826026,
+            "research_flags": [
+              "small_team_sample"
+            ]
+          },
+          "away": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 0.878261,
+                "confidence": 0.206608,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 1.043873,
+                "confidence": 0.206608,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 0.983524,
+                "confidence": 0.206608,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.766191,
+            "research_flags": [
+              "lineup_projection_review",
+              "small_team_sample"
+            ]
+          },
+          "tentative_only": true
+        },
+        "verdict": "baseline_supported",
+        "goal_environment": "suppressed",
+        "directions": {
+          "home": {
+            "archetype": "Adaptive hybrid",
+            "preferred_route": "Set pieces",
+            "signal": -0.237263,
+            "reliability": 0.671703,
+            "xg_multiplier": 0.984189
+          },
+          "away": {
+            "archetype": "Adaptive hybrid",
+            "preferred_route": "Set pieces",
+            "signal": -0.398217,
+            "reliability": 0.636363,
+            "xg_multiplier": 0.974977
+          }
+        },
+        "status": "pending",
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "official_shadow_not_market_ready",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795442,
+        "kickoff_utc": "2026-09-05T14:00:00Z",
+        "home_team": "Manchester City",
+        "away_team": "Coventry City",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.943237,
+            "away": 1.095419,
+            "total": 3.038657
+          }
+        },
+        "predicted_xg": {
+          "home": 2.00837,
+          "away": 1.061418,
+          "total": 3.069789
+        },
+        "probabilities": {
+          "home_win": 0.59438,
+          "draw": 0.21086,
+          "away_win": 0.19476,
+          "over_2_5": 0.59288,
+          "under_2_5": 0.40712,
+          "over_3_5": 0.36846,
+          "under_3_5": 0.63154,
+          "btts_yes": 0.56344
+        },
+        "top_scoreline": "2-1",
+        "official_pick": {
+          "outcome": "home_win",
+          "team": "Manchester City",
+          "confidence": "high",
+          "primary_read": "Manchester City win",
+          "secondary_read": "City team total / Coventry under 1.5",
+          "thesis": "Every layer agrees: City own the largest Player Alpha mismatch, the stronger current process and a reinforced box-pressure route against Coventry.",
+          "override_reason": null,
+          "model_probability": 0.59438
+        },
+        "translation_audit": {
+          "probability_leader": "home_win",
+          "fixture_signal_leader": "home_win",
+          "projected_xi_alpha_leader": "home_win",
+          "official_overrides_probability_leader": false
+        },
+        "research_lens": {
+          "checkpoint_as_of": "2026-08-31",
+          "learned_through_kickoff_utc": "2026-08-30T15:30:00Z",
+          "home": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 1.049618,
+                "confidence": 0.233019,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 0.863807,
+                "confidence": 0.233019,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 0.981437,
+                "confidence": 0.233019,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.82542,
+            "research_flags": [
+              "small_team_sample"
+            ]
+          },
+          "away": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 0.953966,
+                "confidence": 0.218228,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 0.927767,
+                "confidence": 0.218228,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 0.943616,
+                "confidence": 0.218228,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.784129,
+            "research_flags": [
+              "lineup_projection_review",
+              "small_team_sample"
+            ]
+          },
+          "tentative_only": true
+        },
+        "verdict": "baseline_reinforced",
+        "goal_environment": "expansive",
+        "directions": {
+          "home": {
+            "archetype": "Territorial controller",
+            "preferred_route": "Box pressure",
+            "signal": 0.738024,
+            "reliability": 0.44671,
+            "xg_multiplier": 1.033518
+          },
+          "away": {
+            "archetype": "Promoted / forming",
+            "preferred_route": "Set pieces",
+            "signal": -0.570452,
+            "reliability": 0.55274,
+            "xg_multiplier": 0.968961
+          }
+        },
+        "status": "pending",
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "official_shadow_not_market_ready",
+          "pressing_evidence_missing",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795444,
+        "kickoff_utc": "2026-09-05T14:00:00Z",
+        "home_team": "Nottingham Forest",
+        "away_team": "Tottenham Hotspur",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.609631,
+            "away": 1.156371,
+            "total": 2.766002
+          }
+        },
+        "predicted_xg": {
+          "home": 1.606198,
+          "away": 1.153414,
+          "total": 2.759612
+        },
+        "probabilities": {
+          "home_win": 0.4797,
+          "draw": 0.24624,
+          "away_win": 0.27406,
+          "over_2_5": 0.52034,
+          "under_2_5": 0.47966,
+          "over_3_5": 0.2995,
+          "under_3_5": 0.7005,
+          "btts_yes": 0.54864
+        },
+        "top_scoreline": "1-1",
+        "official_pick": {
+          "outcome": "home_win",
+          "team": "Nottingham Forest",
+          "confidence": "medium",
+          "primary_read": "Nottingham Forest win",
+          "secondary_read": "Forest or draw",
+          "thesis": "Forest's Anfield chance creation and defensive prevention meet a Tottenham side still searching for its first league goal, although Spurs' latest xG was better than the scoreline.",
+          "override_reason": null,
+          "model_probability": 0.4797
+        },
+        "translation_audit": {
+          "probability_leader": "home_win",
+          "fixture_signal_leader": "home_win",
+          "projected_xi_alpha_leader": "away_win",
+          "official_overrides_probability_leader": false
+        },
+        "research_lens": {
+          "checkpoint_as_of": "2026-08-31",
+          "learned_through_kickoff_utc": "2026-08-30T15:30:00Z",
+          "home": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 1.145829,
+                "confidence": 0.235783,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 1.000074,
+                "confidence": 0.235783,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 1.069235,
+                "confidence": 0.235783,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.825722,
+            "research_flags": [
+              "small_team_sample"
+            ]
+          },
+          "away": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 0.93799,
+                "confidence": 0.199847,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 0.883553,
+                "confidence": 0.199847,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 0.913463,
+                "confidence": 0.199847,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.74913,
+            "research_flags": [
+              "lineup_projection_review",
+              "small_team_sample"
+            ]
+          },
+          "tentative_only": true
+        },
+        "verdict": "no_clear_contextual_edge",
+        "goal_environment": "neutral",
+        "directions": {
+          "home": {
+            "archetype": "Direct / wide / set-piece",
+            "preferred_route": "Set pieces",
+            "signal": -0.035153,
+            "reliability": 0.607303,
+            "xg_multiplier": 0.997867
+          },
+          "away": {
+            "archetype": "Developing possession",
+            "preferred_route": "Set pieces",
+            "signal": -0.041697,
+            "reliability": 0.614045,
+            "xg_multiplier": 0.997443
+          }
+        },
+        "status": "pending",
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "official_shadow_not_market_ready",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795440,
+        "kickoff_utc": "2026-09-05T16:30:00Z",
+        "home_team": "Hull City",
+        "away_team": "Aston Villa",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.677854,
+            "away": 1.28036,
+            "total": 2.958214
+          }
+        },
+        "predicted_xg": {
+          "home": 1.643374,
+          "away": 1.293758,
+          "total": 2.937132
+        },
+        "probabilities": {
+          "home_win": 0.45998,
+          "draw": 0.2426,
+          "away_win": 0.29742,
+          "over_2_5": 0.56486,
+          "under_2_5": 0.43514,
+          "over_3_5": 0.34054,
+          "under_3_5": 0.65946,
+          "btts_yes": 0.58844
+        },
+        "top_scoreline": "1-1",
+        "official_pick": {
+          "outcome": "away_win",
+          "team": "Aston Villa",
+          "confidence": "low",
+          "primary_read": "Aston Villa win",
+          "secondary_read": "Pass until Villa availability is known",
+          "thesis": "Villa's projected-XI quality is materially stronger and Hull's two wins have outpaced their latest chance process, but Villa's August 31 fixture is outside this frozen evidence set.",
+          "override_reason": "The official pick favors the large Player Alpha gap over a low-confidence home-led raw probability.",
+          "model_probability": 0.29742
+        },
+        "translation_audit": {
+          "probability_leader": "home_win",
+          "fixture_signal_leader": "home_win",
+          "projected_xi_alpha_leader": "away_win",
+          "official_overrides_probability_leader": true
+        },
+        "research_lens": {
+          "checkpoint_as_of": "2026-08-31",
+          "learned_through_kickoff_utc": "2026-08-30T15:30:00Z",
+          "home": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 0.922188,
+                "confidence": 0.235783,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 0.950357,
+                "confidence": 0.235783,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 0.939221,
+                "confidence": 0.235783,
+                "direction": "below_expected",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.825722,
+            "research_flags": [
+              "lineup_projection_review",
+              "small_team_sample"
+            ]
+          },
+          "away": {
+            "completed_matches": 0,
+            "beliefs": {},
+            "lineup_reliability": null,
+            "research_flags": [
+              "round_2_result_pending_at_cutoff"
+            ]
+          },
+          "tentative_only": true
+        },
+        "verdict": "no_clear_contextual_edge",
+        "goal_environment": "neutral",
+        "directions": {
+          "home": {
+            "archetype": "Direct / wide / set-piece",
+            "preferred_route": "Set pieces",
+            "signal": -0.480267,
+            "reliability": 0.432344,
+            "xg_multiplier": 0.97945
+          },
+          "away": {
+            "archetype": "Adaptive hybrid",
+            "preferred_route": "Set pieces",
+            "signal": 0.220539,
+            "reliability": 0.471989,
+            "xg_multiplier": 1.010464
+          }
+        },
+        "status": "pending",
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "latest_august_31_fixture_excluded_by_cutoff",
+          "official_shadow_not_market_ready",
+          "pressing_evidence_missing",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795438,
+        "kickoff_utc": "2026-09-06T13:00:00Z",
+        "home_team": "Everton",
+        "away_team": "Manchester United",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.423835,
+            "away": 1.521286,
+            "total": 2.945121
+          }
+        },
+        "predicted_xg": {
+          "home": 1.404172,
+          "away": 1.518202,
+          "total": 2.922374
+        },
+        "probabilities": {
+          "home_win": 0.35058,
+          "draw": 0.24754,
+          "away_win": 0.40188,
+          "over_2_5": 0.55938,
+          "under_2_5": 0.44062,
+          "over_3_5": 0.33456,
+          "under_3_5": 0.66544,
+          "btts_yes": 0.58826
+        },
+        "top_scoreline": "1-1",
+        "official_pick": {
+          "outcome": "away_win",
+          "team": "Manchester United",
+          "confidence": "low",
+          "primary_read": "Manchester United win",
+          "secondary_read": "Pass until lineups confirm the recovery",
+          "thesis": "United's Player Alpha and attacking ceiling lead the call after a 4.77-xG performance, but Everton's unbeaten start and stronger defensive profile make this fragile.",
+          "override_reason": null,
+          "model_probability": 0.40188
+        },
+        "translation_audit": {
+          "probability_leader": "away_win",
+          "fixture_signal_leader": "away_win",
+          "projected_xi_alpha_leader": "away_win",
+          "official_overrides_probability_leader": false
+        },
+        "research_lens": {
+          "checkpoint_as_of": "2026-08-31",
+          "learned_through_kickoff_utc": "2026-08-30T15:30:00Z",
+          "home": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 1.086175,
+                "confidence": 0.235783,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 1.050529,
+                "confidence": 0.235783,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 1.066254,
+                "confidence": 0.235783,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.825722,
+            "research_flags": [
+              "small_team_sample"
+            ]
+          },
+          "away": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 1.215302,
+                "confidence": 0.211704,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 1.111137,
+                "confidence": 0.211704,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 1.176994,
+                "confidence": 0.211704,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.765358,
+            "research_flags": [
+              "lineup_projection_review",
+              "small_team_sample"
+            ]
+          },
+          "tentative_only": true
+        },
+        "verdict": "baseline_supported",
+        "goal_environment": "neutral",
+        "directions": {
+          "home": {
+            "archetype": "Direct / wide / set-piece",
+            "preferred_route": "Box pressure",
+            "signal": -0.229782,
+            "reliability": 0.605203,
+            "xg_multiplier": 0.98619
+          },
+          "away": {
+            "archetype": "Developing possession",
+            "preferred_route": "Box pressure",
+            "signal": -0.031025,
+            "reliability": 0.654122,
+            "xg_multiplier": 0.997973
+          }
+        },
+        "status": "pending",
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "official_shadow_not_market_ready",
+          "projected_xi_alpha_provisional"
+        ]
+      },
+      {
+        "match_id": 5795435,
+        "kickoff_utc": "2026-09-06T15:30:00Z",
+        "home_team": "Arsenal",
+        "away_team": "Chelsea",
+        "baseline": {
+          "predicted_xg": {
+            "home": 1.82785,
+            "away": 1.050969,
+            "total": 2.878819
+          }
+        },
+        "predicted_xg": {
+          "home": 1.857562,
+          "away": 1.02062,
+          "total": 2.878182
+        },
+        "probabilities": {
+          "home_win": 0.56808,
+          "draw": 0.22796,
+          "away_win": 0.20396,
+          "over_2_5": 0.54714,
+          "under_2_5": 0.45286,
+          "over_3_5": 0.32348,
+          "under_3_5": 0.67652,
+          "btts_yes": 0.53672
+        },
+        "top_scoreline": "1-1",
+        "official_pick": {
+          "outcome": "home_win",
+          "team": "Arsenal",
+          "confidence": "medium",
+          "primary_read": "Arsenal win",
+          "secondary_read": "Arsenal team total watch",
+          "thesis": "Arsenal's high press is a strong route and their defensive prevention resists Chelsea's box pressure, with the August 31 Villa match excluded by the pre-kickoff cutoff.",
+          "override_reason": null,
+          "model_probability": 0.56808
+        },
+        "translation_audit": {
+          "probability_leader": "home_win",
+          "fixture_signal_leader": "home_win",
+          "projected_xi_alpha_leader": "home_win",
+          "official_overrides_probability_leader": false
+        },
+        "research_lens": {
+          "checkpoint_as_of": "2026-08-31",
+          "learned_through_kickoff_utc": "2026-08-30T15:30:00Z",
+          "home": {
+            "completed_matches": 0,
+            "beliefs": {},
+            "lineup_reliability": null,
+            "research_flags": [
+              "round_2_result_pending_at_cutoff"
+            ]
+          },
+          "away": {
+            "completed_matches": 1,
+            "beliefs": {
+              "attack_creation": {
+                "multiplier": 1.156123,
+                "confidence": 0.220867,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              },
+              "defensive_exposure": {
+                "multiplier": 0.976652,
+                "confidence": 0.220867,
+                "direction": "within_noise",
+                "applied_to_forecast": false
+              },
+              "goal_environment": {
+                "multiplier": 1.075803,
+                "confidence": 0.220867,
+                "direction": "above_expected",
+                "applied_to_forecast": false
+              }
+            },
+            "lineup_reliability": 0.783937,
+            "research_flags": [
+              "lineup_projection_review",
+              "small_team_sample"
+            ]
+          },
+          "tentative_only": true
+        },
+        "verdict": "baseline_reinforced",
+        "goal_environment": "neutral",
+        "directions": {
+          "home": {
+            "archetype": "Territorial controller",
+            "preferred_route": "High press",
+            "signal": 0.245596,
+            "reliability": 0.656552,
+            "xg_multiplier": 1.016255
+          },
+          "away": {
+            "archetype": "Developing possession",
+            "preferred_route": "Box pressure",
+            "signal": -0.399073,
+            "reliability": 0.734259,
+            "xg_multiplier": 0.971123
+          }
+        },
+        "status": "pending",
+        "quality_flags": [
+          "context_coefficient_not_learned_from_residuals",
+          "context_shadow_sensitivity_only",
+          "latest_august_31_fixture_excluded_by_cutoff",
+          "official_shadow_not_market_ready"
+        ]
+      }
+    ]
+  },
   "holy_grail": {
     "name": "Holy Grail v1",
     "status": "shadow_sensitivity_not_validated",
@@ -16565,17 +17876,32 @@
     ]
   },
   "ledger": {
-    "status": "shadow_collection",
+    "status": "official_shadow_collection",
     "matches_logged": 0,
-    "sample_gate": 100,
+    "sample_gate": 30,
+    "hits": 0,
+    "misses": 0,
+    "pending": 10,
+    "hit_rate": null,
+    "hit_rate_gate": 0.5,
+    "review_ready": false,
+    "next_stage": "paper_allocation_and_price_validation",
     "capital_deployment_ready": false,
     "scorecards": [
+      "Official 1X2 hit rate above 50%",
+      "Minimum 30 settled official fixtures",
       "1X2 Brier + log loss",
       "Expected-goals MAE",
       "Totals calibration",
       "Closing-line value",
       "Lineup evidence coverage"
     ]
+  },
+  "historical_ledger": {
+    "status": "shadow_collection",
+    "matches_logged": 0,
+    "sample_gate": 100,
+    "capital_deployment_ready": false
   },
   "methodology": {
     "components": [
@@ -16597,7 +17923,8 @@
     ],
     "caveats": [
       "34 of 200 component-scale sides collected",
-      "10 of 100 goal-calibration matches collected",
+      "Nine latest results are tentative research evidence",
+      "Official MW3 probabilities remain shadow-only",
       "Projected lineups are not confirmed starting XIs",
       "Market prices are not yet an automated model input",
       "Historical August 11 roster is reconstructed and flagged",
