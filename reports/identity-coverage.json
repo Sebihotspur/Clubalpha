@@ -1,0 +1,239 @@
+{
+  "version": "clubalpha_reep_identity_pilot_v1",
+  "generated_at_utc": "2026-08-21T20:33:27.082371+00:00",
+  "source": {
+    "legacy_v0": {
+      "repository": "https://github.com/withqwerty/reep",
+      "commit": "0ec59faa5d81615b7a8200ae6121023a3bc14ce3",
+      "release": "2026.25",
+      "status": "frozen_v0",
+      "license": "CC0-1.0",
+      "metadata": {
+        "data_version": "2026.25",
+        "api_version": "2.7.0",
+        "generated_at": "2026-06-21T08:36:25.920481+00:00",
+        "source": "Wikidata SPARQL + custom verified mappings",
+        "counts": {
+          "people": 444707,
+          "teams": 45337,
+          "competitions": 212,
+          "seasons": 1200,
+          "aliases": 27591,
+          "custom_ids": 398181
+        }
+      },
+      "sha256": {
+        "people.csv": "9c3c1eb59ab149dfd45ba43eceafd8f71820aad0451adee8be9d2d9e279adf7e",
+        "teams.csv": "41c6fe53a9e2b84302cdd5beaa40e9c6d72cba5be8b243daa549b4bc24d9a5b6",
+        "meta.json": "0128f41c61a030b0b3c4b9806d61b983a932f4a1a067bf3b1cbd07b945c857a6"
+      }
+    },
+    "current_v1": {
+      "release_stamp": "20260820T103440Z",
+      "schema_version": "bridge-register-v1",
+      "license": "CC0-1.0",
+      "handoff_provider": "transfermarkt",
+      "namespaces": {
+        "player": [
+          "spieler"
+        ],
+        "team": [
+          "verein"
+        ]
+      },
+      "sha256": {
+        "bridges.csv.gz": "763db5a720ec8c39d32f852644aad2b74a4f4f73775e03bc51ccbce75f25f66e",
+        "entities.csv.gz": "ee5084ac6cc278c3794fb48d23dcc93c4f721fd34d1fce8fe29f1eb772565bfa",
+        "redirects.csv.gz": "b07c5279290a89aecd2b54d8df03fe9a2f3a4afb5d983f5ad50ea2dcac522533"
+      }
+    }
+  },
+  "policy": {
+    "operational_identity": "FotMob IDs remain canonical inside Clubalpha",
+    "reep_role": "Frozen v0 bridge seed and coverage audit only",
+    "matching": "Exact FotMob provider IDs only; no fuzzy or name-only fallback",
+    "quarantine": "Duplicate provider IDs and date-of-birth conflicts never resolve",
+    "v1_boundary": "REEP v0 and v1 IDs are not interchangeable; v1 currently has no published first-class FotMob bridge"
+  },
+  "players": {
+    "legacy_fotmob_bridge": {
+      "universe": 1425,
+      "statuses": {
+        "exact": 720,
+        "unmatched": 705
+      },
+      "exact_matches": 720,
+      "exact_coverage_pct": 50.5,
+      "quality_flags": {
+        "name_differs_on_exact_provider_id": 57
+      },
+      "provider_coverage_among_exact": {
+        "transfermarkt": {
+          "entities": 716,
+          "pct": 99.4
+        },
+        "fbref": {
+          "entities": 546,
+          "pct": 75.8
+        },
+        "sofascore": {
+          "entities": 686,
+          "pct": 95.3
+        },
+        "opta": {
+          "entities": 715,
+          "pct": 99.3
+        },
+        "premier_league": {
+          "entities": 267,
+          "pct": 37.1
+        },
+        "uefa": {
+          "entities": 511,
+          "pct": 71.0
+        },
+        "understat": {
+          "entities": 383,
+          "pct": 53.2
+        }
+      }
+    },
+    "current_v1_handoff": {
+      "universe": 1425,
+      "eligible_exact_legacy_rows": 716,
+      "exact_v1_matches": 707,
+      "exact_pct_of_eligible": 98.7,
+      "exact_pct_of_universe": 49.6,
+      "statuses": {
+        "exact": 707,
+        "missing_handoff_id": 4,
+        "not_eligible": 705,
+        "unmatched": 9
+      }
+    }
+  },
+  "teams": {
+    "legacy_fotmob_bridge": {
+      "universe": 58,
+      "statuses": {
+        "exact": 36,
+        "unmatched": 22
+      },
+      "exact_matches": 36,
+      "exact_coverage_pct": 62.1,
+      "quality_flags": {
+        "name_differs_on_exact_provider_id": 30
+      },
+      "provider_coverage_among_exact": {
+        "transfermarkt": {
+          "entities": 36,
+          "pct": 100.0
+        },
+        "fbref": {
+          "entities": 28,
+          "pct": 77.8
+        },
+        "sofascore": {
+          "entities": 0,
+          "pct": 0.0
+        },
+        "opta": {
+          "entities": 16,
+          "pct": 44.4
+        },
+        "premier_league": {
+          "entities": 0,
+          "pct": 0.0
+        },
+        "uefa": {
+          "entities": 34,
+          "pct": 94.4
+        },
+        "understat": {
+          "entities": 21,
+          "pct": 58.3
+        }
+      }
+    },
+    "current_v1_handoff": {
+      "universe": 58,
+      "eligible_exact_legacy_rows": 36,
+      "exact_v1_matches": 36,
+      "exact_pct_of_eligible": 100.0,
+      "exact_pct_of_universe": 62.1,
+      "statuses": {
+        "exact": 36,
+        "not_eligible": 22
+      }
+    }
+  },
+  "coverage_by_scope": {
+    "players": {
+      "premier_league": {
+        "universe": 581,
+        "legacy_exact": 361,
+        "legacy_exact_pct": 62.1,
+        "current_v1_exact": 356,
+        "current_v1_exact_pct": 61.3
+      },
+      "ucl_direct": {
+        "universe": 738,
+        "legacy_exact": 427,
+        "legacy_exact_pct": 57.9,
+        "current_v1_exact": 416,
+        "current_v1_exact_pct": 56.4
+      },
+      "ucl_playoff": {
+        "universe": 250,
+        "legacy_exact": 37,
+        "legacy_exact_pct": 14.8,
+        "current_v1_exact": 37,
+        "current_v1_exact_pct": 14.8
+      },
+      "ucl_any": {
+        "universe": 988,
+        "legacy_exact": 464,
+        "legacy_exact_pct": 47.0,
+        "current_v1_exact": 453,
+        "current_v1_exact_pct": 45.9
+      }
+    },
+    "teams": {
+      "premier_league": {
+        "universe": 20,
+        "legacy_exact": 17,
+        "legacy_exact_pct": 85.0,
+        "current_v1_exact": 17,
+        "current_v1_exact_pct": 85.0
+      },
+      "ucl_direct": {
+        "universe": 29,
+        "legacy_exact": 22,
+        "legacy_exact_pct": 75.9,
+        "current_v1_exact": 22,
+        "current_v1_exact_pct": 75.9
+      },
+      "ucl_playoff": {
+        "universe": 14,
+        "legacy_exact": 2,
+        "legacy_exact_pct": 14.3,
+        "current_v1_exact": 2,
+        "current_v1_exact_pct": 14.3
+      },
+      "ucl_any": {
+        "universe": 43,
+        "legacy_exact": 24,
+        "legacy_exact_pct": 55.8,
+        "current_v1_exact": 24,
+        "current_v1_exact_pct": 55.8
+      }
+    },
+    "note": "Competition scopes overlap; a Premier League club may also appear in UCL."
+  },
+  "decision": {
+    "runtime_dependency": false,
+    "status": "selective_validator",
+    "reason": "The exact v0 FotMob bridge plus typed Transfermarkt handoff can validate the covered subset against current v1, but incomplete direct coverage prevents a canonical or required dependency.",
+    "v1_handoff": "Rows carrying a Transfermarkt bridge are candidates for a separately versioned REEP v1 resolution pass; v0 Reep IDs must never be reused."
+  }
+}
