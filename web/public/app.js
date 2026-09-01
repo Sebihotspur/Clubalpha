@@ -23,6 +23,13 @@ const dateTime = (value) =>
     timeZone: "UTC",
     timeZoneName: "short",
   }).format(new Date(value));
+const dateOnly = (value) =>
+  new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(value));
 
 function routeName() {
   const query = new URLSearchParams(location.search).get("view");
@@ -276,6 +283,50 @@ function predictions(data) {
     <p class="notice">Latest match evidence is attached as a tentative research lens, not a hidden formula adjustment. Lineups remain projected; prices are not yet an input; real allocation remains 0.00 units.</p>`;
 }
 
+function matchweekMarket(metric) {
+  const value = metric.hit_rate === null ? "—" : pct(metric.hit_rate);
+  const note = metric.settled
+    ? `${metric.hits}/${metric.settled} correct`
+    : "Awaiting results";
+  return `<div class="matchweek-market">
+    <span>${esc(metric.label)}</span>
+    <strong>${esc(value)}</strong>
+    <small>${esc(note)}</small>
+  </div>`;
+}
+
+function matchweekFold(week) {
+  const oneXTwo = week.markets.one_x_two;
+  const headline = oneXTwo.hit_rate === null
+    ? `${week.pending} pending`
+    : `${pct(oneXTwo.hit_rate)} 1X2`;
+  const gateLabel = week.counts_toward_promotion_gate
+    ? "Its 1X2 results count toward the official promotion gate"
+    : "Research backtest · excluded from the official promotion gate";
+  return `<details class="matchweek-fold">
+    <summary>
+      <div class="matchweek-identity">
+        <span>${esc(dateOnly(week.first_kickoff_utc))} – ${esc(dateOnly(week.last_kickoff_utc))}</span>
+        <strong>${esc(week.name)}</strong>
+        <small>${esc(week.source)}</small>
+      </div>
+      <div class="matchweek-summary">
+        <span class="status-chip ${week.status === "settled" ? "official" : ""}">${esc(week.status)}</span>
+        <strong>${esc(headline)}</strong>
+        <i aria-hidden="true">⌄</i>
+      </div>
+    </summary>
+    <div class="matchweek-body">
+      <div class="matchweek-market-grid">
+        ${matchweekMarket(week.markets.one_x_two)}
+        ${matchweekMarket(week.markets.over_under_2_5)}
+        ${matchweekMarket(week.markets.btts)}
+      </div>
+      <div class="matchweek-foot"><span>${week.settled}/${week.fixtures} fixtures settled</span><span>${esc(gateLabel)}</span></div>
+    </div>
+  </details>`;
+}
+
 function ledger(data) {
   const progress = Math.min(100, (data.ledger.matches_logged / data.ledger.sample_gate) * 100);
   const displayedRate = data.ledger.hit_rate === null ? "—" : pct(data.ledger.hit_rate);
@@ -289,6 +340,7 @@ function ledger(data) {
       <article class="ledger-panel"><span class="panel-label">Promotion progress</span><h2>${displayedRate} <span>· ${data.ledger.matches_logged}/${data.ledger.sample_gate} settled</span></h2><p>The gate is strictly above ${pct(data.ledger.hit_rate_gate)} with at least ${data.ledger.sample_gate} official results. Passing opens paper allocation and price validation only; real capital remains locked.</p><div class="progress"><span style="width:${progress}%"></span></div></article>
       <article class="ledger-panel"><span class="panel-label">What will be scored</span><div class="gate-list">${data.ledger.scorecards.map((item) => `<div class="gate-row"><span>${esc(item)}</span><span>Pending</span></div>`).join("")}</div></article>
     </div>
+    <section class="section matchweek-section"><div class="section-head"><h2>Hit rate by matchweek</h2><span class="panel-label">Open a week to inspect each market</span></div><div class="matchweek-history">${data.ledger.matchweeks.map(matchweekFold).join("")}</div></section>
     <section class="section"><div class="section-head"><h2>Frozen Matchweek 3 slate</h2><span class="panel-label">${data.ledger.hits} hits · ${data.ledger.misses} misses · ${data.ledger.pending} pending</span></div><div class="table-shell"><table><thead><tr><th>Fixture</th><th>Official 1X2 call</th><th>Model probability</th><th>Secondary read</th><th>Result</th></tr></thead><tbody>${slateRows}</tbody></table></div></section>`;
 }
 

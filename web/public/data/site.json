@@ -17895,6 +17895,72 @@
       "Totals calibration",
       "Closing-line value",
       "Lineup evidence coverage"
+    ],
+    "matchweeks": [
+      {
+        "matchweek": 3,
+        "name": "Official Matchweek 3",
+        "source": "Official shadow slate",
+        "status": "collecting",
+        "counts_toward_promotion_gate": true,
+        "fixtures": 10,
+        "first_kickoff_utc": "2026-09-04T19:00:00Z",
+        "last_kickoff_utc": "2026-09-06T15:30:00Z",
+        "settled": 0,
+        "pending": 10,
+        "markets": {
+          "one_x_two": {
+            "label": "1X2",
+            "hits": 0,
+            "settled": 0,
+            "hit_rate": null
+          },
+          "over_under_2_5": {
+            "label": "O/U 2.5",
+            "hits": 0,
+            "settled": 0,
+            "hit_rate": null
+          },
+          "btts": {
+            "label": "BTTS",
+            "hits": 0,
+            "settled": 0,
+            "hit_rate": null
+          }
+        }
+      },
+      {
+        "matchweek": 2,
+        "name": "Matchweek 2",
+        "source": "Frozen contextual model backtest",
+        "status": "settled",
+        "counts_toward_promotion_gate": false,
+        "fixtures": 10,
+        "first_kickoff_utc": "2026-08-28T19:00:00Z",
+        "last_kickoff_utc": "2026-08-31T19:00:00Z",
+        "settled": 10,
+        "pending": 0,
+        "markets": {
+          "one_x_two": {
+            "label": "1X2",
+            "hits": 4,
+            "settled": 10,
+            "hit_rate": 0.4
+          },
+          "over_under_2_5": {
+            "label": "O/U 2.5",
+            "hits": 4,
+            "settled": 10,
+            "hit_rate": 0.4
+          },
+          "btts": {
+            "label": "BTTS",
+            "hits": 6,
+            "settled": 10,
+            "hit_rate": 0.6
+          }
+        }
+      }
     ]
   },
   "historical_ledger": {

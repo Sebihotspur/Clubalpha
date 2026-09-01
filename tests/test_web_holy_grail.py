@@ -91,6 +91,29 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertEqual(ledger["next_stage"], "paper_allocation_and_price_validation")
         self.assertFalse(ledger["capital_deployment_ready"])
 
+    def test_matchweek_hit_rates_keep_markets_separate(self):
+        weeks = {
+            row["matchweek"]: row for row in self.data["ledger"]["matchweeks"]
+        }
+        self.assertEqual(set(weeks), {2, 3})
+        completed = weeks[2]
+        self.assertEqual(completed["settled"], 10)
+        self.assertEqual(completed["markets"]["one_x_two"]["hit_rate"], 0.4)
+        self.assertEqual(
+            completed["markets"]["over_under_2_5"]["hit_rate"], 0.4
+        )
+        self.assertEqual(completed["markets"]["btts"]["hit_rate"], 0.6)
+        self.assertFalse(completed["counts_toward_promotion_gate"])
+        official = weeks[3]
+        self.assertEqual(official["settled"], 0)
+        self.assertIsNone(official["markets"]["one_x_two"]["hit_rate"])
+        self.assertTrue(official["counts_toward_promotion_gate"])
+
+    def test_matchweek_history_uses_collapsible_native_controls(self):
+        app = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
+        self.assertIn('<details class="matchweek-fold">', app)
+        self.assertIn("Hit rate by matchweek", app)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -17,6 +17,10 @@ audited football verdicts, confidence, and evidence notes. More than 50% 1X2
 accuracy after at least 30 settled official fixtures opens paper allocation and
 price validation; it does not authorize real capital.
 
+The `/ledger/` route keeps a collapsible history by matchweek. Every week
+reports 1X2, O/U 2.5, and BTTS separately; research backtests are visibly
+excluded from the official promotion-gate sample.
+
 The `/holy-grail/` route preserves the frozen Contextual Interaction v1 slate
 beside its immutable baseline, including directional routes, reliability, xG
 changes, and rerun probabilities. The `/matchups/` route exposes Style

@@ -97,7 +97,11 @@ Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
   at least 30 settled fixtures. Passing it opens paper allocation and price
   validation only. Real capital remains disabled and requires separate
   calibration, price, lineup, availability, and drawdown gates.
-- All 172 tests pass, including regression guards proving the earlier Holy
+- The Ledger now includes a collapsed Matchweek History view. Each week keeps
+  1X2, O/U 2.5, and BTTS hit rates separate. Matchweek 2 reports 4/10, 4/10,
+  and 6/10 respectively; it is labeled as research and does not count toward
+  the official promotion gate. Matchweek 3 remains pending.
+- All 174 tests pass, including regression guards proving the earlier Holy
   Grail experiment and original ledger observation were not rewritten by the
   new official scoring stream.
 

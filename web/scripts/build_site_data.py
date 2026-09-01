@@ -37,6 +37,80 @@ def load_jsonl(path: Path):
     ]
 
 
+def _hit_rate(hits: int, settled: int):
+    return round(hits / settled, 6) if settled else None
+
+
+def score_matchweek(predictions, results, *, official: bool):
+    """Score 1X2, O/U 2.5, and BTTS without blending the markets."""
+
+    result_by_id = {int(row["match_id"]): row for row in results}
+    if len(result_by_id) != len(results):
+        raise ValueError("matchweek history contains duplicate result ids")
+    hits = {"one_x_two": 0, "over_under_2_5": 0, "btts": 0}
+    settled = 0
+    for row in predictions:
+        match_id = int(row["fixture"]["match_id"])
+        result = result_by_id.get(match_id)
+        if result is None:
+            continue
+        settled += 1
+        home_goals = int(result["final_home_goals"])
+        away_goals = int(result["final_away_goals"])
+        actual_outcome = (
+            "home_win"
+            if home_goals > away_goals
+            else "away_win" if away_goals > home_goals else "draw"
+        )
+        if official:
+            predicted_outcome = row["official_pick"]["outcome"]
+            probabilities = row["model"]["probabilities"]
+            over_probability = float(probabilities["over_2_5"])
+        else:
+            probabilities = row["contextual"]["probabilities"]
+            predicted_outcome = max(
+                ("home_win", "draw", "away_win"),
+                key=lambda key: float(probabilities[key]),
+            )
+            over_probability = float(probabilities["over"]["2.5"])
+        predicted_over = over_probability >= 0.5
+        predicted_btts = float(probabilities["btts_yes"]) >= 0.5
+        actual_over = home_goals + away_goals > 2
+        actual_btts = home_goals > 0 and away_goals > 0
+        hits["one_x_two"] += predicted_outcome == actual_outcome
+        hits["over_under_2_5"] += predicted_over == actual_over
+        hits["btts"] += predicted_btts == actual_btts
+
+    kickoffs = sorted(row["fixture"]["kickoff_utc"] for row in predictions)
+    return {
+        "fixtures": len(predictions),
+        "first_kickoff_utc": kickoffs[0] if kickoffs else None,
+        "last_kickoff_utc": kickoffs[-1] if kickoffs else None,
+        "settled": settled,
+        "pending": len(predictions) - settled,
+        "markets": {
+            "one_x_two": {
+                "label": "1X2",
+                "hits": hits["one_x_two"],
+                "settled": settled,
+                "hit_rate": _hit_rate(hits["one_x_two"], settled),
+            },
+            "over_under_2_5": {
+                "label": "O/U 2.5",
+                "hits": hits["over_under_2_5"],
+                "settled": settled,
+                "hit_rate": _hit_rate(hits["over_under_2_5"], settled),
+            },
+            "btts": {
+                "label": "BTTS",
+                "hits": hits["btts"],
+                "settled": settled,
+                "hit_rate": _hit_rate(hits["btts"], settled),
+            },
+        },
+    }
+
+
 def build():
     report = load_json(ARTIFACT_DIR / "report.json")
     predictions = load_jsonl(ARTIFACT_DIR / "predictions.jsonl")
@@ -46,6 +120,7 @@ def build():
     round_robin_results = load_jsonl(ROUND_ROBIN_DIR / "results.jsonl")
     contextual_report = load_json(CONTEXTUAL_DIR / "report.json")
     contextual_predictions = load_jsonl(CONTEXTUAL_DIR / "predictions.jsonl")
+    contextual_results = load_jsonl(CONTEXTUAL_DIR / "results.jsonl")
     official_report = load_json(OFFICIAL_DIR / "report.json")
     official_predictions = load_jsonl(OFFICIAL_DIR / "predictions.jsonl")
     official_results = load_jsonl(OFFICIAL_DIR / "results.jsonl")
@@ -60,6 +135,12 @@ def build():
         as_of_utc=official_report["as_of_utc"],
     )
     official_score = score_results(official_predictions, official_results)
+    matchweek_two_score = score_matchweek(
+        contextual_predictions, contextual_results, official=False
+    )
+    matchweek_three_score = score_matchweek(
+        official_predictions, official_results, official=True
+    )
     result_validation = validate_results(
         round_robin_predictions, round_robin_results
     )
@@ -390,6 +471,26 @@ def build():
                 "Totals calibration",
                 "Closing-line value",
                 "Lineup evidence coverage",
+            ],
+            "matchweeks": [
+                {
+                    "matchweek": 3,
+                    "name": "Official Matchweek 3",
+                    "source": "Official shadow slate",
+                    "status": "settled"
+                    if matchweek_three_score["pending"] == 0
+                    else "collecting",
+                    "counts_toward_promotion_gate": True,
+                    **matchweek_three_score,
+                },
+                {
+                    "matchweek": 2,
+                    "name": "Matchweek 2",
+                    "source": "Frozen contextual model backtest",
+                    "status": "settled",
+                    "counts_toward_promotion_gate": False,
+                    **matchweek_two_score,
+                },
             ],
         },
         "historical_ledger": {
