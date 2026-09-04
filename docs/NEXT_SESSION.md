@@ -100,19 +100,26 @@ Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
 - The Ledger now includes a collapsed Matchweek History view. Each week keeps
   1X2, O/U 2.5, and BTTS hit rates separate. Matchweek 2 reports 4/10, 4/10,
   and 6/10 respectively; it is labeled as research and does not count toward
-  the official promotion gate. Matchweek 3 remains pending.
-- All 174 tests pass, including regression guards proving the earlier Holy
+  the official promotion gate. Matchweek 3 has begun: Liverpool's 2–0 win at
+  Ipswich makes the official 1X2 ledger 1/1, while the model's Over 2.5 and
+  BTTS leans are both 0/1. Nine fixtures remain pending.
+- The Ipswich–Liverpool process was much lower-event than forecast: 1.39
+  observed FotMob xG versus 3.05 predicted. The audited Liverpool direction
+  was correct, but the totals and BTTS misses reinforce the existing
+  goal-environment calibration concern.
+- All 175 tests pass, including regression guards proving the earlier Holy
   Grail experiment and original ledger observation were not rewritten by the
-  new official scoring stream.
+  new official scoring stream. The Matchweek 3 test now derives its settled
+  count from the append-only result ledger instead of assuming zero results.
 
 ## Start here
 
 1. Review the completed ten-match diagnostic, especially why the model placed
    Villa–Arsenal in a roughly 2.95-xG environment when the observed total was
    1.36. Keep the correct Arsenal direction separate from the totals error.
-2. After Matchweek 3 settles, append results to the official archive and rebuild
-   the website. Score all ten fixtures; do not omit low-confidence calls or
-   rewrite either audited override.
+2. As each Matchweek 3 fixture settles, append results to the official archive
+   and rebuild the website. Score all ten fixtures; do not omit low-confidence
+   calls or rewrite either audited override.
 
    ```bash
    python scripts/collect_official_shadow_results.py

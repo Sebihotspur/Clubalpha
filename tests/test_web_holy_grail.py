@@ -4,6 +4,8 @@ import sys
 import unittest
 from pathlib import Path
 
+from web.scripts.build_site_data import score_matchweek
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE_DATA = ROOT / "web/public/data/site.json"
@@ -105,9 +107,64 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertEqual(completed["markets"]["btts"]["hit_rate"], 0.6)
         self.assertFalse(completed["counts_toward_promotion_gate"])
         official = weeks[3]
-        self.assertEqual(official["settled"], 0)
-        self.assertIsNone(official["markets"]["one_x_two"]["hit_rate"])
+        result_path = (
+            ROOT
+            / "artifacts/official_shadow/2026-08-31-mw3/results.jsonl"
+        )
+        result_count = sum(
+            bool(line.strip())
+            for line in result_path.read_text(encoding="utf-8").splitlines()
+        )
+        self.assertEqual(official["settled"], result_count)
+        self.assertEqual(official["pending"], official["fixtures"] - result_count)
+        for market in official["markets"].values():
+            self.assertEqual(market["settled"], result_count)
+            if result_count:
+                self.assertEqual(
+                    market["hit_rate"],
+                    round(market["hits"] / result_count, 6),
+                )
+            else:
+                self.assertIsNone(market["hit_rate"])
         self.assertTrue(official["counts_toward_promotion_gate"])
+
+    def test_ipswich_liverpool_result_scores_markets_independently(self):
+        predictions = [
+            json.loads(line)
+            for line in (
+                ROOT
+                / "artifacts/official_shadow/2026-08-31-mw3/predictions.jsonl"
+            )
+            .read_text(encoding="utf-8")
+            .splitlines()
+            if line.strip()
+        ]
+        results = [
+            json.loads(line)
+            for line in (
+                ROOT
+                / "artifacts/official_shadow/2026-08-31-mw3/results.jsonl"
+            )
+            .read_text(encoding="utf-8")
+            .splitlines()
+            if line.strip()
+        ]
+        prediction = next(
+            row
+            for row in predictions
+            if row["fixture"]["match_id"] == 5795441
+        )
+        result = next(
+            row for row in results if row["match_id"] == 5795441
+        )
+        score = score_matchweek([prediction], [result], official=True)
+        # Liverpool was the audited 1X2 selection, while the model probabilities
+        # leaned Over 2.5 and BTTS. The 0-2 result therefore grades 1X2 as a hit
+        # and both goal markets as misses.
+        self.assertEqual(score["settled"], 1)
+        self.assertEqual(score["markets"]["one_x_two"]["hits"], 1)
+        self.assertEqual(score["markets"]["over_under_2_5"]["hits"], 0)
+        self.assertEqual(score["markets"]["btts"]["hits"], 0)
 
     def test_matchweek_history_uses_collapsible_native_controls(self):
         app = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
