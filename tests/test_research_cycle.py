@@ -32,7 +32,13 @@ class ResearchCycleTests(unittest.TestCase):
         self.assertEqual(sha256(predictions_path), before)
         self.assertEqual(normalized["prediction_format"], "official_shadow")
         self.assertEqual(len(normalized["predictions"]), 10)
-        self.assertEqual(len(normalized["results"]), 1)
+        source_result_count = sum(
+            bool(line.strip())
+            for line in (archive / "results.jsonl")
+            .read_text(encoding="utf-8")
+            .splitlines()
+        )
+        self.assertEqual(len(normalized["results"]), source_result_count)
         self.assertEqual(
             normalized["results"][0]["result_version"], RESULT_VERSION
         )

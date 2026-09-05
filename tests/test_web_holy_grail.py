@@ -173,7 +173,7 @@ class WebHolyGrailTests(unittest.TestCase):
 
     def test_methodology_exposes_the_append_only_learning_loop(self):
         learning = self.data["methodology"]["research_loop"]
-        self.assertEqual(learning["completed_results"], 11)
+        self.assertEqual(learning["completed_results"], 17)
         self.assertEqual(learning["frozen_fixtures"], 20)
         self.assertEqual(learning["promotion_candidates"], 0)
         self.assertEqual(learning["automatically_applied"], 0)
@@ -181,6 +181,37 @@ class WebHolyGrailTests(unittest.TestCase):
         app = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
         self.assertIn("05 · Learning loop", app)
         self.assertIn("Absorb evidence without rewriting the model", app)
+
+    def test_current_results_expose_outcomes_and_model_diagnostics(self):
+        diagnostic = self.data["official_slate"]["performance_diagnostic"]
+        self.assertEqual(diagnostic["settled"], 7)
+        self.assertEqual(diagnostic["official_1x2_hits"], 2)
+        self.assertEqual(diagnostic["raw_probability_leader_hits"], 1)
+        self.assertAlmostEqual(
+            diagnostic["mean_projected_xi_hits_of_11"], 8.285714
+        )
+        self.assertFalse(diagnostic["sample_sufficient_to_recalibrate"])
+        official_week = next(
+            row
+            for row in self.data["ledger"]["matchweeks"]
+            if row["counts_toward_promotion_gate"]
+        )
+        self.assertEqual(official_week["markets"]["one_x_two"]["hits"], 2)
+        self.assertEqual(
+            official_week["markets"]["over_under_2_5"]["hits"], 2
+        )
+        self.assertEqual(official_week["markets"]["btts"]["hits"], 4)
+
+        newcastle = next(
+            row
+            for row in self.data["official_slate"]["predictions"]
+            if row["match_id"] == 5795443
+        )
+        self.assertEqual(newcastle["status"], "settled")
+        self.assertEqual(newcastle["result"]["final_home_goals"], 2)
+        self.assertEqual(newcastle["result"]["final_away_goals"], 2)
+        self.assertFalse(newcastle["result"]["official_1x2_hit"])
+        self.assertFalse(newcastle["result"]["raw_1x2_hit"])
 
 
 if __name__ == "__main__":

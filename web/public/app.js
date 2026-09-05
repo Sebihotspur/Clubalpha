@@ -330,16 +330,27 @@ function matchweekFold(week) {
 function ledger(data) {
   const progress = Math.min(100, (data.ledger.matches_logged / data.ledger.sample_gate) * 100);
   const displayedRate = data.ledger.hit_rate === null ? "—" : pct(data.ledger.hit_rate);
+  const officialWeek = data.ledger.matchweeks.find((week) => week.counts_toward_promotion_gate);
+  const diagnostic = data.official_slate.performance_diagnostic;
+  const environment = diagnostic.observed_xg_total_range;
+  const forecastEnvironment = diagnostic.projected_xg_total_range;
   const slateRows = data.official_slate.predictions
     .map(
-      (match) => `<tr><td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))}</span></td><td class="official-call"><strong>${esc(match.official_pick.team)}</strong><span>${esc(match.official_pick.confidence)}</span></td><td>${pct(match.official_pick.model_probability)}</td><td>${esc(match.official_pick.secondary_read)}</td><td><span class="status-chip official">Pending</span></td></tr>`,
+      (match) => {
+        const result = match.result;
+        const resultCell = result
+          ? `<div class="ledger-result"><strong>${result.final_home_goals}–${result.final_away_goals}</strong><span class="status-chip ${result.official_1x2_hit ? "hit" : "miss"}">${result.official_1x2_hit ? "1X2 hit" : "1X2 miss"}</span><small>xG ${dec(result.actual_xg.home)}–${dec(result.actual_xg.away)}</small></div>`
+          : `<span class="status-chip">Pending</span>`;
+        return `<tr><td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))}</span></td><td class="official-call"><strong>${esc(match.official_pick.team)}</strong><span>${esc(match.official_pick.confidence)}</span></td><td>${pct(match.official_pick.model_probability)}</td><td>${esc(match.official_pick.secondary_read)}</td><td>${resultCell}</td></tr>`;
+      },
     )
     .join("");
   return `<section class="page-head"><p class="eyebrow">Immutable public record</p><h1>Official prediction ledger</h1><p>Every Matchweek 3 outcome is published before kickoff. Results append after full time, and the original calls never change.</p></section>
     <div class="ledger-hero">
       <article class="ledger-panel"><span class="panel-label">Promotion progress</span><h2>${displayedRate} <span>· ${data.ledger.matches_logged}/${data.ledger.sample_gate} settled</span></h2><p>The gate is strictly above ${pct(data.ledger.hit_rate_gate)} with at least ${data.ledger.sample_gate} official results. Passing opens paper allocation and price validation only; real capital remains locked.</p><div class="progress"><span style="width:${progress}%"></span></div></article>
-      <article class="ledger-panel"><span class="panel-label">What will be scored</span><div class="gate-list">${data.ledger.scorecards.map((item) => `<div class="gate-row"><span>${esc(item)}</span><span>Pending</span></div>`).join("")}</div></article>
+      <article class="ledger-panel"><span class="panel-label">Current evidence</span><div class="gate-list"><div class="gate-row"><span>Official 1X2</span><span>${data.ledger.hits}/${data.ledger.matches_logged}</span></div><div class="gate-row"><span>Raw probability leader</span><span>${diagnostic.raw_probability_leader_hits}/${diagnostic.settled}</span></div><div class="gate-row"><span>O/U 2.5</span><span>${officialWeek.markets.over_under_2_5.hits}/${officialWeek.settled}</span></div><div class="gate-row"><span>BTTS</span><span>${officialWeek.markets.btts.hits}/${officialWeek.settled}</span></div><div class="gate-row"><span>Projected-XI accuracy</span><span>${dec(diagnostic.mean_projected_xi_hits_of_11)}/11</span></div></div></article>
     </div>
+    <p class="notice">MODEL READ · Mean total xG is close, but dispersion is not: observed ${dec(environment.mean)} xG vs ${dec(forecastEnvironment.mean)} forecast, with a ${dec(environment.minimum)}–${dec(environment.maximum)} observed range versus ${dec(forecastEnvironment.minimum)}–${dec(forecastEnvironment.maximum)} forecast. ${diagnostic.structural_misses} structural reviews · ${diagnostic.process_supported_outcome_variance} result classified as finishing variance · no recalibration authorized.</p>
     <section class="section matchweek-section"><div class="section-head"><h2>Hit rate by matchweek</h2><span class="panel-label">Open a week to inspect each market</span></div><div class="matchweek-history">${data.ledger.matchweeks.map(matchweekFold).join("")}</div></section>
     <section class="section"><div class="section-head"><h2>Frozen Matchweek 3 slate</h2><span class="panel-label">${data.ledger.hits} hits · ${data.ledger.misses} misses · ${data.ledger.pending} pending</span></div><div class="table-shell"><table><thead><tr><th>Fixture</th><th>Official 1X2 call</th><th>Model probability</th><th>Secondary read</th><th>Result</th></tr></thead><tbody>${slateRows}</tbody></table></div></section>`;
 }

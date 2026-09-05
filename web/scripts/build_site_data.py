@@ -22,9 +22,8 @@ STYLE_MATCHUP_ARTIFACT = ROOT / "artifacts/style_matchup/2026-08-25/style-matchu
 ROUND_ROBIN_DIR = ROOT / "artifacts/round_robin/2026-08-25"
 CONTEXTUAL_DIR = ROOT / "artifacts/contextual_interaction/2026-08-26"
 OFFICIAL_DIR = ROOT / "artifacts/official_shadow/2026-08-31-mw3"
-RESEARCH_STATE = (
-    ROOT / "artifacts/research_loop/2026-09-04-11-completed/state.json"
-)
+RESEARCH_LOOP_DIR = ROOT / "artifacts/research_loop"
+BACKTEST_REPORT_PATTERN = "contextual-interaction-v1-backtest-*.json"
 PUBLIC_DIR = ROOT / "web/public"
 
 
@@ -38,6 +37,56 @@ def load_jsonl(path: Path):
         for line in path.read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
+
+
+def load_latest_research_state():
+    """Load the most complete append-only checkpoint without a dated pointer."""
+
+    candidates = []
+    for path in RESEARCH_LOOP_DIR.glob("*/state.json"):
+        state = load_json(path)
+        if state.get("research_state_version") != "clubalpha_research_state_v1":
+            continue
+        coverage = state.get("coverage") or {}
+        candidates.append(
+            (
+                int(coverage.get("completed_results") or 0),
+                str(state.get("learned_through_kickoff_utc") or ""),
+                str(state.get("as_of") or ""),
+                str(path),
+                state,
+            )
+        )
+    if not candidates:
+        raise ValueError("website requires at least one research-loop checkpoint")
+    return max(candidates, key=lambda row: row[:4])[4]
+
+
+def load_latest_backtest():
+    """Load the latest backtest for the current official frozen slate."""
+
+    official_prediction_source = str(
+        (OFFICIAL_DIR / "predictions.jsonl").relative_to(ROOT)
+    )
+    candidates = []
+    for path in (ROOT / "reports").glob(BACKTEST_REPORT_PATTERN):
+        report = load_json(path)
+        if report.get("backtest_version") != "clubalpha_contextual_interaction_v1_backtest":
+            continue
+        if (report.get("sources") or {}).get("predictions") != official_prediction_source:
+            continue
+        validation = report.get("validation") or {}
+        candidates.append(
+            (
+                str(report.get("generated_at_utc") or ""),
+                int(validation.get("completed_results") or 0),
+                str(path),
+                report,
+            )
+        )
+    if not candidates:
+        raise ValueError("website requires at least one contextual backtest")
+    return max(candidates, key=lambda row: row[:3])[3]
 
 
 def _hit_rate(hits: int, settled: int):
@@ -127,7 +176,8 @@ def build():
     official_report = load_json(OFFICIAL_DIR / "report.json")
     official_predictions = load_jsonl(OFFICIAL_DIR / "predictions.jsonl")
     official_results = load_jsonl(OFFICIAL_DIR / "results.jsonl")
-    research_state = load_json(RESEARCH_STATE)
+    research_state = load_latest_research_state()
+    latest_backtest = load_latest_backtest()
     if contextual_report["decision_boundaries"]["capital_deployment_ready"]:
         raise ValueError("website refuses capital-ready contextual shadow data")
     if contextual_report["method"]["archetype_labels_used_in_math"]:
@@ -149,6 +199,10 @@ def build():
         round_robin_predictions, round_robin_results
     )
 
+    official_result_by_id = {
+        int(row["match_id"]): row for row in official_results
+    }
+    raw_probability_hits = 0
     official_web_predictions = []
     for row in official_predictions:
         fixture = row["fixture"]
@@ -157,6 +211,33 @@ def build():
         probabilities = model["probabilities"]
         home_direction = model["context"]["home_attack"]
         away_direction = model["context"]["away_attack"]
+        result = official_result_by_id.get(match_id)
+        result_summary = None
+        if result is not None:
+            home_goals = int(result["final_home_goals"])
+            away_goals = int(result["final_away_goals"])
+            actual_outcome = str(result["outcome"])
+            probability_leader = max(
+                ("home_win", "draw", "away_win"),
+                key=lambda key: float(probabilities[key]),
+            )
+            raw_probability_hits += probability_leader == actual_outcome
+            predicted_over = float(probabilities["over_2_5"]) >= 0.5
+            actual_over = home_goals + away_goals > 2
+            predicted_btts = float(probabilities["btts_yes"]) >= 0.5
+            actual_btts = home_goals > 0 and away_goals > 0
+            result_summary = {
+                "final_home_goals": home_goals,
+                "final_away_goals": away_goals,
+                "outcome": actual_outcome,
+                "actual_xg": result["actual_xg"],
+                "official_1x2_hit": row["official_pick"]["outcome"]
+                == actual_outcome,
+                "raw_probability_leader": probability_leader,
+                "raw_1x2_hit": probability_leader == actual_outcome,
+                "over_under_2_5_hit": predicted_over == actual_over,
+                "btts_hit": predicted_btts == actual_btts,
+            }
         official_web_predictions.append(
             {
                 "match_id": match_id,
@@ -188,7 +269,8 @@ def build():
                         "xg_multiplier": away_direction["xg_multiplier"],
                     },
                 },
-                "status": "pending",
+                "status": "settled" if result_summary else "pending",
+                "result": result_summary,
                 "quality_flags": row["quality_flags"],
             }
         )
@@ -328,7 +410,7 @@ def build():
 
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_3_official_mw3",
+            "site_version": "clubalpha_web_v0_4_result_diagnostics",
             "prediction_version": official_report["report_version"],
             "as_of": official_report["as_of_utc"],
             "generated_at_utc": official_report["as_of_utc"],
@@ -387,6 +469,32 @@ def build():
             "as_of": official_report["as_of_utc"],
             "fixtures": len(official_web_predictions),
             "validation": official_validation,
+            "performance_diagnostic": {
+                "settled": official_score["settled"],
+                "official_1x2_hits": official_score["hits"],
+                "raw_probability_leader_hits": raw_probability_hits,
+                "contextual_xg_total_mae": latest_backtest["metrics"][
+                    "contextual"
+                ]["xg_total_mae"],
+                "mean_projected_xi_hits_of_11": latest_backtest[
+                    "lineup_projection"
+                ]["mean_xi_hits_of_11"],
+                "projected_xg_total_range": latest_backtest["diagnostics"][
+                    "goal_environment_dispersion"
+                ]["contextual_predicted_xg_total"],
+                "observed_xg_total_range": latest_backtest["diagnostics"][
+                    "goal_environment_dispersion"
+                ]["observed_xg_total"],
+                "structural_misses": latest_backtest["diagnostics"][
+                    "structural_misses"
+                ],
+                "process_supported_outcome_variance": latest_backtest[
+                    "diagnostics"
+                ]["process_supported_outcome_variance"],
+                "sample_sufficient_to_recalibrate": latest_backtest["sample"][
+                    "sufficient_to_recalibrate"
+                ],
+            },
             "predictions": official_web_predictions,
         },
         "holy_grail": {

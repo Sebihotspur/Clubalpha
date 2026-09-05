@@ -1,6 +1,6 @@
 {
   "meta": {
-    "site_version": "clubalpha_web_v0_3_official_mw3",
+    "site_version": "clubalpha_web_v0_4_result_diagnostics",
     "prediction_version": "clubalpha_official_shadow_mw3_v1",
     "as_of": "2026-08-31T18:56:06Z",
     "generated_at_utc": "2026-08-31T18:56:06Z",
@@ -395,6 +395,28 @@
       },
       "model_overrides": 2
     },
+    "performance_diagnostic": {
+      "settled": 7,
+      "official_1x2_hits": 2,
+      "raw_probability_leader_hits": 1,
+      "contextual_xg_total_mae": 1.023514,
+      "mean_projected_xi_hits_of_11": 8.285714,
+      "projected_xg_total_range": {
+        "minimum": 2.759612,
+        "maximum": 3.1874,
+        "mean": 3.01706,
+        "population_sd": 0.142818
+      },
+      "observed_xg_total_range": {
+        "minimum": 1.39,
+        "maximum": 5.1,
+        "mean": 3.074286,
+        "population_sd": 1.244288
+      },
+      "structural_misses": 5,
+      "process_supported_outcome_variance": 1,
+      "sample_sufficient_to_recalibrate": false
+    },
     "predictions": [
       {
         "match_id": 5795441,
@@ -517,7 +539,22 @@
             "xg_multiplier": 1.014833
           }
         },
-        "status": "pending",
+        "status": "settled",
+        "result": {
+          "final_home_goals": 0,
+          "final_away_goals": 2,
+          "outcome": "away_win",
+          "actual_xg": {
+            "home": 0.73,
+            "away": 0.66,
+            "total": 1.3900000000000001
+          },
+          "official_1x2_hit": true,
+          "raw_probability_leader": "home_win",
+          "raw_1x2_hit": false,
+          "over_under_2_5_hit": false,
+          "btts_hit": false
+        },
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -647,7 +684,22 @@
             "xg_multiplier": 1.010594
           }
         },
-        "status": "pending",
+        "status": "settled",
+        "result": {
+          "final_home_goals": 2,
+          "final_away_goals": 2,
+          "outcome": "draw",
+          "actual_xg": {
+            "home": 0.71,
+            "away": 1.37,
+            "total": 2.08
+          },
+          "official_1x2_hit": false,
+          "raw_probability_leader": "home_win",
+          "raw_1x2_hit": false,
+          "over_under_2_5_hit": true,
+          "btts_hit": true
+        },
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -776,7 +828,22 @@
             "xg_multiplier": 0.969322
           }
         },
-        "status": "pending",
+        "status": "settled",
+        "result": {
+          "final_home_goals": 1,
+          "final_away_goals": 1,
+          "outcome": "draw",
+          "actual_xg": {
+            "home": 1.26,
+            "away": 1.85,
+            "total": 3.1100000000000003
+          },
+          "official_1x2_hit": false,
+          "raw_probability_leader": "home_win",
+          "raw_1x2_hit": false,
+          "over_under_2_5_hit": false,
+          "btts_hit": true
+        },
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -906,7 +973,22 @@
             "xg_multiplier": 0.995093
           }
         },
-        "status": "pending",
+        "status": "settled",
+        "result": {
+          "final_home_goals": 1,
+          "final_away_goals": 1,
+          "outcome": "draw",
+          "actual_xg": {
+            "home": 1.79,
+            "away": 2.76,
+            "total": 4.55
+          },
+          "official_1x2_hit": false,
+          "raw_probability_leader": "home_win",
+          "raw_1x2_hit": false,
+          "over_under_2_5_hit": false,
+          "btts_hit": true
+        },
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -1036,7 +1118,22 @@
             "xg_multiplier": 0.974977
           }
         },
-        "status": "pending",
+        "status": "settled",
+        "result": {
+          "final_home_goals": 2,
+          "final_away_goals": 3,
+          "outcome": "away_win",
+          "actual_xg": {
+            "home": 3.13,
+            "away": 1.97,
+            "total": 5.1
+          },
+          "official_1x2_hit": false,
+          "raw_probability_leader": "home_win",
+          "raw_1x2_hit": false,
+          "over_under_2_5_hit": true,
+          "btts_hit": true
+        },
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -1166,7 +1263,22 @@
             "xg_multiplier": 0.968961
           }
         },
-        "status": "pending",
+        "status": "settled",
+        "result": {
+          "final_home_goals": 1,
+          "final_away_goals": 0,
+          "outcome": "home_win",
+          "actual_xg": {
+            "home": 1.84,
+            "away": 1.23,
+            "total": 3.0700000000000003
+          },
+          "official_1x2_hit": true,
+          "raw_probability_leader": "home_win",
+          "raw_1x2_hit": true,
+          "over_under_2_5_hit": false,
+          "btts_hit": false
+        },
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -1297,7 +1409,22 @@
             "xg_multiplier": 0.997443
           }
         },
-        "status": "pending",
+        "status": "settled",
+        "result": {
+          "final_home_goals": 0,
+          "final_away_goals": 0,
+          "outcome": "draw",
+          "actual_xg": {
+            "home": 0.65,
+            "away": 1.57,
+            "total": 2.22
+          },
+          "official_1x2_hit": false,
+          "raw_probability_leader": "home_win",
+          "raw_1x2_hit": false,
+          "over_under_2_5_hit": false,
+          "btts_hit": false
+        },
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -1409,6 +1536,7 @@
           }
         },
         "status": "pending",
+        "result": null,
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -1541,6 +1669,7 @@
           }
         },
         "status": "pending",
+        "result": null,
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -1652,6 +1781,7 @@
           }
         },
         "status": "pending",
+        "result": null,
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -17877,12 +18007,12 @@
   },
   "ledger": {
     "status": "official_shadow_collection",
-    "matches_logged": 1,
+    "matches_logged": 7,
     "sample_gate": 30,
-    "hits": 1,
-    "misses": 0,
-    "pending": 9,
-    "hit_rate": 1.0,
+    "hits": 2,
+    "misses": 5,
+    "pending": 3,
+    "hit_rate": 0.285714,
     "hit_rate_gate": 0.5,
     "review_ready": false,
     "next_stage": "paper_allocation_and_price_validation",
@@ -17906,26 +18036,26 @@
         "fixtures": 10,
         "first_kickoff_utc": "2026-09-04T19:00:00Z",
         "last_kickoff_utc": "2026-09-06T15:30:00Z",
-        "settled": 1,
-        "pending": 9,
+        "settled": 7,
+        "pending": 3,
         "markets": {
           "one_x_two": {
             "label": "1X2",
-            "hits": 1,
-            "settled": 1,
-            "hit_rate": 1.0
+            "hits": 2,
+            "settled": 7,
+            "hit_rate": 0.285714
           },
           "over_under_2_5": {
             "label": "O/U 2.5",
-            "hits": 0,
-            "settled": 1,
-            "hit_rate": 0.0
+            "hits": 2,
+            "settled": 7,
+            "hit_rate": 0.285714
           },
           "btts": {
             "label": "BTTS",
-            "hits": 0,
-            "settled": 1,
-            "hit_rate": 0.0
+            "hits": 4,
+            "settled": 7,
+            "hit_rate": 0.571429
           }
         }
       },
@@ -17971,11 +18101,11 @@
   },
   "methodology": {
     "research_loop": {
-      "as_of": "2026-09-04",
-      "learned_through_kickoff_utc": "2026-09-04T19:00:00Z",
-      "completed_results": 11,
+      "as_of": "2026-09-05",
+      "learned_through_kickoff_utc": "2026-09-05T14:00:00Z",
+      "completed_results": 17,
       "frozen_fixtures": 20,
-      "pending_results": 9,
+      "pending_results": 3,
       "promotion_candidates": 0,
       "automatically_applied": 0,
       "capital_deployment_ready": false
@@ -17999,7 +18129,7 @@
     ],
     "caveats": [
       "34 of 200 component-scale sides collected",
-      "11 completed fixtures are tentative research evidence",
+      "17 completed fixtures are tentative research evidence",
       "Official MW3 probabilities remain shadow-only",
       "Projected lineups are not confirmed starting XIs",
       "Market prices are not yet an automated model input",

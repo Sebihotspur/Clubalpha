@@ -1,0 +1,1997 @@
+{
+  "research_state_version": "clubalpha_research_state_v1",
+  "research_loop_version": "clubalpha_research_loop_v1",
+  "status": "research_state_only",
+  "as_of": "2026-09-05",
+  "learned_through_kickoff_utc": "2026-09-05T14:00:00Z",
+  "input_fingerprint_sha256": "35b4ef9b7288da12de0289588731e0e8fcf3e01893ecdac9a8336e6d3c201660",
+  "input_match_ids": [
+    5795425,
+    5795426,
+    5795427,
+    5795428,
+    5795429,
+    5795430,
+    5795431,
+    5795432,
+    5795433,
+    5795434,
+    5795436,
+    5795437,
+    5795439,
+    5795441,
+    5795442,
+    5795443,
+    5795444
+  ],
+  "method": {
+    "target": "observed_fotmob_xg_residual_against_locked_base_forecast",
+    "update": "zero-centered shrinkage posterior over recency-and-lineup-reliability weighted log-xG residuals",
+    "recency_half_life_days": 45.0,
+    "prior_match_equivalents": 3.0,
+    "scoreline_finishing_separated_from_xg_strength": true,
+    "recomputed_from_full_append_only_ledger": true
+  },
+  "coverage": {
+    "frozen_fixtures": 20,
+    "completed_results": 17,
+    "pending_results": 3,
+    "unique_match_ids": 17,
+    "complete": false
+  },
+  "league_learning": {
+    "base_vs_context_metrics": {
+      "baseline": {
+        "xg_side_mae": 0.680424,
+        "xg_side_rmse": 0.889913,
+        "xg_total_mae": 1.090048,
+        "goal_side_mae": 0.972573,
+        "one_x_two_brier": 0.699826,
+        "one_x_two_log_loss": 1.14601,
+        "one_x_two_top_pick_accuracy": 0.294118,
+        "over_2_5_brier": 0.265688,
+        "over_2_5_log_loss": 0.724773,
+        "btts_brier": 0.23193,
+        "btts_log_loss": 0.656311
+      },
+      "contextual": {
+        "xg_side_mae": 0.690109,
+        "xg_side_rmse": 0.8944,
+        "xg_total_mae": 1.0971,
+        "goal_side_mae": 0.967944,
+        "one_x_two_brier": 0.696565,
+        "one_x_two_log_loss": 1.14105,
+        "one_x_two_top_pick_accuracy": 0.294118,
+        "over_2_5_brier": 0.265613,
+        "over_2_5_log_loss": 0.72463,
+        "btts_brier": 0.231363,
+        "btts_log_loss": 0.655222
+      },
+      "holy_grail_improvement_positive_is_better": {
+        "xg_side_mae": -0.009685,
+        "xg_side_rmse": -0.004487,
+        "xg_total_mae": -0.007052,
+        "goal_side_mae": 0.004629,
+        "one_x_two_brier": 0.003261,
+        "one_x_two_log_loss": 0.00496,
+        "over_2_5_brier": 7.5e-05,
+        "over_2_5_log_loss": 0.000143,
+        "btts_brier": 0.000567,
+        "btts_log_loss": 0.001089,
+        "one_x_two_top_pick_accuracy": 0.0
+      }
+    },
+    "diagnostics": {
+      "outcome_hits": 5,
+      "process_supported_outcome_variance": 4,
+      "structural_misses": 8,
+      "context_improved_actual_outcome_probability": 7,
+      "context_improved_side_xg_mae": 5,
+      "goal_environment_dispersion": {
+        "observed_xg_total": {
+          "minimum": 1.36,
+          "maximum": 6.83,
+          "mean": 3.230588,
+          "population_sd": 1.40565
+        },
+        "baseline_predicted_xg_total": {
+          "minimum": 2.713766,
+          "maximum": 3.204754,
+          "mean": 2.984874,
+          "population_sd": 0.130218
+        },
+        "contextual_predicted_xg_total": {
+          "minimum": 2.706948,
+          "maximum": 3.1874,
+          "mean": 2.984686,
+          "population_sd": 0.142494
+        }
+      },
+      "context_adjustment_scale": {
+        "mean_absolute_side_xg_shift": 0.024599,
+        "maximum_absolute_side_xg_shift": 0.066418
+      },
+      "preferred_route_coverage": {
+        "observed": [
+          "box_pressure",
+          "high_press",
+          "set_pieces"
+        ],
+        "missing": [
+          "direct_transition",
+          "wide_delivery"
+        ],
+        "covered_routes": 3,
+        "known_routes": 5
+      },
+      "route_diagnostics": [
+        {
+          "preferred_route": "box_pressure",
+          "attack_directions": 11,
+          "movement_alignment_rate": 0.363636,
+          "mean_xg_mae_improvement": -0.007072
+        },
+        {
+          "preferred_route": "high_press",
+          "attack_directions": 5,
+          "movement_alignment_rate": 0.2,
+          "mean_xg_mae_improvement": -0.028146
+        },
+        {
+          "preferred_route": "set_pieces",
+          "attack_directions": 18,
+          "movement_alignment_rate": 0.388889,
+          "mean_xg_mae_improvement": -0.006152
+        }
+      ]
+    },
+    "pre_match_goal_coefficient_ablation": {
+      "goal_model_version": "clubalpha_goal_model_2026-08-24_v0",
+      "goal_model_trained_through": "2026-08-24",
+      "outcomes_used_to_choose_candidates": false,
+      "reconstruction_assumes_frozen_xg_was_not_clipped": true,
+      "best_side_xg_mae_candidate": "zero_coefficient",
+      "candidates": [
+        {
+          "candidate": "zero_coefficient",
+          "coefficient": 0.0,
+          "side_xg_mae": 0.674997,
+          "side_xg_rmse": 0.895953,
+          "total_xg_mae": 1.099547,
+          "predicted_total_xg_distribution": {
+            "minimum": 2.895699,
+            "maximum": 2.896301,
+            "mean": 2.895947,
+            "population_sd": 0.000295
+          },
+          "reconstructed_competition_baseline": {
+            "home": 1.5917,
+            "away": 1.304247
+          }
+        },
+        {
+          "candidate": "applied_conservative",
+          "coefficient": 0.146445877,
+          "side_xg_mae": 0.680424,
+          "side_xg_rmse": 0.889913,
+          "total_xg_mae": 1.090048,
+          "predicted_total_xg_distribution": {
+            "minimum": 2.713766,
+            "maximum": 3.204754,
+            "mean": 2.984874,
+            "population_sd": 0.130218
+          },
+          "reconstructed_competition_baseline": {
+            "home": 1.5917,
+            "away": 1.304247
+          }
+        },
+        {
+          "candidate": "frozen_point_estimate",
+          "coefficient": 0.445695839,
+          "side_xg_mae": 0.890031,
+          "side_xg_rmse": 1.086615,
+          "total_xg_mae": 1.260551,
+          "predicted_total_xg_distribution": {
+            "minimum": 2.461847,
+            "maximum": 4.292977,
+            "mean": 3.374047,
+            "population_sd": 0.513937
+          },
+          "reconstructed_competition_baseline": {
+            "home": 1.5917,
+            "away": 1.304247
+          }
+        },
+        {
+          "candidate": "frozen_raw_estimate",
+          "coefficient": 0.513116594,
+          "side_xg_mae": 0.966431,
+          "side_xg_rmse": 1.186192,
+          "total_xg_mae": 1.328097,
+          "predicted_total_xg_distribution": {
+            "minimum": 2.422997,
+            "maximum": 4.719295,
+            "mean": 3.506658,
+            "population_sd": 0.645398
+          },
+          "reconstructed_competition_baseline": {
+            "home": 1.5917,
+            "away": 1.304247
+          }
+        }
+      ]
+    },
+    "league_route_beliefs": [
+      {
+        "route": "box_pressure",
+        "observations": 11,
+        "effective_evidence": 4.882397,
+        "raw_weighted_mean_log_residual": -0.007714,
+        "posterior_log_residual": -0.004778,
+        "posterior_multiplier": 0.995234,
+        "evidence_confidence": 0.619405,
+        "direction_consistency": 0.57543,
+        "direction": "within_noise",
+        "promotion_candidate": false,
+        "applied_to_forecast": false
+      },
+      {
+        "route": "high_press",
+        "observations": 5,
+        "effective_evidence": 2.414861,
+        "raw_weighted_mean_log_residual": -0.112491,
+        "posterior_log_residual": -0.050167,
+        "posterior_multiplier": 0.95107,
+        "evidence_confidence": 0.445969,
+        "direction_consistency": 0.797165,
+        "direction": "below_expected",
+        "promotion_candidate": false,
+        "applied_to_forecast": false
+      },
+      {
+        "route": "set_pieces",
+        "observations": 18,
+        "effective_evidence": 9.356227,
+        "raw_weighted_mean_log_residual": -0.031653,
+        "posterior_log_residual": -0.023968,
+        "posterior_multiplier": 0.976317,
+        "evidence_confidence": 0.757207,
+        "direction_consistency": 0.515196,
+        "direction": "within_noise",
+        "promotion_candidate": false,
+        "applied_to_forecast": false
+      }
+    ]
+  },
+  "teams": [
+    {
+      "team_id": 8678,
+      "team": "AFC Bournemouth",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.852333,
+          "raw_weighted_mean_log_residual": 0.067933,
+          "posterior_log_residual": 0.025933,
+          "posterior_multiplier": 1.026272,
+          "evidence_confidence": 0.381741,
+          "direction_consistency": 0.515321,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.852333,
+          "raw_weighted_mean_log_residual": -0.223608,
+          "posterior_log_residual": -0.08536,
+          "posterior_multiplier": 0.918181,
+          "evidence_confidence": 0.381741,
+          "direction_consistency": 0.515321,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.852333,
+          "raw_weighted_mean_log_residual": -0.06205,
+          "posterior_log_residual": -0.023687,
+          "posterior_multiplier": 0.976591,
+          "evidence_confidence": 0.381741,
+          "direction_consistency": 0.515321,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 10.485,
+        "observed_xi_hit_rate": 0.953153,
+        "posterior_xi_reliability": 0.858465,
+        "formation_accuracy": 1.0,
+        "review_required": false,
+        "review_reasons": []
+      },
+      "route_hypotheses": [
+        {
+          "route": "high_press",
+          "observations": 2,
+          "effective_evidence": 1.010605,
+          "raw_weighted_mean_log_residual": 0.067932,
+          "posterior_log_residual": 0.017118,
+          "posterior_multiplier": 1.017265,
+          "evidence_confidence": 0.251983,
+          "direction_consistency": 0.515321,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": -0.237576,
+        "goals_allowed_minus_xg_allowed_per_match": 0.257634,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795425,
+        5795443
+      ]
+    },
+    {
+      "team_id": 9825,
+      "team": "Arsenal",
+      "completed_matches": 1,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 1,
+          "effective_evidence": 0.925875,
+          "raw_weighted_mean_log_residual": -0.470274,
+          "posterior_log_residual": -0.110909,
+          "posterior_multiplier": 0.89502,
+          "evidence_confidence": 0.235839,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 1,
+          "effective_evidence": 0.925875,
+          "raw_weighted_mean_log_residual": -1.06109,
+          "posterior_log_residual": -0.250247,
+          "posterior_multiplier": 0.778609,
+          "evidence_confidence": 0.235839,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 1,
+          "effective_evidence": 0.925875,
+          "raw_weighted_mean_log_residual": -0.671744,
+          "posterior_log_residual": -0.158424,
+          "posterior_multiplier": 0.853488,
+          "evidence_confidence": 0.235839,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 1,
+        "mean_xi_hits_of_11": 11.0,
+        "observed_xi_hit_rate": 1.0,
+        "posterior_xi_reliability": 0.847168,
+        "formation_accuracy": 0.0,
+        "review_required": true,
+        "review_reasons": [
+          "formation_accuracy"
+        ]
+      },
+      "route_hypotheses": [
+        {
+          "route": "high_press",
+          "observations": 1,
+          "effective_evidence": 0.607885,
+          "raw_weighted_mean_log_residual": -0.470274,
+          "posterior_log_residual": -0.079235,
+          "posterior_multiplier": 0.923822,
+          "evidence_confidence": 0.168488,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": -0.05,
+        "goals_allowed_minus_xg_allowed_per_match": -0.31,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "lineup_projection_review",
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795426
+      ]
+    },
+    {
+      "team_id": 10252,
+      "team": "Aston Villa",
+      "completed_matches": 1,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 1,
+          "effective_evidence": 0.841704,
+          "raw_weighted_mean_log_residual": -1.06109,
+          "posterior_log_residual": -0.232481,
+          "posterior_multiplier": 0.792565,
+          "evidence_confidence": 0.219097,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 1,
+          "effective_evidence": 0.841704,
+          "raw_weighted_mean_log_residual": -0.470274,
+          "posterior_log_residual": -0.103035,
+          "posterior_multiplier": 0.902095,
+          "evidence_confidence": 0.219097,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 1,
+          "effective_evidence": 0.841704,
+          "raw_weighted_mean_log_residual": -0.671744,
+          "posterior_log_residual": -0.147177,
+          "posterior_multiplier": 0.863141,
+          "evidence_confidence": 0.219097,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 1,
+        "mean_xi_hits_of_11": 9.0,
+        "observed_xi_hit_rate": 0.818182,
+        "posterior_xi_reliability": 0.803984,
+        "formation_accuracy": 1.0,
+        "review_required": false,
+        "review_reasons": []
+      },
+      "route_hypotheses": [
+        {
+          "route": "set_pieces",
+          "observations": 1,
+          "effective_evidence": 0.626784,
+          "raw_weighted_mean_log_residual": -1.06109,
+          "posterior_log_residual": -0.183379,
+          "posterior_multiplier": 0.832453,
+          "evidence_confidence": 0.172821,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": -0.31,
+        "goals_allowed_minus_xg_allowed_per_match": -0.05,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795426
+      ]
+    },
+    {
+      "team_id": 9937,
+      "team": "Brentford",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.783385,
+          "raw_weighted_mean_log_residual": -0.157824,
+          "posterior_log_residual": -0.058841,
+          "posterior_multiplier": 0.942856,
+          "evidence_confidence": 0.372829,
+          "direction_consistency": 0.535244,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.783385,
+          "raw_weighted_mean_log_residual": 0.189757,
+          "posterior_log_residual": 0.070747,
+          "posterior_multiplier": 1.073309,
+          "evidence_confidence": 0.372829,
+          "direction_consistency": 0.535244,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.783385,
+          "raw_weighted_mean_log_residual": 0.009422,
+          "posterior_log_residual": 0.003513,
+          "posterior_multiplier": 1.003519,
+          "evidence_confidence": 0.372829,
+          "direction_consistency": 0.535244,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 9.535,
+        "observed_xi_hit_rate": 0.86684,
+        "posterior_xi_reliability": 0.82492,
+        "formation_accuracy": 1.0,
+        "review_required": false,
+        "review_reasons": []
+      },
+      "route_hypotheses": [
+        {
+          "route": "set_pieces",
+          "observations": 2,
+          "effective_evidence": 1.256844,
+          "raw_weighted_mean_log_residual": -0.178496,
+          "posterior_log_residual": -0.052701,
+          "posterior_multiplier": 0.948663,
+          "evidence_confidence": 0.295253,
+          "direction_consistency": 0.570784,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": -0.45055,
+        "goals_allowed_minus_xg_allowed_per_match": -0.668745,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795430,
+        5795436
+      ]
+    },
+    {
+      "team_id": 10204,
+      "team": "Brighton & Hove Albion",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.651033,
+          "raw_weighted_mean_log_residual": -0.065498,
+          "posterior_log_residual": -0.023251,
+          "posterior_multiplier": 0.977018,
+          "evidence_confidence": 0.354982,
+          "direction_consistency": 1.0,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.651033,
+          "raw_weighted_mean_log_residual": 0.786131,
+          "posterior_log_residual": 0.279062,
+          "posterior_multiplier": 1.32189,
+          "evidence_confidence": 0.354982,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.651033,
+          "raw_weighted_mean_log_residual": 0.379744,
+          "posterior_log_residual": 0.134802,
+          "posterior_multiplier": 1.144311,
+          "evidence_confidence": 0.354982,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 8.0,
+        "observed_xi_hit_rate": 0.727273,
+        "posterior_xi_reliability": 0.774183,
+        "formation_accuracy": 1.0,
+        "review_required": true,
+        "review_reasons": [
+          "starting_xi_accuracy"
+        ]
+      },
+      "route_hypotheses": [
+        {
+          "route": "high_press",
+          "observations": 2,
+          "effective_evidence": 0.796371,
+          "raw_weighted_mean_log_residual": -0.068347,
+          "posterior_log_residual": -0.014337,
+          "posterior_multiplier": 0.985765,
+          "evidence_confidence": 0.209772,
+          "direction_consistency": 1.0,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": 0.34505,
+        "goals_allowed_minus_xg_allowed_per_match": -0.41034,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "lineup_projection_review",
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795427,
+        5795437
+      ]
+    },
+    {
+      "team_id": 8455,
+      "team": "Chelsea",
+      "completed_matches": 1,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 1,
+          "effective_evidence": 0.787397,
+          "raw_weighted_mean_log_residual": 0.656829,
+          "posterior_log_residual": 0.136554,
+          "posterior_multiplier": 1.146317,
+          "evidence_confidence": 0.207899,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 1,
+          "effective_evidence": 0.787397,
+          "raw_weighted_mean_log_residual": -0.106964,
+          "posterior_log_residual": -0.022238,
+          "posterior_multiplier": 0.978008,
+          "evidence_confidence": 0.207899,
+          "direction_consistency": 1.0,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 1,
+          "effective_evidence": 0.787397,
+          "raw_weighted_mean_log_residual": 0.33082,
+          "posterior_log_residual": 0.068777,
+          "posterior_multiplier": 1.071198,
+          "evidence_confidence": 0.207899,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 1,
+        "mean_xi_hits_of_11": 8.0,
+        "observed_xi_hit_rate": 0.727273,
+        "posterior_xi_reliability": 0.78488,
+        "formation_accuracy": 1.0,
+        "review_required": true,
+        "review_reasons": [
+          "starting_xi_accuracy"
+        ]
+      },
+      "route_hypotheses": [
+        {
+          "route": "box_pressure",
+          "observations": 1,
+          "effective_evidence": 0.500695,
+          "raw_weighted_mean_log_residual": 0.656829,
+          "posterior_log_residual": 0.093944,
+          "posterior_multiplier": 1.098499,
+          "evidence_confidence": 0.143027,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": 1.07,
+        "goals_allowed_minus_xg_allowed_per_match": 1.59,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "lineup_projection_review",
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795427
+      ]
+    },
+    {
+      "team_id": 8669,
+      "team": "Coventry City",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.593543,
+          "raw_weighted_mean_log_residual": -0.05239,
+          "posterior_log_residual": -0.018175,
+          "posterior_multiplier": 0.981989,
+          "evidence_confidence": 0.346909,
+          "direction_consistency": 0.513436,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.593543,
+          "raw_weighted_mean_log_residual": -0.193132,
+          "posterior_log_residual": -0.066999,
+          "posterior_multiplier": 0.935196,
+          "evidence_confidence": 0.346909,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.593543,
+          "raw_weighted_mean_log_residual": -0.124601,
+          "posterior_log_residual": -0.043225,
+          "posterior_multiplier": 0.957696,
+          "evidence_confidence": 0.346909,
+          "direction_consistency": 0.513436,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 7.487,
+        "observed_xi_hit_rate": 0.680597,
+        "posterior_xi_reliability": 0.758578,
+        "formation_accuracy": 0.0,
+        "review_required": true,
+        "review_reasons": [
+          "starting_xi_accuracy",
+          "formation_accuracy"
+        ]
+      },
+      "route_hypotheses": [
+        {
+          "route": "set_pieces",
+          "observations": 2,
+          "effective_evidence": 0.755289,
+          "raw_weighted_mean_log_residual": -0.025207,
+          "posterior_log_residual": -0.00507,
+          "posterior_multiplier": 0.994943,
+          "evidence_confidence": 0.201127,
+          "direction_consistency": 0.598767,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": -1.259194,
+        "goals_allowed_minus_xg_allowed_per_match": -0.295048,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "lineup_projection_review",
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795428,
+        5795442
+      ]
+    },
+    {
+      "team_id": 9826,
+      "team": "Crystal Palace",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.541507,
+          "raw_weighted_mean_log_residual": -0.104957,
+          "posterior_log_residual": -0.035625,
+          "posterior_multiplier": 0.965002,
+          "evidence_confidence": 0.339426,
+          "direction_consistency": 0.530768,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.541507,
+          "raw_weighted_mean_log_residual": 0.405151,
+          "posterior_log_residual": 0.137519,
+          "posterior_multiplier": 1.147423,
+          "evidence_confidence": 0.339426,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.541507,
+          "raw_weighted_mean_log_residual": 0.220507,
+          "posterior_log_residual": 0.074846,
+          "posterior_multiplier": 1.077718,
+          "evidence_confidence": 0.339426,
+          "direction_consistency": 0.530768,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 7.0,
+        "observed_xi_hit_rate": 0.636364,
+        "posterior_xi_reliability": 0.744458,
+        "formation_accuracy": 1.0,
+        "review_required": true,
+        "review_reasons": [
+          "starting_xi_accuracy"
+        ]
+      },
+      "route_hypotheses": [
+        {
+          "route": "set_pieces",
+          "observations": 2,
+          "effective_evidence": 0.980958,
+          "raw_weighted_mean_log_residual": -0.104957,
+          "posterior_log_residual": -0.025863,
+          "posterior_multiplier": 0.974469,
+          "evidence_confidence": 0.246413,
+          "direction_consistency": 0.530768,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": 0.70623,
+        "goals_allowed_minus_xg_allowed_per_match": 0.240159,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "lineup_projection_review",
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795429,
+        5795439
+      ]
+    },
+    {
+      "team_id": 8668,
+      "team": "Everton",
+      "completed_matches": 1,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 1,
+          "effective_evidence": 0.856978,
+          "raw_weighted_mean_log_residual": 0.350586,
+          "posterior_log_residual": 0.077896,
+          "posterior_multiplier": 1.081011,
+          "evidence_confidence": 0.222189,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 1,
+          "effective_evidence": 0.856978,
+          "raw_weighted_mean_log_residual": 0.209065,
+          "posterior_log_residual": 0.046452,
+          "posterior_multiplier": 1.047548,
+          "evidence_confidence": 0.222189,
+          "direction_consistency": 1.0,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 1,
+          "effective_evidence": 0.856978,
+          "raw_weighted_mean_log_residual": 0.27208,
+          "posterior_log_residual": 0.060453,
+          "posterior_multiplier": 1.062318,
+          "evidence_confidence": 0.222189,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 1,
+        "mean_xi_hits_of_11": 10.0,
+        "observed_xi_hit_rate": 0.909091,
+        "posterior_xi_reliability": 0.824239,
+        "formation_accuracy": 1.0,
+        "review_required": false,
+        "review_reasons": []
+      },
+      "route_hypotheses": [
+        {
+          "route": "box_pressure",
+          "observations": 1,
+          "effective_evidence": 0.518646,
+          "raw_weighted_mean_log_residual": 0.350586,
+          "posterior_log_residual": 0.051676,
+          "posterior_multiplier": 1.053035,
+          "evidence_confidence": 0.147399,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": -0.84,
+        "goals_allowed_minus_xg_allowed_per_match": -1.16,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795425
+      ]
+    },
+    {
+      "team_id": 9879,
+      "team": "Fulham",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.779372,
+          "raw_weighted_mean_log_residual": 0.155304,
+          "posterior_log_residual": 0.05782,
+          "posterior_multiplier": 1.059524,
+          "evidence_confidence": 0.372302,
+          "direction_consistency": 0.510906,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.779372,
+          "raw_weighted_mean_log_residual": 0.31808,
+          "posterior_log_residual": 0.118422,
+          "posterior_multiplier": 1.125719,
+          "evidence_confidence": 0.372302,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.779372,
+          "raw_weighted_mean_log_residual": 0.272716,
+          "posterior_log_residual": 0.101533,
+          "posterior_multiplier": 1.106866,
+          "evidence_confidence": 0.372302,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 9.489,
+        "observed_xi_hit_rate": 0.862645,
+        "posterior_xi_reliability": 0.823323,
+        "formation_accuracy": 1.0,
+        "review_required": false,
+        "review_reasons": []
+      },
+      "route_hypotheses": [
+        {
+          "route": "set_pieces",
+          "observations": 2,
+          "effective_evidence": 1.285643,
+          "raw_weighted_mean_log_residual": 0.124127,
+          "posterior_log_residual": 0.037237,
+          "posterior_multiplier": 1.037939,
+          "evidence_confidence": 0.299988,
+          "direction_consistency": 0.525032,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": -1.041963,
+        "goals_allowed_minus_xg_allowed_per_match": 0.027356,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795433,
+        5795439
+      ]
+    },
+    {
+      "team_id": 8667,
+      "team": "Hull City",
+      "completed_matches": 1,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 1,
+          "effective_evidence": 0.856978,
+          "raw_weighted_mean_log_residual": -0.34356,
+          "posterior_log_residual": -0.076335,
+          "posterior_multiplier": 0.926506,
+          "evidence_confidence": 0.222189,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 1,
+          "effective_evidence": 0.856978,
+          "raw_weighted_mean_log_residual": -0.215952,
+          "posterior_log_residual": -0.047982,
+          "posterior_multiplier": 0.953151,
+          "evidence_confidence": 0.222189,
+          "direction_consistency": 1.0,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 1,
+          "effective_evidence": 0.856978,
+          "raw_weighted_mean_log_residual": -0.265943,
+          "posterior_log_residual": -0.05909,
+          "posterior_multiplier": 0.942622,
+          "evidence_confidence": 0.222189,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 1,
+        "mean_xi_hits_of_11": 10.0,
+        "observed_xi_hit_rate": 0.909091,
+        "posterior_xi_reliability": 0.824239,
+        "formation_accuracy": 0.0,
+        "review_required": true,
+        "review_reasons": [
+          "formation_accuracy"
+        ]
+      },
+      "route_hypotheses": [
+        {
+          "route": "set_pieces",
+          "observations": 1,
+          "effective_evidence": 0.320871,
+          "raw_weighted_mean_log_residual": -0.34356,
+          "posterior_log_residual": -0.033196,
+          "posterior_multiplier": 0.967349,
+          "evidence_confidence": 0.096623,
+          "direction_consistency": 1.0,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": 0.28,
+        "goals_allowed_minus_xg_allowed_per_match": -1.29,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "lineup_projection_review",
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795428
+      ]
+    },
+    {
+      "team_id": 9902,
+      "team": "Ipswich Town",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.851677,
+          "raw_weighted_mean_log_residual": -0.117237,
+          "posterior_log_residual": -0.044744,
+          "posterior_multiplier": 0.956242,
+          "evidence_confidence": 0.381657,
+          "direction_consistency": 0.507624,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.851677,
+          "raw_weighted_mean_log_residual": 0.121758,
+          "posterior_log_residual": 0.04647,
+          "posterior_multiplier": 1.047566,
+          "evidence_confidence": 0.381657,
+          "direction_consistency": 0.507624,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.851677,
+          "raw_weighted_mean_log_residual": 0.031111,
+          "posterior_log_residual": 0.011874,
+          "posterior_multiplier": 1.011945,
+          "evidence_confidence": 0.381657,
+          "direction_consistency": 0.507624,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 10.492,
+        "observed_xi_hit_rate": 0.953852,
+        "posterior_xi_reliability": 0.858719,
+        "formation_accuracy": 1.0,
+        "review_required": false,
+        "review_reasons": []
+      },
+      "route_hypotheses": [
+        {
+          "route": "box_pressure",
+          "observations": 2,
+          "effective_evidence": 0.774457,
+          "raw_weighted_mean_log_residual": -0.073706,
+          "posterior_log_residual": -0.015123,
+          "posterior_multiplier": 0.984991,
+          "evidence_confidence": 0.205184,
+          "direction_consistency": 0.528306,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": -0.400108,
+        "goals_allowed_minus_xg_allowed_per_match": 0.793462,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795432,
+        5795441
+      ]
+    },
+    {
+      "team_id": 8463,
+      "team": "Leeds United",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.688463,
+          "raw_weighted_mean_log_residual": 0.411328,
+          "posterior_log_residual": 0.148132,
+          "posterior_multiplier": 1.159666,
+          "evidence_confidence": 0.360131,
+          "direction_consistency": 0.515428,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.688463,
+          "raw_weighted_mean_log_residual": 0.0657,
+          "posterior_log_residual": 0.023661,
+          "posterior_multiplier": 1.023943,
+          "evidence_confidence": 0.360131,
+          "direction_consistency": 0.515428,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.688463,
+          "raw_weighted_mean_log_residual": 0.232347,
+          "posterior_log_residual": 0.083675,
+          "posterior_multiplier": 1.087276,
+          "evidence_confidence": 0.360131,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 8.546,
+        "observed_xi_hit_rate": 0.776935,
+        "posterior_xi_reliability": 0.791694,
+        "formation_accuracy": 0.0,
+        "review_required": true,
+        "review_reasons": [
+          "formation_accuracy"
+        ]
+      },
+      "route_hypotheses": [
+        {
+          "route": "set_pieces",
+          "observations": 2,
+          "effective_evidence": 0.928008,
+          "raw_weighted_mean_log_residual": 0.377121,
+          "posterior_log_residual": 0.089096,
+          "posterior_multiplier": 1.093186,
+          "evidence_confidence": 0.236254,
+          "direction_consistency": 0.551213,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": -1.089944,
+        "goals_allowed_minus_xg_allowed_per_match": -0.728149,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "lineup_projection_review",
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795430,
+        5795437
+      ]
+    },
+    {
+      "team_id": 8650,
+      "team": "Liverpool",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.666606,
+          "raw_weighted_mean_log_residual": -0.333335,
+          "posterior_log_residual": -0.119046,
+          "posterior_multiplier": 0.887767,
+          "evidence_confidence": 0.357134,
+          "direction_consistency": 0.51028,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.666606,
+          "raw_weighted_mean_log_residual": -0.081495,
+          "posterior_log_residual": -0.029105,
+          "posterior_multiplier": 0.971315,
+          "evidence_confidence": 0.357134,
+          "direction_consistency": 0.51028,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.666606,
+          "raw_weighted_mean_log_residual": -0.210687,
+          "posterior_log_residual": -0.075244,
+          "posterior_multiplier": 0.927517,
+          "evidence_confidence": 0.357134,
+          "direction_consistency": 0.51028,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 8.49,
+        "observed_xi_hit_rate": 0.771793,
+        "posterior_xi_reliability": 0.789926,
+        "formation_accuracy": 1.0,
+        "review_required": false,
+        "review_reasons": []
+      },
+      "route_hypotheses": [
+        {
+          "route": "box_pressure",
+          "observations": 2,
+          "effective_evidence": 0.826945,
+          "raw_weighted_mean_log_residual": -0.24872,
+          "posterior_log_residual": -0.053745,
+          "posterior_multiplier": 0.947674,
+          "evidence_confidence": 0.216085,
+          "direction_consistency": 0.619131,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": 0.806205,
+        "goals_allowed_minus_xg_allowed_per_match": -0.51942,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795431,
+        5795441
+      ]
+    },
+    {
+      "team_id": 8456,
+      "team": "Manchester City",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.707515,
+          "raw_weighted_mean_log_residual": 0.077128,
+          "posterior_log_residual": 0.027976,
+          "posterior_multiplier": 1.028371,
+          "evidence_confidence": 0.362721,
+          "direction_consistency": 0.505785,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.707515,
+          "raw_weighted_mean_log_residual": -0.258615,
+          "posterior_log_residual": -0.093805,
+          "posterior_multiplier": 0.91046,
+          "evidence_confidence": 0.362721,
+          "direction_consistency": 0.505785,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.707515,
+          "raw_weighted_mean_log_residual": -0.035014,
+          "posterior_log_residual": -0.0127,
+          "posterior_multiplier": 0.98738,
+          "evidence_confidence": 0.362721,
+          "direction_consistency": 0.505785,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 8.988,
+        "observed_xi_hit_rate": 0.81713,
+        "posterior_xi_reliability": 0.806213,
+        "formation_accuracy": 0.494215,
+        "review_required": true,
+        "review_reasons": [
+          "formation_accuracy"
+        ]
+      },
+      "route_hypotheses": [
+        {
+          "route": "box_pressure",
+          "observations": 2,
+          "effective_evidence": 0.892062,
+          "raw_weighted_mean_log_residual": 0.096071,
+          "posterior_log_residual": 0.022019,
+          "posterior_multiplier": 1.022264,
+          "evidence_confidence": 0.2292,
+          "direction_consistency": 0.567524,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": 0.459785,
+        "goals_allowed_minus_xg_allowed_per_match": -0.454083,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "lineup_projection_review",
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795429,
+        5795442
+      ]
+    },
+    {
+      "team_id": 10260,
+      "team": "Manchester United",
+      "completed_matches": 1,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 1,
+          "effective_evidence": 0.745955,
+          "raw_weighted_mean_log_residual": 0.921063,
+          "posterior_log_residual": 0.183417,
+          "posterior_multiplier": 1.201315,
+          "evidence_confidence": 0.199136,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 1,
+          "effective_evidence": 0.745955,
+          "raw_weighted_mean_log_residual": 0.497788,
+          "posterior_log_residual": 0.099128,
+          "posterior_multiplier": 1.104207,
+          "evidence_confidence": 0.199136,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 1,
+          "effective_evidence": 0.745955,
+          "raw_weighted_mean_log_residual": 0.769773,
+          "posterior_log_residual": 0.15329,
+          "posterior_multiplier": 1.165663,
+          "evidence_confidence": 0.199136,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 1,
+        "mean_xi_hits_of_11": 7.0,
+        "observed_xi_hit_rate": 0.636364,
+        "posterior_xi_reliability": 0.767414,
+        "formation_accuracy": 1.0,
+        "review_required": true,
+        "review_reasons": [
+          "starting_xi_accuracy"
+        ]
+      },
+      "route_hypotheses": [
+        {
+          "route": "box_pressure",
+          "observations": 1,
+          "effective_evidence": 0.362733,
+          "raw_weighted_mean_log_residual": 0.921063,
+          "posterior_log_residual": 0.099354,
+          "posterior_multiplier": 1.104457,
+          "evidence_confidence": 0.107869,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": 0.23,
+        "goals_allowed_minus_xg_allowed_per_match": -0.06,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "lineup_projection_review",
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795432
+      ]
+    },
+    {
+      "team_id": 10261,
+      "team": "Newcastle United",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.725261,
+          "raw_weighted_mean_log_residual": -0.695457,
+          "posterior_log_residual": -0.253922,
+          "posterior_multiplier": 0.775753,
+          "evidence_confidence": 0.365114,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.725261,
+          "raw_weighted_mean_log_residual": -0.185686,
+          "posterior_log_residual": -0.067797,
+          "posterior_multiplier": 0.93445,
+          "evidence_confidence": 0.365114,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.725261,
+          "raw_weighted_mean_log_residual": -0.412548,
+          "posterior_log_residual": -0.150627,
+          "posterior_multiplier": 0.860168,
+          "evidence_confidence": 0.365114,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 9.0,
+        "observed_xi_hit_rate": 0.818182,
+        "posterior_xi_reliability": 0.806639,
+        "formation_accuracy": 1.0,
+        "review_required": false,
+        "review_reasons": []
+      },
+      "route_hypotheses": [
+        {
+          "route": "box_pressure",
+          "observations": 2,
+          "effective_evidence": 1.006859,
+          "raw_weighted_mean_log_residual": -0.700598,
+          "posterior_log_residual": -0.176049,
+          "posterior_multiplier": 0.838577,
+          "evidence_confidence": 0.251284,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": 1.285269,
+        "goals_allowed_minus_xg_allowed_per_match": -0.197873,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795434,
+        5795443
+      ]
+    },
+    {
+      "team_id": 10203,
+      "team": "Nottingham Forest",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.766069,
+          "raw_weighted_mean_log_residual": -0.125599,
+          "posterior_log_residual": -0.046541,
+          "posterior_multiplier": 0.954526,
+          "evidence_confidence": 0.37055,
+          "direction_consistency": 0.514754,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.766069,
+          "raw_weighted_mean_log_residual": 0.141745,
+          "posterior_log_residual": 0.052524,
+          "posterior_multiplier": 1.053928,
+          "evidence_confidence": 0.37055,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.766069,
+          "raw_weighted_mean_log_residual": 0.036819,
+          "posterior_log_residual": 0.013643,
+          "posterior_multiplier": 1.013737,
+          "evidence_confidence": 0.37055,
+          "direction_consistency": 0.514754,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 9.485,
+        "observed_xi_hit_rate": 0.862295,
+        "posterior_xi_reliability": 0.823084,
+        "formation_accuracy": 1.0,
+        "review_required": false,
+        "review_reasons": []
+      },
+      "route_hypotheses": [
+        {
+          "route": "set_pieces",
+          "observations": 2,
+          "effective_evidence": 1.072539,
+          "raw_weighted_mean_log_residual": -0.125599,
+          "posterior_log_residual": -0.033078,
+          "posterior_multiplier": 0.967463,
+          "evidence_confidence": 0.263359,
+          "direction_consistency": 0.514754,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": -0.480164,
+        "goals_allowed_minus_xg_allowed_per_match": -0.686852,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795431,
+        5795444
+      ]
+    },
+    {
+      "team_id": 8472,
+      "team": "Sunderland",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.779372,
+          "raw_weighted_mean_log_residual": 0.339462,
+          "posterior_log_residual": 0.126383,
+          "posterior_multiplier": 1.134716,
+          "evidence_confidence": 0.372302,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.779372,
+          "raw_weighted_mean_log_residual": -0.359562,
+          "posterior_log_residual": -0.133866,
+          "posterior_multiplier": 0.874707,
+          "evidence_confidence": 0.372302,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.779372,
+          "raw_weighted_mean_log_residual": 0.010139,
+          "posterior_log_residual": 0.003775,
+          "posterior_multiplier": 1.003782,
+          "evidence_confidence": 0.372302,
+          "direction_consistency": 0.510906,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 9.489,
+        "observed_xi_hit_rate": 0.862645,
+        "posterior_xi_reliability": 0.823323,
+        "formation_accuracy": 1.0,
+        "review_required": false,
+        "review_reasons": []
+      },
+      "route_hypotheses": [
+        {
+          "route": "set_pieces",
+          "observations": 2,
+          "effective_evidence": 1.313794,
+          "raw_weighted_mean_log_residual": 0.339462,
+          "posterior_log_residual": 0.103385,
+          "posterior_multiplier": 1.108919,
+          "evidence_confidence": 0.304556,
+          "direction_consistency": 1.0,
+          "direction": "above_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": -0.933146,
+        "goals_allowed_minus_xg_allowed_per_match": -0.597475,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795433,
+        5795436
+      ]
+    },
+    {
+      "team_id": 8586,
+      "team": "Tottenham Hotspur",
+      "completed_matches": 2,
+      "beliefs": {
+        "attack_creation": {
+          "observations": 2,
+          "effective_evidence": 1.421016,
+          "raw_weighted_mean_log_residual": -0.015603,
+          "posterior_log_residual": -0.005015,
+          "posterior_multiplier": 0.994997,
+          "evidence_confidence": 0.321423,
+          "direction_consistency": 0.511797,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "defensive_exposure": {
+          "observations": 2,
+          "effective_evidence": 1.421016,
+          "raw_weighted_mean_log_residual": -0.70586,
+          "posterior_log_residual": -0.22688,
+          "posterior_multiplier": 0.797017,
+          "evidence_confidence": 0.321423,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        },
+        "goal_environment": {
+          "observations": 2,
+          "effective_evidence": 1.421016,
+          "raw_weighted_mean_log_residual": -0.321483,
+          "posterior_log_residual": -0.103332,
+          "posterior_multiplier": 0.901827,
+          "evidence_confidence": 0.321423,
+          "direction_consistency": 1.0,
+          "direction": "below_expected",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      },
+      "lineup_projection": {
+        "team_lineups": 2,
+        "mean_xi_hits_of_11": 5.488,
+        "observed_xi_hit_rate": 0.498928,
+        "posterior_xi_reliability": 0.703228,
+        "formation_accuracy": 1.0,
+        "review_required": true,
+        "review_reasons": [
+          "starting_xi_accuracy"
+        ]
+      },
+      "route_hypotheses": [
+        {
+          "route": "set_pieces",
+          "observations": 2,
+          "effective_evidence": 0.815497,
+          "raw_weighted_mean_log_residual": 0.005722,
+          "posterior_log_residual": 0.001223,
+          "posterior_multiplier": 1.001224,
+          "evidence_confidence": 0.213733,
+          "direction_consistency": 0.547615,
+          "direction": "within_noise",
+          "promotion_candidate": false,
+          "applied_to_forecast": false
+        }
+      ],
+      "finishing_variance": {
+        "goals_minus_xg_per_match": -1.350309,
+        "goals_allowed_minus_xg_allowed_per_match": 0.292231,
+        "changes_strength_beliefs": false
+      },
+      "research_flags": [
+        "lineup_projection_review",
+        "small_team_sample"
+      ],
+      "observation_match_ids": [
+        5795434,
+        5795444
+      ]
+    }
+  ],
+  "research_queue": {
+    "structural_fixture_reviews": [
+      "Liverpool vs Nottingham Forest",
+      "Chelsea vs Brighton & Hove Albion",
+      "Leeds United vs Brentford",
+      "Ipswich Town vs Liverpool",
+      "Newcastle United vs AFC Bournemouth",
+      "Brentford vs Sunderland",
+      "Brighton & Hove Albion vs Leeds United",
+      "Nottingham Forest vs Tottenham Hotspur"
+    ],
+    "lineup_projection_reviews": [
+      {
+        "team": "Tottenham Hotspur",
+        "mean_xi_hits_of_11": 5.488,
+        "formation_accuracy": 1.0,
+        "reasons": [
+          "starting_xi_accuracy"
+        ]
+      },
+      {
+        "team": "Crystal Palace",
+        "mean_xi_hits_of_11": 7.0,
+        "formation_accuracy": 1.0,
+        "reasons": [
+          "starting_xi_accuracy"
+        ]
+      },
+      {
+        "team": "Manchester United",
+        "mean_xi_hits_of_11": 7.0,
+        "formation_accuracy": 1.0,
+        "reasons": [
+          "starting_xi_accuracy"
+        ]
+      },
+      {
+        "team": "Coventry City",
+        "mean_xi_hits_of_11": 7.487,
+        "formation_accuracy": 0.0,
+        "reasons": [
+          "starting_xi_accuracy",
+          "formation_accuracy"
+        ]
+      },
+      {
+        "team": "Brighton & Hove Albion",
+        "mean_xi_hits_of_11": 8.0,
+        "formation_accuracy": 1.0,
+        "reasons": [
+          "starting_xi_accuracy"
+        ]
+      },
+      {
+        "team": "Chelsea",
+        "mean_xi_hits_of_11": 8.0,
+        "formation_accuracy": 1.0,
+        "reasons": [
+          "starting_xi_accuracy"
+        ]
+      },
+      {
+        "team": "Leeds United",
+        "mean_xi_hits_of_11": 8.546,
+        "formation_accuracy": 0.0,
+        "reasons": [
+          "formation_accuracy"
+        ]
+      },
+      {
+        "team": "Manchester City",
+        "mean_xi_hits_of_11": 8.988,
+        "formation_accuracy": 0.494215,
+        "reasons": [
+          "formation_accuracy"
+        ]
+      },
+      {
+        "team": "Hull City",
+        "mean_xi_hits_of_11": 10.0,
+        "formation_accuracy": 0.0,
+        "reasons": [
+          "formation_accuracy"
+        ]
+      },
+      {
+        "team": "Arsenal",
+        "mean_xi_hits_of_11": 11.0,
+        "formation_accuracy": 0.0,
+        "reasons": [
+          "formation_accuracy"
+        ]
+      }
+    ],
+    "missing_preferred_routes": [
+      "direct_transition",
+      "wide_delivery"
+    ]
+  },
+  "promotion_candidates": [],
+  "forecast_handoff": {
+    "mode": "propose_only",
+    "eligible_candidates": 0,
+    "automatically_applied": 0,
+    "research_state_available_for_next_cycle": true
+  },
+  "locked_boundaries": {
+    "player_alpha_formulas_mutable": false,
+    "base_60_30_10_weights_mutable": false,
+    "historical_residual_cap_mutable": false,
+    "frozen_predictions_mutable": false,
+    "automatic_code_rewrite_allowed": false,
+    "automatic_capital_authorization_allowed": false,
+    "research_state_can_update_automatically": true
+  },
+  "decision_boundaries": {
+    "core_architecture_changed": false,
+    "base_weights_changed": false,
+    "player_alpha_changed": false,
+    "frozen_predictions_changed": false,
+    "research_state_updated": true,
+    "capital_deployment_ready": false
+  }
+}
