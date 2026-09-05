@@ -22,6 +22,9 @@ STYLE_MATCHUP_ARTIFACT = ROOT / "artifacts/style_matchup/2026-08-25/style-matchu
 ROUND_ROBIN_DIR = ROOT / "artifacts/round_robin/2026-08-25"
 CONTEXTUAL_DIR = ROOT / "artifacts/contextual_interaction/2026-08-26"
 OFFICIAL_DIR = ROOT / "artifacts/official_shadow/2026-08-31-mw3"
+RESEARCH_STATE = (
+    ROOT / "artifacts/research_loop/2026-09-04-11-completed/state.json"
+)
 PUBLIC_DIR = ROOT / "web/public"
 
 
@@ -124,6 +127,7 @@ def build():
     official_report = load_json(OFFICIAL_DIR / "report.json")
     official_predictions = load_jsonl(OFFICIAL_DIR / "predictions.jsonl")
     official_results = load_jsonl(OFFICIAL_DIR / "results.jsonl")
+    research_state = load_json(RESEARCH_STATE)
     if contextual_report["decision_boundaries"]["capital_deployment_ready"]:
         raise ValueError("website refuses capital-ready contextual shadow data")
     if contextual_report["method"]["archetype_labels_used_in_math"]:
@@ -500,6 +504,30 @@ def build():
             "capital_deployment_ready": False,
         },
         "methodology": {
+            "research_loop": {
+                "as_of": research_state["as_of"],
+                "learned_through_kickoff_utc": research_state[
+                    "learned_through_kickoff_utc"
+                ],
+                "completed_results": research_state["coverage"][
+                    "completed_results"
+                ],
+                "frozen_fixtures": research_state["coverage"][
+                    "frozen_fixtures"
+                ],
+                "pending_results": research_state["coverage"][
+                    "pending_results"
+                ],
+                "promotion_candidates": len(
+                    research_state["promotion_candidates"]
+                ),
+                "automatically_applied": research_state["forecast_handoff"][
+                    "automatically_applied"
+                ],
+                "capital_deployment_ready": research_state[
+                    "decision_boundaries"
+                ]["capital_deployment_ready"],
+            },
             "components": [
                 {
                     "name": "Club Form",
@@ -519,7 +547,10 @@ def build():
             ],
             "caveats": [
                 "34 of 200 component-scale sides collected",
-                "Ten latest results are tentative research evidence",
+                (
+                    f"{research_state['coverage']['completed_results']} completed "
+                    "fixtures are tentative research evidence"
+                ),
                 "Official MW3 probabilities remain shadow-only",
                 "Projected lineups are not confirmed starting XIs",
                 "Market prices are not yet an automated model input",

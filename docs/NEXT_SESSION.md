@@ -1,8 +1,8 @@
 # Next session
 
-Updated: 2026-08-31
+Updated: 2026-09-04
 
-Model and website checkpoint: `8327fba`
+Model and website checkpoint: see latest commit on `main`
 
 Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
 
@@ -73,10 +73,15 @@ Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
   tempo, lineup reliability, finishing variance, and route hypotheses. It
   recomputes from every registered cycle and cannot learn the same match twice.
 - The latest cumulative research checkpoint is frozen at
-  `artifacts/research_loop/2026-08-31-10-completed/`. Every team still has only
-  one new match, so all signals remain tentative and zero adjustments passed
-  the five-match proposal gate. The earlier nine-match checkpoint remains
-  preserved.
+  `artifacts/research_loop/2026-09-04-11-completed/`. Ipswich and Liverpool now
+  have two observations; every other team has one. All signals remain
+  tentative and zero adjustments passed the five-match proposal gate. Earlier
+  checkpoints remain preserved.
+- Official Matchweek 3 slates now feed Research Loop v1 through a read-only
+  in-memory adapter. It preserves the frozen archive byte-for-byte, keeps the
+  audited official decision separate from raw probability calibration, and
+  binds each projected XI to the correct fixture so later snapshots cannot
+  leak backward.
 - Manchester United, Chelsea, and Nottingham Forest produced the largest
   tentative attacking upside relative to the frozen base. Ipswich, Brighton,
   and Liverpool showed the largest tentative defensive exposure. These are
@@ -107,7 +112,14 @@ Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
   observed FotMob xG versus 3.05 predicted. The audited Liverpool direction
   was correct, but the totals and BTTS misses reinforce the existing
   goal-environment calibration concern.
-- All 175 tests pass, including regression guards proving the earlier Holy
+- After conservative shrinkage, Ipswich's attack-creation multiplier moved
+  from 1.131 to 0.956 and Liverpool's from 1.000 to 0.887. Their
+  goal-environment multipliers moved to 1.012 and 0.927 respectively. These
+  are research beliefs only; the large Isak finishing and Alisson prevention
+  residuals remain isolated from xG strength.
+- The public Methodology page now exposes the learning loop, its 11/20 frozen
+  fixture coverage, proposal count, and zero automatic applications.
+- All 179 tests pass, including regression guards proving the earlier Holy
   Grail experiment and original ledger observation were not rewritten by the
   new official scoring stream. The Matchweek 3 test now derives its settled
   count from the append-only result ledger instead of assuming zero results.
@@ -118,11 +130,11 @@ Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
    Villa–Arsenal in a roughly 2.95-xG environment when the observed total was
    1.36. Keep the correct Arsenal direction separate from the totals error.
 2. As each Matchweek 3 fixture settles, append results to the official archive
-   and rebuild the website. Score all ten fixtures; do not omit low-confidence
-   calls or rewrite either audited override.
+   and rerun the cumulative research loop. Score all ten fixtures; do not omit
+   low-confidence calls or rewrite either audited override.
 
    ```bash
-   python scripts/collect_official_shadow_results.py
+   python scripts/run_research_cycle.py --as-of YYYY-MM-DD
    python web/scripts/build_site_data.py
    ```
 3. Audit projected-XI misses, beginning with Tottenham (6/11), Crystal Palace

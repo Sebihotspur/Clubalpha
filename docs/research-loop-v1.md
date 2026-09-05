@@ -64,3 +64,11 @@ the exact input-result fingerprint.
 New frozen slates are registered as data in `config/research-loop-2026-27.json`.
 The runner then reads every registered cycle, so earlier learning is retained
 without carrying mutable hidden memory or applying the same match twice.
+
+The registry accepts both native `contextual` experiments and
+`official_shadow` slates. Official rows are adapted only in memory to the
+research contract: their frozen predictions remain byte-identical, their
+audited 1X2 decision stays separate from the probability model being
+calibrated, and the append-only result retains its original archive version.
+Each cycle's projected lineup is explicitly bound to its fixture ID so a later
+lineup snapshot can never be used to grade an earlier projection.

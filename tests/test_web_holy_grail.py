@@ -171,6 +171,17 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertIn('<details class="matchweek-fold">', app)
         self.assertIn("Hit rate by matchweek", app)
 
+    def test_methodology_exposes_the_append_only_learning_loop(self):
+        learning = self.data["methodology"]["research_loop"]
+        self.assertEqual(learning["completed_results"], 11)
+        self.assertEqual(learning["frozen_fixtures"], 20)
+        self.assertEqual(learning["promotion_candidates"], 0)
+        self.assertEqual(learning["automatically_applied"], 0)
+        self.assertFalse(learning["capital_deployment_ready"])
+        app = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
+        self.assertIn("05 · Learning loop", app)
+        self.assertIn("Absorb evidence without rewriting the model", app)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,404 @@
+{
+  "backtest_version": "clubalpha_contextual_interaction_v1_backtest",
+  "generated_at_utc": "2026-09-04T22:56:58.927368+00:00",
+  "prediction_freeze_date": "2026-08-31",
+  "status": "partial_shadow_backtest",
+  "sources": {
+    "predictions": "artifacts/official_shadow/2026-08-31-mw3/predictions.jsonl",
+    "results": "artifacts/official_shadow/2026-08-31-mw3/results.jsonl",
+    "lineup_snapshot": "reports/premier-league-alpha-snapshot-2026-08-25.json",
+    "base_predictions": "artifacts/round_robin/2026-08-25/predictions.jsonl",
+    "goal_model_artifact": "artifacts/prediction_lab/2026-08-24/goal-model.json",
+    "observed_match_data": "FotMob final scores, expected goals, team stats, and declared lineups",
+    "score_crosscheck": [
+      "https://www.fotmob.com/matches/-/-#5795441"
+    ]
+  },
+  "interpretation_rules": {
+    "outcomes_and_xg_are_scored_separately": true,
+    "xg_process_draw_gap": 0.25,
+    "positive_improvement_means_holy_grail_beat_base": true,
+    "multiclass_brier_range": [
+      0.0,
+      2.0
+    ],
+    "lower_is_better_except_accuracy": true
+  },
+  "validation": {
+    "frozen_fixtures": 10,
+    "completed_results": 1,
+    "pending_results": 9,
+    "unique_match_ids": 1,
+    "complete": false
+  },
+  "sample": {
+    "matches": 1,
+    "team_attack_directions": 2,
+    "xg_process_draw_threshold": 0.25,
+    "sufficient_to_recalibrate": false
+  },
+  "metrics": {
+    "baseline": {
+      "xg_side_mae": 0.831898,
+      "xg_side_rmse": 0.83621,
+      "xg_total_mae": 1.663796,
+      "goal_side_mae": 1.119809,
+      "one_x_two_brier": 0.692716,
+      "one_x_two_log_loss": 1.110665,
+      "one_x_two_top_pick_accuracy": 0.0,
+      "over_2_5_brier": 0.345297,
+      "over_2_5_log_loss": 0.88581,
+      "btts_brier": 0.368862,
+      "btts_log_loss": 0.934811
+    },
+    "contextual": {
+      "xg_side_mae": 0.829595,
+      "xg_side_rmse": 0.831881,
+      "xg_total_mae": 1.659189,
+      "goal_side_mae": 1.096634,
+      "one_x_two_brier": 0.672434,
+      "one_x_two_log_loss": 1.082522,
+      "one_x_two_top_pick_accuracy": 0.0,
+      "over_2_5_brier": 0.343724,
+      "over_2_5_log_loss": 0.882566,
+      "btts_brier": 0.368231,
+      "btts_log_loss": 0.933488
+    },
+    "holy_grail_improvement_positive_is_better": {
+      "xg_side_mae": 0.002303,
+      "xg_side_rmse": 0.004329,
+      "xg_total_mae": 0.004607,
+      "goal_side_mae": 0.023175,
+      "one_x_two_brier": 0.020282,
+      "one_x_two_log_loss": 0.028143,
+      "over_2_5_brier": 0.001573,
+      "over_2_5_log_loss": 0.003244,
+      "btts_brier": 0.000631,
+      "btts_log_loss": 0.001323,
+      "one_x_two_top_pick_accuracy": 0.0
+    }
+  },
+  "diagnostics": {
+    "outcome_hits": 0,
+    "process_supported_outcome_variance": 0,
+    "structural_misses": 1,
+    "context_improved_actual_outcome_probability": 1,
+    "context_improved_side_xg_mae": 1,
+    "goal_environment_dispersion": {
+      "observed_xg_total": {
+        "minimum": 1.39,
+        "maximum": 1.39,
+        "mean": 1.39,
+        "population_sd": 0.0
+      },
+      "baseline_predicted_xg_total": {
+        "minimum": 3.053796,
+        "maximum": 3.053796,
+        "mean": 3.053796,
+        "population_sd": 0.0
+      },
+      "contextual_predicted_xg_total": {
+        "minimum": 3.04919,
+        "maximum": 3.04919,
+        "mean": 3.04919,
+        "population_sd": 0.0
+      }
+    },
+    "context_adjustment_scale": {
+      "mean_absolute_side_xg_shift": 0.023174,
+      "maximum_absolute_side_xg_shift": 0.025478
+    },
+    "preferred_route_coverage": {
+      "observed": [
+        "box_pressure"
+      ],
+      "missing": [
+        "direct_transition",
+        "high_press",
+        "set_pieces",
+        "wide_delivery"
+      ],
+      "covered_routes": 1,
+      "known_routes": 5
+    },
+    "route_diagnostics": [
+      {
+        "preferred_route": "box_pressure",
+        "attack_directions": 2,
+        "movement_alignment_rate": 0.5,
+        "mean_xg_mae_improvement": 0.002303
+      }
+    ]
+  },
+  "lineup_projection": {
+    "snapshot_version": "clubalpha_premier_league_projected_xi_alpha_2026_08_25_fixture_bound",
+    "team_lineups": 2,
+    "mean_xi_hits_of_11": 9.0,
+    "xi_hit_rate": 0.818182,
+    "formation_accuracy": 1.0,
+    "rows": [
+      {
+        "match_id": 5795441,
+        "team_id": 9902,
+        "team": "Ipswich Town",
+        "projected_starters": 11,
+        "xi_hits": 10,
+        "xi_hit_rate": 0.909091,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          1129081
+        ],
+        "unprojected_starter_ids": [
+          693599
+        ],
+        "missed_projected_players": [
+          "Marcelino N\u00fa\u00f1ez"
+        ],
+        "unprojected_starters": [
+          "Exequiel Palacios"
+        ]
+      },
+      {
+        "match_id": 5795441,
+        "team_id": 8650,
+        "team": "Liverpool",
+        "projected_starters": 11,
+        "xi_hits": 8,
+        "xi_hit_rate": 0.727273,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          956683,
+          966018,
+          1597668
+        ],
+        "unprojected_starter_ids": [
+          831489,
+          921253,
+          1553105
+        ],
+        "missed_projected_players": [
+          "Ryan Gravenberch",
+          "Jeremie Frimpong",
+          "Rio Ngumoha"
+        ],
+        "unprojected_starters": [
+          "Alexis Mac Allister",
+          "Ronald Araujo",
+          "V\u00edctor Mu\u00f1oz"
+        ]
+      }
+    ]
+  },
+  "fixtures": [
+    {
+      "match_id": 5795441,
+      "kickoff_utc": "2026-09-04T19:00:00Z",
+      "fixture": "Ipswich Town vs Liverpool",
+      "score": "0-2",
+      "observed_xg": {
+        "home": 0.73,
+        "away": 0.66,
+        "total": 1.39
+      },
+      "actual_outcome": "away_win",
+      "xg_process_outcome": "draw",
+      "review_class": "structural_miss",
+      "baseline_top_pick": "home_win",
+      "contextual_top_pick": "home_win",
+      "baseline_actual_outcome_probability": 0.32934,
+      "contextual_actual_outcome_probability": 0.33874,
+      "actual_outcome_probability_improvement": 0.0094,
+      "base_predicted_xg": {
+        "home": 1.646707,
+        "away": 1.407089,
+        "total": 3.053796
+      },
+      "contextual_predicted_xg": {
+        "home": 1.621229,
+        "away": 1.42796,
+        "total": 3.04919
+      },
+      "xg_side_mae_improvement": 0.002304,
+      "directional_context_review": [
+        {
+          "side": "home",
+          "attacker": "Ipswich Town",
+          "defender": "Liverpool",
+          "preferred_route": "box_pressure",
+          "continuous_signal": -0.401227,
+          "combined_reliability": 0.388643,
+          "base_xg": 1.646707,
+          "contextual_xg": 1.621229,
+          "observed_xg": 0.73,
+          "context_xg_mae_improvement": 0.025478,
+          "movement_aligned_with_observed_residual": true
+        },
+        {
+          "side": "away",
+          "attacker": "Liverpool",
+          "defender": "Ipswich Town",
+          "preferred_route": "box_pressure",
+          "continuous_signal": 0.397573,
+          "combined_reliability": 0.370349,
+          "base_xg": 1.407089,
+          "contextual_xg": 1.42796,
+          "observed_xg": 0.66,
+          "context_xg_mae_improvement": -0.020871,
+          "movement_aligned_with_observed_residual": false
+        }
+      ],
+      "scores": {
+        "baseline": {
+          "xg_side_absolute_errors": [
+            0.9167069999999999,
+            0.747089
+          ],
+          "xg_side_squared_errors": [
+            0.8403517238489999,
+            0.558141973921
+          ],
+          "xg_total_absolute_error": 1.663796,
+          "goal_side_absolute_errors": [
+            1.646707,
+            0.592911
+          ],
+          "one_x_two_brier": 0.6927158552000001,
+          "one_x_two_log_loss": 1.1106646271922842,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": false,
+          "actual_outcome_probability": 0.32934,
+          "over_2_5_brier": 0.3452972644,
+          "over_2_5_log_loss": 0.8858100246205682,
+          "btts_brier": 0.3688618756,
+          "btts_log_loss": 0.9348111815115341
+        },
+        "contextual": {
+          "xg_side_absolute_errors": [
+            0.891229,
+            0.7679599999999999
+          ],
+          "xg_side_squared_errors": [
+            0.7942891304410001,
+            0.5897625615999998
+          ],
+          "xg_total_absolute_error": 1.659189,
+          "goal_side_absolute_errors": [
+            1.621229,
+            0.5720400000000001
+          ],
+          "one_x_two_brier": 0.6724337111999998,
+          "one_x_two_log_loss": 1.0825224275191618,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": false,
+          "actual_outcome_probability": 0.33874,
+          "over_2_5_brier": 0.34372423840000005,
+          "over_2_5_log_loss": 0.8825658624725342,
+          "btts_brier": 0.36823051240000004,
+          "btts_log_loss": 0.9334877567026766
+        }
+      }
+    }
+  ],
+  "pre_match_goal_coefficient_ablation": {
+    "goal_model_version": "clubalpha_goal_model_2026-08-24_v0",
+    "goal_model_trained_through": "2026-08-24",
+    "outcomes_used_to_choose_candidates": false,
+    "reconstruction_assumes_frozen_xg_was_not_clipped": true,
+    "best_side_xg_mae_candidate": "zero_coefficient",
+    "candidates": [
+      {
+        "candidate": "zero_coefficient",
+        "coefficient": 0.0,
+        "side_xg_mae": 0.75315,
+        "side_xg_rmse": 0.760932,
+        "total_xg_mae": 1.5063,
+        "predicted_total_xg_distribution": {
+          "minimum": 2.8963,
+          "maximum": 2.8963,
+          "mean": 2.8963,
+          "population_sd": 0.0
+        },
+        "reconstructed_competition_baseline": {
+          "home": 1.5917,
+          "away": 1.3046
+        }
+      },
+      {
+        "candidate": "applied_conservative",
+        "coefficient": 0.146445877,
+        "side_xg_mae": 0.831898,
+        "side_xg_rmse": 0.83621,
+        "total_xg_mae": 1.663796,
+        "predicted_total_xg_distribution": {
+          "minimum": 3.053796,
+          "maximum": 3.053796,
+          "mean": 3.053796,
+          "population_sd": 0.0
+        },
+        "reconstructed_competition_baseline": {
+          "home": 1.5917,
+          "away": 1.3046
+        }
+      },
+      {
+        "candidate": "frozen_point_estimate",
+        "coefficient": 0.445695839,
+        "side_xg_mae": 1.008664,
+        "side_xg_rmse": 1.00901,
+        "total_xg_mae": 2.017328,
+        "predicted_total_xg_distribution": {
+          "minimum": 3.407328,
+          "maximum": 3.407328,
+          "mean": 3.407328,
+          "population_sd": 0.0
+        },
+        "reconstructed_competition_baseline": {
+          "home": 1.5917,
+          "away": 1.3046
+        }
+      },
+      {
+        "candidate": "frozen_raw_estimate",
+        "coefficient": 0.513116594,
+        "side_xg_mae": 1.051669,
+        "side_xg_rmse": 1.051729,
+        "total_xg_mae": 2.103338,
+        "predicted_total_xg_distribution": {
+          "minimum": 3.493338,
+          "maximum": 3.493338,
+          "mean": 3.493338,
+          "population_sd": 0.0
+        },
+        "reconstructed_competition_baseline": {
+          "home": 1.5917,
+          "away": 1.3046
+        }
+      }
+    ]
+  },
+  "audit_read": {
+    "structural_review_queue": [
+      "Ipswich Town vs Liverpool"
+    ],
+    "evidence_findings": [
+      "The frozen XI averaged 9.00/11 starters; selection error still reaches Player Alpha before kickoff.",
+      "Observed match xG totals spanned 1.39-1.39, while the base forecast spanned only 3.05-3.05; the goal environment is over-compressed in this sample.",
+      "Only 1/5 route families became preferred; missing direct_transition, high_press, set_pieces, wide_delivery.",
+      "The best side-xG MAE among coefficient choices frozen before kickoff is zero_coefficient; this result does not fit a new coefficient or authorize a change."
+    ],
+    "coefficient_action": "hold_at_shadow_value",
+    "capital_action": "zero_allocation",
+    "next_iteration": "Audit the route and lineup assumptions behind structural misses; do not refit the context coefficient on this partial sample."
+  },
+  "decision_boundaries": {
+    "base_weights_changed": false,
+    "context_coefficient_changed": false,
+    "predictions_mutated": false,
+    "sample_sufficient_for_calibration": false,
+    "capital_deployment_ready": false
+  }
+}

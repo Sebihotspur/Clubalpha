@@ -18,6 +18,7 @@ from clubalpha.contextual_backtest import (  # noqa: E402
     evaluate_contextual_backtest,
     evaluate_goal_coefficient_ablation,
 )
+from clubalpha.research_cycle import normalize_cycle_data  # noqa: E402
 from clubalpha.round_robin_archive import load_jsonl  # noqa: E402
 
 
@@ -49,15 +50,35 @@ def parse_args() -> argparse.Namespace:
         default=ROOT
         / "reports/contextual-interaction-v1-backtest-2026-08-31.json",
     )
+    parser.add_argument(
+        "--prediction-format",
+        choices=("contextual", "official_shadow"),
+        default="contextual",
+    )
     return parser.parse_args()
+
+
+def relative_source(path: Path) -> str:
+    return str(path.resolve().relative_to(ROOT))
 
 
 def main() -> int:
     args = parse_args()
-    predictions = load_jsonl(args.archive_dir / "predictions.jsonl")
-    results = load_jsonl(args.archive_dir / "results.jsonl")
-    snapshot = json.loads(args.lineup_snapshot.read_text(encoding="utf-8"))
-    base_predictions = load_jsonl(args.base_predictions)
+    raw_predictions = load_jsonl(args.archive_dir / "predictions.jsonl")
+    raw_results = load_jsonl(args.archive_dir / "results.jsonl")
+    raw_snapshot = json.loads(args.lineup_snapshot.read_text(encoding="utf-8"))
+    raw_base_predictions = load_jsonl(args.base_predictions)
+    cycle = normalize_cycle_data(
+        raw_predictions,
+        raw_results,
+        raw_base_predictions,
+        raw_snapshot,
+        prediction_format=args.prediction_format,
+    )
+    predictions = cycle["predictions"]
+    results = cycle["results"]
+    snapshot = cycle["lineup_snapshot"]
+    base_predictions = cycle["base_predictions"]
     goal_model_artifact = json.loads(
         args.goal_model_artifact.read_text(encoding="utf-8")
     )
@@ -82,24 +103,28 @@ def main() -> int:
     report = {
         "backtest_version": "clubalpha_contextual_interaction_v1_backtest",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-        "prediction_freeze_date": "2026-08-26",
+        "prediction_freeze_date": str(
+            raw_predictions[0].get("as_of_utc")
+            or raw_predictions[0].get("fixture", {}).get("kickoff_utc")
+            or "unknown"
+        )[:10],
         "status": "partial_shadow_backtest",
         "sources": {
             "predictions": str(
-                (args.archive_dir / "predictions.jsonl").relative_to(ROOT)
+                relative_source(args.archive_dir / "predictions.jsonl")
             ),
-            "results": str((args.archive_dir / "results.jsonl").relative_to(ROOT)),
-            "lineup_snapshot": str(args.lineup_snapshot.relative_to(ROOT)),
-            "base_predictions": str(args.base_predictions.relative_to(ROOT)),
-            "goal_model_artifact": str(
-                args.goal_model_artifact.relative_to(ROOT)
-            ),
+            "results": relative_source(args.archive_dir / "results.jsonl"),
+            "lineup_snapshot": relative_source(args.lineup_snapshot),
+            "base_predictions": relative_source(args.base_predictions),
+            "goal_model_artifact": relative_source(args.goal_model_artifact),
             "observed_match_data": "FotMob final scores, expected goals, team stats, and declared lineups",
-            "score_crosscheck": [
-                "https://www.premierleague.com/en/news/4698714/haaland-and-cherki-both-score-twice-in-man-city-win-at-crystal-palace",
-                "https://www.premierleague.com/en/news/4699961/saturday-wrap-hull-in-dreamland-while-newcastle-impress",
-                "https://www.premierleague.com/en/news/4701772/sunday-wrap-fernandes-masterclass-alonsos-perfect-chelsea-start",
-            ],
+            "score_crosscheck": sorted(
+                {
+                    str(row.get("source_url"))
+                    for row in raw_results
+                    if row.get("source_url")
+                }
+            ),
         },
         "interpretation_rules": {
             "outcomes_and_xg_are_scored_separately": True,
@@ -134,10 +159,10 @@ def main() -> int:
                     f"missing {', '.join(route_coverage['missing'])}."
                 ),
                 (
-                    "The pre-kickoff applied conservative goal coefficient still "
-                    f"has the best side-xG MAE among the artifact's frozen choices "
-                    f"({coefficient_ablation['best_side_xg_mae_candidate']}); "
-                    "increasing sensitivity is not the fix."
+                    "The best side-xG MAE among coefficient choices frozen before "
+                    "kickoff is "
+                    f"{coefficient_ablation['best_side_xg_mae_candidate']}; this "
+                    "result does not fit a new coefficient or authorize a change."
                 ),
             ],
             "coefficient_action": "hold_at_shadow_value",

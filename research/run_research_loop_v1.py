@@ -16,7 +16,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from clubalpha.research_loop import build_research_state, learning_summary  # noqa: E402
-from clubalpha.round_robin_archive import load_jsonl  # noqa: E402
+from clubalpha.research_cycle import load_registered_cycle  # noqa: E402
 
 
 def parse_args() -> argparse.Namespace:
@@ -67,7 +67,11 @@ def _report(state: dict[str, Any]) -> str:
         "",
         "## What the loop learned",
         "",
-        "The state below is deliberately tentative. Every club has only one new match, so no belief passed the five-match promotion gate and nothing was applied to a forecast.",
+        (
+            "The state below is deliberately tentative. Evidence is shrunk "
+            "toward neutral, the five-match promotion gate remains active, "
+            "and nothing was applied automatically to a forecast."
+        ),
         "",
         "### Attack above expectation",
         "",
@@ -131,13 +135,12 @@ def main() -> int:
     cycle_ids = []
     for cycle in cycles:
         cycle_ids.append(str(cycle["cycle_id"]))
-        archive = ROOT / cycle["contextual_archive"]
-        predictions.extend(load_jsonl(archive / "predictions.jsonl"))
-        results.extend(load_jsonl(archive / "results.jsonl"))
-        base_predictions.extend(load_jsonl(ROOT / cycle["base_predictions"]))
-        snapshot = load_json(ROOT / cycle["lineup_snapshot"])
-        lineup_clubs.extend(snapshot.get("clubs") or [])
-        goal_models.append(load_json(ROOT / cycle["goal_model_artifact"]))
+        normalized = load_registered_cycle(ROOT, cycle)
+        predictions.extend(normalized["predictions"])
+        results.extend(normalized["results"])
+        base_predictions.extend(normalized["base_predictions"])
+        lineup_clubs.extend(normalized["lineup_snapshot"].get("clubs") or [])
+        goal_models.append(normalized["goal_model"])
     goal_versions = {row.get("version") for row in goal_models}
     shared_goal_model = goal_models[0] if len(goal_versions) == 1 else None
     lineup_snapshot = {
@@ -185,6 +188,9 @@ def main() -> int:
         "implementation_sha256": {
             "clubalpha/research_loop.py": _sha256(
                 ROOT / "clubalpha/research_loop.py"
+            ),
+            "clubalpha/research_cycle.py": _sha256(
+                ROOT / "clubalpha/research_cycle.py"
             ),
             "research/run_research_loop_v1.py": _sha256(Path(__file__)),
             "config/research-loop-v1.json": _sha256(args.config),

@@ -40,7 +40,11 @@ def main() -> int:
     if not cycles:
         raise ValueError("research cycle registry contains no cycles")
     latest = cycles[-1]
-    archive = ROOT / latest["contextual_archive"]
+    prediction_format = str(latest.get("prediction_format") or "contextual")
+    archive_value = latest.get("archive") or latest.get("contextual_archive")
+    if not archive_value:
+        raise ValueError("latest research cycle has no archive")
+    archive = ROOT / str(archive_value)
     collect = [
         sys.executable,
         str(ROOT / "scripts/collect_contextual_results.py"),
@@ -49,6 +53,8 @@ def main() -> int:
         "--season",
         str(registry["season"]),
     ]
+    if prediction_format == "official_shadow":
+        collect.extend(["--result-stream", "official"])
     if args.use_cache:
         collect.append("--use-cache")
     run(collect)
@@ -64,6 +70,8 @@ def main() -> int:
             str(ROOT / latest["base_predictions"]),
             "--goal-model-artifact",
             str(ROOT / latest["goal_model_artifact"]),
+            "--prediction-format",
+            prediction_format,
             "--output",
             str(ROOT / f"reports/contextual-interaction-v1-backtest-{args.as_of}.json"),
         ]

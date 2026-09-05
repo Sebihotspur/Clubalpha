@@ -5,9 +5,18 @@
   "cycles": [
     {
       "cycle_id": "2026-08-26-matchweek-2",
+      "prediction_format": "contextual",
       "contextual_archive": "artifacts/contextual_interaction/2026-08-26",
       "lineup_snapshot": "reports/premier-league-alpha-snapshot-2026-08-25.json",
       "base_predictions": "artifacts/prediction_lab/2026-08-24/predictions.jsonl",
+      "goal_model_artifact": "artifacts/prediction_lab/2026-08-24/goal-model.json"
+    },
+    {
+      "cycle_id": "2026-08-31-matchweek-3-official",
+      "prediction_format": "official_shadow",
+      "archive": "artifacts/official_shadow/2026-08-31-mw3",
+      "lineup_snapshot": "reports/premier-league-alpha-snapshot-2026-08-25.json",
+      "base_predictions": "artifacts/round_robin/2026-08-25/predictions.jsonl",
       "goal_model_artifact": "artifacts/prediction_lab/2026-08-24/goal-model.json"
     }
   ]
