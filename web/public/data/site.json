@@ -396,24 +396,24 @@
       "model_overrides": 2
     },
     "performance_diagnostic": {
-      "settled": 7,
-      "official_1x2_hits": 2,
-      "raw_probability_leader_hits": 1,
-      "contextual_xg_total_mae": 1.023514,
-      "mean_projected_xi_hits_of_11": 8.285714,
+      "settled": 10,
+      "official_1x2_hits": 3,
+      "raw_probability_leader_hits": 2,
+      "contextual_xg_total_mae": 0.926229,
+      "mean_projected_xi_hits_of_11": 8.4,
       "projected_xg_total_range": {
         "minimum": 2.759612,
         "maximum": 3.1874,
-        "mean": 3.01706,
-        "population_sd": 0.142818
+        "mean": 2.985711,
+        "population_sd": 0.129457
       },
       "observed_xg_total_range": {
         "minimum": 1.39,
         "maximum": 5.1,
-        "mean": 3.074286,
-        "population_sd": 1.244288
+        "mean": 2.816,
+        "population_sd": 1.130992
       },
-      "structural_misses": 5,
+      "structural_misses": 7,
       "process_supported_outcome_variance": 1,
       "sample_sufficient_to_recalibrate": false
     },
@@ -1535,8 +1535,22 @@
             "xg_multiplier": 1.010464
           }
         },
-        "status": "pending",
-        "result": null,
+        "status": "settled",
+        "result": {
+          "final_home_goals": 0,
+          "final_away_goals": 0,
+          "outcome": "draw",
+          "actual_xg": {
+            "home": 0.57,
+            "away": 1.93,
+            "total": 2.5
+          },
+          "official_1x2_hit": false,
+          "raw_probability_leader": "home_win",
+          "raw_1x2_hit": false,
+          "over_under_2_5_hit": false,
+          "btts_hit": false
+        },
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -1668,8 +1682,22 @@
             "xg_multiplier": 0.997973
           }
         },
-        "status": "pending",
-        "result": null,
+        "status": "settled",
+        "result": {
+          "final_home_goals": 2,
+          "final_away_goals": 2,
+          "outcome": "draw",
+          "actual_xg": {
+            "home": 1.01,
+            "away": 0.69,
+            "total": 1.7
+          },
+          "official_1x2_hit": false,
+          "raw_probability_leader": "away_win",
+          "raw_1x2_hit": false,
+          "over_under_2_5_hit": true,
+          "btts_hit": true
+        },
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -1780,8 +1808,22 @@
             "xg_multiplier": 0.971123
           }
         },
-        "status": "pending",
-        "result": null,
+        "status": "settled",
+        "result": {
+          "final_home_goals": 2,
+          "final_away_goals": 1,
+          "outcome": "home_win",
+          "actual_xg": {
+            "home": 2.05,
+            "away": 0.39,
+            "total": 2.44
+          },
+          "official_1x2_hit": true,
+          "raw_probability_leader": "home_win",
+          "raw_1x2_hit": true,
+          "over_under_2_5_hit": true,
+          "btts_hit": true
+        },
         "quality_flags": [
           "context_coefficient_not_learned_from_residuals",
           "context_shadow_sensitivity_only",
@@ -18007,12 +18049,12 @@
   },
   "ledger": {
     "status": "official_shadow_collection",
-    "matches_logged": 7,
+    "matches_logged": 10,
     "sample_gate": 30,
-    "hits": 2,
-    "misses": 5,
-    "pending": 3,
-    "hit_rate": 0.285714,
+    "hits": 3,
+    "misses": 7,
+    "pending": 0,
+    "hit_rate": 0.3,
     "hit_rate_gate": 0.5,
     "review_ready": false,
     "next_stage": "paper_allocation_and_price_validation",
@@ -18031,31 +18073,31 @@
         "matchweek": 3,
         "name": "Official Matchweek 3",
         "source": "Official shadow slate",
-        "status": "collecting",
+        "status": "settled",
         "counts_toward_promotion_gate": true,
         "fixtures": 10,
         "first_kickoff_utc": "2026-09-04T19:00:00Z",
         "last_kickoff_utc": "2026-09-06T15:30:00Z",
-        "settled": 7,
-        "pending": 3,
+        "settled": 10,
+        "pending": 0,
         "markets": {
           "one_x_two": {
             "label": "1X2",
-            "hits": 2,
-            "settled": 7,
-            "hit_rate": 0.285714
+            "hits": 3,
+            "settled": 10,
+            "hit_rate": 0.3
           },
           "over_under_2_5": {
             "label": "O/U 2.5",
-            "hits": 2,
-            "settled": 7,
-            "hit_rate": 0.285714
+            "hits": 4,
+            "settled": 10,
+            "hit_rate": 0.4
           },
           "btts": {
             "label": "BTTS",
-            "hits": 4,
-            "settled": 7,
-            "hit_rate": 0.571429
+            "hits": 6,
+            "settled": 10,
+            "hit_rate": 0.6
           }
         }
       },
@@ -18101,11 +18143,11 @@
   },
   "methodology": {
     "research_loop": {
-      "as_of": "2026-09-05",
-      "learned_through_kickoff_utc": "2026-09-05T14:00:00Z",
-      "completed_results": 17,
+      "as_of": "2026-09-07",
+      "learned_through_kickoff_utc": "2026-09-06T15:30:00Z",
+      "completed_results": 20,
       "frozen_fixtures": 20,
-      "pending_results": 3,
+      "pending_results": 0,
       "promotion_candidates": 0,
       "automatically_applied": 0,
       "capital_deployment_ready": false
@@ -18129,7 +18171,7 @@
     ],
     "caveats": [
       "34 of 200 component-scale sides collected",
-      "17 completed fixtures are tentative research evidence",
+      "20 completed fixtures are tentative research evidence",
       "Official MW3 probabilities remain shadow-only",
       "Projected lineups are not confirmed starting XIs",
       "Market prices are not yet an automated model input",
