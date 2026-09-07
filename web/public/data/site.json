@@ -1,6 +1,6 @@
 {
   "meta": {
-    "site_version": "clubalpha_web_v0_4_result_diagnostics",
+    "site_version": "clubalpha_web_v0_5_fixture_calibration",
     "prediction_version": "clubalpha_official_shadow_mw3_v1",
     "as_of": "2026-08-31T18:56:06Z",
     "generated_at_utc": "2026-08-31T18:56:06Z",
@@ -18142,6 +18142,52 @@
     "capital_deployment_ready": false
   },
   "methodology": {
+    "fixture_calibration": {
+      "version": "clubalpha_fixture_calibration_v1",
+      "status": "shadow_challenger",
+      "as_of": "2026-09-07",
+      "training_matches": 20,
+      "league_venue": {
+        "predicted_home_away_xg_ratio": 1.211988,
+        "observed_home_away_xg_ratio": 1.088408,
+        "raw_log_ratio_correction": -0.107546,
+        "evidence_confidence": 0.5,
+        "applied_log_ratio_correction": -0.053773
+      },
+      "adjusted_home_away_xg_ratio": 1.148537,
+      "draw_calibration": {
+        "predicted_draw_rate": 0.234961,
+        "observed_draws": 9,
+        "observed_draw_rate": 0.45,
+        "posterior_draw_rate": 0.342481,
+        "applied_logit_correction": 0.528248,
+        "draw_zone_max_probability_gap": 0.04,
+        "draw_zone_max_side_probability": 0.5
+      },
+      "active_team_venue_modifiers": 0,
+      "chronological_audit": {
+        "interpretation": "cycle-forward; each calibration uses only earlier cycles",
+        "evaluated_cycles": 1,
+        "baseline": {
+          "matches": 10,
+          "one_x_two_brier": 0.741644,
+          "one_x_two_log_loss": 1.20987,
+          "top_pick_accuracy": 0.2,
+          "home_probability_leader_rate": 0.9,
+          "mean_draw_probability": 0.232618
+        },
+        "calibrated": {
+          "matches": 10,
+          "one_x_two_brier": 0.724677,
+          "one_x_two_log_loss": 1.175468,
+          "top_pick_accuracy": 0.2,
+          "home_probability_leader_rate": 0.9,
+          "mean_draw_probability": 0.2508
+        }
+      },
+      "probability_validated": false,
+      "capital_deployment_ready": false
+    },
     "research_loop": {
       "as_of": "2026-09-07",
       "learned_through_kickoff_utc": "2026-09-06T15:30:00Z",
@@ -18178,7 +18224,8 @@
       "Historical August 11 roster is reconstructed and flagged",
       "Player scorer and assist heads remain deferred",
       "Style Matchup v0 is a zero-weight research challenger",
-      "Holy Grail context sensitivity is not yet learned from residuals"
+      "Holy Grail context sensitivity is not yet learned from residuals",
+      "Fixture Calibration v1 remains shadow-only until 100 matches"
     ]
   }
 }

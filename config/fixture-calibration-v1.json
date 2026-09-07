@@ -1,0 +1,33 @@
+{
+  "version": "clubalpha_fixture_calibration_v1",
+  "status": "shadow_challenger",
+  "minimum_training_matches": 10,
+  "minimum_validation_matches": 100,
+  "xg_floor": 0.15,
+  "venue": {
+    "prior_match_equivalents": 20.0,
+    "maximum_absolute_league_log_ratio_correction": 0.12,
+    "team_prior_match_equivalents": 6.0,
+    "minimum_team_home_matches": 5,
+    "minimum_team_away_matches": 5,
+    "maximum_absolute_team_log_ratio_effect": 0.1,
+    "maximum_absolute_total_log_ratio_correction": 0.2
+  },
+  "draw": {
+    "prior_match_equivalents": 20.0,
+    "maximum_absolute_logit_correction": 0.75,
+    "draw_zone_max_probability_gap": 0.04,
+    "draw_zone_max_side_probability": 0.5
+  },
+  "simulation": {
+    "draws": 50000,
+    "seed": 20260907,
+    "totals_lines": [2.5, 3.5]
+  },
+  "locked_boundaries": {
+    "player_alpha_formulas_mutable": false,
+    "base_60_30_10_weights_mutable": false,
+    "frozen_predictions_mutable": false,
+    "automatic_capital_authorization_allowed": false
+  }
+}

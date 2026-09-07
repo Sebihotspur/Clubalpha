@@ -86,6 +86,16 @@ def main() -> int:
             str(args.registry),
         ]
     )
+    run(
+        [
+            sys.executable,
+            str(ROOT / "research/build_fixture_calibration_v1.py"),
+            "--as-of",
+            args.as_of,
+            "--registry",
+            str(args.registry),
+        ]
+    )
     return 0
 
 

@@ -300,6 +300,13 @@ Outputs include 1X2, Over/Under 2.5 and 3.5, BTTS, projected xG, and likely
 scorelines. They are frozen shadow probabilities—not market edges or capital
 signals. See [Prediction Lab v0](docs/prediction-lab-v0.md).
 
+Fixture Calibration v1 now learns from every registered, completed frozen
+fixture. It conservatively updates the current league venue translation, raises
+or lowers draw probability through a bounded logit correction, and marks close
+side-versus-draw forecasts as pass/review zones. It does not modify Player
+Alpha, the 60/30/10 foundation, contextual coefficients, or frozen archives.
+See [Fixture Calibration v1](docs/fixture-calibration-v1.md).
+
 ## Web dashboard
 
 The read-only Clubalpha dashboard is live at

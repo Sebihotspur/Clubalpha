@@ -1,0 +1,268 @@
+{
+  "version": "clubalpha_fixture_calibration_v1",
+  "status": "shadow_challenger",
+  "as_of": "2026-09-07",
+  "learned_through_kickoff_utc": "2026-09-06T15:30:00Z",
+  "training_matches": 20,
+  "training_match_ids": [
+    5795425,
+    5795426,
+    5795427,
+    5795428,
+    5795429,
+    5795430,
+    5795431,
+    5795432,
+    5795433,
+    5795434,
+    5795435,
+    5795436,
+    5795437,
+    5795438,
+    5795439,
+    5795440,
+    5795441,
+    5795442,
+    5795443,
+    5795444
+  ],
+  "method": {
+    "venue": "evidence-shrunk aggregate xG log-ratio residual",
+    "draw": "evidence-shrunk draw-rate logit intercept",
+    "team_venue": "home-versus-away xG-ratio residual with two-sided evidence gate"
+  },
+  "league_venue": {
+    "predicted_home_away_xg_ratio": 1.211988,
+    "observed_home_away_xg_ratio": 1.088408,
+    "raw_log_ratio_correction": -0.107546,
+    "evidence_confidence": 0.5,
+    "applied_log_ratio_correction": -0.053773
+  },
+  "draw_calibration": {
+    "predicted_draw_rate": 0.234961,
+    "observed_draws": 9,
+    "observed_draw_rate": 0.45,
+    "posterior_draw_rate": 0.342481,
+    "applied_logit_correction": 0.528248,
+    "draw_zone_max_probability_gap": 0.04,
+    "draw_zone_max_side_probability": 0.5
+  },
+  "team_venue_modifiers": [
+    {
+      "team_id": 8678,
+      "team": "AFC Bournemouth",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -0.84138,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 9825,
+      "team": "Arsenal",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": 0.344308,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 10252,
+      "team": "Aston Villa",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -1.798669,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 9937,
+      "team": "Brentford",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -1.062021,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 10204,
+      "team": "Brighton & Hove Albion",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -0.163168,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 8455,
+      "team": "Chelsea",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": 1.658035,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 8669,
+      "team": "Coventry City",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -0.093146,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 9826,
+      "team": "Crystal Palace",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -0.566618,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 8668,
+      "team": "Everton",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": 0.242988,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 9879,
+      "team": "Fulham",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": 0.794446,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 8667,
+      "team": "Hull City",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -1.159357,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 9902,
+      "team": "Ipswich Town",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": 0.35993,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 8463,
+      "team": "Leeds United",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -1.1538,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 8650,
+      "team": "Liverpool",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -0.636697,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 8456,
+      "team": "Manchester City",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -0.991899,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 10260,
+      "team": "Manchester United",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": 0.78616,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 10261,
+      "team": "Newcastle United",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -0.385534,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 10203,
+      "team": "Nottingham Forest",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -1.667676,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 8472,
+      "team": "Sunderland",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -0.283493,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    },
+    {
+      "team_id": 8586,
+      "team": "Tottenham Hotspur",
+      "home_matches": 1,
+      "away_matches": 1,
+      "raw_home_minus_away_log_ratio": -0.758374,
+      "evidence_confidence": 0.25,
+      "eligible": false,
+      "log_ratio_effect": 0.0
+    }
+  ],
+  "decision_boundaries": {
+    "shadow_forecast_ready": true,
+    "probability_validated": false,
+    "team_venue_modifiers_active": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  },
+  "locked_boundaries": {
+    "player_alpha_formulas_mutable": false,
+    "base_60_30_10_weights_mutable": false,
+    "frozen_predictions_mutable": false,
+    "automatic_capital_authorization_allowed": false
+  },
+  "quality_flags": [
+    "small_fixture_calibration_sample"
+  ]
+}

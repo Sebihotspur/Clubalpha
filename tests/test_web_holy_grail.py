@@ -182,6 +182,27 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertIn("05 · Learning loop", app)
         self.assertIn("Absorb evidence without rewriting the model", app)
 
+    def test_methodology_exposes_fixture_calibration_without_unlocking_capital(self):
+        calibration = self.data["methodology"]["fixture_calibration"]
+        self.assertEqual(calibration["training_matches"], 20)
+        self.assertLess(
+            calibration["league_venue"]["applied_log_ratio_correction"], 0
+        )
+        self.assertGreater(
+            calibration["draw_calibration"]["applied_logit_correction"], 0
+        )
+        self.assertEqual(calibration["active_team_venue_modifiers"], 0)
+        self.assertFalse(calibration["probability_validated"])
+        self.assertFalse(calibration["capital_deployment_ready"])
+        chronological = calibration["chronological_audit"]
+        self.assertLess(
+            chronological["calibrated"]["one_x_two_brier"],
+            chronological["baseline"]["one_x_two_brier"],
+        )
+        app = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
+        self.assertIn("04 · Calibrate + simulate", app)
+        self.assertIn("draw-risk gate", app)
+
     def test_current_results_expose_outcomes_and_model_diagnostics(self):
         diagnostic = self.data["official_slate"]["performance_diagnostic"]
         self.assertEqual(diagnostic["settled"], 10)

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import math
 import shutil
 import sys
 from pathlib import Path
@@ -23,6 +24,7 @@ ROUND_ROBIN_DIR = ROOT / "artifacts/round_robin/2026-08-25"
 CONTEXTUAL_DIR = ROOT / "artifacts/contextual_interaction/2026-08-26"
 OFFICIAL_DIR = ROOT / "artifacts/official_shadow/2026-08-31-mw3"
 RESEARCH_LOOP_DIR = ROOT / "artifacts/research_loop"
+FIXTURE_CALIBRATION_DIR = ROOT / "artifacts/fixture_calibration"
 BACKTEST_REPORT_PATTERN = "contextual-interaction-v1-backtest-*.json"
 PUBLIC_DIR = ROOT / "web/public"
 
@@ -87,6 +89,32 @@ def load_latest_backtest():
     if not candidates:
         raise ValueError("website requires at least one contextual backtest")
     return max(candidates, key=lambda row: row[:3])[3]
+
+
+def load_latest_fixture_calibration():
+    """Load the most recent immutable venue/draw calibration artifact."""
+
+    candidates = []
+    for path in FIXTURE_CALIBRATION_DIR.glob("*/calibration.json"):
+        artifact = load_json(path)
+        if artifact.get("version") != "clubalpha_fixture_calibration_v1":
+            continue
+        audit_path = path.with_name("audit.json")
+        if not audit_path.exists():
+            continue
+        candidates.append(
+            (
+                str(artifact.get("as_of") or ""),
+                int(artifact.get("training_matches") or 0),
+                str(path),
+                artifact,
+                load_json(audit_path),
+            )
+        )
+    if not candidates:
+        raise ValueError("website requires a fixture-calibration artifact")
+    selected = max(candidates, key=lambda row: row[:3])
+    return selected[3], selected[4]
 
 
 def _hit_rate(hits: int, settled: int):
@@ -178,10 +206,15 @@ def build():
     official_results = load_jsonl(OFFICIAL_DIR / "results.jsonl")
     research_state = load_latest_research_state()
     latest_backtest = load_latest_backtest()
+    fixture_calibration, fixture_calibration_audit = (
+        load_latest_fixture_calibration()
+    )
     if contextual_report["decision_boundaries"]["capital_deployment_ready"]:
         raise ValueError("website refuses capital-ready contextual shadow data")
     if contextual_report["method"]["archetype_labels_used_in_math"]:
         raise ValueError("website refuses context that uses archetype labels in math")
+    if fixture_calibration["decision_boundaries"]["capital_deployment_ready"]:
+        raise ValueError("website refuses capital-ready fixture calibration")
     official_validation = validate_predictions(
         official_predictions,
         expected_round=int(official_report["round"]),
@@ -410,7 +443,7 @@ def build():
 
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_4_result_diagnostics",
+            "site_version": "clubalpha_web_v0_5_fixture_calibration",
             "prediction_version": official_report["report_version"],
             "as_of": official_report["as_of_utc"],
             "generated_at_utc": official_report["as_of_utc"],
@@ -612,6 +645,38 @@ def build():
             "capital_deployment_ready": False,
         },
         "methodology": {
+            "fixture_calibration": {
+                "version": fixture_calibration["version"],
+                "status": fixture_calibration["status"],
+                "as_of": fixture_calibration["as_of"],
+                "training_matches": fixture_calibration["training_matches"],
+                "league_venue": fixture_calibration["league_venue"],
+                "adjusted_home_away_xg_ratio": round(
+                    fixture_calibration["league_venue"][
+                        "predicted_home_away_xg_ratio"
+                    ]
+                    * math.exp(
+                        fixture_calibration["league_venue"][
+                            "applied_log_ratio_correction"
+                        ]
+                    ),
+                    6,
+                ),
+                "draw_calibration": fixture_calibration["draw_calibration"],
+                "active_team_venue_modifiers": sum(
+                    bool(row["eligible"])
+                    for row in fixture_calibration["team_venue_modifiers"]
+                ),
+                "chronological_audit": fixture_calibration_audit[
+                    "chronological_audit"
+                ],
+                "probability_validated": fixture_calibration[
+                    "decision_boundaries"
+                ]["probability_validated"],
+                "capital_deployment_ready": fixture_calibration[
+                    "decision_boundaries"
+                ]["capital_deployment_ready"],
+            },
             "research_loop": {
                 "as_of": research_state["as_of"],
                 "learned_through_kickoff_utc": research_state[
@@ -666,6 +731,7 @@ def build():
                 "Player scorer and assist heads remain deferred",
                 "Style Matchup v0 is a zero-weight research challenger",
                 "Holy Grail context sensitivity is not yet learned from residuals",
+                "Fixture Calibration v1 remains shadow-only until 100 matches",
             ],
         },
     }

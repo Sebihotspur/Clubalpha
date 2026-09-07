@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from clubalpha.contextual_interaction import contextualize_prediction  # noqa: E402
+from clubalpha.fixture_calibration import calibrate_fixture_forecast  # noqa: E402
 from clubalpha.official_shadow import (  # noqa: E402
     picked_team,
     score_results,
@@ -107,6 +108,20 @@ def build_predictions(config: dict[str, Any]) -> list[dict[str, Any]]:
     style_snapshot = load_json(inputs["style_snapshot"])
     context_config = load_json(inputs["context_config"])
     research = load_json(inputs["research_checkpoint"])
+    calibration_artifact = (
+        load_json(inputs["fixture_calibration_artifact"])
+        if "fixture_calibration_artifact" in inputs
+        else None
+    )
+    calibration_config = (
+        load_json(inputs["fixture_calibration_config"])
+        if "fixture_calibration_config" in inputs
+        else None
+    )
+    if (calibration_artifact is None) != (calibration_config is None):
+        raise ValueError(
+            "fixture calibration artifact and config must be supplied together"
+        )
 
     scheduled = [
         row
@@ -135,11 +150,38 @@ def build_predictions(config: dict[str, Any]) -> list[dict[str, Any]]:
         contextual = contextualize_prediction(
             base, style_by_team[home], style_by_team[away], context_config
         )
-        probabilities = contextual["contextual"]["probabilities"]
+        contextual_model = contextual["contextual"]
+        calibration = None
+        if calibration_artifact is not None and calibration_config is not None:
+            calibration = calibrate_fixture_forecast(
+                {
+                    "fixture": {
+                        "match_id": match_id,
+                        "kickoff_utc": scheduled_fixture["status"]["utcTime"],
+                        "home_team_id": int(scheduled_fixture["home"]["id"]),
+                        "home_team": home,
+                        "away_team_id": int(scheduled_fixture["away"]["id"]),
+                        "away_team": away,
+                    },
+                    "predicted_xg": contextual_model["predicted_xg"],
+                    "probabilities": contextual_model["probabilities"],
+                },
+                calibration_artifact,
+                calibration_config,
+            )
+        probabilities = (
+            calibration["probabilities"]
+            if calibration is not None
+            else contextual_model["probabilities"]
+        )
         model = {
             "source_prediction_match_id": base["fixture"]["match_id"],
             "base_predicted_xg": contextual["baseline"]["predicted_xg"],
-            "predicted_xg": contextual["contextual"]["predicted_xg"],
+            "predicted_xg": (
+                calibration["predicted_xg"]
+                if calibration is not None
+                else contextual_model["predicted_xg"]
+            ),
             "probabilities": {
                 "home_win": probabilities["home_win"],
                 "draw": probabilities["draw"],
@@ -150,9 +192,11 @@ def build_predictions(config: dict[str, Any]) -> list[dict[str, Any]]:
                 "under_3_5": probabilities["under"]["3.5"],
                 "btts_yes": probabilities["btts_yes"],
             },
-            "most_likely_scorelines": contextual["contextual"][
-                "most_likely_scorelines"
-            ],
+            "most_likely_scorelines": (
+                calibration["most_likely_scorelines"]
+                if calibration is not None
+                else contextual_model["most_likely_scorelines"]
+            ),
             "fixture_intelligence": base["fixture_intelligence"],
             "context": {
                 "verdict": contextual["context_read"]["verdict"],
@@ -163,6 +207,16 @@ def build_predictions(config: dict[str, Any]) -> list[dict[str, Any]]:
                 "away_attack": contextual["directional_context"]["away_attack"],
             },
         }
+        if calibration is not None:
+            model["pre_fixture_calibration"] = {
+                "predicted_xg": contextual_model["predicted_xg"],
+                "probabilities": contextual_model["probabilities"],
+            }
+            model["fixture_calibration"] = {
+                "version": calibration["calibration_version"],
+                "artifact_as_of": calibration_artifact["as_of"],
+                "read": calibration["calibration_read"],
+            }
         alpha_home = style_by_team[home]["projected_xi"]["attacking_unit"]
         alpha_away = style_by_team[away]["projected_xi"]["attacking_unit"]
         fixture_home = base["fixture_intelligence"]["home"]["fixture_signal_z"]
@@ -232,6 +286,12 @@ def build_predictions(config: dict[str, Any]) -> list[dict[str, Any]]:
                 )
             ),
         }
+        if calibration is not None:
+            row["decision_boundaries"]["fixture_calibration_applied"] = True
+            row["decision_boundaries"]["fixture_calibration_market_ready"] = False
+            row["quality_flags"] = sorted(
+                set(row["quality_flags"] + calibration["quality_flags"])
+            )
         row["translation_audit"]["official_overrides_probability_leader"] = (
             official_pick["outcome"]
             != row["translation_audit"]["probability_leader"]

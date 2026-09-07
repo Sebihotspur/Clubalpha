@@ -1,0 +1,126 @@
+{
+  "version": "clubalpha_fixture_calibration_audit_v1",
+  "generated_at_utc": "2026-09-07T00:00:00+00:00",
+  "as_of": "2026-09-07",
+  "cycle_ids": [
+    "2026-08-26-matchweek-2",
+    "2026-08-31-matchweek-3-official"
+  ],
+  "training_matches": 20,
+  "same_sample_sensitivity": {
+    "interpretation": "same-sample sensitivity only; not validation",
+    "baseline": {
+      "matches": 20,
+      "one_x_two_brier": 0.692302,
+      "one_x_two_log_loss": 1.138793,
+      "top_pick_accuracy": 0.3,
+      "home_probability_leader_rate": 0.8,
+      "mean_draw_probability": 0.234961
+    },
+    "calibrated": {
+      "matches": 20,
+      "one_x_two_brier": 0.634139,
+      "one_x_two_log_loss": 1.046023,
+      "top_pick_accuracy": 0.3,
+      "home_probability_leader_rate": 0.6,
+      "mean_draw_probability": 0.345145
+    },
+    "draw_zone": {
+      "flagged": 9,
+      "actual_draws_flagged": 5,
+      "rows": [
+        {
+          "match_id": 5795434,
+          "fixture": "Tottenham Hotspur vs Newcastle United",
+          "outcome": "away_win",
+          "draw_probability": 0.345632,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795427,
+          "fixture": "Chelsea vs Brighton & Hove Albion",
+          "outcome": "home_win",
+          "draw_probability": 0.34698,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795430,
+          "fixture": "Leeds United vs Brentford",
+          "outcome": "draw",
+          "draw_probability": 0.355848,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795441,
+          "fixture": "Ipswich Town vs Liverpool",
+          "outcome": "away_win",
+          "draw_probability": 0.350814,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795443,
+          "fixture": "Newcastle United vs AFC Bournemouth",
+          "outcome": "draw",
+          "draw_probability": 0.342078,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795439,
+          "fixture": "Fulham vs Crystal Palace",
+          "outcome": "away_win",
+          "draw_probability": 0.353966,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795444,
+          "fixture": "Nottingham Forest vs Tottenham Hotspur",
+          "outcome": "draw",
+          "draw_probability": 0.365647,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795440,
+          "fixture": "Hull City vs Aston Villa",
+          "outcome": "draw",
+          "draw_probability": 0.356021,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795438,
+          "fixture": "Everton vs Manchester United",
+          "outcome": "draw",
+          "draw_probability": 0.356021,
+          "correct_draw_flag": true
+        }
+      ]
+    }
+  },
+  "chronological_audit": {
+    "interpretation": "cycle-forward; each calibration uses only earlier cycles",
+    "evaluated_cycles": 1,
+    "baseline": {
+      "matches": 10,
+      "one_x_two_brier": 0.741644,
+      "one_x_two_log_loss": 1.20987,
+      "top_pick_accuracy": 0.2,
+      "home_probability_leader_rate": 0.9,
+      "mean_draw_probability": 0.232618
+    },
+    "calibrated": {
+      "matches": 10,
+      "one_x_two_brier": 0.724677,
+      "one_x_two_log_loss": 1.175468,
+      "top_pick_accuracy": 0.2,
+      "home_probability_leader_rate": 0.9,
+      "mean_draw_probability": 0.2508
+    }
+  },
+  "decision_boundaries": {
+    "same_sample_metrics_are_validation": false,
+    "core_architecture_changed": false,
+    "player_alpha_changed": false,
+    "base_weights_changed": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  }
+}

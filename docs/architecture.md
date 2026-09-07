@@ -217,6 +217,13 @@ a safety rail, not a coefficient learned from chronological residuals. See
 [Contextual Interaction v1](contextual-interaction-v1.md) for the exact
 calculation, reliability shrinkage, and activation boundary.
 
+Fixture Calibration v1 now sits after contextual xG for future shadow slates.
+It learns a strongly shrunk current-league home/away xG-ratio correction and a
+draw-logit correction from completed frozen forecasts. It also creates an
+explicit draw-risk zone instead of forcing every close fixture into a side
+call. Team-specific venue effects require five home and five away observations
+before they can activate. See [Fixture Calibration v1](fixture-calibration-v1.md).
+
 ## First output
 
 The first useful product is a Football Intelligence Snapshot:
