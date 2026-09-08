@@ -279,8 +279,11 @@ def build_predictions(config: dict[str, Any]) -> list[dict[str, Any]]:
                     + ["official_shadow_not_market_ready"]
                     + (
                         ["latest_august_31_fixture_excluded_by_cutoff"]
-                        if home in {"Arsenal", "Aston Villa"}
-                        or away in {"Arsenal", "Aston Villa"}
+                        if int(config["round"]) == 3
+                        and (
+                            home in {"Arsenal", "Aston Villa"}
+                            or away in {"Arsenal", "Aston Villa"}
+                        )
                         else []
                     )
                 )
@@ -350,11 +353,11 @@ def main() -> int:
             "results append after full time and never mutate a prediction",
             "passing the hit-rate gate opens paper allocation and price validation only",
         ],
-        "featured_match_id": 5795442,
+        "featured_match_id": int(config.get("featured_match_id", 5795442)),
         "capital_deployment_ready": False,
     }
     write_json(args.output_dir / "report.json", report)
-    readme = f"""# Official Matchweek 3 shadow slate\n\nFrozen: {config['as_of_utc']}\n\nThis directory is Clubalpha's first full official 1X2 slate. Every fixture has\none auditable outcome pick for hit-rate scoring. Model probabilities, contextual\nroutes, the latest research checkpoint and any decision override remain visible.\n\nReal capital is not authorized. The promotion gate requires a cumulative hit\nrate above 50% after at least 30 settled official fixtures, then advances only\nto paper allocation and price validation.\n"""
+    readme = f"""# Official Matchweek {config['round']} shadow slate\n\nFrozen: {config['as_of_utc']}\n\nEvery fixture has one auditable outcome pick for hit-rate scoring. Model\nprobabilities, contextual routes, the latest research checkpoint and any\ndecision override remain visible.\n\nReal capital is not authorized. The promotion gate requires a cumulative hit\nrate above 50% after at least 30 settled official fixtures, then advances only\nto paper allocation and price validation.\n"""
     (args.output_dir / "README.md").write_text(readme, encoding="utf-8")
     inputs = {
         key: ROOT / value for key, value in config["inputs"].items()

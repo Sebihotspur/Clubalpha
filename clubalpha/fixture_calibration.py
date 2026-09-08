@@ -308,8 +308,21 @@ def _weighted_simulation(
     btts = sum(
         value for (home, away), value in weighted.items() if home > 0 and away > 0
     ) / denominator
+    one_x_two = {
+        key: round(value / denominator, 6) for key, value in outcomes.items()
+    }
+    # The official archive requires an exact probability simplex. Independent
+    # six-decimal rounding can otherwise leave a harmless +/-0.000001 residue.
+    # Reconcile that residue to the largest outcome instead of weakening the
+    # immutable-slate validator.
+    probability_leader = max(one_x_two, key=one_x_two.get)
+    simplex_residue = round(1.0 - sum(one_x_two.values()), 6)
+    one_x_two[probability_leader] = round(
+        one_x_two[probability_leader] + simplex_residue,
+        6,
+    )
     probabilities = {
-        **{key: round(value / denominator, 6) for key, value in outcomes.items()},
+        **one_x_two,
         "over": {key: round(value, 6) for key, value in over.items()},
         "under": {key: round(1.0 - value, 6) for key, value in over.items()},
         "btts_yes": round(btts, 6),

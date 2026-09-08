@@ -1,0 +1,135 @@
+{
+  "slate_version": "clubalpha_official_shadow_mw4_v1",
+  "status": "official_shadow",
+  "competition": "Premier League",
+  "competition_id": 47,
+  "season": "2026/2027",
+  "round": 4,
+  "as_of_utc": "2026-09-08T16:28:02Z",
+  "featured_match_id": 5795450,
+  "inputs": {
+    "fixture_schedule": "data/cache/fotmob/league_47_2026-2027.json",
+    "base_predictions": "artifacts/current_matchweek/2026-09-08-mw4/predictions.jsonl",
+    "style_snapshot": "artifacts/style_matchup/2026-09-08/style-matchups.json",
+    "context_config": "config/contextual-interaction-v1.json",
+    "research_checkpoint": "artifacts/research_loop/2026-09-07-20-completed/state.json",
+    "fixture_calibration_artifact": "artifacts/fixture_calibration/2026-09-07/calibration.json",
+    "fixture_calibration_config": "config/fixture-calibration-v1.json"
+  },
+  "promotion_gate": {
+    "metric": "official_1x2_hit_rate",
+    "threshold_exclusive": 0.5,
+    "minimum_settled_fixtures": 30,
+    "next_stage": "paper_allocation_and_price_validation",
+    "real_capital_authorized": false,
+    "supporting_checks": [
+      "probability_calibration_does_not_regress",
+      "closing_price_is_recorded_before_any_allocation",
+      "lineup_and_availability_gate_passes",
+      "maximum_drawdown_rule_is_defined"
+    ]
+  },
+  "decisions": [
+    {
+      "match_id": 5795445,
+      "home_team": "AFC Bournemouth",
+      "away_team": "Brentford",
+      "outcome": "draw",
+      "confidence": "low",
+      "primary_read": "Draw",
+      "secondary_read": "Pass / draw zone",
+      "thesis": "Bournemouth's positive chance process meets a Brentford side with the stronger form contribution; calibration leaves only a narrow home edge and raises the draw into the same decision zone.",
+      "override_reason": "The calibrated home probability leads the draw by only 2.2 percentage points, which activates the locked draw-risk gate."
+    },
+    {
+      "match_id": 5795446,
+      "home_team": "Aston Villa",
+      "away_team": "Nottingham Forest",
+      "outcome": "draw",
+      "confidence": "medium",
+      "primary_read": "Draw",
+      "secondary_read": "Under 2.5 watch",
+      "thesis": "Villa's Player Alpha and finishing-regression case are offset by weak current form and a Forest side that has repeatedly made stronger opponents uncomfortable; the model suppresses the goal environment."
+    },
+    {
+      "match_id": 5795447,
+      "home_team": "Chelsea",
+      "away_team": "Hull City",
+      "outcome": "home_win",
+      "confidence": "medium",
+      "primary_read": "Chelsea win",
+      "secondary_read": "Chelsea margin caution",
+      "thesis": "Chelsea own the largest projected-XI Player Alpha advantage on the slate, while Hull's unbeaten scoreline has materially outpaced their underlying chance process; Hull's compact shape limits margin conviction."
+    },
+    {
+      "match_id": 5795449,
+      "home_team": "Crystal Palace",
+      "away_team": "Ipswich Town",
+      "outcome": "home_win",
+      "confidence": "low",
+      "primary_read": "Crystal Palace win",
+      "secondary_read": "BTTS / Over 2.5 watch",
+      "thesis": "Palace hold the Player Alpha and home edge, but both defences have allowed elevated chance quality and Ipswich's latest process improved sharply against Liverpool."
+    },
+    {
+      "match_id": 5795451,
+      "home_team": "Liverpool",
+      "away_team": "Fulham",
+      "outcome": "home_win",
+      "confidence": "medium",
+      "primary_read": "Liverpool win",
+      "secondary_read": "BTTS watch",
+      "thesis": "Liverpool's home, form and projected-XI advantages lead the fixture, but Fulham's box pressure can test a Liverpool side whose first two tracked xG performances were weaker than its results."
+    },
+    {
+      "match_id": 5795454,
+      "home_team": "Tottenham Hotspur",
+      "away_team": "Everton",
+      "outcome": "draw",
+      "confidence": "medium",
+      "primary_read": "Draw",
+      "secondary_read": "Pass until Tottenham XI confirmation",
+      "thesis": "Tottenham's positive xG-versus-results regression meets Everton's compact direct profile, while neither side owns a strong base fixture signal and Tottenham's lineup projection remains a priority risk."
+    },
+    {
+      "match_id": 5795453,
+      "home_team": "Sunderland",
+      "away_team": "Arsenal",
+      "outcome": "away_win",
+      "confidence": "medium",
+      "primary_read": "Arsenal win",
+      "secondary_read": "Sunderland team total under watch",
+      "thesis": "Sunderland's improved attack faces the league's strongest early defensive process; Arsenal lead both projected-XI Alpha and the opponent-adjusted fixture signal away from home."
+    },
+    {
+      "match_id": 5795448,
+      "home_team": "Coventry City",
+      "away_team": "Brighton & Hove Albion",
+      "outcome": "draw",
+      "confidence": "low",
+      "primary_read": "Draw",
+      "secondary_read": "BTTS watch",
+      "thesis": "Brighton's territorial and Player Alpha advantages are offset by repeated defensive exposure, while Coventry have created more than their zero-goal record implies; calibration leaves the three outcomes tightly grouped."
+    },
+    {
+      "match_id": 5795452,
+      "home_team": "Manchester United",
+      "away_team": "Manchester City",
+      "outcome": "away_win",
+      "confidence": "low",
+      "primary_read": "Manchester City win",
+      "secondary_read": "Pass / draw zone",
+      "thesis": "City's territorial form and projected-XI quality produce the stronger side signal, but United's ceiling, derby variance and the calibrated draw probability prevent a clean position."
+    },
+    {
+      "match_id": 5795450,
+      "home_team": "Leeds United",
+      "away_team": "Newcastle United",
+      "outcome": "home_win",
+      "confidence": "medium",
+      "primary_read": "Leeds United win",
+      "secondary_read": "Leeds or draw",
+      "thesis": "Leeds' high-intensity process has produced materially stronger recent xG than Newcastle, whose four tracked goals have outpaced a weak 1.43-xG attacking process."
+    }
+  ]
+}

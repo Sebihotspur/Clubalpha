@@ -96,7 +96,7 @@ function overview(data) {
       <aside class="hero-note">
         <span class="label">Current operating state</span>
         <strong>OBSERVE · FREEZE · SCORE</strong>
-        <p>Matchweek 3 is frozen as a complete official shadow slate. The ledger scores every 1X2 call after full time; nothing can be rewritten.</p>
+        <p>Matchweek ${esc(data.official_slate.round)} is frozen as a complete official shadow slate. The ledger scores every 1X2 call after full time; nothing can be rewritten.</p>
       </aside>
     </section>
 
@@ -256,7 +256,7 @@ function holyGrail(data) {
     </section>
 
     <section class="section">
-      <div class="section-head"><h2>Official Matchweek 3 fixtures</h2><span class="panel-label">One scored 1X2 call per match</span></div>
+      <div class="section-head"><h2>Archived contextual fixtures</h2><span class="panel-label">Original Holy Grail experiment</span></div>
       <div class="holy-fixture-grid">${holyFixtureCards(model.predictions)}</div>
     </section>
 
@@ -278,7 +278,7 @@ function predictions(data) {
     )
     .join("");
 
-  return `<section class="page-head"><p class="eyebrow">Official shadow slate · Matchweek 3</p><h1>Predictions</h1><p>Ten immutable 1X2 calls, frozen before the final Matchweek 2 fixture kicked off. Model probabilities remain visible even when the football audit chooses a different official outcome.</p><div class="notice">SCORING STARTS HERE · Every fixture counts toward the hit rate · More than 50% after at least ${data.ledger.sample_gate} settled official fixtures opens paper allocation and price validation—not real capital</div></section>
+  return `<section class="page-head"><p class="eyebrow">Official shadow slate · Matchweek ${esc(data.official_slate.round)}</p><h1>Predictions</h1><p>Ten immutable 1X2 calls, frozen before kickoff from the latest available team, projected-XI and fixture evidence. Model probabilities remain visible even when the football audit chooses a different official outcome.</p><div class="notice">SHADOW SCORING · Every fixture counts toward the hit rate · More than 50% after at least ${data.ledger.sample_gate} settled official fixtures opens paper allocation and price validation—not real capital</div></section>
     <div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>Model xG</th><th>1X2 probability</th><th>O2.5</th><th>BTTS</th><th>Official call</th><th>Why</th></tr></thead><tbody>${rows}</tbody></table></div>
     <p class="notice">Latest match evidence is attached as a tentative research lens, not a hidden formula adjustment. Lineups remain projected; prices are not yet an input; real allocation remains 0.00 units.</p>`;
 }
@@ -330,7 +330,9 @@ function matchweekFold(week) {
 function ledger(data) {
   const progress = Math.min(100, (data.ledger.matches_logged / data.ledger.sample_gate) * 100);
   const displayedRate = data.ledger.hit_rate === null ? "—" : pct(data.ledger.hit_rate);
-  const officialWeek = data.ledger.matchweeks.find((week) => week.counts_toward_promotion_gate);
+  const officialWeek = data.ledger.matchweeks.find(
+    (week) => week.counts_toward_promotion_gate && week.settled > 0,
+  ) || data.ledger.matchweeks.find((week) => week.counts_toward_promotion_gate);
   const diagnostic = data.official_slate.performance_diagnostic;
   const environment = diagnostic.observed_xg_total_range;
   const forecastEnvironment = diagnostic.projected_xg_total_range;
@@ -345,14 +347,16 @@ function ledger(data) {
       },
     )
     .join("");
-  return `<section class="page-head"><p class="eyebrow">Immutable public record</p><h1>Official prediction ledger</h1><p>Every Matchweek 3 outcome is published before kickoff. Results append after full time, and the original calls never change.</p></section>
+  const currentMisses = diagnostic.settled - diagnostic.official_1x2_hits;
+  const currentPending = data.official_slate.fixtures - diagnostic.settled;
+  return `<section class="page-head"><p class="eyebrow">Immutable public record</p><h1>Official prediction ledger</h1><p>Every Matchweek ${esc(data.official_slate.round)} outcome is published before kickoff. Results append after full time, and the original calls never change.</p></section>
     <div class="ledger-hero">
       <article class="ledger-panel"><span class="panel-label">Promotion progress</span><h2>${displayedRate} <span>· ${data.ledger.matches_logged}/${data.ledger.sample_gate} settled</span></h2><p>The gate is strictly above ${pct(data.ledger.hit_rate_gate)} with at least ${data.ledger.sample_gate} official results. Passing opens paper allocation and price validation only; real capital remains locked.</p><div class="progress"><span style="width:${progress}%"></span></div></article>
-      <article class="ledger-panel"><span class="panel-label">Current evidence</span><div class="gate-list"><div class="gate-row"><span>Official 1X2</span><span>${data.ledger.hits}/${data.ledger.matches_logged}</span></div><div class="gate-row"><span>Raw probability leader</span><span>${diagnostic.raw_probability_leader_hits}/${diagnostic.settled}</span></div><div class="gate-row"><span>O/U 2.5</span><span>${officialWeek.markets.over_under_2_5.hits}/${officialWeek.settled}</span></div><div class="gate-row"><span>BTTS</span><span>${officialWeek.markets.btts.hits}/${officialWeek.settled}</span></div><div class="gate-row"><span>Projected-XI accuracy</span><span>${dec(diagnostic.mean_projected_xi_hits_of_11)}/11</span></div></div></article>
+      <article class="ledger-panel"><span class="panel-label">Current evidence</span><div class="gate-list"><div class="gate-row"><span>Official 1X2</span><span>${data.ledger.hits}/${data.ledger.matches_logged}</span></div><div class="gate-row"><span>Raw probability leader</span><span>${data.ledger.raw_probability_leader_hits}/${data.ledger.matches_logged}</span></div><div class="gate-row"><span>Latest settled O/U 2.5</span><span>${officialWeek.markets.over_under_2_5.hits}/${officialWeek.settled}</span></div><div class="gate-row"><span>Latest settled BTTS</span><span>${officialWeek.markets.btts.hits}/${officialWeek.settled}</span></div><div class="gate-row"><span>Prior projected-XI accuracy</span><span>${dec(diagnostic.mean_projected_xi_hits_of_11)}/11</span></div></div></article>
     </div>
     <p class="notice">MODEL READ · Mean total xG is close, but dispersion is not: observed ${dec(environment.mean)} xG vs ${dec(forecastEnvironment.mean)} forecast, with a ${dec(environment.minimum)}–${dec(environment.maximum)} observed range versus ${dec(forecastEnvironment.minimum)}–${dec(forecastEnvironment.maximum)} forecast. ${diagnostic.structural_misses} structural reviews · ${diagnostic.process_supported_outcome_variance} result classified as finishing variance · no recalibration authorized.</p>
     <section class="section matchweek-section"><div class="section-head"><h2>Hit rate by matchweek</h2><span class="panel-label">Open a week to inspect each market</span></div><div class="matchweek-history">${data.ledger.matchweeks.map(matchweekFold).join("")}</div></section>
-    <section class="section"><div class="section-head"><h2>Frozen Matchweek 3 slate</h2><span class="panel-label">${data.ledger.hits} hits · ${data.ledger.misses} misses · ${data.ledger.pending} pending</span></div><div class="table-shell"><table><thead><tr><th>Fixture</th><th>Official 1X2 call</th><th>Model probability</th><th>Secondary read</th><th>Result</th></tr></thead><tbody>${slateRows}</tbody></table></div></section>`;
+    <section class="section"><div class="section-head"><h2>Frozen Matchweek ${esc(data.official_slate.round)} slate</h2><span class="panel-label">${diagnostic.official_1x2_hits} hits · ${currentMisses} misses · ${currentPending} pending</span></div><div class="table-shell"><table><thead><tr><th>Fixture</th><th>Official 1X2 call</th><th>Model probability</th><th>Secondary read</th><th>Result</th></tr></thead><tbody>${slateRows}</tbody></table></div></section>`;
 }
 
 function signalMeter(value, kind) {

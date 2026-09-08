@@ -22,7 +22,7 @@ ARTIFACT_DIR = ROOT / "artifacts/prediction_lab/2026-08-24"
 STYLE_MATCHUP_ARTIFACT = ROOT / "artifacts/style_matchup/2026-08-25/style-matchups.json"
 ROUND_ROBIN_DIR = ROOT / "artifacts/round_robin/2026-08-25"
 CONTEXTUAL_DIR = ROOT / "artifacts/contextual_interaction/2026-08-26"
-OFFICIAL_DIR = ROOT / "artifacts/official_shadow/2026-08-31-mw3"
+OFFICIAL_ROOT = ROOT / "artifacts/official_shadow"
 RESEARCH_LOOP_DIR = ROOT / "artifacts/research_loop"
 FIXTURE_CALIBRATION_DIR = ROOT / "artifacts/fixture_calibration"
 BACKTEST_REPORT_PATTERN = "contextual-interaction-v1-backtest-*.json"
@@ -64,18 +64,46 @@ def load_latest_research_state():
     return max(candidates, key=lambda row: row[:4])[4]
 
 
-def load_latest_backtest():
-    """Load the latest backtest for the current official frozen slate."""
+def load_official_archives():
+    """Load every immutable official slate in chronological order."""
 
-    official_prediction_source = str(
-        (OFFICIAL_DIR / "predictions.jsonl").relative_to(ROOT)
+    candidates = []
+    for report_path in OFFICIAL_ROOT.glob("*/report.json"):
+        directory = report_path.parent
+        predictions_path = directory / "predictions.jsonl"
+        results_path = directory / "results.jsonl"
+        if not predictions_path.exists() or not results_path.exists():
+            continue
+        report = load_json(report_path)
+        candidates.append(
+            {
+                "directory": directory,
+                "report": report,
+                "predictions": load_jsonl(predictions_path),
+                "results": load_jsonl(results_path),
+            }
+        )
+    if not candidates:
+        raise ValueError("website requires at least one official shadow slate")
+    return sorted(
+        candidates,
+        key=lambda row: (
+            int(row["report"]["round"]),
+            str(row["report"]["as_of_utc"]),
+        ),
     )
+
+
+def load_latest_backtest():
+    """Load the newest completed official-slate diagnostic."""
+
     candidates = []
     for path in (ROOT / "reports").glob(BACKTEST_REPORT_PATTERN):
         report = load_json(path)
         if report.get("backtest_version") != "clubalpha_contextual_interaction_v1_backtest":
             continue
-        if (report.get("sources") or {}).get("predictions") != official_prediction_source:
+        prediction_source = str((report.get("sources") or {}).get("predictions") or "")
+        if not prediction_source.startswith("artifacts/official_shadow/"):
             continue
         validation = report.get("validation") or {}
         candidates.append(
@@ -201,9 +229,11 @@ def build():
     contextual_report = load_json(CONTEXTUAL_DIR / "report.json")
     contextual_predictions = load_jsonl(CONTEXTUAL_DIR / "predictions.jsonl")
     contextual_results = load_jsonl(CONTEXTUAL_DIR / "results.jsonl")
-    official_report = load_json(OFFICIAL_DIR / "report.json")
-    official_predictions = load_jsonl(OFFICIAL_DIR / "predictions.jsonl")
-    official_results = load_jsonl(OFFICIAL_DIR / "results.jsonl")
+    official_archives = load_official_archives()
+    current_official = official_archives[-1]
+    official_report = current_official["report"]
+    official_predictions = current_official["predictions"]
+    official_results = current_official["results"]
     research_state = load_latest_research_state()
     latest_backtest = load_latest_backtest()
     fixture_calibration, fixture_calibration_audit = (
@@ -225,12 +255,58 @@ def build():
     matchweek_two_score = score_matchweek(
         contextual_predictions, contextual_results, official=False
     )
-    matchweek_three_score = score_matchweek(
-        official_predictions, official_results, official=True
-    )
     result_validation = validate_results(
         round_robin_predictions, round_robin_results
     )
+
+    official_matchweeks = []
+    cumulative_official = {
+        "fixtures": 0,
+        "settled": 0,
+        "pending": 0,
+        "hits": 0,
+        "misses": 0,
+        "raw_probability_leader_hits": 0,
+    }
+    for archive in official_archives:
+        archive_report = archive["report"]
+        archive_predictions = archive["predictions"]
+        archive_results = archive["results"]
+        week_score = score_matchweek(
+            archive_predictions,
+            archive_results,
+            official=True,
+        )
+        result_by_id = {int(row["match_id"]): row for row in archive_results}
+        raw_hits = 0
+        for prediction in archive_predictions:
+            result = result_by_id.get(int(prediction["fixture"]["match_id"]))
+            if result is None:
+                continue
+            probabilities = prediction["model"]["probabilities"]
+            leader = max(
+                ("home_win", "draw", "away_win"),
+                key=lambda key: float(probabilities[key]),
+            )
+            raw_hits += leader == result["outcome"]
+        archive_score = score_results(archive_predictions, archive_results)
+        cumulative_official["fixtures"] += archive_score["fixtures"]
+        cumulative_official["settled"] += archive_score["settled"]
+        cumulative_official["pending"] += archive_score["pending"]
+        cumulative_official["hits"] += archive_score["hits"]
+        cumulative_official["misses"] += archive_score["misses"]
+        cumulative_official["raw_probability_leader_hits"] += raw_hits
+        official_matchweeks.append(
+            {
+                "matchweek": int(archive_report["round"]),
+                "name": f"Official Matchweek {archive_report['round']}",
+                "source": "Official shadow slate",
+                "status": "settled" if week_score["pending"] == 0 else "collecting",
+                "counts_toward_promotion_gate": True,
+                **week_score,
+            }
+        )
+    official_matchweeks.sort(key=lambda row: int(row["matchweek"]), reverse=True)
 
     official_result_by_id = {
         int(row["match_id"]): row for row in official_results
@@ -318,16 +394,19 @@ def build():
     )
     featured_pick = featured["official_pick"]
     promotion_gate = official_report["promotion_gate"]
-    hit_rate = official_score["hit_rate"]
+    hit_rate = _hit_rate(
+        cumulative_official["hits"], cumulative_official["settled"]
+    )
     review_ready = (
-        official_score["settled"] >= promotion_gate["minimum_settled_fixtures"]
+        cumulative_official["settled"]
+        >= promotion_gate["minimum_settled_fixtures"]
         and hit_rate is not None
         and hit_rate > promotion_gate["threshold_exclusive"]
     )
 
     # Preserve the original Prediction Lab and Holy Grail records exactly as
-    # published. The official Matchweek 3 slate is a new scoring stream, not a
-    # rewrite of either earlier experiment.
+    # published. Official matchweek slates are a separate scoring stream, not
+    # a rewrite of either earlier experiment.
     by_match = {int(row["match_id"]): row for row in report["next_round"]}
     original_pick_match_id = 5795429
     legacy_predictions = []
@@ -443,7 +522,7 @@ def build():
 
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_5_fixture_calibration",
+            "site_version": "clubalpha_web_v0_6_matchweek_4",
             "prediction_version": official_report["report_version"],
             "as_of": official_report["as_of_utc"],
             "generated_at_utc": official_report["as_of_utc"],
@@ -481,6 +560,8 @@ def build():
         "featured_official_pick": {
             "match_id": featured_match_id,
             "fixture": f"{featured['home_team']} vs {featured['away_team']}",
+            "home_team": featured["home_team"],
+            "away_team": featured["away_team"],
             "kickoff_utc": featured["kickoff_utc"],
             "market": featured_pick["primary_read"],
             "model_probability": featured_pick["model_probability"],
@@ -489,8 +570,14 @@ def build():
             "projected_xg": featured["predicted_xg"],
             "real_units": 0.0,
             "reasons": [
-                {"value": "HIGH", "label": "Official conviction"},
-                {"value": f"{featured['predicted_xg']['home']:.2f}", "label": "City projected xG"},
+                {
+                    "value": featured_pick["confidence"].upper(),
+                    "label": "Official conviction",
+                },
+                {
+                    "value": f"{featured['predicted_xg']['home']:.2f}",
+                    "label": "Projected home xG",
+                },
                 {"value": "10 / 10", "label": "Fixtures frozen"},
             ],
         },
@@ -506,6 +593,7 @@ def build():
                 "settled": official_score["settled"],
                 "official_1x2_hits": official_score["hits"],
                 "raw_probability_leader_hits": raw_probability_hits,
+                "reference": "Latest completed official matchweek",
                 "contextual_xg_total_mae": latest_backtest["metrics"][
                     "contextual"
                 ]["xg_total_mae"],
@@ -598,11 +686,14 @@ def build():
         },
         "ledger": {
             "status": "official_shadow_collection",
-            "matches_logged": official_score["settled"],
+            "matches_logged": cumulative_official["settled"],
             "sample_gate": promotion_gate["minimum_settled_fixtures"],
-            "hits": official_score["hits"],
-            "misses": official_score["misses"],
-            "pending": official_score["pending"],
+            "hits": cumulative_official["hits"],
+            "misses": cumulative_official["misses"],
+            "pending": cumulative_official["pending"],
+            "raw_probability_leader_hits": cumulative_official[
+                "raw_probability_leader_hits"
+            ],
             "hit_rate": hit_rate,
             "hit_rate_gate": promotion_gate["threshold_exclusive"],
             "review_ready": review_ready,
@@ -618,16 +709,7 @@ def build():
                 "Lineup evidence coverage",
             ],
             "matchweeks": [
-                {
-                    "matchweek": 3,
-                    "name": "Official Matchweek 3",
-                    "source": "Official shadow slate",
-                    "status": "settled"
-                    if matchweek_three_score["pending"] == 0
-                    else "collecting",
-                    "counts_toward_promotion_gate": True,
-                    **matchweek_three_score,
-                },
+                *official_matchweeks,
                 {
                     "matchweek": 2,
                     "name": "Matchweek 2",
@@ -724,7 +806,10 @@ def build():
                     f"{research_state['coverage']['completed_results']} completed "
                     "fixtures are tentative research evidence"
                 ),
-                "Official MW3 probabilities remain shadow-only",
+                (
+                    f"Official MW{official_report['round']} probabilities remain "
+                    "shadow-only"
+                ),
                 "Projected lineups are not confirmed starting XIs",
                 "Market prices are not yet an automated model input",
                 "Historical August 11 roster is reconstructed and flagged",

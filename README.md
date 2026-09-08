@@ -307,6 +307,26 @@ side-versus-draw forecasts as pass/review zones. It does not modify Player
 Alpha, the 60/30/10 foundation, contextual coefficients, or frozen archives.
 See [Fixture Calibration v1](docs/fixture-calibration-v1.md).
 
+## Current matchweek runner
+
+After refreshing the FotMob foundation, Club Form, Player Quality, projected
+XI Alpha, Style Matchup, and Historical Fixtures, build a fixture-specific
+baseline with the locked component scales and goal model:
+
+```bash
+python3 research/build_current_matchweek_v1.py \
+  --as-of YYYY-MM-DD \
+  --round N \
+  --premier-league-alpha reports/premier-league-alpha-snapshot-YYYY-MM-DD.json \
+  --output-dir artifacts/current_matchweek/YYYY-MM-DD-mwN
+```
+
+The runner validates exactly ten future Premier League fixtures, binds every
+projected XI to its real fixture ID, preserves the 60/30/10 weights, and writes
+hashed predictions. Context and fixture calibration stay downstream and
+separately auditable. Team research beliefs do not alter the forecast
+automatically.
+
 ## Web dashboard
 
 The read-only Clubalpha dashboard is live at

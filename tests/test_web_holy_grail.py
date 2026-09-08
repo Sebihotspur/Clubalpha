@@ -76,11 +76,12 @@ class WebHolyGrailTests(unittest.TestCase):
             'data-route="holy-grail"', route.read_text(encoding="utf-8")
         )
 
-    def test_official_matchweek_three_is_a_separate_scoring_stream(self):
+    def test_latest_official_matchweek_is_a_separate_scoring_stream(self):
         slate = self.data["official_slate"]
+        self.assertEqual(slate["round"], 4)
         self.assertEqual(slate["fixtures"], 10)
         self.assertEqual(len(slate["predictions"]), 10)
-        self.assertEqual(slate["validation"]["model_overrides"], 2)
+        self.assertEqual(slate["validation"]["model_overrides"], 1)
         self.assertNotEqual(
             {row["match_id"] for row in slate["predictions"]},
             {row["match_id"] for row in self.data["predictions"]},
@@ -97,7 +98,7 @@ class WebHolyGrailTests(unittest.TestCase):
         weeks = {
             row["matchweek"]: row for row in self.data["ledger"]["matchweeks"]
         }
-        self.assertEqual(set(weeks), {2, 3})
+        self.assertEqual(set(weeks), {2, 3, 4})
         completed = weeks[2]
         self.assertEqual(completed["settled"], 10)
         self.assertEqual(completed["markets"]["one_x_two"]["hit_rate"], 0.4)
@@ -127,6 +128,10 @@ class WebHolyGrailTests(unittest.TestCase):
             else:
                 self.assertIsNone(market["hit_rate"])
         self.assertTrue(official["counts_toward_promotion_gate"])
+        current = weeks[4]
+        self.assertEqual(current["settled"], 0)
+        self.assertEqual(current["pending"], 10)
+        self.assertTrue(current["counts_toward_promotion_gate"])
 
     def test_ipswich_liverpool_result_scores_markets_independently(self):
         predictions = [
@@ -174,7 +179,8 @@ class WebHolyGrailTests(unittest.TestCase):
     def test_methodology_exposes_the_append_only_learning_loop(self):
         learning = self.data["methodology"]["research_loop"]
         self.assertEqual(learning["completed_results"], 20)
-        self.assertEqual(learning["frozen_fixtures"], 20)
+        self.assertEqual(learning["frozen_fixtures"], 30)
+        self.assertEqual(learning["pending_results"], 10)
         self.assertEqual(learning["promotion_candidates"], 0)
         self.assertEqual(learning["automatically_applied"], 0)
         self.assertFalse(learning["capital_deployment_ready"])
@@ -205,32 +211,43 @@ class WebHolyGrailTests(unittest.TestCase):
 
     def test_current_results_expose_outcomes_and_model_diagnostics(self):
         diagnostic = self.data["official_slate"]["performance_diagnostic"]
-        self.assertEqual(diagnostic["settled"], 10)
-        self.assertEqual(diagnostic["official_1x2_hits"], 3)
-        self.assertEqual(diagnostic["raw_probability_leader_hits"], 2)
+        self.assertEqual(diagnostic["settled"], 0)
+        self.assertEqual(diagnostic["official_1x2_hits"], 0)
+        self.assertEqual(diagnostic["raw_probability_leader_hits"], 0)
         self.assertAlmostEqual(diagnostic["mean_projected_xi_hits_of_11"], 8.4)
         self.assertFalse(diagnostic["sample_sufficient_to_recalibrate"])
-        official_week = next(
+        settled_week = next(
             row
             for row in self.data["ledger"]["matchweeks"]
-            if row["counts_toward_promotion_gate"]
+            if row["matchweek"] == 3
         )
-        self.assertEqual(official_week["markets"]["one_x_two"]["hits"], 3)
+        self.assertEqual(settled_week["markets"]["one_x_two"]["hits"], 3)
         self.assertEqual(
-            official_week["markets"]["over_under_2_5"]["hits"], 4
+            settled_week["markets"]["over_under_2_5"]["hits"], 4
         )
-        self.assertEqual(official_week["markets"]["btts"]["hits"], 6)
+        self.assertEqual(settled_week["markets"]["btts"]["hits"], 6)
 
-        newcastle = next(
+        leeds = next(
             row
             for row in self.data["official_slate"]["predictions"]
-            if row["match_id"] == 5795443
+            if row["match_id"] == 5795450
         )
-        self.assertEqual(newcastle["status"], "settled")
-        self.assertEqual(newcastle["result"]["final_home_goals"], 2)
-        self.assertEqual(newcastle["result"]["final_away_goals"], 2)
-        self.assertFalse(newcastle["result"]["official_1x2_hit"])
-        self.assertFalse(newcastle["result"]["raw_1x2_hit"])
+        self.assertEqual(leeds["status"], "pending")
+        self.assertIsNone(leeds["result"])
+
+    def test_current_calibrated_probabilities_are_exact_simplexes(self):
+        draws = 0
+        for row in self.data["official_slate"]["predictions"]:
+            probabilities = row["probabilities"]
+            self.assertAlmostEqual(
+                probabilities["home_win"]
+                + probabilities["draw"]
+                + probabilities["away_win"],
+                1.0,
+                places=12,
+            )
+            draws += row["official_pick"]["outcome"] == "draw"
+        self.assertEqual(draws, 4)
 
 
 if __name__ == "__main__":

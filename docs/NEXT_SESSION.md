@@ -1,10 +1,35 @@
 # Next session
 
-Updated: 2026-09-07
+Updated: 2026-09-08
 
 Model and website checkpoint: see latest commit on `main`
 
 Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
+
+## Matchweek 4 frozen checkpoint
+
+- The September 12–14 Premier League slate is frozen before kickoff at
+  `artifacts/official_shadow/2026-09-08-mw4/`: 10 fixtures, 4 low-confidence
+  calls, 6 medium-confidence calls, 1 audited model override, and zero high
+  confidence calls.
+- Official 1X2 calls: Bournemouth–Brentford draw, Villa–Forest draw, Chelsea,
+  Crystal Palace, Liverpool, Tottenham–Everton draw, Arsenal,
+  Coventry–Brighton draw, Manchester City, and Leeds.
+- Fixture Calibration v1 is applied downstream of the locked 60/30/10 base.
+  The calibrated slate contains four draw calls and four explicit pass/draw
+  zones; calibration does not rewrite Player Alpha, Club Form, History, or
+  Context.
+- The cumulative official ledger remains 3/10 (30%) with 10 Matchweek 4 calls
+  pending. The research learner now sees 30 frozen fixtures, 20 completed
+  observations, and 10 pending results. No coefficients were automatically
+  promoted.
+- Fresh FotMob inputs include all 30 completed Premier League matches through
+  September 6. The current projected-XI Player Alpha and Club Form snapshots
+  are dated September 8 and bound to the actual Matchweek 4 fixture IDs.
+- After full time, run `python scripts/run_research_cycle.py --as-of YYYY-MM-DD`.
+  The collector automatically targets the newest official archive, appends
+  results, rebuilds diagnostics, updates the cumulative learner, and refreshes
+  fixture calibration without mutating the frozen slate.
 
 ## Current checkpoint
 

@@ -128,10 +128,15 @@ class FixtureCalibrationTests(unittest.TestCase):
         after_ratio = first["predicted_xg"]["home"] / first["predicted_xg"]["away"]
         self.assertLess(after_ratio, before_ratio)
         self.assertGreater(first["probabilities"]["draw"], 0.23)
-        self.assertAlmostEqual(
-            sum(first["probabilities"][key] for key in ("home_win", "draw", "away_win")),
-            1.0,
-            places=5,
+        self.assertLessEqual(
+            abs(
+                sum(
+                    first["probabilities"][key]
+                    for key in ("home_win", "draw", "away_win")
+                )
+                - 1.0
+            ),
+            1e-9,
         )
         self.assertFalse(
             first["decision_boundaries"]["base_60_30_10_changed"]

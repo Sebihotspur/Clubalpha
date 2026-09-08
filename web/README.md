@@ -11,7 +11,7 @@ python3 -m http.server 4173 --directory web/public
 ```
 
 The site deliberately contains no wager form, account state, or capital-sizing
-control. The `/predictions/` route exposes the first official Matchweek 3
+control. The `/predictions/` route exposes the latest official matchweek
 shadow slate: ten immutable 1X2 calls, their original model probabilities,
 audited football verdicts, confidence, and evidence notes. More than 50% 1X2
 accuracy after at least 30 settled official fixtures opens paper allocation and
@@ -30,12 +30,17 @@ attacking route, opponent exposure, projected-XI Player Alpha, and official
 60/30/10 probabilities remain visually separate. Vercel serves `web/public` as a static
 export. Regenerate `site.json` and the route entry points whenever a new
 immutable prediction or matchup snapshot is frozen. The current official slate
-lives at `artifacts/official_shadow/2026-08-31-mw3/`.
+lives at `artifacts/official_shadow/2026-09-08-mw4/`.
 
 After completed fixtures appear in FotMob, append them without modifying the
 frozen predictions, then rebuild the static payload:
 
 ```bash
 python scripts/collect_official_shadow_results.py
+python scripts/run_research_cycle.py --as-of YYYY-MM-DD
 python web/scripts/build_site_data.py
 ```
+
+The result collector automatically targets the newest official archive. The
+research runner appends those observations to the cumulative learner and never
+rewrites a frozen prediction.
