@@ -22,6 +22,8 @@ Initial source roles:
 
 - FotMob as the primary free source for repeatable historical and current statistics.
 - Official competition and club information when verification is needed.
+- REEP as an optional exact-ID validator where its dated public crosswalk has coverage;
+  it never replaces FotMob IDs or becomes required for grading.
 
 FotMob is undocumented. Its web and statistics-CDN access live behind one thin,
 cached client so an endpoint change has one repair point. Missing coverage is

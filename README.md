@@ -23,6 +23,7 @@ These foundations combine into a simple Football Intelligence Snapshot for each 
 - [Composite Model v1](docs/composite-model-v1.md)
 - [Fixture State v1](docs/fixture-state-spec.md)
 - [Data-source bakeoff](research/data-source-bakeoff.md)
+- [REEP identity pilot](research/reep-identity-pilot.md)
 
 ## Pull the foundation
 
