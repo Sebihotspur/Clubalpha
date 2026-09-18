@@ -1,0 +1,106 @@
+{
+  "version": "clubalpha_pl_midweek_review_v1",
+  "as_of": "2026-09-17",
+  "status": "completed_cross_competition_evidence",
+  "scope": {
+    "matches": 3,
+    "premier_league_clubs": 3,
+    "selection_evidence_weight": 0.75,
+    "club_form_scoreline_weight": 0.0
+  },
+  "matches": [
+    {
+      "match_id": 6112324,
+      "competition": "Europa League",
+      "fixture": "Crystal Palace vs Lech Poznan",
+      "premier_league_team": "Crystal Palace",
+      "score": "4-0",
+      "team_xg": 2.14,
+      "opponent_xg": 1.1,
+      "shots_on_target": 6,
+      "opponent_shots_on_target": 6,
+      "projected_xi_starter_overlap": 9,
+      "projected_xi_load_share": 0.8141,
+      "rest_days_before_league": 2.75,
+      "risk": "high",
+      "process_read": "A strong attacking result, but the score overstates control: Lech also generated 1.10 xG and six shots on target. Walter Benitez's goalkeeping was material to the clean sheet.",
+      "player_standouts": [
+        {"player": "Yeremi Pino", "rating": 8.91, "goals": 1, "assists": 0},
+        {"player": "Walter Benitez", "rating": 8.67, "goals": 0, "assists": 0},
+        {"player": "Adam Wharton", "rating": 8.58, "goals": 0, "assists": 1},
+        {"player": "Chris Richards", "rating": 8.22, "goals": 1, "assists": 0}
+      ]
+    },
+    {
+      "match_id": 6112272,
+      "competition": "Europa League",
+      "fixture": "Real Sociedad vs AFC Bournemouth",
+      "premier_league_team": "AFC Bournemouth",
+      "score": "1-2",
+      "team_xg": 0.78,
+      "opponent_xg": 1.51,
+      "shots_on_target": 3,
+      "opponent_shots_on_target": 5,
+      "projected_xi_starter_overlap": 11,
+      "projected_xi_load_share": 0.9,
+      "rest_days_before_league": 2.75,
+      "risk": "high",
+      "process_read": "The away win is valuable evidence of execution and resilience, but Bournemouth lost the xG process 0.78-1.51 and used the full projected league XI. The Liverpool fixture now carries substantial fatigue risk.",
+      "player_standouts": [
+        {"player": "Alex Scott", "rating": 8.21, "goals": 0, "assists": 1},
+        {"player": "Rayan", "rating": 8.13, "goals": 1, "assists": 0},
+        {"player": "Djordje Petrovic", "rating": 7.6, "goals": 0, "assists": 0},
+        {"player": "Adrien Truffert", "rating": 7.58, "goals": 0, "assists": 1}
+      ]
+    },
+    {
+      "match_id": 6099330,
+      "competition": "EFL Cup",
+      "fixture": "Manchester City vs Norwich City",
+      "premier_league_team": "Manchester City",
+      "score": "5-0",
+      "team_xg": 1.38,
+      "opponent_xg": 0.12,
+      "shots_on_target": 6,
+      "opponent_shots_on_target": 0,
+      "projected_xi_starter_overlap": 3,
+      "projected_xi_load_share": 0.2273,
+      "rest_days_before_league": 2.771,
+      "risk": "medium",
+      "process_read": "City completely suppressed Norwich, but five goals from 1.38 xG is a finishing spike. Heavy rotation protected most of the projected league XI, so the short turnaround is materially less concerning than Bournemouth's or Palace's.",
+      "player_standouts": [
+        {"player": "Floyd Samba", "rating": 8.91, "goals": 2, "assists": 0},
+        {"player": "Rayan Ait-Nouri", "rating": 8.73, "goals": 0, "assists": 2},
+        {"player": "Allan", "rating": 8.35, "goals": 1, "assists": 1},
+        {"player": "Nico O'Reilly", "rating": 8.22, "goals": 0, "assists": 1}
+      ]
+    }
+  ],
+  "model_effects": [
+    {
+      "fixture": "Manchester City vs Sunderland",
+      "effect": "City home-win probability moved from 62.74% to 61.18% in the uncalibrated football baseline after the refreshed XI projection. The cup scoreline itself received no Club Form weight."
+    },
+    {
+      "fixture": "Leeds United vs Crystal Palace",
+      "effect": "The football probability was essentially unchanged, but Palace moved from a pending-match block to high fatigue risk after using nine projected starters and 81.4% of projected-XI minutes."
+    },
+    {
+      "fixture": "AFC Bournemouth vs Liverpool",
+      "effect": "The football probability was essentially unchanged, but Bournemouth moved from a pending-match block to high fatigue risk after using all eleven projected starters and 90.0% of projected-XI minutes."
+    }
+  ],
+  "decision_boundaries": {
+    "updates_projected_xi": true,
+    "updates_load_risk": true,
+    "updates_player_evidence": true,
+    "updates_club_form_score": false,
+    "rewrites_frozen_predictions": false,
+    "capital_deployment_ready": false
+  },
+  "sources": [
+    "FotMob match 6112324",
+    "FotMob match 6112272",
+    "FotMob match 6099330"
+  ]
+}

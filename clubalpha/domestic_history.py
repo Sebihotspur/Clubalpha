@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import Any
 
-from clubalpha.fotmob import league_matches, normalize_fixture
+from clubalpha.fotmob import clip_fixture_to_as_of, league_matches, normalize_fixture
 
 
 def build_domestic_competitions(
@@ -47,6 +47,9 @@ def build_domestic_competitions(
                 "league_id": league_id,
                 "league_name": league_name,
                 "season": season,
+                "source_scope": config.get(
+                    "source_scope", "domestic_history_previous"
+                ),
                 "target_teams": [],
             },
         )
@@ -69,6 +72,7 @@ def build_domestic_competitions(
 def select_domestic_fixtures(
     league_payload: dict[str, Any],
     competition: dict[str, Any],
+    as_of: str | None = None,
 ) -> list[dict[str, Any]]:
     target_ids = {row["team_id"] for row in competition["target_teams"]}
     selected: list[dict[str, Any]] = []
@@ -77,7 +81,14 @@ def select_domestic_fixtures(
         away_id = (row.get("away") or {}).get("id") or row.get("awayTeamId")
         if not ({int(value) for value in (home_id, away_id) if value is not None} & target_ids):
             continue
-        normalized = normalize_fixture(row, source_scope="domestic_history_previous")
+        normalized = normalize_fixture(
+            row,
+            source_scope=competition.get(
+                "source_scope", "domestic_history_previous"
+            ),
+        )
+        if as_of:
+            normalized = clip_fixture_to_as_of(normalized, as_of)
         normalized["competition_id"] = competition["league_id"]
         normalized["competition"] = competition["league_name"]
         normalized["season"] = competition["season"]
@@ -102,7 +113,9 @@ def filter_target_player_rows(
                 "competition_id": competition["league_id"],
                 "competition": competition["league_name"],
                 "season": competition["season"],
-                "source_scope": "domestic_history_previous",
+                "source_scope": competition.get(
+                    "source_scope", "domestic_history_previous"
+                ),
             }
         )
     return output
@@ -113,7 +126,16 @@ def filter_target_stat_rows(
     competition: dict[str, Any],
 ) -> list[dict[str, Any]]:
     target_ids = {row["team_id"] for row in competition["target_teams"]}
-    return [row for row in rows if row.get("team_id") in target_ids]
+    return [
+        {
+            **row,
+            "source_scope": competition.get(
+                "source_scope", "domestic_history_previous"
+            ),
+        }
+        for row in rows
+        if row.get("team_id") in target_ids
+    ]
 
 
 def target_fixture_counts(

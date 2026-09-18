@@ -1,0 +1,521 @@
+{
+  "report_version": "clubalpha_contextual_next_round_2026_08_26_v1",
+  "generated_at_utc": "2026-09-15T16:01:36.247829+00:00",
+  "status": "shadow_sensitivity_not_validated",
+  "fixtures": 10,
+  "source_provenance": {
+    "baseline": {
+      "filename": "predictions.jsonl",
+      "sha256": "d2f2f6a2ffb0297f24f51b453a2fbac4c6af4f0475a8f1b2c7be492df869807d"
+    },
+    "style_snapshot": {
+      "filename": "style-matchups.json",
+      "sha256": "89522bf19c444f1f9ea2aafe1e4e75749d9a049a114f9f98144aca722662e24f"
+    },
+    "config": {
+      "filename": "contextual-interaction-v1.json",
+      "sha256": "159888c285f53d7b29d9b9ebb4d0caf1ea593f899f61f971ec2dc9b716dbd924"
+    },
+    "fixture_schedule_verified_against": "https://www.premierleague.com/en/news/4678381/fixture-amendments-for-premier-league-matches-in-august-and-september/"
+  },
+  "method": {
+    "base_model_unchanged": true,
+    "archetype_labels_used_in_math": false,
+    "directional": true,
+    "continuous": true,
+    "reliability_shrunk": true,
+    "link": "contextual_xg = base_xg * exp(bounded_context_signal * reliability * maximum_log_sensitivity)",
+    "maximum_absolute_log_xg_adjustment": 0.1,
+    "simulations_per_fixture": 50000,
+    "same_deterministic_seed_as_baseline": true,
+    "common_random_numbers_with_baseline": false,
+    "probability_deltas_are_unpaired_monte_carlo_comparisons": true
+  },
+  "fixtures_summary": [
+    {
+      "match_id": 5795456,
+      "kickoff_utc": "2026-09-18T19:00:00Z",
+      "fixture": "Brentford vs Chelsea",
+      "home_archetype": "Direct / wide / set-piece",
+      "away_archetype": "Developing possession",
+      "base_xg": {
+        "home": 1.809728,
+        "away": 1.534082,
+        "total": 3.34381
+      },
+      "contextual_xg": {
+        "home": 1.789687,
+        "away": 1.531749,
+        "total": 3.321436
+      },
+      "base_1x2": {
+        "home_win": 0.44638,
+        "draw": 0.22442,
+        "away_win": 0.3292
+      },
+      "contextual_1x2": {
+        "home_win": 0.44382,
+        "draw": 0.22442,
+        "away_win": 0.33176
+      },
+      "probability_change_percentage_points": {
+        "home_win": -0.256,
+        "draw": 0.0,
+        "away_win": 0.256,
+        "btts_yes": -0.374
+      },
+      "home_preferred_route": "Set pieces",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.652497,
+      "away_context_reliability": 0.641125,
+      "base_favorite_side": "home",
+      "base_favorite": "Brentford",
+      "favorite_probability_delta": -0.00256,
+      "verdict": "no_clear_contextual_edge",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 5795464,
+      "kickoff_utc": "2026-09-19T11:30:00Z",
+      "fixture": "Tottenham Hotspur vs Aston Villa",
+      "home_archetype": "Developing possession",
+      "away_archetype": "Adaptive hybrid",
+      "base_xg": {
+        "home": 1.490099,
+        "away": 1.164133,
+        "total": 2.654231
+      },
+      "contextual_xg": {
+        "home": 1.490552,
+        "away": 1.156877,
+        "total": 2.647429
+      },
+      "base_1x2": {
+        "home_win": 0.44476,
+        "draw": 0.25712,
+        "away_win": 0.29812
+      },
+      "contextual_1x2": {
+        "home_win": 0.44688,
+        "draw": 0.25718,
+        "away_win": 0.29594
+      },
+      "probability_change_percentage_points": {
+        "home_win": 0.212,
+        "draw": 0.006,
+        "away_win": -0.218,
+        "btts_yes": -0.19
+      },
+      "home_preferred_route": "Set pieces",
+      "away_preferred_route": "Set pieces",
+      "home_context_reliability": 0.622329,
+      "away_context_reliability": 0.636878,
+      "base_favorite_side": "home",
+      "base_favorite": "Tottenham Hotspur",
+      "favorite_probability_delta": 0.00212,
+      "verdict": "baseline_supported",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 5795457,
+      "kickoff_utc": "2026-09-19T14:00:00Z",
+      "fixture": "Brighton & Hove Albion vs Arsenal",
+      "home_archetype": "Territorial controller",
+      "away_archetype": "Territorial controller",
+      "base_xg": {
+        "home": 1.391924,
+        "away": 1.457482,
+        "total": 2.849406
+      },
+      "contextual_xg": {
+        "home": 1.402,
+        "away": 1.493171,
+        "total": 2.895171
+      },
+      "base_1x2": {
+        "home_win": 0.3566,
+        "draw": 0.25212,
+        "away_win": 0.39128
+      },
+      "contextual_1x2": {
+        "home_win": 0.35532,
+        "draw": 0.24864,
+        "away_win": 0.39604
+      },
+      "probability_change_percentage_points": {
+        "home_win": -0.128,
+        "draw": -0.348,
+        "away_win": 0.476,
+        "btts_yes": 0.79
+      },
+      "home_preferred_route": "High press",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.426562,
+      "away_context_reliability": 0.466511,
+      "base_favorite_side": "away",
+      "base_favorite": "Arsenal",
+      "favorite_probability_delta": 0.00476,
+      "verdict": "baseline_supported",
+      "goal_environment": "expansive",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 5795458,
+      "kickoff_utc": "2026-09-19T14:00:00Z",
+      "fixture": "Everton vs Ipswich Town",
+      "home_archetype": "Adaptive hybrid",
+      "away_archetype": "Promoted / forming",
+      "base_xg": {
+        "home": 1.649773,
+        "away": 1.269841,
+        "total": 2.919614
+      },
+      "contextual_xg": {
+        "home": 1.644938,
+        "away": 1.249757,
+        "total": 2.894695
+      },
+      "base_1x2": {
+        "home_win": 0.45808,
+        "draw": 0.243,
+        "away_win": 0.29892
+      },
+      "contextual_1x2": {
+        "home_win": 0.46108,
+        "draw": 0.24494,
+        "away_win": 0.29398
+      },
+      "probability_change_percentage_points": {
+        "home_win": 0.3,
+        "draw": 0.194,
+        "away_win": -0.494,
+        "btts_yes": -0.516
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.352784,
+      "away_context_reliability": 0.378732,
+      "base_favorite_side": "home",
+      "base_favorite": "Everton",
+      "favorite_probability_delta": 0.003,
+      "verdict": "baseline_supported",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 5795462,
+      "kickoff_utc": "2026-09-19T14:00:00Z",
+      "fixture": "Newcastle United vs Hull City",
+      "home_archetype": "Adaptive hybrid",
+      "away_archetype": "Direct / wide / set-piece",
+      "base_xg": {
+        "home": 1.624277,
+        "away": 1.185606,
+        "total": 2.809882
+      },
+      "contextual_xg": {
+        "home": 1.644001,
+        "away": 1.159082,
+        "total": 2.803082
+      },
+      "base_1x2": {
+        "home_win": 0.47928,
+        "draw": 0.24366,
+        "away_win": 0.27706
+      },
+      "contextual_1x2": {
+        "home_win": 0.4896,
+        "draw": 0.24316,
+        "away_win": 0.26724
+      },
+      "probability_change_percentage_points": {
+        "home_win": 1.032,
+        "draw": -0.05,
+        "away_win": -0.982,
+        "btts_yes": -0.336
+      },
+      "home_preferred_route": "Set pieces",
+      "away_preferred_route": "Set pieces",
+      "home_context_reliability": 0.379295,
+      "away_context_reliability": 0.363568,
+      "base_favorite_side": "home",
+      "base_favorite": "Newcastle United",
+      "favorite_probability_delta": 0.01032,
+      "verdict": "baseline_reinforced",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 5795463,
+      "kickoff_utc": "2026-09-19T16:30:00Z",
+      "fixture": "Nottingham Forest vs Coventry City",
+      "home_archetype": "Direct / wide / set-piece",
+      "away_archetype": "Promoted / forming",
+      "base_xg": {
+        "home": 1.591205,
+        "away": 1.100681,
+        "total": 2.691886
+      },
+      "contextual_xg": {
+        "home": 1.595963,
+        "away": 1.074166,
+        "total": 2.670128
+      },
+      "base_1x2": {
+        "home_win": 0.48952,
+        "draw": 0.24742,
+        "away_win": 0.26306
+      },
+      "contextual_1x2": {
+        "home_win": 0.4972,
+        "draw": 0.24774,
+        "away_win": 0.25506
+      },
+      "probability_change_percentage_points": {
+        "home_win": 0.768,
+        "draw": 0.032,
+        "away_win": -0.8,
+        "btts_yes": -0.656
+      },
+      "home_preferred_route": "Set pieces",
+      "away_preferred_route": "Set pieces",
+      "home_context_reliability": 0.513989,
+      "away_context_reliability": 0.551816,
+      "base_favorite_side": "home",
+      "base_favorite": "Nottingham Forest",
+      "favorite_probability_delta": 0.00768,
+      "verdict": "baseline_supported",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 5795455,
+      "kickoff_utc": "2026-09-20T13:00:00Z",
+      "fixture": "AFC Bournemouth vs Liverpool",
+      "home_archetype": "High-intensity direct",
+      "away_archetype": "Territorial controller",
+      "base_xg": {
+        "home": 1.606544,
+        "away": 1.305497,
+        "total": 2.91204
+      },
+      "contextual_xg": {
+        "home": 1.610143,
+        "away": 1.321143,
+        "total": 2.931286
+      },
+      "base_1x2": {
+        "home_win": 0.44396,
+        "draw": 0.2452,
+        "away_win": 0.31084
+      },
+      "contextual_1x2": {
+        "home_win": 0.4403,
+        "draw": 0.24476,
+        "away_win": 0.31494
+      },
+      "probability_change_percentage_points": {
+        "home_win": -0.366,
+        "draw": -0.044,
+        "away_win": 0.41,
+        "btts_yes": 0.42
+      },
+      "home_preferred_route": "High press",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.557446,
+      "away_context_reliability": 0.617159,
+      "base_favorite_side": "home",
+      "base_favorite": "AFC Bournemouth",
+      "favorite_probability_delta": -0.00366,
+      "verdict": "no_clear_contextual_edge",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 5795460,
+      "kickoff_utc": "2026-09-20T13:00:00Z",
+      "fixture": "Leeds United vs Crystal Palace",
+      "home_archetype": "High-intensity direct",
+      "away_archetype": "Adaptive hybrid",
+      "base_xg": {
+        "home": 1.915715,
+        "away": 1.225027,
+        "total": 3.140743
+      },
+      "contextual_xg": {
+        "home": 1.923271,
+        "away": 1.205411,
+        "total": 3.128681
+      },
+      "base_1x2": {
+        "home_win": 0.53366,
+        "draw": 0.2215,
+        "away_win": 0.24484
+      },
+      "contextual_1x2": {
+        "home_win": 0.53872,
+        "draw": 0.22114,
+        "away_win": 0.24014
+      },
+      "probability_change_percentage_points": {
+        "home_win": 0.506,
+        "draw": -0.036,
+        "away_win": -0.47,
+        "btts_yes": -0.35
+      },
+      "home_preferred_route": "Set pieces",
+      "away_preferred_route": "Set pieces",
+      "home_context_reliability": 0.415357,
+      "away_context_reliability": 0.443634,
+      "base_favorite_side": "home",
+      "base_favorite": "Leeds United",
+      "favorite_probability_delta": 0.00506,
+      "verdict": "baseline_supported",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 5795461,
+      "kickoff_utc": "2026-09-20T13:00:00Z",
+      "fixture": "Manchester City vs Sunderland",
+      "home_archetype": "Territorial controller",
+      "away_archetype": "Direct / wide / set-piece",
+      "base_xg": {
+        "home": 1.926663,
+        "away": 0.938041,
+        "total": 2.864704
+      },
+      "contextual_xg": {
+        "home": 1.997198,
+        "away": 0.905528,
+        "total": 2.902726
+      },
+      "base_1x2": {
+        "home_win": 0.60426,
+        "draw": 0.2188,
+        "away_win": 0.17694
+      },
+      "contextual_1x2": {
+        "home_win": 0.62808,
+        "draw": 0.20998,
+        "away_win": 0.16194
+      },
+      "probability_change_percentage_points": {
+        "home_win": 2.382,
+        "draw": -0.882,
+        "away_win": -1.5,
+        "btts_yes": -0.404
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.68133,
+      "away_context_reliability": 0.736409,
+      "base_favorite_side": "home",
+      "base_favorite": "Manchester City",
+      "favorite_probability_delta": 0.02382,
+      "verdict": "baseline_reinforced",
+      "goal_environment": "expansive",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only"
+      ]
+    },
+    {
+      "match_id": 5795459,
+      "kickoff_utc": "2026-09-20T15:30:00Z",
+      "fixture": "Fulham vs Manchester United",
+      "home_archetype": "Adaptive hybrid",
+      "away_archetype": "Developing possession",
+      "base_xg": {
+        "home": 1.325407,
+        "away": 1.629617,
+        "total": 2.955024
+      },
+      "contextual_xg": {
+        "home": 1.289524,
+        "away": 1.622888,
+        "total": 2.912413
+      },
+      "base_1x2": {
+        "home_win": 0.31334,
+        "draw": 0.24536,
+        "away_win": 0.4413
+      },
+      "contextual_1x2": {
+        "home_win": 0.30178,
+        "draw": 0.2472,
+        "away_win": 0.45102
+      },
+      "probability_change_percentage_points": {
+        "home_win": -1.156,
+        "draw": 0.184,
+        "away_win": 0.972,
+        "btts_yes": -0.754
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.674335,
+      "away_context_reliability": 0.663402,
+      "base_favorite_side": "away",
+      "base_favorite": "Manchester United",
+      "favorite_probability_delta": 0.00972,
+      "verdict": "baseline_supported",
+      "goal_environment": "suppressed",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "projected_xi_alpha_provisional"
+      ]
+    }
+  ],
+  "decision_boundaries": {
+    "archetype_label_used_in_math": false,
+    "base_60_30_10_modified": false,
+    "coefficient_learned_from_residuals": false,
+    "probability_validated": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  },
+  "quality_flags": [
+    "first_live_contextual_shadow",
+    "context_coefficient_not_learned_from_residuals",
+    "do_not_use_for_capital_deployment"
+  ]
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pull club-filtered 2025/26 domestic history for the PL/UCL universe."""
+"""Pull club-filtered domestic evidence for the PL/UCL universe."""
 
 from __future__ import annotations
 
@@ -174,6 +174,7 @@ def main() -> int:
     parser.add_argument("--league-id", type=int, action="append", dest="league_ids")
     parser.add_argument("--request-interval", type=float, default=0.25)
     parser.add_argument("--workers", type=int, default=3)
+    parser.add_argument("--as-of", default=None, help="Inclusive YYYY-MM-DD snapshot date.")
     args = parser.parse_args()
     if args.workers < 1 or args.workers > 6:
         raise SystemExit("--workers must be between 1 and 6")
@@ -183,6 +184,8 @@ def main() -> int:
         raise SystemExit("Missing foundation teams.json; run pull_fotmob_foundation.py first.")
     config = load_json(args.config)
     teams = load_json(teams_path)
+    foundation_coverage = load_json(args.foundation_dir / "coverage.json")
+    as_of = args.as_of or foundation_coverage["as_of"]
     competitions = build_domestic_competitions(teams, config)
     if args.league_ids:
         wanted_ids = set(args.league_ids)
@@ -214,7 +217,7 @@ def main() -> int:
                 raise RuntimeError(
                     f"FotMob returned season {selected_season!r}; expected {competition['season']!r}"
                 )
-            fixtures = select_domestic_fixtures(payload, competition)
+            fixtures = select_domestic_fixtures(payload, competition, as_of)
             finished = [row for row in fixtures if row["finished"]]
             counts = target_fixture_counts(fixtures, competition)
             for fixture in fixtures:
@@ -293,7 +296,7 @@ def main() -> int:
             try:
                 payload = worker_client.match(match_id)
                 player_rows = filter_target_player_rows(
-                    flatten_match_player_stats(payload),
+                    flatten_match_player_stats(payload, fixtures_by_id[match_id]),
                     match_context[match_id],
                 )
                 team_rows = flatten_match_team_stats(payload, fixtures_by_id[match_id])
@@ -351,14 +354,22 @@ def main() -> int:
         "match_team_rows": write_jsonl(
             args.output_dir / "match_team_stats.jsonl", match_team_rows
         ),
+        "matches_with_red_cards": len(
+            {
+                row["match_id"]
+                for row in match_team_rows
+                if (row.get("red_cards_for") or 0) > 0
+            }
+        ),
         "season_player_stat_rows": write_jsonl(args.output_dir / "season_player_stats.jsonl", player_stat_rows),
     }
     manifest = {
         "version": config["version"],
+        "as_of": as_of,
         "generated_at_utc": generated_at,
         "source": "FotMob public web data",
         "source_status": "unofficial_undocumented",
-        "sampling_policy": "Complete domestic matches for target clubs; opponent player rows excluded",
+        "sampling_policy": "Complete domestic matches through the as-of date for target clubs; opponent player rows excluded",
         "competitions": competitions,
         "counts": counts,
     }
@@ -374,6 +385,7 @@ def main() -> int:
             "Domestic match detail is club-filtered; opponent-only rows are excluded to prevent partial-season player grades.",
             "Players transferred from a non-target club may still require a player-centric backfill.",
             "FotMob is undocumented; endpoint and field-shape tests remain required.",
+            "Red-card timing is stored as context but does not automatically rewrite any locked model weight.",
         ],
     }
     write_json(args.output_dir / "manifest.json", manifest)

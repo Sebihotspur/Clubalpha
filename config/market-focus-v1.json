@@ -1,0 +1,28 @@
+{
+  "version": "clubalpha_market_focus_v1",
+  "status": "shadow_research",
+  "active_markets": [
+    {
+      "key": "one_x_two",
+      "label": "1X2"
+    },
+    {
+      "key": "over_under_2_5",
+      "label": "Over/Under 2.5"
+    }
+  ],
+  "shadow_diagnostics": [
+    {
+      "key": "btts",
+      "label": "BTTS",
+      "reason": "Retained for calibration evidence but excluded from official recommendations and allocation review."
+    }
+  ],
+  "decision_boundaries": {
+    "btts_official_recommendations": false,
+    "btts_allocation_eligible": false,
+    "btts_continue_scoring": true,
+    "market_prices_required_before_paper_allocation": true,
+    "capital_deployment_ready": false
+  }
+}

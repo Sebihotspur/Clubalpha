@@ -239,11 +239,21 @@ def normalize_fixture(row: dict[str, Any], *, source_scope: str) -> dict[str, An
     home = row.get("home") or {}
     away = row.get("away") or {}
     tournament = row.get("tournament") or {}
+    stage_id = tournament.get("leagueId") or row.get("leagueId")
+    parent_id = (
+        tournament.get("parentLeagueId")
+        or row.get("parentLeagueId")
+        or row.get("primaryLeagueId")
+    )
+    competition_id = parent_id or stage_id
     return {
         "match_id": int(row["id"]),
         "source": "fotmob",
         "source_scope": source_scope,
-        "competition_id": tournament.get("leagueId") or row.get("leagueId"),
+        "competition_id": competition_id,
+        "competition_stage_id": (
+            stage_id if stage_id is not None and stage_id != competition_id else None
+        ),
         "competition": tournament.get("name") or row.get("leagueName"),
         "round": row.get("roundName") or row.get("round"),
         "kickoff_utc": status.get("utcTime") or row.get("matchDate"),
@@ -356,6 +366,70 @@ def _estimated_attempts(completed: float | None, accuracy_pct: float | None) -> 
     return completed * 100.0 / accuracy_pct
 
 
+def normalize_match_game_state(match_payload: dict[str, Any]) -> dict[str, Any]:
+    """Extract explicit numerical-imbalance context from a FotMob match card.
+
+    A red card can make the full-time xG and scoreline a misleading description
+    of the original 11-v-11 matchup. Preserve the event and its timing so model
+    review can separate pre-card evidence without guessing from the final score.
+    """
+
+    general = match_payload.get("general") or {}
+    home = general.get("homeTeam") or {}
+    away = general.get("awayTeam") or {}
+    match_facts = (match_payload.get("content") or {}).get("matchFacts") or {}
+    event_group = match_facts.get("events") or {}
+    events = event_group.get("events") or []
+    red_cards: list[dict[str, Any]] = []
+    for event in events:
+        card = normalize_name(event.get("card"))
+        if event.get("type") != "Card" or "red" not in card:
+            continue
+        minute = _number(event.get("timeStr") or event.get("time"))
+        added_minute = _number(event.get("overloadTime")) or 0.0
+        elapsed_minute = minute + added_minute if minute is not None else None
+        is_home = event.get("isHome")
+        side = "home" if is_home is True else "away" if is_home is False else None
+        team = home if side == "home" else away if side == "away" else {}
+        red_cards.append(
+            {
+                "team_id": int(team["id"]) if team.get("id") is not None else None,
+                "team": team.get("name"),
+                "side": side,
+                "player_id": (
+                    int(event["playerId"]) if event.get("playerId") is not None else None
+                ),
+                "player": event.get("fullName") or event.get("nameStr"),
+                "minute": minute,
+                "added_minute": added_minute or None,
+                "elapsed_minute": elapsed_minute,
+                "card": event.get("card"),
+            }
+        )
+    red_cards.sort(
+        key=lambda row: (
+            float(row["elapsed_minute"])
+            if row.get("elapsed_minute") is not None
+            else float("inf"),
+            str(row.get("side") or "unknown"),
+        )
+    )
+    first = red_cards[0] if red_cards else None
+    first_minute = first.get("elapsed_minute") if first else None
+    return {
+        "red_cards": red_cards,
+        "home_red_cards": sum(row.get("side") == "home" for row in red_cards),
+        "away_red_cards": sum(row.get("side") == "away" for row in red_cards),
+        "first_red_card_side": first.get("side") if first else None,
+        "first_red_card_minute": first_minute,
+        "estimated_11v11_minutes": (
+            min(90.0, max(0.0, float(first_minute)))
+            if first_minute is not None
+            else 90.0
+        ),
+    }
+
+
 def flatten_match_team_stats(
     match_payload: dict[str, Any], fixture: dict[str, Any]
 ) -> list[dict[str, Any]]:
@@ -370,6 +444,7 @@ def flatten_match_team_stats(
     header_teams = ((match_payload.get("header") or {}).get("teams")) or []
     stat_pairs = _match_team_stat_pairs(match_payload)
     percentage_pairs = _match_team_stat_percentage_pairs(match_payload)
+    game_state = normalize_match_game_state(match_payload)
     score_pair = _match_score(fixture.get("score"))
     if len(header_teams) >= 2:
         header_score = (
@@ -409,7 +484,16 @@ def flatten_match_team_stats(
             "match_id": int(fixture["match_id"]),
             "source": "fotmob",
             "source_scope": fixture.get("source_scope"),
-            "competition_id": fixture.get("competition_id") or general.get("leagueId"),
+            "competition_id": fixture.get("competition_id")
+            or general.get("parentLeagueId")
+            or general.get("leagueId"),
+            "competition_stage_id": fixture.get("competition_stage_id")
+            or (
+                general.get("leagueId")
+                if general.get("parentLeagueId")
+                and general.get("leagueId") != general.get("parentLeagueId")
+                else None
+            ),
             "competition": fixture.get("competition") or general.get("leagueName"),
             "season": fixture.get("season"),
             "kickoff_utc": fixture.get("kickoff_utc")
@@ -423,6 +507,17 @@ def flatten_match_team_stats(
             "cache_detail_available": bool(match_payload),
             "goals_for": score_pair[side["for_index"]],
             "goals_against": score_pair[side["against_index"]],
+            "red_cards_for": game_state[f"{side['venue']}_red_cards"],
+            "red_cards_against": game_state[
+                f"{'away' if side['venue'] == 'home' else 'home'}_red_cards"
+            ],
+            "first_red_card_for": game_state["first_red_card_side"] == side["venue"],
+            "first_red_card_against": (
+                game_state["first_red_card_side"] in {"home", "away"}
+                and game_state["first_red_card_side"] != side["venue"]
+            ),
+            "first_red_card_minute": game_state["first_red_card_minute"],
+            "estimated_11v11_minutes": game_state["estimated_11v11_minutes"],
         }
         for canonical, source_key in MATCH_TEAM_STAT_KEYS.items():
             pair = stat_pairs.get(source_key, (None, None))
@@ -541,8 +636,11 @@ def normalize_transfer_events(
     return rows
 
 
-def flatten_match_player_stats(match_payload: dict[str, Any]) -> list[dict[str, Any]]:
+def flatten_match_player_stats(
+    match_payload: dict[str, Any], fixture: dict[str, Any] | None = None
+) -> list[dict[str, Any]]:
     general = match_payload.get("general") or {}
+    fixture = fixture or {}
     output: list[dict[str, Any]] = []
     content = match_payload.get("content") or {}
     players = content.get("playerStats") or {}
@@ -643,9 +741,23 @@ def flatten_match_player_stats(match_payload: dict[str, Any]) -> list[dict[str, 
         output.append(
             {
                 "match_id": int(general.get("matchId")),
-                "competition_id": general.get("leagueId"),
-                "competition": general.get("leagueName"),
-                "kickoff_utc": general.get("matchTimeUTCDate") or general.get("matchTimeUTC"),
+                "source": "fotmob",
+                "source_scope": fixture.get("source_scope"),
+                "competition_id": fixture.get("competition_id")
+                or general.get("parentLeagueId")
+                or general.get("leagueId"),
+                "competition_stage_id": fixture.get("competition_stage_id")
+                or (
+                    general.get("leagueId")
+                    if general.get("parentLeagueId")
+                    and general.get("leagueId") != general.get("parentLeagueId")
+                    else None
+                ),
+                "competition": fixture.get("competition") or general.get("leagueName"),
+                "season": fixture.get("season"),
+                "kickoff_utc": fixture.get("kickoff_utc")
+                or general.get("matchTimeUTCDate")
+                or general.get("matchTimeUTC"),
                 "player_id": player_id,
                 "player": player.get("name"),
                 "team_id": int(player["teamId"]),

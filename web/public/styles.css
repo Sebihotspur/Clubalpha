@@ -257,6 +257,14 @@ tbody tr:hover { background: rgba(23, 37, 31, 0.56); }
 .status-chip.official { color: var(--accent); border-color: rgba(67, 245, 154, 0.25); }
 .status-chip.hit { color: var(--accent); border-color: rgba(67, 245, 154, 0.25); }
 .status-chip.miss { color: #ff8d83; border-color: rgba(255, 141, 131, 0.28); }
+.risk-stack, .player-strip { display: flex; flex-wrap: wrap; gap: 6px; }
+.risk-stack { min-width: 190px; }
+.table-sub { display: block; margin-top: 5px; color: var(--muted); font: 9px var(--mono); }
+.midweek-card h3 span { color: var(--accent); white-space: nowrap; }
+.midweek-card p { color: var(--muted); line-height: 1.55; }
+.player-strip { margin-top: 15px; }
+.player-strip span { padding: 5px 7px; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); font: 9px var(--mono); }
+.player-strip strong { color: var(--text); }
 .ledger-result { display: grid; justify-items: end; gap: 5px; }
 .ledger-result strong { color: var(--text); font-size: 14px; }
 .ledger-result small { color: var(--muted-2); font: 8px var(--mono); }
@@ -352,6 +360,17 @@ tbody tr:hover { background: rgba(23, 37, 31, 0.56); }
 .round-robin-table { margin-top: 0; }
 .round-robin-table th:first-child, .round-robin-table td:first-child { width: 40px; padding-left: 15px; color: var(--muted-2); }
 
+.ucl-page-head .notice { border-color: rgba(72, 145, 255, 0.28); color: var(--blue); }
+.ucl-insight-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 22px; }
+.ucl-insight-grid .ledger-panel { min-height: 184px; }
+.ucl-insight-grid .ledger-panel h2 span { color: var(--muted); font-size: 13px; }
+.ucl-score { color: var(--accent); font: 600 18px var(--mono); }
+.ucl-residual { display: block; margin-top: 7px; color: var(--muted); font: 8px var(--mono); }
+.cup-watch { border-color: rgba(72, 145, 255, 0.2); }
+.cup-watch .pick-tag { color: var(--blue); }
+.cup-watch .pick-tag span { background: var(--blue); box-shadow: 0 0 12px rgba(72, 145, 255, 0.6); }
+.cup-read { max-width: 700px; margin: 18px 0 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+
 .method-stack { display: grid; gap: 12px; margin-top: 28px; }
 .method-card { display: grid; grid-template-columns: 130px 1fr; gap: 24px; padding: 24px; border: 1px solid var(--border); border-radius: 12px; background: rgba(13, 21, 17, 0.7); }
 .method-card .step { color: var(--accent); font: 500 10px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; }
@@ -373,6 +392,7 @@ tbody tr:hover { background: rgba(23, 37, 31, 0.56); }
   .metric:nth-child(2) { border-right: 0; }
   .metric:nth-child(-n + 2) { border-bottom: 1px solid var(--border); }
   .pick-card, .ledger-hero { grid-template-columns: 1fr; }
+  .ucl-insight-grid { grid-template-columns: 1fr; }
   .pick-numbers { border-left: 0; border-top: 1px solid var(--border); }
   .card-grid { grid-template-columns: 1fr 1fr; }
   .matchup-teaser, .holy-teaser { grid-template-columns: 1fr; }

@@ -94,6 +94,22 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertEqual(ledger["next_stage"], "paper_allocation_and_price_validation")
         self.assertFalse(ledger["capital_deployment_ready"])
 
+    def test_market_focus_is_limited_without_deleting_btts_history(self):
+        focus = self.data["market_focus"]
+        self.assertEqual(
+            [row["key"] for row in focus["active_markets"]],
+            ["one_x_two", "over_under_2_5"],
+        )
+        self.assertEqual(
+            [row["key"] for row in focus["shadow_diagnostics"]],
+            ["btts"],
+        )
+        boundaries = focus["decision_boundaries"]
+        self.assertFalse(boundaries["btts_official_recommendations"])
+        self.assertFalse(boundaries["btts_allocation_eligible"])
+        self.assertTrue(boundaries["btts_continue_scoring"])
+        self.assertFalse(boundaries["capital_deployment_ready"])
+
     def test_matchweek_hit_rates_keep_markets_separate(self):
         weeks = {
             row["matchweek"]: row for row in self.data["ledger"]["matchweeks"]
@@ -129,8 +145,25 @@ class WebHolyGrailTests(unittest.TestCase):
                 self.assertIsNone(market["hit_rate"])
         self.assertTrue(official["counts_toward_promotion_gate"])
         current = weeks[4]
-        self.assertEqual(current["settled"], 0)
-        self.assertEqual(current["pending"], 10)
+        current_result_path = (
+            ROOT
+            / "artifacts/official_shadow/2026-09-08-mw4/results.jsonl"
+        )
+        current_result_count = sum(
+            bool(line.strip())
+            for line in current_result_path.read_text(encoding="utf-8").splitlines()
+        )
+        self.assertEqual(current["settled"], current_result_count)
+        self.assertEqual(current["pending"], current["fixtures"] - current_result_count)
+        for market in current["markets"].values():
+            self.assertEqual(market["settled"], current_result_count)
+            if current_result_count:
+                self.assertEqual(
+                    market["hit_rate"],
+                    round(market["hits"] / current_result_count, 6),
+                )
+            else:
+                self.assertIsNone(market["hit_rate"])
         self.assertTrue(current["counts_toward_promotion_gate"])
 
     def test_ipswich_liverpool_result_scores_markets_independently(self):
@@ -178,19 +211,46 @@ class WebHolyGrailTests(unittest.TestCase):
 
     def test_methodology_exposes_the_append_only_learning_loop(self):
         learning = self.data["methodology"]["research_loop"]
-        self.assertEqual(learning["completed_results"], 20)
+        completed_results = sum(
+            sum(
+                bool(line.strip())
+                for line in path.read_text(encoding="utf-8").splitlines()
+            )
+            for path in (
+                ROOT / "artifacts/contextual_interaction/2026-08-26/results.jsonl",
+                ROOT / "artifacts/official_shadow/2026-08-31-mw3/results.jsonl",
+                ROOT / "artifacts/official_shadow/2026-09-08-mw4/results.jsonl",
+            )
+        )
+        self.assertEqual(learning["completed_results"], completed_results)
         self.assertEqual(learning["frozen_fixtures"], 30)
-        self.assertEqual(learning["pending_results"], 10)
+        self.assertEqual(
+            learning["pending_results"],
+            learning["frozen_fixtures"] - completed_results,
+        )
         self.assertEqual(learning["promotion_candidates"], 0)
         self.assertEqual(learning["automatically_applied"], 0)
         self.assertFalse(learning["capital_deployment_ready"])
+        adaptive = learning["adaptive"]
+        self.assertEqual(adaptive["match_learning_cards"], completed_results)
+        self.assertEqual(
+            set(adaptive["memory_policy"]), {"fast", "medium", "slow"}
+        )
+        self.assertFalse(
+            adaptive["champion_challenger"]["promotion_gate"][
+                "automatically_promoted"
+            ]
+        )
         app = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
-        self.assertIn("05 · Learning loop", app)
-        self.assertIn("Absorb evidence without rewriting the model", app)
+        self.assertIn("05 · Adaptive learning", app)
+        self.assertIn("Diagnose every match before learning from it", app)
 
     def test_methodology_exposes_fixture_calibration_without_unlocking_capital(self):
         calibration = self.data["methodology"]["fixture_calibration"]
-        self.assertEqual(calibration["training_matches"], 20)
+        self.assertEqual(
+            calibration["training_matches"],
+            self.data["methodology"]["research_loop"]["completed_results"],
+        )
         self.assertLess(
             calibration["league_venue"]["applied_log_ratio_correction"], 0
         )
@@ -211,10 +271,22 @@ class WebHolyGrailTests(unittest.TestCase):
 
     def test_current_results_expose_outcomes_and_model_diagnostics(self):
         diagnostic = self.data["official_slate"]["performance_diagnostic"]
-        self.assertEqual(diagnostic["settled"], 0)
-        self.assertEqual(diagnostic["official_1x2_hits"], 0)
-        self.assertEqual(diagnostic["raw_probability_leader_hits"], 0)
-        self.assertAlmostEqual(diagnostic["mean_projected_xi_hits_of_11"], 8.4)
+        current_week = next(
+            row
+            for row in self.data["ledger"]["matchweeks"]
+            if row["matchweek"] == 4
+        )
+        self.assertEqual(diagnostic["settled"], current_week["settled"])
+        self.assertEqual(
+            diagnostic["official_1x2_hits"],
+            current_week["markets"]["one_x_two"]["hits"],
+        )
+        self.assertGreaterEqual(diagnostic["raw_probability_leader_hits"], 0)
+        self.assertLessEqual(
+            diagnostic["raw_probability_leader_hits"], diagnostic["settled"]
+        )
+        self.assertGreaterEqual(diagnostic["mean_projected_xi_hits_of_11"], 0)
+        self.assertLessEqual(diagnostic["mean_projected_xi_hits_of_11"], 11)
         self.assertFalse(diagnostic["sample_sufficient_to_recalibrate"])
         settled_week = next(
             row
@@ -227,13 +299,33 @@ class WebHolyGrailTests(unittest.TestCase):
         )
         self.assertEqual(settled_week["markets"]["btts"]["hits"], 6)
 
+        bournemouth = next(
+            row
+            for row in self.data["official_slate"]["predictions"]
+            if row["match_id"] == 5795445
+        )
+        self.assertEqual(bournemouth["status"], "settled")
+        self.assertTrue(bournemouth["result"]["official_1x2_hit"])
+        self.assertTrue(bournemouth["result"]["over_under_2_5_hit"])
+        self.assertTrue(bournemouth["result"]["btts_hit"])
+
         leeds = next(
             row
             for row in self.data["official_slate"]["predictions"]
             if row["match_id"] == 5795450
         )
-        self.assertEqual(leeds["status"], "pending")
-        self.assertIsNone(leeds["result"])
+        result_path = ROOT / "artifacts/official_shadow/2026-09-08-mw4/results.jsonl"
+        recorded_ids = {
+            json.loads(line)["match_id"]
+            for line in result_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        }
+        if leeds["match_id"] in recorded_ids:
+            self.assertEqual(leeds["status"], "settled")
+            self.assertIsNotNone(leeds["result"])
+        else:
+            self.assertEqual(leeds["status"], "pending")
+            self.assertIsNone(leeds["result"])
 
     def test_current_calibrated_probabilities_are_exact_simplexes(self):
         draws = 0

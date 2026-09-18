@@ -1,0 +1,1095 @@
+{
+  "version": "clubalpha_total_goals_challenger_v1",
+  "status": "research_challenger_zero_live_weight",
+  "generated_at_utc": "2026-09-16T23:19:15.824889+00:00",
+  "training_cutoff": "2026-07-01",
+  "method": {
+    "target": "P(total goals > 2.5 | predicted total xG)",
+    "estimator": "recency-weighted Gaussian kernel with independent-Poisson prior and monotone PAVA projection",
+    "parameter_selection": "chronological season-forward validation"
+  },
+  "competitions": [
+    {
+      "key": "premier_league",
+      "competition_id": 47,
+      "training_matches": 1900,
+      "training_seasons": [
+        "2021/2022",
+        "2022/2023",
+        "2023/2024",
+        "2024/2025",
+        "2025/2026"
+      ],
+      "selected_parameters": {
+        "bandwidth": 0.35,
+        "poisson_prior_strength": 25.0,
+        "recency_half_life_days": 730.0
+      },
+      "chronological_validation": {
+        "bandwidth": 0.35,
+        "poisson_prior_strength": 25.0,
+        "validation_matches": 1140,
+        "challenger_brier": 0.20094643,
+        "challenger_log_loss": 0.58522667,
+        "poisson_brier": 0.20293296,
+        "poisson_log_loss": 0.5896749,
+        "brier_improvement": 0.00198653,
+        "log_loss_improvement": 0.00444823
+      },
+      "probability_grid": [
+        {
+          "total_xg": 0.5,
+          "over_2_5": 0.03806629,
+          "local_weighted_matches": 9.7905
+        },
+        {
+          "total_xg": 0.55,
+          "over_2_5": 0.04749377,
+          "local_weighted_matches": 12.0353
+        },
+        {
+          "total_xg": 0.6,
+          "over_2_5": 0.0579785,
+          "local_weighted_matches": 14.6834
+        },
+        {
+          "total_xg": 0.65,
+          "over_2_5": 0.06939731,
+          "local_weighted_matches": 17.7786
+        },
+        {
+          "total_xg": 0.7,
+          "over_2_5": 0.08160481,
+          "local_weighted_matches": 21.3621
+        },
+        {
+          "total_xg": 0.75,
+          "over_2_5": 0.09444757,
+          "local_weighted_matches": 25.471
+        },
+        {
+          "total_xg": 0.8,
+          "over_2_5": 0.10777705,
+          "local_weighted_matches": 30.1364
+        },
+        {
+          "total_xg": 0.85,
+          "over_2_5": 0.1214589,
+          "local_weighted_matches": 35.3823
+        },
+        {
+          "total_xg": 0.9,
+          "over_2_5": 0.1353778,
+          "local_weighted_matches": 41.2242
+        },
+        {
+          "total_xg": 0.95,
+          "over_2_5": 0.14943797,
+          "local_weighted_matches": 47.6685
+        },
+        {
+          "total_xg": 1.0,
+          "over_2_5": 0.16356036,
+          "local_weighted_matches": 54.7125
+        },
+        {
+          "total_xg": 1.05,
+          "over_2_5": 0.17767805,
+          "local_weighted_matches": 62.3443
+        },
+        {
+          "total_xg": 1.1,
+          "over_2_5": 0.19173122,
+          "local_weighted_matches": 70.5436
+        },
+        {
+          "total_xg": 1.15,
+          "over_2_5": 0.20566269,
+          "local_weighted_matches": 79.2823
+        },
+        {
+          "total_xg": 1.2,
+          "over_2_5": 0.2194149,
+          "local_weighted_matches": 88.5252
+        },
+        {
+          "total_xg": 1.25,
+          "over_2_5": 0.23292869,
+          "local_weighted_matches": 98.2308
+        },
+        {
+          "total_xg": 1.3,
+          "over_2_5": 0.24614378,
+          "local_weighted_matches": 108.3522
+        },
+        {
+          "total_xg": 1.35,
+          "over_2_5": 0.25900088,
+          "local_weighted_matches": 118.8372
+        },
+        {
+          "total_xg": 1.4,
+          "over_2_5": 0.27144495,
+          "local_weighted_matches": 129.6284
+        },
+        {
+          "total_xg": 1.45,
+          "over_2_5": 0.28342904,
+          "local_weighted_matches": 140.6639
+        },
+        {
+          "total_xg": 1.5,
+          "over_2_5": 0.29491819,
+          "local_weighted_matches": 151.8767
+        },
+        {
+          "total_xg": 1.55,
+          "over_2_5": 0.30589268,
+          "local_weighted_matches": 163.1954
+        },
+        {
+          "total_xg": 1.6,
+          "over_2_5": 0.31635037,
+          "local_weighted_matches": 174.544
+        },
+        {
+          "total_xg": 1.65,
+          "over_2_5": 0.32630758,
+          "local_weighted_matches": 185.8432
+        },
+        {
+          "total_xg": 1.7,
+          "over_2_5": 0.33579865,
+          "local_weighted_matches": 197.0108
+        },
+        {
+          "total_xg": 1.75,
+          "over_2_5": 0.34487397,
+          "local_weighted_matches": 207.9637
+        },
+        {
+          "total_xg": 1.8,
+          "over_2_5": 0.35359708,
+          "local_weighted_matches": 218.6188
+        },
+        {
+          "total_xg": 1.85,
+          "over_2_5": 0.3620409,
+          "local_weighted_matches": 228.8947
+        },
+        {
+          "total_xg": 1.9,
+          "over_2_5": 0.37028377,
+          "local_weighted_matches": 238.7137
+        },
+        {
+          "total_xg": 1.95,
+          "over_2_5": 0.37840565,
+          "local_weighted_matches": 248.0025
+        },
+        {
+          "total_xg": 2.0,
+          "over_2_5": 0.38648493,
+          "local_weighted_matches": 256.6937
+        },
+        {
+          "total_xg": 2.05,
+          "over_2_5": 0.39459608,
+          "local_weighted_matches": 264.7262
+        },
+        {
+          "total_xg": 2.1,
+          "over_2_5": 0.40280833,
+          "local_weighted_matches": 272.0458
+        },
+        {
+          "total_xg": 2.15,
+          "over_2_5": 0.41118537,
+          "local_weighted_matches": 278.6053
+        },
+        {
+          "total_xg": 2.2,
+          "over_2_5": 0.41978581,
+          "local_weighted_matches": 284.3652
+        },
+        {
+          "total_xg": 2.25,
+          "over_2_5": 0.42866414,
+          "local_weighted_matches": 289.294
+        },
+        {
+          "total_xg": 2.3,
+          "over_2_5": 0.43787181,
+          "local_weighted_matches": 293.3689
+        },
+        {
+          "total_xg": 2.35,
+          "over_2_5": 0.44745783,
+          "local_weighted_matches": 296.5767
+        },
+        {
+          "total_xg": 2.4,
+          "over_2_5": 0.45746864,
+          "local_weighted_matches": 298.9149
+        },
+        {
+          "total_xg": 2.45,
+          "over_2_5": 0.46794688,
+          "local_weighted_matches": 300.3924
+        },
+        {
+          "total_xg": 2.5,
+          "over_2_5": 0.47892899,
+          "local_weighted_matches": 301.0302
+        },
+        {
+          "total_xg": 2.55,
+          "over_2_5": 0.49044174,
+          "local_weighted_matches": 300.8609
+        },
+        {
+          "total_xg": 2.6,
+          "over_2_5": 0.50249805,
+          "local_weighted_matches": 299.9281
+        },
+        {
+          "total_xg": 2.65,
+          "over_2_5": 0.51509259,
+          "local_weighted_matches": 298.2844
+        },
+        {
+          "total_xg": 2.7,
+          "over_2_5": 0.5281979,
+          "local_weighted_matches": 295.9897
+        },
+        {
+          "total_xg": 2.75,
+          "over_2_5": 0.54176157,
+          "local_weighted_matches": 293.1078
+        },
+        {
+          "total_xg": 2.8,
+          "over_2_5": 0.55570521,
+          "local_weighted_matches": 289.7046
+        },
+        {
+          "total_xg": 2.85,
+          "over_2_5": 0.56992536,
+          "local_weighted_matches": 285.8448
+        },
+        {
+          "total_xg": 2.9,
+          "over_2_5": 0.58429656,
+          "local_weighted_matches": 281.5901
+        },
+        {
+          "total_xg": 2.95,
+          "over_2_5": 0.59867628,
+          "local_weighted_matches": 276.9979
+        },
+        {
+          "total_xg": 3.0,
+          "over_2_5": 0.61291121,
+          "local_weighted_matches": 272.1205
+        },
+        {
+          "total_xg": 3.05,
+          "over_2_5": 0.62684431,
+          "local_weighted_matches": 267.0039
+        },
+        {
+          "total_xg": 3.1,
+          "over_2_5": 0.64032204,
+          "local_weighted_matches": 261.6885
+        },
+        {
+          "total_xg": 3.15,
+          "over_2_5": 0.65320113,
+          "local_weighted_matches": 256.2085
+        },
+        {
+          "total_xg": 3.2,
+          "over_2_5": 0.66535472,
+          "local_weighted_matches": 250.5919
+        },
+        {
+          "total_xg": 3.25,
+          "over_2_5": 0.67667761,
+          "local_weighted_matches": 244.8605
+        },
+        {
+          "total_xg": 3.3,
+          "over_2_5": 0.6870906,
+          "local_weighted_matches": 239.0304
+        },
+        {
+          "total_xg": 3.35,
+          "over_2_5": 0.69654396,
+          "local_weighted_matches": 233.1117
+        },
+        {
+          "total_xg": 3.4,
+          "over_2_5": 0.7050201,
+          "local_weighted_matches": 227.11
+        },
+        {
+          "total_xg": 3.45,
+          "over_2_5": 0.71253527,
+          "local_weighted_matches": 221.0272
+        },
+        {
+          "total_xg": 3.5,
+          "over_2_5": 0.71914025,
+          "local_weighted_matches": 214.8636
+        },
+        {
+          "total_xg": 3.55,
+          "over_2_5": 0.72491985,
+          "local_weighted_matches": 208.6198
+        },
+        {
+          "total_xg": 3.6,
+          "over_2_5": 0.72999085,
+          "local_weighted_matches": 202.299
+        },
+        {
+          "total_xg": 3.65,
+          "over_2_5": 0.73449836,
+          "local_weighted_matches": 195.9082
+        },
+        {
+          "total_xg": 3.7,
+          "over_2_5": 0.73861027,
+          "local_weighted_matches": 189.4602
+        },
+        {
+          "total_xg": 3.75,
+          "over_2_5": 0.74250979,
+          "local_weighted_matches": 182.973
+        },
+        {
+          "total_xg": 3.8,
+          "over_2_5": 0.7463862,
+          "local_weighted_matches": 176.4698
+        },
+        {
+          "total_xg": 3.85,
+          "over_2_5": 0.75042415,
+          "local_weighted_matches": 169.9773
+        },
+        {
+          "total_xg": 3.9,
+          "over_2_5": 0.75479205,
+          "local_weighted_matches": 163.5234
+        },
+        {
+          "total_xg": 3.95,
+          "over_2_5": 0.75963066,
+          "local_weighted_matches": 157.1348
+        },
+        {
+          "total_xg": 4.0,
+          "over_2_5": 0.76504286,
+          "local_weighted_matches": 150.8347
+        },
+        {
+          "total_xg": 4.05,
+          "over_2_5": 0.77108605,
+          "local_weighted_matches": 144.6405
+        },
+        {
+          "total_xg": 4.1,
+          "over_2_5": 0.7777682,
+          "local_weighted_matches": 138.5626
+        },
+        {
+          "total_xg": 4.15,
+          "over_2_5": 0.78504839,
+          "local_weighted_matches": 132.6041
+        },
+        {
+          "total_xg": 4.2,
+          "over_2_5": 0.79284203,
+          "local_weighted_matches": 126.7611
+        },
+        {
+          "total_xg": 4.25,
+          "over_2_5": 0.80103014,
+          "local_weighted_matches": 121.024
+        },
+        {
+          "total_xg": 4.3,
+          "over_2_5": 0.80947156,
+          "local_weighted_matches": 115.3794
+        },
+        {
+          "total_xg": 4.35,
+          "over_2_5": 0.81801658,
+          "local_weighted_matches": 109.8124
+        },
+        {
+          "total_xg": 4.4,
+          "over_2_5": 0.82652011,
+          "local_weighted_matches": 104.3091
+        },
+        {
+          "total_xg": 4.45,
+          "over_2_5": 0.83485307,
+          "local_weighted_matches": 98.8592
+        },
+        {
+          "total_xg": 4.5,
+          "over_2_5": 0.8429107,
+          "local_weighted_matches": 93.4577
+        },
+        {
+          "total_xg": 4.55,
+          "over_2_5": 0.85061732,
+          "local_weighted_matches": 88.1063
+        },
+        {
+          "total_xg": 4.6,
+          "over_2_5": 0.85792754,
+          "local_weighted_matches": 82.8145
+        },
+        {
+          "total_xg": 4.65,
+          "over_2_5": 0.86482418,
+          "local_weighted_matches": 77.5995
+        },
+        {
+          "total_xg": 4.7,
+          "over_2_5": 0.87131376,
+          "local_weighted_matches": 72.4852
+        },
+        {
+          "total_xg": 4.75,
+          "over_2_5": 0.87742034,
+          "local_weighted_matches": 67.5009
+        },
+        {
+          "total_xg": 4.8,
+          "over_2_5": 0.88317861,
+          "local_weighted_matches": 62.6788
+        },
+        {
+          "total_xg": 4.85,
+          "over_2_5": 0.88862707,
+          "local_weighted_matches": 58.0521
+        },
+        {
+          "total_xg": 4.9,
+          "over_2_5": 0.89380204,
+          "local_weighted_matches": 53.6518
+        },
+        {
+          "total_xg": 4.95,
+          "over_2_5": 0.89873312,
+          "local_weighted_matches": 49.5045
+        },
+        {
+          "total_xg": 5.0,
+          "over_2_5": 0.90344039,
+          "local_weighted_matches": 45.6299
+        },
+        {
+          "total_xg": 5.05,
+          "over_2_5": 0.90793364,
+          "local_weighted_matches": 42.0397
+        },
+        {
+          "total_xg": 5.1,
+          "over_2_5": 0.91221338,
+          "local_weighted_matches": 38.7365
+        },
+        {
+          "total_xg": 5.15,
+          "over_2_5": 0.91627329,
+          "local_weighted_matches": 35.7143
+        },
+        {
+          "total_xg": 5.2,
+          "over_2_5": 0.92010348,
+          "local_weighted_matches": 32.9589
+        },
+        {
+          "total_xg": 5.25,
+          "over_2_5": 0.92369379,
+          "local_weighted_matches": 30.4496
+        },
+        {
+          "total_xg": 5.3,
+          "over_2_5": 0.92703657,
+          "local_weighted_matches": 28.1614
+        },
+        {
+          "total_xg": 5.35,
+          "over_2_5": 0.9301285,
+          "local_weighted_matches": 26.0672
+        },
+        {
+          "total_xg": 5.4,
+          "over_2_5": 0.93297132,
+          "local_weighted_matches": 24.1399
+        },
+        {
+          "total_xg": 5.45,
+          "over_2_5": 0.93557176,
+          "local_weighted_matches": 22.3546
+        },
+        {
+          "total_xg": 5.5,
+          "over_2_5": 0.93794089,
+          "local_weighted_matches": 20.69
+        }
+      ]
+    },
+    {
+      "key": "champions_league",
+      "competition_id": 42,
+      "training_matches": 753,
+      "training_seasons": [
+        "2021/2022",
+        "2022/2023",
+        "2023/2024",
+        "2024/2025",
+        "2025/2026"
+      ],
+      "selected_parameters": {
+        "bandwidth": 0.2,
+        "poisson_prior_strength": 25.0,
+        "recency_half_life_days": 730.0
+      },
+      "chronological_validation": {
+        "bandwidth": 0.2,
+        "poisson_prior_strength": 25.0,
+        "validation_matches": 503,
+        "challenger_brier": 0.18143988,
+        "challenger_log_loss": 0.53921297,
+        "poisson_brier": 0.18289191,
+        "poisson_log_loss": 0.54346429,
+        "brier_improvement": 0.00145203,
+        "log_loss_improvement": 0.00425132
+      },
+      "probability_grid": [
+        {
+          "total_xg": 0.5,
+          "over_2_5": 0.01779078,
+          "local_weighted_matches": 1.057
+        },
+        {
+          "total_xg": 0.55,
+          "over_2_5": 0.02359628,
+          "local_weighted_matches": 1.4244
+        },
+        {
+          "total_xg": 0.6,
+          "over_2_5": 0.03030692,
+          "local_weighted_matches": 1.8908
+        },
+        {
+          "total_xg": 0.65,
+          "over_2_5": 0.0376688,
+          "local_weighted_matches": 2.47
+        },
+        {
+          "total_xg": 0.7,
+          "over_2_5": 0.04527283,
+          "local_weighted_matches": 3.169
+        },
+        {
+          "total_xg": 0.75,
+          "over_2_5": 0.05262262,
+          "local_weighted_matches": 3.985
+        },
+        {
+          "total_xg": 0.8,
+          "over_2_5": 0.05925266,
+          "local_weighted_matches": 4.9032
+        },
+        {
+          "total_xg": 0.85,
+          "over_2_5": 0.06485734,
+          "local_weighted_matches": 5.8994
+        },
+        {
+          "total_xg": 0.9,
+          "over_2_5": 0.06938348,
+          "local_weighted_matches": 6.9458
+        },
+        {
+          "total_xg": 0.95,
+          "over_2_5": 0.07305721,
+          "local_weighted_matches": 8.019
+        },
+        {
+          "total_xg": 1.0,
+          "over_2_5": 0.07634565,
+          "local_weighted_matches": 9.1082
+        },
+        {
+          "total_xg": 1.05,
+          "over_2_5": 0.07987434,
+          "local_weighted_matches": 10.2202
+        },
+        {
+          "total_xg": 1.1,
+          "over_2_5": 0.08432651,
+          "local_weighted_matches": 11.3803
+        },
+        {
+          "total_xg": 1.15,
+          "over_2_5": 0.09034306,
+          "local_weighted_matches": 12.6277
+        },
+        {
+          "total_xg": 1.2,
+          "over_2_5": 0.09843328,
+          "local_weighted_matches": 14.0058
+        },
+        {
+          "total_xg": 1.25,
+          "over_2_5": 0.10890162,
+          "local_weighted_matches": 15.5501
+        },
+        {
+          "total_xg": 1.3,
+          "over_2_5": 0.12179678,
+          "local_weighted_matches": 17.2774
+        },
+        {
+          "total_xg": 1.35,
+          "over_2_5": 0.13689069,
+          "local_weighted_matches": 19.1789
+        },
+        {
+          "total_xg": 1.4,
+          "over_2_5": 0.15369247,
+          "local_weighted_matches": 21.222
+        },
+        {
+          "total_xg": 1.45,
+          "over_2_5": 0.17149813,
+          "local_weighted_matches": 23.3607
+        },
+        {
+          "total_xg": 1.5,
+          "over_2_5": 0.18947556,
+          "local_weighted_matches": 25.5503
+        },
+        {
+          "total_xg": 1.55,
+          "over_2_5": 0.20678727,
+          "local_weighted_matches": 27.7618
+        },
+        {
+          "total_xg": 1.6,
+          "over_2_5": 0.22274873,
+          "local_weighted_matches": 29.9873
+        },
+        {
+          "total_xg": 1.65,
+          "over_2_5": 0.23699941,
+          "local_weighted_matches": 32.2363
+        },
+        {
+          "total_xg": 1.7,
+          "over_2_5": 0.24963436,
+          "local_weighted_matches": 34.5248
+        },
+        {
+          "total_xg": 1.75,
+          "over_2_5": 0.2612332,
+          "local_weighted_matches": 36.8649
+        },
+        {
+          "total_xg": 1.8,
+          "over_2_5": 0.27275177,
+          "local_weighted_matches": 39.2618
+        },
+        {
+          "total_xg": 1.85,
+          "over_2_5": 0.28529758,
+          "local_weighted_matches": 41.7186
+        },
+        {
+          "total_xg": 1.9,
+          "over_2_5": 0.29985487,
+          "local_weighted_matches": 44.246
+        },
+        {
+          "total_xg": 1.95,
+          "over_2_5": 0.31703476,
+          "local_weighted_matches": 46.867
+        },
+        {
+          "total_xg": 2.0,
+          "over_2_5": 0.33691039,
+          "local_weighted_matches": 49.6102
+        },
+        {
+          "total_xg": 2.05,
+          "over_2_5": 0.35897588,
+          "local_weighted_matches": 52.4923
+        },
+        {
+          "total_xg": 2.1,
+          "over_2_5": 0.3822427,
+          "local_weighted_matches": 55.4968
+        },
+        {
+          "total_xg": 2.15,
+          "over_2_5": 0.40545071,
+          "local_weighted_matches": 58.5586
+        },
+        {
+          "total_xg": 2.2,
+          "over_2_5": 0.42733379,
+          "local_weighted_matches": 61.5652
+        },
+        {
+          "total_xg": 2.25,
+          "over_2_5": 0.44686651,
+          "local_weighted_matches": 64.3758
+        },
+        {
+          "total_xg": 2.3,
+          "over_2_5": 0.46343695,
+          "local_weighted_matches": 66.8536
+        },
+        {
+          "total_xg": 2.35,
+          "over_2_5": 0.47692299,
+          "local_weighted_matches": 68.9008
+        },
+        {
+          "total_xg": 2.4,
+          "over_2_5": 0.4876723,
+          "local_weighted_matches": 70.4856
+        },
+        {
+          "total_xg": 2.45,
+          "over_2_5": 0.49639529,
+          "local_weighted_matches": 71.651
+        },
+        {
+          "total_xg": 2.5,
+          "over_2_5": 0.50398872,
+          "local_weighted_matches": 72.5014
+        },
+        {
+          "total_xg": 2.55,
+          "over_2_5": 0.51132556,
+          "local_weighted_matches": 73.1693
+        },
+        {
+          "total_xg": 2.6,
+          "over_2_5": 0.51906911,
+          "local_weighted_matches": 73.7709
+        },
+        {
+          "total_xg": 2.65,
+          "over_2_5": 0.52757531,
+          "local_weighted_matches": 74.3622
+        },
+        {
+          "total_xg": 2.7,
+          "over_2_5": 0.53691738,
+          "local_weighted_matches": 74.9131
+        },
+        {
+          "total_xg": 2.75,
+          "over_2_5": 0.54700786,
+          "local_weighted_matches": 75.3098
+        },
+        {
+          "total_xg": 2.8,
+          "over_2_5": 0.55774553,
+          "local_weighted_matches": 75.387
+        },
+        {
+          "total_xg": 2.85,
+          "over_2_5": 0.5691143,
+          "local_weighted_matches": 74.9816
+        },
+        {
+          "total_xg": 2.9,
+          "over_2_5": 0.58120253,
+          "local_weighted_matches": 73.9878
+        },
+        {
+          "total_xg": 2.95,
+          "over_2_5": 0.5941557,
+          "local_weighted_matches": 72.3947
+        },
+        {
+          "total_xg": 3.0,
+          "over_2_5": 0.60809589,
+          "local_weighted_matches": 70.2914
+        },
+        {
+          "total_xg": 3.05,
+          "over_2_5": 0.62304032,
+          "local_weighted_matches": 67.8426
+        },
+        {
+          "total_xg": 3.1,
+          "over_2_5": 0.63884296,
+          "local_weighted_matches": 65.2426
+        },
+        {
+          "total_xg": 3.15,
+          "over_2_5": 0.65517651,
+          "local_weighted_matches": 62.6674
+        },
+        {
+          "total_xg": 3.2,
+          "over_2_5": 0.67156244,
+          "local_weighted_matches": 60.2398
+        },
+        {
+          "total_xg": 3.25,
+          "over_2_5": 0.6874422,
+          "local_weighted_matches": 58.016
+        },
+        {
+          "total_xg": 3.3,
+          "over_2_5": 0.7022665,
+          "local_weighted_matches": 55.9936
+        },
+        {
+          "total_xg": 3.35,
+          "over_2_5": 0.71557491,
+          "local_weighted_matches": 54.1331
+        },
+        {
+          "total_xg": 3.4,
+          "over_2_5": 0.72704726,
+          "local_weighted_matches": 52.3818
+        },
+        {
+          "total_xg": 3.45,
+          "over_2_5": 0.73652605,
+          "local_weighted_matches": 50.6954
+        },
+        {
+          "total_xg": 3.5,
+          "over_2_5": 0.74401924,
+          "local_weighted_matches": 49.0495
+        },
+        {
+          "total_xg": 3.55,
+          "over_2_5": 0.74969406,
+          "local_weighted_matches": 47.4455
+        },
+        {
+          "total_xg": 3.6,
+          "over_2_5": 0.75386537,
+          "local_weighted_matches": 45.9094
+        },
+        {
+          "total_xg": 3.65,
+          "over_2_5": 0.75697488,
+          "local_weighted_matches": 44.4868
+        },
+        {
+          "total_xg": 3.7,
+          "over_2_5": 0.75955281,
+          "local_weighted_matches": 43.2311
+        },
+        {
+          "total_xg": 3.75,
+          "over_2_5": 0.7621558,
+          "local_weighted_matches": 42.187
+        },
+        {
+          "total_xg": 3.8,
+          "over_2_5": 0.76528558,
+          "local_weighted_matches": 41.3707
+        },
+        {
+          "total_xg": 3.85,
+          "over_2_5": 0.76931125,
+          "local_weighted_matches": 40.7548
+        },
+        {
+          "total_xg": 3.9,
+          "over_2_5": 0.77442829,
+          "local_weighted_matches": 40.2649
+        },
+        {
+          "total_xg": 3.95,
+          "over_2_5": 0.78067589,
+          "local_weighted_matches": 39.7931
+        },
+        {
+          "total_xg": 4.0,
+          "over_2_5": 0.78800298,
+          "local_weighted_matches": 39.2249
+        },
+        {
+          "total_xg": 4.05,
+          "over_2_5": 0.79634579,
+          "local_weighted_matches": 38.4707
+        },
+        {
+          "total_xg": 4.1,
+          "over_2_5": 0.80567549,
+          "local_weighted_matches": 37.4893
+        },
+        {
+          "total_xg": 4.15,
+          "over_2_5": 0.81599221,
+          "local_weighted_matches": 36.2961
+        },
+        {
+          "total_xg": 4.2,
+          "over_2_5": 0.82726887,
+          "local_weighted_matches": 34.9543
+        },
+        {
+          "total_xg": 4.25,
+          "over_2_5": 0.83937118,
+          "local_weighted_matches": 33.5552
+        },
+        {
+          "total_xg": 4.3,
+          "over_2_5": 0.85199338,
+          "local_weighted_matches": 32.196
+        },
+        {
+          "total_xg": 4.35,
+          "over_2_5": 0.86464577,
+          "local_weighted_matches": 30.9596
+        },
+        {
+          "total_xg": 4.4,
+          "over_2_5": 0.87670963,
+          "local_weighted_matches": 29.9025
+        },
+        {
+          "total_xg": 4.45,
+          "over_2_5": 0.88754467,
+          "local_weighted_matches": 29.0475
+        },
+        {
+          "total_xg": 4.5,
+          "over_2_5": 0.89661112,
+          "local_weighted_matches": 28.3836
+        },
+        {
+          "total_xg": 4.55,
+          "over_2_5": 0.90356439,
+          "local_weighted_matches": 27.8719
+        },
+        {
+          "total_xg": 4.6,
+          "over_2_5": 0.90829967,
+          "local_weighted_matches": 27.4563
+        },
+        {
+          "total_xg": 4.65,
+          "over_2_5": 0.91035716,
+          "local_weighted_matches": 27.077
+        },
+        {
+          "total_xg": 4.7,
+          "over_2_5": 0.91035716,
+          "local_weighted_matches": 26.6816
+        },
+        {
+          "total_xg": 4.75,
+          "over_2_5": 0.91035716,
+          "local_weighted_matches": 26.2321
+        },
+        {
+          "total_xg": 4.8,
+          "over_2_5": 0.91035716,
+          "local_weighted_matches": 25.7037
+        },
+        {
+          "total_xg": 4.85,
+          "over_2_5": 0.91035716,
+          "local_weighted_matches": 25.0786
+        },
+        {
+          "total_xg": 4.9,
+          "over_2_5": 0.91035716,
+          "local_weighted_matches": 24.3378
+        },
+        {
+          "total_xg": 4.95,
+          "over_2_5": 0.91035716,
+          "local_weighted_matches": 23.4563
+        },
+        {
+          "total_xg": 5.0,
+          "over_2_5": 0.91052245,
+          "local_weighted_matches": 22.404
+        },
+        {
+          "total_xg": 5.05,
+          "over_2_5": 0.91271614,
+          "local_weighted_matches": 21.1534
+        },
+        {
+          "total_xg": 5.1,
+          "over_2_5": 0.91549523,
+          "local_weighted_matches": 19.6915
+        },
+        {
+          "total_xg": 5.15,
+          "over_2_5": 0.91846891,
+          "local_weighted_matches": 18.0312
+        },
+        {
+          "total_xg": 5.2,
+          "over_2_5": 0.92125343,
+          "local_weighted_matches": 16.2162
+        },
+        {
+          "total_xg": 5.25,
+          "over_2_5": 0.92355154,
+          "local_weighted_matches": 14.3194
+        },
+        {
+          "total_xg": 5.3,
+          "over_2_5": 0.92519635,
+          "local_weighted_matches": 12.4317
+        },
+        {
+          "total_xg": 5.35,
+          "over_2_5": 0.92615639,
+          "local_weighted_matches": 10.6477
+        },
+        {
+          "total_xg": 5.4,
+          "over_2_5": 0.92629729,
+          "local_weighted_matches": 9.0501
+        },
+        {
+          "total_xg": 5.45,
+          "over_2_5": 0.92629729,
+          "local_weighted_matches": 7.6986
+        },
+        {
+          "total_xg": 5.5,
+          "over_2_5": 0.92629729,
+          "local_weighted_matches": 6.6239
+        }
+      ]
+    }
+  ],
+  "decision_boundaries": {
+    "changes_60_30_10": false,
+    "changes_predicted_xg": false,
+    "changes_1x2": false,
+    "changes_player_alpha": false,
+    "changes_projected_xi": false,
+    "changes_only_over_under_probability_when_promoted": true,
+    "automatic_application": false,
+    "probability_validated": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  }
+}

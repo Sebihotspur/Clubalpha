@@ -1,0 +1,3248 @@
+{
+  "version": "clubalpha_mw5_shadow_research_draft_v1",
+  "status": "frozen_preweek_shadow_draft",
+  "frozen_at_utc": "2026-09-15T16:06:32.744373+00:00",
+  "as_of": "2026-09-15",
+  "season": "2026/2027",
+  "round": 5,
+  "fixtures": [
+    {
+      "fixture": {
+        "match_id": 5795456,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 5,
+        "kickoff_utc": "2026-09-18T19:00:00Z",
+        "home_team_id": 9937,
+        "home_team": "Brentford",
+        "away_team_id": 8455,
+        "away_team": "Chelsea",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "model": {
+        "calibration_version": "clubalpha_fixture_calibration_v1",
+        "status": "shadow_only",
+        "fixture": {
+          "match_id": 5795456,
+          "source": "fotmob",
+          "source_scope": "premier_league_current",
+          "competition_id": 47,
+          "competition_stage_id": null,
+          "competition": "Premier League",
+          "round": 5,
+          "kickoff_utc": "2026-09-18T19:00:00Z",
+          "home_team_id": 9937,
+          "home_team": "Brentford",
+          "away_team_id": 8455,
+          "away_team": "Chelsea",
+          "score": null,
+          "started": false,
+          "finished": false,
+          "cancelled": false,
+          "season": "2026/2027"
+        },
+        "predicted_xg_before_calibration": {
+          "home": 1.804661,
+          "away": 1.523628,
+          "total": 3.328289
+        },
+        "predicted_xg": {
+          "home": 1.732987,
+          "away": 1.586643,
+          "total": 3.31963
+        },
+        "probabilities_before_calibration": {
+          "home_win": 0.4464,
+          "draw": 0.225,
+          "away_win": 0.3286,
+          "over": {
+            "2.5": 0.64674,
+            "3.5": 0.42334
+          },
+          "under": {
+            "2.5": 0.35326,
+            "3.5": 0.57666
+          },
+          "btts_yes": 0.65414,
+          "btts_no": 0.34586
+        },
+        "probabilities": {
+          "home_win": 0.367421,
+          "draw": 0.3183,
+          "away_win": 0.314279,
+          "over": {
+            "2.5": 0.618722,
+            "3.5": 0.422971
+          },
+          "under": {
+            "2.5": 0.381278,
+            "3.5": 0.577029
+          },
+          "btts_yes": 0.677944,
+          "btts_no": 0.322056
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.137243
+          },
+          {
+            "score": "2-2",
+            "probability": 0.097293
+          },
+          {
+            "score": "2-1",
+            "probability": 0.077329
+          },
+          {
+            "score": "1-2",
+            "probability": 0.069905
+          },
+          {
+            "score": "1-0",
+            "probability": 0.054116
+          }
+        ],
+        "calibration_read": {
+          "league_log_ratio_correction": -0.081052,
+          "home_team_log_ratio_effect": 0,
+          "away_team_log_ratio_effect": 0,
+          "total_log_ratio_correction": -0.081052,
+          "draw_logit_correction": 0.443446,
+          "raw_draw_probability_after_venue": 0.23058,
+          "calibrated_draw_probability": 0.3183,
+          "draw_zone": false,
+          "probability_leader": "home_win",
+          "side_leader": "home_win",
+          "risk_gate": "shadow_evaluation"
+        },
+        "decision_boundaries": {
+          "base_60_30_10_changed": false,
+          "player_alpha_changed": false,
+          "context_coefficient_changed": false,
+          "frozen_predictions_changed": false,
+          "probability_validated": false,
+          "market_ready": false,
+          "capital_deployment_ready": false
+        },
+        "quality_flags": [
+          "fixture_calibration_shadow_only",
+          "small_fixture_calibration_sample"
+        ]
+      },
+      "uncalibrated_contextual": {
+        "predicted_xg": {
+          "home": 1.804661,
+          "away": 1.523628,
+          "total": 3.328289
+        },
+        "probabilities": {
+          "home_win": 0.4464,
+          "draw": 0.225,
+          "away_win": 0.3286,
+          "over": {
+            "2.5": 0.64674,
+            "3.5": 0.42334
+          },
+          "under": {
+            "2.5": 0.35326,
+            "3.5": 0.57666
+          },
+          "btts_yes": 0.65414,
+          "btts_no": 0.34586
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.09836
+          },
+          {
+            "score": "2-1",
+            "probability": 0.09056
+          },
+          {
+            "score": "1-2",
+            "probability": 0.07732
+          },
+          {
+            "score": "2-2",
+            "probability": 0.06678
+          },
+          {
+            "score": "1-0",
+            "probability": 0.06384
+          }
+        ]
+      },
+      "context_read": {
+        "base_favorite_side": "home",
+        "base_favorite": "Brentford",
+        "favorite_probability_delta": -0.00284,
+        "verdict": "no_clear_contextual_edge",
+        "goal_environment": "neutral"
+      },
+      "player_alpha": {
+        "home": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.046946,
+              "coverage": 0.9374
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.095901,
+              "coverage": 1
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.07335,
+              "coverage": 0.9306
+            },
+            "scoring_threat": {
+              "z": -0.01311,
+              "coverage": 0.9308
+            },
+            "chance_creation": {
+              "z": -0.104408,
+              "coverage": 0.9271
+            },
+            "defensive_prevention": {
+              "z": 0.142879,
+              "coverage": 0.9374
+            }
+          },
+          "availability": {
+            "unavailable": [
+              "Antoni Milambo",
+              "Joshua Dasilva",
+              "Mathias Jensen",
+              "Nathan Collins",
+              "Sepp van den Berg"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795445,
+              5795436,
+              5795430,
+              6005660,
+              5795368
+            ],
+            "weighted_matches": 5.890625,
+            "weighted_exact_lineups": 5.890625,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 28
+          },
+          "grade_confidence": "medium",
+          "grade_provisional": true
+        },
+        "away": {
+          "formation": "3-4-2-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.338582,
+              "coverage": 0.8867
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.178038,
+              "coverage": 0.8468
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.363135,
+              "coverage": 0.8745
+            },
+            "scoring_threat": {
+              "z": -0.017778,
+              "coverage": 0.9043
+            },
+            "chance_creation": {
+              "z": 0.201258,
+              "coverage": 0.8867
+            },
+            "defensive_prevention": {
+              "z": 0.36834,
+              "coverage": 0.8765
+            }
+          },
+          "availability": {
+            "unavailable": [
+              "Dastan Satpaev",
+              "Emanuel Emegha",
+              "Jordan Henderson",
+              "Marco Palestra",
+              "Moisés Caicedo"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795447,
+              6099342,
+              5795435,
+              5795427,
+              6005665
+            ],
+            "weighted_matches": 5.568359,
+            "weighted_exact_lineups": 5.568359,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 28
+          },
+          "grade_confidence": "medium",
+          "grade_provisional": true
+        }
+      },
+      "shadow_pick": {
+        "outcome": "home_win",
+        "team": "Brentford",
+        "probability": 0.367421,
+        "confidence": "low",
+        "thesis": "Brentford's form contribution narrowly leads Chelsea despite Chelsea's superior projected Alpha. Both have defensive warning signs, so Over 2.5 is the stronger market read.",
+        "override_reason": null
+      },
+      "totals_read": {
+        "line": 2.5,
+        "model_direction": "over",
+        "model_probability": 0.618722,
+        "shortlist": "over",
+        "confidence": "medium",
+        "market_edge_verified": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795464,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 5,
+        "kickoff_utc": "2026-09-19T11:30:00Z",
+        "home_team_id": 8586,
+        "home_team": "Tottenham Hotspur",
+        "away_team_id": 10252,
+        "away_team": "Aston Villa",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "model": {
+        "calibration_version": "clubalpha_fixture_calibration_v1",
+        "status": "shadow_only",
+        "fixture": {
+          "match_id": 5795464,
+          "source": "fotmob",
+          "source_scope": "premier_league_current",
+          "competition_id": 47,
+          "competition_stage_id": null,
+          "competition": "Premier League",
+          "round": 5,
+          "kickoff_utc": "2026-09-19T11:30:00Z",
+          "home_team_id": 8586,
+          "home_team": "Tottenham Hotspur",
+          "away_team_id": 10252,
+          "away_team": "Aston Villa",
+          "score": null,
+          "started": false,
+          "finished": false,
+          "cancelled": false,
+          "season": "2026/2027"
+        },
+        "predicted_xg_before_calibration": {
+          "home": 1.489149,
+          "away": 1.157475,
+          "total": 2.646623
+        },
+        "predicted_xg": {
+          "home": 1.430006,
+          "away": 1.205346,
+          "total": 2.635353
+        },
+        "probabilities_before_calibration": {
+          "home_win": 0.44664,
+          "draw": 0.25706,
+          "away_win": 0.2963,
+          "over": {
+            "2.5": 0.48834,
+            "3.5": 0.27174
+          },
+          "under": {
+            "2.5": 0.51166,
+            "3.5": 0.72826
+          },
+          "btts_yes": 0.52948,
+          "btts_no": 0.47052
+        },
+        "probabilities": {
+          "home_win": 0.365608,
+          "draw": 0.356117,
+          "away_win": 0.278275,
+          "over": {
+            "2.5": 0.458854,
+            "3.5": 0.271382
+          },
+          "under": {
+            "2.5": 0.541146,
+            "3.5": 0.728618
+          },
+          "btts_yes": 0.557325,
+          "btts_no": 0.442675
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.168965
+          },
+          {
+            "score": "0-0",
+            "probability": 0.098687
+          },
+          {
+            "score": "1-0",
+            "probability": 0.088187
+          },
+          {
+            "score": "0-1",
+            "probability": 0.075903
+          },
+          {
+            "score": "2-1",
+            "probability": 0.075501
+          }
+        ],
+        "calibration_read": {
+          "league_log_ratio_correction": -0.081052,
+          "home_team_log_ratio_effect": 0,
+          "away_team_log_ratio_effect": 0,
+          "total_log_ratio_correction": -0.081052,
+          "draw_logit_correction": 0.443446,
+          "raw_draw_probability_after_venue": 0.26198,
+          "calibrated_draw_probability": 0.356117,
+          "draw_zone": true,
+          "probability_leader": "home_win",
+          "side_leader": "home_win",
+          "risk_gate": "pass_draw_zone"
+        },
+        "decision_boundaries": {
+          "base_60_30_10_changed": false,
+          "player_alpha_changed": false,
+          "context_coefficient_changed": false,
+          "frozen_predictions_changed": false,
+          "probability_validated": false,
+          "market_ready": false,
+          "capital_deployment_ready": false
+        },
+        "quality_flags": [
+          "fixture_calibration_shadow_only",
+          "small_fixture_calibration_sample"
+        ]
+      },
+      "uncalibrated_contextual": {
+        "predicted_xg": {
+          "home": 1.489149,
+          "away": 1.157475,
+          "total": 2.646623
+        },
+        "probabilities": {
+          "home_win": 0.44664,
+          "draw": 0.25706,
+          "away_win": 0.2963,
+          "over": {
+            "2.5": 0.48834,
+            "3.5": 0.27174
+          },
+          "under": {
+            "2.5": 0.51166,
+            "3.5": 0.72826
+          },
+          "btts_yes": 0.52948,
+          "btts_no": 0.47052
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.1237
+          },
+          {
+            "score": "1-0",
+            "probability": 0.10544
+          },
+          {
+            "score": "2-1",
+            "probability": 0.0907
+          },
+          {
+            "score": "0-1",
+            "probability": 0.08468
+          },
+          {
+            "score": "2-0",
+            "probability": 0.07986
+          }
+        ]
+      },
+      "context_read": {
+        "base_favorite_side": "home",
+        "base_favorite": "Tottenham Hotspur",
+        "favorite_probability_delta": 0.00188,
+        "verdict": "baseline_supported",
+        "goal_environment": "neutral"
+      },
+      "player_alpha": {
+        "home": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.07082,
+              "coverage": 1
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.162039,
+              "coverage": 1
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.086373,
+              "coverage": 1
+            },
+            "scoring_threat": {
+              "z": 0.148922,
+              "coverage": 1
+            },
+            "chance_creation": {
+              "z": 0.144281,
+              "coverage": 1
+            },
+            "defensive_prevention": {
+              "z": -0.032883,
+              "coverage": 0.9626
+            }
+          },
+          "availability": {
+            "unavailable": [
+              "Dejan Kulusevski",
+              "Mykhaylo Mudryk",
+              "Wilson Odobert",
+              "Xavi Simons"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795454,
+              5795444,
+              5795434,
+              6005666,
+              5795368
+            ],
+            "weighted_matches": 5.890625,
+            "weighted_exact_lineups": 5.890625,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 28
+          },
+          "grade_confidence": "high",
+          "grade_provisional": false
+        },
+        "away": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.182748,
+              "coverage": 0.9088
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.212223,
+              "coverage": 0.9825
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.112098,
+              "coverage": 0.8959
+            },
+            "scoring_threat": {
+              "z": -0.069336,
+              "coverage": 0.9894
+            },
+            "chance_creation": {
+              "z": 0.24027,
+              "coverage": 0.9088
+            },
+            "defensive_prevention": {
+              "z": 0.153978,
+              "coverage": 0.86
+            }
+          },
+          "availability": {
+            "questionable": [
+              "Pau Torres",
+              "Matty Cash"
+            ],
+            "unavailable": [
+              "Amadou Onana",
+              "Brian Madjo",
+              "Leon Goretzka"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795446,
+              6106295,
+              5795440,
+              5795426,
+              5795369
+            ],
+            "weighted_matches": 5.726562,
+            "weighted_exact_lineups": 5.726562,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 27
+          },
+          "grade_confidence": "medium",
+          "grade_provisional": true
+        }
+      },
+      "shadow_pick": {
+        "outcome": "draw",
+        "team": "Draw",
+        "probability": 0.356117,
+        "confidence": "low",
+        "thesis": "Both attacks have under-created against the frozen model. Spurs' attacking absences and poor historical XI accuracy weaken the small home lead.",
+        "override_reason": "The home probability exceeds the draw by only 0.95 percentage points, inside the locked draw zone; neither attack provides a decisive process signal."
+      },
+      "totals_read": {
+        "line": 2.5,
+        "model_direction": "under",
+        "model_probability": 0.541146,
+        "shortlist": "pass",
+        "confidence": "low",
+        "market_edge_verified": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795457,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 5,
+        "kickoff_utc": "2026-09-19T14:00:00Z",
+        "home_team_id": 10204,
+        "home_team": "Brighton & Hove Albion",
+        "away_team_id": 9825,
+        "away_team": "Arsenal",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "model": {
+        "calibration_version": "clubalpha_fixture_calibration_v1",
+        "status": "shadow_only",
+        "fixture": {
+          "match_id": 5795457,
+          "source": "fotmob",
+          "source_scope": "premier_league_current",
+          "competition_id": 47,
+          "competition_stage_id": null,
+          "competition": "Premier League",
+          "round": 5,
+          "kickoff_utc": "2026-09-19T14:00:00Z",
+          "home_team_id": 10204,
+          "home_team": "Brighton & Hove Albion",
+          "away_team_id": 9825,
+          "away_team": "Arsenal",
+          "score": null,
+          "started": false,
+          "finished": false,
+          "cancelled": false,
+          "season": "2026/2027"
+        },
+        "predicted_xg_before_calibration": {
+          "home": 1.402817,
+          "away": 1.492488,
+          "total": 2.895306
+        },
+        "predicted_xg": {
+          "home": 1.347103,
+          "away": 1.554215,
+          "total": 2.901318
+        },
+        "probabilities_before_calibration": {
+          "home_win": 0.3562,
+          "draw": 0.24832,
+          "away_win": 0.39548,
+          "over": {
+            "2.5": 0.55256,
+            "3.5": 0.32854
+          },
+          "under": {
+            "2.5": 0.44744,
+            "3.5": 0.67146
+          },
+          "btts_yes": 0.58706,
+          "btts_no": 0.41294
+        },
+        "probabilities": {
+          "home_win": 0.286951,
+          "draw": 0.340434,
+          "away_win": 0.372615,
+          "over": {
+            "2.5": 0.524993,
+            "3.5": 0.327868
+          },
+          "under": {
+            "2.5": 0.475007,
+            "3.5": 0.672132
+          },
+          "btts_yes": 0.612618,
+          "btts_no": 0.387382
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.160996
+          },
+          {
+            "score": "2-2",
+            "probability": 0.082824
+          },
+          {
+            "score": "1-2",
+            "probability": 0.080413
+          },
+          {
+            "score": "0-0",
+            "probability": 0.074861
+          },
+          {
+            "score": "0-1",
+            "probability": 0.073336
+          }
+        ],
+        "calibration_read": {
+          "league_log_ratio_correction": -0.081052,
+          "home_team_log_ratio_effect": 0,
+          "away_team_log_ratio_effect": 0,
+          "total_log_ratio_correction": -0.081052,
+          "draw_logit_correction": 0.443446,
+          "raw_draw_probability_after_venue": 0.24884,
+          "calibrated_draw_probability": 0.340434,
+          "draw_zone": true,
+          "probability_leader": "away_win",
+          "side_leader": "away_win",
+          "risk_gate": "pass_draw_zone"
+        },
+        "decision_boundaries": {
+          "base_60_30_10_changed": false,
+          "player_alpha_changed": false,
+          "context_coefficient_changed": false,
+          "frozen_predictions_changed": false,
+          "probability_validated": false,
+          "market_ready": false,
+          "capital_deployment_ready": false
+        },
+        "quality_flags": [
+          "fixture_calibration_shadow_only",
+          "small_fixture_calibration_sample"
+        ]
+      },
+      "uncalibrated_contextual": {
+        "predicted_xg": {
+          "home": 1.402817,
+          "away": 1.492488,
+          "total": 2.895306
+        },
+        "probabilities": {
+          "home_win": 0.3562,
+          "draw": 0.24832,
+          "away_win": 0.39548,
+          "over": {
+            "2.5": 0.55256,
+            "3.5": 0.32854
+          },
+          "under": {
+            "2.5": 0.44744,
+            "3.5": 0.67146
+          },
+          "btts_yes": 0.58706,
+          "btts_no": 0.41294
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.11758
+          },
+          {
+            "score": "1-2",
+            "probability": 0.08726
+          },
+          {
+            "score": "0-1",
+            "probability": 0.08226
+          },
+          {
+            "score": "2-1",
+            "probability": 0.08118
+          },
+          {
+            "score": "1-0",
+            "probability": 0.07816
+          }
+        ]
+      },
+      "context_read": {
+        "base_favorite_side": "away",
+        "base_favorite": "Arsenal",
+        "favorite_probability_delta": 0.00484,
+        "verdict": "baseline_supported",
+        "goal_environment": "expansive"
+      },
+      "player_alpha": {
+        "home": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.305732,
+              "coverage": 0.8331
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.383802,
+              "coverage": 0.8593
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.267538,
+              "coverage": 0.8253
+            },
+            "scoring_threat": {
+              "z": 0.138076,
+              "coverage": 0.8165
+            },
+            "chance_creation": {
+              "z": 0.309135,
+              "coverage": 0.8331
+            },
+            "defensive_prevention": {
+              "z": 0.237391,
+              "coverage": 0.8276
+            }
+          },
+          "availability": {
+            "questionable": [
+              "Georginio Rutter",
+              "Femi Azeez"
+            ],
+            "unavailable": [
+              "Evan Ferguson",
+              "Jack Hinshelwood",
+              "Kaoru Mitoma",
+              "Mats Wieffer",
+              "Michael Svoboda",
+              "Stefanos Tzimas",
+              "Yankuba Minteh",
+              "Zadok Yohanna"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795448,
+              5795437,
+              5795427,
+              5988084,
+              5795369
+            ],
+            "weighted_matches": 5.890625,
+            "weighted_exact_lineups": 5.890625,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 29
+          },
+          "grade_confidence": "low",
+          "grade_provisional": true
+        },
+        "away": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.669166,
+              "coverage": 1
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.689962,
+              "coverage": 1
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.70044,
+              "coverage": 1
+            },
+            "scoring_threat": {
+              "z": 0.295565,
+              "coverage": 1
+            },
+            "chance_creation": {
+              "z": 0.368393,
+              "coverage": 1
+            },
+            "defensive_prevention": {
+              "z": 0.489107,
+              "coverage": 0.9181
+            }
+          },
+          "availability": {
+            "questionable": [
+              "Cristhian Mosquera"
+            ],
+            "unavailable": [
+              "Ben White",
+              "William Saliba"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795453,
+              6106318,
+              5795435,
+              5795426,
+              5795363
+            ],
+            "weighted_matches": 5.726562,
+            "weighted_exact_lineups": 5.726562,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 24
+          },
+          "grade_confidence": "high",
+          "grade_provisional": false
+        }
+      },
+      "shadow_pick": {
+        "outcome": "away_win",
+        "team": "Arsenal",
+        "probability": 0.372615,
+        "confidence": "low",
+        "thesis": "Arsenal's superior projected player quality and chance-prevention profile narrowly lead Brighton. Brighton's attacking upside and Arsenal's defensive availability risks keep this inside the pass/draw zone.",
+        "override_reason": null
+      },
+      "totals_read": {
+        "line": 2.5,
+        "model_direction": "over",
+        "model_probability": 0.524993,
+        "shortlist": "pass",
+        "confidence": "low",
+        "market_edge_verified": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795458,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 5,
+        "kickoff_utc": "2026-09-19T14:00:00Z",
+        "home_team_id": 8668,
+        "home_team": "Everton",
+        "away_team_id": 9902,
+        "away_team": "Ipswich Town",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "model": {
+        "calibration_version": "clubalpha_fixture_calibration_v1",
+        "status": "shadow_only",
+        "fixture": {
+          "match_id": 5795458,
+          "source": "fotmob",
+          "source_scope": "premier_league_current",
+          "competition_id": 47,
+          "competition_stage_id": null,
+          "competition": "Premier League",
+          "round": 5,
+          "kickoff_utc": "2026-09-19T14:00:00Z",
+          "home_team_id": 8668,
+          "home_team": "Everton",
+          "away_team_id": 9902,
+          "away_team": "Ipswich Town",
+          "score": null,
+          "started": false,
+          "finished": false,
+          "cancelled": false,
+          "season": "2026/2027"
+        },
+        "predicted_xg_before_calibration": {
+          "home": 1.652346,
+          "away": 1.243349,
+          "total": 2.895695
+        },
+        "predicted_xg": {
+          "home": 1.586722,
+          "away": 1.294772,
+          "total": 2.881494
+        },
+        "probabilities_before_calibration": {
+          "home_win": 0.46436,
+          "draw": 0.24396,
+          "away_win": 0.29168,
+          "over": {
+            "2.5": 0.55412,
+            "3.5": 0.32892
+          },
+          "under": {
+            "2.5": 0.44588,
+            "3.5": 0.67108
+          },
+          "btts_yes": 0.5773,
+          "btts_no": 0.4227
+        },
+        "probabilities": {
+          "home_win": 0.3933,
+          "draw": 0.337162,
+          "away_win": 0.269538,
+          "over": {
+            "2.5": 0.520252,
+            "3.5": 0.322846
+          },
+          "under": {
+            "2.5": 0.479748,
+            "3.5": 0.677154
+          },
+          "btts_yes": 0.601695,
+          "btts_no": 0.398305
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.158745
+          },
+          {
+            "score": "2-2",
+            "probability": 0.082907
+          },
+          {
+            "score": "2-1",
+            "probability": 0.081892
+          },
+          {
+            "score": "1-0",
+            "probability": 0.080345
+          },
+          {
+            "score": "0-0",
+            "probability": 0.075098
+          }
+        ],
+        "calibration_read": {
+          "league_log_ratio_correction": -0.081052,
+          "home_team_log_ratio_effect": 0,
+          "away_team_log_ratio_effect": 0,
+          "total_log_ratio_correction": -0.081052,
+          "draw_logit_correction": 0.443446,
+          "raw_draw_probability_after_venue": 0.24612,
+          "calibrated_draw_probability": 0.337162,
+          "draw_zone": false,
+          "probability_leader": "home_win",
+          "side_leader": "home_win",
+          "risk_gate": "shadow_evaluation"
+        },
+        "decision_boundaries": {
+          "base_60_30_10_changed": false,
+          "player_alpha_changed": false,
+          "context_coefficient_changed": false,
+          "frozen_predictions_changed": false,
+          "probability_validated": false,
+          "market_ready": false,
+          "capital_deployment_ready": false
+        },
+        "quality_flags": [
+          "fixture_calibration_shadow_only",
+          "small_fixture_calibration_sample"
+        ]
+      },
+      "uncalibrated_contextual": {
+        "predicted_xg": {
+          "home": 1.652346,
+          "away": 1.243349,
+          "total": 2.895695
+        },
+        "probabilities": {
+          "home_win": 0.46436,
+          "draw": 0.24396,
+          "away_win": 0.29168,
+          "over": {
+            "2.5": 0.55412,
+            "3.5": 0.32892
+          },
+          "under": {
+            "2.5": 0.44588,
+            "3.5": 0.67108
+          },
+          "btts_yes": 0.5773,
+          "btts_no": 0.4227
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.11526
+          },
+          {
+            "score": "2-1",
+            "probability": 0.09342
+          },
+          {
+            "score": "1-0",
+            "probability": 0.08806
+          },
+          {
+            "score": "2-0",
+            "probability": 0.07422
+          },
+          {
+            "score": "1-2",
+            "probability": 0.0721
+          }
+        ]
+      },
+      "context_read": {
+        "base_favorite_side": "home",
+        "base_favorite": "Everton",
+        "favorite_probability_delta": 0.00314,
+        "verdict": "baseline_supported",
+        "goal_environment": "neutral"
+      },
+      "player_alpha": {
+        "home": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.007852,
+              "coverage": 0.9433
+            },
+            "attacking_unit_alpha_ability": {
+              "z": -0.107192,
+              "coverage": 0.9528
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.055523,
+              "coverage": 0.9365
+            },
+            "scoring_threat": {
+              "z": -0.067429,
+              "coverage": 0.9376
+            },
+            "chance_creation": {
+              "z": -0.233862,
+              "coverage": 0.9433
+            },
+            "defensive_prevention": {
+              "z": 0.246877,
+              "coverage": 0.8621
+            }
+          },
+          "availability": {
+            "unavailable": [
+              "Christian Nørgaard"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795454,
+              5795438,
+              5795425,
+              6005650,
+              5795365
+            ],
+            "weighted_matches": 5.890625,
+            "weighted_exact_lineups": 5.890625,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 21
+          },
+          "grade_confidence": "medium",
+          "grade_provisional": true
+        },
+        "away": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": -0.33478,
+              "coverage": 0.7336
+            },
+            "attacking_unit_alpha_ability": {
+              "z": -0.201883,
+              "coverage": 0.5261
+            },
+            "defensive_unit_alpha_ability": {
+              "z": -0.334846,
+              "coverage": 0.7647
+            },
+            "scoring_threat": {
+              "z": -0.266921,
+              "coverage": 0.7066
+            },
+            "chance_creation": {
+              "z": -0.295512,
+              "coverage": 0.7336
+            },
+            "defensive_prevention": {
+              "z": -0.200279,
+              "coverage": 0.7336
+            }
+          },
+          "availability": {
+            "questionable": [
+              "Emersonn",
+              "Azor Matusiwa"
+            ],
+            "unavailable": [
+              "Jack Taylor"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795449,
+              5795441,
+              5795432,
+              6005656,
+              5795366
+            ],
+            "weighted_matches": 5.890625,
+            "weighted_exact_lineups": 5.890625,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 29
+          },
+          "grade_confidence": "low",
+          "grade_provisional": true
+        }
+      },
+      "shadow_pick": {
+        "outcome": "home_win",
+        "team": "Everton",
+        "probability": 0.3933,
+        "confidence": "medium",
+        "thesis": "Everton's compact prevention profile and projected-quality advantage should offer Ipswich a harder opponent than Palace. Ipswich's improving results are not ignored, but the chance process does not make them favorites.",
+        "override_reason": null
+      },
+      "totals_read": {
+        "line": 2.5,
+        "model_direction": "over",
+        "model_probability": 0.520252,
+        "shortlist": "pass",
+        "confidence": "low",
+        "market_edge_verified": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795462,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 5,
+        "kickoff_utc": "2026-09-19T14:00:00Z",
+        "home_team_id": 10261,
+        "home_team": "Newcastle United",
+        "away_team_id": 8667,
+        "away_team": "Hull City",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "model": {
+        "calibration_version": "clubalpha_fixture_calibration_v1",
+        "status": "shadow_only",
+        "fixture": {
+          "match_id": 5795462,
+          "source": "fotmob",
+          "source_scope": "premier_league_current",
+          "competition_id": 47,
+          "competition_stage_id": null,
+          "competition": "Premier League",
+          "round": 5,
+          "kickoff_utc": "2026-09-19T14:00:00Z",
+          "home_team_id": 10261,
+          "home_team": "Newcastle United",
+          "away_team_id": 8667,
+          "away_team": "Hull City",
+          "score": null,
+          "started": false,
+          "finished": false,
+          "cancelled": false,
+          "season": "2026/2027"
+        },
+        "predicted_xg_before_calibration": {
+          "home": 1.615167,
+          "away": 1.179102,
+          "total": 2.794269
+        },
+        "predicted_xg": {
+          "home": 1.551019,
+          "away": 1.227868,
+          "total": 2.778887
+        },
+        "probabilities_before_calibration": {
+          "home_win": 0.47886,
+          "draw": 0.24458,
+          "away_win": 0.27656,
+          "over": {
+            "2.5": 0.53032,
+            "3.5": 0.30704
+          },
+          "under": {
+            "2.5": 0.46968,
+            "3.5": 0.69296
+          },
+          "btts_yes": 0.55286,
+          "btts_no": 0.44714
+        },
+        "probabilities": {
+          "home_win": 0.396681,
+          "draw": 0.341154,
+          "away_win": 0.262165,
+          "over": {
+            "2.5": 0.498055,
+            "3.5": 0.301813
+          },
+          "under": {
+            "2.5": 0.501945,
+            "3.5": 0.698187
+          },
+          "btts_yes": 0.583245,
+          "btts_no": 0.416755
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.161769
+          },
+          {
+            "score": "1-0",
+            "probability": 0.085059
+          },
+          {
+            "score": "0-0",
+            "probability": 0.083839
+          },
+          {
+            "score": "2-1",
+            "probability": 0.081478
+          },
+          {
+            "score": "2-2",
+            "probability": 0.077602
+          }
+        ],
+        "calibration_read": {
+          "league_log_ratio_correction": -0.081052,
+          "home_team_log_ratio_effect": 0,
+          "away_team_log_ratio_effect": 0,
+          "total_log_ratio_correction": -0.081052,
+          "draw_logit_correction": 0.443446,
+          "raw_draw_probability_after_venue": 0.24944,
+          "calibrated_draw_probability": 0.341154,
+          "draw_zone": false,
+          "probability_leader": "home_win",
+          "side_leader": "home_win",
+          "risk_gate": "shadow_evaluation"
+        },
+        "decision_boundaries": {
+          "base_60_30_10_changed": false,
+          "player_alpha_changed": false,
+          "context_coefficient_changed": false,
+          "frozen_predictions_changed": false,
+          "probability_validated": false,
+          "market_ready": false,
+          "capital_deployment_ready": false
+        },
+        "quality_flags": [
+          "fixture_calibration_shadow_only",
+          "small_fixture_calibration_sample"
+        ]
+      },
+      "uncalibrated_contextual": {
+        "predicted_xg": {
+          "home": 1.615167,
+          "away": 1.179102,
+          "total": 2.794269
+        },
+        "probabilities": {
+          "home_win": 0.47886,
+          "draw": 0.24458,
+          "away_win": 0.27656,
+          "over": {
+            "2.5": 0.53032,
+            "3.5": 0.30704
+          },
+          "under": {
+            "2.5": 0.46968,
+            "3.5": 0.69296
+          },
+          "btts_yes": 0.55286,
+          "btts_no": 0.44714
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.1153
+          },
+          {
+            "score": "1-0",
+            "probability": 0.1011
+          },
+          {
+            "score": "2-1",
+            "probability": 0.09336
+          },
+          {
+            "score": "2-0",
+            "probability": 0.0802
+          },
+          {
+            "score": "0-1",
+            "probability": 0.07078
+          }
+        ]
+      },
+      "context_read": {
+        "base_favorite_side": "home",
+        "base_favorite": "Newcastle United",
+        "favorite_probability_delta": 0.00826,
+        "verdict": "baseline_supported",
+        "goal_environment": "neutral"
+      },
+      "player_alpha": {
+        "home": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.31183,
+              "coverage": 0.8866
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.183733,
+              "coverage": 0.9679
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.347999,
+              "coverage": 0.8762
+            },
+            "scoring_threat": {
+              "z": 0.052255,
+              "coverage": 0.9812
+            },
+            "chance_creation": {
+              "z": 0.117265,
+              "coverage": 0.8866
+            },
+            "defensive_prevention": {
+              "z": 0.28074,
+              "coverage": 0.8866
+            }
+          },
+          "availability": {
+            "questionable": [
+              "Nico González",
+              "Ewen Jaouen"
+            ],
+            "unavailable": [
+              "Anthony Elanga",
+              "Daniel Burn",
+              "Joelinton",
+              "William Osula"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795450,
+              6099336,
+              5795443,
+              5795434,
+              6005645
+            ],
+            "weighted_matches": 5.568359,
+            "weighted_exact_lineups": 5.568359,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 26
+          },
+          "grade_confidence": "medium",
+          "grade_provisional": true
+        },
+        "away": {
+          "formation": "3-4-3",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": -0.564195,
+              "coverage": 0.7049
+            },
+            "attacking_unit_alpha_ability": {
+              "z": -0.685075,
+              "coverage": 0.6679
+            },
+            "defensive_unit_alpha_ability": {
+              "z": -0.581177,
+              "coverage": 0.6986
+            },
+            "scoring_threat": {
+              "z": -0.466117,
+              "coverage": 0.6718
+            },
+            "chance_creation": {
+              "z": -0.750367,
+              "coverage": 0.676
+            },
+            "defensive_prevention": {
+              "z": -0.307069,
+              "coverage": 0.6223
+            }
+          },
+          "availability": {
+            "questionable": [
+              "Paddy McNair"
+            ],
+            "unavailable": [
+              "Charlie Hughes",
+              "Darko Gyabi",
+              "Eliot Matazo",
+              "Hidemasa Morita",
+              "Ilyas Ansah",
+              "Jack Butland",
+              "Nobel Mendy"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795447,
+              6099331,
+              5795440,
+              5795428,
+              6005644
+            ],
+            "weighted_matches": 5.568359,
+            "weighted_exact_lineups": 5.568359,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 33
+          },
+          "grade_confidence": "low",
+          "grade_provisional": true
+        }
+      },
+      "shadow_pick": {
+        "outcome": "home_win",
+        "team": "Newcastle United",
+        "probability": 0.396681,
+        "confidence": "low",
+        "thesis": "Newcastle still lead Hull on projected Alpha, but weak recent attacking creation and the Leeds defeat cap conviction. Hull's low-event approach and scoring resilience make this a fragile home lean.",
+        "override_reason": null
+      },
+      "totals_read": {
+        "line": 2.5,
+        "model_direction": "under",
+        "model_probability": 0.501945,
+        "shortlist": "pass",
+        "confidence": "low",
+        "market_edge_verified": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795463,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 5,
+        "kickoff_utc": "2026-09-19T16:30:00Z",
+        "home_team_id": 10203,
+        "home_team": "Nottingham Forest",
+        "away_team_id": 8669,
+        "away_team": "Coventry City",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "model": {
+        "calibration_version": "clubalpha_fixture_calibration_v1",
+        "status": "shadow_only",
+        "fixture": {
+          "match_id": 5795463,
+          "source": "fotmob",
+          "source_scope": "premier_league_current",
+          "competition_id": 47,
+          "competition_stage_id": null,
+          "competition": "Premier League",
+          "round": 5,
+          "kickoff_utc": "2026-09-19T16:30:00Z",
+          "home_team_id": 10203,
+          "home_team": "Nottingham Forest",
+          "away_team_id": 8669,
+          "away_team": "Coventry City",
+          "score": null,
+          "started": false,
+          "finished": false,
+          "cancelled": false,
+          "season": "2026/2027"
+        },
+        "predicted_xg_before_calibration": {
+          "home": 1.596225,
+          "away": 1.074414,
+          "total": 2.670639
+        },
+        "predicted_xg": {
+          "home": 1.53283,
+          "away": 1.11885,
+          "total": 2.65168
+        },
+        "probabilities_before_calibration": {
+          "home_win": 0.49728,
+          "draw": 0.24756,
+          "away_win": 0.25516,
+          "over": {
+            "2.5": 0.49954,
+            "3.5": 0.27818
+          },
+          "under": {
+            "2.5": 0.50046,
+            "3.5": 0.72182
+          },
+          "btts_yes": 0.52456,
+          "btts_no": 0.47544
+        },
+        "probabilities": {
+          "home_win": 0.407933,
+          "draw": 0.347262,
+          "away_win": 0.244805,
+          "over": {
+            "2.5": 0.463929,
+            "3.5": 0.270855
+          },
+          "under": {
+            "2.5": 0.536071,
+            "3.5": 0.729145
+          },
+          "btts_yes": 0.550349,
+          "btts_no": 0.449651
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.16344
+          },
+          {
+            "score": "0-0",
+            "probability": 0.096181
+          },
+          {
+            "score": "1-0",
+            "probability": 0.094339
+          },
+          {
+            "score": "2-1",
+            "probability": 0.081327
+          },
+          {
+            "score": "2-0",
+            "probability": 0.072957
+          }
+        ],
+        "calibration_read": {
+          "league_log_ratio_correction": -0.081052,
+          "home_team_log_ratio_effect": 0,
+          "away_team_log_ratio_effect": 0,
+          "total_log_ratio_correction": -0.081052,
+          "draw_logit_correction": 0.443446,
+          "raw_draw_probability_after_venue": 0.25454,
+          "calibrated_draw_probability": 0.347262,
+          "draw_zone": false,
+          "probability_leader": "home_win",
+          "side_leader": "home_win",
+          "risk_gate": "shadow_evaluation"
+        },
+        "decision_boundaries": {
+          "base_60_30_10_changed": false,
+          "player_alpha_changed": false,
+          "context_coefficient_changed": false,
+          "frozen_predictions_changed": false,
+          "probability_validated": false,
+          "market_ready": false,
+          "capital_deployment_ready": false
+        },
+        "quality_flags": [
+          "fixture_calibration_shadow_only",
+          "small_fixture_calibration_sample"
+        ]
+      },
+      "uncalibrated_contextual": {
+        "predicted_xg": {
+          "home": 1.596225,
+          "away": 1.074414,
+          "total": 2.670639
+        },
+        "probabilities": {
+          "home_win": 0.49728,
+          "draw": 0.24756,
+          "away_win": 0.25516,
+          "over": {
+            "2.5": 0.49954,
+            "3.5": 0.27818
+          },
+          "under": {
+            "2.5": 0.50046,
+            "3.5": 0.72182
+          },
+          "btts_yes": 0.52456,
+          "btts_no": 0.47544
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.11944
+          },
+          {
+            "score": "1-0",
+            "probability": 0.11156
+          },
+          {
+            "score": "2-1",
+            "probability": 0.09556
+          },
+          {
+            "score": "2-0",
+            "probability": 0.0889
+          },
+          {
+            "score": "0-1",
+            "probability": 0.0748
+          }
+        ]
+      },
+      "context_read": {
+        "base_favorite_side": "home",
+        "base_favorite": "Nottingham Forest",
+        "favorite_probability_delta": 0.00776,
+        "verdict": "baseline_supported",
+        "goal_environment": "neutral"
+      },
+      "player_alpha": {
+        "home": {
+          "formation": "3-4-2-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": -0.016438,
+              "coverage": 1
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.04714,
+              "coverage": 1
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.041742,
+              "coverage": 1
+            },
+            "scoring_threat": {
+              "z": -0.105164,
+              "coverage": 1
+            },
+            "chance_creation": {
+              "z": -0.150617,
+              "coverage": 1
+            },
+            "defensive_prevention": {
+              "z": 0.079848,
+              "coverage": 0.9761
+            }
+          },
+          "availability": {
+            "unavailable": [
+              "Nicolò Savona"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795446,
+              5795444,
+              5795431,
+              6005647,
+              5795367
+            ],
+            "weighted_matches": 5.890625,
+            "weighted_exact_lineups": 5.890625,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 24
+          },
+          "grade_confidence": "high",
+          "grade_provisional": false
+        },
+        "away": {
+          "formation": "3-4-3",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": -0.509254,
+              "coverage": 0.9412
+            },
+            "attacking_unit_alpha_ability": {
+              "z": -0.572019,
+              "coverage": 0.9078
+            },
+            "defensive_unit_alpha_ability": {
+              "z": -0.573921,
+              "coverage": 0.9214
+            },
+            "scoring_threat": {
+              "z": -0.380471,
+              "coverage": 0.9348
+            },
+            "chance_creation": {
+              "z": -0.512664,
+              "coverage": 0.8397
+            },
+            "defensive_prevention": {
+              "z": -0.275982,
+              "coverage": 0.8588
+            }
+          },
+          "availability": {
+            "unavailable": [
+              "Frank Onyeka",
+              "Haji Wright",
+              "Josh Eccles",
+              "Kaine Kesler-Hayden",
+              "Luke Woolfenden"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795448,
+              5795442,
+              5795428,
+              6005664,
+              5795363
+            ],
+            "weighted_matches": 5.890625,
+            "weighted_exact_lineups": 5.890625,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 29
+          },
+          "grade_confidence": "medium",
+          "grade_provisional": true
+        }
+      },
+      "shadow_pick": {
+        "outcome": "home_win",
+        "team": "Nottingham Forest",
+        "probability": 0.407933,
+        "confidence": "medium",
+        "thesis": "Forest's stronger current process, including their chance-supported win at Villa, meets Coventry's weak creation and recent defensive exposure. The signal supports Forest without assuming another five-goal Coventry collapse.",
+        "override_reason": null
+      },
+      "totals_read": {
+        "line": 2.5,
+        "model_direction": "under",
+        "model_probability": 0.536071,
+        "shortlist": "pass",
+        "confidence": "low",
+        "market_edge_verified": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795455,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 5,
+        "kickoff_utc": "2026-09-20T13:00:00Z",
+        "home_team_id": 8678,
+        "home_team": "AFC Bournemouth",
+        "away_team_id": 8650,
+        "away_team": "Liverpool",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "model": {
+        "calibration_version": "clubalpha_fixture_calibration_v1",
+        "status": "shadow_only",
+        "fixture": {
+          "match_id": 5795455,
+          "source": "fotmob",
+          "source_scope": "premier_league_current",
+          "competition_id": 47,
+          "competition_stage_id": null,
+          "competition": "Premier League",
+          "round": 5,
+          "kickoff_utc": "2026-09-20T13:00:00Z",
+          "home_team_id": 8678,
+          "home_team": "AFC Bournemouth",
+          "away_team_id": 8650,
+          "away_team": "Liverpool",
+          "score": null,
+          "started": false,
+          "finished": false,
+          "cancelled": false,
+          "season": "2026/2027"
+        },
+        "predicted_xg_before_calibration": {
+          "home": 1.613611,
+          "away": 1.320537,
+          "total": 2.934148
+        },
+        "predicted_xg": {
+          "home": 1.549525,
+          "away": 1.375152,
+          "total": 2.924677
+        },
+        "probabilities_before_calibration": {
+          "home_win": 0.4407,
+          "draw": 0.24514,
+          "away_win": 0.31416,
+          "over": {
+            "2.5": 0.56088,
+            "3.5": 0.34026
+          },
+          "under": {
+            "2.5": 0.43912,
+            "3.5": 0.65974
+          },
+          "btts_yes": 0.58656,
+          "btts_no": 0.41344
+        },
+        "probabilities": {
+          "home_win": 0.363741,
+          "draw": 0.336439,
+          "away_win": 0.29982,
+          "over": {
+            "2.5": 0.530583,
+            "3.5": 0.332309
+          },
+          "under": {
+            "2.5": 0.469417,
+            "3.5": 0.667691
+          },
+          "btts_yes": 0.6099,
+          "btts_no": 0.3901
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.155393
+          },
+          {
+            "score": "2-2",
+            "probability": 0.086275
+          },
+          {
+            "score": "2-1",
+            "probability": 0.077396
+          },
+          {
+            "score": "1-0",
+            "probability": 0.074071
+          },
+          {
+            "score": "0-0",
+            "probability": 0.071284
+          }
+        ],
+        "calibration_read": {
+          "league_log_ratio_correction": -0.081052,
+          "home_team_log_ratio_effect": 0,
+          "away_team_log_ratio_effect": 0,
+          "total_log_ratio_correction": -0.081052,
+          "draw_logit_correction": 0.443446,
+          "raw_draw_probability_after_venue": 0.24552,
+          "calibrated_draw_probability": 0.336439,
+          "draw_zone": true,
+          "probability_leader": "home_win",
+          "side_leader": "home_win",
+          "risk_gate": "pass_draw_zone"
+        },
+        "decision_boundaries": {
+          "base_60_30_10_changed": false,
+          "player_alpha_changed": false,
+          "context_coefficient_changed": false,
+          "frozen_predictions_changed": false,
+          "probability_validated": false,
+          "market_ready": false,
+          "capital_deployment_ready": false
+        },
+        "quality_flags": [
+          "fixture_calibration_shadow_only",
+          "small_fixture_calibration_sample"
+        ]
+      },
+      "uncalibrated_contextual": {
+        "predicted_xg": {
+          "home": 1.613611,
+          "away": 1.320537,
+          "total": 2.934148
+        },
+        "probabilities": {
+          "home_win": 0.4407,
+          "draw": 0.24514,
+          "away_win": 0.31416,
+          "over": {
+            "2.5": 0.56088,
+            "3.5": 0.34026
+          },
+          "under": {
+            "2.5": 0.43912,
+            "3.5": 0.65974
+          },
+          "btts_yes": 0.58656,
+          "btts_no": 0.41344
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.11406
+          },
+          {
+            "score": "2-1",
+            "probability": 0.08808
+          },
+          {
+            "score": "1-0",
+            "probability": 0.0853
+          },
+          {
+            "score": "1-2",
+            "probability": 0.07472
+          },
+          {
+            "score": "0-1",
+            "probability": 0.07038
+          }
+        ]
+      },
+      "context_read": {
+        "base_favorite_side": "home",
+        "base_favorite": "AFC Bournemouth",
+        "favorite_probability_delta": -0.00476,
+        "verdict": "no_clear_contextual_edge",
+        "goal_environment": "neutral"
+      },
+      "player_alpha": {
+        "home": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.087206,
+              "coverage": 0.977
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.084471,
+              "coverage": 0.9579
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.136351,
+              "coverage": 0.9983
+            },
+            "scoring_threat": {
+              "z": -0.128397,
+              "coverage": 0.9747
+            },
+            "chance_creation": {
+              "z": -0.135522,
+              "coverage": 0.8698
+            },
+            "defensive_prevention": {
+              "z": 0.369602,
+              "coverage": 0.8861
+            }
+          },
+          "availability": {
+            "unavailable": [
+              "Amine Adli",
+              "Julián Araujo",
+              "Junior Kroupi",
+              "Veljko Milosavljević"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795445,
+              6099334,
+              5795443,
+              5795425,
+              5795370
+            ],
+            "weighted_matches": 5.726562,
+            "weighted_exact_lineups": 5.726562,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 29
+          },
+          "grade_confidence": "high",
+          "grade_provisional": false
+        },
+        "away": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.398873,
+              "coverage": 0.857
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.376009,
+              "coverage": 0.8963
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.484866,
+              "coverage": 0.8434
+            },
+            "scoring_threat": {
+              "z": 0.341128,
+              "coverage": 0.8427
+            },
+            "chance_creation": {
+              "z": 0.309462,
+              "coverage": 0.857
+            },
+            "defensive_prevention": {
+              "z": 0.253127,
+              "coverage": 0.7717
+            }
+          },
+          "availability": {
+            "questionable": [
+              "Cody Gakpo"
+            ],
+            "unavailable": [
+              "Conor Bradley",
+              "Federico Chiesa",
+              "Giovanni Leoni",
+              "Hugo Ekitiké",
+              "Joseph Gomez"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795451,
+              6106246,
+              5795441,
+              5795431,
+              5795371
+            ],
+            "weighted_matches": 5.726562,
+            "weighted_exact_lineups": 5.726562,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 28
+          },
+          "grade_confidence": "medium",
+          "grade_provisional": true
+        }
+      },
+      "shadow_pick": {
+        "outcome": "draw",
+        "team": "Draw",
+        "probability": 0.336439,
+        "confidence": "low",
+        "thesis": "Bournemouth's stronger recent creation opposes Liverpool's better projected Alpha but below-expected attack. There is no clear contextual edge, and Bournemouth's upcoming Thursday European trip adds unresolved lineup risk.",
+        "override_reason": "The home probability exceeds the draw by only 2.73 percentage points, inside the locked draw zone; conflicting quality/form signals and pending midweek games prevent a clean winner call."
+      },
+      "totals_read": {
+        "line": 2.5,
+        "model_direction": "over",
+        "model_probability": 0.530583,
+        "shortlist": "pass",
+        "confidence": "low",
+        "market_edge_verified": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795460,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 5,
+        "kickoff_utc": "2026-09-20T13:00:00Z",
+        "home_team_id": 8463,
+        "home_team": "Leeds United",
+        "away_team_id": 9826,
+        "away_team": "Crystal Palace",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "model": {
+        "calibration_version": "clubalpha_fixture_calibration_v1",
+        "status": "shadow_only",
+        "fixture": {
+          "match_id": 5795460,
+          "source": "fotmob",
+          "source_scope": "premier_league_current",
+          "competition_id": 47,
+          "competition_stage_id": null,
+          "competition": "Premier League",
+          "round": 5,
+          "kickoff_utc": "2026-09-20T13:00:00Z",
+          "home_team_id": 8463,
+          "home_team": "Leeds United",
+          "away_team_id": 9826,
+          "away_team": "Crystal Palace",
+          "score": null,
+          "started": false,
+          "finished": false,
+          "cancelled": false,
+          "season": "2026/2027"
+        },
+        "predicted_xg_before_calibration": {
+          "home": 1.931674,
+          "away": 1.202851,
+          "total": 3.134525
+        },
+        "predicted_xg": {
+          "home": 1.854956,
+          "away": 1.252599,
+          "total": 3.107555
+        },
+        "probabilities_before_calibration": {
+          "home_win": 0.5408,
+          "draw": 0.22092,
+          "away_win": 0.23828,
+          "over": {
+            "2.5": 0.608,
+            "3.5": 0.38284
+          },
+          "under": {
+            "2.5": 0.392,
+            "3.5": 0.61716
+          },
+          "btts_yes": 0.60066,
+          "btts_no": 0.39934
+        },
+        "probabilities": {
+          "home_win": 0.457771,
+          "draw": 0.315729,
+          "away_win": 0.2265,
+          "over": {
+            "2.5": 0.570341,
+            "3.5": 0.371708
+          },
+          "under": {
+            "2.5": 0.429659,
+            "3.5": 0.628292
+          },
+          "btts_yes": 0.625497,
+          "btts_no": 0.374503
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.14681
+          },
+          {
+            "score": "2-2",
+            "probability": 0.084874
+          },
+          {
+            "score": "2-1",
+            "probability": 0.083937
+          },
+          {
+            "score": "1-0",
+            "probability": 0.074412
+          },
+          {
+            "score": "2-0",
+            "probability": 0.06925
+          }
+        ],
+        "calibration_read": {
+          "league_log_ratio_correction": -0.081052,
+          "home_team_log_ratio_effect": 0,
+          "away_team_log_ratio_effect": 0,
+          "total_log_ratio_correction": -0.081052,
+          "draw_logit_correction": 0.443446,
+          "raw_draw_probability_after_venue": 0.22848,
+          "calibrated_draw_probability": 0.315729,
+          "draw_zone": false,
+          "probability_leader": "home_win",
+          "side_leader": "home_win",
+          "risk_gate": "shadow_evaluation"
+        },
+        "decision_boundaries": {
+          "base_60_30_10_changed": false,
+          "player_alpha_changed": false,
+          "context_coefficient_changed": false,
+          "frozen_predictions_changed": false,
+          "probability_validated": false,
+          "market_ready": false,
+          "capital_deployment_ready": false
+        },
+        "quality_flags": [
+          "fixture_calibration_shadow_only",
+          "small_fixture_calibration_sample"
+        ]
+      },
+      "uncalibrated_contextual": {
+        "predicted_xg": {
+          "home": 1.931674,
+          "away": 1.202851,
+          "total": 3.134525
+        },
+        "probabilities": {
+          "home_win": 0.5408,
+          "draw": 0.22092,
+          "away_win": 0.23828,
+          "over": {
+            "2.5": 0.608,
+            "3.5": 0.38284
+          },
+          "under": {
+            "2.5": 0.392,
+            "3.5": 0.61716
+          },
+          "btts_yes": 0.60066,
+          "btts_no": 0.39934
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.1018
+          },
+          {
+            "score": "2-1",
+            "probability": 0.09782
+          },
+          {
+            "score": "1-0",
+            "probability": 0.08312
+          },
+          {
+            "score": "2-0",
+            "probability": 0.0815
+          },
+          {
+            "score": "3-1",
+            "probability": 0.06348
+          }
+        ]
+      },
+      "context_read": {
+        "base_favorite_side": "home",
+        "base_favorite": "Leeds United",
+        "favorite_probability_delta": 0.00542,
+        "verdict": "baseline_supported",
+        "goal_environment": "neutral"
+      },
+      "player_alpha": {
+        "home": {
+          "formation": "3-5-2",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.082007,
+              "coverage": 0.8177
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.068398,
+              "coverage": 1
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.110694,
+              "coverage": 0.7984
+            },
+            "scoring_threat": {
+              "z": 0.098621,
+              "coverage": 0.7991
+            },
+            "chance_creation": {
+              "z": -0.182735,
+              "coverage": 0.7251
+            },
+            "defensive_prevention": {
+              "z": 0.217041,
+              "coverage": 0.8177
+            }
+          },
+          "availability": {
+            "questionable": [
+              "Ilia Gruev"
+            ],
+            "unavailable": [
+              "Joe Rodon",
+              "Mateo Joseph"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795450,
+              6099342,
+              5795437,
+              5795430,
+              6005647
+            ],
+            "weighted_matches": 5.568359,
+            "weighted_exact_lineups": 5.568359,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 24
+          },
+          "grade_confidence": "low",
+          "grade_provisional": true
+        },
+        "away": {
+          "formation": "3-4-2-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.108863,
+              "coverage": 0.8789
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.171552,
+              "coverage": 0.9632
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.194898,
+              "coverage": 0.869
+            },
+            "scoring_threat": {
+              "z": -0.149939,
+              "coverage": 0.8662
+            },
+            "chance_creation": {
+              "z": -0.039975,
+              "coverage": 0.7754
+            },
+            "defensive_prevention": {
+              "z": 0.236281,
+              "coverage": 0.8526
+            }
+          },
+          "availability": {
+            "questionable": [
+              "Edward Nketiah"
+            ],
+            "unavailable": [
+              "Chadi Riad",
+              "Ismaïla Sarr",
+              "Jean-Philippe Mateta"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795449,
+              6099328,
+              5795439,
+              5795429,
+              5795365
+            ],
+            "weighted_matches": 5.726562,
+            "weighted_exact_lineups": 5.726562,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 28
+          },
+          "grade_confidence": "medium",
+          "grade_provisional": true
+        }
+      },
+      "shadow_pick": {
+        "outcome": "home_win",
+        "team": "Leeds United",
+        "probability": 0.457771,
+        "confidence": "medium",
+        "thesis": "Leeds' repeated attacking-process improvement meets Palace's elevated defensive exposure. Leeds' Alpha coverage remains provisional, while Palace play on Thursday before this Sunday fixture.",
+        "override_reason": null
+      },
+      "totals_read": {
+        "line": 2.5,
+        "model_direction": "over",
+        "model_probability": 0.570341,
+        "shortlist": "over",
+        "confidence": "low",
+        "market_edge_verified": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795461,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 5,
+        "kickoff_utc": "2026-09-20T13:00:00Z",
+        "home_team_id": 8456,
+        "home_team": "Manchester City",
+        "away_team_id": 8472,
+        "away_team": "Sunderland",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "model": {
+        "calibration_version": "clubalpha_fixture_calibration_v1",
+        "status": "shadow_only",
+        "fixture": {
+          "match_id": 5795461,
+          "source": "fotmob",
+          "source_scope": "premier_league_current",
+          "competition_id": 47,
+          "competition_stage_id": null,
+          "competition": "Premier League",
+          "round": 5,
+          "kickoff_utc": "2026-09-20T13:00:00Z",
+          "home_team_id": 8456,
+          "home_team": "Manchester City",
+          "away_team_id": 8472,
+          "away_team": "Sunderland",
+          "score": null,
+          "started": false,
+          "finished": false,
+          "cancelled": false,
+          "season": "2026/2027"
+        },
+        "predicted_xg_before_calibration": {
+          "home": 1.995392,
+          "away": 0.908589,
+          "total": 2.903981
+        },
+        "predicted_xg": {
+          "home": 1.916143,
+          "away": 0.946167,
+          "total": 2.86231
+        },
+        "probabilities_before_calibration": {
+          "home_win": 0.62686,
+          "draw": 0.21054,
+          "away_win": 0.1626,
+          "over": {
+            "2.5": 0.55506,
+            "3.5": 0.3313
+          },
+          "under": {
+            "2.5": 0.44494,
+            "3.5": 0.6687
+          },
+          "btts_yes": 0.51628,
+          "btts_no": 0.48372
+        },
+        "probabilities": {
+          "home_win": 0.532873,
+          "draw": 0.305144,
+          "away_win": 0.161983,
+          "over": {
+            "2.5": 0.515251,
+            "3.5": 0.313899
+          },
+          "under": {
+            "2.5": 0.484749,
+            "3.5": 0.686101
+          },
+          "btts_yes": 0.545986,
+          "btts_no": 0.454014
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.143302
+          },
+          {
+            "score": "1-0",
+            "probability": 0.095252
+          },
+          {
+            "score": "2-0",
+            "probability": 0.091725
+          },
+          {
+            "score": "2-1",
+            "probability": 0.090763
+          },
+          {
+            "score": "0-0",
+            "probability": 0.082573
+          }
+        ],
+        "calibration_read": {
+          "league_log_ratio_correction": -0.081052,
+          "home_team_log_ratio_effect": 0,
+          "away_team_log_ratio_effect": 0,
+          "total_log_ratio_correction": -0.081052,
+          "draw_logit_correction": 0.443446,
+          "raw_draw_probability_after_venue": 0.21988,
+          "calibrated_draw_probability": 0.305144,
+          "draw_zone": false,
+          "probability_leader": "home_win",
+          "side_leader": "home_win",
+          "risk_gate": "shadow_evaluation"
+        },
+        "decision_boundaries": {
+          "base_60_30_10_changed": false,
+          "player_alpha_changed": false,
+          "context_coefficient_changed": false,
+          "frozen_predictions_changed": false,
+          "probability_validated": false,
+          "market_ready": false,
+          "capital_deployment_ready": false
+        },
+        "quality_flags": [
+          "fixture_calibration_shadow_only",
+          "small_fixture_calibration_sample"
+        ]
+      },
+      "uncalibrated_contextual": {
+        "predicted_xg": {
+          "home": 1.995392,
+          "away": 0.908589,
+          "total": 2.903981
+        },
+        "probabilities": {
+          "home_win": 0.62686,
+          "draw": 0.21054,
+          "away_win": 0.1626,
+          "over": {
+            "2.5": 0.55506,
+            "3.5": 0.3313
+          },
+          "under": {
+            "2.5": 0.44494,
+            "3.5": 0.6687
+          },
+          "btts_yes": 0.51628,
+          "btts_no": 0.48372
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "2-0",
+            "probability": 0.109
+          },
+          {
+            "score": "1-0",
+            "probability": 0.10868
+          },
+          {
+            "score": "1-1",
+            "probability": 0.10034
+          },
+          {
+            "score": "2-1",
+            "probability": 0.09858
+          },
+          {
+            "score": "3-0",
+            "probability": 0.07302
+          }
+        ]
+      },
+      "context_read": {
+        "base_favorite_side": "home",
+        "base_favorite": "Manchester City",
+        "favorite_probability_delta": 0.0215,
+        "verdict": "baseline_reinforced",
+        "goal_environment": "expansive"
+      },
+      "player_alpha": {
+        "home": {
+          "formation": "4-1-4-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.755072,
+              "coverage": 0.998
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.687412,
+              "coverage": 0.9965
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.769351,
+              "coverage": 0.9998
+            },
+            "scoring_threat": {
+              "z": 0.391001,
+              "coverage": 0.9978
+            },
+            "chance_creation": {
+              "z": 0.757948,
+              "coverage": 0.998
+            },
+            "defensive_prevention": {
+              "z": 0.286239,
+              "coverage": 0.998
+            }
+          },
+          "availability": {
+            "unavailable": [
+              "Jérémy Doku"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795452,
+              6106286,
+              5795442,
+              5795429,
+              5795370
+            ],
+            "weighted_matches": 5.726562,
+            "weighted_exact_lineups": 5.726562,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 25
+          },
+          "grade_confidence": "high",
+          "grade_provisional": false
+        },
+        "away": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": -0.108607,
+              "coverage": 0.9429
+            },
+            "attacking_unit_alpha_ability": {
+              "z": -0.289853,
+              "coverage": 0.925
+            },
+            "defensive_unit_alpha_ability": {
+              "z": -0.059144,
+              "coverage": 0.9364
+            },
+            "scoring_threat": {
+              "z": -0.144947,
+              "coverage": 0.9371
+            },
+            "chance_creation": {
+              "z": -0.307271,
+              "coverage": 0.9249
+            },
+            "defensive_prevention": {
+              "z": 0.113945,
+              "coverage": 0.8709
+            }
+          },
+          "availability": {
+            "unavailable": [
+              "Habib Diarra",
+              "Romaine Mundle"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795453,
+              6099331,
+              5795436,
+              5795433,
+              5795366
+            ],
+            "weighted_matches": 5.726562,
+            "weighted_exact_lineups": 5.726562,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 29
+          },
+          "grade_confidence": "medium",
+          "grade_provisional": true
+        }
+      },
+      "shadow_pick": {
+        "outcome": "home_win",
+        "team": "Manchester City",
+        "probability": 0.532873,
+        "confidence": "medium",
+        "thesis": "City lead on all projected quality pillars and have the clearest box-pressure execution advantage. Sunderland's stronger-than-expected chance creation is respected; City and Sunderland both have midweek games, so no high-confidence or over-goals combo is justified.",
+        "override_reason": null
+      },
+      "totals_read": {
+        "line": 2.5,
+        "model_direction": "over",
+        "model_probability": 0.515251,
+        "shortlist": "pass",
+        "confidence": "low",
+        "market_edge_verified": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795459,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 5,
+        "kickoff_utc": "2026-09-20T15:30:00Z",
+        "home_team_id": 9879,
+        "home_team": "Fulham",
+        "away_team_id": 10260,
+        "away_team": "Manchester United",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "model": {
+        "calibration_version": "clubalpha_fixture_calibration_v1",
+        "status": "shadow_only",
+        "fixture": {
+          "match_id": 5795459,
+          "source": "fotmob",
+          "source_scope": "premier_league_current",
+          "competition_id": 47,
+          "competition_stage_id": null,
+          "competition": "Premier League",
+          "round": 5,
+          "kickoff_utc": "2026-09-20T15:30:00Z",
+          "home_team_id": 9879,
+          "home_team": "Fulham",
+          "away_team_id": 10260,
+          "away_team": "Manchester United",
+          "score": null,
+          "started": false,
+          "finished": false,
+          "cancelled": false,
+          "season": "2026/2027"
+        },
+        "predicted_xg_before_calibration": {
+          "home": 1.287808,
+          "away": 1.625881,
+          "total": 2.913689
+        },
+        "predicted_xg": {
+          "home": 1.236662,
+          "away": 1.693125,
+          "total": 2.929786
+        },
+        "probabilities_before_calibration": {
+          "home_win": 0.30082,
+          "draw": 0.2474,
+          "away_win": 0.45178,
+          "over": {
+            "2.5": 0.55916,
+            "3.5": 0.3338
+          },
+          "under": {
+            "2.5": 0.44084,
+            "3.5": 0.6662
+          },
+          "btts_yes": 0.5875,
+          "btts_no": 0.4125
+        },
+        "probabilities": {
+          "home_win": 0.247028,
+          "draw": 0.331754,
+          "away_win": 0.421218,
+          "over": {
+            "2.5": 0.532066,
+            "3.5": 0.336851
+          },
+          "under": {
+            "2.5": 0.467934,
+            "3.5": 0.663149
+          },
+          "btts_yes": 0.607261,
+          "btts_no": 0.392739
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.155223
+          },
+          {
+            "score": "1-2",
+            "probability": 0.083694
+          },
+          {
+            "score": "2-2",
+            "probability": 0.081387
+          },
+          {
+            "score": "0-1",
+            "probability": 0.079746
+          },
+          {
+            "score": "0-0",
+            "probability": 0.073314
+          }
+        ],
+        "calibration_read": {
+          "league_log_ratio_correction": -0.081052,
+          "home_team_log_ratio_effect": 0,
+          "away_team_log_ratio_effect": 0,
+          "total_log_ratio_correction": -0.081052,
+          "draw_logit_correction": 0.443446,
+          "raw_draw_probability_after_venue": 0.24164,
+          "calibrated_draw_probability": 0.331754,
+          "draw_zone": false,
+          "probability_leader": "away_win",
+          "side_leader": "away_win",
+          "risk_gate": "shadow_evaluation"
+        },
+        "decision_boundaries": {
+          "base_60_30_10_changed": false,
+          "player_alpha_changed": false,
+          "context_coefficient_changed": false,
+          "frozen_predictions_changed": false,
+          "probability_validated": false,
+          "market_ready": false,
+          "capital_deployment_ready": false
+        },
+        "quality_flags": [
+          "fixture_calibration_shadow_only",
+          "small_fixture_calibration_sample"
+        ]
+      },
+      "uncalibrated_contextual": {
+        "predicted_xg": {
+          "home": 1.287808,
+          "away": 1.625881,
+          "total": 2.913689
+        },
+        "probabilities": {
+          "home_win": 0.30082,
+          "draw": 0.2474,
+          "away_win": 0.45178,
+          "over": {
+            "2.5": 0.55916,
+            "3.5": 0.3338
+          },
+          "under": {
+            "2.5": 0.44084,
+            "3.5": 0.6662
+          },
+          "btts_yes": 0.5875,
+          "btts_no": 0.4125
+        },
+        "most_likely_scorelines": [
+          {
+            "score": "1-1",
+            "probability": 0.11592
+          },
+          {
+            "score": "1-2",
+            "probability": 0.09348
+          },
+          {
+            "score": "0-1",
+            "probability": 0.08624
+          },
+          {
+            "score": "2-1",
+            "probability": 0.07396
+          },
+          {
+            "score": "0-2",
+            "probability": 0.07096
+          }
+        ]
+      },
+      "context_read": {
+        "base_favorite_side": "away",
+        "base_favorite": "Manchester United",
+        "favorite_probability_delta": 0.00904,
+        "verdict": "baseline_supported",
+        "goal_environment": "suppressed"
+      },
+      "player_alpha": {
+        "home": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.223501,
+              "coverage": 0.8901
+            },
+            "attacking_unit_alpha_ability": {
+              "z": -0.030205,
+              "coverage": 0.8738
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.24656,
+              "coverage": 0.8785
+            },
+            "scoring_threat": {
+              "z": -0.122703,
+              "coverage": 0.8898
+            },
+            "chance_creation": {
+              "z": 0.112211,
+              "coverage": 0.8901
+            },
+            "defensive_prevention": {
+              "z": 0.341975,
+              "coverage": 0.8494
+            }
+          },
+          "availability": {
+            "unavailable": [
+              "Tom Cairney"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795451,
+              5795439,
+              5795433,
+              6005663,
+              5795372
+            ],
+            "weighted_matches": 5.890625,
+            "weighted_exact_lineups": 5.890625,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 25
+          },
+          "grade_confidence": "medium",
+          "grade_provisional": true
+        },
+        "away": {
+          "formation": "4-2-3-1",
+          "alpha": {
+            "overall_alpha_ability": {
+              "z": 0.517153,
+              "coverage": 0.9964
+            },
+            "attacking_unit_alpha_ability": {
+              "z": 0.545422,
+              "coverage": 0.9934
+            },
+            "defensive_unit_alpha_ability": {
+              "z": 0.550644,
+              "coverage": 0.9959
+            },
+            "scoring_threat": {
+              "z": 0.043197,
+              "coverage": 0.9961
+            },
+            "chance_creation": {
+              "z": 0.297888,
+              "coverage": 0.9964
+            },
+            "defensive_prevention": {
+              "z": 0.319444,
+              "coverage": 0.9917
+            }
+          },
+          "availability": {
+            "questionable": [
+              "Luke Shaw"
+            ],
+            "unavailable": [
+              "Amad Diallo",
+              "Carlos Baleba",
+              "Manuel Ugarte",
+              "Matthijs de Ligt",
+              "Tom Heaton"
+            ]
+          },
+          "evidence": {
+            "prior_matches": 5,
+            "latest_match_competition_id": 47,
+            "competition_changed_since_latest_match": false,
+            "latest_xi_bonus_suppressed": false,
+            "prior_match_ids": [
+              5795452,
+              6106293,
+              5795438,
+              5795432,
+              5795364
+            ],
+            "weighted_matches": 5.726562,
+            "weighted_exact_lineups": 5.726562,
+            "latest_exact_lineup_source": "current_season",
+            "candidate_players": 30
+          },
+          "grade_confidence": "high",
+          "grade_provisional": false
+        }
+      },
+      "shadow_pick": {
+        "outcome": "away_win",
+        "team": "Manchester United",
+        "probability": 0.421218,
+        "confidence": "low",
+        "thesis": "United's large projected-quality advantage and the opponent-adjusted signal narrowly lead Fulham. Fulham's improved prevention, United's lineup uncertainty and both clubs' midweek games keep the draw prominent.",
+        "override_reason": null
+      },
+      "totals_read": {
+        "line": 2.5,
+        "model_direction": "over",
+        "model_probability": 0.532066,
+        "shortlist": "pass",
+        "confidence": "low",
+        "market_edge_verified": false
+      }
+    }
+  ],
+  "evidence": {
+    "completed_pl_matches": 40,
+    "completed_ucl_matches": 18,
+    "frozen_calibration_matches": 30,
+    "selection": {
+      "current_selection_competition_ids": [
+        42,
+        47,
+        74,
+        133,
+        247,
+        10615
+      ],
+      "current_selection_matches": 64,
+      "supplementary_appearances_are_selection_only": true,
+      "primary_grade": "990-minute projected-squad weighted locked Alpha Ability z",
+      "transition_source_weights": {
+        "current_season": 2,
+        "preseason": 0.5,
+        "previous_season": 0.25
+      },
+      "strength_index": "50 + 15 * within-snapshot z-score of team Alpha, capped 0-100; display only",
+      "grade_confidence": "high at 95% expected-minute Alpha coverage, medium at 85%, low below 85%",
+      "not_in_grade": [
+        "club_form",
+        "historical_fixture_matchup",
+        "opponent",
+        "market_price"
+      ]
+    }
+  },
+  "source_provenance": {
+    "contextual_predictions": {
+      "path": "artifacts/contextual_interaction/2026-09-15-mw5-shared-selection/predictions.jsonl",
+      "sha256": "b6a6826985f6d3d9e2c912d07328847efa8567fb23449f499b8d3e32a5ae9ee7"
+    },
+    "base_predictions": {
+      "path": "artifacts/current_matchweek/2026-09-15-mw5-shared-selection/predictions.jsonl",
+      "sha256": "74f6fabfe59615f10c022ce0643330e5812e097ac25fa364f8f5fb7e5d8fb939"
+    },
+    "player_alpha_snapshot": {
+      "path": "reports/premier-league-alpha-snapshot-2026-09-15-shared-selection.json",
+      "sha256": "f1a82f4c86de9db92f71d118f006c5278197f1a9a177bd649d09f8abf643dc98"
+    },
+    "style_snapshot": {
+      "path": "artifacts/style_matchup/2026-09-15-shared-selection/style-matchups.json",
+      "sha256": "4548635621b86707ea5fb34d538d398dc17db5a9af7e870b77efc009c77a3b34"
+    },
+    "research_checkpoint": {
+      "path": "artifacts/research_loop/2026-09-15-30-completed/state.json",
+      "sha256": "28ce9bc8326e72319b820db2427a38cca1dfa09722fd09eb60fec42424668914"
+    },
+    "fixture_calibration": {
+      "path": "artifacts/fixture_calibration/2026-09-15/calibration.json",
+      "sha256": "27fb9972426b5a24627f05e805d01679a4a4816b3e33f25a593c41b2222550f8"
+    },
+    "calibration_config": {
+      "path": "config/fixture-calibration-v1.json",
+      "sha256": "e17474f6326a6db1d7e505f62ee4f032ac3055c2bfe1bb9f9d694317a42e0f4a"
+    },
+    "component_scales": {
+      "path": "artifacts/prediction_lab/2026-08-24/component-scales.json",
+      "sha256": "64ff9a93520649cdf893c1e9fcd5d81e58840252faec38b250f8d6b3ad86f0d9"
+    },
+    "goal_model": {
+      "path": "artifacts/prediction_lab/2026-08-24/goal-model.json",
+      "sha256": "db1ad39c296423b54f2258a2514149bc9e63b15b86d95664bc39532b930e1f13"
+    }
+  },
+  "decision_boundaries": {
+    "lineups_confirmed": false,
+    "player_alpha_formula_changed": false,
+    "base_60_30_10_weights_changed": false,
+    "research_beliefs_automatically_applied": false,
+    "market_prices_checked": false,
+    "capital_deployment_ready": false,
+    "published_to_website": false
+  },
+  "quality_flags": [
+    "provisional_lineups",
+    "pending_midweek_fixtures",
+    "fixture_calibration_shadow_only",
+    "goal_environment_compression_unresolved",
+    "no_live_market_price_or_closing_line_validation"
+  ]
+}

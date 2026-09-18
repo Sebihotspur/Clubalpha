@@ -159,6 +159,11 @@ def main() -> int:
     parser.add_argument(
         "--domestic-dir", type=Path, default=ROOT / "data/processed/domestic_history"
     )
+    parser.add_argument(
+        "--current-domestic-dir",
+        type=Path,
+        default=ROOT / "data/processed/domestic_current",
+    )
     parser.add_argument("--cache-dir", type=Path, default=ROOT / "data/cache/fotmob")
     parser.add_argument(
         "--player-grades",
@@ -181,7 +186,12 @@ def main() -> int:
     print("[1/4] Load and deduplicate normalized fixtures")
     foundation_fixtures = load_jsonl(args.foundation_dir / "fixtures.jsonl")
     domestic_fixtures = load_jsonl(args.domestic_dir / "fixtures.jsonl")
-    fixtures = dedupe_fixtures(foundation_fixtures, domestic_fixtures)
+    current_domestic_fixtures = load_jsonl(
+        args.current_domestic_dir / "fixtures.jsonl", required=False
+    )
+    fixtures = dedupe_fixtures(
+        foundation_fixtures, domestic_fixtures, current_domestic_fixtures
+    )
     print(f"      {len(fixtures)} unique registered fixtures")
 
     print("[2/4] Normalize cached FotMob team-match evidence")
@@ -190,6 +200,7 @@ def main() -> int:
         args.foundation_dir / "current_match_team_stats.jsonl",
         args.foundation_dir / "preseason_match_team_stats.jsonl",
         args.domestic_dir / "match_team_stats.jsonl",
+        args.current_domestic_dir / "match_team_stats.jsonl",
     ]
     processed_rows: list[dict[str, Any]] = []
     for path in processed_team_paths:
@@ -245,6 +256,7 @@ def main() -> int:
         "inputs": {
             "foundation_dir": str(args.foundation_dir),
             "domestic_dir": str(args.domestic_dir),
+            "current_domestic_dir": str(args.current_domestic_dir),
             "cache_dir": str(args.cache_dir),
             "player_grades": str(args.player_grades),
             "processed_team_stat_files": [str(path) for path in processed_team_paths],

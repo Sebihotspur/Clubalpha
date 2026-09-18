@@ -5,13 +5,14 @@
 The first pull builds five local datasets from free FotMob web data:
 
 1. The 2026/27 Premier League club and fixture universe.
-2. The 29 confirmed 2026/27 Champions League league-phase clubs and 14 current play-off contenders.
+2. The finalized 36-club 2026/27 Champions League league-phase field and current fixtures.
 3. The previous Premier League and Champions League fixtures, player-match detail, and requested player and team season metrics.
 4. The 2026 preseason fixture registry and every player-match detail FotMob exposes for those clubs.
 5. Dated club snapshots, manager history, and confirmed transfer events for Club Dynamics.
 
-UEFA remains the authority for qualification status. The seven 2026/27 play-off
-winners are intentionally provisional until the second legs finish on 26 August.
+UEFA remains the authority for qualification status. Qualification matches are
+retained only for clubs that reached the final league phase; eliminated clubs
+do not expand the target universe.
 
 ## Data flow
 
@@ -73,10 +74,14 @@ provider-data warehouse.
 - Decorated team values preserve their leading counts and percentages for style analysis.
 - Confirmed transfers retain effective and reported dates so `--as-of` builds can reject future information.
 - Every observation keeps FotMob IDs so players, teams, and matches remain joinable.
+- Parent competition IDs remain stable across FotMob stage changes; the stage
+  ID is preserved separately for audit.
+- Red cards, their timing, and estimated 11-v-11 minutes are preserved so a
+  numerically distorted match is not mistaken for clean tactical evidence.
 - FotMob `excludeFromRanking` is ranking eligibility, not roster status; all
   non-coach squad members are retained.
 - The collector fails if FotMob silently returns the wrong requested league season.
-- UCL qualification status includes an `as_of` date because the field is still changing.
+- The UCL registry is dated and tied to its official UEFA schedule source.
 
 ## First-pull result
 
@@ -133,6 +138,37 @@ The first version pulls match detail plus only two season leaderboards: goals as
 a reconciliation fallback and possessions won in the attacking third. The
 primary non-penalty-goal count is derived from reconciled match shot maps or
 match goal events; other canonical features are calculated from match detail.
+
+## Current foreign-UCL domestic evidence
+
+The same collector is reused for the current season rather than creating a
+second provider pipeline:
+
+```bash
+python3 scripts/pull_domestic_history.py \
+  --config config/domestic-current.json \
+  --output-dir data/processed/domestic_current \
+  --audit reports/domestic-current-coverage.json
+```
+
+It selects only matches involving the 31 non-English UCL clubs across their 15
+domestic leagues and clips results to the build's `as_of` date. These rows feed
+shared team form, style, strength/weakness, lineup, and historical evidence.
+They do not enter the Premier League prediction ledger or Premier
+League-specific calibration sample. Player Alpha's locked prior-season formula
+also remains unchanged; current matches describe condition and selection until
+a separately validated rating update is approved.
+
+When the five-season archive has already been scored, Historical Fixtures can
+ingest it incrementally instead of rematerializing every old match card:
+
+```bash
+python3 scripts/build_historical_fixtures.py \
+  --config config/historical-fixtures-v2.json \
+  --seed-scored-history data/processed/historical_fixtures_v2/scored_history_observations.jsonl \
+  --output-dir data/processed/historical_fixtures_v2 \
+  --audit reports/historical-fixtures-v2-audit.json
+```
 
 ## Historical Fixtures handoff
 

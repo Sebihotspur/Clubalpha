@@ -12,7 +12,17 @@ Data Sources
 
 Player Quality + Club Form + Historical Fixtures
     → Football Intelligence
+
+Shared Football Intelligence
+    ├── Premier League forecast → PL ledger + PL calibration
+    └── Champions League forecast → UCL ledger + UCL calibration
 ```
+
+Current UCL matches and the domestic matches of foreign UCL clubs strengthen
+the shared evidence for those teams. Competition-specific predictions and
+learning samples never cross buckets: a UCL performance by an English club can
+update what is known about the club and its likely XI, but it is not recorded as
+a Premier League prediction or Premier League calibration result.
 
 ## 1. Data Sources
 
@@ -240,9 +250,12 @@ Team
 └── Relevant Historical Evidence
 ```
 
-Prediction Lab v0 now emits shadow 1X2, totals, and BTTS probabilities. They
-remain outside the trusted deployment product until chronological validation
-gates pass; scorer, assist, market-price, and capital layers remain deferred.
+Prediction Lab v0 still emits shadow 1X2, totals, and BTTS probabilities for
+audit continuity. The active research surface is deliberately limited to 1X2
+and Over/Under 2.5. BTTS is a zero-weight scored diagnostic and cannot produce
+an official recommendation or allocation review. All markets remain outside
+the trusted deployment product until chronological validation gates pass;
+scorer, assist, market-price, and capital layers remain deferred.
 
 The accepted minimal handoff into that later probability layer is documented
 in [Composite Model v1](composite-model-v1.md) and implemented in

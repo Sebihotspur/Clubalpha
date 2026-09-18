@@ -1,19 +1,21 @@
 {
   "version": "domestic_history_v1",
-  "generated_at_utc": "2026-08-19T18:44:59.569018+00:00",
+  "as_of": "2026-09-10",
+  "generated_at_utc": "2026-09-10T16:50:17.519826+00:00",
   "source": "FotMob public web data",
   "source_status": "unofficial_undocumented",
-  "sampling_policy": "Complete domestic matches for target clubs; opponent player rows excluded",
+  "sampling_policy": "Complete domestic matches through the as-of date for target clubs; opponent player rows excluded",
   "competitions": [
     {
       "league_id": 38,
       "league_name": "Austrian Bundesliga",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 9977,
           "team": "LASK",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         }
       ]
@@ -22,11 +24,12 @@
       "league_id": 262,
       "league_name": "Azerbaijan Premier League",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 951893,
           "team": "Sabah FK",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         }
       ]
@@ -35,6 +38,7 @@
       "league_id": 40,
       "league_name": "Belgian Pro League",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 8342,
@@ -45,22 +49,10 @@
       ]
     },
     {
-      "league_id": 270,
-      "league_name": "Bulgarian First League",
-      "season": "2025/2026",
-      "target_teams": [
-        {
-          "team_id": 8632,
-          "team": "Levski Sofia",
-          "ucl_status": "playoff_contender",
-          "override_reason": null
-        }
-      ]
-    },
-    {
       "league_id": 54,
       "league_name": "Bundesliga",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 9823,
@@ -92,6 +84,7 @@
       "league_id": 48,
       "league_name": "Championship",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 8669,
@@ -114,22 +107,10 @@
       ]
     },
     {
-      "league_id": 252,
-      "league_name": "Croatian HNL",
-      "season": "2025/2026",
-      "target_teams": [
-        {
-          "team_id": 10156,
-          "team": "Dinamo Zagreb",
-          "ucl_status": "playoff_contender",
-          "override_reason": null
-        }
-      ]
-    },
-    {
       "league_id": 122,
       "league_name": "Czech First League",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 7787,
@@ -143,17 +124,18 @@
       "league_id": 59,
       "league_name": "Eliteserien",
       "season": "2025",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 8402,
           "team": "Bodø/Glimt",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         },
         {
           "team_id": 8478,
           "team": "Viking",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         }
       ]
@@ -162,17 +144,12 @@
       "league_id": 57,
       "league_name": "Eredivisie",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 10235,
           "team": "Feyenoord",
           "ucl_status": "direct_league_phase",
-          "override_reason": null
-        },
-        {
-          "team_id": 8464,
-          "team": "NEC Nijmegen",
-          "ucl_status": "playoff_contender",
           "override_reason": null
         },
         {
@@ -187,24 +164,12 @@
       "league_id": 135,
       "league_name": "Greek Super League",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 8563,
           "team": "AEK Athens",
-          "ucl_status": "playoff_contender",
-          "override_reason": null
-        }
-      ]
-    },
-    {
-      "league_id": 127,
-      "league_name": "Israeli Premier League",
-      "season": "2025/2026",
-      "target_teams": [
-        {
-          "team_id": 9754,
-          "team": "Hapoel Beer Sheva",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         }
       ]
@@ -213,10 +178,11 @@
       "league_id": 87,
       "league_name": "LaLiga",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 9906,
-          "team": "Atletico Madrid",
+          "team": "Atlético Madrid",
           "ucl_status": "direct_league_phase",
           "override_reason": null
         },
@@ -250,6 +216,7 @@
       "league_id": 61,
       "league_name": "Liga Portugal",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 9773,
@@ -269,6 +236,7 @@
       "league_id": 53,
       "league_name": "Ligue 1",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 8588,
@@ -283,12 +251,6 @@
           "override_reason": null
         },
         {
-          "team_id": 9748,
-          "team": "Lyon",
-          "ucl_status": "playoff_contender",
-          "override_reason": null
-        },
-        {
           "team_id": 9847,
           "team": "Paris Saint-Germain",
           "ucl_status": "direct_league_phase",
@@ -297,22 +259,10 @@
       ]
     },
     {
-      "league_id": 64,
-      "league_name": "Scottish Premiership",
-      "season": "2025/2026",
-      "target_teams": [
-        {
-          "team_id": 9925,
-          "team": "Celtic",
-          "ucl_status": "playoff_contender",
-          "override_reason": null
-        }
-      ]
-    },
-    {
       "league_id": 55,
       "league_name": "Serie A",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 10171,
@@ -344,24 +294,12 @@
       "league_id": 176,
       "league_name": "Slovak First Football League",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 6019,
           "team": "Slovan Bratislava",
-          "ucl_status": "playoff_contender",
-          "override_reason": null
-        }
-      ]
-    },
-    {
-      "league_id": 173,
-      "league_name": "Slovenian PrvaLiga",
-      "season": "2025/2026",
-      "target_teams": [
-        {
-          "team_id": 4622,
-          "team": "NK Celje",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         }
       ]
@@ -370,11 +308,12 @@
       "league_id": 71,
       "league_name": "Süper Lig",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 8695,
           "team": "Fenerbahçe",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         },
         {
@@ -389,6 +328,7 @@
       "league_id": 441,
       "league_name": "Ukrainian Premier League",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 9728,
@@ -400,26 +340,29 @@
     }
   ],
   "counts": {
-    "competitions": 21,
-    "target_teams": 41,
-    "selected_fixtures": 1396,
-    "finished_selected_fixtures": 1394,
-    "matches_with_target_player_stats": 1261,
-    "matches_without_target_player_stats": 133,
-    "target_player_detail_coverage_pct": 90.5,
-    "match_player_rows": 20851,
-    "season_player_stat_rows": 1256
+    "competitions": 16,
+    "target_teams": 34,
+    "selected_fixtures": 1156,
+    "finished_selected_fixtures": 1156,
+    "matches_with_target_player_stats": 1093,
+    "matches_without_target_player_stats": 63,
+    "target_player_detail_coverage_pct": 94.6,
+    "match_player_rows": 18099,
+    "match_team_rows": 2312,
+    "matches_with_red_cards": 213,
+    "season_player_stat_rows": 1081
   },
   "competition_audit": [
     {
       "league_id": 38,
       "league_name": "Austrian Bundesliga",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 9977,
           "team": "LASK",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         }
       ],
@@ -439,11 +382,12 @@
       "league_id": 262,
       "league_name": "Azerbaijan Premier League",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 951893,
           "team": "Sabah FK",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         }
       ],
@@ -465,6 +409,7 @@
       "league_id": 40,
       "league_name": "Belgian Pro League",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 8342,
@@ -486,35 +431,10 @@
       "target_player_detail_coverage_pct": 100.0
     },
     {
-      "league_id": 270,
-      "league_name": "Bulgarian First League",
-      "season": "2025/2026",
-      "target_teams": [
-        {
-          "team_id": 8632,
-          "team": "Levski Sofia",
-          "ucl_status": "playoff_contender",
-          "override_reason": null
-        }
-      ],
-      "league_fixture_count": 293,
-      "selected_fixtures": 36,
-      "finished_selected_fixtures": 36,
-      "target_fixture_counts": {
-        "8632": 36
-      },
-      "target_teams_without_fixtures": [],
-      "missing_requested_stats": [
-        "poss_won_att_3rd"
-      ],
-      "matches_with_target_player_stats": 0,
-      "matches_without_target_player_stats": 36,
-      "target_player_detail_coverage_pct": 0.0
-    },
-    {
       "league_id": 54,
       "league_name": "Bundesliga",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 9823,
@@ -560,6 +480,7 @@
       "league_id": 48,
       "league_name": "Championship",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 8669,
@@ -595,33 +516,10 @@
       "target_player_detail_coverage_pct": 100.0
     },
     {
-      "league_id": 252,
-      "league_name": "Croatian HNL",
-      "season": "2025/2026",
-      "target_teams": [
-        {
-          "team_id": 10156,
-          "team": "Dinamo Zagreb",
-          "ucl_status": "playoff_contender",
-          "override_reason": null
-        }
-      ],
-      "league_fixture_count": 180,
-      "selected_fixtures": 36,
-      "finished_selected_fixtures": 36,
-      "target_fixture_counts": {
-        "10156": 36
-      },
-      "target_teams_without_fixtures": [],
-      "missing_requested_stats": [],
-      "matches_with_target_player_stats": 36,
-      "matches_without_target_player_stats": 0,
-      "target_player_detail_coverage_pct": 100.0
-    },
-    {
       "league_id": 122,
       "league_name": "Czech First League",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 7787,
@@ -646,17 +544,18 @@
       "league_id": 59,
       "league_name": "Eliteserien",
       "season": "2025",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 8402,
           "team": "Bodø/Glimt",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         },
         {
           "team_id": 8478,
           "team": "Viking",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         }
       ],
@@ -677,17 +576,12 @@
       "league_id": 57,
       "league_name": "Eredivisie",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 10235,
           "team": "Feyenoord",
           "ucl_status": "direct_league_phase",
-          "override_reason": null
-        },
-        {
-          "team_id": 8464,
-          "team": "NEC Nijmegen",
-          "ucl_status": "playoff_contender",
           "override_reason": null
         },
         {
@@ -698,16 +592,15 @@
         }
       ],
       "league_fixture_count": 309,
-      "selected_fixtures": 96,
-      "finished_selected_fixtures": 96,
+      "selected_fixtures": 66,
+      "finished_selected_fixtures": 66,
       "target_fixture_counts": {
         "10235": 34,
-        "8464": 34,
         "8640": 34
       },
       "target_teams_without_fixtures": [],
       "missing_requested_stats": [],
-      "matches_with_target_player_stats": 96,
+      "matches_with_target_player_stats": 66,
       "matches_without_target_player_stats": 0,
       "target_player_detail_coverage_pct": 100.0
     },
@@ -715,11 +608,12 @@
       "league_id": 135,
       "league_name": "Greek Super League",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 8563,
           "team": "AEK Athens",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         }
       ],
@@ -736,39 +630,14 @@
       "target_player_detail_coverage_pct": 100.0
     },
     {
-      "league_id": 127,
-      "league_name": "Israeli Premier League",
-      "season": "2025/2026",
-      "target_teams": [
-        {
-          "team_id": 9754,
-          "team": "Hapoel Beer Sheva",
-          "ucl_status": "playoff_contender",
-          "override_reason": null
-        }
-      ],
-      "league_fixture_count": 240,
-      "selected_fixtures": 36,
-      "finished_selected_fixtures": 36,
-      "target_fixture_counts": {
-        "9754": 36
-      },
-      "target_teams_without_fixtures": [],
-      "missing_requested_stats": [
-        "poss_won_att_3rd"
-      ],
-      "matches_with_target_player_stats": 36,
-      "matches_without_target_player_stats": 0,
-      "target_player_detail_coverage_pct": 100.0
-    },
-    {
       "league_id": 87,
       "league_name": "LaLiga",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 9906,
-          "team": "Atletico Madrid",
+          "team": "Atlético Madrid",
           "ucl_status": "direct_league_phase",
           "override_reason": null
         },
@@ -817,6 +686,7 @@
       "league_id": 61,
       "league_name": "Liga Portugal",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 9773,
@@ -848,6 +718,7 @@
       "league_id": 53,
       "league_name": "Ligue 1",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 8588,
@@ -862,12 +733,6 @@
           "override_reason": null
         },
         {
-          "team_id": 9748,
-          "team": "Lyon",
-          "ucl_status": "playoff_contender",
-          "override_reason": null
-        },
-        {
           "team_id": 9847,
           "team": "Paris Saint-Germain",
           "ucl_status": "direct_league_phase",
@@ -875,41 +740,16 @@
         }
       ],
       "league_fixture_count": 306,
-      "selected_fixtures": 124,
-      "finished_selected_fixtures": 124,
+      "selected_fixtures": 96,
+      "finished_selected_fixtures": 96,
       "target_fixture_counts": {
         "8588": 34,
         "8639": 34,
-        "9748": 34,
         "9847": 34
       },
       "target_teams_without_fixtures": [],
       "missing_requested_stats": [],
-      "matches_with_target_player_stats": 124,
-      "matches_without_target_player_stats": 0,
-      "target_player_detail_coverage_pct": 100.0
-    },
-    {
-      "league_id": 64,
-      "league_name": "Scottish Premiership",
-      "season": "2025/2026",
-      "target_teams": [
-        {
-          "team_id": 9925,
-          "team": "Celtic",
-          "ucl_status": "playoff_contender",
-          "override_reason": null
-        }
-      ],
-      "league_fixture_count": 228,
-      "selected_fixtures": 38,
-      "finished_selected_fixtures": 38,
-      "target_fixture_counts": {
-        "9925": 38
-      },
-      "target_teams_without_fixtures": [],
-      "missing_requested_stats": [],
-      "matches_with_target_player_stats": 38,
+      "matches_with_target_player_stats": 96,
       "matches_without_target_player_stats": 0,
       "target_player_detail_coverage_pct": 100.0
     },
@@ -917,6 +757,7 @@
       "league_id": 55,
       "league_name": "Serie A",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 10171,
@@ -962,11 +803,12 @@
       "league_id": 176,
       "league_name": "Slovak First Football League",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 6019,
           "team": "Slovan Bratislava",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         }
       ],
@@ -983,40 +825,15 @@
       "target_player_detail_coverage_pct": 100.0
     },
     {
-      "league_id": 173,
-      "league_name": "Slovenian PrvaLiga",
-      "season": "2025/2026",
-      "target_teams": [
-        {
-          "team_id": 4622,
-          "team": "NK Celje",
-          "ucl_status": "playoff_contender",
-          "override_reason": null
-        }
-      ],
-      "league_fixture_count": 180,
-      "selected_fixtures": 36,
-      "finished_selected_fixtures": 34,
-      "target_fixture_counts": {
-        "4622": 36
-      },
-      "target_teams_without_fixtures": [],
-      "missing_requested_stats": [
-        "poss_won_att_3rd"
-      ],
-      "matches_with_target_player_stats": 0,
-      "matches_without_target_player_stats": 34,
-      "target_player_detail_coverage_pct": 0.0
-    },
-    {
       "league_id": 71,
       "league_name": "Süper Lig",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 8695,
           "team": "Fenerbahçe",
-          "ucl_status": "playoff_contender",
+          "ucl_status": "direct_league_phase",
           "override_reason": null
         },
         {
@@ -1043,6 +860,7 @@
       "league_id": 441,
       "league_name": "Ukrainian Premier League",
       "season": "2025/2026",
+      "source_scope": "domestic_history_previous",
       "target_teams": [
         {
           "team_id": 9728,
@@ -1069,122 +887,173 @@
   "competition_errors": [],
   "match_detail_errors": [],
   "matches_without_target_player_stats_sample": [
-    4809357,
-    4809375,
-    4809379,
-    4809392,
-    4809395,
-    4809402,
-    4809413,
-    4809423,
-    4809637,
-    4809640,
-    4809649,
-    4834421,
-    4834427,
-    4834432,
-    4834436,
-    4834440,
-    4834445,
-    4834451,
-    4834456,
-    4834461,
-    4834467,
-    4834474,
-    4834477,
-    4834482,
-    4834486,
-    4834491,
-    4834496,
-    4834501,
-    4834508,
-    4834511
+    4844798,
+    4844807,
+    4844821,
+    4844829,
+    4844833,
+    4844845,
+    4844852,
+    4844861,
+    4844866,
+    4844876,
+    4844885,
+    4844892,
+    4844898,
+    4844908,
+    4844911,
+    4844925,
+    4844932,
+    4844941,
+    4844946,
+    4844957,
+    4844958,
+    4844973,
+    4844977,
+    4844989,
+    4844994,
+    4844998,
+    4845013,
+    4845020,
+    4845025,
+    4845036
   ],
   "metric_coverage": {
     "minutes": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "goals": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "non_penalty_goals": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "assists": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "xg": {
-      "matches_with_value": 1122,
-      "pct_of_detailed_matches": 89.0
+      "matches_with_value": 1026,
+      "pct_of_detailed_matches": 93.9
     },
     "non_penalty_xg": {
-      "matches_with_value": 1122,
-      "pct_of_detailed_matches": 89.0
+      "matches_with_value": 1026,
+      "pct_of_detailed_matches": 93.9
     },
     "xa": {
-      "matches_with_value": 1122,
-      "pct_of_detailed_matches": 89.0
+      "matches_with_value": 1026,
+      "pct_of_detailed_matches": 93.9
     },
     "shots_on_target": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "chances_created": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "box_touches": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "successful_dribbles": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "errors_leading_to_goal": {
-      "matches_with_value": 182,
-      "pct_of_detailed_matches": 14.4
+      "matches_with_value": 158,
+      "pct_of_detailed_matches": 14.5
     },
     "tackles": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "aerial_duels": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "ground_duels": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "interceptions": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "dribbled_past": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "clearances": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "blocks": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
     },
     "accurate_passes": {
-      "matches_with_value": 1261,
+      "matches_with_value": 1093,
       "pct_of_detailed_matches": 100.0
+    }
+  },
+  "team_metric_coverage": {
+    "goals": {
+      "team_match_rows_with_value": 2312,
+      "team_match_rows": 2312
+    },
+    "expected_goals": {
+      "team_match_rows_with_value": 2052,
+      "team_match_rows": 2312
+    },
+    "shots_on_target": {
+      "team_match_rows_with_value": 2242,
+      "team_match_rows": 2312
+    },
+    "big_chances": {
+      "team_match_rows_with_value": 2186,
+      "team_match_rows": 2312
+    },
+    "total_shots": {
+      "team_match_rows_with_value": 2242,
+      "team_match_rows": 2312
+    },
+    "touches_opp_box": {
+      "team_match_rows_with_value": 2186,
+      "team_match_rows": 2312
+    },
+    "possession_pct": {
+      "team_match_rows_with_value": 2242,
+      "team_match_rows": 2312
+    },
+    "passes": {
+      "team_match_rows_with_value": 2186,
+      "team_match_rows": 2312
+    },
+    "opposition_half_passes": {
+      "team_match_rows_with_value": 2186,
+      "team_match_rows": 2312
+    },
+    "long_balls_attempted_est": {
+      "team_match_rows_with_value": 2186,
+      "team_match_rows": 2312
+    },
+    "crosses_attempted_est": {
+      "team_match_rows_with_value": 2090,
+      "team_match_rows": 2312
+    },
+    "expected_goals_set_play": {
+      "team_match_rows_with_value": 2040,
+      "team_match_rows": 2312
     }
   },
   "warnings": [
     "Domestic match detail is club-filtered; opponent-only rows are excluded to prevent partial-season player grades.",
     "Players transferred from a non-target club may still require a player-centric backfill.",
-    "FotMob is undocumented; endpoint and field-shape tests remain required."
+    "FotMob is undocumented; endpoint and field-shape tests remain required.",
+    "Red-card timing is stored as context but does not automatically rewrite any locked model weight."
   ]
 }

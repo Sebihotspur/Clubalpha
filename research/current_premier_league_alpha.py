@@ -20,6 +20,7 @@ from clubalpha.fotmob import (  # noqa: E402
     flatten_match_player_stats,
     league_matches,
     normalize_fixture,
+    team_fixtures,
     team_squad,
 )
 from clubalpha.role_aware_alpha import attach_role_aware_alpha  # noqa: E402
@@ -36,6 +37,61 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
         for line in path.read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
+
+
+def merge_current_selection_rows(
+    cached_rows: list[dict[str, Any]],
+    fresh_pl_rows: list[dict[str, Any]],
+    team_ids: set[int],
+    as_of: str,
+) -> list[dict[str, Any]]:
+    """Reuse current European appearances without duplicating PL evidence.
+
+    Competition identity is retained so the locked selection policy still
+    discounts cross-competition evidence and suppresses latest-XI persistence
+    on a competition switch. Fresh PL rows take precedence over cached copies.
+    """
+
+    indexed = {}
+    for row in [*cached_rows, *fresh_pl_rows]:
+        team_id = int(row.get("team_id") or -1)
+        kickoff = str(row.get("kickoff_utc") or "")
+        if team_id not in team_ids or not kickoff or kickoff[:10] > as_of:
+            continue
+        key = (team_id, int(row["match_id"]), int(row["player_id"]))
+        indexed[key] = {**row, "selection_source": "current_season"}
+    return [indexed[key] for key in sorted(indexed)]
+
+
+def collect_shared_selection_rows(
+    client: FotMobClient,
+    team_ids: set[int],
+    as_of: str,
+    season_start: str,
+) -> list[dict[str, Any]]:
+    """Use completed cup/other-European lineups for selection only.
+
+    These appearances do not enter Player Alpha, PL calibration or a PL
+    results ledger. PL/UCL rows already exist in the foundation and are reused
+    separately; friendlies remain in the explicit preseason input.
+    """
+
+    fixtures = {}
+    for team_id in sorted(team_ids):
+        for source in team_fixtures(client.team(team_id)):
+            fixture = normalize_fixture(source, source_scope="shared_current_selection")
+            kickoff = str(fixture.get("kickoff_utc") or "")
+            if (
+                fixture.get("finished")
+                and not fixture.get("cancelled")
+                and season_start <= kickoff[:10] <= as_of
+                and fixture.get("competition_id") not in (47, 42, 489)
+            ):
+                fixtures[int(fixture["match_id"])] = fixture
+    rows = []
+    for match_id, fixture in sorted(fixtures.items()):
+        rows.extend(flatten_match_player_stats(client.match(match_id), fixture))
+    return rows
 
 
 def display_grade(score: float) -> str:
@@ -133,6 +189,18 @@ def main() -> None:
                     "selection_source": "current_season",
                 }
             )
+
+    current_rows = merge_current_selection_rows(
+        [
+            *load_jsonl(args.foundation_dir / "current_match_player_stats.jsonl"),
+            *collect_shared_selection_rows(
+                client, team_ids, args.as_of, f"{args.season.split('/')[0]}-07-01"
+            ),
+        ],
+        current_rows,
+        team_ids,
+        args.as_of,
+    )
 
     squads: dict[int, list[dict[str, Any]]] = defaultdict(list)
     for team_id in sorted(team_ids):
@@ -271,11 +339,18 @@ def main() -> None:
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "source": (
             "FotMob current squads, injuries, current-season declared lineups, "
-            "preseason detail, and 2025/26 match history"
+            "shared cup/European appearances, preseason detail, and 2025/26 match history"
         ),
         "selection_version": config["version"],
         "player_quality_version": "clubalpha_player_quality_v2",
         "method": {
+            "current_selection_competition_ids": sorted(
+                {int(row["competition_id"]) for row in current_rows}
+            ),
+            "current_selection_matches": len(
+                {int(row["match_id"]) for row in current_rows}
+            ),
+            "supplementary_appearances_are_selection_only": True,
             "primary_grade": (
                 "990-minute projected-squad weighted locked Alpha Ability z"
             ),

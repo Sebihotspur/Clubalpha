@@ -1,10 +1,100 @@
 # Next session
 
-Updated: 2026-09-08
+Updated: 2026-09-17
 
 Model and website checkpoint: see latest commit on `main`
 
 Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
+
+## Start next session: archetype matchup memory
+
+This is the highest-priority extension to Adaptive Learning v1.
+
+- Preserve the readable archetype label and the continuous five-route tactical
+  fingerprint exactly as they were frozen before kickoff.
+- Add three separate, non-duplicative ledgers: direct opponent history,
+  team-versus-opponent-archetype history, and league-wide
+  archetype-versus-archetype history.
+- Score W-D-L, goals, xG for/against, xG difference, goal environment, route
+  execution, venue, opponent quality, lineup reliability, competition, manager,
+  and match-state disruption.
+- Let xG process lead the learning signal; keep W-D-L as supporting evidence so
+  fragile finishing does not become a false tactical belief.
+- Fewer than three comparable matches remain descriptive; three to four are
+  tentative; five to seven may enter the challenger; eight or more may become
+  eligible for human promotion review.
+- Archetype memory is a bounded downstream context modifier. It must not alter
+  Player Alpha, the 60/30/10 base, frozen forecasts, or capital authorization.
+
+## September 17 adaptive-learning checkpoint
+
+- Adaptive Learning v1 produced 30 immutable Match Learning Cards.
+- Error attribution: 15 outcome-variance cases, 9 lineup-projection cases,
+  3 club-form/team-strength reviews, 1 draw-calibration review, and 2 model-
+  supported matches.
+- Fast memory uses a seven-day half-life, medium memory 28 days, and slow
+  structural memory 120 days.
+- The first chronological challenger was evaluated on 10 later fixtures. It
+  worsened side-xG MAE from 0.6135 to 0.6203 and 1X2 Brier from 0.6539 to
+  0.6929, so the system correctly held the Holy Grail champion.
+- The production Methodology page exposes the cards, memory horizons, and
+  champion-challenger gate. Capital remains disabled.
+- Full regression suite: 211 tests passing.
+
+## September 16 research checkpoint
+
+- The three newly requested support layers are implemented as versioned,
+  zero-live-weight research: an empirical Over 2.5 challenger, a projected-XI
+  load/rotation audit, and a no-auth, read-only Polymarket order-book snapshot.
+- The goals challenger failed its frozen-fixture promotion gate. On 20 official
+  fixtures its Brier score was 0.2606 versus 0.2554 for the existing baseline,
+  and log loss was 0.7161 versus 0.7044. It remains inactive. The evidence says
+  total-xG estimation is the larger problem; globally raising Over probability
+  is not the solution.
+- The pre-match audit marks Bournemouth, Crystal Palace, Manchester City, and
+  Sunderland high risk. The first three still have a match before their league
+  fixture; Sunderland has short rest plus heavy projected-XI load. Refresh the
+  affected teams after those matches before freezing Matchweek 5.
+- The market collector matched 10/10 Premier League fixtures and 10/10 O/U 2.5
+  books. It reads executable asks, spreads, and shallow depth, never places an
+  order, and uses no wallet or credentials.
+- The first market comparison exposes probability compression rather than a
+  deployable edge. Across the slate, Clubalpha assigns the market favourite
+  39.4% on average versus 53.8% no-vig, and assigns draws 33.5% versus 23.8%.
+  The 30-match Fixture Calibration v1 artifact learned from an unusually
+  draw-heavy 13/30 sample and remains explicitly unvalidated.
+- Next build: a separate 1X2 calibration challenger using long-run prior
+  evidence and chronological frozen-fixture validation. Do not change the
+  60/30/10 foundation, Player Alpha, or existing calibration in place. Market
+  prices are a benchmark, not a football-intelligence training target.
+- Full regression suite: 207 tests passing.
+- Detailed evidence:
+  `artifacts/research_phase/2026-09-16/README.md`.
+
+## Locked market focus
+
+- Active research markets are now 1X2 and Over/Under 2.5 only.
+- BTTS remains in the append-only scorecard as a zero-weight diagnostic. It
+  cannot generate an official recommendation, paper-allocation review, or
+  capital decision.
+- The intelligence foundations, simulation output, frozen historical slates,
+  and market-specific backtest history remain unchanged.
+
+## UCL shared-evidence checkpoint
+
+- The final 36-team 2026/27 UCL league-phase registry is resolved. The core
+  universe is now 51 clubs: 20 PL clubs plus 31 foreign UCL clubs.
+- Current evidence includes 30 completed PL matches, 12 completed UCL matches,
+  7 retained UCL qualification matches, and 142 completed foreign domestic
+  matches across 15 leagues.
+- Foreign domestic player detail is 134/142 matches (94.4%). FotMob exposes
+  team results but no player cards for Sabah's three and Shakhtar's five
+  domestic matches; both stay explicitly low-confidence.
+- Shared Club Form and strength evidence exists for 51/51 clubs. Squad priors
+  are usable for 49/51; Sabah and Shakhtar lack complete FotMob squad pages.
+- Current UCL/domestic evidence can update shared form, dynamics, historical
+  context, and lineup expectations. PL and UCL ledgers/calibration remain
+  separate, and the locked prior-season Player Alpha formula was not changed.
 
 ## Matchweek 4 frozen checkpoint
 

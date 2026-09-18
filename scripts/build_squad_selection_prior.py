@@ -200,6 +200,11 @@ def main() -> int:
         default=ROOT / "data/processed/player_quality_v2/player_grades.jsonl",
     )
     parser.add_argument(
+        "--current-domestic-dir",
+        type=Path,
+        default=ROOT / "data/processed/domestic_current",
+    )
+    parser.add_argument(
         "--output-dir",
         type=Path,
         default=ROOT / "data/processed/squad_selection_prior",
@@ -220,6 +225,9 @@ def main() -> int:
     squads = load_jsonl(args.foundation_dir / "squads.jsonl")
     grades = load_jsonl(args.player_grades)
     current_rows = load_jsonl(args.foundation_dir / "current_match_player_stats.jsonl")
+    current_domestic_path = args.current_domestic_dir / "match_player_stats.jsonl"
+    if current_domestic_path.exists():
+        current_rows.extend(load_jsonl(current_domestic_path))
     preseason_rows = load_jsonl(args.foundation_dir / "preseason_match_player_stats.jsonl")
 
     print("[2/4] Build recent selection evidence and previous-season workload prior")
@@ -255,6 +263,7 @@ def main() -> int:
             "inputs": {
                 "foundation_dir": str(args.foundation_dir),
                 "player_grades": str(args.player_grades),
+                "current_domestic_dir": str(args.current_domestic_dir),
             },
             "outputs": {"team_rows": count},
             "fixture_specific": False,

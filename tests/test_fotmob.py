@@ -5,6 +5,7 @@ from clubalpha.fotmob import (
     flatten_match_player_stats,
     flatten_match_team_stats,
     normalize_fixture,
+    normalize_match_game_state,
     normalize_manager_history,
     normalize_name,
     normalize_stat_rows,
@@ -31,6 +32,20 @@ class FotMobNormalizationTests(unittest.TestCase):
         self.assertEqual(result["match_id"], 4813374)
         self.assertEqual(result["home_team_id"], 8650)
         self.assertTrue(result["finished"])
+
+    def test_normalize_fixture_preserves_parent_competition_and_stage(self):
+        row = {
+            "id": 99,
+            "leagueId": 943230,
+            "parentLeagueId": 42,
+            "leagueName": "Champions League",
+            "home": {"id": 1, "name": "Home"},
+            "away": {"id": 2, "name": "Away"},
+            "status": {"finished": True},
+        }
+        result = normalize_fixture(row, source_scope="champions_league_current")
+        self.assertEqual(result["competition_id"], 42)
+        self.assertEqual(result["competition_stage_id"], 943230)
 
     def test_future_fixture_snapshot_does_not_leak_a_later_result(self):
         row = {
@@ -133,6 +148,86 @@ class FotMobNormalizationTests(unittest.TestCase):
         self.assertEqual(rows[0]["lineup_position_id"], 105)
         self.assertEqual(rows[0]["team_formation"], "4-3-3")
         self.assertEqual(rows[0]["lineup_source"], "provider")
+
+    def test_player_stats_use_stable_parent_competition_and_fixture_scope(self):
+        payload = {
+            "general": {
+                "matchId": 1,
+                "leagueId": 943230,
+                "parentLeagueId": 42,
+                "leagueName": "Champions League",
+            },
+            "content": {
+                "playerStats": {
+                    "9": {
+                        "id": 9,
+                        "name": "Forward",
+                        "teamId": 10,
+                        "teamName": "Club",
+                        "stats": [
+                            {
+                                "stats": {
+                                    "Minutes": {
+                                        "key": "minutes_played",
+                                        "stat": {"value": 90},
+                                    }
+                                }
+                            }
+                        ],
+                    }
+                }
+            },
+        }
+        fixture = {
+            "competition_id": 42,
+            "competition": "Champions League",
+            "season": "2026/2027",
+            "source_scope": "champions_league_current",
+        }
+        row = flatten_match_player_stats(payload, fixture)[0]
+        self.assertEqual(row["competition_id"], 42)
+        self.assertEqual(row["competition_stage_id"], 943230)
+        self.assertEqual(row["source_scope"], "champions_league_current")
+        self.assertEqual(row["season"], "2026/2027")
+
+    def test_red_card_game_state_is_attached_to_team_rows(self):
+        payload = {
+            "general": {
+                "homeTeam": {"id": 10, "name": "Home"},
+                "awayTeam": {"id": 20, "name": "Away"},
+            },
+            "content": {
+                "matchFacts": {
+                    "events": {
+                        "events": [
+                            {
+                                "type": "Card",
+                                "card": "Red",
+                                "time": 56,
+                                "isHome": True,
+                                "playerId": 9,
+                                "fullName": "Dismissed Player",
+                            }
+                        ]
+                    }
+                }
+            },
+        }
+        fixture = {
+            "match_id": 1,
+            "home_team_id": 10,
+            "home_team": "Home",
+            "away_team_id": 20,
+            "away_team": "Away",
+            "score": "2 - 3",
+        }
+        state = normalize_match_game_state(payload)
+        rows = flatten_match_team_stats(payload, fixture)
+        self.assertEqual(state["first_red_card_minute"], 56)
+        self.assertEqual(state["estimated_11v11_minutes"], 56)
+        self.assertEqual(rows[0]["red_cards_for"], 1)
+        self.assertEqual(rows[1]["red_cards_against"], 1)
+        self.assertTrue(rows[0]["first_red_card_for"])
 
     def test_missing_lineup_remains_unknown_instead_of_inferred_from_minutes(self):
         payload = {

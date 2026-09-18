@@ -240,8 +240,16 @@ def main() -> int:
             normalized = clip_fixture_to_as_of(
                 normalize_fixture(match, source_scope=competition["key"]), as_of
             )
+            raw_competition_id = normalized.get("competition_id")
             normalized["competition_id"] = int(competition["fotmob_id"])
+            if (
+                normalized.get("competition_stage_id") is None
+                and raw_competition_id is not None
+                and int(raw_competition_id) != int(competition["fotmob_id"])
+            ):
+                normalized["competition_stage_id"] = int(raw_competition_id)
             normalized["competition"] = competition["name"]
+            normalized["season"] = competition["season"]
             fixture_index[normalized["match_id"]] = normalized
             if competition.get("pull_stats") and normalized["finished"]:
                 historical_match_ids.add(normalized["match_id"])
@@ -287,39 +295,41 @@ def main() -> int:
         )
         record["ucl_status"] = "direct_league_phase"
 
+    final_ucl_team_ids = {
+        int(team_id)
+        for team_id, row in team_index.items()
+        if row.get("ucl_status") == "direct_league_phase"
+    }
     for day in config.get("ucl_qualification_dates") or []:
         daily = client.matches_on(day.replace("-", ""))
         for league in daily.get("leagues") or []:
             if normalize_name(league.get("name")) != "champions league qualification":
                 continue
             for match in league.get("matches") or []:
+                match_team_ids = {
+                    int(team["id"])
+                    for team in (match.get("home") or {}, match.get("away") or {})
+                    if team.get("id") is not None
+                }
+                if not match_team_ids & final_ucl_team_ids:
+                    continue
                 normalized = clip_fixture_to_as_of(
                     normalize_fixture(
-                        {**match, "leagueId": league.get("primaryId") or league.get("id"), "leagueName": league.get("name")},
+                        {
+                            **match,
+                            "leagueId": league.get("id"),
+                            "parentLeagueId": league.get("primaryId")
+                            or league.get("parentLeagueId"),
+                            "leagueName": league.get("name"),
+                        },
                         source_scope="champions_league_qualification_2026_27",
                     ),
                     as_of,
                 )
+                normalized["season"] = ucl["season"]
                 fixture_index[normalized["match_id"]] = normalized
                 if normalized["finished"]:
                     current_match_ids.add(normalized["match_id"])
-                for side in ("home", "away"):
-                    source_team = match.get(side) or {}
-                    if not source_team.get("id"):
-                        continue
-                    team_id = int(source_team["id"])
-                    record = team_index.setdefault(
-                        team_id,
-                        {
-                            "team_id": team_id,
-                            "name": source_team.get("name"),
-                            "short_name": source_team.get("shortName"),
-                            "premier_league_2026_27": False,
-                            "ucl_status": None,
-                        },
-                    )
-                    if not record.get("ucl_status"):
-                        record["ucl_status"] = "playoff_contender"
 
     print(f"[3/8] Team pages, squads, dynamics, and preseason registry ({len(team_index)} clubs)")
     squad_rows: list[dict[str, Any]] = []
@@ -400,7 +410,9 @@ def main() -> int:
                 print(f"  match {number:03d}/{len(preseason_match_ids):03d}")
             try:
                 payload = client.match(match_id)
-                match_player_rows.extend(flatten_match_player_stats(payload))
+                match_player_rows.extend(
+                    flatten_match_player_stats(payload, fixture_index[match_id])
+                )
                 match_team_rows.extend(
                     flatten_match_team_stats(payload, fixture_index[match_id])
                 )
@@ -417,7 +429,9 @@ def main() -> int:
                 print(f"  match {number:03d}/{len(current_match_ids):03d}")
             try:
                 payload = client.match(match_id)
-                current_match_player_rows.extend(flatten_match_player_stats(payload))
+                current_match_player_rows.extend(
+                    flatten_match_player_stats(payload, fixture_index[match_id])
+                )
                 current_match_team_rows.extend(
                     flatten_match_team_stats(payload, fixture_index[match_id])
                 )
@@ -434,7 +448,9 @@ def main() -> int:
                 print(f"  match {number:03d}/{len(historical_match_ids):03d}")
             try:
                 payload = client.match(match_id)
-                historical_match_player_rows.extend(flatten_match_player_stats(payload))
+                historical_match_player_rows.extend(
+                    flatten_match_player_stats(payload, fixture_index[match_id])
+                )
                 historical_match_team_rows.extend(
                     flatten_match_team_stats(payload, fixture_index[match_id])
                 )
@@ -513,6 +529,25 @@ def main() -> int:
             output_dir / "preseason_match_team_stats.jsonl", match_team_rows
         ),
         "current_finished_fixtures": len(current_match_ids),
+        "current_finished_fixtures_by_scope": {
+            scope: sum(
+                fixture_index[match_id].get("source_scope") == scope
+                for match_id in current_match_ids
+            )
+            for scope in sorted(
+                {
+                    str(fixture_index[match_id].get("source_scope"))
+                    for match_id in current_match_ids
+                }
+            )
+        },
+        "current_matches_with_red_cards": len(
+            {
+                row["match_id"]
+                for row in current_match_team_rows
+                if (row.get("red_cards_for") or 0) > 0
+            }
+        ),
         "current_match_player_rows": write_jsonl(
             output_dir / "current_match_player_stats.jsonl", current_match_player_rows
         ),
@@ -570,7 +605,8 @@ def main() -> int:
         "missing_requested_stats": missing_stats,
         "warnings": [
             "FotMob is an undocumented source; endpoint and field-shape tests are required.",
-            "The 2026/27 UCL field remains provisional until seven play-off winners are known.",
+            "The 2026/27 UCL registry is the finalized 36-club league-phase field.",
+            "Qualification fixtures are retained only when they involve a finalized league-phase club; eliminated candidates do not expand the target universe.",
             "A listed preseason fixture may have no player detail when FotMob coverage is incomplete.",
             "Current competitive match cards are cached after every completed pull so Club Form can update without a separate provider.",
             "Metric presence counts show matches with at least one explicit value; an omitted zero may appear as missing.",

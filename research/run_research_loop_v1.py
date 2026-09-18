@@ -17,6 +17,7 @@ if str(ROOT) not in sys.path:
 
 from clubalpha.research_loop import build_research_state, learning_summary  # noqa: E402
 from clubalpha.research_cycle import load_registered_cycle  # noqa: E402
+from clubalpha.adaptive_learning import build_adaptive_learning_state  # noqa: E402
 
 
 def parse_args() -> argparse.Namespace:
@@ -58,6 +59,9 @@ def _report(state: dict[str, Any]) -> str:
     queue = state["research_queue"]
     metrics = state["league_learning"]["base_vs_context_metrics"]
     ablation = state["league_learning"]["pre_match_goal_coefficient_ablation"]
+    adaptive = state["adaptive_learning"]
+    challenger = adaptive["champion_challenger"]
+    attribution = adaptive["error_attribution_summary"]
     lines = [
         "# Clubalpha research checkpoint",
         "",
@@ -100,6 +104,20 @@ def _report(state: dict[str, Any]) -> str:
             or "none"
         ),
         f"- Missing preferred route evidence: {', '.join(queue['missing_preferred_routes']) or 'none'}",
+        "",
+        "## Adaptive learning audit",
+        "",
+        f"- Match Learning Cards: {adaptive['completed_match_cards']}",
+        "- Error attribution: "
+        + (
+            ", ".join(f"{key}={value}" for key, value in attribution.items())
+            or "none"
+        ),
+        f"- Chronological challenger validation matches: {challenger['champion']['fixtures']}",
+        f"- Challenger xG MAE improvement: {challenger['improvement_positive_is_better']['xg_side_mae']}",
+        f"- Challenger 1X2 Brier improvement: {challenger['improvement_positive_is_better']['one_x_two_brier']}",
+        f"- Challenger promotion status: {challenger['promotion_gate']['status']}",
+        "- Fast memory: lineup and formation state; medium memory: form and matchup execution; slow memory: structural review only.",
         "",
         "## Promotion gate",
         "",
@@ -156,6 +174,15 @@ def main() -> int:
         base_predictions=base_predictions if shared_goal_model else None,
         goal_model_artifact=shared_goal_model,
     )
+    adaptive_state = build_adaptive_learning_state(
+        predictions,
+        results,
+        lineup_snapshot,
+        load_json(args.config),
+        as_of=args.as_of,
+    )
+    match_cards = adaptive_state.pop("match_learning_cards")
+    state["adaptive_learning"] = adaptive_state
     checkpoint_dir = args.checkpoint_dir or (
         ROOT
         / "artifacts/research_loop"
@@ -164,10 +191,16 @@ def main() -> int:
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
     state_path = checkpoint_dir / "state.json"
     report_path = checkpoint_dir / "report.md"
+    cards_path = checkpoint_dir / "match-learning-cards.jsonl"
     state_content = json.dumps(state, indent=2, ensure_ascii=False) + "\n"
     report_content = _report(state)
+    cards_content = "".join(
+        json.dumps(card, ensure_ascii=False, sort_keys=True) + "\n"
+        for card in match_cards
+    )
     _write_or_verify(state_path, state_content)
     _write_or_verify(report_path, report_content)
+    _write_or_verify(cards_path, cards_content)
     manifest = {
         "checkpoint_version": "clubalpha_research_checkpoint_v1",
         "as_of": args.as_of,
@@ -177,10 +210,14 @@ def main() -> int:
         "files": {
             "state.json": _sha256(state_path),
             "report.md": _sha256(report_path),
+            "match-learning-cards.jsonl": _sha256(cards_path),
         },
         "source_versions": {
             "research_loop": state["research_loop_version"],
             "research_state": state["research_state_version"],
+            "adaptive_learning": state["adaptive_learning"][
+                "adaptive_learning_version"
+            ],
             "cycle_registry": registry["registry_version"],
         },
         "cycle_ids": cycle_ids,
@@ -191,6 +228,9 @@ def main() -> int:
             ),
             "clubalpha/research_cycle.py": _sha256(
                 ROOT / "clubalpha/research_cycle.py"
+            ),
+            "clubalpha/adaptive_learning.py": _sha256(
+                ROOT / "clubalpha/adaptive_learning.py"
             ),
             "research/run_research_loop_v1.py": _sha256(Path(__file__)),
             "config/research-loop-v1.json": _sha256(args.config),
@@ -203,6 +243,7 @@ def main() -> int:
     )
     print(
         f"Research checkpoint ready: {len(results)} completed matches, "
+        f"{len(match_cards)} learning cards, "
         f"{len(state['promotion_candidates'])} promotion candidates, "
         f"{checkpoint_dir.relative_to(ROOT)}"
     )

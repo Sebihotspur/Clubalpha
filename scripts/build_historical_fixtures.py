@@ -132,7 +132,18 @@ def main() -> int:
     parser.add_argument(
         "--domestic-dir", type=Path, default=ROOT / "data/processed/domestic_history"
     )
+    parser.add_argument(
+        "--current-domestic-dir",
+        type=Path,
+        default=ROOT / "data/processed/domestic_current",
+    )
     parser.add_argument("--deep-history-dir", type=Path, default=None)
+    parser.add_argument(
+        "--seed-scored-history",
+        type=Path,
+        default=None,
+        help="Reuse an earlier scored archive as raw history before adding new matches.",
+    )
     parser.add_argument(
         "--output-dir", type=Path, default=ROOT / "data/processed/historical_fixtures"
     )
@@ -159,8 +170,12 @@ def main() -> int:
     )
     deep_history_dir = args.deep_history_dir or configured_deep_dir
     row_sets: list[list[dict[str, Any]]] = []
-    if deep_history_dir is not None:
+    if args.seed_scored_history is not None:
+        row_sets.append(load_jsonl(args.seed_scored_history))
+    if deep_history_dir is not None and (deep_history_dir / "match_team_stats.jsonl").exists():
         row_sets.append(load_jsonl(deep_history_dir / "match_team_stats.jsonl"))
+    elif deep_history_dir is not None and args.seed_scored_history is None:
+        raise FileNotFoundError(deep_history_dir / "match_team_stats.jsonl")
     row_sets.extend(
         [
             load_jsonl(args.foundation_dir / "historical_match_team_stats.jsonl"),
@@ -168,6 +183,9 @@ def main() -> int:
                 args.foundation_dir / "current_match_team_stats.jsonl", required=False
             ),
             load_jsonl(args.domestic_dir / "match_team_stats.jsonl", required=False),
+            load_jsonl(
+                args.current_domestic_dir / "match_team_stats.jsonl", required=False
+            ),
         ]
     )
     history_rows = dedupe_team_match_rows(*row_sets)
@@ -186,6 +204,21 @@ def main() -> int:
             "historical_fixtures_version": config["version"],
             "as_of": as_of.isoformat(),
             "source": config["source"],
+            "inputs": {
+                "seed_scored_history": (
+                    str(args.seed_scored_history)
+                    if args.seed_scored_history is not None
+                    else None
+                ),
+                "deep_history_dir": (
+                    str(deep_history_dir)
+                    if deep_history_dir is not None
+                    and (deep_history_dir / "match_team_stats.jsonl").exists()
+                    else None
+                ),
+                "domestic_dir": str(args.domestic_dir),
+                "current_domestic_dir": str(args.current_domestic_dir),
+            },
             "outputs": {
                 "fixtures": len(outputs),
                 "historical_team_match_rows": len(scored_rows),

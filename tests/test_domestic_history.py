@@ -91,6 +91,35 @@ class DomesticHistoryTests(unittest.TestCase):
         self.assertEqual([row["match_id"] for row in result], [10])
         self.assertEqual(result[0]["competition_id"], 54)
 
+    def test_current_domestic_scope_and_as_of_prevent_result_leakage(self):
+        payload = {
+            "fixtures": {
+                "allMatches": [
+                    {
+                        "id": 12,
+                        "home": {"id": 2, "name": "Target"},
+                        "away": {"id": 8, "name": "Opponent"},
+                        "status": {
+                            "finished": True,
+                            "scoreStr": "3 - 0",
+                            "utcTime": "2026-09-12T18:00:00Z",
+                        },
+                    }
+                ]
+            }
+        }
+        competition = {
+            "league_id": 54,
+            "league_name": "Bundesliga",
+            "season": "2026/2027",
+            "source_scope": "domestic_current_2026_27",
+            "target_teams": [{"team_id": 2, "team": "Target"}],
+        }
+        result = select_domestic_fixtures(payload, competition, "2026-09-09")
+        self.assertEqual(result[0]["source_scope"], "domestic_current_2026_27")
+        self.assertFalse(result[0]["finished"])
+        self.assertIsNone(result[0]["score"])
+
     def test_opponent_rows_are_excluded_from_player_sample(self):
         competition = {
             "league_id": 54,
@@ -105,6 +134,20 @@ class DomesticHistoryTests(unittest.TestCase):
         result = filter_target_player_rows(rows, competition)
         self.assertEqual([row["player_id"] for row in result], [20])
         self.assertEqual(result[0]["source_scope"], "domestic_history_previous")
+
+    def test_current_scope_is_preserved_on_target_player_rows(self):
+        competition = {
+            "league_id": 54,
+            "league_name": "Bundesliga",
+            "season": "2026/2027",
+            "source_scope": "domestic_current_2026_27",
+            "target_teams": [{"team_id": 2, "team": "Target"}],
+        }
+        result = filter_target_player_rows(
+            [{"match_id": 10, "team_id": 2, "player_id": 20, "metrics": {}}],
+            competition,
+        )
+        self.assertEqual(result[0]["source_scope"], "domestic_current_2026_27")
 
 
 if __name__ == "__main__":

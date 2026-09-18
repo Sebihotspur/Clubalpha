@@ -1,0 +1,21 @@
+# Deploy only the generated read-only website. Research caches and processed
+# intelligence remain local and are never part of the Vercel upload bundle.
+#
+# Use explicit exclusions instead of a catch-all plus negations. Vercel's
+# upload walker can prune an ignored parent before evaluating its children,
+# which previously produced a successful but empty (404) deployment.
+/.git/
+/.gitignore
+/.pytest_cache/
+/.vercel/
+/README.md
+/artifacts/
+/clubalpha/
+/config/
+/data/
+/docs/
+/reports/
+/research/
+/scripts/
+/tests/
+/web/scripts/

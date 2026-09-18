@@ -1,26 +1,32 @@
 {
-  "as_of": "2026-09-08",
+  "as_of": "2026-09-16",
   "counts": {
-    "teams": 58,
+    "teams": 51,
     "pl_teams": 20,
-    "ucl_direct_qualifiers": 29,
-    "ucl_playoff_contenders": 14,
-    "teams_without_squad": 3,
-    "squad_rows": 1623,
-    "club_snapshots": 58,
-    "manager_history_rows": 1116,
-    "transfer_event_rows": 1766,
-    "fixtures": 1143,
-    "preseason_fixtures": 180,
-    "preseason_finished_fixtures": 178,
+    "ucl_direct_qualifiers": 36,
+    "ucl_playoff_contenders": 0,
+    "teams_without_squad": 2,
+    "squad_rows": 1371,
+    "club_snapshots": 51,
+    "manager_history_rows": 992,
+    "transfer_event_rows": 1590,
+    "fixtures": 1277,
+    "preseason_fixtures": 170,
+    "preseason_finished_fixtures": 169,
     "preseason_matches_with_player_stats": 76,
-    "preseason_matches_without_player_stats": 102,
-    "preseason_player_detail_coverage_pct": 42.7,
-    "preseason_match_player_rows": 3120,
-    "preseason_match_team_rows": 356,
-    "current_finished_fixtures": 33,
-    "current_match_player_rows": 1021,
-    "current_match_team_rows": 66,
+    "preseason_matches_without_player_stats": 93,
+    "preseason_player_detail_coverage_pct": 45.0,
+    "preseason_match_player_rows": 3113,
+    "preseason_match_team_rows": 338,
+    "current_finished_fixtures": 72,
+    "current_finished_fixtures_by_scope": {
+      "champions_league_current": 18,
+      "champions_league_qualification_2026_27": 14,
+      "premier_league_current": 40
+    },
+    "current_matches_with_red_cards": 11,
+    "current_match_player_rows": 2243,
+    "current_match_team_rows": 144,
     "historical_finished_fixtures": 569,
     "historical_matches_with_player_stats": 569,
     "historical_matches_without_player_stats": 0,
@@ -34,14 +40,9 @@
   "team_errors": [],
   "teams_without_squad": [
     {
-      "team_id": 4622,
-      "name": "NK Celje",
-      "ucl_status": "playoff_contender"
-    },
-    {
       "team_id": 951893,
       "name": "Sabah FK",
-      "ucl_status": "playoff_contender"
+      "ucl_status": "direct_league_phase"
     },
     {
       "team_id": 9728,
@@ -67,12 +68,12 @@
     5765866,
     5765867,
     5770725,
-    5789078,
     5789079,
     5793428,
     5793440,
     5795852,
-    5810818
+    5847086,
+    5847089
   ],
   "historical_matches_without_player_stats_sample": [],
   "match_metric_coverage": {
@@ -242,90 +243,175 @@
             "pct_of_detailed_matches": 100.0
           },
           "top_speed": {
-            "matches_with_value": 2,
-            "pct_of_detailed_matches": 0.5
+            "matches_with_value": 282,
+            "pct_of_detailed_matches": 74.2
           }
         }
       }
     },
     "current": {
-      "Champions League Qualification": {
-        "matches_with_any_player_stats": 3,
+      "Champions League": {
+        "matches_with_any_player_stats": 18,
         "metrics": {
           "minutes": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "goals": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "non_penalty_goals": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "assists": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "xg": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "xa": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "shots_on_target": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "chances_created": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "box_touches": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "successful_dribbles": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "errors_leading_to_goal": {
-            "matches_with_value": 1,
-            "pct_of_detailed_matches": 33.3
+            "matches_with_value": 8,
+            "pct_of_detailed_matches": 44.4
           },
           "tackles": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "aerial_duels_won": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "ground_duels_won": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "interceptions": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "dribbled_past": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "clearances": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "blocks": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
             "pct_of_detailed_matches": 100.0
           },
           "accurate_passes": {
-            "matches_with_value": 3,
+            "matches_with_value": 18,
+            "pct_of_detailed_matches": 100.0
+          },
+          "top_speed": {
+            "matches_with_value": 9,
+            "pct_of_detailed_matches": 50.0
+          }
+        }
+      },
+      "Champions League Qualification": {
+        "matches_with_any_player_stats": 14,
+        "metrics": {
+          "minutes": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "goals": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "non_penalty_goals": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "assists": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "xg": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "xa": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "shots_on_target": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "chances_created": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "box_touches": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "successful_dribbles": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "errors_leading_to_goal": {
+            "matches_with_value": 7,
+            "pct_of_detailed_matches": 50.0
+          },
+          "tackles": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "aerial_duels_won": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "ground_duels_won": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "interceptions": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "dribbled_past": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "clearances": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "blocks": {
+            "matches_with_value": 14,
+            "pct_of_detailed_matches": 100.0
+          },
+          "accurate_passes": {
+            "matches_with_value": 14,
             "pct_of_detailed_matches": 100.0
           },
           "top_speed": {
@@ -335,86 +421,86 @@
         }
       },
       "Premier League": {
-        "matches_with_any_player_stats": 30,
+        "matches_with_any_player_stats": 40,
         "metrics": {
           "minutes": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "goals": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "non_penalty_goals": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "assists": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "xg": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "xa": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "shots_on_target": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "chances_created": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "box_touches": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "successful_dribbles": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "errors_leading_to_goal": {
-            "matches_with_value": 10,
-            "pct_of_detailed_matches": 33.3
+            "matches_with_value": 13,
+            "pct_of_detailed_matches": 32.5
           },
           "tackles": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "aerial_duels_won": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "ground_duels_won": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "interceptions": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "dribbled_past": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "clearances": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "blocks": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "accurate_passes": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           },
           "top_speed": {
-            "matches_with_value": 30,
+            "matches_with_value": 40,
             "pct_of_detailed_matches": 100.0
           }
         }
@@ -465,8 +551,8 @@
             "pct_of_detailed_matches": 100.0
           },
           "errors_leading_to_goal": {
-            "matches_with_value": 32,
-            "pct_of_detailed_matches": 42.1
+            "matches_with_value": 31,
+            "pct_of_detailed_matches": 40.8
           },
           "tackles": {
             "matches_with_value": 76,
@@ -612,156 +698,206 @@
       }
     },
     "current": {
-      "Champions League Qualification": {
+      "Champions League": {
         "goals": {
-          "team_match_rows_with_value": 6,
-          "team_match_rows": 6
+          "team_match_rows_with_value": 36,
+          "team_match_rows": 36
         },
         "expected_goals": {
-          "team_match_rows_with_value": 6,
-          "team_match_rows": 6
+          "team_match_rows_with_value": 36,
+          "team_match_rows": 36
         },
         "shots_on_target": {
-          "team_match_rows_with_value": 6,
-          "team_match_rows": 6
+          "team_match_rows_with_value": 36,
+          "team_match_rows": 36
         },
         "big_chances": {
-          "team_match_rows_with_value": 6,
-          "team_match_rows": 6
+          "team_match_rows_with_value": 36,
+          "team_match_rows": 36
         },
         "total_shots": {
-          "team_match_rows_with_value": 6,
-          "team_match_rows": 6
+          "team_match_rows_with_value": 36,
+          "team_match_rows": 36
         },
         "touches_opp_box": {
-          "team_match_rows_with_value": 6,
-          "team_match_rows": 6
+          "team_match_rows_with_value": 36,
+          "team_match_rows": 36
         },
         "possession_pct": {
-          "team_match_rows_with_value": 6,
-          "team_match_rows": 6
+          "team_match_rows_with_value": 36,
+          "team_match_rows": 36
         },
         "passes": {
-          "team_match_rows_with_value": 6,
-          "team_match_rows": 6
+          "team_match_rows_with_value": 36,
+          "team_match_rows": 36
         },
         "opposition_half_passes": {
-          "team_match_rows_with_value": 6,
-          "team_match_rows": 6
+          "team_match_rows_with_value": 36,
+          "team_match_rows": 36
         },
         "long_balls_attempted_est": {
-          "team_match_rows_with_value": 6,
-          "team_match_rows": 6
+          "team_match_rows_with_value": 36,
+          "team_match_rows": 36
         },
         "crosses_attempted_est": {
-          "team_match_rows_with_value": 6,
-          "team_match_rows": 6
+          "team_match_rows_with_value": 34,
+          "team_match_rows": 36
         },
         "expected_goals_set_play": {
-          "team_match_rows_with_value": 6,
-          "team_match_rows": 6
+          "team_match_rows_with_value": 36,
+          "team_match_rows": 36
+        }
+      },
+      "Champions League Qualification": {
+        "goals": {
+          "team_match_rows_with_value": 28,
+          "team_match_rows": 28
+        },
+        "expected_goals": {
+          "team_match_rows_with_value": 28,
+          "team_match_rows": 28
+        },
+        "shots_on_target": {
+          "team_match_rows_with_value": 28,
+          "team_match_rows": 28
+        },
+        "big_chances": {
+          "team_match_rows_with_value": 28,
+          "team_match_rows": 28
+        },
+        "total_shots": {
+          "team_match_rows_with_value": 28,
+          "team_match_rows": 28
+        },
+        "touches_opp_box": {
+          "team_match_rows_with_value": 28,
+          "team_match_rows": 28
+        },
+        "possession_pct": {
+          "team_match_rows_with_value": 28,
+          "team_match_rows": 28
+        },
+        "passes": {
+          "team_match_rows_with_value": 28,
+          "team_match_rows": 28
+        },
+        "opposition_half_passes": {
+          "team_match_rows_with_value": 28,
+          "team_match_rows": 28
+        },
+        "long_balls_attempted_est": {
+          "team_match_rows_with_value": 28,
+          "team_match_rows": 28
+        },
+        "crosses_attempted_est": {
+          "team_match_rows_with_value": 28,
+          "team_match_rows": 28
+        },
+        "expected_goals_set_play": {
+          "team_match_rows_with_value": 28,
+          "team_match_rows": 28
         }
       },
       "Premier League": {
         "goals": {
-          "team_match_rows_with_value": 60,
-          "team_match_rows": 60
+          "team_match_rows_with_value": 80,
+          "team_match_rows": 80
         },
         "expected_goals": {
-          "team_match_rows_with_value": 60,
-          "team_match_rows": 60
+          "team_match_rows_with_value": 80,
+          "team_match_rows": 80
         },
         "shots_on_target": {
-          "team_match_rows_with_value": 60,
-          "team_match_rows": 60
+          "team_match_rows_with_value": 80,
+          "team_match_rows": 80
         },
         "big_chances": {
-          "team_match_rows_with_value": 60,
-          "team_match_rows": 60
+          "team_match_rows_with_value": 80,
+          "team_match_rows": 80
         },
         "total_shots": {
-          "team_match_rows_with_value": 60,
-          "team_match_rows": 60
+          "team_match_rows_with_value": 80,
+          "team_match_rows": 80
         },
         "touches_opp_box": {
-          "team_match_rows_with_value": 60,
-          "team_match_rows": 60
+          "team_match_rows_with_value": 80,
+          "team_match_rows": 80
         },
         "possession_pct": {
-          "team_match_rows_with_value": 60,
-          "team_match_rows": 60
+          "team_match_rows_with_value": 80,
+          "team_match_rows": 80
         },
         "passes": {
-          "team_match_rows_with_value": 60,
-          "team_match_rows": 60
+          "team_match_rows_with_value": 80,
+          "team_match_rows": 80
         },
         "opposition_half_passes": {
-          "team_match_rows_with_value": 60,
-          "team_match_rows": 60
+          "team_match_rows_with_value": 80,
+          "team_match_rows": 80
         },
         "long_balls_attempted_est": {
-          "team_match_rows_with_value": 60,
-          "team_match_rows": 60
+          "team_match_rows_with_value": 80,
+          "team_match_rows": 80
         },
         "crosses_attempted_est": {
-          "team_match_rows_with_value": 59,
-          "team_match_rows": 60
+          "team_match_rows_with_value": 79,
+          "team_match_rows": 80
         },
         "expected_goals_set_play": {
-          "team_match_rows_with_value": 60,
-          "team_match_rows": 60
+          "team_match_rows_with_value": 80,
+          "team_match_rows": 80
         }
       }
     },
     "preseason": {
       "Club Friendlies": {
         "goals": {
-          "team_match_rows_with_value": 356,
-          "team_match_rows": 356
+          "team_match_rows_with_value": 338,
+          "team_match_rows": 338
         },
         "expected_goals": {
           "team_match_rows_with_value": 20,
-          "team_match_rows": 356
+          "team_match_rows": 338
         },
         "shots_on_target": {
           "team_match_rows_with_value": 154,
-          "team_match_rows": 356
+          "team_match_rows": 338
         },
         "big_chances": {
           "team_match_rows_with_value": 152,
-          "team_match_rows": 356
+          "team_match_rows": 338
         },
         "total_shots": {
           "team_match_rows_with_value": 154,
-          "team_match_rows": 356
+          "team_match_rows": 338
         },
         "touches_opp_box": {
           "team_match_rows_with_value": 152,
-          "team_match_rows": 356
+          "team_match_rows": 338
         },
         "possession_pct": {
           "team_match_rows_with_value": 154,
-          "team_match_rows": 356
+          "team_match_rows": 338
         },
         "passes": {
           "team_match_rows_with_value": 152,
-          "team_match_rows": 356
+          "team_match_rows": 338
         },
         "opposition_half_passes": {
           "team_match_rows_with_value": 152,
-          "team_match_rows": 356
+          "team_match_rows": 338
         },
         "long_balls_attempted_est": {
           "team_match_rows_with_value": 152,
-          "team_match_rows": 356
+          "team_match_rows": 338
         },
         "crosses_attempted_est": {
           "team_match_rows_with_value": 144,
-          "team_match_rows": 356
+          "team_match_rows": 338
         },
         "expected_goals_set_play": {
           "team_match_rows_with_value": 20,
-          "team_match_rows": 356
+          "team_match_rows": 338
         }
       }
     }
@@ -778,7 +914,8 @@
   },
   "warnings": [
     "FotMob is an undocumented source; endpoint and field-shape tests are required.",
-    "The 2026/27 UCL field remains provisional until seven play-off winners are known.",
+    "The 2026/27 UCL registry is the finalized 36-club league-phase field.",
+    "Qualification fixtures are retained only when they involve a finalized league-phase club; eliminated candidates do not expand the target universe.",
     "A listed preseason fixture may have no player detail when FotMob coverage is incomplete.",
     "Current competitive match cards are cached after every completed pull so Club Form can update without a separate provider.",
     "Metric presence counts show matches with at least one explicit value; an omitted zero may appear as missing."

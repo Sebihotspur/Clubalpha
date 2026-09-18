@@ -163,6 +163,17 @@ def main() -> int:
     parser.add_argument("--config", type=Path, default=ROOT / "config/club-dynamics-v1.json")
     parser.add_argument("--foundation-dir", type=Path, default=ROOT / "data/processed/foundation")
     parser.add_argument("--domestic-dir", type=Path, default=ROOT / "data/processed/domestic_history")
+    parser.add_argument(
+        "--current-domestic-dir",
+        type=Path,
+        default=ROOT / "data/processed/domestic_current",
+    )
+    parser.add_argument(
+        "--club-form-observations",
+        type=Path,
+        default=ROOT / "data/processed/club_form/team_match_observations.jsonl",
+        help="Preferred unified team-match layer, including cache-normalized legacy rows.",
+    )
     parser.add_argument("--player-grades", type=Path, default=ROOT / "data/processed/player_quality_v2/player_grades.jsonl")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "data/processed/club_dynamics")
     parser.add_argument("--audit", type=Path, default=ROOT / "reports/club-dynamics-v1-audit.json")
@@ -179,18 +190,25 @@ def main() -> int:
     transfers = load_jsonl(args.foundation_dir / "transfer_events.jsonl")
     season_stats = load_jsonl(args.foundation_dir / "season_team_stats.jsonl")
     grades = load_jsonl(args.player_grades, required=False)
-    team_rows: list[dict[str, Any]] = []
-    for path in (
-        args.foundation_dir / "historical_match_team_stats.jsonl",
-        args.foundation_dir / "current_match_team_stats.jsonl",
-        args.foundation_dir / "preseason_match_team_stats.jsonl",
-        args.domestic_dir / "match_team_stats.jsonl",
-    ):
-        team_rows.extend(load_jsonl(path, required=False))
+    if args.club_form_observations.exists():
+        team_rows = load_jsonl(args.club_form_observations)
+        team_match_source = "club_form_unified_observations"
+    else:
+        team_rows = []
+        for path in (
+            args.foundation_dir / "historical_match_team_stats.jsonl",
+            args.foundation_dir / "current_match_team_stats.jsonl",
+            args.foundation_dir / "preseason_match_team_stats.jsonl",
+            args.domestic_dir / "match_team_stats.jsonl",
+            args.current_domestic_dir / "match_team_stats.jsonl",
+        ):
+            team_rows.extend(load_jsonl(path, required=False))
+        team_match_source = "direct_normalized_files"
     player_rows: list[dict[str, Any]] = []
     for path in (
         args.foundation_dir / "current_match_player_stats.jsonl",
         args.foundation_dir / "preseason_match_player_stats.jsonl",
+        args.current_domestic_dir / "match_player_stats.jsonl",
     ):
         player_rows.extend(load_jsonl(path, required=False))
 
@@ -225,6 +243,13 @@ def main() -> int:
         args.output_dir / "manifest.json",
         {
             "dynamics_version": config["version"], "as_of": as_of.isoformat(), "source": config["source"],
+            "inputs": {
+                "foundation_dir": str(args.foundation_dir),
+                "domestic_dir": str(args.domestic_dir),
+                "current_domestic_dir": str(args.current_domestic_dir),
+                "club_form_observations": str(args.club_form_observations),
+                "team_match_source": team_match_source,
+            },
             "outputs": {"teams": len(profiles), "team_match_observations": len(observations), "events": len(events), "dated_snapshots": len(updated_history)},
             "composite_modifier_enabled": config["change_state"]["composite_modifier_enabled"]
         },

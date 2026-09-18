@@ -26,6 +26,12 @@ OFFICIAL_ROOT = ROOT / "artifacts/official_shadow"
 RESEARCH_LOOP_DIR = ROOT / "artifacts/research_loop"
 FIXTURE_CALIBRATION_DIR = ROOT / "artifacts/fixture_calibration"
 BACKTEST_REPORT_PATTERN = "contextual-interaction-v1-backtest-*.json"
+UCL_MATCHDAY_REVIEW = ROOT / "reports/ucl-matchday-1-review.json"
+PL_MIDWEEK_REVIEW = ROOT / "reports/pl-midweek-review-2026-09-17.json"
+CURRENT_MARKET_SNAPSHOT = (
+    ROOT / "artifacts/market_snapshots/2026-09-17-mw5-polymarket.json"
+)
+MARKET_FOCUS_CONFIG = ROOT / "config/market-focus-v1.json"
 PUBLIC_DIR = ROOT / "web/public"
 
 
@@ -239,6 +245,19 @@ def build():
     fixture_calibration, fixture_calibration_audit = (
         load_latest_fixture_calibration()
     )
+    ucl_matchday = load_json(UCL_MATCHDAY_REVIEW)
+    pl_midweek_review = load_json(PL_MIDWEEK_REVIEW)
+    current_market_snapshot = load_json(CURRENT_MARKET_SNAPSHOT)
+    market_focus = load_json(MARKET_FOCUS_CONFIG)
+    if market_focus.get("version") != "clubalpha_market_focus_v1":
+        raise ValueError("website requires the locked market-focus contract")
+    if [row["key"] for row in market_focus["active_markets"]] != [
+        "one_x_two",
+        "over_under_2_5",
+    ]:
+        raise ValueError("active market focus must remain 1X2 plus O/U 2.5")
+    if market_focus["decision_boundaries"]["capital_deployment_ready"]:
+        raise ValueError("website refuses capital-ready market focus")
     if contextual_report["decision_boundaries"]["capital_deployment_ready"]:
         raise ValueError("website refuses capital-ready contextual shadow data")
     if contextual_report["method"]["archetype_labels_used_in_math"]:
@@ -520,12 +539,55 @@ def build():
     )
     original_fair_decimal = 1.0 / original_pick["probabilities"]["over_2_5"]
 
+    current_matchweek_predictions = []
+    for row in current_market_snapshot["fixtures"]:
+        fixture = row["fixture"]
+        football = row["football_baseline"]
+        market_outcomes = row["one_x_two"]["outcomes"]
+        football_leader = max(
+            ("home_win", "draw", "away_win"),
+            key=lambda key: float(football[key]),
+        )
+        market_leader = max(
+            ("home_win", "draw", "away_win"),
+            key=lambda key: float(
+                market_outcomes[key]["market_no_vig_probability"]
+            ),
+        )
+        current_matchweek_predictions.append(
+            {
+                "match_id": int(fixture["match_id"]),
+                "kickoff_utc": fixture["kickoff_utc"],
+                "home_team": fixture["home_team"],
+                "away_team": fixture["away_team"],
+                "predicted_xg": football["predicted_xg"],
+                "probabilities": {
+                    key: football[key]
+                    for key in ("home_win", "draw", "away_win")
+                },
+                "over_2_5": football["over_2_5"],
+                "football_leader": football_leader,
+                "market_leader": market_leader,
+                "market_no_vig": {
+                    key: market_outcomes[key]["market_no_vig_probability"]
+                    for key in ("home_win", "draw", "away_win")
+                },
+                "market_over_midpoint": row["over_under_2_5"]["over"]["book"][
+                    "midpoint"
+                ],
+                "load_risk": row["prematch_load"],
+            }
+        )
+    current_matchweek_predictions.sort(
+        key=lambda row: (row["kickoff_utc"], row["match_id"])
+    )
+
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_6_matchweek_4",
+            "site_version": "clubalpha_web_v0_9_adaptive_learning",
             "prediction_version": official_report["report_version"],
             "as_of": official_report["as_of_utc"],
-            "generated_at_utc": official_report["as_of_utc"],
+            "generated_at_utc": current_market_snapshot["captured_at_utc"],
             "context_as_of": "2026-08-26",
             "context_version": contextual_report["report_version"],
             "simulations": 50000,
@@ -534,6 +596,17 @@ def build():
             "scale_validation_sides": 200,
             "goal_training_matches": report["counts"]["goal_training_matches"],
             "goal_validation_matches": 100,
+        },
+        "current_matchweek": {
+            "status": "provisional_research_not_frozen",
+            "round": 5,
+            "as_of": current_market_snapshot["captured_at_utc"],
+            "fixtures": len(current_matchweek_predictions),
+            "active_markets": ["1X2", "Over/Under 2.5"],
+            "fixture_calibration_status": "under_review_not_used_for_conviction",
+            "capital_deployment_ready": False,
+            "predictions": current_matchweek_predictions,
+            "midweek_review": pl_midweek_review,
         },
         "official_shadow_pick": {
             "match_id": original_pick_match_id,
@@ -557,6 +630,7 @@ def build():
                 },
             ],
         },
+        "ucl_matchday": ucl_matchday,
         "featured_official_pick": {
             "match_id": featured_match_id,
             "fixture": f"{featured['home_team']} vs {featured['away_team']}",
@@ -582,6 +656,7 @@ def build():
             ],
         },
         "predictions": legacy_predictions,
+        "market_focus": market_focus,
         "official_slate": {
             "report_version": official_report["report_version"],
             "status": official_report["status"],
@@ -782,6 +857,35 @@ def build():
                 "capital_deployment_ready": research_state[
                     "decision_boundaries"
                 ]["capital_deployment_ready"],
+                "adaptive": {
+                    "version": research_state["adaptive_learning"][
+                        "adaptive_learning_version"
+                    ],
+                    "status": research_state["adaptive_learning"]["status"],
+                    "match_learning_cards": research_state[
+                        "adaptive_learning"
+                    ]["completed_match_cards"],
+                    "error_attribution": research_state[
+                        "adaptive_learning"
+                    ]["error_attribution_summary"],
+                    "memory_policy": research_state["adaptive_learning"][
+                        "memory"
+                    ]["policy"],
+                    "champion_challenger": {
+                        "champion": research_state["adaptive_learning"][
+                            "champion_challenger"
+                        ]["champion"],
+                        "challenger": research_state["adaptive_learning"][
+                            "champion_challenger"
+                        ]["challenger"],
+                        "improvement_positive_is_better": research_state[
+                            "adaptive_learning"
+                        ]["champion_challenger"]["improvement_positive_is_better"],
+                        "promotion_gate": research_state["adaptive_learning"][
+                            "champion_challenger"
+                        ]["promotion_gate"],
+                    },
+                },
             },
             "components": [
                 {
@@ -829,6 +933,7 @@ def build():
     )
     for route in (
         "predictions",
+        "ucl",
         "holy-grail",
         "matchups",
         "ledger",

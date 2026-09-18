@@ -1,0 +1,148 @@
+{
+  "version": "clubalpha_fixture_calibration_audit_v1",
+  "generated_at_utc": "2026-09-12T00:00:00+00:00",
+  "as_of": "2026-09-12",
+  "cycle_ids": [
+    "2026-08-26-matchweek-2",
+    "2026-08-31-matchweek-3-official",
+    "2026-09-08-matchweek-4-official"
+  ],
+  "training_matches": 25,
+  "same_sample_sensitivity": {
+    "interpretation": "same-sample sensitivity only; not validation",
+    "baseline": {
+      "matches": 25,
+      "one_x_two_brier": 0.696687,
+      "one_x_two_log_loss": 1.14116,
+      "top_pick_accuracy": 0.24,
+      "home_probability_leader_rate": 0.8,
+      "mean_draw_probability": 0.25643
+    },
+    "calibrated": {
+      "matches": 25,
+      "one_x_two_brier": 0.637702,
+      "one_x_two_log_loss": 1.049896,
+      "top_pick_accuracy": 0.44,
+      "home_probability_leader_rate": 0.44,
+      "mean_draw_probability": 0.356949
+    },
+    "draw_zone": {
+      "flagged": 12,
+      "actual_draws_flagged": 6,
+      "rows": [
+        {
+          "match_id": 5795425,
+          "fixture": "AFC Bournemouth vs Everton",
+          "outcome": "draw",
+          "draw_probability": 0.358432,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795428,
+          "fixture": "Coventry City vs Hull City",
+          "outcome": "away_win",
+          "draw_probability": 0.374744,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795434,
+          "fixture": "Tottenham Hotspur vs Newcastle United",
+          "outcome": "away_win",
+          "draw_probability": 0.358863,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795427,
+          "fixture": "Chelsea vs Brighton & Hove Albion",
+          "outcome": "home_win",
+          "draw_probability": 0.357444,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795441,
+          "fixture": "Ipswich Town vs Liverpool",
+          "outcome": "away_win",
+          "draw_probability": 0.362498,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795443,
+          "fixture": "Newcastle United vs AFC Bournemouth",
+          "outcome": "draw",
+          "draw_probability": 0.353687,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795439,
+          "fixture": "Fulham vs Crystal Palace",
+          "outcome": "away_win",
+          "draw_probability": 0.367826,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795444,
+          "fixture": "Nottingham Forest vs Tottenham Hotspur",
+          "outcome": "draw",
+          "draw_probability": 0.378196,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795440,
+          "fixture": "Hull City vs Aston Villa",
+          "outcome": "draw",
+          "draw_probability": 0.36725,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795438,
+          "fixture": "Everton vs Manchester United",
+          "outcome": "draw",
+          "draw_probability": 0.366799,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795445,
+          "fixture": "AFC Bournemouth vs Brentford",
+          "outcome": "draw",
+          "draw_probability": 0.355644,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795449,
+          "fixture": "Crystal Palace vs Ipswich Town",
+          "outcome": "away_win",
+          "draw_probability": 0.342327,
+          "correct_draw_flag": false
+        }
+      ]
+    }
+  },
+  "chronological_audit": {
+    "interpretation": "cycle-forward; each calibration uses only earlier cycles",
+    "evaluated_cycles": 2,
+    "baseline": {
+      "matches": 15,
+      "one_x_two_brier": 0.732506,
+      "one_x_two_log_loss": 1.190122,
+      "top_pick_accuracy": 0.133333,
+      "home_probability_leader_rate": 0.866667,
+      "mean_draw_probability": 0.269181
+    },
+    "calibrated": {
+      "matches": 15,
+      "one_x_two_brier": 0.714061,
+      "one_x_two_log_loss": 1.157674,
+      "top_pick_accuracy": 0.133333,
+      "home_probability_leader_rate": 0.866667,
+      "mean_draw_probability": 0.281751
+    }
+  },
+  "decision_boundaries": {
+    "same_sample_metrics_are_validation": false,
+    "core_architecture_changed": false,
+    "player_alpha_changed": false,
+    "base_weights_changed": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  }
+}

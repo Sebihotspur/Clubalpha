@@ -37,6 +37,21 @@ The command caches FotMob responses, normalizes the local datasets under
 `reports/foundation-coverage.json`. Raw and normalized provider data are not
 committed to this public repository.
 
+The finalized 2026/27 UCL registry contains all 36 league-phase clubs. Pull
+current domestic evidence for the 31 non-English qualifiers with the same
+club-filtered collector:
+
+```bash
+python3 scripts/pull_domestic_history.py \
+  --config config/domestic-current.json \
+  --output-dir data/processed/domestic_current \
+  --audit reports/domestic-current-coverage.json
+```
+
+Current UCL and foreign domestic matches feed the shared Club Form, Club
+Dynamics, Historical Fixtures, and squad-selection evidence. Premier League
+and Champions League forecasts, ledgers, and calibration remain separate.
+
 ## Build Player Quality
 
 Once the foundation pull is present, add previous domestic history for the
@@ -161,7 +176,7 @@ fixture-specific context:
 python3 scripts/build_historical_fixtures.py
 ```
 
-For every Premier League or active Champions League qualifying fixture inside
+For every Premier League or Champions League fixture inside
 the 14-day snapshot horizon, it compares the home club's historical home
 performance with the away club's historical away performance. It also surfaces
 direct meetings, but caps their influence at 25%. Attack and defence context is
@@ -299,6 +314,12 @@ rather than the central estimate.
 Outputs include 1X2, Over/Under 2.5 and 3.5, BTTS, projected xG, and likely
 scorelines. They are frozen shadow probabilities—not market edges or capital
 signals. See [Prediction Lab v0](docs/prediction-lab-v0.md).
+
+The active market focus is intentionally narrower than the simulation output.
+`config/market-focus-v1.json` locks 1X2 and Over/Under 2.5 as the only active
+research markets. BTTS continues to be scored as a zero-weight diagnostic so
+its calibration history is preserved, but it cannot create an official
+recommendation, allocation review, or capital decision.
 
 Fixture Calibration v1 now learns from every registered, completed frozen
 fixture. It conservatively updates the current league venue translation, raises

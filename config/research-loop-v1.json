@@ -20,6 +20,41 @@
     "lineup_hit_rate_below": 0.75,
     "formation_accuracy_below": 0.7
   },
+  "adaptive_learning": {
+    "memory": {
+      "fast": {
+        "half_life_days": 7.0,
+        "prior_match_equivalents": 2.0,
+        "minimum_observations": 2
+      },
+      "medium": {
+        "half_life_days": 28.0,
+        "prior_match_equivalents": 3.0,
+        "minimum_observations": 3
+      },
+      "slow": {
+        "half_life_days": 120.0,
+        "prior_match_equivalents": 8.0,
+        "minimum_observations": 8
+      }
+    },
+    "evidence": {
+      "poor_lineup_hit_rate": 0.72,
+      "extreme_finishing_goals_minus_xg": 1.0,
+      "context_harm_side_xg_mae": 0.03,
+      "outcome_variance_multiplier": 0.25,
+      "red_card_multiplier": 0.25,
+      "major_rotation_multiplier": 0.65
+    },
+    "challenger": {
+      "minimum_prior_team_matches": 2,
+      "minimum_validation_matches": 20,
+      "maximum_absolute_log_xg_adjustment": 0.12,
+      "minimum_brier_improvement": 0.0,
+      "minimum_xg_mae_improvement": 0.0,
+      "promotion_mode": "human_review_only"
+    }
+  },
   "locked_boundaries": {
     "player_alpha_formulas_mutable": false,
     "base_60_30_10_weights_mutable": false,
