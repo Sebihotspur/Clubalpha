@@ -124,30 +124,30 @@ function overview(data) {
       </div>
       <aside class="hero-note">
         <span class="label">Current operating state</span>
-        <strong>REFRESH · AUDIT · THEN FREEZE</strong>
-        <p>Matchweek ${esc(current.round)} now includes today’s European and cup lineups. The board remains provisional while draw calibration is audited; the settled official ledger remains immutable.</p>
+        <strong>SETTLE · DIAGNOSE · LEARN</strong>
+        <p>All ${esc(current.settled)} Matchweek ${esc(current.round)} results are settled. They update the adaptive research memory while the official capital gate and prior frozen ledgers remain unchanged.</p>
       </aside>
     </section>
 
     <section class="metrics">
       ${metric("Deployment", "NO CAPITAL", "Shadow observations only", "amber")}
       ${metric("Simulation", data.meta.simulations.toLocaleString(), "Independent Poisson runs", "accent")}
-      ${metric("Current board", `${current.fixtures} fixtures`, "Provisional Matchweek 5 research")}
+      ${metric("MW5 research", `${current.score.markets.one_x_two.hits}/${current.settled} 1X2`, `${current.score.markets.over_under_2_5.hits}/${current.settled} O/U 2.5`)}
       ${metric("Promotion gate", `>${pct(data.ledger.hit_rate_gate)}`, `Minimum ${data.ledger.sample_gate} settled picks`)}
     </section>
 
     <section class="section">
-      <div class="section-head"><h2>Latest evidence refresh</h2><a href="/predictions/">Open current board →</a></div>
+      <div class="section-head"><h2>Matchweek 5 settled</h2><a href="/predictions/">Open result review →</a></div>
       <article class="pick-card">
         <div class="pick-main">
-          <div class="pick-tag"><span></span> Cross-competition evidence · September 17</div>
-          <p class="fixture-kicker">PALACE 4–0 · BOURNEMOUTH 2–1 · CITY 5–0</p>
-          <h2 class="pick-title">Lineups and load updated</h2>
-          <div class="pick-market">No official Matchweek 5 call frozen</div>
+          <div class="pick-tag"><span></span> Research slate · September 18–20</div>
+          <p class="fixture-kicker">BRENTFORD 3–0 CHELSEA · BRIGHTON 3–0 ARSENAL · CITY 5–3 SUNDERLAND</p>
+          <h2 class="pick-title">Upsets separated from process</h2>
+          <div class="pick-market">Brentford was a model-supported upset; Brighton–Arsenal was outcome variance</div>
           <div class="pick-reasons">
-            <div class="reason"><strong>3</strong><span>completed matches ingested</span></div>
-            <div class="reason"><strong>10/10</strong><span>fixtures with market books</span></div>
-            <div class="reason"><strong>${highLoadTeams.size}</strong><span>high load-risk teams</span></div>
+            <div class="reason"><strong>${current.score.markets.one_x_two.hits}/10</strong><span>1X2 calls correct</span></div>
+            <div class="reason"><strong>${current.score.markets.over_under_2_5.hits}/10</strong><span>total calls correct</span></div>
+            <div class="reason"><strong>${dec(current.backtest_summary.mean_projected_xi_hits_of_11)}/11</strong><span>mean projected-XI hits</span></div>
           </div>
         </div>
         <div class="pick-numbers">
@@ -408,12 +408,14 @@ function predictions(data) {
       const footballProbability = match.probabilities[match.football_leader];
       const marketProbability = match.market_no_vig[match.market_leader];
       const agrees = match.football_leader === match.market_leader;
+      const result = match.result;
+      const reviewLabel = result.review_class.replaceAll("_", " ");
       return `<tr>
-        <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · projected xG ${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</span></td>
-        <td class="official-call"><strong>${esc(outcomeLabel(match, match.football_leader))}</strong><span>${pct(footballProbability)} football baseline</span></td>
+        <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · pre-match xG ${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</span></td>
+        <td class="official-call"><strong>${esc(outcomeLabel(match, match.football_leader))}</strong><span>${pct(footballProbability)} · <span class="status-chip ${result.football_1x2_hit ? "hit" : "miss"}">${result.football_1x2_hit ? "hit" : "miss"}</span></span></td>
         <td class="official-call"><strong>${esc(outcomeLabel(match, match.market_leader))}</strong><span>${pct(marketProbability)} no-vig · ${agrees ? "agrees" : "disagrees"}</span></td>
-        <td><strong>${pct(match.over_2_5)}</strong><span class="table-sub">market ${pct(match.market_over_midpoint)}</span></td>
-        <td><div class="risk-stack">${riskChip(match.home_team, match.load_risk.home)}${riskChip(match.away_team, match.load_risk.away)}</div></td>
+        <td><strong>${pct(match.over_2_5)}</strong><span class="table-sub"><span class="status-chip ${result.over_under_2_5_hit ? "hit" : "miss"}">${result.over_under_2_5_hit ? "hit" : "miss"}</span> · market ${pct(match.market_over_midpoint)}</span></td>
+        <td><div class="ledger-result"><strong>${result.final_home_goals}–${result.final_away_goals}</strong><small>xG ${dec(result.actual_xg.home)}–${dec(result.actual_xg.away)}</small><span class="table-sub">${esc(reviewLabel)}</span></div></td>
       </tr>`;
     })
     .join("");
@@ -443,10 +445,16 @@ function predictions(data) {
     )
     .join("");
 
-  return `<section class="page-head"><p class="eyebrow">Current research slate · Matchweek ${esc(current.round)}</p><h1>Predictions</h1><p>Today’s European and cup lineups are now reflected in projected-XI and load risk. The football baseline is shown beside the market so disagreement is audited rather than mislabeled as edge.</p><div class="notice">PROVISIONAL · NOT YET FROZEN · 1X2 + O/U 2.5 only · Draw calibration under review · Zero capital authorized</div></section>
-    <section class="section"><div class="section-head"><h2>Matchweek ${esc(current.round)} research board</h2><span class="panel-label">Updated ${esc(dateTime(current.as_of))}</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>Football baseline</th><th>Market benchmark</th><th>O2.5</th><th>Load risk</th></tr></thead><tbody>${currentRows}</tbody></table></div></section>
-    <section class="section"><div class="section-head"><h2>What today changed</h2><span class="panel-label">Score + process + minutes</span></div><div class="ucl-insight-grid">${reviewCards}</div></section>
-    <p class="notice">The three scorelines receive zero automatic Club Form weight. Their actual lineups and minutes update squad projection and fatigue evidence at the locked cross-competition weight. Market prices remain a benchmark, not a model input.</p>
+  return `<section class="page-head"><p class="eyebrow">Settled research slate · Matchweek ${esc(current.round)}</p><h1>Predictions vs reality</h1><p>The pre-match football baseline and market benchmark are preserved beside the final score and xG process. Outcomes update team memory only after error attribution.</p><div class="notice">SETTLED RESEARCH · 1X2 + O/U 2.5 scored separately · Excluded from the official promotion gate · Zero capital authorized</div></section>
+    <section class="metrics">
+      ${metric("1X2", `${current.score.markets.one_x_two.hits}/${current.settled}`, pct(current.score.markets.one_x_two.hit_rate), current.score.markets.one_x_two.hit_rate > 0.5 ? "accent" : "amber")}
+      ${metric("O/U 2.5", `${current.score.markets.over_under_2_5.hits}/${current.settled}`, pct(current.score.markets.over_under_2_5.hit_rate), current.score.markets.over_under_2_5.hit_rate >= 0.5 ? "accent" : "amber")}
+      ${metric("Projected XI", `${dec(current.backtest_summary.mean_projected_xi_hits_of_11)}/11`, "Mean starters correct", "accent")}
+      ${metric("Deployment", "NO CAPITAL", "Research shadow only", "amber")}
+    </section>
+    <section class="section"><div class="section-head"><h2>Matchweek ${esc(current.round)} result review</h2><span class="panel-label">Updated ${esc(dateTime(current.as_of))}</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>Our pre-match read</th><th>Market benchmark</th><th>O2.5</th><th>Result + process</th></tr></thead><tbody>${currentRows}</tbody></table></div></section>
+    <section class="section"><div class="section-head"><h2>Pre-match cross-competition evidence</h2><span class="panel-label">Score + process + minutes</span></div><div class="ucl-insight-grid">${reviewCards}</div></section>
+    <p class="notice">The Matchweek 5 results created 10 append-only learning cards: ${current.backtest_summary.process_supported_outcome_variance} outcome-variance reviews and ${current.backtest_summary.structural_misses} structural reviews. No single scoreline can directly rewrite Player Alpha, Club Form, or the locked 60/30/10 foundation.</p>
     <section class="section"><div class="section-head"><h2>Latest settled official archive</h2><a href="/ledger/">Open the immutable ledger →</a></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>Model xG</th><th>1X2 probability</th><th>O2.5</th><th>Official call</th><th>Why</th></tr></thead><tbody>${archivedRows}</tbody></table></div></section>`;
 }
 

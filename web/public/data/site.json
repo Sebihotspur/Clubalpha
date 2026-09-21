@@ -1,6 +1,6 @@
 {
   "meta": {
-    "site_version": "clubalpha_web_v0_9_adaptive_learning",
+    "site_version": "clubalpha_web_v0_10_matchweek_5_settled",
     "prediction_version": "clubalpha_official_shadow_mw4_v1",
     "as_of": "2026-09-08T16:28:02Z",
     "generated_at_utc": "2026-09-17T23:00:59.841794+00:00",
@@ -14,15 +14,50 @@
     "goal_validation_matches": 100
   },
   "current_matchweek": {
-    "status": "provisional_research_not_frozen",
+    "status": "settled_research_shadow",
     "round": 5,
-    "as_of": "2026-09-17T23:00:59.841794+00:00",
+    "as_of": "2026-09-21T15:10:48.291104+00:00",
     "fixtures": 10,
+    "settled": 10,
+    "score": {
+      "fixtures": 10,
+      "first_kickoff_utc": "2026-09-18T19:00:00Z",
+      "last_kickoff_utc": "2026-09-20T15:30:00Z",
+      "settled": 10,
+      "pending": 0,
+      "markets": {
+        "one_x_two": {
+          "label": "1X2",
+          "hits": 4,
+          "settled": 10,
+          "hit_rate": 0.4
+        },
+        "over_under_2_5": {
+          "label": "O/U 2.5",
+          "hits": 5,
+          "settled": 10,
+          "hit_rate": 0.5
+        },
+        "btts": {
+          "label": "BTTS",
+          "hits": 4,
+          "settled": 10,
+          "hit_rate": 0.4
+        }
+      }
+    },
+    "backtest_summary": {
+      "outcome_hits": 4,
+      "process_supported_outcome_variance": 4,
+      "structural_misses": 2,
+      "mean_projected_xi_hits_of_11": 9.05,
+      "sample_sufficient_to_recalibrate": false
+    },
     "active_markets": [
       "1X2",
       "Over/Under 2.5"
     ],
-    "fixture_calibration_status": "under_review_not_used_for_conviction",
+    "fixture_calibration_status": "shadow_learning_only",
     "capital_deployment_ready": false,
     "predictions": [
       {
@@ -52,6 +87,23 @@
         "load_risk": {
           "home": "medium",
           "away": "low"
+        },
+        "status": "settled",
+        "result": {
+          "final_home_goals": 3,
+          "final_away_goals": 0,
+          "actual_xg": {
+            "home": 2.65,
+            "away": 0.83,
+            "total": 3.48
+          },
+          "outcome": "home_win",
+          "football_1x2_hit": true,
+          "market_1x2_hit": false,
+          "over_under_2_5_hit": true,
+          "market_over_under_2_5_hit": true,
+          "review_class": "outcome_hit",
+          "xg_process_outcome": "home_win"
         }
       },
       {
@@ -81,6 +133,23 @@
         "load_risk": {
           "home": "medium",
           "away": "medium"
+        },
+        "status": "settled",
+        "result": {
+          "final_home_goals": 2,
+          "final_away_goals": 3,
+          "actual_xg": {
+            "home": 1.56,
+            "away": 1.16,
+            "total": 2.7199999999999998
+          },
+          "outcome": "away_win",
+          "football_1x2_hit": false,
+          "market_1x2_hit": false,
+          "over_under_2_5_hit": false,
+          "market_over_under_2_5_hit": true,
+          "review_class": "process_supported_outcome_variance",
+          "xg_process_outcome": "home_win"
         }
       },
       {
@@ -110,6 +179,23 @@
         "load_risk": {
           "home": "medium",
           "away": "medium"
+        },
+        "status": "settled",
+        "result": {
+          "final_home_goals": 3,
+          "final_away_goals": 0,
+          "actual_xg": {
+            "home": 1.31,
+            "away": 1.63,
+            "total": 2.94
+          },
+          "outcome": "home_win",
+          "football_1x2_hit": false,
+          "market_1x2_hit": false,
+          "over_under_2_5_hit": true,
+          "market_over_under_2_5_hit": true,
+          "review_class": "process_supported_outcome_variance",
+          "xg_process_outcome": "away_win"
         }
       },
       {
@@ -139,6 +225,23 @@
         "load_risk": {
           "home": "medium",
           "away": "medium"
+        },
+        "status": "settled",
+        "result": {
+          "final_home_goals": 1,
+          "final_away_goals": 0,
+          "actual_xg": {
+            "home": 2.24,
+            "away": 1.44,
+            "total": 3.68
+          },
+          "outcome": "home_win",
+          "football_1x2_hit": true,
+          "market_1x2_hit": true,
+          "over_under_2_5_hit": false,
+          "market_over_under_2_5_hit": false,
+          "review_class": "outcome_hit",
+          "xg_process_outcome": "home_win"
         }
       },
       {
@@ -168,6 +271,23 @@
         "load_risk": {
           "home": "medium",
           "away": "medium"
+        },
+        "status": "settled",
+        "result": {
+          "final_home_goals": 2,
+          "final_away_goals": 1,
+          "actual_xg": {
+            "home": 1.44,
+            "away": 1.59,
+            "total": 3.0300000000000002
+          },
+          "outcome": "home_win",
+          "football_1x2_hit": true,
+          "market_1x2_hit": true,
+          "over_under_2_5_hit": true,
+          "market_over_under_2_5_hit": true,
+          "review_class": "outcome_hit",
+          "xg_process_outcome": "draw"
         }
       },
       {
@@ -197,6 +317,23 @@
         "load_risk": {
           "home": "low",
           "away": "medium"
+        },
+        "status": "settled",
+        "result": {
+          "final_home_goals": 0,
+          "final_away_goals": 1,
+          "actual_xg": {
+            "home": 1.1,
+            "away": 0.67,
+            "total": 1.77
+          },
+          "outcome": "away_win",
+          "football_1x2_hit": false,
+          "market_1x2_hit": false,
+          "over_under_2_5_hit": true,
+          "market_over_under_2_5_hit": false,
+          "review_class": "process_supported_outcome_variance",
+          "xg_process_outcome": "home_win"
         }
       },
       {
@@ -226,6 +363,23 @@
         "load_risk": {
           "home": "high",
           "away": "medium"
+        },
+        "status": "settled",
+        "result": {
+          "final_home_goals": 0,
+          "final_away_goals": 1,
+          "actual_xg": {
+            "home": 0.79,
+            "away": 1.65,
+            "total": 2.44
+          },
+          "outcome": "away_win",
+          "football_1x2_hit": false,
+          "market_1x2_hit": true,
+          "over_under_2_5_hit": false,
+          "market_over_under_2_5_hit": false,
+          "review_class": "structural_miss",
+          "xg_process_outcome": "away_win"
         }
       },
       {
@@ -255,6 +409,23 @@
         "load_risk": {
           "home": "medium",
           "away": "high"
+        },
+        "status": "settled",
+        "result": {
+          "final_home_goals": 0,
+          "final_away_goals": 0,
+          "actual_xg": {
+            "home": 1.31,
+            "away": 1.06,
+            "total": 2.37
+          },
+          "outcome": "draw",
+          "football_1x2_hit": false,
+          "market_1x2_hit": false,
+          "over_under_2_5_hit": false,
+          "market_over_under_2_5_hit": false,
+          "review_class": "process_supported_outcome_variance",
+          "xg_process_outcome": "home_win"
         }
       },
       {
@@ -284,6 +455,23 @@
         "load_risk": {
           "home": "medium",
           "away": "high"
+        },
+        "status": "settled",
+        "result": {
+          "final_home_goals": 5,
+          "final_away_goals": 3,
+          "actual_xg": {
+            "home": 2.82,
+            "away": 3.57,
+            "total": 6.39
+          },
+          "outcome": "home_win",
+          "football_1x2_hit": true,
+          "market_1x2_hit": true,
+          "over_under_2_5_hit": true,
+          "market_over_under_2_5_hit": true,
+          "review_class": "outcome_hit",
+          "xg_process_outcome": "away_win"
         }
       },
       {
@@ -313,6 +501,23 @@
         "load_risk": {
           "home": "medium",
           "away": "medium"
+        },
+        "status": "settled",
+        "result": {
+          "final_home_goals": 1,
+          "final_away_goals": 1,
+          "actual_xg": {
+            "home": 1.62,
+            "away": 1.6,
+            "total": 3.22
+          },
+          "outcome": "draw",
+          "football_1x2_hit": false,
+          "market_1x2_hit": false,
+          "over_under_2_5_hit": false,
+          "market_over_under_2_5_hit": false,
+          "review_class": "structural_miss",
+          "xg_process_outcome": "draw"
         }
       }
     ],
@@ -21017,6 +21222,38 @@
     ],
     "matchweeks": [
       {
+        "matchweek": 5,
+        "name": "Research Matchweek 5",
+        "source": "Pre-match contextual research slate",
+        "status": "settled",
+        "counts_toward_promotion_gate": false,
+        "fixtures": 10,
+        "first_kickoff_utc": "2026-09-18T19:00:00Z",
+        "last_kickoff_utc": "2026-09-20T15:30:00Z",
+        "settled": 10,
+        "pending": 0,
+        "markets": {
+          "one_x_two": {
+            "label": "1X2",
+            "hits": 4,
+            "settled": 10,
+            "hit_rate": 0.4
+          },
+          "over_under_2_5": {
+            "label": "O/U 2.5",
+            "hits": 5,
+            "settled": 10,
+            "hit_rate": 0.5
+          },
+          "btts": {
+            "label": "BTTS",
+            "hits": 4,
+            "settled": 10,
+            "hit_rate": 0.4
+          }
+        }
+      },
+      {
         "matchweek": 4,
         "name": "Official Matchweek 4",
         "source": "Official shadow slate",
@@ -21124,54 +21361,54 @@
     "fixture_calibration": {
       "version": "clubalpha_fixture_calibration_v1",
       "status": "shadow_challenger",
-      "as_of": "2026-09-15",
-      "training_matches": 30,
+      "as_of": "2026-09-21",
+      "training_matches": 40,
       "league_venue": {
-        "predicted_home_away_xg_ratio": 1.176404,
-        "observed_home_away_xg_ratio": 1.027755,
-        "raw_log_ratio_correction": -0.135086,
-        "evidence_confidence": 0.6,
-        "applied_log_ratio_correction": -0.081052
+        "predicted_home_away_xg_ratio": 1.195437,
+        "observed_home_away_xg_ratio": 1.045961,
+        "raw_log_ratio_correction": -0.133575,
+        "evidence_confidence": 0.666667,
+        "applied_log_ratio_correction": -0.08905
       },
-      "adjusted_home_away_xg_ratio": 1.084816,
+      "adjusted_home_away_xg_ratio": 1.093586,
       "draw_calibration": {
-        "predicted_draw_rate": 0.273108,
-        "observed_draws": 13,
-        "observed_draw_rate": 0.433333,
-        "posterior_draw_rate": 0.369243,
-        "applied_logit_correction": 0.443446,
+        "predicted_draw_rate": 0.265109,
+        "observed_draws": 15,
+        "observed_draw_rate": 0.375,
+        "posterior_draw_rate": 0.33837,
+        "applied_logit_correction": 0.349013,
         "draw_zone_max_probability_gap": 0.04,
         "draw_zone_max_side_probability": 0.5
       },
       "active_team_venue_modifiers": 0,
       "chronological_audit": {
         "interpretation": "cycle-forward; each calibration uses only earlier cycles",
-        "evaluated_cycles": 2,
+        "evaluated_cycles": 3,
         "baseline": {
-          "matches": 20,
-          "one_x_two_brier": 0.697764,
-          "one_x_two_log_loss": 1.139373,
-          "top_pick_accuracy": 0.3,
-          "home_probability_leader_rate": 0.7,
-          "mean_draw_probability": 0.29101
+          "matches": 30,
+          "one_x_two_brier": 0.675867,
+          "one_x_two_log_loss": 1.108445,
+          "top_pick_accuracy": 0.333333,
+          "home_probability_leader_rate": 0.733333,
+          "mean_draw_probability": 0.274377
         },
         "calibrated": {
-          "matches": 20,
-          "one_x_two_brier": 0.681124,
-          "one_x_two_log_loss": 1.111006,
-          "top_pick_accuracy": 0.3,
-          "home_probability_leader_rate": 0.7,
-          "mean_draw_probability": 0.299995
+          "matches": 30,
+          "one_x_two_brier": 0.674359,
+          "one_x_two_log_loss": 1.104018,
+          "top_pick_accuracy": 0.333333,
+          "home_probability_leader_rate": 0.733333,
+          "mean_draw_probability": 0.311614
         }
       },
       "probability_validated": false,
       "capital_deployment_ready": false
     },
     "research_loop": {
-      "as_of": "2026-09-17",
-      "learned_through_kickoff_utc": "2026-09-14T19:00:00Z",
-      "completed_results": 30,
-      "frozen_fixtures": 30,
+      "as_of": "2026-09-21",
+      "learned_through_kickoff_utc": "2026-09-20T15:30:00Z",
+      "completed_results": 40,
+      "frozen_fixtures": 40,
       "pending_results": 0,
       "promotion_candidates": 0,
       "automatically_applied": 0,
@@ -21179,13 +21416,13 @@
       "adaptive": {
         "version": "clubalpha_adaptive_learning_v1",
         "status": "challenger_research_only",
-        "match_learning_cards": 30,
+        "match_learning_cards": 40,
         "error_attribution": {
-          "club_form_or_team_strength": 3,
-          "draw_calibration_review": 1,
-          "lineup_projection": 9,
-          "model_supported": 2,
-          "outcome_variance": 15
+          "club_form_or_team_strength": 4,
+          "draw_calibration_review": 2,
+          "lineup_projection": 10,
+          "model_supported": 4,
+          "outcome_variance": 20
         },
         "memory_policy": {
           "fast": "lineups, formations and short-lived availability state",
@@ -21194,27 +21431,27 @@
         },
         "champion_challenger": {
           "champion": {
-            "fixtures": 10,
-            "xg_side_mae": 0.613471,
-            "one_x_two_brier": 0.653884,
+            "fixtures": 20,
+            "xg_side_mae": 0.557306,
+            "one_x_two_brier": 0.642979,
             "one_x_two_accuracy": 0.4,
-            "over_2_5_brier": 0.240231
+            "over_2_5_brier": 0.248394
           },
           "challenger": {
-            "fixtures": 10,
-            "xg_side_mae": 0.620291,
-            "one_x_two_brier": 0.692893,
-            "one_x_two_accuracy": 0.3,
-            "over_2_5_brier": 0.238497
+            "fixtures": 20,
+            "xg_side_mae": 0.584475,
+            "one_x_two_brier": 0.681098,
+            "one_x_two_accuracy": 0.35,
+            "over_2_5_brier": 0.249695
           },
           "improvement_positive_is_better": {
-            "xg_side_mae": -0.00682,
-            "one_x_two_brier": -0.039009,
-            "over_2_5_brier": 0.001734
+            "xg_side_mae": -0.027169,
+            "one_x_two_brier": -0.038119,
+            "over_2_5_brier": -0.001301
           },
           "promotion_gate": {
             "minimum_validation_matches": 20,
-            "sample_sufficient": false,
+            "sample_sufficient": true,
             "metrics_pass": false,
             "status": "hold_champion",
             "mode": "human_review_only",
@@ -21242,7 +21479,7 @@
     ],
     "caveats": [
       "34 of 200 component-scale sides collected",
-      "30 completed fixtures are tentative research evidence",
+      "40 completed fixtures are tentative research evidence",
       "Official MW4 probabilities remain shadow-only",
       "Projected lineups are not confirmed starting XIs",
       "Market prices are not yet an automated model input",

@@ -1,10 +1,34 @@
 # Next session
 
-Updated: 2026-09-17
+Updated: 2026-09-21
 
 Model and website checkpoint: see latest commit on `main`
 
 Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
+
+## September 21 Matchweek 5 settlement
+
+- All ten Matchweek 5 results are appended to the pre-match contextual archive.
+  The research slate scored 4/10 on 1X2 and 5/10 on Over/Under 2.5. It remains
+  excluded from the official promotion gate because it was a research slate,
+  not an official capital slate.
+- Brentford 3–0 Chelsea was the cleanest process success. Clubalpha made
+  Brentford the 44.9% football leader while the market made Chelsea the
+  favourite; Brentford also won xG 2.65–0.83.
+- Brighton 3–0 Arsenal must not be learned as tactical domination. Arsenal won
+  xG 1.63–1.31, so the Match Learning Card attributes it primarily to outcome
+  variance.
+- Manchester City 5–3 Sunderland was a result hit but a process warning:
+  Sunderland led xG 3.57–2.82. Preserve the win in the result ledger and the
+  defensive warning in medium team memory.
+- Projected-XI accuracy was 9.05/11 with 85% formation accuracy. The contextual
+  layer slightly improved 1X2 Brier and totals Brier but did not improve raw
+  top-pick accuracy or side-xG error.
+- Adaptive Learning now contains 40 append-only Match Learning Cards. The
+  medium-memory challenger failed the 20-match validation gate, so the Holy
+  Grail champion remains active and no automatic weight change is authorized.
+- Fixture Calibration v1 is refreshed descriptively on 40 matches. It remains
+  an unvalidated shadow challenger and authorizes no capital.
 
 ## Start next session: archetype matchup memory
 

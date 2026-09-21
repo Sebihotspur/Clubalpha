@@ -1,0 +1,28 @@
+{
+  "archive_version": "clubalpha_contextual_settlement_manifest_v1",
+  "status": "frozen_pre_match_shadow",
+  "as_of": "2026-09-17",
+  "round": 5,
+  "source_commit": "f493bdf477abf120614642734bbfaeaf1f60d8a5",
+  "frozen_before_first_kickoff": true,
+  "outputs": {
+    "predictions.jsonl": "63740457fda132ccfa0bd9185be50ba1c310884db2fd77a402edd9fb6a101c25",
+    "report.json": "3190e51412bac2564300a5647a14ad3c9dde5d98dfe03d479c0286988bb9cd8e"
+  },
+  "inputs": {
+    "projected_xi_snapshot": {
+      "path": "reports/premier-league-alpha-snapshot-2026-09-17.json",
+      "sha256": "5ecbfb1830145ffadb9a0c1ea2ce17473bff1be34c9434d732a0a3b63aca6797"
+    },
+    "base_matchweek_manifest": {
+      "path": "artifacts/current_matchweek/2026-09-17-mw5/manifest.json",
+      "sha256": "709af0be8d4370744ca24db69c5c3155feb99a4dd543a6d245c2ecb8155841fa"
+    }
+  },
+  "decision_boundaries": {
+    "predictions_mutable": false,
+    "results_append_only": true,
+    "official_capital_slate": false,
+    "capital_deployment_ready": false
+  }
+}

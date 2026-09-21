@@ -114,7 +114,7 @@ class WebHolyGrailTests(unittest.TestCase):
         weeks = {
             row["matchweek"]: row for row in self.data["ledger"]["matchweeks"]
         }
-        self.assertEqual(set(weeks), {2, 3, 4})
+        self.assertEqual(set(weeks), {2, 3, 4, 5})
         completed = weeks[2]
         self.assertEqual(completed["settled"], 10)
         self.assertEqual(completed["markets"]["one_x_two"]["hit_rate"], 0.4)
@@ -165,6 +165,38 @@ class WebHolyGrailTests(unittest.TestCase):
             else:
                 self.assertIsNone(market["hit_rate"])
         self.assertTrue(current["counts_toward_promotion_gate"])
+        research = weeks[5]
+        self.assertEqual(research["settled"], 10)
+        self.assertEqual(research["pending"], 0)
+        self.assertEqual(research["markets"]["one_x_two"]["hits"], 4)
+        self.assertEqual(research["markets"]["over_under_2_5"]["hits"], 5)
+        self.assertFalse(research["counts_toward_promotion_gate"])
+
+    def test_matchweek_five_results_preserve_prematch_calls(self):
+        current = self.data["current_matchweek"]
+        self.assertEqual(current["status"], "settled_research_shadow")
+        self.assertEqual(current["settled"], 10)
+        self.assertFalse(current["capital_deployment_ready"])
+        self.assertFalse(
+            current["backtest_summary"]["sample_sufficient_to_recalibrate"]
+        )
+        brentford = next(
+            row
+            for row in current["predictions"]
+            if row["home_team"] == "Brentford"
+        )
+        self.assertEqual(brentford["away_team"], "Chelsea")
+        self.assertEqual(brentford["football_leader"], "home_win")
+        self.assertEqual(brentford["market_leader"], "away_win")
+        self.assertEqual(
+            (
+                brentford["result"]["final_home_goals"],
+                brentford["result"]["final_away_goals"],
+            ),
+            (3, 0),
+        )
+        self.assertTrue(brentford["result"]["football_1x2_hit"])
+        self.assertFalse(brentford["result"]["market_1x2_hit"])
 
     def test_ipswich_liverpool_result_scores_markets_independently(self):
         predictions = [
@@ -220,10 +252,12 @@ class WebHolyGrailTests(unittest.TestCase):
                 ROOT / "artifacts/contextual_interaction/2026-08-26/results.jsonl",
                 ROOT / "artifacts/official_shadow/2026-08-31-mw3/results.jsonl",
                 ROOT / "artifacts/official_shadow/2026-09-08-mw4/results.jsonl",
+                ROOT
+                / "artifacts/contextual_interaction/2026-09-17-mw5/results.jsonl",
             )
         )
         self.assertEqual(learning["completed_results"], completed_results)
-        self.assertEqual(learning["frozen_fixtures"], 30)
+        self.assertEqual(learning["frozen_fixtures"], 40)
         self.assertEqual(
             learning["pending_results"],
             learning["frozen_fixtures"] - completed_results,

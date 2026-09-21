@@ -31,6 +31,12 @@ PL_MIDWEEK_REVIEW = ROOT / "reports/pl-midweek-review-2026-09-17.json"
 CURRENT_MARKET_SNAPSHOT = (
     ROOT / "artifacts/market_snapshots/2026-09-17-mw5-polymarket.json"
 )
+CURRENT_MATCHWEEK_CONTEXTUAL_DIR = (
+    ROOT / "artifacts/contextual_interaction/2026-09-17-mw5"
+)
+CURRENT_MATCHWEEK_BACKTEST = (
+    ROOT / "reports/contextual-interaction-v1-backtest-2026-09-21.json"
+)
 MARKET_FOCUS_CONFIG = ROOT / "config/market-focus-v1.json"
 PUBLIC_DIR = ROOT / "web/public"
 
@@ -248,6 +254,13 @@ def build():
     ucl_matchday = load_json(UCL_MATCHDAY_REVIEW)
     pl_midweek_review = load_json(PL_MIDWEEK_REVIEW)
     current_market_snapshot = load_json(CURRENT_MARKET_SNAPSHOT)
+    current_matchweek_contextual_predictions = load_jsonl(
+        CURRENT_MATCHWEEK_CONTEXTUAL_DIR / "predictions.jsonl"
+    )
+    current_matchweek_results = load_jsonl(
+        CURRENT_MATCHWEEK_CONTEXTUAL_DIR / "results.jsonl"
+    )
+    current_matchweek_backtest = load_json(CURRENT_MATCHWEEK_BACKTEST)
     market_focus = load_json(MARKET_FOCUS_CONFIG)
     if market_focus.get("version") != "clubalpha_market_focus_v1":
         raise ValueError("website requires the locked market-focus contract")
@@ -273,6 +286,11 @@ def build():
     official_score = score_results(official_predictions, official_results)
     matchweek_two_score = score_matchweek(
         contextual_predictions, contextual_results, official=False
+    )
+    current_matchweek_score = score_matchweek(
+        current_matchweek_contextual_predictions,
+        current_matchweek_results,
+        official=False,
     )
     result_validation = validate_results(
         round_robin_predictions, round_robin_results
@@ -539,10 +557,30 @@ def build():
     )
     original_fair_decimal = 1.0 / original_pick["probabilities"]["over_2_5"]
 
+    current_context_by_id = {
+        int(row["fixture"]["match_id"]): row
+        for row in current_matchweek_contextual_predictions
+    }
+    current_result_by_id = {
+        int(row["match_id"]): row for row in current_matchweek_results
+    }
+    current_backtest_by_id = {
+        int(row["match_id"]): row for row in current_matchweek_backtest["fixtures"]
+    }
+    market_match_ids = {
+        int(row["fixture"]["match_id"])
+        for row in current_market_snapshot["fixtures"]
+    }
+    if market_match_ids != set(current_context_by_id):
+        raise ValueError("Matchweek 5 market and contextual slates do not reconcile")
+    if set(current_result_by_id) != market_match_ids:
+        raise ValueError("Matchweek 5 website requires all ten settled results")
+
     current_matchweek_predictions = []
     for row in current_market_snapshot["fixtures"]:
         fixture = row["fixture"]
         football = row["football_baseline"]
+        match_id = int(fixture["match_id"])
         market_outcomes = row["one_x_two"]["outcomes"]
         football_leader = max(
             ("home_win", "draw", "away_win"),
@@ -554,9 +592,19 @@ def build():
                 market_outcomes[key]["market_no_vig_probability"]
             ),
         )
+        result = current_result_by_id[match_id]
+        backtest = current_backtest_by_id[match_id]
+        actual_outcome = str(result["outcome"])
+        actual_over = (
+            int(result["final_home_goals"]) + int(result["final_away_goals"])
+        ) > 2
+        football_over = float(football["over_2_5"]) >= 0.5
+        market_over = float(
+            row["over_under_2_5"]["over"]["book"]["midpoint"]
+        ) >= 0.5
         current_matchweek_predictions.append(
             {
-                "match_id": int(fixture["match_id"]),
+                "match_id": match_id,
                 "kickoff_utc": fixture["kickoff_utc"],
                 "home_team": fixture["home_team"],
                 "away_team": fixture["away_team"],
@@ -576,6 +624,19 @@ def build():
                     "midpoint"
                 ],
                 "load_risk": row["prematch_load"],
+                "status": "settled",
+                "result": {
+                    "final_home_goals": int(result["final_home_goals"]),
+                    "final_away_goals": int(result["final_away_goals"]),
+                    "actual_xg": result["actual_xg"],
+                    "outcome": actual_outcome,
+                    "football_1x2_hit": football_leader == actual_outcome,
+                    "market_1x2_hit": market_leader == actual_outcome,
+                    "over_under_2_5_hit": football_over == actual_over,
+                    "market_over_under_2_5_hit": market_over == actual_over,
+                    "review_class": backtest["review_class"],
+                    "xg_process_outcome": backtest["xg_process_outcome"],
+                },
             }
         )
     current_matchweek_predictions.sort(
@@ -584,7 +645,7 @@ def build():
 
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_9_adaptive_learning",
+            "site_version": "clubalpha_web_v0_10_matchweek_5_settled",
             "prediction_version": official_report["report_version"],
             "as_of": official_report["as_of_utc"],
             "generated_at_utc": current_market_snapshot["captured_at_utc"],
@@ -598,12 +659,31 @@ def build():
             "goal_validation_matches": 100,
         },
         "current_matchweek": {
-            "status": "provisional_research_not_frozen",
+            "status": "settled_research_shadow",
             "round": 5,
-            "as_of": current_market_snapshot["captured_at_utc"],
+            "as_of": current_matchweek_backtest["generated_at_utc"],
             "fixtures": len(current_matchweek_predictions),
+            "settled": current_matchweek_score["settled"],
+            "score": current_matchweek_score,
+            "backtest_summary": {
+                "outcome_hits": current_matchweek_backtest["diagnostics"][
+                    "outcome_hits"
+                ],
+                "process_supported_outcome_variance": current_matchweek_backtest[
+                    "diagnostics"
+                ]["process_supported_outcome_variance"],
+                "structural_misses": current_matchweek_backtest["diagnostics"][
+                    "structural_misses"
+                ],
+                "mean_projected_xi_hits_of_11": current_matchweek_backtest[
+                    "lineup_projection"
+                ]["mean_xi_hits_of_11"],
+                "sample_sufficient_to_recalibrate": current_matchweek_backtest[
+                    "sample"
+                ]["sufficient_to_recalibrate"],
+            },
             "active_markets": ["1X2", "Over/Under 2.5"],
-            "fixture_calibration_status": "under_review_not_used_for_conviction",
+            "fixture_calibration_status": "shadow_learning_only",
             "capital_deployment_ready": False,
             "predictions": current_matchweek_predictions,
             "midweek_review": pl_midweek_review,
@@ -784,6 +864,14 @@ def build():
                 "Lineup evidence coverage",
             ],
             "matchweeks": [
+                {
+                    "matchweek": 5,
+                    "name": "Research Matchweek 5",
+                    "source": "Pre-match contextual research slate",
+                    "status": "settled",
+                    "counts_toward_promotion_gate": False,
+                    **current_matchweek_score,
+                },
                 *official_matchweeks,
                 {
                     "matchweek": 2,
