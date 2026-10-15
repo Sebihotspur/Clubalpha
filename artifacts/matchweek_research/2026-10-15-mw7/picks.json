@@ -1,0 +1,41 @@
+{
+  "version": "clubalpha_matchweek_research_picks_v1",
+  "status": "frozen_preweek_shadow",
+  "as_of": "2026-10-15",
+  "round": 7,
+  "market_captured_at_utc": "2026-10-15T18:52:36.611044+00:00",
+  "policy": {
+    "base_is_anchor": true,
+    "context_may_reverse_base": false,
+    "side_pass_gap_below": 0.05,
+    "over_call_at_or_above": 0.58,
+    "under_call_at_or_below_over_probability": 0.42,
+    "minimum_price_edge_for_shortlist": 0.05,
+    "fixture_calibration_can_reverse_call": false
+  },
+  "fixtures": [
+    {"match_id":5795478,"fixture":"Everton vs Chelsea","side_leader":"home_win","side_probability":0.48076,"side_gap":0.1949,"side_call":"home_win","side_best_ask":0.3,"side_edge":0.18076,"side_shortlist":true,"total_call":"over_2_5","total_probability":0.5952,"total_edge":0.0152,"totals_shortlist":false,"context_verdict":"baseline_supported"},
+    {"match_id":5795476,"fixture":"Brentford vs Liverpool","side_leader":"home_win","side_probability":0.39666,"side_gap":0.04118,"side_call":"pass","side_best_ask":0.41,"side_edge":-0.01334,"side_shortlist":false,"total_call":"pass","total_probability":null,"total_edge":null,"totals_shortlist":false,"context_verdict":"no_clear_contextual_edge"},
+    {"match_id":5795479,"fixture":"Fulham vs Hull City","side_leader":"home_win","side_probability":0.4984,"side_gap":0.2432,"side_call":"home_win","side_best_ask":0.56,"side_edge":-0.0616,"side_shortlist":false,"total_call":"pass","total_probability":null,"total_edge":null,"totals_shortlist":false,"context_verdict":"baseline_supported"},
+    {"match_id":5795481,"fixture":"Manchester City vs Ipswich Town","side_leader":"home_win","side_probability":0.65946,"side_gap":0.475,"side_call":"home_win","side_best_ask":0.8,"side_edge":-0.14054,"side_shortlist":false,"total_call":"over_2_5","total_probability":0.6592,"total_edge":-0.0508,"totals_shortlist":false,"context_verdict":"baseline_reinforced"},
+    {"match_id":5795482,"fixture":"Newcastle United vs Aston Villa","side_leader":"home_win","side_probability":0.41892,"side_gap":0.07706,"side_call":"home_win","side_best_ask":0.42,"side_edge":-0.00108,"side_shortlist":false,"total_call":"over_2_5","total_probability":0.60236,"total_edge":-0.00764,"totals_shortlist":false,"context_verdict":"baseline_supported"},
+    {"match_id":5795475,"fixture":"AFC Bournemouth vs Sunderland","side_leader":"home_win","side_probability":0.4818,"side_gap":0.2058,"side_call":"home_win","side_best_ask":0.46,"side_edge":0.0218,"side_shortlist":false,"total_call":"pass","total_probability":null,"total_edge":null,"totals_shortlist":false,"context_verdict":"baseline_supported"},
+    {"match_id":5795477,"fixture":"Brighton & Hove Albion vs Crystal Palace","side_leader":"home_win","side_probability":0.62808,"side_gap":0.43798,"side_call":"home_win","side_best_ask":0.64,"side_edge":-0.01192,"side_shortlist":false,"total_call":"over_2_5","total_probability":0.66956,"total_edge":0.04956,"totals_shortlist":false,"context_verdict":"baseline_reinforced"},
+    {"match_id":5795480,"fixture":"Leeds United vs Manchester United","side_leader":"home_win","side_probability":0.38652,"side_gap":0.02838,"side_call":"pass","side_best_ask":0.41,"side_edge":-0.02348,"side_shortlist":false,"total_call":"pass","total_probability":null,"total_edge":null,"totals_shortlist":false,"context_verdict":"no_clear_contextual_edge"},
+    {"match_id":5795483,"fixture":"Nottingham Forest vs Arsenal","side_leader":"away_win","side_probability":0.47158,"side_gap":0.20174,"side_call":"away_win","side_best_ask":0.61,"side_edge":-0.13842,"side_shortlist":false,"total_call":"pass","total_probability":null,"total_edge":null,"totals_shortlist":false,"context_verdict":"baseline_reinforced"},
+    {"match_id":5795484,"fixture":"Tottenham Hotspur vs Coventry City","side_leader":"home_win","side_probability":0.4726,"side_gap":0.20368,"side_call":"home_win","side_best_ask":0.66,"side_edge":-0.1874,"side_shortlist":false,"total_call":"pass","total_probability":null,"total_edge":null,"totals_shortlist":false,"context_verdict":"baseline_reinforced"}
+  ],
+  "accuracy_shortlist": [
+    {"match_id":5795481,"market":"one_x_two","call":"home_win","probability":0.65946},
+    {"match_id":5795477,"market":"one_x_two","call":"home_win","probability":0.62808},
+    {"match_id":5795477,"market":"over_under_2_5","call":"over_2_5","probability":0.66956}
+  ],
+  "price_aware_shadow_shortlist": [
+    {"match_id":5795478,"market":"one_x_two","call":"home_win","probability":0.48076,"best_ask":0.3,"edge":0.18076}
+  ],
+  "decision_boundaries": {
+    "capital_deployment_ready": false,
+    "wallet_used": false,
+    "orders_placed": false
+  }
+}

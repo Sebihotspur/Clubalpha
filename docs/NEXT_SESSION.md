@@ -6,6 +6,28 @@ Model and website checkpoint: see latest commit on `main`
 
 Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
 
+## October 15 Matchweek 7 freeze
+
+- A new ten-fixture Matchweek 7 baseline and contextual slate is frozen before
+  the October 17 first kickoff. The base and contextual leaders agree in all
+  ten fixtures; context makes no reversals.
+- The stricter decision policy passes Brentford–Liverpool and
+  Leeds–Manchester United because the leading side is fewer than five
+  percentage points clear. Totals are called only above 58% Over probability
+  or below 42%.
+- Accuracy leaders are Manchester City over Ipswich (65.9%), Brighton over
+  Crystal Palace (62.8%), and Brighton–Palace Over 2.5 (67.0%).
+- Everton over Chelsea is the only strict price-aware shadow shortlist: 48.1%
+  football probability versus a 30% best ask at capture time. It remains a
+  research pick with zero capital authorization.
+- Brighton–Palace Over misses the exact five-point price gate by 0.04 points;
+  apparent Unders in Tottenham–Coventry and Leeds–Manchester United are
+  rejected because the football probabilities do not reach the totals
+  confidence boundary.
+- Canonical selection evidence is stored in
+  `artifacts/matchweek_research/2026-10-15-mw7/picks.json`. The frozen
+  contextual archive is registered for automatic post-match collection.
+
 ## October 15 Matchweek 6 settlement
 
 - All ten Matchweek 6 results are appended to the frozen October 6 contextual
