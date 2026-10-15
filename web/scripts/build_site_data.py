@@ -645,15 +645,17 @@ def build():
         football = row["football_baseline"]
         decision = row["model"]
         match_id = int(fixture["match_id"])
+        backtest = current_backtest_by_id[match_id]
         market_outcomes = row["one_x_two"]["outcomes"]
         football_leader = max(
             ("home_win", "draw", "away_win"),
             key=lambda key: float(decision[key]),
         )
-        base_leader = max(
-            ("home_win", "draw", "away_win"),
-            key=lambda key: float(football[key]),
-        )
+        # Keep the three model stages explicit. ``football_baseline`` in the
+        # frozen market snapshot is the contextual model, while the immutable
+        # backtest retains the true pre-context baseline leader.
+        base_leader = str(backtest["baseline_top_pick"])
+        contextual_leader = str(backtest["contextual_top_pick"])
         market_leader = max(
             ("home_win", "draw", "away_win"),
             key=lambda key: float(
@@ -661,7 +663,6 @@ def build():
             ),
         )
         result = current_result_by_id[match_id]
-        backtest = current_backtest_by_id[match_id]
         actual_outcome = str(result["outcome"])
         actual_over = (
             int(result["final_home_goals"]) + int(result["final_away_goals"])
@@ -684,6 +685,7 @@ def build():
                 "over_2_5": decision["over_2_5"],
                 "football_leader": football_leader,
                 "base_leader": base_leader,
+                "contextual_leader": contextual_leader,
                 "market_leader": market_leader,
                 "market_no_vig": {
                     key: market_outcomes[key]["market_no_vig_probability"]
@@ -701,6 +703,7 @@ def build():
                     "outcome": actual_outcome,
                     "football_1x2_hit": football_leader == actual_outcome,
                     "base_1x2_hit": base_leader == actual_outcome,
+                    "contextual_1x2_hit": contextual_leader == actual_outcome,
                     "market_1x2_hit": market_leader == actual_outcome,
                     "over_under_2_5_hit": football_over == actual_over,
                     "market_over_under_2_5_hit": market_over == actual_over,
