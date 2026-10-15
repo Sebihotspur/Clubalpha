@@ -95,7 +95,7 @@ function currentResearchCards(matches) {
         <div class="match-teams"><span>${esc(match.home_team)}</span><span>${esc(match.away_team)}</span></div>
         <div class="xg-row">
           <div><span class="panel-label">Projected total xG</span><div class="xg-total">${dec(match.predicted_xg.total)}</div></div>
-          <div class="lean">Football baseline<strong>${esc(label)} · ${pct(match.probabilities[leader])}</strong></div>
+          <div class="lean">Final calibrated call<strong>${esc(label)} · ${pct(match.probabilities[leader])}</strong></div>
         </div>
       </article>`;
     })
@@ -132,18 +132,18 @@ function overview(data) {
     <section class="metrics">
       ${metric("Deployment", "NO CAPITAL", "Shadow observations only", "amber")}
       ${metric("Simulation", data.meta.simulations.toLocaleString(), "Independent Poisson runs", "accent")}
-      ${metric("MW5 research", `${current.score.markets.one_x_two.hits}/${current.settled} 1X2`, `${current.score.markets.over_under_2_5.hits}/${current.settled} O/U 2.5`)}
+      ${metric(`MW${current.round} research`, `${current.score.markets.one_x_two.hits}/${current.settled} 1X2`, `${current.score.markets.over_under_2_5.hits}/${current.settled} O/U 2.5`)}
       ${metric("Promotion gate", `>${pct(data.ledger.hit_rate_gate)}`, `Minimum ${data.ledger.sample_gate} settled picks`)}
     </section>
 
     <section class="section">
-      <div class="section-head"><h2>Matchweek 5 settled</h2><a href="/predictions/">Open result review →</a></div>
+      <div class="section-head"><h2>Matchweek ${esc(current.round)} settled</h2><a href="/predictions/">Open result review →</a></div>
       <article class="pick-card">
         <div class="pick-main">
-          <div class="pick-tag"><span></span> Research slate · September 18–20</div>
-          <p class="fixture-kicker">BRENTFORD 3–0 CHELSEA · BRIGHTON 3–0 ARSENAL · CITY 5–3 SUNDERLAND</p>
-          <h2 class="pick-title">Upsets separated from process</h2>
-          <div class="pick-market">Brentford was a model-supported upset; Brighton–Arsenal was outcome variance</div>
+          <div class="pick-tag"><span></span> Research slate · October 10–12</div>
+          <p class="fixture-kicker">ARSENAL 2–1 LEEDS · CHELSEA 5–1 BOURNEMOUTH · CITY 3–0 LIVERPOOL</p>
+          <h2 class="pick-title">The base beat the final translation</h2>
+          <div class="pick-market">Base leaders scored ${current.backtest_summary.base_outcome_hits}/10; context scored ${current.backtest_summary.outcome_hits}/10; final calibrated calls scored ${current.backtest_summary.final_call_hits}/10</div>
           <div class="pick-reasons">
             <div class="reason"><strong>${current.score.markets.one_x_two.hits}/10</strong><span>1X2 calls correct</span></div>
             <div class="reason"><strong>${current.score.markets.over_under_2_5.hits}/10</strong><span>total calls correct</span></div>
@@ -151,9 +151,9 @@ function overview(data) {
           </div>
         </div>
         <div class="pick-numbers">
-          <div class="pick-number"><span class="label">Palace load</span><strong class="yellow">HIGH</strong><small>9/11 projected starters</small></div>
-          <div class="pick-number"><span class="label">Bournemouth load</span><strong class="yellow">HIGH</strong><small>11/11 projected starters</small></div>
-          <div class="pick-number"><span class="label">City load</span><strong>MEDIUM</strong><small>Heavy rotation · 3/11 overlap</small></div>
+          <div class="pick-number"><span class="label">Base 1X2</span><strong class="green">${current.backtest_summary.base_outcome_hits}/10</strong><small>Before context + calibration</small></div>
+          <div class="pick-number"><span class="label">Final 1X2</span><strong>${current.backtest_summary.final_call_hits}/10</strong><small>Exact advertised calls</small></div>
+          <div class="pick-number"><span class="label">Shortlist</span><strong class="yellow">${current.shortlist_score.combined_shortlist.hits}/${current.shortlist_score.combined_shortlist.settled}</strong><small>Confidence ordering failed</small></div>
           <div class="pick-number"><span class="label">Real allocation</span><strong>0.00u</strong><small>Calibration gate remains locked</small></div>
         </div>
       </article>
@@ -432,6 +432,9 @@ function predictions(data) {
       <div class="player-strip">${match.player_standouts.map((player) => `<span><strong>${dec(player.rating)}</strong> ${esc(player.player)} · ${player.goals}G ${player.assists}A</span>`).join("")}</div>
     </article>`)
     .join("");
+  const reviewSection = reviewCards
+    ? `<section class="section"><div class="section-head"><h2>Pre-match cross-competition evidence</h2><span class="panel-label">Score + process + minutes</span></div><div class="ucl-insight-grid">${reviewCards}</div></section>`
+    : "";
   const archivedRows = data.official_slate.predictions
     .map(
       (match) => `<tr>
@@ -445,16 +448,16 @@ function predictions(data) {
     )
     .join("");
 
-  return `<section class="page-head"><p class="eyebrow">Settled research slate · Matchweek ${esc(current.round)}</p><h1>Predictions vs reality</h1><p>The pre-match football baseline and market benchmark are preserved beside the final score and xG process. Outcomes update team memory only after error attribution.</p><div class="notice">SETTLED RESEARCH · 1X2 + O/U 2.5 scored separately · Excluded from the official promotion gate · Zero capital authorized</div></section>
+  return `<section class="page-head"><p class="eyebrow">Settled research slate · Matchweek ${esc(current.round)}</p><h1>Predictions vs reality</h1><p>The exact calibrated calls shown before kickoff and the market benchmark are preserved beside the final score and xG process. Outcomes update team memory only after error attribution.</p><div class="notice">SETTLED RESEARCH · 1X2 + O/U 2.5 scored separately · Excluded from the official promotion gate · Zero capital authorized</div></section>
     <section class="metrics">
       ${metric("1X2", `${current.score.markets.one_x_two.hits}/${current.settled}`, pct(current.score.markets.one_x_two.hit_rate), current.score.markets.one_x_two.hit_rate > 0.5 ? "accent" : "amber")}
       ${metric("O/U 2.5", `${current.score.markets.over_under_2_5.hits}/${current.settled}`, pct(current.score.markets.over_under_2_5.hit_rate), current.score.markets.over_under_2_5.hit_rate >= 0.5 ? "accent" : "amber")}
       ${metric("Projected XI", `${dec(current.backtest_summary.mean_projected_xi_hits_of_11)}/11`, "Mean starters correct", "accent")}
       ${metric("Deployment", "NO CAPITAL", "Research shadow only", "amber")}
     </section>
-    <section class="section"><div class="section-head"><h2>Matchweek ${esc(current.round)} result review</h2><span class="panel-label">Updated ${esc(dateTime(current.as_of))}</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>Our pre-match read</th><th>Market benchmark</th><th>O2.5</th><th>Result + process</th></tr></thead><tbody>${currentRows}</tbody></table></div></section>
-    <section class="section"><div class="section-head"><h2>Pre-match cross-competition evidence</h2><span class="panel-label">Score + process + minutes</span></div><div class="ucl-insight-grid">${reviewCards}</div></section>
-    <p class="notice">The Matchweek 5 results created 10 append-only learning cards: ${current.backtest_summary.process_supported_outcome_variance} outcome-variance reviews and ${current.backtest_summary.structural_misses} structural reviews. No single scoreline can directly rewrite Player Alpha, Club Form, or the locked 60/30/10 foundation.</p>
+    <section class="section"><div class="section-head"><h2>Matchweek ${esc(current.round)} result review</h2><span class="panel-label">Updated ${esc(dateTime(current.as_of))}</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>Our final pre-match call</th><th>Market benchmark</th><th>O2.5</th><th>Result + process</th></tr></thead><tbody>${currentRows}</tbody></table></div></section>
+    ${reviewSection}
+    <p class="notice">The Matchweek ${esc(current.round)} results created 10 append-only learning cards: ${current.backtest_summary.process_supported_outcome_variance} outcome-variance reviews and ${current.backtest_summary.structural_misses} structural reviews. Base 1X2 leaders scored ${current.backtest_summary.base_outcome_hits}/10 versus ${current.backtest_summary.final_call_hits}/10 for the final calibrated calls, so confidence translation—not data coverage—is the immediate review. No single scoreline can directly rewrite Player Alpha, Club Form, or the locked 60/30/10 foundation.</p>
     <section class="section"><div class="section-head"><h2>Latest settled official archive</h2><a href="/ledger/">Open the immutable ledger →</a></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>Model xG</th><th>1X2 probability</th><th>O2.5</th><th>Official call</th><th>Why</th></tr></thead><tbody>${archivedRows}</tbody></table></div></section>`;
 }
 

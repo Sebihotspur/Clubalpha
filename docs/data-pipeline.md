@@ -24,6 +24,25 @@ FotMob web feeds + FotMob statistics CDN + UEFA qualifier registry
     -> Player Quality / Club Form + Club Dynamics / Historical Fixtures
 ```
 
+## International-window player evidence
+
+National-team appearances for players in the 51-club PL/UCL universe are
+collected into a separate zero-live-weight ledger:
+
+```bash
+python3 scripts/pull_international_player_evidence.py \
+  --from-date 2026-09-21 \
+  --as-of 2026-10-06
+```
+
+The collector joins FotMob player IDs back to the current club squads and
+preserves minutes, starts, results, goals, assists, xG, xA, chances created,
+final-third and line-breaking passes, and defensive actions when published.
+This evidence may inform workload, availability, role, condition, and projected
+XI review. It has zero automatic Club Form, Player Alpha, probability, or
+capital weight because national-team opposition and tactical context are not
+directly comparable with club football.
+
 The client uses the current FotMob paths:
 
 - `/api/data/leagues`

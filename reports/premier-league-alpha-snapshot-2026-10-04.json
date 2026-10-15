@@ -1,0 +1,3946 @@
+{
+  "snapshot_version": "clubalpha_premier_league_projected_xi_alpha_2026_10_04",
+  "as_of": "2026-10-04",
+  "generated_at_utc": "2026-10-04T20:41:12.430576+00:00",
+  "source": "FotMob current squads, injuries, current-season declared lineups, shared cup/European appearances, preseason detail, and 2025/26 match history",
+  "selection_version": "clubalpha_squad_selection_v2_locked",
+  "player_quality_version": "clubalpha_player_quality_v2",
+  "method": {
+    "current_selection_competition_ids": [
+      42,
+      47,
+      73,
+      74,
+      133,
+      247,
+      10615
+    ],
+    "current_selection_matches": 85,
+    "supplementary_appearances_are_selection_only": true,
+    "primary_grade": "990-minute projected-squad weighted locked Alpha Ability z",
+    "transition_source_weights": {
+      "current_season": 2.0,
+      "preseason": 0.5,
+      "previous_season": 0.25
+    },
+    "strength_index": "50 + 15 * within-snapshot z-score of team Alpha, capped 0-100; display only",
+    "grade_confidence": "high at 95% expected-minute Alpha coverage, medium at 85%, low below 85%",
+    "not_in_grade": [
+      "club_form",
+      "historical_fixture_matchup",
+      "opponent",
+      "market_price"
+    ]
+  },
+  "league_distribution": {
+    "mean_team_alpha_z": 0.115558,
+    "sample_sd": 0.336805
+  },
+  "clubs": [
+    {
+      "team_id": 8456,
+      "team": "Manchester City",
+      "next_fixture": {
+        "match_id": 5795472,
+        "kickoff_utc": "2026-10-11T15:30:00Z",
+        "venue": "away",
+        "opponent": "Liverpool"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.6973,
+          "coverage": 0.9556
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.667821,
+          "coverage": 0.9521
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.706899,
+          "coverage": 0.9621
+        },
+        "scoring_threat": {
+          "z": 0.303592,
+          "coverage": 0.951
+        },
+        "chance_creation": {
+          "z": 0.720216,
+          "coverage": 0.9556
+        },
+        "defensive_prevention": {
+          "z": 0.29863,
+          "coverage": 0.9556
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 618878,
+          "player": "Gianluigi Donnarumma",
+          "role": "GK",
+          "expected_minutes": 74.337,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.308,
+          "scoring_threat_z": null,
+          "chance_creation_z": 0.930509,
+          "defensive_prevention_z": 0.307046
+        },
+        {
+          "player_id": 844425,
+          "player": "Marc Gu\u00e9hi",
+          "role": "DEF",
+          "expected_minutes": 74.339,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 1.083,
+          "scoring_threat_z": 0.902351,
+          "chance_creation_z": 0.929506,
+          "defensive_prevention_z": 0.572195
+        },
+        {
+          "player_id": 614006,
+          "player": "R\u00faben Dias",
+          "role": "DEF",
+          "expected_minutes": 74.339,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.841,
+          "scoring_threat_z": -0.088819,
+          "chance_creation_z": 1.160793,
+          "defensive_prevention_z": 0.404948
+        },
+        {
+          "player_id": 1070712,
+          "player": "Jo\u0161ko Gvardiol",
+          "role": "DEF",
+          "expected_minutes": 69.339,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 1.097,
+          "scoring_threat_z": 1.474369,
+          "chance_creation_z": 1.129289,
+          "defensive_prevention_z": 0.325074
+        },
+        {
+          "player_id": 955529,
+          "player": "Matheus Nunes",
+          "role": "DEF",
+          "expected_minutes": 63.624,
+          "start_frequency": 0.681303,
+          "alpha_ability_z": 0.759,
+          "scoring_threat_z": -0.427793,
+          "chance_creation_z": 0.755118,
+          "defensive_prevention_z": 0.568748
+        },
+        {
+          "player_id": 933576,
+          "player": "Antoine Semenyo",
+          "role": "MID",
+          "expected_minutes": 71.005,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.264,
+          "scoring_threat_z": 0.409834,
+          "chance_creation_z": -0.078886,
+          "defensive_prevention_z": 0.353968
+        },
+        {
+          "player_id": 1137705,
+          "player": "Enzo Fern\u00e1ndez",
+          "role": "MID",
+          "expected_minutes": 70.979,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.554,
+          "scoring_threat_z": -0.340623,
+          "chance_creation_z": 1.255481,
+          "defensive_prevention_z": -0.4917
+        },
+        {
+          "player_id": 1089691,
+          "player": "Elliot Anderson",
+          "role": "MID",
+          "expected_minutes": 66.958,
+          "start_frequency": 0.681303,
+          "alpha_ability_z": 1.393,
+          "scoring_threat_z": 0.08324,
+          "chance_creation_z": 1.516845,
+          "defensive_prevention_z": 0.687984
+        },
+        {
+          "player_id": 1104053,
+          "player": "Rayan Cherki",
+          "role": "MID",
+          "expected_minutes": 66.267,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 1.764,
+          "scoring_threat_z": 0.245944,
+          "chance_creation_z": 2.123414,
+          "defensive_prevention_z": 0.892198
+        },
+        {
+          "player_id": 965764,
+          "player": "Iliman Ndiaye",
+          "role": "MID",
+          "expected_minutes": 51.433,
+          "start_frequency": 0.477337,
+          "alpha_ability_z": -0.215,
+          "scoring_threat_z": -0.565906,
+          "chance_creation_z": 0.030932,
+          "defensive_prevention_z": 0.620333
+        },
+        {
+          "player_id": 737066,
+          "player": "Erling Haaland",
+          "role": "FWD",
+          "expected_minutes": 74.339,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.628,
+          "scoring_threat_z": 1.99762,
+          "chance_creation_z": -0.70169,
+          "defensive_prevention_z": -0.697605
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Antoine Semenyo",
+          "Nico O'Reilly"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795461,
+          6099330,
+          5795452,
+          6106286,
+          5795442
+        ],
+        "weighted_matches": 5.515625,
+        "weighted_exact_lineups": 5.515625,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 25
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 75.9,
+      "display_grade": "S",
+      "grade_confidence": "high",
+      "grade_provisional": false,
+      "rank": 1
+    },
+    {
+      "team_id": 9825,
+      "team": "Arsenal",
+      "next_fixture": {
+        "match_id": 5795465,
+        "kickoff_utc": "2026-10-10T11:30:00Z",
+        "venue": "home",
+        "opponent": "Leeds United"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.580331,
+          "coverage": 1.0
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.572045,
+          "coverage": 1.0
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.610376,
+          "coverage": 1.0
+        },
+        "scoring_threat": {
+          "z": 0.335556,
+          "coverage": 1.0
+        },
+        "chance_creation": {
+          "z": 0.256545,
+          "coverage": 0.9797
+        },
+        "defensive_prevention": {
+          "z": 0.479745,
+          "coverage": 0.9317
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 562727,
+          "player": "David Raya",
+          "role": "GK",
+          "expected_minutes": 78.251,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.836,
+          "scoring_threat_z": null,
+          "chance_creation_z": -0.440943,
+          "defensive_prevention_z": 0.835886
+        },
+        {
+          "player_id": 710159,
+          "player": "Ezri Konsa",
+          "role": "DEF",
+          "expected_minutes": 88.277,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.356,
+          "scoring_threat_z": -0.755046,
+          "chance_creation_z": 0.591463,
+          "defensive_prevention_z": 0.298637
+        },
+        {
+          "player_id": 795179,
+          "player": "Gabriel",
+          "role": "DEF",
+          "expected_minutes": 88.277,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.966,
+          "scoring_threat_z": 1.404707,
+          "chance_creation_z": 0.035935,
+          "defensive_prevention_z": 0.794968
+        },
+        {
+          "player_id": 1105912,
+          "player": "Riccardo Calafiori",
+          "role": "DEF",
+          "expected_minutes": 64.091,
+          "start_frequency": 0.681303,
+          "alpha_ability_z": 0.599,
+          "scoring_threat_z": 0.54277,
+          "chance_creation_z": -0.166536,
+          "defensive_prevention_z": 0.841949
+        },
+        {
+          "player_id": 942381,
+          "player": "Jurri\u00ebn Timber",
+          "role": "DEF",
+          "expected_minutes": 33.788,
+          "start_frequency": 0.362606,
+          "alpha_ability_z": 0.934,
+          "scoring_threat_z": 1.217775,
+          "chance_creation_z": -0.079847,
+          "defensive_prevention_z": 1.199682
+        },
+        {
+          "player_id": 654096,
+          "player": "Declan Rice",
+          "role": "MID",
+          "expected_minutes": 76.246,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 1.142,
+          "scoring_threat_z": -0.058395,
+          "chance_creation_z": 0.858261,
+          "defensive_prevention_z": 1.054738
+        },
+        {
+          "player_id": 961995,
+          "player": "Bukayo Saka",
+          "role": "MID",
+          "expected_minutes": 72.431,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.992,
+          "scoring_threat_z": 0.509607,
+          "chance_creation_z": 0.645824,
+          "defensive_prevention_z": 1.287588
+        },
+        {
+          "player_id": 534670,
+          "player": "Martin \u00d8degaard",
+          "role": "MID",
+          "expected_minutes": 71.894,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.973,
+          "scoring_threat_z": 0.242153,
+          "chance_creation_z": 1.380449,
+          "defensive_prevention_z": -0.156518
+        },
+        {
+          "player_id": 850354,
+          "player": "Bruno Guimar\u00e3es",
+          "role": "MID",
+          "expected_minutes": 51.179,
+          "start_frequency": 0.566572,
+          "alpha_ability_z": 0.842,
+          "scoring_threat_z": 0.798416,
+          "chance_creation_z": 0.987855,
+          "defensive_prevention_z": -0.253396
+        },
+        {
+          "player_id": 574645,
+          "player": "Mikel Merino",
+          "role": "MID",
+          "expected_minutes": 42.82,
+          "start_frequency": 0.318697,
+          "alpha_ability_z": -0.113,
+          "scoring_threat_z": 1.11019,
+          "chance_creation_z": -0.250131,
+          "defensive_prevention_z": -0.507614
+        },
+        {
+          "player_id": 749736,
+          "player": "Kai Havertz",
+          "role": "FWD",
+          "expected_minutes": 67.6,
+          "start_frequency": 0.681303,
+          "alpha_ability_z": 0.52,
+          "scoring_threat_z": 0.516278,
+          "chance_creation_z": 0.216006,
+          "defensive_prevention_z": null
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Declan Rice",
+          "Kai Havertz",
+          "Ben White",
+          "Piero Hincapi\u00e9",
+          "Cristhian Mosquera"
+        ],
+        "unavailable": [
+          "Christos Tzolis",
+          "William Saliba"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795457,
+          6099332,
+          5795453,
+          6106318,
+          5795435
+        ],
+        "weighted_matches": 5.515625,
+        "weighted_exact_lineups": 5.515625,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 24
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 70.7,
+      "display_grade": "A+",
+      "grade_confidence": "high",
+      "grade_provisional": false,
+      "rank": 2
+    },
+    {
+      "team_id": 10260,
+      "team": "Manchester United",
+      "next_fixture": {
+        "match_id": 5795473,
+        "kickoff_utc": "2026-10-10T16:30:00Z",
+        "venue": "home",
+        "opponent": "Tottenham Hotspur"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.562011,
+          "coverage": 0.9977
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.554727,
+          "coverage": 0.996
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.587866,
+          "coverage": 0.9974
+        },
+        "scoring_threat": {
+          "z": 0.032755,
+          "coverage": 0.9975
+        },
+        "chance_creation": {
+          "z": 0.350538,
+          "coverage": 0.9977
+        },
+        "defensive_prevention": {
+          "z": 0.409297,
+          "coverage": 0.9801
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 1178602,
+          "player": "Senne Lammens",
+          "role": "GK",
+          "expected_minutes": 80.237,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.336,
+          "scoring_threat_z": null,
+          "chance_creation_z": -0.805537,
+          "defensive_prevention_z": 0.33651
+        },
+        {
+          "player_id": 751550,
+          "player": "Diogo Dalot",
+          "role": "DEF",
+          "expected_minutes": 88.46,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": 0.726,
+          "scoring_threat_z": 0.032509,
+          "chance_creation_z": 0.487163,
+          "defensive_prevention_z": 0.650106
+        },
+        {
+          "player_id": 847983,
+          "player": "Lisandro Mart\u00ednez",
+          "role": "DEF",
+          "expected_minutes": 80.237,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.77,
+          "scoring_threat_z": -0.56604,
+          "chance_creation_z": 0.697265,
+          "defensive_prevention_z": 0.714641
+        },
+        {
+          "player_id": 255610,
+          "player": "Harry Maguire",
+          "role": "DEF",
+          "expected_minutes": 68.672,
+          "start_frequency": 0.681303,
+          "alpha_ability_z": 0.666,
+          "scoring_threat_z": 0.736792,
+          "chance_creation_z": -0.138126,
+          "defensive_prevention_z": 0.699622
+        },
+        {
+          "player_id": 362694,
+          "player": "Luke Shaw",
+          "role": "DEF",
+          "expected_minutes": 45.548,
+          "start_frequency": 0.477337,
+          "alpha_ability_z": 0.382,
+          "scoring_threat_z": -0.321819,
+          "chance_creation_z": -0.420437,
+          "defensive_prevention_z": 1.119067
+        },
+        {
+          "player_id": 465960,
+          "player": "Youri Tielemans",
+          "role": "MID",
+          "expected_minutes": 89.759,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.854,
+          "scoring_threat_z": -0.203372,
+          "chance_creation_z": 0.820024,
+          "defensive_prevention_z": 0.728476
+        },
+        {
+          "player_id": 422685,
+          "player": "Bruno Fernandes",
+          "role": "MID",
+          "expected_minutes": 84.12,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 1.037,
+          "scoring_threat_z": -0.62392,
+          "chance_creation_z": 2.147092,
+          "defensive_prevention_z": -0.217518
+        },
+        {
+          "player_id": 923312,
+          "player": "Bryan Mbeumo",
+          "role": "MID",
+          "expected_minutes": 83.406,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.356,
+          "scoring_threat_z": 0.531523,
+          "chance_creation_z": -0.050429,
+          "defensive_prevention_z": 0.337205
+        },
+        {
+          "player_id": 1292810,
+          "player": "Kobbie Mainoo",
+          "role": "MID",
+          "expected_minutes": 77.546,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": -0.007,
+          "scoring_threat_z": -0.180338,
+          "chance_creation_z": 0.182927,
+          "defensive_prevention_z": -0.141518
+        },
+        {
+          "player_id": 696365,
+          "player": "Marcus Rashford",
+          "role": "MID",
+          "expected_minutes": 77.499,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": 1.157,
+          "scoring_threat_z": 0.948761,
+          "chance_creation_z": 0.731943,
+          "defensive_prevention_z": 0.302176
+        },
+        {
+          "player_id": 863098,
+          "player": "Matheus Cunha",
+          "role": "FWD",
+          "expected_minutes": 79.951,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.349,
+          "scoring_threat_z": 0.316758,
+          "chance_creation_z": 0.135438,
+          "defensive_prevention_z": 0.33358
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Kobbie Mainoo",
+          "Marcus Rashford"
+        ],
+        "unavailable": [
+          "Amad Diallo",
+          "Benjamin \u0160e\u0161ko",
+          "Karl Darlow",
+          "Manuel Ugarte",
+          "Matthijs de Ligt",
+          "Noussair Mazraoui",
+          "Patrick Dorgu",
+          "Tom Heaton"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795459,
+          6099329,
+          5795452,
+          6106293,
+          5795438
+        ],
+        "weighted_matches": 5.515625,
+        "weighted_exact_lineups": 5.515625,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 30
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 69.9,
+      "display_grade": "A+",
+      "grade_confidence": "high",
+      "grade_provisional": false,
+      "rank": 3
+    },
+    {
+      "team_id": 8455,
+      "team": "Chelsea",
+      "next_fixture": {
+        "match_id": 5795467,
+        "kickoff_utc": "2026-10-10T14:00:00Z",
+        "venue": "home",
+        "opponent": "AFC Bournemouth"
+      },
+      "formation": "3-4-2-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.350521,
+          "coverage": 0.8668
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.134674,
+          "coverage": 0.7886
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.377125,
+          "coverage": 0.8596
+        },
+        "scoring_threat": {
+          "z": -0.087538,
+          "coverage": 0.868
+        },
+        "chance_creation": {
+          "z": 0.212441,
+          "coverage": 0.8668
+        },
+        "defensive_prevention": {
+          "z": 0.442519,
+          "coverage": 0.8668
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 268375,
+          "player": "Emiliano Mart\u00ednez",
+          "role": "GK",
+          "expected_minutes": 81.927,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": 0.9,
+          "scoring_threat_z": null,
+          "chance_creation_z": 0.371698,
+          "defensive_prevention_z": 0.899707
+        },
+        {
+          "player_id": 1096400,
+          "player": "Levi Colwill",
+          "role": "DEF",
+          "expected_minutes": 77.683,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": 0.396,
+          "scoring_threat_z": -0.195862,
+          "chance_creation_z": 0.162231,
+          "defensive_prevention_z": 0.491562
+        },
+        {
+          "player_id": 917802,
+          "player": "Wesley Fofana",
+          "role": "DEF",
+          "expected_minutes": 73.493,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": 1.036,
+          "scoring_threat_z": 0.032016,
+          "chance_creation_z": 0.550988,
+          "defensive_prevention_z": 0.960298
+        },
+        {
+          "player_id": 950485,
+          "player": "Maxence Lacroix",
+          "role": "DEF",
+          "expected_minutes": 72.221,
+          "start_frequency": 0.742282,
+          "alpha_ability_z": 1.0,
+          "scoring_threat_z": 0.120141,
+          "chance_creation_z": 0.057051,
+          "defensive_prevention_z": 1.167639
+        },
+        {
+          "player_id": 1096353,
+          "player": "Cole Palmer",
+          "role": "MID",
+          "expected_minutes": 88.871,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": 0.407,
+          "scoring_threat_z": -0.005422,
+          "chance_creation_z": 0.30801,
+          "defensive_prevention_z": 1.090432
+        },
+        {
+          "player_id": 883080,
+          "player": "Morgan Rogers",
+          "role": "MID",
+          "expected_minutes": 88.409,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": 0.151,
+          "scoring_threat_z": -0.072468,
+          "chance_creation_z": 0.192745,
+          "defensive_prevention_z": 0.355788
+        },
+        {
+          "player_id": 843040,
+          "player": "Pedro Neto",
+          "role": "MID",
+          "expected_minutes": 82.742,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": -0.19,
+          "scoring_threat_z": -0.690458,
+          "chance_creation_z": 0.420844,
+          "defensive_prevention_z": -0.261095
+        },
+        {
+          "player_id": 988805,
+          "player": "Pep Chavarr\u00eda",
+          "role": "MID",
+          "expected_minutes": 65.876,
+          "start_frequency": 0.488591,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 1272440,
+          "player": "Valent\u00edn Barco",
+          "role": "MID",
+          "expected_minutes": 52.131,
+          "start_frequency": 0.488591,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 156008,
+          "player": "Jordan Henderson",
+          "role": "MID",
+          "expected_minutes": 32.925,
+          "start_frequency": 0.343624,
+          "alpha_ability_z": 0.316,
+          "scoring_threat_z": -0.500315,
+          "chance_creation_z": 0.326681,
+          "defensive_prevention_z": 0.546547
+        },
+        {
+          "player_id": 113836,
+          "player": "Danny Welbeck",
+          "role": "FWD",
+          "expected_minutes": 43.62,
+          "start_frequency": 0.488591,
+          "alpha_ability_z": -0.143,
+          "scoring_threat_z": 0.527438,
+          "chance_creation_z": -0.702449,
+          "defensive_prevention_z": 0.061432
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Cole Palmer",
+          "Reece James",
+          "Mois\u00e9s Caicedo",
+          "Emanuel Emegha",
+          "Marco Palestra"
+        ],
+        "unavailable": [
+          "Jamie Gittens",
+          "Jo\u00e3o Pedro"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795456,
+          5795447,
+          6099342,
+          5795435,
+          5795427
+        ],
+        "weighted_matches": 5.820312,
+        "weighted_exact_lineups": 5.820312,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 27
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 60.5,
+      "display_grade": "A",
+      "grade_confidence": "medium",
+      "grade_provisional": true,
+      "rank": 4
+    },
+    {
+      "team_id": 8650,
+      "team": "Liverpool",
+      "next_fixture": {
+        "match_id": 5795472,
+        "kickoff_utc": "2026-10-11T15:30:00Z",
+        "venue": "home",
+        "opponent": "Manchester City"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.350253,
+          "coverage": 0.8782
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.329487,
+          "coverage": 0.9353
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.448509,
+          "coverage": 0.8652
+        },
+        "scoring_threat": {
+          "z": 0.374257,
+          "coverage": 0.8647
+        },
+        "chance_creation": {
+          "z": 0.24999,
+          "coverage": 0.8782
+        },
+        "defensive_prevention": {
+          "z": 0.212381,
+          "coverage": 0.8053
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 319784,
+          "player": "Alisson Becker",
+          "role": "GK",
+          "expected_minutes": 78.29,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.577,
+          "scoring_threat_z": null,
+          "chance_creation_z": 0.716566,
+          "defensive_prevention_z": 0.577128
+        },
+        {
+          "player_id": 921253,
+          "player": "Ronald Araujo",
+          "role": "DEF",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.77,
+          "scoring_threat_z": 0.767133,
+          "chance_creation_z": 0.455658,
+          "defensive_prevention_z": 0.526151
+        },
+        {
+          "player_id": 1473534,
+          "player": "J\u00e9r\u00e9my Jacquet",
+          "role": "DEF",
+          "expected_minutes": 88.32,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 1195281,
+          "player": "Milo\u0161 Kerkez",
+          "role": "DEF",
+          "expected_minutes": 88.069,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.052,
+          "scoring_threat_z": 0.166218,
+          "chance_creation_z": -0.309464,
+          "defensive_prevention_z": 0.346246
+        },
+        {
+          "player_id": 209405,
+          "player": "Virgil van Dijk",
+          "role": "DEF",
+          "expected_minutes": 78.29,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 1.164,
+          "scoring_threat_z": 1.477658,
+          "chance_creation_z": 0.482053,
+          "defensive_prevention_z": 0.769374
+        },
+        {
+          "player_id": 831489,
+          "player": "Alexis Mac Allister",
+          "role": "MID",
+          "expected_minutes": 81.591,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": -0.101,
+          "scoring_threat_z": 0.53533,
+          "chance_creation_z": 0.017974,
+          "defensive_prevention_z": -0.60573
+        },
+        {
+          "player_id": 846005,
+          "player": "Dominik Szoboszlai",
+          "role": "MID",
+          "expected_minutes": 80.965,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 1.051,
+          "scoring_threat_z": 0.63753,
+          "chance_creation_z": 1.254055,
+          "defensive_prevention_z": 0.094747
+        },
+        {
+          "player_id": 1152455,
+          "player": "Florian Wirtz",
+          "role": "MID",
+          "expected_minutes": 70.636,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.833,
+          "scoring_threat_z": -0.123396,
+          "chance_creation_z": 1.182457,
+          "defensive_prevention_z": 0.562507
+        },
+        {
+          "player_id": 1297165,
+          "player": "Bradley Barcola",
+          "role": "MID",
+          "expected_minutes": 59.372,
+          "start_frequency": 0.681303,
+          "alpha_ability_z": 0.984,
+          "scoring_threat_z": 1.004419,
+          "chance_creation_z": 0.196861,
+          "defensive_prevention_z": 0.859613
+        },
+        {
+          "player_id": 1553105,
+          "player": "V\u00edctor Mu\u00f1oz",
+          "role": "MID",
+          "expected_minutes": 32.291,
+          "start_frequency": 0.318697,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 690107,
+          "player": "Alexander Isak",
+          "role": "FWD",
+          "expected_minutes": 72.105,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": -0.493,
+          "scoring_threat_z": 0.038987,
+          "chance_creation_z": -0.686681,
+          "defensive_prevention_z": null
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Alexander Isak"
+        ],
+        "unavailable": [
+          "Cody Gakpo",
+          "Conor Bradley",
+          "Federico Chiesa",
+          "Giovanni Leoni",
+          "Hugo Ekitik\u00e9"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795455,
+          6099335,
+          5795451,
+          6106246,
+          5795441
+        ],
+        "weighted_matches": 5.515625,
+        "weighted_exact_lineups": 5.515625,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 28
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 60.5,
+      "display_grade": "A",
+      "grade_confidence": "medium",
+      "grade_provisional": true,
+      "rank": 5
+    },
+    {
+      "team_id": 10204,
+      "team": "Brighton & Hove Albion",
+      "next_fixture": {
+        "match_id": 5795474,
+        "kickoff_utc": "2026-10-10T14:00:00Z",
+        "venue": "away",
+        "opponent": "Sunderland"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.315248,
+          "coverage": 0.8034
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.416396,
+          "coverage": 0.8762
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.27982,
+          "coverage": 0.7806
+        },
+        "scoring_threat": {
+          "z": 0.182405,
+          "coverage": 0.8033
+        },
+        "chance_creation": {
+          "z": 0.271023,
+          "coverage": 0.8034
+        },
+        "defensive_prevention": {
+          "z": 0.254261,
+          "coverage": 0.7997
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 1131987,
+          "player": "Bart Verbruggen",
+          "role": "GK",
+          "expected_minutes": 87.355,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 0.168,
+          "scoring_threat_z": null,
+          "chance_creation_z": 0.580796,
+          "defensive_prevention_z": 0.168201
+        },
+        {
+          "player_id": 1413996,
+          "player": "Luka Vu\u0161kovi\u0107",
+          "role": "DEF",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 613715,
+          "player": "Olivier Boscagli",
+          "role": "DEF",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.946,
+          "scoring_threat_z": 0.226274,
+          "chance_creation_z": 0.614079,
+          "defensive_prevention_z": 0.742009
+        },
+        {
+          "player_id": 774448,
+          "player": "Ferdi Kad\u0131o\u011flu",
+          "role": "DEF",
+          "expected_minutes": 83.11,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.212,
+          "scoring_threat_z": -0.066891,
+          "chance_creation_z": -0.372971,
+          "defensive_prevention_z": 0.06089
+        },
+        {
+          "player_id": 201690,
+          "player": "Lewis Dunk",
+          "role": "DEF",
+          "expected_minutes": 49.388,
+          "start_frequency": 0.454297,
+          "alpha_ability_z": 0.063,
+          "scoring_threat_z": -0.431025,
+          "chance_creation_z": 0.591267,
+          "defensive_prevention_z": -0.152951
+        },
+        {
+          "player_id": 1134871,
+          "player": "Maxim De Cuyper",
+          "role": "MID",
+          "expected_minutes": 90.0,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 1.001,
+          "scoring_threat_z": 0.748191,
+          "chance_creation_z": 1.227979,
+          "defensive_prevention_z": 0.002626
+        },
+        {
+          "player_id": 167008,
+          "player": "Pascal Gro\u00df",
+          "role": "MID",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.626,
+          "scoring_threat_z": 0.235497,
+          "chance_creation_z": 0.836542,
+          "defensive_prevention_z": -0.078126
+        },
+        {
+          "player_id": 1354561,
+          "player": "Diego G\u00f3mez",
+          "role": "MID",
+          "expected_minutes": 89.939,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.192,
+          "scoring_threat_z": -0.35007,
+          "chance_creation_z": -0.119469,
+          "defensive_prevention_z": 0.577665
+        },
+        {
+          "player_id": 1586552,
+          "player": "Chema Andr\u00e9s",
+          "role": "MID",
+          "expected_minutes": 63.147,
+          "start_frequency": 0.545703,
+          "alpha_ability_z": 0.256,
+          "scoring_threat_z": 0.227507,
+          "chance_creation_z": -0.431637,
+          "defensive_prevention_z": 0.659895
+        },
+        {
+          "player_id": 1602352,
+          "player": "Malick Junior Yalcouy\u00e9",
+          "role": "MID",
+          "expected_minutes": 59.09,
+          "start_frequency": 0.65075,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 1561249,
+          "player": "Charalampos Kostoulas",
+          "role": "FWD",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.787,
+          "scoring_threat_z": 0.721492,
+          "chance_creation_z": 0.291746,
+          "defensive_prevention_z": 0.775134
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Lewis Dunk"
+        ],
+        "unavailable": [
+          "Evan Ferguson",
+          "Femi Azeez",
+          "Jack Hinshelwood",
+          "Kaoru Mitoma",
+          "Mats Wieffer",
+          "Pascal Struijk",
+          "Stefanos Tzimas",
+          "Yankuba Minteh",
+          "Yasin Ayari",
+          "Zadok Yohanna"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795457,
+          6099329,
+          5795448,
+          5795437,
+          5795427
+        ],
+        "weighted_matches": 5.726562,
+        "weighted_exact_lineups": 5.726562,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 29
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 58.9,
+      "display_grade": "A",
+      "grade_confidence": "low",
+      "grade_provisional": true,
+      "rank": 6
+    },
+    {
+      "team_id": 10261,
+      "team": "Newcastle United",
+      "next_fixture": {
+        "match_id": 5795468,
+        "kickoff_utc": "2026-10-12T19:00:00Z",
+        "venue": "away",
+        "opponent": "Coventry City"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.291121,
+          "coverage": 0.8938
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.146084,
+          "coverage": 0.9724
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.361743,
+          "coverage": 0.892
+        },
+        "scoring_threat": {
+          "z": 0.044655,
+          "coverage": 0.9831
+        },
+        "chance_creation": {
+          "z": 0.11353,
+          "coverage": 0.8938
+        },
+        "defensive_prevention": {
+          "z": 0.25215,
+          "coverage": 0.8938
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 1186978,
+          "player": "Luk\u00e1s Horn\u00edcek",
+          "role": "GK",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 1197655,
+          "player": "Lewis Hall",
+          "role": "DEF",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.502,
+          "scoring_threat_z": -0.230265,
+          "chance_creation_z": 0.627335,
+          "defensive_prevention_z": 0.233529
+        },
+        {
+          "player_id": 956682,
+          "player": "Sven Botman",
+          "role": "DEF",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 1.02,
+          "scoring_threat_z": 0.32087,
+          "chance_creation_z": 0.040227,
+          "defensive_prevention_z": 1.150761
+        },
+        {
+          "player_id": 1137407,
+          "player": "Malick Thiaw",
+          "role": "DEF",
+          "expected_minutes": 82.751,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": 0.511,
+          "scoring_threat_z": 0.390937,
+          "chance_creation_z": 0.268692,
+          "defensive_prevention_z": 0.36624
+        },
+        {
+          "player_id": 958010,
+          "player": "Amar Dedi\u0107",
+          "role": "DEF",
+          "expected_minutes": 47.641,
+          "start_frequency": 0.656376,
+          "alpha_ability_z": 0.378,
+          "scoring_threat_z": -0.242043,
+          "chance_creation_z": 0.070613,
+          "defensive_prevention_z": 0.570918
+        },
+        {
+          "player_id": 760359,
+          "player": "Harvey Barnes",
+          "role": "MID",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.408,
+          "scoring_threat_z": 0.782015,
+          "chance_creation_z": -0.131076,
+          "defensive_prevention_z": 0.078699
+        },
+        {
+          "player_id": 1296763,
+          "player": "Lewis Miley",
+          "role": "MID",
+          "expected_minutes": 76.862,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": 0.594,
+          "scoring_threat_z": 0.069752,
+          "chance_creation_z": 0.097533,
+          "defensive_prevention_z": 0.878189
+        },
+        {
+          "player_id": 860975,
+          "player": "Joseph Willock",
+          "role": "MID",
+          "expected_minutes": 73.012,
+          "start_frequency": 0.742282,
+          "alpha_ability_z": -0.115,
+          "scoring_threat_z": -0.445634,
+          "chance_creation_z": 0.139246,
+          "defensive_prevention_z": 0.359513
+        },
+        {
+          "player_id": 521148,
+          "player": "Jacob Murphy",
+          "role": "MID",
+          "expected_minutes": 62.304,
+          "start_frequency": 0.746309,
+          "alpha_ability_z": -0.041,
+          "scoring_threat_z": -0.468966,
+          "chance_creation_z": 0.45192,
+          "defensive_prevention_z": -0.316971
+        },
+        {
+          "player_id": 1643770,
+          "player": "Sean Steur",
+          "role": "MID",
+          "expected_minutes": 48.469,
+          "start_frequency": 0.343624,
+          "alpha_ability_z": 0.074,
+          "scoring_threat_z": -0.114446,
+          "chance_creation_z": 0.167425,
+          "defensive_prevention_z": 0.017165
+        },
+        {
+          "player_id": 666857,
+          "player": "Yoane Wissa",
+          "role": "FWD",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": -0.082,
+          "scoring_threat_z": 0.326259,
+          "chance_creation_z": -0.295103,
+          "defensive_prevention_z": -0.446309
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Amar Dedi\u0107",
+          "Valentino Livramento"
+        ],
+        "unavailable": [
+          "Anthony Elanga",
+          "Daniel Burn",
+          "Jacob Ramsey",
+          "Joelinton",
+          "William Osula"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795462,
+          5795450,
+          6099336,
+          5795443,
+          5795434
+        ],
+        "weighted_matches": 5.820312,
+        "weighted_exact_lineups": 5.820312,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 26
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 57.8,
+      "display_grade": "B+",
+      "grade_confidence": "medium",
+      "grade_provisional": true,
+      "rank": 7
+    },
+    {
+      "team_id": 9879,
+      "team": "Fulham",
+      "next_fixture": {
+        "match_id": 5795471,
+        "kickoff_utc": "2026-10-10T14:00:00Z",
+        "venue": "away",
+        "opponent": "Ipswich Town"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.20908,
+          "coverage": 0.8634
+        },
+        "attacking_unit_alpha_ability": {
+          "z": -0.057405,
+          "coverage": 0.8719
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.23309,
+          "coverage": 0.8495
+        },
+        "scoring_threat": {
+          "z": -0.141236,
+          "coverage": 0.8693
+        },
+        "chance_creation": {
+          "z": 0.099385,
+          "coverage": 0.8634
+        },
+        "defensive_prevention": {
+          "z": 0.334763,
+          "coverage": 0.8212
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 215168,
+          "player": "Bernd Leno",
+          "role": "GK",
+          "expected_minutes": 72.319,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 0.507,
+          "scoring_threat_z": null,
+          "chance_creation_z": 0.687983,
+          "defensive_prevention_z": 0.507434
+        },
+        {
+          "player_id": 662428,
+          "player": "Antonee Robinson",
+          "role": "DEF",
+          "expected_minutes": 88.379,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.836,
+          "scoring_threat_z": 0.145676,
+          "chance_creation_z": 0.344181,
+          "defensive_prevention_z": 0.989586
+        },
+        {
+          "player_id": 465750,
+          "player": "Timothy Castagne",
+          "role": "DEF",
+          "expected_minutes": 84.033,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.776,
+          "scoring_threat_z": -0.155638,
+          "chance_creation_z": -0.044354,
+          "defensive_prevention_z": 1.31454
+        },
+        {
+          "player_id": 877401,
+          "player": "Calvin Bassey",
+          "role": "DEF",
+          "expected_minutes": 72.319,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 0.194,
+          "scoring_threat_z": -0.382296,
+          "chance_creation_z": 0.11572,
+          "defensive_prevention_z": 0.265121
+        },
+        {
+          "player_id": 1073980,
+          "player": "David Affengruber",
+          "role": "DEF",
+          "expected_minutes": 49.113,
+          "start_frequency": 0.545703,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 1422593,
+          "player": "Joshua King",
+          "role": "MID",
+          "expected_minutes": 70.398,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.351,
+          "scoring_threat_z": -0.31869,
+          "chance_creation_z": -0.06173,
+          "defensive_prevention_z": -0.602056
+        },
+        {
+          "player_id": 1281452,
+          "player": "Shea Charles",
+          "role": "MID",
+          "expected_minutes": 68.488,
+          "start_frequency": 0.693042,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 604785,
+          "player": "Alex Iwobi",
+          "role": "MID",
+          "expected_minutes": 62.098,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 0.48,
+          "scoring_threat_z": 0.345518,
+          "chance_creation_z": 0.593829,
+          "defensive_prevention_z": -0.107232
+        },
+        {
+          "player_id": 1113790,
+          "player": "Oscar Bobb",
+          "role": "MID",
+          "expected_minutes": 60.453,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 0.019,
+          "scoring_threat_z": -0.511649,
+          "chance_creation_z": 0.426616,
+          "defensive_prevention_z": 0.246459
+        },
+        {
+          "player_id": 540963,
+          "player": "Sander Berge",
+          "role": "MID",
+          "expected_minutes": 58.018,
+          "start_frequency": 0.656207,
+          "alpha_ability_z": -0.167,
+          "scoring_threat_z": -0.518734,
+          "chance_creation_z": -0.354533,
+          "defensive_prevention_z": 0.389659
+        },
+        {
+          "player_id": 1413847,
+          "player": "Gonzalo Garc\u00eda",
+          "role": "FWD",
+          "expected_minutes": 70.595,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 0.084,
+          "scoring_threat_z": 0.289068,
+          "chance_creation_z": -0.395418,
+          "defensive_prevention_z": 0.613782
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Kenny Tete",
+          "Tom Cairney"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795459,
+          6099343,
+          5795451,
+          5795439,
+          5795433
+        ],
+        "weighted_matches": 5.726562,
+        "weighted_exact_lineups": 5.726562,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 25
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 54.2,
+      "display_grade": "B+",
+      "grade_confidence": "medium",
+      "grade_provisional": true,
+      "rank": 8
+    },
+    {
+      "team_id": 10252,
+      "team": "Aston Villa",
+      "next_fixture": {
+        "match_id": 5795466,
+        "kickoff_utc": "2026-10-10T14:00:00Z",
+        "venue": "home",
+        "opponent": "Brentford"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.184995,
+          "coverage": 0.8571
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.190548,
+          "coverage": 0.932
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.103523,
+          "coverage": 0.839
+        },
+        "scoring_threat": {
+          "z": -0.109938,
+          "coverage": 0.9359
+        },
+        "chance_creation": {
+          "z": 0.206936,
+          "coverage": 0.8571
+        },
+        "defensive_prevention": {
+          "z": 0.202071,
+          "coverage": 0.8139
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 1053679,
+          "player": "Zion Suzuki",
+          "role": "GK",
+          "expected_minutes": 83.985,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 419664,
+          "player": "Tyrone Mings",
+          "role": "DEF",
+          "expected_minutes": 77.494,
+          "start_frequency": 0.681303,
+          "alpha_ability_z": 0.199,
+          "scoring_threat_z": -0.582688,
+          "chance_creation_z": 0.438789,
+          "defensive_prevention_z": 0.140763
+        },
+        {
+          "player_id": 258269,
+          "player": "Victor Nilsson Lindel\u00f6f",
+          "role": "DEF",
+          "expected_minutes": 74.447,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.161,
+          "scoring_threat_z": 0.132135,
+          "chance_creation_z": 0.376314,
+          "defensive_prevention_z": -0.134679
+        },
+        {
+          "player_id": 760320,
+          "player": "Aaron Wan-Bissaka",
+          "role": "DEF",
+          "expected_minutes": 63.81,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": 0.816,
+          "scoring_threat_z": -0.567253,
+          "chance_creation_z": 0.464447,
+          "defensive_prevention_z": 1.057722
+        },
+        {
+          "player_id": 1051097,
+          "player": "Matteo Ruggeri",
+          "role": "DEF",
+          "expected_minutes": 54.776,
+          "start_frequency": 0.566572,
+          "alpha_ability_z": 0.105,
+          "scoring_threat_z": -0.700407,
+          "chance_creation_z": 0.615012,
+          "defensive_prevention_z": -0.1342
+        },
+        {
+          "player_id": 356406,
+          "player": "John McGinn",
+          "role": "MID",
+          "expected_minutes": 85.749,
+          "start_frequency": 1.0,
+          "alpha_ability_z": -0.004,
+          "scoring_threat_z": -0.725357,
+          "chance_creation_z": 0.42749,
+          "defensive_prevention_z": 0.83863
+        },
+        {
+          "player_id": 610184,
+          "player": "Emiliano Buend\u00eda",
+          "role": "MID",
+          "expected_minutes": 69.824,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.031,
+          "scoring_threat_z": -0.275,
+          "chance_creation_z": 0.215002,
+          "defensive_prevention_z": 0.30004
+        },
+        {
+          "player_id": 816325,
+          "player": "Boubacar Kamara",
+          "role": "MID",
+          "expected_minutes": 69.563,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 0.302,
+          "scoring_threat_z": -0.364762,
+          "chance_creation_z": 0.362336,
+          "defensive_prevention_z": 0.323855
+        },
+        {
+          "player_id": 1174672,
+          "player": "Jo\u00e3o Gomes",
+          "role": "MID",
+          "expected_minutes": 44.642,
+          "start_frequency": 0.477337,
+          "alpha_ability_z": -0.168,
+          "scoring_threat_z": -0.355864,
+          "chance_creation_z": -0.0765,
+          "defensive_prevention_z": -0.002607
+        },
+        {
+          "player_id": 1520063,
+          "player": "Johan Manzambi",
+          "role": "MID",
+          "expected_minutes": 38.363,
+          "start_frequency": 0.362606,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 1197347,
+          "player": "Nicolas Jackson",
+          "role": "FWD",
+          "expected_minutes": 66.938,
+          "start_frequency": 0.796034,
+          "alpha_ability_z": 1.319,
+          "scoring_threat_z": 1.702103,
+          "chance_creation_z": 0.044587,
+          "defensive_prevention_z": 0.596783
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Pau Torres",
+          "Marco Bizot"
+        ],
+        "unavailable": [
+          "Amadou Onana",
+          "Brian Madjo",
+          "Ian Maatsen",
+          "Leon Goretzka",
+          "Modou K\u00e9ba Ciss\u00e9"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795464,
+          6099333,
+          5795446,
+          6106295,
+          5795440
+        ],
+        "weighted_matches": 5.515625,
+        "weighted_exact_lineups": 5.515625,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 27
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 53.1,
+      "display_grade": "B+",
+      "grade_confidence": "medium",
+      "grade_provisional": true,
+      "rank": 9
+    },
+    {
+      "team_id": 8678,
+      "team": "AFC Bournemouth",
+      "next_fixture": {
+        "match_id": 5795467,
+        "kickoff_utc": "2026-10-10T14:00:00Z",
+        "venue": "away",
+        "opponent": "Chelsea"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.100632,
+          "coverage": 0.9777
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.093273,
+          "coverage": 0.96
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.159571,
+          "coverage": 0.9989
+        },
+        "scoring_threat": {
+          "z": -0.086584,
+          "coverage": 0.9753
+        },
+        "chance_creation": {
+          "z": -0.154093,
+          "coverage": 0.8757
+        },
+        "defensive_prevention": {
+          "z": 0.342326,
+          "coverage": 0.8814
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 1067256,
+          "player": "Djordje Petrovi\u0107",
+          "role": "GK",
+          "expected_minutes": 84.395,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": 0.1,
+          "scoring_threat_z": null,
+          "chance_creation_z": -0.395799,
+          "defensive_prevention_z": 0.100232
+        },
+        {
+          "player_id": 1292092,
+          "player": "Ant\u00f3nio Silva",
+          "role": "DEF",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": -0.023,
+          "scoring_threat_z": -0.294796,
+          "chance_creation_z": null,
+          "defensive_prevention_z": 0.088511
+        },
+        {
+          "player_id": 959407,
+          "player": "James Hill",
+          "role": "DEF",
+          "expected_minutes": 89.999,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.712,
+          "scoring_threat_z": 0.479558,
+          "chance_creation_z": -0.897043,
+          "defensive_prevention_z": 1.250907
+        },
+        {
+          "player_id": 1177358,
+          "player": "Adrien Truffert",
+          "role": "DEF",
+          "expected_minutes": 84.395,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": 0.474,
+          "scoring_threat_z": -0.228018,
+          "chance_creation_z": 0.134948,
+          "defensive_prevention_z": 0.680564
+        },
+        {
+          "player_id": 160447,
+          "player": "Adam Smith",
+          "role": "DEF",
+          "expected_minutes": 72.8,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": -0.759,
+          "scoring_threat_z": -0.442913,
+          "chance_creation_z": -0.451305,
+          "defensive_prevention_z": -0.606542
+        },
+        {
+          "player_id": 1233655,
+          "player": "Alex Scott",
+          "role": "MID",
+          "expected_minutes": 84.273,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": 0.461,
+          "scoring_threat_z": 0.099843,
+          "chance_creation_z": -0.063095,
+          "defensive_prevention_z": 0.811228
+        },
+        {
+          "player_id": 1478295,
+          "player": "Rayan",
+          "role": "MID",
+          "expected_minutes": 79.13,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": -0.095,
+          "scoring_threat_z": -0.060053,
+          "chance_creation_z": -0.071198,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 789630,
+          "player": "Marcus Tavernier",
+          "role": "MID",
+          "expected_minutes": 78.458,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": 0.419,
+          "scoring_threat_z": -0.304369,
+          "chance_creation_z": 0.650854,
+          "defensive_prevention_z": 0.894459
+        },
+        {
+          "player_id": 729769,
+          "player": "Tyler Adams",
+          "role": "MID",
+          "expected_minutes": 74.363,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": -0.268,
+          "scoring_threat_z": -0.378064,
+          "chance_creation_z": -0.447627,
+          "defensive_prevention_z": 0.37515
+        },
+        {
+          "player_id": 439369,
+          "player": "Ryan Christie",
+          "role": "MID",
+          "expected_minutes": 50.884,
+          "start_frequency": 0.477337,
+          "alpha_ability_z": 0.573,
+          "scoring_threat_z": 0.504054,
+          "chance_creation_z": 0.500874,
+          "defensive_prevention_z": 0.105597
+        },
+        {
+          "player_id": 1098096,
+          "player": "Evanilson",
+          "role": "FWD",
+          "expected_minutes": 80.074,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": -0.527,
+          "scoring_threat_z": -0.050766,
+          "chance_creation_z": -0.74273,
+          "defensive_prevention_z": 0.064783
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Amine Adli",
+          "Veljko Milosavljevi\u0107"
+        ],
+        "unavailable": [
+          "Juli\u00e1n Araujo",
+          "Junior Kroupi",
+          "Justin Kluivert"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795455,
+          6112272,
+          5795445,
+          6099334,
+          5795443
+        ],
+        "weighted_matches": 5.515625,
+        "weighted_exact_lineups": 5.515625,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 30
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 49.3,
+      "display_grade": "B",
+      "grade_confidence": "high",
+      "grade_provisional": false,
+      "rank": 10
+    },
+    {
+      "team_id": 8463,
+      "team": "Leeds United",
+      "next_fixture": {
+        "match_id": 5795465,
+        "kickoff_utc": "2026-10-10T11:30:00Z",
+        "venue": "away",
+        "opponent": "Arsenal"
+      },
+      "formation": "3-5-2",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.081881,
+          "coverage": 0.8185
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.069136,
+          "coverage": 1.0
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.115126,
+          "coverage": 0.7828
+        },
+        "scoring_threat": {
+          "z": 0.091324,
+          "coverage": 0.8003
+        },
+        "chance_creation": {
+          "z": -0.183354,
+          "coverage": 0.7271
+        },
+        "defensive_prevention": {
+          "z": 0.225444,
+          "coverage": 0.8185
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 1187213,
+          "player": "James Trafford",
+          "role": "GK",
+          "expected_minutes": 77.35,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": 0.059,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": 0.059135
+        },
+        {
+          "player_id": 710158,
+          "player": "James Justin",
+          "role": "DEF",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.349,
+          "scoring_threat_z": 0.588462,
+          "chance_creation_z": -1.067035,
+          "defensive_prevention_z": 0.864967
+        },
+        {
+          "player_id": 1250485,
+          "player": "Tarik Muharemovi\u0107",
+          "role": "DEF",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 517346,
+          "player": "Nico Elvedi",
+          "role": "DEF",
+          "expected_minutes": 73.634,
+          "start_frequency": 0.746309,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 780432,
+          "player": "Ethan Ampadu",
+          "role": "MID",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.469,
+          "scoring_threat_z": -0.431497,
+          "chance_creation_z": -0.263441,
+          "defensive_prevention_z": 1.327416
+        },
+        {
+          "player_id": 881735,
+          "player": "Anton Stach",
+          "role": "MID",
+          "expected_minutes": 80.329,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": 0.568,
+          "scoring_threat_z": 0.454217,
+          "chance_creation_z": 0.434423,
+          "defensive_prevention_z": 0.260585
+        },
+        {
+          "player_id": 744494,
+          "player": "Gabriel Gudmundsson",
+          "role": "MID",
+          "expected_minutes": 64.255,
+          "start_frequency": 0.746309,
+          "alpha_ability_z": -0.08,
+          "scoring_threat_z": -0.37375,
+          "chance_creation_z": 0.153098,
+          "defensive_prevention_z": -0.167563
+        },
+        {
+          "player_id": 935728,
+          "player": "Ao Tanaka",
+          "role": "MID",
+          "expected_minutes": 61.045,
+          "start_frequency": 0.746309,
+          "alpha_ability_z": 0.038,
+          "scoring_threat_z": -0.01376,
+          "chance_creation_z": -0.203436,
+          "defensive_prevention_z": 0.391236
+        },
+        {
+          "player_id": 789646,
+          "player": "Jayden Bogle",
+          "role": "MID",
+          "expected_minutes": 60.963,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": -0.23,
+          "scoring_threat_z": 0.01447,
+          "chance_creation_z": -0.240092,
+          "defensive_prevention_z": -0.124032
+        },
+        {
+          "player_id": 612150,
+          "player": "Dominic Calvert-Lewin",
+          "role": "FWD",
+          "expected_minutes": 75.262,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": -0.303,
+          "scoring_threat_z": 0.368998,
+          "chance_creation_z": -0.794664,
+          "defensive_prevention_z": 0.064611
+        },
+        {
+          "player_id": 915797,
+          "player": "Noah Okafor",
+          "role": "FWD",
+          "expected_minutes": 64.828,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": 0.122,
+          "scoring_threat_z": 0.202349,
+          "chance_creation_z": -0.018379,
+          "defensive_prevention_z": 0.054559
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Harry Wilson"
+        ],
+        "unavailable": [
+          "Joe Rodon",
+          "Mateo Joseph"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795460,
+          5795450,
+          6099342,
+          5795437,
+          5795430
+        ],
+        "weighted_matches": 5.820312,
+        "weighted_exact_lineups": 5.820312,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 24
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 48.5,
+      "display_grade": "B",
+      "grade_confidence": "low",
+      "grade_provisional": true,
+      "rank": 11
+    },
+    {
+      "team_id": 9937,
+      "team": "Brentford",
+      "next_fixture": {
+        "match_id": 5795466,
+        "kickoff_utc": "2026-10-10T14:00:00Z",
+        "venue": "away",
+        "opponent": "Aston Villa"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.055552,
+          "coverage": 0.9147
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.08602,
+          "coverage": 1.0
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.07811,
+          "coverage": 0.906
+        },
+        "scoring_threat": {
+          "z": -0.027362,
+          "coverage": 0.926
+        },
+        "chance_creation": {
+          "z": -0.084034,
+          "coverage": 0.9147
+        },
+        "defensive_prevention": {
+          "z": 0.171124,
+          "coverage": 0.9147
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 776689,
+          "player": "Caoimh\u00edn Kelleher",
+          "role": "GK",
+          "expected_minutes": 73.334,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.111,
+          "scoring_threat_z": null,
+          "chance_creation_z": -0.319926,
+          "defensive_prevention_z": -0.110932
+        },
+        {
+          "player_id": 552718,
+          "player": "Kristoffer Ajer",
+          "role": "DEF",
+          "expected_minutes": 89.997,
+          "start_frequency": 1.0,
+          "alpha_ability_z": -0.144,
+          "scoring_threat_z": -0.2225,
+          "chance_creation_z": -0.913194,
+          "defensive_prevention_z": 0.380816
+        },
+        {
+          "player_id": 1010426,
+          "player": "Keane Lewis-Potter",
+          "role": "DEF",
+          "expected_minutes": 81.875,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.096,
+          "scoring_threat_z": 1.027538,
+          "chance_creation_z": 0.238143,
+          "defensive_prevention_z": -0.474643
+        },
+        {
+          "player_id": 1572340,
+          "player": "Jannik Schuster",
+          "role": "DEF",
+          "expected_minutes": 66.486,
+          "start_frequency": 0.545703,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 1429912,
+          "player": "Michael Kayode",
+          "role": "DEF",
+          "expected_minutes": 62.734,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 0.547,
+          "scoring_threat_z": -0.242474,
+          "chance_creation_z": 0.204504,
+          "defensive_prevention_z": 0.730228
+        },
+        {
+          "player_id": 888912,
+          "player": "Mikkel Damsgaard",
+          "role": "MID",
+          "expected_minutes": 75.297,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 0.568,
+          "scoring_threat_z": -0.630931,
+          "chance_creation_z": 1.044979,
+          "defensive_prevention_z": 1.338723
+        },
+        {
+          "player_id": 688273,
+          "player": "Vitaly Janelt",
+          "role": "MID",
+          "expected_minutes": 73.334,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 0.447,
+          "scoring_threat_z": -0.139766,
+          "chance_creation_z": 0.426057,
+          "defensive_prevention_z": 0.413469
+        },
+        {
+          "player_id": 1083796,
+          "player": "Kevin Schade",
+          "role": "MID",
+          "expected_minutes": 73.11,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.347,
+          "scoring_threat_z": 0.099948,
+          "chance_creation_z": -0.39171,
+          "defensive_prevention_z": -0.766808
+        },
+        {
+          "player_id": 1171140,
+          "player": "Jaidon Anthony",
+          "role": "MID",
+          "expected_minutes": 56.787,
+          "start_frequency": 0.656207,
+          "alpha_ability_z": -0.135,
+          "scoring_threat_z": -0.34759,
+          "chance_creation_z": -0.047639,
+          "defensive_prevention_z": 0.617051
+        },
+        {
+          "player_id": 1157236,
+          "player": "Yehor Yarmoliuk",
+          "role": "MID",
+          "expected_minutes": 54.43,
+          "start_frequency": 0.545703,
+          "alpha_ability_z": -0.221,
+          "scoring_threat_z": -0.521005,
+          "chance_creation_z": -0.469704,
+          "defensive_prevention_z": 0.424713
+        },
+        {
+          "player_id": 1302005,
+          "player": "Igor Thiago",
+          "role": "FWD",
+          "expected_minutes": 75.923,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.239,
+          "scoring_threat_z": 0.4659,
+          "chance_creation_z": -0.634329,
+          "defensive_prevention_z": -0.509993
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Dango Ouattara"
+        ],
+        "unavailable": [
+          "Antoni Milambo",
+          "Joshua Dasilva",
+          "Mathias Jensen",
+          "Nathan Collins",
+          "Sepp van den Berg"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795456,
+          6099340,
+          5795445,
+          5795436,
+          5795430
+        ],
+        "weighted_matches": 5.726562,
+        "weighted_exact_lineups": 5.726562,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 28
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 47.3,
+      "display_grade": "B",
+      "grade_confidence": "medium",
+      "grade_provisional": true,
+      "rank": 12
+    },
+    {
+      "team_id": 9826,
+      "team": "Crystal Palace",
+      "next_fixture": {
+        "match_id": 5795469,
+        "kickoff_utc": "2026-10-11T13:00:00Z",
+        "venue": "home",
+        "opponent": "Nottingham Forest"
+      },
+      "formation": "3-4-2-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.039441,
+          "coverage": 0.9316
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.039427,
+          "coverage": 0.9759
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.154899,
+          "coverage": 0.9215
+        },
+        "scoring_threat": {
+          "z": -0.256512,
+          "coverage": 0.9248
+        },
+        "chance_creation": {
+          "z": 0.003859,
+          "coverage": 0.7846
+        },
+        "defensive_prevention": {
+          "z": 0.193316,
+          "coverage": 0.9153
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 448897,
+          "player": "Walter Ben\u00edtez",
+          "role": "GK",
+          "expected_minutes": 89.998,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.131,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": 0.130841
+        },
+        {
+          "player_id": 950829,
+          "player": "Chris Richards",
+          "role": "DEF",
+          "expected_minutes": 78.025,
+          "start_frequency": 0.78955,
+          "alpha_ability_z": 0.036,
+          "scoring_threat_z": -0.428882,
+          "chance_creation_z": -0.356899,
+          "defensive_prevention_z": 0.345679
+        },
+        {
+          "player_id": 1669629,
+          "player": "Honest Ahanor",
+          "role": "DEF",
+          "expected_minutes": 55.539,
+          "start_frequency": 0.535559,
+          "alpha_ability_z": -0.147,
+          "scoring_threat_z": -0.362035,
+          "chance_creation_z": null,
+          "defensive_prevention_z": -0.016994
+        },
+        {
+          "player_id": 696646,
+          "player": "Axel Disasi",
+          "role": "DEF",
+          "expected_minutes": 49.383,
+          "start_frequency": 0.628447,
+          "alpha_ability_z": -0.067,
+          "scoring_threat_z": -0.569957,
+          "chance_creation_z": -0.247836,
+          "defensive_prevention_z": 0.298149
+        },
+        {
+          "player_id": 1296650,
+          "player": "Adam Wharton",
+          "role": "MID",
+          "expected_minutes": 90.0,
+          "start_frequency": 0.882438,
+          "alpha_ability_z": 0.55,
+          "scoring_threat_z": -0.351885,
+          "chance_creation_z": 0.912232,
+          "defensive_prevention_z": 0.143005
+        },
+        {
+          "player_id": 1120224,
+          "player": "Tyrick Mitchell",
+          "role": "MID",
+          "expected_minutes": 85.812,
+          "start_frequency": 0.882438,
+          "alpha_ability_z": 0.208,
+          "scoring_threat_z": -0.164409,
+          "chance_creation_z": -0.464527,
+          "defensive_prevention_z": 0.842864
+        },
+        {
+          "player_id": 970563,
+          "player": "Quinten Timber",
+          "role": "MID",
+          "expected_minutes": 83.128,
+          "start_frequency": 0.907112,
+          "alpha_ability_z": 0.467,
+          "scoring_threat_z": 0.522488,
+          "chance_creation_z": 0.530503,
+          "defensive_prevention_z": -0.110646
+        },
+        {
+          "player_id": 621515,
+          "player": "Daichi Kamada",
+          "role": "MID",
+          "expected_minutes": 80.78,
+          "start_frequency": 0.78955,
+          "alpha_ability_z": 0.089,
+          "scoring_threat_z": -0.12882,
+          "chance_creation_z": -0.214324,
+          "defensive_prevention_z": 0.59607
+        },
+        {
+          "player_id": 1047676,
+          "player": "Y\u00e9remi Pino",
+          "role": "MID",
+          "expected_minutes": 75.579,
+          "start_frequency": 0.907112,
+          "alpha_ability_z": 0.106,
+          "scoring_threat_z": -0.626947,
+          "chance_creation_z": 0.568382,
+          "defensive_prevention_z": 0.58174
+        },
+        {
+          "player_id": 295067,
+          "player": "Will Hughes",
+          "role": "MID",
+          "expected_minutes": 24.955,
+          "start_frequency": 0.21045,
+          "alpha_ability_z": -0.014,
+          "scoring_threat_z": -0.188144,
+          "chance_creation_z": 0.088516,
+          "defensive_prevention_z": -0.013585
+        },
+        {
+          "player_id": 821100,
+          "player": "J\u00f8rgen Strand Larsen",
+          "role": "FWD",
+          "expected_minutes": 83.044,
+          "start_frequency": 0.907112,
+          "alpha_ability_z": -0.997,
+          "scoring_threat_z": -0.607816,
+          "chance_creation_z": -0.710739,
+          "defensive_prevention_z": -0.73223
+        }
+      ],
+      "availability": {
+        "unavailable": [
+          "Anan Khalaili",
+          "Chadi Riad",
+          "Jean-Philippe Mateta",
+          "Takehiro Tomiyasu"
+        ],
+        "questionable": [
+          "Dean Henderson"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 489,
+        "competition_changed_since_latest_match": true,
+        "latest_xi_bonus_suppressed": true,
+        "prior_match_ids": [
+          6374917,
+          5795460,
+          6112324,
+          5795449,
+          6099328
+        ],
+        "weighted_matches": 4.037109,
+        "weighted_exact_lineups": 4.037109,
+        "latest_exact_lineup_source": "preseason",
+        "candidate_players": 28
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 46.6,
+      "display_grade": "B",
+      "grade_confidence": "medium",
+      "grade_provisional": true,
+      "rank": 13
+    },
+    {
+      "team_id": 8668,
+      "team": "Everton",
+      "next_fixture": {
+        "match_id": 5795470,
+        "kickoff_utc": "2026-10-11T13:00:00Z",
+        "venue": "away",
+        "opponent": "Hull City"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": 0.02197,
+          "coverage": 0.9084
+        },
+        "attacking_unit_alpha_ability": {
+          "z": -0.063968,
+          "coverage": 0.955
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.071419,
+          "coverage": 0.9
+        },
+        "scoring_threat": {
+          "z": -0.135842,
+          "coverage": 0.8992
+        },
+        "chance_creation": {
+          "z": -0.168226,
+          "coverage": 0.9084
+        },
+        "defensive_prevention": {
+          "z": 0.272592,
+          "coverage": 0.8413
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 303919,
+          "player": "Jordan Pickford",
+          "role": "GK",
+          "expected_minutes": 89.998,
+          "start_frequency": 1.0,
+          "alpha_ability_z": -0.208,
+          "scoring_threat_z": null,
+          "chance_creation_z": -0.630022,
+          "defensive_prevention_z": -0.208385
+        },
+        {
+          "player_id": 874025,
+          "player": "Vitaliy Mykolenko",
+          "role": "DEF",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": -0.28,
+          "scoring_threat_z": -0.566769,
+          "chance_creation_z": -0.255139,
+          "defensive_prevention_z": -0.018162
+        },
+        {
+          "player_id": 243138,
+          "player": "James Tarkowski",
+          "role": "DEF",
+          "expected_minutes": 73.571,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 0.694,
+          "scoring_threat_z": 0.608661,
+          "chance_creation_z": -0.837653,
+          "defensive_prevention_z": 1.159011
+        },
+        {
+          "player_id": 1030829,
+          "player": "Jarrad Branthwaite",
+          "role": "DEF",
+          "expected_minutes": 73.571,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 0.529,
+          "scoring_threat_z": 0.316765,
+          "chance_creation_z": 0.008533,
+          "defensive_prevention_z": 0.601955
+        },
+        {
+          "player_id": 604089,
+          "player": "Ainsley Maitland-Niles",
+          "role": "DEF",
+          "expected_minutes": 66.545,
+          "start_frequency": 0.742156,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 886016,
+          "player": "Kiernan Dewsbury-Hall",
+          "role": "MID",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.022,
+          "scoring_threat_z": -0.577142,
+          "chance_creation_z": 0.465863,
+          "defensive_prevention_z": 0.337659
+        },
+        {
+          "player_id": 950474,
+          "player": "James Garner",
+          "role": "MID",
+          "expected_minutes": 86.461,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.763,
+          "scoring_threat_z": -0.439358,
+          "chance_creation_z": 0.531956,
+          "defensive_prevention_z": 1.128436
+        },
+        {
+          "player_id": 1559637,
+          "player": "Harrison Armstrong",
+          "role": "MID",
+          "expected_minutes": 73.121,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.306,
+          "scoring_threat_z": 0.014042,
+          "chance_creation_z": -0.416362,
+          "defensive_prevention_z": -0.032254
+        },
+        {
+          "player_id": 1076756,
+          "player": "Brennan Johnson",
+          "role": "MID",
+          "expected_minutes": 57.874,
+          "start_frequency": 0.693042,
+          "alpha_ability_z": -0.753,
+          "scoring_threat_z": -0.753021,
+          "chance_creation_z": -0.42703,
+          "defensive_prevention_z": 0.030664
+        },
+        {
+          "player_id": 312765,
+          "player": "Jack Grealish",
+          "role": "MID",
+          "expected_minutes": 52.051,
+          "start_frequency": 0.545703,
+          "alpha_ability_z": 0.339,
+          "scoring_threat_z": -0.410492,
+          "chance_creation_z": 0.663067,
+          "defensive_prevention_z": 0.764982
+        },
+        {
+          "player_id": 1398392,
+          "player": "Thierno Barry",
+          "role": "FWD",
+          "expected_minutes": 82.914,
+          "start_frequency": 1.0,
+          "alpha_ability_z": -0.519,
+          "scoring_threat_z": 0.144235,
+          "chance_creation_z": -0.771577,
+          "defensive_prevention_z": -0.441777
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Vitaliy Mykolenko",
+          "Merlin R\u00f6hl"
+        ],
+        "unavailable": [
+          "Christian N\u00f8rgaard"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795458,
+          6099338,
+          5795454,
+          5795438,
+          5795425
+        ],
+        "weighted_matches": 5.726562,
+        "weighted_exact_lineups": 5.726562,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 23
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 45.8,
+      "display_grade": "C+",
+      "grade_confidence": "medium",
+      "grade_provisional": true,
+      "rank": 14
+    },
+    {
+      "team_id": 8472,
+      "team": "Sunderland",
+      "next_fixture": {
+        "match_id": 5795474,
+        "kickoff_utc": "2026-10-10T14:00:00Z",
+        "venue": "home",
+        "opponent": "Brighton & Hove Albion"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": -0.019688,
+          "coverage": 0.9013
+        },
+        "attacking_unit_alpha_ability": {
+          "z": -0.189957,
+          "coverage": 0.8953
+        },
+        "defensive_unit_alpha_ability": {
+          "z": -0.007793,
+          "coverage": 0.8971
+        },
+        "scoring_threat": {
+          "z": -0.154961,
+          "coverage": 0.8905
+        },
+        "chance_creation": {
+          "z": -0.238264,
+          "coverage": 0.89
+        },
+        "defensive_prevention": {
+          "z": 0.216098,
+          "coverage": 0.8486
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 1125720,
+          "player": "Robin Roefs",
+          "role": "GK",
+          "expected_minutes": 86.491,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": -0.073,
+          "scoring_threat_z": null,
+          "chance_creation_z": -0.446518,
+          "defensive_prevention_z": -0.07267
+        },
+        {
+          "player_id": 602304,
+          "player": "Nordi Mukiele",
+          "role": "DEF",
+          "expected_minutes": 86.494,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": 0.512,
+          "scoring_threat_z": 1.476164,
+          "chance_creation_z": -0.79531,
+          "defensive_prevention_z": 0.676807
+        },
+        {
+          "player_id": 754126,
+          "player": "Kevin Danso",
+          "role": "DEF",
+          "expected_minutes": 85.165,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": 0.019,
+          "scoring_threat_z": -0.724546,
+          "chance_creation_z": -0.028151,
+          "defensive_prevention_z": 0.220872
+        },
+        {
+          "player_id": 974268,
+          "player": "Daniel Ballard",
+          "role": "DEF",
+          "expected_minutes": 74.98,
+          "start_frequency": 0.681303,
+          "alpha_ability_z": 0.535,
+          "scoring_threat_z": 0.07647,
+          "chance_creation_z": -0.464099,
+          "defensive_prevention_z": 0.89451
+        },
+        {
+          "player_id": 1664716,
+          "player": "Dayann M\u00e9thalie",
+          "role": "DEF",
+          "expected_minutes": 43.524,
+          "start_frequency": 0.477337,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 1049999,
+          "player": "Enzo Le F\u00e9e",
+          "role": "MID",
+          "expected_minutes": 86.494,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": -0.436,
+          "scoring_threat_z": -1.172433,
+          "chance_creation_z": 0.332205,
+          "defensive_prevention_z": 0.346723
+        },
+        {
+          "player_id": 207236,
+          "player": "Granit Xhaka",
+          "role": "MID",
+          "expected_minutes": 86.494,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": 1.022,
+          "scoring_threat_z": -0.597519,
+          "chance_creation_z": 0.85191,
+          "defensive_prevention_z": 1.145449
+        },
+        {
+          "player_id": 1359649,
+          "player": "Noah Sadiki",
+          "role": "MID",
+          "expected_minutes": 75.841,
+          "start_frequency": 0.885269,
+          "alpha_ability_z": -0.54,
+          "scoring_threat_z": -0.428888,
+          "chance_creation_z": -0.628507,
+          "defensive_prevention_z": 0.11245
+        },
+        {
+          "player_id": 277771,
+          "player": "Thomas Meunier",
+          "role": "MID",
+          "expected_minutes": 64.104,
+          "start_frequency": 0.681303,
+          "alpha_ability_z": -0.509,
+          "scoring_threat_z": -0.127405,
+          "chance_creation_z": -0.278449,
+          "defensive_prevention_z": -0.487567
+        },
+        {
+          "player_id": 1287010,
+          "player": "Nilson Angulo",
+          "role": "MID",
+          "expected_minutes": 52.182,
+          "start_frequency": 0.681303,
+          "alpha_ability_z": -0.372,
+          "scoring_threat_z": -0.287552,
+          "chance_creation_z": -0.230555,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 887703,
+          "player": "Wilson Isidor",
+          "role": "FWD",
+          "expected_minutes": 41.002,
+          "start_frequency": 0.318697,
+          "alpha_ability_z": -0.295,
+          "scoring_threat_z": 0.516691,
+          "chance_creation_z": -0.690184,
+          "defensive_prevention_z": -0.779361
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Daniel Ballard"
+        ],
+        "unavailable": [
+          "Brian Brobbey",
+          "Habib Diarra",
+          "Romaine Mundle"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795461,
+          6112330,
+          5795453,
+          6099331,
+          5795436
+        ],
+        "weighted_matches": 5.515625,
+        "weighted_exact_lineups": 5.515625,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 28
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 44.0,
+      "display_grade": "C+",
+      "grade_confidence": "medium",
+      "grade_provisional": true,
+      "rank": 15
+    },
+    {
+      "team_id": 8586,
+      "team": "Tottenham Hotspur",
+      "next_fixture": {
+        "match_id": 5795473,
+        "kickoff_utc": "2026-10-10T16:30:00Z",
+        "venue": "away",
+        "opponent": "Manchester United"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": -0.022217,
+          "coverage": 1.0
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.129053,
+          "coverage": 1.0
+        },
+        "defensive_unit_alpha_ability": {
+          "z": -0.020646,
+          "coverage": 1.0
+        },
+        "scoring_threat": {
+          "z": 0.056892,
+          "coverage": 1.0
+        },
+        "chance_creation": {
+          "z": 0.003035,
+          "coverage": 1.0
+        },
+        "defensive_prevention": {
+          "z": -0.054039,
+          "coverage": 0.9555
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 1341475,
+          "player": "Anton\u00edn Kinsk\u00fd",
+          "role": "GK",
+          "expected_minutes": 81.718,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.879,
+          "scoring_threat_z": null,
+          "chance_creation_z": -0.274684,
+          "defensive_prevention_z": -0.878819
+        },
+        {
+          "player_id": 1097466,
+          "player": "Micky van de Ven",
+          "role": "DEF",
+          "expected_minutes": 81.718,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.209,
+          "scoring_threat_z": 0.902487,
+          "chance_creation_z": 0.059484,
+          "defensive_prevention_z": -0.551407
+        },
+        {
+          "player_id": 357880,
+          "player": "Andrew Robertson",
+          "role": "DEF",
+          "expected_minutes": 76.14,
+          "start_frequency": 0.656207,
+          "alpha_ability_z": 0.388,
+          "scoring_threat_z": 0.443081,
+          "chance_creation_z": 0.685894,
+          "defensive_prevention_z": -0.45175
+        },
+        {
+          "player_id": 1323305,
+          "player": "Archie Gray",
+          "role": "DEF",
+          "expected_minutes": 75.357,
+          "start_frequency": 0.503411,
+          "alpha_ability_z": -0.737,
+          "scoring_threat_z": 0.001971,
+          "chance_creation_z": -0.433525,
+          "defensive_prevention_z": -0.884141
+        },
+        {
+          "player_id": 1052898,
+          "player": "Destiny Udogie",
+          "role": "DEF",
+          "expected_minutes": 25.556,
+          "start_frequency": 0.343793,
+          "alpha_ability_z": -0.025,
+          "scoring_threat_z": -0.483185,
+          "chance_creation_z": -0.336911,
+          "defensive_prevention_z": 0.534005
+        },
+        {
+          "player_id": 839204,
+          "player": "Omar Marmoush",
+          "role": "MID",
+          "expected_minutes": 89.999,
+          "start_frequency": 1.0,
+          "alpha_ability_z": -0.014,
+          "scoring_threat_z": 0.17185,
+          "chance_creation_z": -0.147991,
+          "defensive_prevention_z": -0.100433
+        },
+        {
+          "player_id": 620618,
+          "player": "Rodrigo Bentancur",
+          "role": "MID",
+          "expected_minutes": 86.01,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.077,
+          "scoring_threat_z": -0.341899,
+          "chance_creation_z": -0.512986,
+          "defensive_prevention_z": 0.88337
+        },
+        {
+          "player_id": 867414,
+          "player": "Sandro Tonali",
+          "role": "MID",
+          "expected_minutes": 77.477,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": 0.42,
+          "scoring_threat_z": -0.442543,
+          "chance_creation_z": 0.374497,
+          "defensive_prevention_z": 0.650769
+        },
+        {
+          "player_id": 1174337,
+          "player": "S\u00e1vio",
+          "role": "MID",
+          "expected_minutes": 68.982,
+          "start_frequency": 0.693042,
+          "alpha_ability_z": 0.266,
+          "scoring_threat_z": 0.191122,
+          "chance_creation_z": 0.321546,
+          "defensive_prevention_z": -0.388315
+        },
+        {
+          "player_id": 1356312,
+          "player": "Mateus Fernandes",
+          "role": "MID",
+          "expected_minutes": 51.473,
+          "start_frequency": 0.656207,
+          "alpha_ability_z": 0.485,
+          "scoring_threat_z": -0.350753,
+          "chance_creation_z": 0.419941,
+          "defensive_prevention_z": 0.654812
+        },
+        {
+          "player_id": 591734,
+          "player": "Dominic Solanke",
+          "role": "FWD",
+          "expected_minutes": 44.013,
+          "start_frequency": 0.545703,
+          "alpha_ability_z": -0.056,
+          "scoring_threat_z": 0.403366,
+          "chance_creation_z": -0.441089,
+          "defensive_prevention_z": null
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Dejan Kulusevski"
+        ],
+        "unavailable": [
+          "Jan Paul van Hecke",
+          "Mykhaylo Mudryk",
+          "Pedro Porro",
+          "Wilson Odobert",
+          "Xavi Simons"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795464,
+          6099335,
+          5795454,
+          5795444,
+          5795434
+        ],
+        "weighted_matches": 5.726562,
+        "weighted_exact_lineups": 5.726562,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 28
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 43.9,
+      "display_grade": "C+",
+      "grade_confidence": "high",
+      "grade_provisional": false,
+      "rank": 16
+    },
+    {
+      "team_id": 10203,
+      "team": "Nottingham Forest",
+      "next_fixture": {
+        "match_id": 5795469,
+        "kickoff_utc": "2026-10-11T13:00:00Z",
+        "venue": "away",
+        "opponent": "Crystal Palace"
+      },
+      "formation": "3-4-2-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": -0.031887,
+          "coverage": 1.0
+        },
+        "attacking_unit_alpha_ability": {
+          "z": 0.053144,
+          "coverage": 1.0
+        },
+        "defensive_unit_alpha_ability": {
+          "z": 0.028394,
+          "coverage": 1.0
+        },
+        "scoring_threat": {
+          "z": -0.053719,
+          "coverage": 1.0
+        },
+        "chance_creation": {
+          "z": -0.135369,
+          "coverage": 1.0
+        },
+        "defensive_prevention": {
+          "z": 0.030833,
+          "coverage": 0.9788
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 181069,
+          "player": "Matz Sels",
+          "role": "GK",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": -0.366,
+          "scoring_threat_z": null,
+          "chance_creation_z": -0.94446,
+          "defensive_prevention_z": -0.365677
+        },
+        {
+          "player_id": 1458711,
+          "player": "Murillo",
+          "role": "DEF",
+          "expected_minutes": 85.112,
+          "start_frequency": 0.920145,
+          "alpha_ability_z": 0.562,
+          "scoring_threat_z": -0.303544,
+          "chance_creation_z": -0.11647,
+          "defensive_prevention_z": 0.891092
+        },
+        {
+          "player_id": 1391209,
+          "player": "Jair Cunha",
+          "role": "DEF",
+          "expected_minutes": 67.359,
+          "start_frequency": 0.747617,
+          "alpha_ability_z": -0.599,
+          "scoring_threat_z": -0.356468,
+          "chance_creation_z": -0.046443,
+          "defensive_prevention_z": -0.58336
+        },
+        {
+          "player_id": 1425182,
+          "player": "Ousmane Diomande",
+          "role": "DEF",
+          "expected_minutes": 52.317,
+          "start_frequency": 0.668748,
+          "alpha_ability_z": -0.864,
+          "scoring_threat_z": -0.186227,
+          "chance_creation_z": 0.589255,
+          "defensive_prevention_z": -1.09089
+        },
+        {
+          "player_id": 620027,
+          "player": "Xaver Schlager",
+          "role": "MID",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.205,
+          "scoring_threat_z": 0.160762,
+          "chance_creation_z": 0.126377,
+          "defensive_prevention_z": 0.130252
+        },
+        {
+          "player_id": 1078788,
+          "player": "Neco Williams",
+          "role": "MID",
+          "expected_minutes": 89.218,
+          "start_frequency": 1.0,
+          "alpha_ability_z": 0.576,
+          "scoring_threat_z": 0.092486,
+          "chance_creation_z": 0.178867,
+          "defensive_prevention_z": 0.705271
+        },
+        {
+          "player_id": 789502,
+          "player": "Morgan Gibbs-White",
+          "role": "MID",
+          "expected_minutes": 82.903,
+          "start_frequency": 0.920145,
+          "alpha_ability_z": 0.335,
+          "scoring_threat_z": 0.099967,
+          "chance_creation_z": 0.383909,
+          "defensive_prevention_z": 0.066673
+        },
+        {
+          "player_id": 1107648,
+          "player": "James McAtee",
+          "role": "MID",
+          "expected_minutes": 78.381,
+          "start_frequency": 0.920145,
+          "alpha_ability_z": 0.07,
+          "scoring_threat_z": 0.249058,
+          "chance_creation_z": 0.112369,
+          "defensive_prevention_z": -0.313314
+        },
+        {
+          "player_id": 1022649,
+          "player": "Dan Ndoye",
+          "role": "MID",
+          "expected_minutes": 61.783,
+          "start_frequency": 0.920145,
+          "alpha_ability_z": -0.689,
+          "scoring_threat_z": -0.658406,
+          "chance_creation_z": -0.255388,
+          "defensive_prevention_z": -0.575614
+        },
+        {
+          "player_id": 859282,
+          "player": "Daniel Mu\u00f1oz",
+          "role": "MID",
+          "expected_minutes": 56.574,
+          "start_frequency": 0.588893,
+          "alpha_ability_z": 0.39,
+          "scoring_threat_z": 0.882156,
+          "chance_creation_z": -0.307497,
+          "defensive_prevention_z": 0.667844
+        },
+        {
+          "player_id": 1113903,
+          "player": "Liam Delap",
+          "role": "FWD",
+          "expected_minutes": 70.239,
+          "start_frequency": 0.778179,
+          "alpha_ability_z": -0.474,
+          "scoring_threat_z": 0.111549,
+          "chance_creation_z": -0.630863,
+          "defensive_prevention_z": -0.608759
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Nikola Milenkovi\u0107",
+          "Nicol\u00f2 Savona"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795463,
+          5795446,
+          5795444,
+          5795431,
+          6005647
+        ],
+        "weighted_matches": 5.943359,
+        "weighted_exact_lineups": 5.943359,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 24
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 43.4,
+      "display_grade": "C+",
+      "grade_confidence": "high",
+      "grade_provisional": false,
+      "rank": 17
+    },
+    {
+      "team_id": 9902,
+      "team": "Ipswich Town",
+      "next_fixture": {
+        "match_id": 5795471,
+        "kickoff_utc": "2026-10-10T14:00:00Z",
+        "venue": "home",
+        "opponent": "Fulham"
+      },
+      "formation": "4-2-3-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": -0.319298,
+          "coverage": 0.7393
+        },
+        "attacking_unit_alpha_ability": {
+          "z": -0.241774,
+          "coverage": 0.6065
+        },
+        "defensive_unit_alpha_ability": {
+          "z": -0.33087,
+          "coverage": 0.7767
+        },
+        "scoring_threat": {
+          "z": -0.26712,
+          "coverage": 0.713
+        },
+        "chance_creation": {
+          "z": -0.287078,
+          "coverage": 0.7393
+        },
+        "defensive_prevention": {
+          "z": -0.173671,
+          "coverage": 0.7393
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 512013,
+          "player": "Christian Walton",
+          "role": "GK",
+          "expected_minutes": 49.515,
+          "start_frequency": 0.545703,
+          "alpha_ability_z": 0.084,
+          "scoring_threat_z": null,
+          "chance_creation_z": -0.139167,
+          "defensive_prevention_z": 0.083899
+        },
+        {
+          "player_id": 980381,
+          "player": "Leif Davis",
+          "role": "DEF",
+          "expected_minutes": 77.268,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.556,
+          "scoring_threat_z": -0.687912,
+          "chance_creation_z": 0.264464,
+          "defensive_prevention_z": -0.81194
+        },
+        {
+          "player_id": 789578,
+          "player": "Dara O'Shea",
+          "role": "DEF",
+          "expected_minutes": 72.911,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -1.031,
+          "scoring_threat_z": -1.034212,
+          "chance_creation_z": -1.313073,
+          "defensive_prevention_z": -0.517581
+        },
+        {
+          "player_id": 696443,
+          "player": "Issa Diop",
+          "role": "DEF",
+          "expected_minutes": 72.911,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.055,
+          "scoring_threat_z": 0.216351,
+          "chance_creation_z": -0.132261,
+          "defensive_prevention_z": -0.067604
+        },
+        {
+          "player_id": 1343053,
+          "player": "Abdoul Ouattara",
+          "role": "DEF",
+          "expected_minutes": 49.23,
+          "start_frequency": 0.545703,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 1073742,
+          "player": "Julio Enciso",
+          "role": "MID",
+          "expected_minutes": 67.277,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 556972,
+          "player": "Sa\u0161a Luki\u0107",
+          "role": "MID",
+          "expected_minutes": 64.239,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.208,
+          "scoring_threat_z": 0.075174,
+          "chance_creation_z": -0.231421,
+          "defensive_prevention_z": -0.134456
+        },
+        {
+          "player_id": 693599,
+          "player": "Exequiel Palacios",
+          "role": "MID",
+          "expected_minutes": 61.052,
+          "start_frequency": 0.693042,
+          "alpha_ability_z": 0.117,
+          "scoring_threat_z": -0.299687,
+          "chance_creation_z": -0.153275,
+          "defensive_prevention_z": 0.813
+        },
+        {
+          "player_id": 1265626,
+          "player": "Abdul Fatawu",
+          "role": "MID",
+          "expected_minutes": 56.853,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 914402,
+          "player": "Jack Clarke",
+          "role": "MID",
+          "expected_minutes": 45.026,
+          "start_frequency": 0.545703,
+          "alpha_ability_z": -0.469,
+          "scoring_threat_z": -0.549953,
+          "chance_creation_z": 0.10828,
+          "defensive_prevention_z": -0.756051
+        },
+        {
+          "player_id": 1320949,
+          "player": "Emersonn",
+          "role": "FWD",
+          "expected_minutes": 55.816,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Jack Taylor"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795458,
+          6099332,
+          5795449,
+          5795441,
+          5795432
+        ],
+        "weighted_matches": 5.726562,
+        "weighted_exact_lineups": 5.726562,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 29
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 30.6,
+      "display_grade": "C",
+      "grade_confidence": "low",
+      "grade_provisional": true,
+      "rank": 18
+    },
+    {
+      "team_id": 8669,
+      "team": "Coventry City",
+      "next_fixture": {
+        "match_id": 5795468,
+        "kickoff_utc": "2026-10-12T19:00:00Z",
+        "venue": "home",
+        "opponent": "Newcastle United"
+      },
+      "formation": "3-4-3",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": -0.519311,
+          "coverage": 0.8455
+        },
+        "attacking_unit_alpha_ability": {
+          "z": -0.556153,
+          "coverage": 0.8393
+        },
+        "defensive_unit_alpha_ability": {
+          "z": -0.545219,
+          "coverage": 0.8021
+        },
+        "scoring_threat": {
+          "z": -0.331737,
+          "coverage": 0.8291
+        },
+        "chance_creation": {
+          "z": -0.51514,
+          "coverage": 0.8266
+        },
+        "defensive_prevention": {
+          "z": -0.280956,
+          "coverage": 0.7941
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 1187236,
+          "player": "Carl Rushworth",
+          "role": "GK",
+          "expected_minutes": 76.5,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.818,
+          "scoring_threat_z": null,
+          "chance_creation_z": -1.080255,
+          "defensive_prevention_z": -0.817447
+        },
+        {
+          "player_id": 1161885,
+          "player": "Bobby Thomas",
+          "role": "DEF",
+          "expected_minutes": 90.0,
+          "start_frequency": 1.0,
+          "alpha_ability_z": -0.981,
+          "scoring_threat_z": 0.740273,
+          "chance_creation_z": -1.701131,
+          "defensive_prevention_z": -0.827422
+        },
+        {
+          "player_id": 711357,
+          "player": "Ethan Pinnock",
+          "role": "DEF",
+          "expected_minutes": 83.592,
+          "start_frequency": 0.693042,
+          "alpha_ability_z": 0.147,
+          "scoring_threat_z": -0.257558,
+          "chance_creation_z": -0.15401,
+          "defensive_prevention_z": 0.33434
+        },
+        {
+          "player_id": 1613300,
+          "player": "Stephen Mfuni",
+          "role": "DEF",
+          "expected_minutes": 48.42,
+          "start_frequency": 0.545703,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 759814,
+          "player": "Jay Dasilva",
+          "role": "MID",
+          "expected_minutes": 75.721,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -1.228,
+          "scoring_threat_z": -1.171068,
+          "chance_creation_z": -0.527822,
+          "defensive_prevention_z": -1.008428
+        },
+        {
+          "player_id": 478357,
+          "player": "Matt Grimes",
+          "role": "MID",
+          "expected_minutes": 75.253,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.427,
+          "scoring_threat_z": -1.461701,
+          "chance_creation_z": 0.098969,
+          "defensive_prevention_z": 0.047808
+        },
+        {
+          "player_id": 1615927,
+          "player": "Caleb Yirenkyi",
+          "role": "MID",
+          "expected_minutes": 64.091,
+          "start_frequency": 0.656207,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 856685,
+          "player": "Frank Onyeka",
+          "role": "MID",
+          "expected_minutes": 61.772,
+          "start_frequency": 0.693042,
+          "alpha_ability_z": -0.745,
+          "scoring_threat_z": -0.508405,
+          "chance_creation_z": -0.646517,
+          "defensive_prevention_z": -0.230323
+        },
+        {
+          "player_id": 1030830,
+          "player": "Jack Rudoni",
+          "role": "FWD",
+          "expected_minutes": 60.627,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.411,
+          "scoring_threat_z": -0.765921,
+          "chance_creation_z": -0.08808,
+          "defensive_prevention_z": 0.834042
+        },
+        {
+          "player_id": 798654,
+          "player": "Ephron Mason-Clark",
+          "role": "FWD",
+          "expected_minutes": 46.939,
+          "start_frequency": 0.803547,
+          "alpha_ability_z": -0.709,
+          "scoring_threat_z": -0.35589,
+          "chance_creation_z": -0.593237,
+          "defensive_prevention_z": -0.50627
+        },
+        {
+          "player_id": 776184,
+          "player": "Brandon Thomas-Asante",
+          "role": "FWD",
+          "expected_minutes": 43.484,
+          "start_frequency": 0.34925,
+          "alpha_ability_z": -0.474,
+          "scoring_threat_z": 0.230455,
+          "chance_creation_z": -0.960484,
+          "defensive_prevention_z": -0.235145
+        }
+      ],
+      "availability": {
+        "unavailable": [
+          "Aur\u00e8le Amenda",
+          "Haji Wright",
+          "Josh Eccles",
+          "Kaine Kesler-Hayden",
+          "Luke Woolfenden"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795463,
+          6099333,
+          5795448,
+          5795442,
+          5795428
+        ],
+        "weighted_matches": 5.726562,
+        "weighted_exact_lineups": 5.726562,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 29
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 21.7,
+      "display_grade": "D",
+      "grade_confidence": "low",
+      "grade_provisional": true,
+      "rank": 19
+    },
+    {
+      "team_id": 8667,
+      "team": "Hull City",
+      "next_fixture": {
+        "match_id": 5795470,
+        "kickoff_utc": "2026-10-11T13:00:00Z",
+        "venue": "home",
+        "opponent": "Everton"
+      },
+      "formation": "5-4-1",
+      "alpha": {
+        "overall_alpha_ability": {
+          "z": -0.616776,
+          "coverage": 0.7448
+        },
+        "attacking_unit_alpha_ability": {
+          "z": -0.629985,
+          "coverage": 0.6901
+        },
+        "defensive_unit_alpha_ability": {
+          "z": -0.581108,
+          "coverage": 0.7173
+        },
+        "scoring_threat": {
+          "z": -0.510692,
+          "coverage": 0.7173
+        },
+        "chance_creation": {
+          "z": -0.818576,
+          "coverage": 0.7307
+        },
+        "defensive_prevention": {
+          "z": -0.34642,
+          "coverage": 0.6584
+        }
+      },
+      "expected_xi": [
+        {
+          "player_id": 1072068,
+          "player": "Konstantinos Tzolakis",
+          "role": "GK",
+          "expected_minutes": 82.545,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": 0.103,
+          "scoring_threat_z": null,
+          "chance_creation_z": -1.422,
+          "defensive_prevention_z": 0.102681
+        },
+        {
+          "player_id": 295062,
+          "player": "John Egan",
+          "role": "DEF",
+          "expected_minutes": 85.12,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": -1.064,
+          "scoring_threat_z": -0.718033,
+          "chance_creation_z": -2.412,
+          "defensive_prevention_z": -0.294635
+        },
+        {
+          "player_id": 709148,
+          "player": "Lewie Coyle",
+          "role": "DEF",
+          "expected_minutes": 85.038,
+          "start_frequency": 1.0,
+          "alpha_ability_z": -1.359,
+          "scoring_threat_z": -1.208953,
+          "chance_creation_z": -0.958492,
+          "defensive_prevention_z": -0.839585
+        },
+        {
+          "player_id": 933635,
+          "player": "Ryan Giles",
+          "role": "DEF",
+          "expected_minutes": 82.545,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": -1.238,
+          "scoring_threat_z": -1.16641,
+          "chance_creation_z": -0.182341,
+          "defensive_prevention_z": -1.362008
+        },
+        {
+          "player_id": 410836,
+          "player": "Semi Ajayi",
+          "role": "DEF",
+          "expected_minutes": 82.545,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": -0.425,
+          "scoring_threat_z": -0.319006,
+          "chance_creation_z": -2.013,
+          "defensive_prevention_z": 0.198311
+        },
+        {
+          "player_id": 1686118,
+          "player": "Lucas Herrington",
+          "role": "DEF",
+          "expected_minutes": 62.309,
+          "start_frequency": 0.488591,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 807930,
+          "player": "Regan Slater",
+          "role": "MID",
+          "expected_minutes": 82.787,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": -1.308,
+          "scoring_threat_z": -0.991891,
+          "chance_creation_z": -1.166314,
+          "defensive_prevention_z": -0.468761
+        },
+        {
+          "player_id": 1231090,
+          "player": "Mohamed Belloumi",
+          "role": "MID",
+          "expected_minutes": 69.611,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": -0.319,
+          "scoring_threat_z": -0.436635,
+          "chance_creation_z": 0.027604,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 812982,
+          "player": "Sorba Thomas",
+          "role": "MID",
+          "expected_minutes": 49.709,
+          "start_frequency": 0.488591,
+          "alpha_ability_z": null,
+          "scoring_threat_z": null,
+          "chance_creation_z": null,
+          "defensive_prevention_z": null
+        },
+        {
+          "player_id": 280507,
+          "player": "Matt Crooks",
+          "role": "MID",
+          "expected_minutes": 44.836,
+          "start_frequency": 0.746309,
+          "alpha_ability_z": -1.169,
+          "scoring_threat_z": -0.485193,
+          "chance_creation_z": -0.900902,
+          "defensive_prevention_z": -0.75562
+        },
+        {
+          "player_id": 509151,
+          "player": "Oli McBurnie",
+          "role": "FWD",
+          "expected_minutes": 80.334,
+          "start_frequency": 0.855034,
+          "alpha_ability_z": -1.098,
+          "scoring_threat_z": -0.378416,
+          "chance_creation_z": -0.997418,
+          "defensive_prevention_z": -1.127186
+        }
+      ],
+      "availability": {
+        "questionable": [
+          "Nobel Mendy",
+          "Matt Targett"
+        ],
+        "unavailable": [
+          "Charlie Hughes",
+          "Darko Gyabi",
+          "Eliot Matazo",
+          "Elliot Stroud",
+          "Hidemasa Morita",
+          "Ilyas Ansah",
+          "Jack Butland",
+          "Tim Iroegbunam"
+        ]
+      },
+      "evidence": {
+        "prior_matches": 5,
+        "latest_match_competition_id": 47,
+        "competition_changed_since_latest_match": false,
+        "latest_xi_bonus_suppressed": false,
+        "prior_match_ids": [
+          5795462,
+          5795447,
+          6099331,
+          5795440,
+          5795428
+        ],
+        "weighted_matches": 5.820312,
+        "weighted_exact_lineups": 5.820312,
+        "latest_exact_lineup_source": "current_season",
+        "candidate_players": 33
+      },
+      "quality_flags": [],
+      "projection_ready": true,
+      "league_relative_strength_index": 17.4,
+      "display_grade": "D",
+      "grade_confidence": "low",
+      "grade_provisional": true,
+      "rank": 20
+    }
+  ],
+  "decision_boundaries": {
+    "full_fixture_prediction": false,
+    "market_probability": false,
+    "capital_ready": false,
+    "selection_frequencies_calibrated": false
+  }
+}

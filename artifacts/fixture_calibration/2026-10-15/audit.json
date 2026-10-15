@@ -1,0 +1,122 @@
+{
+  "version": "clubalpha_fixture_calibration_audit_v1",
+  "generated_at_utc": "2026-10-15T00:00:00+00:00",
+  "as_of": "2026-10-15",
+  "cycle_ids": [
+    "2026-08-26-matchweek-2",
+    "2026-08-31-matchweek-3-official",
+    "2026-09-08-matchweek-4-official",
+    "2026-09-17-matchweek-5-contextual",
+    "2026-10-06-matchweek-6-contextual"
+  ],
+  "training_matches": 50,
+  "same_sample_sensitivity": {
+    "interpretation": "same-sample sensitivity only; not validation",
+    "baseline": {
+      "matches": 50,
+      "one_x_two_brier": 0.657618,
+      "one_x_two_log_loss": 1.084007,
+      "top_pick_accuracy": 0.4,
+      "home_probability_leader_rate": 0.7,
+      "mean_draw_probability": 0.260828
+    },
+    "calibrated": {
+      "matches": 50,
+      "one_x_two_brier": 0.639026,
+      "one_x_two_log_loss": 1.055527,
+      "top_pick_accuracy": 0.4,
+      "home_probability_leader_rate": 0.62,
+      "mean_draw_probability": 0.309387
+    },
+    "draw_zone": {
+      "flagged": 8,
+      "actual_draws_flagged": 3,
+      "rows": [
+        {
+          "match_id": 5795430,
+          "fixture": "Leeds United vs Brentford",
+          "outcome": "draw",
+          "draw_probability": 0.313547,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795433,
+          "fixture": "Sunderland vs Fulham",
+          "outcome": "home_win",
+          "draw_probability": 0.326889,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795441,
+          "fixture": "Ipswich Town vs Liverpool",
+          "outcome": "away_win",
+          "draw_probability": 0.31052,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795446,
+          "fixture": "Aston Villa vs Nottingham Forest",
+          "outcome": "away_win",
+          "draw_probability": 0.335698,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795454,
+          "fixture": "Tottenham Hotspur vs Everton",
+          "outcome": "draw",
+          "draw_probability": 0.326473,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795464,
+          "fixture": "Tottenham Hotspur vs Aston Villa",
+          "outcome": "away_win",
+          "draw_probability": 0.337004,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795470,
+          "fixture": "Hull City vs Everton",
+          "outcome": "draw",
+          "draw_probability": 0.340003,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795468,
+          "fixture": "Coventry City vs Newcastle United",
+          "outcome": "home_win",
+          "draw_probability": 0.320232,
+          "correct_draw_flag": false
+        }
+      ]
+    }
+  },
+  "chronological_audit": {
+    "interpretation": "cycle-forward; each calibration uses only earlier cycles",
+    "evaluated_cycles": 4,
+    "baseline": {
+      "matches": 40,
+      "one_x_two_brier": 0.661283,
+      "one_x_two_log_loss": 1.088079,
+      "top_pick_accuracy": 0.4,
+      "home_probability_leader_rate": 0.7,
+      "mean_draw_probability": 0.266709
+    },
+    "calibrated": {
+      "matches": 40,
+      "one_x_two_brier": 0.662388,
+      "one_x_two_log_loss": 1.086697,
+      "top_pick_accuracy": 0.375,
+      "home_probability_leader_rate": 0.65,
+      "mean_draw_probability": 0.312739
+    }
+  },
+  "decision_boundaries": {
+    "same_sample_metrics_are_validation": false,
+    "core_architecture_changed": false,
+    "player_alpha_changed": false,
+    "base_weights_changed": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  }
+}

@@ -67,3 +67,28 @@ The checkpoint writes `state.json`, `report.md`, and
 `match-learning-cards.jsonl` beneath `artifacts/research_loop/`. Existing
 checkpoint files are immutable: rerunning the same path must reproduce the
 same bytes or fail.
+
+## Archetype matchup memory
+
+Run:
+
+```bash
+python3 research/build_archetype_memory_v1.py \
+  --as-of YYYY-MM-DD \
+  --cards artifacts/research_loop/CHECKPOINT/match-learning-cards.jsonl \
+  --output-dir artifacts/archetype_memory/YYYY-MM-DD
+```
+
+The archetype memory derives two team-perspective observations from every
+completed Match Learning Card and keeps three ledgers separate:
+
+1. Direct opponent history.
+2. Team versus opponent-archetype history.
+3. League-wide archetype versus archetype history.
+
+xG process, forecast residual, lineup accuracy, preferred route and W-D-L are
+retained together so a finishing outlier does not become a false tactical
+lesson. Fewer than three comparable matches are descriptive, three to four
+are tentative, five to seven are challenger-eligible, and eight or more may
+enter human promotion review. The ledger has zero live weight and cannot
+rewrite Player Alpha, Club Form, probabilities or capital authorization.

@@ -1,48 +1,48 @@
 {
   "form_version": "clubalpha_club_form_v1",
-  "generated_at_utc": "2026-09-16T22:48:41.865769+00:00",
-  "as_of": "2026-09-16",
+  "generated_at_utc": "2026-10-15T17:14:09.536957+00:00",
+  "as_of": "2026-10-15",
   "counts": {
     "target_teams": 51,
     "teams_with_form": 51,
-    "unique_matches": 2141,
-    "team_match_rows": 4282,
+    "unique_matches": 2243,
+    "team_match_rows": 4486,
     "match_cards_missing_from_cache": 0,
     "source_scope_team_rows": {
-      "champions_league_current": 36,
+      "champions_league_current": 72,
       "champions_league_previous": 378,
       "champions_league_qualification_2026_27": 28,
-      "domestic_current_2026_27": 350,
+      "domestic_current_2026_27": 468,
       "domestic_history_previous": 2312,
-      "premier_league_current": 80,
+      "premier_league_current": 120,
       "premier_league_previous": 760,
-      "preseason_2026": 338
+      "preseason_2026": 348
     }
   },
   "input_handoff": {
-    "source_normalized_team_match_rows": 4282,
+    "source_normalized_team_match_rows": 4486,
     "legacy_cache_fallback_rows": 0,
     "note": "The fallback keeps older snapshots buildable; refreshed collectors materialize every row before Club Form scoring."
   },
   "metric_coverage": {
     "goals": {
-      "team_match_rows_with_value": 4282,
-      "team_match_rows": 4282,
+      "team_match_rows_with_value": 4486,
+      "team_match_rows": 4486,
       "pct": 100.0
     },
     "expected_goals": {
-      "team_match_rows_with_value": 3654,
-      "team_match_rows": 4282,
-      "pct": 85.3
+      "team_match_rows_with_value": 3834,
+      "team_match_rows": 4486,
+      "pct": 85.5
     },
     "shots_on_target": {
-      "team_match_rows_with_value": 4020,
-      "team_match_rows": 4282,
+      "team_match_rows_with_value": 4212,
+      "team_match_rows": 4486,
       "pct": 93.9
     },
     "big_chances": {
-      "team_match_rows_with_value": 3950,
-      "team_match_rows": 4282,
+      "team_match_rows_with_value": 4138,
+      "team_match_rows": 4486,
       "pct": 92.2
     }
   },
@@ -50,25 +50,25 @@
     "groups": {
       "champions_league": {
         "goals": {
-          "peer_rows": 442,
+          "peer_rows": 478,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 442,
+          "peer_rows": 478,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 442,
+          "peer_rows": 478,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 442,
+          "peer_rows": 478,
           "source": "competition"
         }
       },
       "competition:122": {
         "goals": {
-          "peer_rows": 86,
+          "peer_rows": 90,
           "source": "competition"
         },
         "expected_goals": {
@@ -76,35 +76,35 @@
           "source": "global_fallback"
         },
         "shots_on_target": {
-          "peer_rows": 86,
+          "peer_rows": 90,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 86,
+          "peer_rows": 90,
           "source": "competition"
         }
       },
       "competition:135": {
         "goals": {
-          "peer_rows": 72,
+          "peer_rows": 76,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 72,
+          "peer_rows": 76,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 72,
+          "peer_rows": 76,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 72,
+          "peer_rows": 76,
           "source": "competition"
         }
       },
       "competition:176": {
         "goals": {
-          "peer_rows": 78,
+          "peer_rows": 82,
           "source": "competition"
         },
         "expected_goals": {
@@ -112,17 +112,17 @@
           "source": "global_fallback"
         },
         "shots_on_target": {
-          "peer_rows": 78,
+          "peer_rows": 82,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 78,
+          "peer_rows": 82,
           "source": "competition"
         }
       },
       "competition:262": {
         "goals": {
-          "peer_rows": 74,
+          "peer_rows": 78,
           "source": "competition"
         },
         "expected_goals": {
@@ -140,43 +140,43 @@
       },
       "competition:38": {
         "goals": {
-          "peer_rows": 76,
+          "peer_rows": 80,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 76,
+          "peer_rows": 80,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 76,
+          "peer_rows": 80,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 76,
+          "peer_rows": 80,
           "source": "competition"
         }
       },
       "competition:40": {
         "goals": {
-          "peer_rows": 92,
+          "peer_rows": 96,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 92,
+          "peer_rows": 96,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 92,
+          "peer_rows": 96,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 92,
+          "peer_rows": 96,
           "source": "competition"
         }
       },
       "competition:441": {
         "goals": {
-          "peer_rows": 72,
+          "peer_rows": 76,
           "source": "competition"
         },
         "expected_goals": {
@@ -184,7 +184,7 @@
           "source": "global_fallback"
         },
         "shots_on_target": {
-          "peer_rows": 68,
+          "peer_rows": 72,
           "source": "competition"
         },
         "big_chances": {
@@ -194,19 +194,19 @@
       },
       "competition:47": {
         "goals": {
-          "peer_rows": 840,
+          "peer_rows": 880,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 840,
+          "peer_rows": 880,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 840,
+          "peer_rows": 880,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 840,
+          "peer_rows": 880,
           "source": "competition"
         }
       },
@@ -230,163 +230,163 @@
       },
       "competition:53": {
         "goals": {
-          "peer_rows": 214,
+          "peer_rows": 226,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 214,
+          "peer_rows": 226,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 214,
+          "peer_rows": 226,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 214,
+          "peer_rows": 226,
           "source": "competition"
         }
       },
       "competition:54": {
         "goals": {
-          "peer_rows": 270,
+          "peer_rows": 284,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 270,
+          "peer_rows": 284,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 270,
+          "peer_rows": 284,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 270,
+          "peer_rows": 284,
           "source": "competition"
         }
       },
       "competition:55": {
         "goals": {
-          "peer_rows": 308,
+          "peer_rows": 320,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 308,
+          "peer_rows": 320,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 308,
+          "peer_rows": 320,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 308,
+          "peer_rows": 320,
           "source": "competition"
         }
       },
       "competition:57": {
         "goals": {
-          "peer_rows": 156,
+          "peer_rows": 164,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 156,
+          "peer_rows": 164,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 156,
+          "peer_rows": 164,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 156,
+          "peer_rows": 164,
           "source": "competition"
         }
       },
       "competition:59": {
         "goals": {
-          "peer_rows": 194,
+          "peer_rows": 202,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 194,
+          "peer_rows": 202,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 194,
+          "peer_rows": 202,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 194,
+          "peer_rows": 202,
           "source": "competition"
         }
       },
       "competition:61": {
         "goals": {
-          "peer_rows": 156,
+          "peer_rows": 164,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 156,
+          "peer_rows": 164,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 156,
+          "peer_rows": 164,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 156,
+          "peer_rows": 164,
           "source": "competition"
         }
       },
       "competition:71": {
         "goals": {
-          "peer_rows": 152,
+          "peer_rows": 160,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 152,
+          "peer_rows": 160,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 152,
+          "peer_rows": 160,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 152,
+          "peer_rows": 160,
           "source": "competition"
         }
       },
       "competition:87": {
         "goals": {
-          "peer_rows": 390,
+          "peer_rows": 410,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 390,
+          "peer_rows": 410,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 390,
+          "peer_rows": 410,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 390,
+          "peer_rows": 410,
           "source": "competition"
         }
       },
       "preseason": {
         "goals": {
-          "peer_rows": 338,
+          "peer_rows": 348,
           "source": "competition"
         },
         "expected_goals": {
-          "peer_rows": 20,
+          "peer_rows": 22,
           "source": "competition"
         },
         "shots_on_target": {
-          "peer_rows": 154,
+          "peer_rows": 156,
           "source": "competition"
         },
         "big_chances": {
-          "peer_rows": 152,
+          "peer_rows": 154,
           "source": "competition"
         }
       }
@@ -394,360 +394,360 @@
     "team_reference": {
       "attack": {
         "reference_teams": 51,
-        "mean": 0.271219,
-        "sample_sd": 0.323591
+        "mean": 0.273675,
+        "sample_sd": 0.302517
       },
       "defense": {
         "reference_teams": 51,
-        "mean": 0.115271,
-        "sample_sd": 0.248218
+        "mean": 0.078516,
+        "sample_sd": 0.224211
       }
     }
   },
   "quality_flags": {
-    "low_form_confidence": 2,
+    "low_form_confidence": 1,
     "partial_match_detail": 2
   },
   "availability_snapshot": {
-    "unavailable": 134,
-    "questionable": 42,
-    "unknown": 2
+    "unavailable": 131,
+    "questionable": 41,
+    "unknown": 5
   },
   "leaders": {
     "overall": [
       {
-        "team_id": 9823,
-        "team": "Bayern München",
-        "overall_form_z": 1.1016,
-        "attack_form_z": 1.0935,
-        "defense_form_z": 1.1096,
-        "attack_confidence": 0.6215,
-        "defense_confidence": 0.6215,
-        "matches": 58,
-        "preseason_weight_share": 0.1104
-      },
-      {
         "team_id": 8634,
         "team": "Barcelona",
-        "overall_form_z": 1.0603,
-        "attack_form_z": 1.7946,
-        "defense_form_z": 0.3261,
-        "attack_confidence": 0.6799,
-        "defense_confidence": 0.6799,
-        "matches": 62,
-        "preseason_weight_share": 0.074
+        "overall_form_z": 1.3718,
+        "attack_form_z": 1.927,
+        "defense_form_z": 0.8166,
+        "attack_confidence": 0.6723,
+        "defense_confidence": 0.6723,
+        "matches": 65,
+        "preseason_weight_share": 0.0554
+      },
+      {
+        "team_id": 9823,
+        "team": "Bayern München",
+        "overall_form_z": 1.2137,
+        "attack_form_z": 1.4399,
+        "defense_form_z": 0.9875,
+        "attack_confidence": 0.6303,
+        "defense_confidence": 0.6303,
+        "matches": 61,
+        "preseason_weight_share": 0.0769
       },
       {
         "team_id": 9825,
         "team": "Arsenal",
-        "overall_form_z": 0.8013,
-        "attack_form_z": 0.1285,
-        "defense_form_z": 1.474,
-        "attack_confidence": 0.6505,
-        "defense_confidence": 0.6505,
-        "matches": 62,
-        "preseason_weight_share": 0.0664
-      },
-      {
-        "team_id": 8456,
-        "team": "Manchester City",
-        "overall_form_z": 0.7906,
-        "attack_form_z": 0.5328,
-        "defense_form_z": 1.0484,
-        "attack_confidence": 0.6215,
-        "defense_confidence": 0.6215,
-        "matches": 56,
-        "preseason_weight_share": 0.055
+        "overall_form_z": 0.8772,
+        "attack_form_z": 0.1598,
+        "defense_form_z": 1.5947,
+        "attack_confidence": 0.6508,
+        "defense_confidence": 0.6508,
+        "matches": 65,
+        "preseason_weight_share": 0.0477
       },
       {
         "team_id": 8563,
         "team": "AEK Athens",
-        "overall_form_z": 0.7886,
-        "attack_form_z": 0.3858,
-        "defense_form_z": 1.1914,
-        "attack_confidence": 0.629,
-        "defense_confidence": 0.629,
-        "matches": 41,
-        "preseason_weight_share": 0.0302
-      },
-      {
-        "team_id": 8633,
-        "team": "Real Madrid",
-        "overall_form_z": 0.7699,
-        "attack_form_z": 0.9843,
-        "defense_form_z": 0.5556,
-        "attack_confidence": 0.6851,
-        "defense_confidence": 0.6851,
-        "matches": 64,
-        "preseason_weight_share": 0.0707
-      },
-      {
-        "team_id": 9977,
-        "team": "LASK",
-        "overall_form_z": 0.7372,
-        "attack_form_z": 0.7544,
-        "defense_form_z": 0.7201,
-        "attack_confidence": 0.6584,
-        "defense_confidence": 0.6584,
-        "matches": 42,
-        "preseason_weight_share": 0.0123
+        "overall_form_z": 0.6998,
+        "attack_form_z": 0.2248,
+        "defense_form_z": 1.1747,
+        "attack_confidence": 0.6363,
+        "defense_confidence": 0.6363,
+        "matches": 44,
+        "preseason_weight_share": 0.0211
       },
       {
         "team_id": 9847,
         "team": "Paris Saint-Germain",
-        "overall_form_z": 0.5631,
-        "attack_form_z": 0.6273,
-        "defense_form_z": 0.4988,
-        "attack_confidence": 0.6449,
-        "defense_confidence": 0.6449,
-        "matches": 58,
-        "preseason_weight_share": 0.0342
+        "overall_form_z": 0.656,
+        "attack_form_z": 1.2147,
+        "defense_form_z": 0.0973,
+        "attack_confidence": 0.6473,
+        "defense_confidence": 0.6473,
+        "matches": 61,
+        "preseason_weight_share": 0.0243
       },
       {
-        "team_id": 7787,
-        "team": "Slavia Prague",
-        "overall_form_z": 0.4783,
-        "attack_form_z": 0.5337,
-        "defense_form_z": 0.423,
-        "attack_confidence": 0.6093,
-        "defense_confidence": 0.6093,
-        "matches": 52,
-        "preseason_weight_share": 0.0
+        "team_id": 8402,
+        "team": "Bodø/Glimt",
+        "overall_form_z": 0.5923,
+        "attack_form_z": 0.4021,
+        "defense_form_z": 0.7825,
+        "attack_confidence": 0.6894,
+        "defense_confidence": 0.6894,
+        "matches": 70,
+        "preseason_weight_share": 0.0131
       },
       {
-        "team_id": 8640,
-        "team": "PSV Eindhoven",
-        "overall_form_z": 0.4542,
-        "attack_form_z": 0.6371,
-        "defense_form_z": 0.2714,
-        "attack_confidence": 0.6382,
-        "defense_confidence": 0.6382,
-        "matches": 53,
-        "preseason_weight_share": 0.0553
+        "team_id": 10204,
+        "team": "Brighton & Hove Albion",
+        "overall_form_z": 0.5865,
+        "attack_form_z": 0.8994,
+        "defense_form_z": 0.2735,
+        "attack_confidence": 0.5631,
+        "defense_confidence": 0.5631,
+        "matches": 46,
+        "preseason_weight_share": 0.0365
+      },
+      {
+        "team_id": 8456,
+        "team": "Manchester City",
+        "overall_form_z": 0.5825,
+        "attack_form_z": 0.8741,
+        "defense_form_z": 0.2909,
+        "attack_confidence": 0.6314,
+        "defense_confidence": 0.6314,
+        "matches": 59,
+        "preseason_weight_share": 0.038
+      },
+      {
+        "team_id": 8633,
+        "team": "Real Madrid",
+        "overall_form_z": 0.5732,
+        "attack_form_z": 0.6611,
+        "defense_form_z": 0.4852,
+        "attack_confidence": 0.6766,
+        "defense_confidence": 0.6766,
+        "matches": 67,
+        "preseason_weight_share": 0.0529
+      },
+      {
+        "team_id": 10235,
+        "team": "Feyenoord",
+        "overall_form_z": 0.5698,
+        "attack_form_z": 0.0714,
+        "defense_form_z": 1.0683,
+        "attack_confidence": 0.6394,
+        "defense_confidence": 0.6394,
+        "matches": 49,
+        "preseason_weight_share": 0.05
       }
     ],
     "attack": [
       {
         "team_id": 8634,
         "team": "Barcelona",
-        "attack_z": 1.7946,
-        "attack_form_z": 1.7946,
-        "defense_form_z": 0.3261,
-        "attack_confidence": 0.6799,
-        "defense_confidence": 0.6799,
-        "matches": 62,
-        "preseason_weight_share": 0.074
+        "attack_z": 1.927,
+        "attack_form_z": 1.927,
+        "defense_form_z": 0.8166,
+        "attack_confidence": 0.6723,
+        "defense_confidence": 0.6723,
+        "matches": 65,
+        "preseason_weight_share": 0.0554
       },
       {
         "team_id": 8636,
         "team": "Inter",
-        "attack_z": 1.2826,
-        "attack_form_z": 1.2826,
-        "defense_form_z": -0.5,
-        "attack_confidence": 0.6306,
-        "defense_confidence": 0.6306,
-        "matches": 58,
-        "preseason_weight_share": 0.0882
+        "attack_z": 1.6102,
+        "attack_form_z": 1.6102,
+        "defense_form_z": -0.7467,
+        "attack_confidence": 0.6368,
+        "defense_confidence": 0.6368,
+        "matches": 61,
+        "preseason_weight_share": 0.0619
       },
       {
         "team_id": 9823,
         "team": "Bayern München",
-        "attack_z": 1.0935,
-        "attack_form_z": 1.0935,
-        "defense_form_z": 1.1096,
-        "attack_confidence": 0.6215,
-        "defense_confidence": 0.6215,
-        "matches": 58,
-        "preseason_weight_share": 0.1104
-      },
-      {
-        "team_id": 8633,
-        "team": "Real Madrid",
-        "attack_z": 0.9843,
-        "attack_form_z": 0.9843,
-        "defense_form_z": 0.5556,
-        "attack_confidence": 0.6851,
-        "defense_confidence": 0.6851,
-        "matches": 64,
-        "preseason_weight_share": 0.0707
-      },
-      {
-        "team_id": 10204,
-        "team": "Brighton & Hove Albion",
-        "attack_z": 0.8496,
-        "attack_form_z": 0.8496,
-        "defense_form_z": -0.3067,
-        "attack_confidence": 0.571,
-        "defense_confidence": 0.571,
-        "matches": 44,
-        "preseason_weight_share": 0.0493
-      },
-      {
-        "team_id": 9977,
-        "team": "LASK",
-        "attack_z": 0.7544,
-        "attack_form_z": 0.7544,
-        "defense_form_z": 0.7201,
-        "attack_confidence": 0.6584,
-        "defense_confidence": 0.6584,
-        "matches": 42,
-        "preseason_weight_share": 0.0123
-      },
-      {
-        "team_id": 8640,
-        "team": "PSV Eindhoven",
-        "attack_z": 0.6371,
-        "attack_form_z": 0.6371,
-        "defense_form_z": 0.2714,
-        "attack_confidence": 0.6382,
-        "defense_confidence": 0.6382,
-        "matches": 53,
-        "preseason_weight_share": 0.0553
+        "attack_z": 1.4399,
+        "attack_form_z": 1.4399,
+        "defense_form_z": 0.9875,
+        "attack_confidence": 0.6303,
+        "defense_confidence": 0.6303,
+        "matches": 61,
+        "preseason_weight_share": 0.0769
       },
       {
         "team_id": 9847,
         "team": "Paris Saint-Germain",
-        "attack_z": 0.6273,
-        "attack_form_z": 0.6273,
-        "defense_form_z": 0.4988,
-        "attack_confidence": 0.6449,
-        "defense_confidence": 0.6449,
-        "matches": 58,
-        "preseason_weight_share": 0.0342
+        "attack_z": 1.2147,
+        "attack_form_z": 1.2147,
+        "defense_form_z": 0.0973,
+        "attack_confidence": 0.6473,
+        "defense_confidence": 0.6473,
+        "matches": 61,
+        "preseason_weight_share": 0.0243
       },
       {
-        "team_id": 10260,
-        "team": "Manchester United",
-        "attack_z": 0.5415,
-        "attack_form_z": 0.5415,
-        "defense_form_z": 0.3465,
-        "attack_confidence": 0.6166,
-        "defense_confidence": 0.6166,
-        "matches": 49,
-        "preseason_weight_share": 0.1094
+        "team_id": 10204,
+        "team": "Brighton & Hove Albion",
+        "attack_z": 0.8994,
+        "attack_form_z": 0.8994,
+        "defense_form_z": 0.2735,
+        "attack_confidence": 0.5631,
+        "defense_confidence": 0.5631,
+        "matches": 46,
+        "preseason_weight_share": 0.0365
       },
       {
-        "team_id": 7787,
-        "team": "Slavia Prague",
-        "attack_z": 0.5337,
-        "attack_form_z": 0.5337,
-        "defense_form_z": 0.423,
-        "attack_confidence": 0.6093,
-        "defense_confidence": 0.6093,
-        "matches": 52,
-        "preseason_weight_share": 0.0
+        "team_id": 8456,
+        "team": "Manchester City",
+        "attack_z": 0.8741,
+        "attack_form_z": 0.8741,
+        "defense_form_z": 0.2909,
+        "attack_confidence": 0.6314,
+        "defense_confidence": 0.6314,
+        "matches": 59,
+        "preseason_weight_share": 0.038
+      },
+      {
+        "team_id": 8342,
+        "team": "Club Brugge",
+        "attack_z": 0.8587,
+        "attack_form_z": 0.8587,
+        "defense_form_z": -0.0424,
+        "attack_confidence": 0.6582,
+        "defense_confidence": 0.6582,
+        "matches": 64,
+        "preseason_weight_share": 0.0349
+      },
+      {
+        "team_id": 8633,
+        "team": "Real Madrid",
+        "attack_z": 0.6611,
+        "attack_form_z": 0.6611,
+        "defense_form_z": 0.4852,
+        "attack_confidence": 0.6766,
+        "defense_confidence": 0.6766,
+        "matches": 67,
+        "preseason_weight_share": 0.0529
+      },
+      {
+        "team_id": 8402,
+        "team": "Bodø/Glimt",
+        "attack_z": 0.4021,
+        "attack_form_z": 0.4021,
+        "defense_form_z": 0.7825,
+        "attack_confidence": 0.6894,
+        "defense_confidence": 0.6894,
+        "matches": 70,
+        "preseason_weight_share": 0.0131
+      },
+      {
+        "team_id": 9977,
+        "team": "LASK",
+        "attack_z": 0.3758,
+        "attack_form_z": 0.3758,
+        "defense_form_z": 0.0377,
+        "attack_confidence": 0.6572,
+        "defense_confidence": 0.6572,
+        "matches": 45,
+        "preseason_weight_share": 0.0089
       }
     ],
     "defense": [
       {
         "team_id": 9825,
         "team": "Arsenal",
-        "defense_z": 1.474,
-        "attack_form_z": 0.1285,
-        "defense_form_z": 1.474,
-        "attack_confidence": 0.6505,
-        "defense_confidence": 0.6505,
-        "matches": 62,
-        "preseason_weight_share": 0.0664
+        "defense_z": 1.5947,
+        "attack_form_z": 0.1598,
+        "defense_form_z": 1.5947,
+        "attack_confidence": 0.6508,
+        "defense_confidence": 0.6508,
+        "matches": 65,
+        "preseason_weight_share": 0.0477
       },
       {
         "team_id": 8563,
         "team": "AEK Athens",
-        "defense_z": 1.1914,
-        "attack_form_z": 0.3858,
-        "defense_form_z": 1.1914,
-        "attack_confidence": 0.629,
-        "defense_confidence": 0.629,
-        "matches": 41,
-        "preseason_weight_share": 0.0302
-      },
-      {
-        "team_id": 9823,
-        "team": "Bayern München",
-        "defense_z": 1.1096,
-        "attack_form_z": 1.0935,
-        "defense_form_z": 1.1096,
-        "attack_confidence": 0.6215,
-        "defense_confidence": 0.6215,
-        "matches": 58,
-        "preseason_weight_share": 0.1104
-      },
-      {
-        "team_id": 8456,
-        "team": "Manchester City",
-        "defense_z": 1.0484,
-        "attack_form_z": 0.5328,
-        "defense_form_z": 1.0484,
-        "attack_confidence": 0.6215,
-        "defense_confidence": 0.6215,
-        "matches": 56,
-        "preseason_weight_share": 0.055
-      },
-      {
-        "team_id": 9977,
-        "team": "LASK",
-        "defense_z": 0.7201,
-        "attack_form_z": 0.7544,
-        "defense_form_z": 0.7201,
-        "attack_confidence": 0.6584,
-        "defense_confidence": 0.6584,
-        "matches": 42,
-        "preseason_weight_share": 0.0123
+        "defense_z": 1.1747,
+        "attack_form_z": 0.2248,
+        "defense_form_z": 1.1747,
+        "attack_confidence": 0.6363,
+        "defense_confidence": 0.6363,
+        "matches": 44,
+        "preseason_weight_share": 0.0211
       },
       {
         "team_id": 10235,
         "team": "Feyenoord",
-        "defense_z": 0.7098,
-        "attack_form_z": -0.0704,
-        "defense_form_z": 0.7098,
-        "attack_confidence": 0.6336,
-        "defense_confidence": 0.6336,
-        "matches": 46,
-        "preseason_weight_share": 0.0711
+        "defense_z": 1.0683,
+        "attack_form_z": 0.0714,
+        "defense_form_z": 1.0683,
+        "attack_confidence": 0.6394,
+        "defense_confidence": 0.6394,
+        "matches": 49,
+        "preseason_weight_share": 0.05
+      },
+      {
+        "team_id": 9823,
+        "team": "Bayern München",
+        "defense_z": 0.9875,
+        "attack_form_z": 1.4399,
+        "defense_form_z": 0.9875,
+        "attack_confidence": 0.6303,
+        "defense_confidence": 0.6303,
+        "matches": 61,
+        "preseason_weight_share": 0.0769
+      },
+      {
+        "team_id": 8634,
+        "team": "Barcelona",
+        "defense_z": 0.8166,
+        "attack_form_z": 1.927,
+        "defense_form_z": 0.8166,
+        "attack_confidence": 0.6723,
+        "defense_confidence": 0.6723,
+        "matches": 65,
+        "preseason_weight_share": 0.0554
+      },
+      {
+        "team_id": 8402,
+        "team": "Bodø/Glimt",
+        "defense_z": 0.7825,
+        "attack_form_z": 0.4021,
+        "defense_form_z": 0.7825,
+        "attack_confidence": 0.6894,
+        "defense_confidence": 0.6894,
+        "matches": 70,
+        "preseason_weight_share": 0.0131
       },
       {
         "team_id": 9728,
         "team": "Shakhtar Donetsk",
-        "defense_z": 0.6981,
-        "attack_form_z": -0.3765,
-        "defense_form_z": 0.6981,
-        "attack_confidence": 0.4783,
-        "defense_confidence": 0.4783,
-        "matches": 37,
+        "defense_z": 0.7638,
+        "attack_form_z": -0.029,
+        "defense_form_z": 0.7638,
+        "attack_confidence": 0.5054,
+        "defense_confidence": 0.5054,
+        "matches": 40,
         "preseason_weight_share": 0.0
       },
       {
-        "team_id": 9768,
-        "team": "Sporting CP",
-        "defense_z": 0.5859,
-        "attack_form_z": 0.2099,
-        "defense_form_z": 0.5859,
-        "attack_confidence": 0.6528,
-        "defense_confidence": 0.6528,
+        "team_id": 7787,
+        "team": "Slavia Prague",
+        "defense_z": 0.6642,
+        "attack_form_z": 0.1845,
+        "defense_form_z": 0.6642,
+        "attack_confidence": 0.6099,
+        "defense_confidence": 0.6099,
+        "matches": 55,
+        "preseason_weight_share": 0.0
+      },
+      {
+        "team_id": 9789,
+        "team": "Borussia Dortmund",
+        "defense_z": 0.5777,
+        "attack_form_z": -0.7101,
+        "defense_form_z": 0.5777,
+        "attack_confidence": 0.6146,
+        "defense_confidence": 0.6146,
         "matches": 57,
-        "preseason_weight_share": 0.0539
+        "preseason_weight_share": 0.0777
       },
       {
-        "team_id": 8633,
-        "team": "Real Madrid",
-        "defense_z": 0.5556,
-        "attack_form_z": 0.9843,
-        "defense_form_z": 0.5556,
-        "attack_confidence": 0.6851,
-        "defense_confidence": 0.6851,
-        "matches": 64,
-        "preseason_weight_share": 0.0707
-      },
-      {
-        "team_id": 9847,
-        "team": "Paris Saint-Germain",
-        "defense_z": 0.4988,
-        "attack_form_z": 0.6273,
-        "defense_form_z": 0.4988,
-        "attack_confidence": 0.6449,
-        "defense_confidence": 0.6449,
-        "matches": 58,
-        "preseason_weight_share": 0.0342
+        "team_id": 9906,
+        "team": "Atlético Madrid",
+        "defense_z": 0.5122,
+        "attack_form_z": -0.2696,
+        "defense_form_z": 0.5122,
+        "attack_confidence": 0.6803,
+        "defense_confidence": 0.6803,
+        "matches": 68,
+        "preseason_weight_share": 0.0411
       }
     ]
   },

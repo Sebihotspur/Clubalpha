@@ -1,0 +1,33 @@
+{
+  "version": "clubalpha_matchweek_research_settlement_v1",
+  "status": "settled_research_shadow",
+  "round": 6,
+  "frozen_source": "artifacts/matchweek_research/2026-10-06-mw6/README.md",
+  "model_snapshot": "artifacts/market_snapshots/2026-10-06-mw6-polymarket.json",
+  "result_source": "artifacts/contextual_interaction/2026-10-06-mw6/results.jsonl",
+  "summary": {
+    "advertised_one_x_two": {"hits": 5, "settled": 10, "hit_rate": 0.5},
+    "advertised_over_under_2_5": {"hits": 5, "settled": 10, "hit_rate": 0.5},
+    "base_model_one_x_two": {"hits": 7, "settled": 10, "hit_rate": 0.7},
+    "contextual_model_one_x_two": {"hits": 6, "settled": 10, "hit_rate": 0.6},
+    "side_shortlist": {"hits": 1, "settled": 3, "hit_rate": 0.333333},
+    "totals_shortlist": {"hits": 0, "settled": 1, "hit_rate": 0.0},
+    "combined_shortlist": {"hits": 1, "settled": 4, "hit_rate": 0.25}
+  },
+  "fixtures": [
+    {"match_id":5795465,"fixture":"Arsenal vs Leeds United","advertised_one_x_two":"home_win","advertised_total":"under_2_5","side_shortlist":true,"totals_shortlist":false,"score":"2-1","actual_outcome":"home_win","actual_total":"over_2_5","one_x_two_hit":true,"total_hit":false,"actual_xg":{"home":2.33,"away":0.62}},
+    {"match_id":5795466,"fixture":"Aston Villa vs Brentford","advertised_one_x_two":"away_win","advertised_total":"over_2_5","side_shortlist":false,"totals_shortlist":false,"score":"2-2","actual_outcome":"draw","actual_total":"over_2_5","one_x_two_hit":false,"total_hit":true,"actual_xg":{"home":2.28,"away":1.06}},
+    {"match_id":5795467,"fixture":"Chelsea vs AFC Bournemouth","advertised_one_x_two":"away_win","advertised_total":"over_2_5","side_shortlist":false,"totals_shortlist":false,"score":"5-1","actual_outcome":"home_win","actual_total":"over_2_5","one_x_two_hit":false,"total_hit":true,"actual_xg":{"home":1.1,"away":1.38}},
+    {"match_id":5795471,"fixture":"Ipswich Town vs Fulham","advertised_one_x_two":"home_win","advertised_total":"over_2_5","side_shortlist":false,"totals_shortlist":false,"score":"2-1","actual_outcome":"home_win","actual_total":"over_2_5","one_x_two_hit":true,"total_hit":true,"actual_xg":{"home":1.15,"away":1.81}},
+    {"match_id":5795474,"fixture":"Sunderland vs Brighton & Hove Albion","advertised_one_x_two":"away_win","advertised_total":"over_2_5","side_shortlist":false,"totals_shortlist":true,"score":"0-2","actual_outcome":"away_win","actual_total":"under_2_5","one_x_two_hit":true,"total_hit":false,"actual_xg":{"home":0.72,"away":1.41}},
+    {"match_id":5795473,"fixture":"Manchester United vs Tottenham Hotspur","advertised_one_x_two":"home_win","advertised_total":"over_2_5","side_shortlist":true,"totals_shortlist":false,"score":"1-1","actual_outcome":"draw","actual_total":"under_2_5","one_x_two_hit":false,"total_hit":false,"actual_xg":{"home":0.8,"away":1.62}},
+    {"match_id":5795469,"fixture":"Crystal Palace vs Nottingham Forest","advertised_one_x_two":"away_win","advertised_total":"under_2_5","side_shortlist":false,"totals_shortlist":false,"score":"3-1","actual_outcome":"home_win","actual_total":"over_2_5","one_x_two_hit":false,"total_hit":false,"actual_xg":{"home":2.41,"away":3.34}},
+    {"match_id":5795470,"fixture":"Hull City vs Everton","advertised_one_x_two":"away_win","advertised_total":"under_2_5","side_shortlist":true,"totals_shortlist":false,"score":"2-2","actual_outcome":"draw","actual_total":"over_2_5","one_x_two_hit":false,"total_hit":false,"actual_xg":{"home":1.33,"away":1.68}},
+    {"match_id":5795472,"fixture":"Liverpool vs Manchester City","advertised_one_x_two":"away_win","advertised_total":"over_2_5","side_shortlist":false,"totals_shortlist":false,"score":"0-3","actual_outcome":"away_win","actual_total":"over_2_5","one_x_two_hit":true,"total_hit":true,"actual_xg":{"home":0.94,"away":1.28}},
+    {"match_id":5795468,"fixture":"Coventry City vs Newcastle United","advertised_one_x_two":"home_win","advertised_total":"over_2_5","side_shortlist":false,"totals_shortlist":false,"score":"4-1","actual_outcome":"home_win","actual_total":"over_2_5","one_x_two_hit":true,"total_hit":true,"actual_xg":{"home":1.47,"away":1.84}}
+  ],
+  "decision_boundaries": {
+    "counts_toward_official_promotion_gate": false,
+    "capital_deployment_ready": false
+  }
+}

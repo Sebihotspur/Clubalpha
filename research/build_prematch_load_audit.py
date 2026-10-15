@@ -26,6 +26,16 @@ def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def load_jsonl(path: Path) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    return [
+        json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+
+
 def kickoff(value: str) -> datetime:
     return datetime.fromisoformat(value.replace("Z", "+00:00"))
 
@@ -37,9 +47,20 @@ def main() -> None:
     parser.add_argument(
         "--cache-dir", type=Path, default=ROOT / "data/cache/fotmob"
     )
+    parser.add_argument(
+        "--international-summary",
+        type=Path,
+        default=(
+            ROOT
+            / "data/processed/international_current/player_window_summary.jsonl"
+        ),
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     alpha = load_json(args.alpha)
+    international_by_player = {
+        int(row["player_id"]): row for row in load_jsonl(args.international_summary)
+    }
     client = FotMobClient(args.cache_dir, refresh=False)
     output = []
     for club in alpha["clubs"]:
@@ -75,6 +96,9 @@ def main() -> None:
             if int(row.get("team_id") or -1) == int(club["team_id"])
         ]
         projected_ids = {int(row["player_id"]) for row in club["expected_xi"]}
+        projected_names = {
+            int(row["player_id"]): row["player"] for row in club["expected_xi"]
+        }
         actual_starters = {
             int(row["player_id"]) for row in player_rows if row.get("is_starter")
         }
@@ -87,6 +111,35 @@ def main() -> None:
                 or 0.0
             )
         pending = min(future_before_league, key=lambda row: row["kickoff_utc"]) if future_before_league else None
+        international_rows = [
+            international_by_player[player_id]
+            for player_id in sorted(projected_ids)
+            if player_id in international_by_player
+        ]
+        international_minutes = sum(
+            float(row.get("minutes") or 0.0) for row in international_rows
+        )
+        international_latest = max(
+            (
+                row.get("last_kickoff_utc")
+                for row in international_rows
+                if row.get("last_kickoff_utc")
+            ),
+            default=None,
+        )
+        international_recovery = (
+            (next_kickoff - kickoff(international_latest)).total_seconds() / 86400.0
+            if international_latest
+            else None
+        )
+        international_180 = sum(
+            float(row.get("minutes") or 0.0) >= 180.0
+            for row in international_rows
+        )
+        international_270 = sum(
+            float(row.get("minutes") or 0.0) >= 270.0
+            for row in international_rows
+        )
         result = {
             "team_id": int(club["team_id"]),
             "team": club["team"],
@@ -115,6 +168,50 @@ def main() -> None:
             "player_alpha_coverage": float(
                 club["alpha"]["overall_alpha_ability"]["coverage"]
             ),
+            "international_projected_xi_total_minutes": round(
+                international_minutes, 1
+            ),
+            "international_projected_xi_players_180_plus": international_180,
+            "international_projected_xi_players_270_plus": international_270,
+            "international_min_recovery_days": (
+                round(international_recovery, 3)
+                if international_recovery is not None
+                else None
+            ),
+            "international_window": {
+                "source": str(args.international_summary),
+                "projected_xi_players_with_appearances": len(international_rows),
+                "projected_xi_total_minutes": round(international_minutes, 1),
+                "projected_xi_players_180_plus": international_180,
+                "projected_xi_players_270_plus": international_270,
+                "latest_kickoff_utc": international_latest,
+                "minimum_recovery_days": (
+                    round(international_recovery, 3)
+                    if international_recovery is not None
+                    else None
+                ),
+                "players": [
+                    {
+                        "player_id": int(row["player_id"]),
+                        "player": projected_names[int(row["player_id"])],
+                        "minutes": row.get("minutes"),
+                        "appearances": row.get("appearances"),
+                        "goals": (row.get("totals") or {}).get("goals"),
+                        "assists": (row.get("totals") or {}).get("assists"),
+                        "chances_created": (row.get("totals") or {}).get(
+                            "chances_created"
+                        ),
+                        "last_kickoff_utc": row.get("last_kickoff_utc"),
+                    }
+                    for row in sorted(
+                        international_rows,
+                        key=lambda item: (
+                            -float(item.get("minutes") or 0.0),
+                            str(item.get("player") or ""),
+                        ),
+                    )
+                ],
+            },
             "pending_preleague_fixture": (
                 {
                     "match_id": int(pending["match_id"]),
@@ -140,6 +237,7 @@ def main() -> None:
             "changes_player_alpha": False,
             "changes_probabilities": False,
             "capital_deployment_ready": False,
+            "international_evidence_probability_weight": 0,
         },
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)

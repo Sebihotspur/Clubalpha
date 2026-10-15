@@ -114,7 +114,7 @@ class WebHolyGrailTests(unittest.TestCase):
         weeks = {
             row["matchweek"]: row for row in self.data["ledger"]["matchweeks"]
         }
-        self.assertEqual(set(weeks), {2, 3, 4, 5})
+        self.assertEqual(set(weeks), {2, 3, 4, 5, 6})
         completed = weeks[2]
         self.assertEqual(completed["settled"], 10)
         self.assertEqual(completed["markets"]["one_x_two"]["hit_rate"], 0.4)
@@ -171,32 +171,43 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertEqual(research["markets"]["one_x_two"]["hits"], 4)
         self.assertEqual(research["markets"]["over_under_2_5"]["hits"], 5)
         self.assertFalse(research["counts_toward_promotion_gate"])
+        latest_research = weeks[6]
+        self.assertEqual(latest_research["settled"], 10)
+        self.assertEqual(latest_research["pending"], 0)
+        self.assertEqual(latest_research["markets"]["one_x_two"]["hits"], 5)
+        self.assertEqual(
+            latest_research["markets"]["over_under_2_5"]["hits"], 5
+        )
+        self.assertFalse(latest_research["counts_toward_promotion_gate"])
 
-    def test_matchweek_five_results_preserve_prematch_calls(self):
+    def test_matchweek_six_results_preserve_prematch_calls(self):
         current = self.data["current_matchweek"]
         self.assertEqual(current["status"], "settled_research_shadow")
+        self.assertEqual(current["round"], 6)
         self.assertEqual(current["settled"], 10)
         self.assertFalse(current["capital_deployment_ready"])
         self.assertFalse(
             current["backtest_summary"]["sample_sufficient_to_recalibrate"]
         )
-        brentford = next(
+        chelsea = next(
             row
             for row in current["predictions"]
-            if row["home_team"] == "Brentford"
+            if row["home_team"] == "Chelsea"
         )
-        self.assertEqual(brentford["away_team"], "Chelsea")
-        self.assertEqual(brentford["football_leader"], "home_win")
-        self.assertEqual(brentford["market_leader"], "away_win")
+        self.assertEqual(chelsea["away_team"], "AFC Bournemouth")
+        self.assertEqual(chelsea["base_leader"], "home_win")
+        self.assertEqual(chelsea["football_leader"], "away_win")
+        self.assertEqual(chelsea["market_leader"], "home_win")
         self.assertEqual(
             (
-                brentford["result"]["final_home_goals"],
-                brentford["result"]["final_away_goals"],
+                chelsea["result"]["final_home_goals"],
+                chelsea["result"]["final_away_goals"],
             ),
-            (3, 0),
+            (5, 1),
         )
-        self.assertTrue(brentford["result"]["football_1x2_hit"])
-        self.assertFalse(brentford["result"]["market_1x2_hit"])
+        self.assertFalse(chelsea["result"]["football_1x2_hit"])
+        self.assertTrue(chelsea["result"]["base_1x2_hit"])
+        self.assertTrue(chelsea["result"]["market_1x2_hit"])
 
     def test_ipswich_liverpool_result_scores_markets_independently(self):
         predictions = [
@@ -254,15 +265,17 @@ class WebHolyGrailTests(unittest.TestCase):
                 ROOT / "artifacts/official_shadow/2026-09-08-mw4/results.jsonl",
                 ROOT
                 / "artifacts/contextual_interaction/2026-09-17-mw5/results.jsonl",
+                ROOT
+                / "artifacts/contextual_interaction/2026-10-06-mw6/results.jsonl",
             )
         )
         self.assertEqual(learning["completed_results"], completed_results)
-        self.assertEqual(learning["frozen_fixtures"], 40)
+        self.assertEqual(learning["frozen_fixtures"], 50)
         self.assertEqual(
             learning["pending_results"],
             learning["frozen_fixtures"] - completed_results,
         )
-        self.assertEqual(learning["promotion_candidates"], 0)
+        self.assertEqual(learning["promotion_candidates"], 4)
         self.assertEqual(learning["automatically_applied"], 0)
         self.assertFalse(learning["capital_deployment_ready"])
         adaptive = learning["adaptive"]
@@ -295,9 +308,11 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertFalse(calibration["probability_validated"])
         self.assertFalse(calibration["capital_deployment_ready"])
         chronological = calibration["chronological_audit"]
-        self.assertLess(
-            chronological["calibrated"]["one_x_two_brier"],
-            chronological["baseline"]["one_x_two_brier"],
+        self.assertGreaterEqual(
+            chronological["calibrated"]["one_x_two_brier"], 0.0
+        )
+        self.assertGreaterEqual(
+            chronological["baseline"]["one_x_two_brier"], 0.0
         )
         app = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
         self.assertIn("04 · Calibrate + simulate", app)

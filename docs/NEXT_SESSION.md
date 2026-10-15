@@ -1,10 +1,103 @@
 # Next session
 
-Updated: 2026-09-21
+Updated: 2026-10-15
 
 Model and website checkpoint: see latest commit on `main`
 
 Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
+
+## October 15 Matchweek 6 settlement
+
+- All ten Matchweek 6 results are appended to the frozen October 6 contextual
+  archive with final scores, FotMob xG, team statistics and actual lineups.
+- The exact plain-language calls shown to the user scored 5/10 on 1X2 and 5/10
+  on O/U 2.5. The side shortlist scored 1/3 and the one totals shortlist missed,
+  so combined higher-conviction performance was 1/4.
+- The uncalibrated base probability leaders scored 7/10; Holy Grail contextual
+  leaders scored 6/10; final calibrated calls scored 5/10. The downstream
+  translation removed value this week. It must prove incremental performance
+  before reversing a base leader or elevating confidence.
+- Manchester United–Tottenham was the only structural fixture miss. Villa–
+  Brentford, Palace–Forest and Hull–Everton were final-result misses whose xG
+  direction supported the predicted side.
+- Projected XIs averaged 9.05 correct starters and 18/20 formations were right.
+  Data coverage and lineup projection were not the main failure source.
+- Total-xG dispersion remains compressed: observed match xG ranged 2.13–5.75,
+  versus a 2.51–3.17 contextual forecast range.
+- Adaptive Learning now holds 50 Match Learning Cards. Four signals reached
+  the human-review queue, but the chronological challenger still worsens both
+  side-xG MAE and 1X2 Brier; the champion remains unchanged.
+- Fixture Calibration v1 now trains descriptively on 50 matches. Its
+  cycle-forward Brier is 0.6624 versus 0.6613 for the baseline and top-pick
+  accuracy is 37.5% versus 40.0%, so it remains shadow-only.
+- Current source coverage contains 60 completed PL matches, 36 completed UCL
+  league-phase matches, 234 current foreign-UCL domestic matches and 3,425
+  current PL/UCL player-match rows.
+- The website now exposes Matchweek 6 results, exact final calls, market
+  benchmarks, process classifications, 50-card learning status and the
+  unchanged no-capital boundary.
+- Full settlement evidence is stored at
+  `artifacts/matchweek_research/2026-10-06-mw6/review.md` and
+  `artifacts/matchweek_research/2026-10-06-mw6/settlement.json`.
+
+## October 6 Matchweek 6 preparation
+
+- Club Form now includes all 50 completed Premier League matches from
+  Matchweeks 1–5. The Adaptive Learning and calibration layers use only the 40
+  matches that had genuinely frozen pre-match forecasts; Matchweek 1 informs
+  team evidence but is never reverse-engineered into a fake forecast.
+- The October international evidence is refreshed through the October 6
+  collection time: 337 completed matches inspected, 1,081 covered player-match
+  rows, 444 players and 48 current clubs. Workload is joined to the projected XI
+  by FotMob player ID and remains a confidence/lineup-review input with zero
+  probability weight. Refresh once more if later October 6 fixtures finish.
+- The Matchweek 6 load audit marks six teams high risk, eleven medium and three
+  low. Compressed recovery plus heavy projected-XI international minutes is a
+  review gate, not an injury claim or automatic xG penalty.
+- Archetype Matchup Memory v1 is live as a zero-weight research ledger. Forty
+  frozen forecasts produce 80 team-side observations across direct-opponent,
+  team-versus-archetype and league archetype-versus-archetype memory.
+- No archetype interaction has reached the five-match challenger gate. The
+  current adaptive challenger also failed chronological promotion, so the Holy
+  Grail champion and locked 60/30/10 architecture remain unchanged.
+- The dated Matchweek 6 preparation packet is at
+  `artifacts/matchweek_research/2026-10-06-mw6/README.md`. It uses agreement
+  between football probabilities and the shadow venue/draw calibration as a
+  shortlist gate, with lineup load and archetype evidence controlling
+  confidence.
+- A read-only Polymarket snapshot matched 10/10 1X2 and 10/10 O/U 2.5 books.
+  It is price context only; wallet use, orders and capital authorization remain
+  disabled.
+- Before the final freeze, refresh injuries/availability and expected XIs.
+  Preserve this October 6 packet and create a new dated artifact if any call
+  changes.
+
+## October 4 evidence refresh
+
+- The existing FotMob foundation is refreshed through October 4: all 50
+  completed Premier League matches, all 18 completed UCL league-phase matches,
+  and all 14 retained UCL qualifying matches have normalized player and team
+  cards.
+- Foreign-UCL domestic evidence now contains 205 completed target-club matches;
+  193 expose target-player detail, for 94.1% match coverage.
+- Club Form and Club Dynamics were rebuilt across 51 clubs from 2,186 unique
+  competitive/preseason matches and 4,372 normalized team-match rows.
+- Historical Fixtures v2 now exposes the upcoming Matchweek 6 and UCL horizon:
+  37 fixtures, complete competition baselines, and 19 fixtures with direct
+  history.
+- A separate national-team collector now joins international appearances to
+  current club squads by FotMob player ID. Through October 4 it retains 1,000
+  player-match rows for 440 players from 48 clubs; all 20 Premier League clubs
+  are represented by 198 players.
+- International evidence has zero automatic model weight. It may review
+  workload, availability, recent condition, role, and projected XI only.
+- The international window remains open through October 6. Run the collector
+  again after it closes, refresh squad availability, then rebuild and freeze
+  the official Matchweek 6 slate.
+- A dated provisional Matchweek 6 baseline, projected-XI Alpha snapshot, style
+  snapshot, and contextual run are stored under the October 4 artifacts. They
+  are research-only and must not be treated as the final pre-match slate.
+- Full regression suite: 214 tests passing.
 
 ## September 21 Matchweek 5 settlement
 

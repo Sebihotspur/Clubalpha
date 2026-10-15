@@ -23,8 +23,27 @@ def classify_load_risk(row: dict[str, Any]) -> tuple[str, list[str]]:
         flags.append("rotated_cross_competition_lineup")
     if float(row.get("player_alpha_coverage") or 0.0) < 0.85:
         flags.append("provisional_player_alpha_coverage")
+    international_180 = int(
+        row.get("international_projected_xi_players_180_plus") or 0
+    )
+    international_270 = int(
+        row.get("international_projected_xi_players_270_plus") or 0
+    )
+    international_recovery = row.get("international_min_recovery_days")
+    if international_180 >= 4:
+        flags.append("heavy_international_projected_xi_load")
+    if international_270 >= 2:
+        flags.append("extreme_international_projected_xi_load")
+    if international_recovery is not None and float(international_recovery) < 5.0:
+        flags.append("compressed_international_recovery")
     if "pending_preleague_fixture" in flags or (
         "short_rest" in flags and "heavy_projected_xi_load" in flags
+    ) or (
+        "compressed_international_recovery" in flags
+        and (
+            "heavy_international_projected_xi_load" in flags
+            or "extreme_international_projected_xi_load" in flags
+        )
     ):
         risk = "high"
     elif flags:

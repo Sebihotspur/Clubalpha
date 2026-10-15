@@ -1,0 +1,953 @@
+{
+  "version": "clubalpha_international_player_evidence_v1",
+  "generated_at_utc": "2026-10-06T15:48:44.436863+00:00",
+  "from_date": "2026-09-21",
+  "as_of": "2026-10-06",
+  "source": "FotMob public web match feeds",
+  "source_scope": "international_current",
+  "covered_player_universe": 1374,
+  "model_policy": {
+    "automatic_weight": 0,
+    "allowed_uses": [
+      "workload",
+      "availability_review",
+      "role_and_position_review",
+      "recent_condition_context",
+      "projected_xi_review"
+    ],
+    "prohibited_automatic_uses": [
+      "club_form_reweighting",
+      "player_alpha_regrading",
+      "fixture_probability_override"
+    ]
+  },
+  "counts": {
+    "queried_days": 16,
+    "candidate_completed_matches": 337,
+    "matches_with_player_detail": 228,
+    "matches_with_covered_players": 141,
+    "covered_player_match_rows": 1081,
+    "covered_players_with_appearances": 444,
+    "covered_clubs_with_internationals": 48,
+    "detail_errors": 0
+  },
+  "included_leagues": {
+    "Africa Cup of Nations Qualification Grp. A": 4,
+    "Africa Cup of Nations Qualification Grp. B": 3,
+    "Africa Cup of Nations Qualification Grp. C": 4,
+    "Africa Cup of Nations Qualification Grp. D": 4,
+    "Africa Cup of Nations Qualification Grp. E": 4,
+    "Africa Cup of Nations Qualification Grp. F": 4,
+    "Africa Cup of Nations Qualification Grp. G": 4,
+    "Africa Cup of Nations Qualification Grp. H": 4,
+    "Africa Cup of Nations Qualification Grp. I": 4,
+    "Africa Cup of Nations Qualification Grp. J": 4,
+    "Africa Cup of Nations Qualification Grp. K": 4,
+    "Africa Cup of Nations Qualification Grp. L": 4,
+    "CONCACAF Nations League A Grp. 1": 11,
+    "CONCACAF Nations League A Grp. 2": 12,
+    "CONCACAF Nations League B Grp. 1": 6,
+    "CONCACAF Nations League B Grp. 2": 8,
+    "CONCACAF Nations League B Grp. 3": 8,
+    "CONCACAF Nations League B Grp. 4": 6,
+    "CONCACAF Nations League C Grp. 1": 4,
+    "CONCACAF Nations League C Grp. 2": 4,
+    "CONCACAF Nations League C Grp. 3": 4,
+    "EURO U21 Qualification Grp. A": 6,
+    "EURO U21 Qualification Grp. B": 6,
+    "EURO U21 Qualification Grp. C": 7,
+    "EURO U21 Qualification Grp. D": 5,
+    "EURO U21 Qualification Grp. E": 6,
+    "EURO U21 Qualification Grp. F": 6,
+    "EURO U21 Qualification Grp. G": 4,
+    "EURO U21 Qualification Grp. H": 4,
+    "EURO U21 Qualification Grp. I": 4,
+    "FIFA ASEAN Cup Challenge Division": 1,
+    "FIFA ASEAN Cup Challenge Division Grp. A": 3,
+    "FIFA ASEAN Cup Challenge Division Grp. B": 3,
+    "FIFA ASEAN Cup Premier Division": 2,
+    "FIFA ASEAN Cup Premier Division Grp. A": 6,
+    "FIFA ASEAN Cup Premier Division Grp. B": 6,
+    "Friendlies": 61,
+    "Friendlies U21": 4,
+    "UEFA Nations League A Grp. 1": 8,
+    "UEFA Nations League A Grp. 2": 8,
+    "UEFA Nations League A Grp. 3": 6,
+    "UEFA Nations League A Grp. 4": 7,
+    "UEFA Nations League B Grp. 1": 6,
+    "UEFA Nations League B Grp. 2": 8,
+    "UEFA Nations League B Grp. 3": 8,
+    "UEFA Nations League B Grp. 4": 8,
+    "UEFA Nations League C Grp. 1": 6,
+    "UEFA Nations League C Grp. 2": 8,
+    "UEFA Nations League C Grp. 3": 6,
+    "UEFA Nations League C Grp. 4": 6,
+    "UEFA Nations League D Grp. 1": 4,
+    "UEFA Nations League D Grp. 2": 4
+  },
+  "excluded_international_leagues": {
+    "Asian Games": 8,
+    "Asian Games Grp. A": 2,
+    "Asian Games Grp. B": 2,
+    "Asian Games Grp. C": 2,
+    "Asian Games Grp. D": 1,
+    "CAF Champions League Qualification": 1,
+    "Club Friendlies": 36,
+    "Gulf Cup": 3,
+    "Gulf Cup Grp. A": 6,
+    "Gulf Cup Grp. B": 6,
+    "UEFA Women's Europa Cup - 2nd Qualifying Round": 32,
+    "Women's Champions League": 18,
+    "Women's World Cup U20": 4
+  },
+  "players_with_appearances_by_club": {
+    "AEK Athens": 9,
+    "AFC Bournemouth": 10,
+    "Arsenal": 15,
+    "Aston Villa": 9,
+    "Atlético Madrid": 13,
+    "Barcelona": 13,
+    "Bayern München": 18,
+    "Bodø/Glimt": 1,
+    "Borussia Dortmund": 13,
+    "Brentford": 10,
+    "Brighton & Hove Albion": 10,
+    "Chelsea": 8,
+    "Club Brugge": 4,
+    "Como": 8,
+    "Coventry City": 7,
+    "Crystal Palace": 8,
+    "Everton": 6,
+    "FC Porto": 8,
+    "Fenerbahçe": 10,
+    "Feyenoord": 5,
+    "Fulham": 10,
+    "Galatasaray": 11,
+    "Hull City": 10,
+    "Inter": 11,
+    "Ipswich Town": 9,
+    "LASK": 5,
+    "Leeds United": 11,
+    "Lens": 6,
+    "Lille": 5,
+    "Liverpool": 16,
+    "Manchester City": 14,
+    "Manchester United": 11,
+    "Napoli": 9,
+    "Newcastle United": 6,
+    "Nottingham Forest": 9,
+    "PSV Eindhoven": 12,
+    "Paris Saint-Germain": 15,
+    "RB Leipzig": 7,
+    "Real Betis": 7,
+    "Real Madrid": 13,
+    "Roma": 7,
+    "Slavia Prague": 5,
+    "Slovan Bratislava": 3,
+    "Sporting CP": 9,
+    "Sunderland": 11,
+    "Tottenham Hotspur": 10,
+    "VfB Stuttgart": 7,
+    "Villarreal": 10
+  },
+  "metric_coverage": {
+    "minutes_played": {
+      "rows_with_value": 1081,
+      "player_match_rows": 1081,
+      "pct": 100.0
+    },
+    "rating_title": {
+      "rows_with_value": 1032,
+      "player_match_rows": 1081,
+      "pct": 95.5
+    },
+    "goals": {
+      "rows_with_value": 1016,
+      "player_match_rows": 1081,
+      "pct": 94.0
+    },
+    "non_penalty_goals": {
+      "rows_with_value": 1081,
+      "player_match_rows": 1081,
+      "pct": 100.0
+    },
+    "assists": {
+      "rows_with_value": 1016,
+      "player_match_rows": 1081,
+      "pct": 94.0
+    },
+    "expected_goals": {
+      "rows_with_value": 439,
+      "player_match_rows": 1081,
+      "pct": 40.6
+    },
+    "expected_assists": {
+      "rows_with_value": 614,
+      "player_match_rows": 1081,
+      "pct": 56.8
+    },
+    "chances_created": {
+      "rows_with_value": 1016,
+      "player_match_rows": 1081,
+      "pct": 94.0
+    },
+    "total_shots": {
+      "rows_with_value": 615,
+      "player_match_rows": 1081,
+      "pct": 56.9
+    },
+    "ShotsOnTarget": {
+      "rows_with_value": 615,
+      "player_match_rows": 1081,
+      "pct": 56.9
+    },
+    "touches_opp_box": {
+      "rows_with_value": 1016,
+      "player_match_rows": 1081,
+      "pct": 94.0
+    },
+    "passes_into_final_third": {
+      "rows_with_value": 898,
+      "player_match_rows": 1081,
+      "pct": 83.1
+    },
+    "line_breaking_passes": {
+      "rows_with_value": 0,
+      "player_match_rows": 1081,
+      "pct": 0.0
+    },
+    "dribbles_succeeded": {
+      "rows_with_value": 533,
+      "player_match_rows": 1081,
+      "pct": 49.3
+    },
+    "matchstats.headers.tackles": {
+      "rows_with_value": 1081,
+      "player_match_rows": 1081,
+      "pct": 100.0
+    },
+    "interceptions": {
+      "rows_with_value": 1081,
+      "player_match_rows": 1081,
+      "pct": 100.0
+    },
+    "recoveries": {
+      "rows_with_value": 1081,
+      "player_match_rows": 1081,
+      "pct": 100.0
+    },
+    "defensive_actions": {
+      "rows_with_value": 1081,
+      "player_match_rows": 1081,
+      "pct": 100.0
+    },
+    "clearances": {
+      "rows_with_value": 1081,
+      "player_match_rows": 1081,
+      "pct": 100.0
+    }
+  },
+  "high_workload_players": [
+    {
+      "player": "Bart Verbruggen",
+      "covered_clubs": [
+        "Brighton & Hove Albion"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Brandon Mechele",
+      "covered_clubs": [
+        "Club Brugge"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Caoimhín Kelleher",
+      "covered_clubs": [
+        "Brentford"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Ethan Ampadu",
+      "covered_clubs": [
+        "Leeds United"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Gianluigi Donnarumma",
+      "covered_clubs": [
+        "Manchester City"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Giorgi Mamardashvili",
+      "covered_clubs": [
+        "Liverpool"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Jan Bednarek",
+      "covered_clubs": [
+        "FC Porto"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Joachim Andersen",
+      "covered_clubs": [
+        "Fulham"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Khvicha Kvaratskhelia",
+      "covered_clubs": [
+        "Paris Saint-Germain"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Konstantinos Tsimikas",
+      "covered_clubs": [
+        "Liverpool"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Konstantinos Tzolakis",
+      "covered_clubs": [
+        "Hull City"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Micky van de Ven",
+      "covered_clubs": [
+        "Tottenham Hotspur"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Nathan Ngoy",
+      "covered_clubs": [
+        "Lille"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Neco Williams",
+      "covered_clubs": [
+        "Nottingham Forest"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Shea Charles",
+      "covered_clubs": [
+        "Fulham"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Tarik Muharemović",
+      "covered_clubs": [
+        "Leeds United"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Timothy Castagne",
+      "covered_clubs": [
+        "Fulham"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Trai Hume",
+      "covered_clubs": [
+        "Sunderland"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Victor Nilsson Lindelöf",
+      "covered_clubs": [
+        "Aston Villa"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Virgil van Dijk",
+      "covered_clubs": [
+        "Liverpool"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Willi Orbán",
+      "covered_clubs": [
+        "RB Leipzig"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Xaver Schlager",
+      "covered_clubs": [
+        "Nottingham Forest"
+      ],
+      "minutes": 360.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T16:00:00.000Z"
+    },
+    {
+      "player": "Ben Davies",
+      "covered_clubs": [
+        "Tottenham Hotspur"
+      ],
+      "minutes": 353.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Denzel Dumfries",
+      "covered_clubs": [
+        "Real Madrid"
+      ],
+      "minutes": 350.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Dominik Szoboszlai",
+      "covered_clubs": [
+        "Liverpool"
+      ],
+      "minutes": 347.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Viktor Gyökeres",
+      "covered_clubs": [
+        "Arsenal"
+      ],
+      "minutes": 345.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    },
+    {
+      "player": "Morten Hjulmand",
+      "covered_clubs": [
+        "Atlético Madrid"
+      ],
+      "minutes": 342.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Rasmus Højlund",
+      "covered_clubs": [
+        "Napoli"
+      ],
+      "minutes": 341.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-04T18:45:00.000Z"
+    },
+    {
+      "player": "Wilson Isidor",
+      "covered_clubs": [
+        "Sunderland"
+      ],
+      "minutes": 341.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T00:00:00.000Z"
+    },
+    {
+      "player": "Piotr Zieliński",
+      "covered_clubs": [
+        "Inter"
+      ],
+      "minutes": 327.0,
+      "appearances": 4,
+      "last_kickoff_utc": "2026-10-05T18:45:00.000Z"
+    }
+  ],
+  "attacking_leaders": [
+    {
+      "player": "Michael Olise",
+      "covered_clubs": [
+        "Bayern München"
+      ],
+      "minutes": 211.0,
+      "goals": 4.0,
+      "assists": 2.0,
+      "xg": 1.08,
+      "xa": 0.92
+    },
+    {
+      "player": "Jude Bellingham",
+      "covered_clubs": [
+        "Real Madrid"
+      ],
+      "minutes": 199.0,
+      "goals": 1.0,
+      "assists": 4.0,
+      "xg": 1.19,
+      "xa": 1.87
+    },
+    {
+      "player": "Harry Kane",
+      "covered_clubs": [
+        "Bayern München"
+      ],
+      "minutes": 224.0,
+      "goals": 4.0,
+      "assists": 1.0,
+      "xg": 2.46,
+      "xa": 0.4
+    },
+    {
+      "player": "Lamine Yamal",
+      "covered_clubs": [
+        "Barcelona"
+      ],
+      "minutes": 203.0,
+      "goals": 4.0,
+      "assists": 1.0,
+      "xg": 1.54,
+      "xa": 0.98
+    },
+    {
+      "player": "Wilson Isidor",
+      "covered_clubs": [
+        "Sunderland"
+      ],
+      "minutes": 341.0,
+      "goals": 3.0,
+      "assists": 2.0,
+      "xg": 0.0,
+      "xa": 0.0
+    },
+    {
+      "player": "Viktor Gyökeres",
+      "covered_clubs": [
+        "Arsenal"
+      ],
+      "minutes": 345.0,
+      "goals": 4.0,
+      "assists": 0.0,
+      "xg": 2.6,
+      "xa": 0.69
+    },
+    {
+      "player": "Anthony Gordon",
+      "covered_clubs": [
+        "Barcelona"
+      ],
+      "minutes": 221.0,
+      "goals": 3.0,
+      "assists": 1.0,
+      "xg": 1.83,
+      "xa": 1.4
+    },
+    {
+      "player": "Troy Parrott",
+      "covered_clubs": [
+        "Real Betis"
+      ],
+      "minutes": 321.0,
+      "goals": 4.0,
+      "assists": 0.0,
+      "xg": 2.85,
+      "xa": 0.23
+    },
+    {
+      "player": "Lautaro Martínez",
+      "covered_clubs": [
+        "Inter"
+      ],
+      "minutes": 144.0,
+      "goals": 2.0,
+      "assists": 2.0,
+      "xg": 0.0,
+      "xa": 0.0
+    },
+    {
+      "player": "Ayase Ueda",
+      "covered_clubs": [
+        "Lille"
+      ],
+      "minutes": 71.0,
+      "goals": 3.0,
+      "assists": 1.0,
+      "xg": 0.0,
+      "xa": 0.0
+    },
+    {
+      "player": "Rasmus Højlund",
+      "covered_clubs": [
+        "Napoli"
+      ],
+      "minutes": 341.0,
+      "goals": 3.0,
+      "assists": 0.0,
+      "xg": 2.56,
+      "xa": 0.36
+    },
+    {
+      "player": "Erling Haaland",
+      "covered_clubs": [
+        "Manchester City"
+      ],
+      "minutes": 270.0,
+      "goals": 3.0,
+      "assists": 0.0,
+      "xg": 2.2,
+      "xa": 0.34
+    },
+    {
+      "player": "Dan Ndoye",
+      "covered_clubs": [
+        "Nottingham Forest"
+      ],
+      "minutes": 248.0,
+      "goals": 1.0,
+      "assists": 2.0,
+      "xg": 1.51,
+      "xa": 0.48
+    },
+    {
+      "player": "Francesco Pio Esposito",
+      "covered_clubs": [
+        "Inter"
+      ],
+      "minutes": 236.0,
+      "goals": 2.0,
+      "assists": 1.0,
+      "xg": 1.29,
+      "xa": 0.38
+    },
+    {
+      "player": "Désiré Doué",
+      "covered_clubs": [
+        "Paris Saint-Germain"
+      ],
+      "minutes": 215.0,
+      "goals": 1.0,
+      "assists": 2.0,
+      "xg": 0.44,
+      "xa": 1.0
+    },
+    {
+      "player": "Kevin De Bruyne",
+      "covered_clubs": [
+        "Napoli"
+      ],
+      "minutes": 203.0,
+      "goals": 2.0,
+      "assists": 1.0,
+      "xg": 0.65,
+      "xa": 0.66
+    },
+    {
+      "player": "Martin Ødegaard",
+      "covered_clubs": [
+        "Arsenal"
+      ],
+      "minutes": 270.0,
+      "goals": 0.0,
+      "assists": 3.0,
+      "xg": 0.43,
+      "xa": 0.82
+    },
+    {
+      "player": "Rayan Cherki",
+      "covered_clubs": [
+        "Manchester City"
+      ],
+      "minutes": 197.0,
+      "goals": 1.0,
+      "assists": 2.0,
+      "xg": 0.63,
+      "xa": 0.59
+    },
+    {
+      "player": "Mikkel Damsgaard",
+      "covered_clubs": [
+        "Brentford"
+      ],
+      "minutes": 254.0,
+      "goals": 2.0,
+      "assists": 1.0,
+      "xg": 0.39,
+      "xa": 0.79
+    },
+    {
+      "player": "Álex Baena",
+      "covered_clubs": [
+        "Atlético Madrid"
+      ],
+      "minutes": 148.0,
+      "goals": 1.0,
+      "assists": 2.0,
+      "xg": 0.57,
+      "xa": 0.38
+    }
+  ],
+  "creative_leaders": [
+    {
+      "player": "Joey Veerman",
+      "covered_clubs": [
+        "Borussia Dortmund"
+      ],
+      "minutes": 271.0,
+      "chances_created": 15.0,
+      "passes_into_final_third": 71.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Dominik Szoboszlai",
+      "covered_clubs": [
+        "Liverpool"
+      ],
+      "minutes": 347.0,
+      "chances_created": 15.0,
+      "passes_into_final_third": 42.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Jude Bellingham",
+      "covered_clubs": [
+        "Real Madrid"
+      ],
+      "minutes": 199.0,
+      "chances_created": 13.0,
+      "passes_into_final_third": 22.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Ousmane Dembélé",
+      "covered_clubs": [
+        "Paris Saint-Germain"
+      ],
+      "minutes": 261.0,
+      "chances_created": 11.0,
+      "passes_into_final_third": 18.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Kevin De Bruyne",
+      "covered_clubs": [
+        "Napoli"
+      ],
+      "minutes": 203.0,
+      "chances_created": 10.0,
+      "passes_into_final_third": 16.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Bruno Fernandes",
+      "covered_clubs": [
+        "Manchester United"
+      ],
+      "minutes": 178.0,
+      "chances_created": 10.0,
+      "passes_into_final_third": 12.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Florian Wirtz",
+      "covered_clubs": [
+        "Liverpool"
+      ],
+      "minutes": 205.0,
+      "chances_created": 9.0,
+      "passes_into_final_third": 18.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Mika Godts",
+      "covered_clubs": [
+        "Paris Saint-Germain"
+      ],
+      "minutes": 268.0,
+      "chances_created": 9.0,
+      "passes_into_final_third": 9.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Martin Ødegaard",
+      "covered_clubs": [
+        "Arsenal"
+      ],
+      "minutes": 270.0,
+      "chances_created": 8.0,
+      "passes_into_final_third": 47.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Piotr Zieliński",
+      "covered_clubs": [
+        "Inter"
+      ],
+      "minutes": 327.0,
+      "chances_created": 8.0,
+      "passes_into_final_third": 34.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Arda Güler",
+      "covered_clubs": [
+        "Real Madrid"
+      ],
+      "minutes": 270.0,
+      "chances_created": 8.0,
+      "passes_into_final_third": 28.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Khvicha Kvaratskhelia",
+      "covered_clubs": [
+        "Paris Saint-Germain"
+      ],
+      "minutes": 360.0,
+      "chances_created": 8.0,
+      "passes_into_final_third": 12.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Dani Olmo",
+      "covered_clubs": [
+        "Barcelona"
+      ],
+      "minutes": 149.0,
+      "chances_created": 8.0,
+      "passes_into_final_third": 12.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Anthony Gordon",
+      "covered_clubs": [
+        "Barcelona"
+      ],
+      "minutes": 221.0,
+      "chances_created": 8.0,
+      "passes_into_final_third": 3.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Konstantinos Tsimikas",
+      "covered_clubs": [
+        "Liverpool"
+      ],
+      "minutes": 360.0,
+      "chances_created": 7.0,
+      "passes_into_final_third": 18.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Enzo Fernández",
+      "covered_clubs": [
+        "Manchester City"
+      ],
+      "minutes": 69.0,
+      "chances_created": 7.0,
+      "passes_into_final_third": 17.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Denzel Dumfries",
+      "covered_clubs": [
+        "Real Madrid"
+      ],
+      "minutes": 350.0,
+      "chances_created": 7.0,
+      "passes_into_final_third": 15.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Michael Olise",
+      "covered_clubs": [
+        "Bayern München"
+      ],
+      "minutes": 211.0,
+      "chances_created": 7.0,
+      "passes_into_final_third": 15.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Rayan Cherki",
+      "covered_clubs": [
+        "Manchester City"
+      ],
+      "minutes": 197.0,
+      "chances_created": 7.0,
+      "passes_into_final_third": 15.0,
+      "line_breaking_passes": 0.0
+    },
+    {
+      "player": "Lamine Yamal",
+      "covered_clubs": [
+        "Barcelona"
+      ],
+      "minutes": 203.0,
+      "chances_created": 7.0,
+      "passes_into_final_third": 11.0,
+      "line_breaking_passes": 0.0
+    }
+  ],
+  "detail_errors": [],
+  "warnings": [
+    "The current international window is incomplete until October 6.",
+    "National-team evidence has zero automatic model weight.",
+    "Missing FotMob match metrics remain missing rather than being converted to zero in raw rows.",
+    "Only covered players with a published match-stat card appear in the normalized player ledger."
+  ]
+}
