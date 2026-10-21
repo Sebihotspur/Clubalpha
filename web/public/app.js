@@ -396,6 +396,7 @@ function holyGrail(data) {
 
 function predictions(data) {
   const current = data.current_matchweek;
+  const provisional = data.provisional_matchweek;
   const outcomeLabel = (match, outcome) => {
     if (outcome === "home_win") return match.home_team;
     if (outcome === "away_win") return match.away_team;
@@ -403,6 +404,25 @@ function predictions(data) {
   };
   const riskChip = (team, risk) =>
     `<span class="status-chip ${risk === "high" ? "miss" : risk === "low" ? "hit" : ""}">${esc(team)} · ${esc(risk)}</span>`;
+  const provisionalRows = provisional.predictions
+    .map((match) => {
+      const sideCall = match.side_call === "pass"
+        ? `Pass · ${esc(outcomeLabel(match, match.side_leader))} lean`
+        : outcomeLabel(match, match.side_call);
+      const totalCall = match.total_call === "over_2_5"
+        ? `Over 2.5 · ${pct(match.over_2_5_probability)}`
+        : match.total_call === "under_2_5"
+          ? `Under 2.5 · ${pct(1 - match.over_2_5_probability)}`
+          : `Pass · O2.5 ${pct(match.over_2_5_probability)}`;
+      return `<tr>
+        <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · xG ${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</span></td>
+        <td><strong>${pct(match.probabilities.home_win)} · ${pct(match.probabilities.draw)} · ${pct(match.probabilities.away_win)}</strong><span class="table-sub">Home · Draw · Away</span></td>
+        <td class="official-call"><strong>${sideCall}</strong><span>${pct(match.side_probability)} leader · ${pct(match.side_gap)} separation</span></td>
+        <td class="official-call"><strong>${totalCall}</strong><span>${esc(match.context_verdict.replaceAll("_", " "))}</span></td>
+        <td>${esc(match.load.replace("/", " / "))}</td>
+      </tr>`;
+    })
+    .join("");
   const currentRows = current.predictions
     .map((match) => {
       const footballProbability = match.probabilities[match.football_leader];
@@ -448,7 +468,16 @@ function predictions(data) {
     )
     .join("");
 
-  return `<section class="page-head"><p class="eyebrow">Settled research slate · Matchweek ${esc(current.round)}</p><h1>Predictions vs reality</h1><p>The exact calibrated calls shown before kickoff and the market benchmark are preserved beside the final score and xG process. Outcomes update team memory only after error attribution.</p><div class="notice">SETTLED RESEARCH · 1X2 + O/U 2.5 scored separately · Excluded from the official promotion gate · Zero capital authorized</div></section>
+  return `<section class="page-head"><p class="eyebrow">Provisional research slate · Matchweek ${esc(provisional.round)}</p><h1>Next matchweek predictions</h1><p>The current 60-match learning state, projected-XI Player Alpha and bounded matchup context produce the directions below. Passes are explicit decisions, not missing predictions.</p><div class="notice">PROVISIONAL · Final refresh after ${esc(dateTime(provisional.final_refresh_required_after_utc))} · ${esc(provisional.pending_preleague_teams.join(", "))} play in Europe first · Zero capital authorized</div></section>
+    <section class="metrics">
+      ${metric("Side calls", String(provisional.predictions.filter((match) => match.side_call !== "pass").length), `${provisional.predictions.filter((match) => match.side_call === "pass").length} passes`, "accent")}
+      ${metric("Totals calls", String(provisional.predictions.filter((match) => match.total_call !== "pass").length), "O/U threshold enforced", "accent")}
+      ${metric("Price shortlist", String(provisional.price_aware_shadow_shortlist.length), "Five-point edge gate", "amber")}
+      ${metric("Deployment", "NO CAPITAL", "Provisional shadow only", "amber")}
+    </section>
+    <section class="section"><div class="section-head"><h2>Matchweek ${esc(provisional.round)} provisional slate</h2><span class="panel-label">Prices captured ${esc(dateTime(provisional.market_captured_at_utc))}</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>H · D · A</th><th>1X2 decision</th><th>O/U 2.5</th><th>Load</th></tr></thead><tbody>${provisionalRows}</tbody></table></div></section>
+    <p class="notice">No price-qualified position currently survives both the football-confidence and market-edge gates. Coventry, Crystal Palace and Brighton appear cheap, but each fails the five-point side-separation rule. This slate will be preserved and replaced by a separately dated final freeze after Thursday's European matches.</p>
+    <section class="page-head"><p class="eyebrow">Settled research slate · Matchweek ${esc(current.round)}</p><h1>Previous predictions vs reality</h1><p>The exact calibrated calls shown before kickoff and the market benchmark are preserved beside the final score and xG process. Outcomes update team memory only after error attribution.</p><div class="notice">SETTLED RESEARCH · 1X2 + O/U 2.5 scored separately · Excluded from the official promotion gate · Zero capital authorized</div></section>
     <section class="metrics">
       ${metric("1X2", `${current.score.markets.one_x_two.hits}/${current.settled}`, pct(current.score.markets.one_x_two.hit_rate), current.score.markets.one_x_two.hit_rate > 0.5 ? "accent" : "amber")}
       ${metric("O/U 2.5", `${current.score.markets.over_under_2_5.hits}/${current.settled}`, pct(current.score.markets.over_under_2_5.hit_rate), current.score.markets.over_under_2_5.hit_rate >= 0.5 ? "accent" : "amber")}

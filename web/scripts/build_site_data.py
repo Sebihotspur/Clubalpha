@@ -40,6 +40,15 @@ CURRENT_MATCHWEEK_BACKTEST = (
 CURRENT_MATCHWEEK_SETTLEMENT = (
     ROOT / "artifacts/matchweek_research/2026-10-06-mw6/settlement.json"
 )
+MATCHWEEK_SEVEN_CONTEXTUAL_DIR = (
+    ROOT / "artifacts/contextual_interaction/2026-10-15-mw7"
+)
+PROVISIONAL_MATCHWEEK_PICKS = (
+    ROOT / "artifacts/matchweek_research/2026-10-21-mw8-provisional/picks.json"
+)
+PROVISIONAL_MATCHWEEK_CONTEXTUAL = (
+    ROOT / "artifacts/contextual_interaction/2026-10-21-mw8/predictions.jsonl"
+)
 MARKET_FOCUS_CONFIG = ROOT / "config/market-focus-v1.json"
 PUBLIC_DIR = ROOT / "web/public"
 
@@ -314,6 +323,14 @@ def build():
         CURRENT_MATCHWEEK_CONTEXTUAL_DIR / "results.jsonl"
     )
     current_matchweek_backtest = load_json(CURRENT_MATCHWEEK_BACKTEST)
+    matchweek_seven_predictions = load_jsonl(
+        MATCHWEEK_SEVEN_CONTEXTUAL_DIR / "predictions.jsonl"
+    )
+    matchweek_seven_results = load_jsonl(
+        MATCHWEEK_SEVEN_CONTEXTUAL_DIR / "results.jsonl"
+    )
+    provisional_picks = load_json(PROVISIONAL_MATCHWEEK_PICKS)
+    provisional_contextual = load_jsonl(PROVISIONAL_MATCHWEEK_CONTEXTUAL)
     market_focus = load_json(MARKET_FOCUS_CONFIG)
     if market_focus.get("version") != "clubalpha_market_focus_v1":
         raise ValueError("website requires the locked market-focus contract")
@@ -349,6 +366,11 @@ def build():
         current_market_snapshot,
         current_matchweek_results,
         btts_diagnostic=current_contextual_score["markets"]["btts"],
+    )
+    matchweek_seven_score = score_matchweek(
+        matchweek_seven_predictions,
+        matchweek_seven_results,
+        official=False,
     )
     result_validation = validate_results(
         round_robin_predictions, round_robin_results
@@ -720,9 +742,37 @@ def build():
         key=lambda row: (row["kickoff_utc"], row["match_id"])
     )
 
+    provisional_context_by_id = {
+        int(row["fixture"]["match_id"]): row for row in provisional_contextual
+    }
+    provisional_predictions = []
+    for pick in provisional_picks["fixtures"]:
+        match_id = int(pick["match_id"])
+        context = provisional_context_by_id[match_id]
+        fixture = context["fixture"]
+        probabilities = context["contextual"]["probabilities"]
+        provisional_predictions.append(
+            {
+                **pick,
+                "match_id": match_id,
+                "kickoff_utc": fixture["kickoff_utc"],
+                "home_team": fixture["home_team"],
+                "away_team": fixture["away_team"],
+                "probabilities": {
+                    "home_win": probabilities["home_win"],
+                    "draw": probabilities["draw"],
+                    "away_win": probabilities["away_win"],
+                },
+                "predicted_xg": context["contextual"]["predicted_xg"],
+            }
+        )
+    provisional_predictions.sort(
+        key=lambda row: (row["kickoff_utc"], row["match_id"])
+    )
+
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_11_matchweek_6_settled",
+            "site_version": "clubalpha_web_v0_12_matchweek_8_provisional",
             "prediction_version": official_report["report_version"],
             "as_of": official_report["as_of_utc"],
             "generated_at_utc": current_matchweek_backtest["generated_at_utc"],
@@ -774,6 +824,27 @@ def build():
             "capital_deployment_ready": False,
             "predictions": current_matchweek_predictions,
             "midweek_review": pl_midweek_review,
+        },
+        "provisional_matchweek": {
+            "status": provisional_picks["status"],
+            "round": provisional_picks["round"],
+            "as_of": provisional_picks["as_of"],
+            "market_captured_at_utc": provisional_picks[
+                "market_captured_at_utc"
+            ],
+            "final_refresh_required_after_utc": provisional_picks[
+                "final_refresh_required_after_utc"
+            ],
+            "fixtures": len(provisional_predictions),
+            "predictions": provisional_predictions,
+            "accuracy_shortlist": provisional_picks["accuracy_shortlist"],
+            "price_aware_shadow_shortlist": provisional_picks[
+                "price_aware_shadow_shortlist"
+            ],
+            "pending_preleague_teams": provisional_picks[
+                "pending_preleague_teams"
+            ],
+            "decision_boundaries": provisional_picks["decision_boundaries"],
         },
         "official_shadow_pick": {
             "match_id": original_pick_match_id,
@@ -951,6 +1022,14 @@ def build():
                 "Lineup evidence coverage",
             ],
             "matchweeks": [
+                {
+                    "matchweek": 7,
+                    "name": "Research Matchweek 7",
+                    "source": "Pre-match contextual research slate",
+                    "status": "settled",
+                    "counts_toward_promotion_gate": False,
+                    **matchweek_seven_score,
+                },
                 {
                     "matchweek": 6,
                     "name": "Research Matchweek 6",

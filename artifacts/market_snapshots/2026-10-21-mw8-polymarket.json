@@ -1,0 +1,1527 @@
+{
+  "version": "clubalpha_polymarket_readonly_v1",
+  "status": "read_only_market_observation",
+  "captured_at_utc": "2026-10-21T19:49:35.936312+00:00",
+  "sources": {
+    "events": "https://gamma-api.polymarket.com",
+    "order_books": "https://clob.polymarket.com",
+    "authentication": "none"
+  },
+  "fixtures": [
+    {
+      "fixture": {
+        "match_id": 5795491,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 8,
+        "kickoff_utc": "2026-10-23T19:00:00Z",
+        "home_team_id": 9902,
+        "home_team": "Ipswich Town",
+        "away_team_id": 10203,
+        "away_team": "Nottingham Forest",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "football_baseline": {
+        "predicted_xg": {
+          "home": 1.469686,
+          "away": 1.488909,
+          "total": 2.958595
+        },
+        "home_win": 0.37148,
+        "draw": 0.24622,
+        "away_win": 0.3823,
+        "over_2_5": 0.56802,
+        "under_2_5": 0.43198
+      },
+      "model": {
+        "home_win": 0.328068,
+        "draw": 0.284673,
+        "away_win": 0.387259,
+        "over_2_5": 0.552442,
+        "under_2_5": 0.447558
+      },
+      "prematch_load": {
+        "home": "medium",
+        "away": "medium"
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_id": "1162669",
+        "event_slug": "epl-ips-not-2026-10-23",
+        "event_liquidity": 263960.5726,
+        "event_volume": 5191.068692,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "token_id": "56221539729014128644936294038956585872228267413372299605006797210159010325130",
+              "best_bid": 0.3,
+              "best_ask": 0.31,
+              "midpoint": 0.305,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 29230.14,
+              "top_ask_notional": 9061.3434,
+              "ask_notional_within_2c": 19624.5832,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.328068,
+            "market_no_vig_probability": 0.3004926108374384,
+            "edge_vs_best_ask": 0.01806800000000003
+          },
+          "draw": {
+            "book": {
+              "token_id": "109840867933810737440489930479523187739712727966733284993789030578223030646820",
+              "best_bid": 0.27,
+              "best_ask": 0.28,
+              "midpoint": 0.275,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 467.2,
+              "top_ask_notional": 130.816,
+              "ask_notional_within_2c": 24318.4634,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.284673,
+            "market_no_vig_probability": 0.270935960591133,
+            "edge_vs_best_ask": 0.004672999999999983
+          },
+          "away_win": {
+            "book": {
+              "token_id": "33625723802314239535610504053804773433766116808038859037938413941676969822422",
+              "best_bid": 0.43,
+              "best_ask": 0.44,
+              "midpoint": 0.435,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 11289.77,
+              "top_ask_notional": 4967.4988,
+              "ask_notional_within_2c": 21719.2739,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.387259,
+            "market_no_vig_probability": 0.4285714285714285,
+            "edge_vs_best_ask": -0.05274099999999998
+          }
+        }
+      },
+      "over_under_2_5": {
+        "market_id": "5480977",
+        "market_slug": "epl-ips-not-2026-10-23-total-2pt5",
+        "reported_liquidity": 45579.3569,
+        "reported_volume": 1367.707551,
+        "over": {
+          "book": {
+            "token_id": "74194026966128789094954083082151276953405335486412760753989232997409511594086",
+            "best_bid": 0.54,
+            "best_ask": 0.55,
+            "midpoint": 0.545,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 2565.48,
+            "top_ask_notional": 1411.0140000000001,
+            "ask_notional_within_2c": 12303.3191,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.552442,
+          "edge_vs_best_ask": 0.002441999999999944
+        },
+        "under": {
+          "book": {
+            "token_id": "66266950901029663824384539525739886089425572772570667965130063993257653545192",
+            "best_bid": 0.45,
+            "best_ask": 0.46,
+            "midpoint": 0.455,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 2956.28,
+            "top_ask_notional": 1359.8888000000002,
+            "ask_notional_within_2c": 9670.1881,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.447558,
+          "edge_vs_best_ask": -0.012442000000000009
+        }
+      },
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795486,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 8,
+        "kickoff_utc": "2026-10-24T11:30:00Z",
+        "home_team_id": 10252,
+        "home_team": "Aston Villa",
+        "away_team_id": 8456,
+        "away_team": "Manchester City",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "football_baseline": {
+        "predicted_xg": {
+          "home": 1.391373,
+          "away": 1.757177,
+          "total": 3.148551
+        },
+        "home_win": 0.30332,
+        "draw": 0.2303,
+        "away_win": 0.46638,
+        "over_2_5": 0.61216,
+        "under_2_5": 0.38784
+      },
+      "model": {
+        "home_win": 0.26249,
+        "draw": 0.272406,
+        "away_win": 0.465104,
+        "over_2_5": 0.59767,
+        "under_2_5": 0.40233
+      },
+      "prematch_load": {
+        "home": "medium",
+        "away": "medium"
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_id": "1168495",
+        "event_slug": "epl-ast-mac-2026-10-24",
+        "event_liquidity": 255018.3453,
+        "event_volume": 14870.621147,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "token_id": "69889052490290426975941356469153102874446961508300512903222835990962403514551",
+              "best_bid": 0.2,
+              "best_ask": 0.21,
+              "midpoint": 0.20500000000000002,
+              "spread": 0.009999999999999981,
+              "top_ask_shares": 5642.42,
+              "top_ask_notional": 1184.9082,
+              "ask_notional_within_2c": 5712.0042,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.26249,
+            "market_no_vig_probability": 0.20603015075376885,
+            "edge_vs_best_ask": 0.05249000000000001
+          },
+          "draw": {
+            "book": {
+              "token_id": "31753254341345748121067739899672970558200020836599432152986540501003527755234",
+              "best_bid": 0.22,
+              "best_ask": 0.23,
+              "midpoint": 0.225,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 7025.71,
+              "top_ask_notional": 1615.9133000000002,
+              "ask_notional_within_2c": 8223.5703,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.272406,
+            "market_no_vig_probability": 0.22613065326633167,
+            "edge_vs_best_ask": 0.04240599999999997
+          },
+          "away_win": {
+            "book": {
+              "token_id": "73483037957860392052175050467368035945606679036016310245683976568420347571293",
+              "best_bid": 0.56,
+              "best_ask": 0.57,
+              "midpoint": 0.565,
+              "spread": 0.009999999999999898,
+              "top_ask_shares": 584.23,
+              "top_ask_notional": 333.0111,
+              "ask_notional_within_2c": 10845.6908,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.465104,
+            "market_no_vig_probability": 0.5678391959798994,
+            "edge_vs_best_ask": -0.10489599999999993
+          }
+        }
+      },
+      "over_under_2_5": {
+        "market_id": "5537345",
+        "market_slug": "epl-ast-mac-2026-10-24-total-2pt5",
+        "reported_liquidity": 19436.1413,
+        "reported_volume": 149.869079,
+        "over": {
+          "book": {
+            "token_id": "81995598664314585864253537724929345973544102000825599735913089768018854891883",
+            "best_bid": 0.62,
+            "best_ask": 0.63,
+            "midpoint": 0.625,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 175.0,
+            "top_ask_notional": 110.25,
+            "ask_notional_within_2c": 5620.5543,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.59767,
+          "edge_vs_best_ask": -0.03232999999999997
+        },
+        "under": {
+          "book": {
+            "token_id": "14489274148720942955874798197863491375709042047657053815083800909292225588679",
+            "best_bid": 0.37,
+            "best_ask": 0.38,
+            "midpoint": 0.375,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 3634.4,
+            "top_ask_notional": 1381.0720000000001,
+            "ask_notional_within_2c": 3586.226,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.40233,
+          "edge_vs_best_ask": 0.022330000000000017
+        }
+      },
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795485,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 8,
+        "kickoff_utc": "2026-10-24T14:00:00Z",
+        "home_team_id": 9825,
+        "home_team": "Arsenal",
+        "away_team_id": 8668,
+        "away_team": "Everton",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "football_baseline": {
+        "predicted_xg": {
+          "home": 1.763621,
+          "away": 0.889622,
+          "total": 2.653244
+        },
+        "home_win": 0.57994,
+        "draw": 0.2342,
+        "away_win": 0.18586,
+        "over_2_5": 0.49516,
+        "under_2_5": 0.50484
+      },
+      "model": {
+        "home_win": 0.527317,
+        "draw": 0.278369,
+        "away_win": 0.194314,
+        "over_2_5": 0.470799,
+        "under_2_5": 0.529201
+      },
+      "prematch_load": {
+        "home": "medium",
+        "away": "low"
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_id": "1168519",
+        "event_slug": "epl-ars-eve-2026-10-24",
+        "event_liquidity": 168627.2344,
+        "event_volume": 5118.320125,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "token_id": "114460869056021695126097471762228510096841940195417663873021964330022095891387",
+              "best_bid": 0.68,
+              "best_ask": 0.69,
+              "midpoint": 0.685,
+              "spread": 0.009999999999999898,
+              "top_ask_shares": 13435.98,
+              "top_ask_notional": 9270.8262,
+              "ask_notional_within_2c": 26157.2456,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.527317,
+            "market_no_vig_probability": 0.685,
+            "edge_vs_best_ask": -0.1626829999999999
+          },
+          "draw": {
+            "book": {
+              "token_id": "76772618595257318890802216232200603057223374387069701948992146928864083750239",
+              "best_bid": 0.2,
+              "best_ask": 0.22,
+              "midpoint": 0.21000000000000002,
+              "spread": 0.01999999999999999,
+              "top_ask_shares": 7017.06,
+              "top_ask_notional": 1543.7532,
+              "ask_notional_within_2c": 6153.393,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.278369,
+            "market_no_vig_probability": 0.21000000000000002,
+            "edge_vs_best_ask": 0.058368999999999976
+          },
+          "away_win": {
+            "book": {
+              "token_id": "106763736183230575755715194633405895541562271740255105013523254065500604693617",
+              "best_bid": 0.1,
+              "best_ask": 0.11,
+              "midpoint": 0.10500000000000001,
+              "spread": 0.009999999999999995,
+              "top_ask_shares": 12416.5,
+              "top_ask_notional": 1365.815,
+              "ask_notional_within_2c": 4484.0007000000005,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.194314,
+            "market_no_vig_probability": 0.10500000000000001,
+            "edge_vs_best_ask": 0.08431399999999999
+          }
+        }
+      },
+      "over_under_2_5": {
+        "market_id": "5537168",
+        "market_slug": "epl-ars-eve-2026-10-24-total-2pt5",
+        "reported_liquidity": 19256.9375,
+        "reported_volume": 40.335,
+        "over": {
+          "book": {
+            "token_id": "81175457374403300795300286618952018108510621983405946540686274886580727957576",
+            "best_bid": 0.52,
+            "best_ask": 0.53,
+            "midpoint": 0.525,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 3430.13,
+            "top_ask_notional": 1817.9689,
+            "ask_notional_within_2c": 5371.6259,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.470799,
+          "edge_vs_best_ask": -0.059201000000000004
+        },
+        "under": {
+          "book": {
+            "token_id": "101180972071418308336657076045106228263477880551640887653846101236451017817138",
+            "best_bid": 0.47,
+            "best_ask": 0.48,
+            "midpoint": 0.475,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 200.47,
+            "top_ask_notional": 96.2256,
+            "ask_notional_within_2c": 3671.8740000000003,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.529201,
+          "edge_vs_best_ask": 0.04920100000000005
+        }
+      },
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795488,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 8,
+        "kickoff_utc": "2026-10-24T14:00:00Z",
+        "home_team_id": 8669,
+        "home_team": "Coventry City",
+        "away_team_id": 9879,
+        "away_team": "Fulham",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "football_baseline": {
+        "predicted_xg": {
+          "home": 1.341413,
+          "away": 1.320979,
+          "total": 2.662392
+        },
+        "home_win": 0.37388,
+        "draw": 0.259,
+        "away_win": 0.36712,
+        "over_2_5": 0.50042,
+        "under_2_5": 0.49958
+      },
+      "model": {
+        "home_win": 0.330693,
+        "draw": 0.30408,
+        "away_win": 0.365227,
+        "over_2_5": 0.485651,
+        "under_2_5": 0.514349
+      },
+      "prematch_load": {
+        "home": "medium",
+        "away": "medium"
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_id": "1168545",
+        "event_slug": "epl-cov-ful-2026-10-24",
+        "event_liquidity": 163635.9559,
+        "event_volume": 1274.2587409999999,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "token_id": "68111204993596622483228682887037826787976272846635466496693343070054399800440",
+              "best_bid": 0.31,
+              "best_ask": 0.32,
+              "midpoint": 0.315,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 8367.6,
+              "top_ask_notional": 2677.632,
+              "ask_notional_within_2c": 10852.9336,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.330693,
+            "market_no_vig_probability": 0.3165829145728643,
+            "edge_vs_best_ask": 0.010693000000000008
+          },
+          "draw": {
+            "book": {
+              "token_id": "23697464055272245877220418952152509132202038995056316482606853148899558654152",
+              "best_bid": 0.27,
+              "best_ask": 0.28,
+              "midpoint": 0.275,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 3118.43,
+              "top_ask_notional": 873.1604,
+              "ask_notional_within_2c": 19594.932699999998,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.30408,
+            "market_no_vig_probability": 0.27638190954773867,
+            "edge_vs_best_ask": 0.02407999999999999
+          },
+          "away_win": {
+            "book": {
+              "token_id": "85718418001517076308056205040722917892426161974440761310179459489457965386728",
+              "best_bid": 0.4,
+              "best_ask": 0.41,
+              "midpoint": 0.405,
+              "spread": 0.009999999999999953,
+              "top_ask_shares": 759.79,
+              "top_ask_notional": 311.5139,
+              "ask_notional_within_2c": 6616.5612,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.365227,
+            "market_no_vig_probability": 0.40703517587939697,
+            "edge_vs_best_ask": -0.04477299999999995
+          }
+        }
+      },
+      "over_under_2_5": {
+        "market_id": "5536953",
+        "market_slug": "epl-cov-ful-2026-10-24-total-2pt5",
+        "reported_liquidity": 19425.1472,
+        "reported_volume": 101.785715,
+        "over": {
+          "book": {
+            "token_id": "37142572349288924256666066499089139844476175639787228604739172915491621723504",
+            "best_bid": 0.55,
+            "best_ask": 0.56,
+            "midpoint": 0.555,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 5187.55,
+            "top_ask_notional": 2905.0280000000002,
+            "ask_notional_within_2c": 7176.0789,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.485651,
+          "edge_vs_best_ask": -0.07434900000000005
+        },
+        "under": {
+          "book": {
+            "token_id": "75558520588113854629890329923753582278482363306974195241727842080859290422924",
+            "best_bid": 0.44,
+            "best_ask": 0.45,
+            "midpoint": 0.445,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 9.09,
+            "top_ask_notional": 4.0905000000000005,
+            "ask_notional_within_2c": 2909.6090999999997,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.514349,
+          "edge_vs_best_ask": 0.06434899999999993
+        }
+      },
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795487,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 8,
+        "kickoff_utc": "2026-10-24T16:30:00Z",
+        "home_team_id": 8455,
+        "home_team": "Chelsea",
+        "away_team_id": 8586,
+        "away_team": "Tottenham Hotspur",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "football_baseline": {
+        "predicted_xg": {
+          "home": 1.583908,
+          "away": 1.249241,
+          "total": 2.833149
+        },
+        "home_win": 0.451,
+        "draw": 0.24982,
+        "away_win": 0.29918,
+        "over_2_5": 0.53798,
+        "under_2_5": 0.46202
+      },
+      "model": {
+        "home_win": 0.39696,
+        "draw": 0.29526,
+        "away_win": 0.30778,
+        "over_2_5": 0.517862,
+        "under_2_5": 0.482138
+      },
+      "prematch_load": {
+        "home": "low",
+        "away": "medium"
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_id": "1168565",
+        "event_slug": "epl-che-tot-2026-10-24",
+        "event_liquidity": 155795.8175,
+        "event_volume": 15440.688036000003,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "token_id": "2368303171470755931173336937786604974357875266394450750807964173720848913574",
+              "best_bid": 0.57,
+              "best_ask": 0.58,
+              "midpoint": 0.575,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 17108.52,
+              "top_ask_notional": 9922.9416,
+              "ask_notional_within_2c": 24892.2299,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.39696,
+            "market_no_vig_probability": 0.5693069306930693,
+            "edge_vs_best_ask": -0.18303999999999998
+          },
+          "draw": {
+            "book": {
+              "token_id": "36865126081445276947847304228440874974879548240576688099895895205010601237986",
+              "best_bid": 0.22,
+              "best_ask": 0.23,
+              "midpoint": 0.225,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 7588.93,
+              "top_ask_notional": 1745.4539000000002,
+              "ask_notional_within_2c": 9290.0559,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.29526,
+            "market_no_vig_probability": 0.22277227722772278,
+            "edge_vs_best_ask": 0.06526000000000001
+          },
+          "away_win": {
+            "book": {
+              "token_id": "94680788354286459220837875705636142994513475445821131622553977708887443552231",
+              "best_bid": 0.2,
+              "best_ask": 0.22,
+              "midpoint": 0.21000000000000002,
+              "spread": 0.01999999999999999,
+              "top_ask_shares": 9567.51,
+              "top_ask_notional": 2104.8522000000003,
+              "ask_notional_within_2c": 10565.3669,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.30778,
+            "market_no_vig_probability": 0.20792079207920794,
+            "edge_vs_best_ask": 0.08778
+          }
+        }
+      },
+      "over_under_2_5": {
+        "market_id": "5536715",
+        "market_slug": "epl-che-tot-2026-10-24-total-2pt5",
+        "reported_liquidity": 19492.174,
+        "reported_volume": 534.076308,
+        "over": {
+          "book": {
+            "token_id": "111144189333009343344598024519360927160685020801952079951364037996640669342135",
+            "best_bid": 0.63,
+            "best_ask": 0.64,
+            "midpoint": 0.635,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 764.74,
+            "top_ask_notional": 489.4336,
+            "ask_notional_within_2c": 4635.5839000000005,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.517862,
+          "edge_vs_best_ask": -0.12213799999999997
+        },
+        "under": {
+          "book": {
+            "token_id": "36812256439403940606348643276162316456364962128776454808173462928777363799624",
+            "best_bid": 0.36,
+            "best_ask": 0.37,
+            "midpoint": 0.365,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 3791.86,
+            "top_ask_notional": 1402.9882,
+            "ask_notional_within_2c": 3952.9723000000004,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.482138,
+          "edge_vs_best_ask": 0.11213800000000002
+        }
+      },
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795489,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 8,
+        "kickoff_utc": "2026-10-25T14:00:00Z",
+        "home_team_id": 9826,
+        "home_team": "Crystal Palace",
+        "away_team_id": 10261,
+        "away_team": "Newcastle United",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "football_baseline": {
+        "predicted_xg": {
+          "home": 1.661821,
+          "away": 1.55347,
+          "total": 3.215291
+        },
+        "home_win": 0.4067,
+        "draw": 0.2334,
+        "away_win": 0.3599,
+        "over_2_5": 0.62318,
+        "under_2_5": 0.37682
+      },
+      "model": {
+        "home_win": 0.357585,
+        "draw": 0.276651,
+        "away_win": 0.365764,
+        "over_2_5": 0.608046,
+        "under_2_5": 0.391954
+      },
+      "prematch_load": {
+        "home": "high",
+        "away": "low"
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_id": "1174974",
+        "event_slug": "epl-cry-new-2026-10-25",
+        "event_liquidity": 86113.004,
+        "event_volume": 1221.326772,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "token_id": "3727368509876842339148253692602633483393112079016019833146631004924900578358",
+              "best_bid": 0.32,
+              "best_ask": 0.34,
+              "midpoint": 0.33,
+              "spread": 0.020000000000000018,
+              "top_ask_shares": 6572.18,
+              "top_ask_notional": 2234.5412,
+              "ask_notional_within_2c": 5462.9583,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.357585,
+            "market_no_vig_probability": 0.33,
+            "edge_vs_best_ask": 0.017584999999999962
+          },
+          "draw": {
+            "book": {
+              "token_id": "87313449775620518461237563856461816718891045837992161421980355034409002452257",
+              "best_bid": 0.26,
+              "best_ask": 0.27,
+              "midpoint": 0.265,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 3968.69,
+              "top_ask_notional": 1071.5463,
+              "ask_notional_within_2c": 4983.7557,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.276651,
+            "market_no_vig_probability": 0.265,
+            "edge_vs_best_ask": 0.0066509999999999625
+          },
+          "away_win": {
+            "book": {
+              "token_id": "73237053577595595895891424572780017052777168537145838456130705646302202539749",
+              "best_bid": 0.4,
+              "best_ask": 0.41,
+              "midpoint": 0.405,
+              "spread": 0.009999999999999953,
+              "top_ask_shares": 1523.64,
+              "top_ask_notional": 624.6924,
+              "ask_notional_within_2c": 4922.2058,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.365764,
+            "market_no_vig_probability": 0.405,
+            "edge_vs_best_ask": -0.044236
+          }
+        }
+      },
+      "over_under_2_5": {
+        "market_id": "5596974",
+        "market_slug": "epl-cry-new-2026-10-25-total-2pt5",
+        "reported_liquidity": 14444.4812,
+        "reported_volume": 118.0,
+        "over": {
+          "book": {
+            "token_id": "25088258886360508708897711211207597611808596652130546649263140482608281050616",
+            "best_bid": 0.59,
+            "best_ask": 0.6,
+            "midpoint": 0.595,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 705.0,
+            "top_ask_notional": 423.0,
+            "ask_notional_within_2c": 3948.0906000000004,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.608046,
+          "edge_vs_best_ask": 0.008045999999999998
+        },
+        "under": {
+          "book": {
+            "token_id": "74339318658536945416153523832174810947960696408060500660171843643202434867240",
+            "best_bid": 0.4,
+            "best_ask": 0.41,
+            "midpoint": 0.405,
+            "spread": 0.009999999999999953,
+            "top_ask_shares": 3544.16,
+            "top_ask_notional": 1453.1055999999999,
+            "ask_notional_within_2c": 3737.0469,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.391954,
+          "edge_vs_best_ask": -0.01804599999999995
+        }
+      },
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795490,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 8,
+        "kickoff_utc": "2026-10-25T14:00:00Z",
+        "home_team_id": 8667,
+        "home_team": "Hull City",
+        "away_team_id": 9937,
+        "away_team": "Brentford",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "football_baseline": {
+        "predicted_xg": {
+          "home": 1.290059,
+          "away": 1.523837,
+          "total": 2.813896
+        },
+        "home_win": 0.32236,
+        "draw": 0.24954,
+        "away_win": 0.4281,
+        "over_2_5": 0.52984,
+        "under_2_5": 0.47016
+      },
+      "model": {
+        "home_win": 0.279212,
+        "draw": 0.289406,
+        "away_win": 0.431382,
+        "over_2_5": 0.521327,
+        "under_2_5": 0.478673
+      },
+      "prematch_load": {
+        "home": "medium",
+        "away": "medium"
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_id": "1175028",
+        "event_slug": "epl-hul-bre-2026-10-25",
+        "event_liquidity": 208556.154,
+        "event_volume": 17956.775351,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "token_id": "80637030477130587906771775554453866950517543296829573288338379320040785269731",
+              "best_bid": 0.2,
+              "best_ask": 0.21,
+              "midpoint": 0.20500000000000002,
+              "spread": 0.009999999999999981,
+              "top_ask_shares": 6521.79,
+              "top_ask_notional": 1369.5759,
+              "ask_notional_within_2c": 3963.2960000000003,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.279212,
+            "market_no_vig_probability": 0.2039800995024876,
+            "edge_vs_best_ask": 0.06921200000000002
+          },
+          "draw": {
+            "book": {
+              "token_id": "70400754141287817922843279519290772889810282198942384770371236785275318553836",
+              "best_bid": 0.23,
+              "best_ask": 0.24,
+              "midpoint": 0.235,
+              "spread": 0.009999999999999981,
+              "top_ask_shares": 2904.83,
+              "top_ask_notional": 697.1591999999999,
+              "ask_notional_within_2c": 3764.5992,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.289406,
+            "market_no_vig_probability": 0.2338308457711443,
+            "edge_vs_best_ask": 0.049406000000000005
+          },
+          "away_win": {
+            "book": {
+              "token_id": "113093381204365254060716182280113443801809878950524709409825977184156459353320",
+              "best_bid": 0.56,
+              "best_ask": 0.57,
+              "midpoint": 0.565,
+              "spread": 0.009999999999999898,
+              "top_ask_shares": 12097.28,
+              "top_ask_notional": 6895.4496,
+              "ask_notional_within_2c": 14809.001,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.431382,
+            "market_no_vig_probability": 0.5621890547263682,
+            "edge_vs_best_ask": -0.13861799999999996
+          }
+        }
+      },
+      "over_under_2_5": {
+        "market_id": "5596381",
+        "market_slug": "epl-hul-bre-2026-10-25-total-2pt5",
+        "reported_liquidity": 13245.5924,
+        "reported_volume": 100.0,
+        "over": {
+          "book": {
+            "token_id": "63692178011358401138221408192939131694508281555243793131140199504023407125711",
+            "best_bid": 0.57,
+            "best_ask": 0.58,
+            "midpoint": 0.575,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 862.0,
+            "top_ask_notional": 499.96,
+            "ask_notional_within_2c": 3384.1917,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.521327,
+          "edge_vs_best_ask": -0.058672999999999975
+        },
+        "under": {
+          "book": {
+            "token_id": "94386621160904891118104274917175274878616685075570281883103830343157410923529",
+            "best_bid": 0.42,
+            "best_ask": 0.43,
+            "midpoint": 0.425,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 3536.34,
+            "top_ask_notional": 1520.6262,
+            "ask_notional_within_2c": 3190.3374,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.478673,
+          "edge_vs_best_ask": 0.04867300000000002
+        }
+      },
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795492,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 8,
+        "kickoff_utc": "2026-10-25T14:00:00Z",
+        "home_team_id": 8650,
+        "home_team": "Liverpool",
+        "away_team_id": 10204,
+        "away_team": "Brighton & Hove Albion",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "football_baseline": {
+        "predicted_xg": {
+          "home": 1.498668,
+          "away": 1.49763,
+          "total": 2.996298
+        },
+        "home_win": 0.37556,
+        "draw": 0.24396,
+        "away_win": 0.38048,
+        "over_2_5": 0.57728,
+        "under_2_5": 0.42272
+      },
+      "model": {
+        "home_win": 0.330108,
+        "draw": 0.28623,
+        "away_win": 0.383662,
+        "over_2_5": 0.563444,
+        "under_2_5": 0.436556
+      },
+      "prematch_load": {
+        "home": "medium",
+        "away": "high"
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_id": "1174996",
+        "event_slug": "epl-liv-bri-2026-10-25",
+        "event_liquidity": 387903.4411,
+        "event_volume": 46239.320863,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "token_id": "37542358490822188748863596809378681307162210822244435154075653230323971437048",
+              "best_bid": 0.44,
+              "best_ask": 0.45,
+              "midpoint": 0.445,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 242960.45,
+              "top_ask_notional": 109332.20250000001,
+              "ask_notional_within_2c": 115732.58280000002,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.330108,
+            "market_no_vig_probability": 0.44278606965174133,
+            "edge_vs_best_ask": -0.119892
+          },
+          "draw": {
+            "book": {
+              "token_id": "71295282375067964893313170731878063013895366192062112324459683006370686812143",
+              "best_bid": 0.24,
+              "best_ask": 0.25,
+              "midpoint": 0.245,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 7479.04,
+              "top_ask_notional": 1869.76,
+              "ask_notional_within_2c": 5669.814,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.28623,
+            "market_no_vig_probability": 0.2437810945273632,
+            "edge_vs_best_ask": 0.036229999999999984
+          },
+          "away_win": {
+            "book": {
+              "token_id": "76311120985556808269596003533623101388860109577260070443770258179311856689520",
+              "best_bid": 0.31,
+              "best_ask": 0.32,
+              "midpoint": 0.315,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 12788.61,
+              "top_ask_notional": 4092.3552000000004,
+              "ask_notional_within_2c": 9513.793,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.383662,
+            "market_no_vig_probability": 0.31343283582089554,
+            "edge_vs_best_ask": 0.063662
+          }
+        }
+      },
+      "over_under_2_5": {
+        "market_id": "5596794",
+        "market_slug": "epl-liv-bri-2026-10-25-total-2pt5",
+        "reported_liquidity": 13590.944,
+        "reported_volume": 8.064515,
+        "over": {
+          "book": {
+            "token_id": "25007260336786555631304445246552025441355843417842905025372302985359672935991",
+            "best_bid": 0.62,
+            "best_ask": 0.63,
+            "midpoint": 0.625,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 2981.0,
+            "top_ask_notional": 1878.03,
+            "ask_notional_within_2c": 4974.1303,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.563444,
+          "edge_vs_best_ask": -0.06655600000000006
+        },
+        "under": {
+          "book": {
+            "token_id": "71042038423142887493043073910664323252559381829272688287965846100432465845661",
+            "best_bid": 0.37,
+            "best_ask": 0.38,
+            "midpoint": 0.375,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 2116.7,
+            "top_ask_notional": 804.3459999999999,
+            "ask_notional_within_2c": 2404.644,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.436556,
+          "edge_vs_best_ask": 0.056555999999999995
+        }
+      },
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795493,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 8,
+        "kickoff_utc": "2026-10-25T14:00:00Z",
+        "home_team_id": 10260,
+        "home_team": "Manchester United",
+        "away_team_id": 8678,
+        "away_team": "AFC Bournemouth",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "football_baseline": {
+        "predicted_xg": {
+          "home": 1.513025,
+          "away": 1.336925,
+          "total": 2.84995
+        },
+        "home_win": 0.4137,
+        "draw": 0.24818,
+        "away_win": 0.33812,
+        "over_2_5": 0.54512,
+        "under_2_5": 0.45488
+      },
+      "model": {
+        "home_win": 0.365055,
+        "draw": 0.293998,
+        "away_win": 0.340947,
+        "over_2_5": 0.525559,
+        "under_2_5": 0.474441
+      },
+      "prematch_load": {
+        "home": "high",
+        "away": "high"
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_id": "1175015",
+        "event_slug": "epl-mun-bou-2026-10-25",
+        "event_liquidity": 83781.9246,
+        "event_volume": 5623.514989,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "token_id": "51205583800298935965504834272191507654261300708771202218133137057292287506473",
+              "best_bid": 0.47,
+              "best_ask": 0.48,
+              "midpoint": 0.475,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 1653.0,
+              "top_ask_notional": 793.4399999999999,
+              "ask_notional_within_2c": 6447.985899999999,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.365055,
+            "market_no_vig_probability": 0.4773869346733668,
+            "edge_vs_best_ask": -0.11494499999999996
+          },
+          "draw": {
+            "book": {
+              "token_id": "40713466892999460277776265241124387822619688714745693564222656607324372436669",
+              "best_bid": 0.25,
+              "best_ask": 0.26,
+              "midpoint": 0.255,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 5484.84,
+              "top_ask_notional": 1426.0584000000001,
+              "ask_notional_within_2c": 3971.1688000000004,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.293998,
+            "market_no_vig_probability": 0.2562814070351759,
+            "edge_vs_best_ask": 0.03399799999999997
+          },
+          "away_win": {
+            "book": {
+              "token_id": "71463834821060439138200477712309674544020671629410897488729723199352099160293",
+              "best_bid": 0.26,
+              "best_ask": 0.27,
+              "midpoint": 0.265,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 1700.0,
+              "top_ask_notional": 459.00000000000006,
+              "ask_notional_within_2c": 2966.8962,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.340947,
+            "market_no_vig_probability": 0.2663316582914573,
+            "edge_vs_best_ask": 0.07094699999999998
+          }
+        }
+      },
+      "over_under_2_5": {
+        "market_id": "5596610",
+        "market_slug": "epl-mun-bou-2026-10-25-total-2pt5",
+        "reported_liquidity": 15905.4921,
+        "reported_volume": 2006.230327,
+        "over": {
+          "book": {
+            "token_id": "38395929413934101737272437606359694895100117635141836805427065433579992241353",
+            "best_bid": 0.6,
+            "best_ask": 0.61,
+            "midpoint": 0.605,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 5442.17,
+            "top_ask_notional": 3319.7237,
+            "ask_notional_within_2c": 6577.635899999999,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.525559,
+          "edge_vs_best_ask": -0.08444099999999999
+        },
+        "under": {
+          "book": {
+            "token_id": "113651218339123138470887782876867944677950665834642070676372864419474363869842",
+            "best_bid": 0.39,
+            "best_ask": 0.4,
+            "midpoint": 0.395,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 1480.29,
+            "top_ask_notional": 592.116,
+            "ask_notional_within_2c": 3049.2108,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.474441,
+          "edge_vs_best_ask": 0.07444099999999998
+        }
+      },
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795494,
+        "source": "fotmob",
+        "source_scope": "premier_league_current",
+        "competition_id": 47,
+        "competition_stage_id": null,
+        "competition": "Premier League",
+        "round": 8,
+        "kickoff_utc": "2026-10-25T16:30:00Z",
+        "home_team_id": 8472,
+        "home_team": "Sunderland",
+        "away_team_id": 8463,
+        "away_team": "Leeds United",
+        "score": null,
+        "started": false,
+        "finished": false,
+        "cancelled": false,
+        "season": "2026/2027"
+      },
+      "football_baseline": {
+        "predicted_xg": {
+          "home": 1.350197,
+          "away": 1.421881,
+          "total": 2.772078
+        },
+        "home_win": 0.3543,
+        "draw": 0.25488,
+        "away_win": 0.39082,
+        "over_2_5": 0.52374,
+        "under_2_5": 0.47626
+      },
+      "model": {
+        "home_win": 0.315206,
+        "draw": 0.297584,
+        "away_win": 0.38721,
+        "over_2_5": 0.510934,
+        "under_2_5": 0.489066
+      },
+      "prematch_load": {
+        "home": "high",
+        "away": "medium"
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_id": "1175038",
+        "event_slug": "epl-sun-lee-2026-10-25",
+        "event_liquidity": 122177.4496,
+        "event_volume": 7338.727559999999,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "token_id": "4085791413674906237576008690544142560679598666515415401494516263887496061721",
+              "best_bid": 0.31,
+              "best_ask": 0.32,
+              "midpoint": 0.315,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 7009.37,
+              "top_ask_notional": 2242.9984,
+              "ask_notional_within_2c": 6797.3606,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.315206,
+            "market_no_vig_probability": 0.315,
+            "edge_vs_best_ask": -0.0047940000000000205
+          },
+          "draw": {
+            "book": {
+              "token_id": "76388989215864796568115639429514101852638740638753938545176103867726650104498",
+              "best_bid": 0.29,
+              "best_ask": 0.31,
+              "midpoint": 0.3,
+              "spread": 0.020000000000000018,
+              "top_ask_shares": 16826.66,
+              "top_ask_notional": 5216.2645999999995,
+              "ask_notional_within_2c": 15239.497199999998,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.297584,
+            "market_no_vig_probability": 0.3,
+            "edge_vs_best_ask": -0.012415999999999983
+          },
+          "away_win": {
+            "book": {
+              "token_id": "21192579629276710931476855870019599311104873283453223294033209194702237922045",
+              "best_bid": 0.38,
+              "best_ask": 0.39,
+              "midpoint": 0.385,
+              "spread": 0.010000000000000009,
+              "top_ask_shares": 2160.36,
+              "top_ask_notional": 842.5404000000001,
+              "ask_notional_within_2c": 4396.7241,
+              "minimum_order_size": 5.0,
+              "tick_size": 0.01
+            },
+            "model_probability": 0.38721,
+            "market_no_vig_probability": 0.385,
+            "edge_vs_best_ask": -0.0027900000000000147
+          }
+        }
+      },
+      "over_under_2_5": {
+        "market_id": "5596147",
+        "market_slug": "epl-sun-lee-2026-10-25-total-2pt5",
+        "reported_liquidity": 13314.1501,
+        "reported_volume": 356.18239300000005,
+        "over": {
+          "book": {
+            "token_id": "71635534484631441239929894929524036161339080787762925655844551684321199285282",
+            "best_bid": 0.45,
+            "best_ask": 0.46,
+            "midpoint": 0.455,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 2812.82,
+            "top_ask_notional": 1293.8972,
+            "ask_notional_within_2c": 2920.8248000000003,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.510934,
+          "edge_vs_best_ask": 0.05093399999999998
+        },
+        "under": {
+          "book": {
+            "token_id": "73276420481210434295945528440266302507422225784813152300467731949037810163133",
+            "best_bid": 0.54,
+            "best_ask": 0.55,
+            "midpoint": 0.545,
+            "spread": 0.010000000000000009,
+            "top_ask_shares": 11.12,
+            "top_ask_notional": 6.116,
+            "ask_notional_within_2c": 2329.0564999999997,
+            "minimum_order_size": 5.0,
+            "tick_size": 0.01
+          },
+          "model_probability": 0.489066,
+          "edge_vs_best_ask": -0.060934000000000044
+        }
+      },
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    }
+  ],
+  "decision_boundaries": {
+    "writes_external_state": false,
+    "can_place_orders": false,
+    "capital_deployment_ready": false
+  }
+}

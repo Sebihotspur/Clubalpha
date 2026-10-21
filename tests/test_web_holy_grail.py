@@ -114,7 +114,7 @@ class WebHolyGrailTests(unittest.TestCase):
         weeks = {
             row["matchweek"]: row for row in self.data["ledger"]["matchweeks"]
         }
-        self.assertEqual(set(weeks), {2, 3, 4, 5, 6})
+        self.assertEqual(set(weeks), {2, 3, 4, 5, 6, 7})
         completed = weeks[2]
         self.assertEqual(completed["settled"], 10)
         self.assertEqual(completed["markets"]["one_x_two"]["hit_rate"], 0.4)
@@ -179,6 +179,14 @@ class WebHolyGrailTests(unittest.TestCase):
             latest_research["markets"]["over_under_2_5"]["hits"], 5
         )
         self.assertFalse(latest_research["counts_toward_promotion_gate"])
+        matchweek_seven = weeks[7]
+        self.assertEqual(matchweek_seven["settled"], 10)
+        self.assertEqual(matchweek_seven["pending"], 0)
+        self.assertEqual(matchweek_seven["markets"]["one_x_two"]["hits"], 6)
+        self.assertEqual(
+            matchweek_seven["markets"]["over_under_2_5"]["hits"], 4
+        )
+        self.assertFalse(matchweek_seven["counts_toward_promotion_gate"])
 
     def test_matchweek_six_results_preserve_prematch_calls(self):
         current = self.data["current_matchweek"]
@@ -208,6 +216,19 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertFalse(chelsea["result"]["football_1x2_hit"])
         self.assertTrue(chelsea["result"]["base_1x2_hit"])
         self.assertTrue(chelsea["result"]["market_1x2_hit"])
+
+    def test_matchweek_eight_provisional_slate_is_visible_but_not_deployable(self):
+        provisional = self.data["provisional_matchweek"]
+        self.assertEqual(provisional["round"], 8)
+        self.assertEqual(provisional["fixtures"], 10)
+        self.assertEqual(len(provisional["predictions"]), 10)
+        self.assertFalse(
+            provisional["decision_boundaries"]["final_slate_frozen"]
+        )
+        self.assertFalse(
+            provisional["decision_boundaries"]["capital_deployment_ready"]
+        )
+        self.assertEqual(provisional["price_aware_shadow_shortlist"], [])
 
     def test_ipswich_liverpool_result_scores_markets_independently(self):
         predictions = [
@@ -267,15 +288,17 @@ class WebHolyGrailTests(unittest.TestCase):
                 / "artifacts/contextual_interaction/2026-09-17-mw5/results.jsonl",
                 ROOT
                 / "artifacts/contextual_interaction/2026-10-06-mw6/results.jsonl",
+                ROOT
+                / "artifacts/contextual_interaction/2026-10-15-mw7/results.jsonl",
             )
         )
         self.assertEqual(learning["completed_results"], completed_results)
-        self.assertEqual(learning["frozen_fixtures"], 50)
+        self.assertEqual(learning["frozen_fixtures"], 60)
         self.assertEqual(
             learning["pending_results"],
             learning["frozen_fixtures"] - completed_results,
         )
-        self.assertEqual(learning["promotion_candidates"], 4)
+        self.assertEqual(learning["promotion_candidates"], 17)
         self.assertEqual(learning["automatically_applied"], 0)
         self.assertFalse(learning["capital_deployment_ready"])
         adaptive = learning["adaptive"]

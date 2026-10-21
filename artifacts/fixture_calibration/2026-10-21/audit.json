@@ -1,0 +1,66 @@
+{
+  "version": "clubalpha_fixture_calibration_audit_v1",
+  "generated_at_utc": "2026-10-21T00:00:00+00:00",
+  "as_of": "2026-10-21",
+  "cycle_ids": [
+    "2026-08-26-matchweek-2",
+    "2026-08-31-matchweek-3-official",
+    "2026-09-08-matchweek-4-official",
+    "2026-09-17-matchweek-5-contextual",
+    "2026-10-06-matchweek-6-contextual",
+    "2026-10-15-matchweek-7-contextual"
+  ],
+  "training_matches": 60,
+  "same_sample_sensitivity": {
+    "interpretation": "same-sample sensitivity only; not validation",
+    "baseline": {
+      "matches": 60,
+      "one_x_two_brier": 0.630127,
+      "one_x_two_log_loss": 1.045576,
+      "top_pick_accuracy": 0.433333,
+      "home_probability_leader_rate": 0.733333,
+      "mean_draw_probability": 0.256624
+    },
+    "calibrated": {
+      "matches": 60,
+      "one_x_two_brier": 0.623381,
+      "one_x_two_log_loss": 1.035319,
+      "top_pick_accuracy": 0.45,
+      "home_probability_leader_rate": 0.666667,
+      "mean_draw_probability": 0.283753
+    },
+    "draw_zone": {
+      "flagged": 0,
+      "actual_draws_flagged": 0,
+      "rows": []
+    }
+  },
+  "chronological_audit": {
+    "interpretation": "cycle-forward; each calibration uses only earlier cycles",
+    "evaluated_cycles": 5,
+    "baseline": {
+      "matches": 50,
+      "one_x_two_brier": 0.62756,
+      "one_x_two_log_loss": 1.041148,
+      "top_pick_accuracy": 0.44,
+      "home_probability_leader_rate": 0.74,
+      "mean_draw_probability": 0.260488
+    },
+    "calibrated": {
+      "matches": 50,
+      "one_x_two_brier": 0.636519,
+      "one_x_two_log_loss": 1.051262,
+      "top_pick_accuracy": 0.44,
+      "home_probability_leader_rate": 0.66,
+      "mean_draw_probability": 0.311149
+    }
+  },
+  "decision_boundaries": {
+    "same_sample_metrics_are_validation": false,
+    "core_architecture_changed": false,
+    "player_alpha_changed": false,
+    "base_weights_changed": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  }
+}

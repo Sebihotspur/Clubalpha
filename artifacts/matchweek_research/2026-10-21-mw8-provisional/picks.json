@@ -1,0 +1,47 @@
+{
+  "version": "clubalpha_matchweek_research_picks_v1",
+  "status": "provisional_preweek_shadow",
+  "as_of": "2026-10-21",
+  "round": 8,
+  "market_captured_at_utc": "2026-10-21T19:49:35.936312+00:00",
+  "final_refresh_required_after_utc": "2026-10-22T21:00:00Z",
+  "policy": {
+    "base_is_anchor": true,
+    "context_may_reverse_base": false,
+    "side_pass_gap_below": 0.05,
+    "over_call_at_or_above": 0.58,
+    "under_call_at_or_below_over_probability": 0.42,
+    "minimum_price_edge_for_shortlist": 0.05,
+    "fixture_calibration_can_reverse_call": false
+  },
+  "fixtures": [
+    {"match_id":5795491,"fixture":"Ipswich Town vs Nottingham Forest","side_leader":"away_win","side_probability":0.3823,"side_gap":0.01082,"side_call":"pass","side_best_ask":0.44,"side_edge":-0.0577,"side_shortlist":false,"total_call":"pass","over_2_5_probability":0.56802,"totals_shortlist":false,"context_verdict":"no_clear_contextual_edge","load":"medium/medium"},
+    {"match_id":5795486,"fixture":"Aston Villa vs Manchester City","side_leader":"away_win","side_probability":0.46638,"side_gap":0.16306,"side_call":"away_win","side_best_ask":0.57,"side_edge":-0.10362,"side_shortlist":false,"total_call":"over_2_5","over_2_5_probability":0.61216,"total_best_ask":0.63,"total_edge":-0.01784,"totals_shortlist":false,"context_verdict":"baseline_reinforced","load":"medium/medium"},
+    {"match_id":5795485,"fixture":"Arsenal vs Everton","side_leader":"home_win","side_probability":0.57988,"side_gap":0.34572,"side_call":"home_win","side_best_ask":0.69,"side_edge":-0.11012,"side_shortlist":false,"total_call":"pass","over_2_5_probability":0.49522,"totals_shortlist":false,"context_verdict":"baseline_reinforced","load":"medium/low"},
+    {"match_id":5795488,"fixture":"Coventry City vs Fulham","side_leader":"home_win","side_probability":0.37388,"side_gap":0.00678,"side_call":"pass","side_best_ask":0.32,"side_edge":0.05388,"side_shortlist":false,"total_call":"pass","over_2_5_probability":0.50042,"totals_shortlist":false,"context_verdict":"baseline_fragile","load":"medium/medium"},
+    {"match_id":5795487,"fixture":"Chelsea vs Tottenham Hotspur","side_leader":"home_win","side_probability":0.451,"side_gap":0.15184,"side_call":"home_win","side_best_ask":0.58,"side_edge":-0.129,"side_shortlist":false,"total_call":"pass","over_2_5_probability":0.538,"totals_shortlist":false,"context_verdict":"baseline_supported","load":"low/medium"},
+    {"match_id":5795489,"fixture":"Crystal Palace vs Newcastle United","side_leader":"home_win","side_probability":0.40666,"side_gap":0.04676,"side_call":"pass","side_best_ask":0.34,"side_edge":0.06666,"side_shortlist":false,"total_call":"over_2_5","over_2_5_probability":0.62318,"total_best_ask":0.60,"total_edge":0.02318,"totals_shortlist":false,"context_verdict":"no_clear_contextual_edge","load":"high/low"},
+    {"match_id":5795490,"fixture":"Hull City vs Brentford","side_leader":"away_win","side_probability":0.42814,"side_gap":0.1057,"side_call":"away_win","side_best_ask":0.57,"side_edge":-0.14186,"side_shortlist":false,"total_call":"pass","over_2_5_probability":0.52984,"totals_shortlist":false,"context_verdict":"baseline_reinforced","load":"medium/medium"},
+    {"match_id":5795492,"fixture":"Liverpool vs Brighton & Hove Albion","side_leader":"away_win","side_probability":0.3805,"side_gap":0.00494,"side_call":"pass","side_best_ask":0.32,"side_edge":0.0605,"side_shortlist":false,"total_call":"pass","over_2_5_probability":0.57728,"totals_shortlist":false,"context_verdict":"no_clear_contextual_edge","load":"medium/high"},
+    {"match_id":5795493,"fixture":"Manchester United vs AFC Bournemouth","side_leader":"home_win","side_probability":0.4137,"side_gap":0.07558,"side_call":"home_win","side_best_ask":0.48,"side_edge":-0.0663,"side_shortlist":false,"total_call":"pass","over_2_5_probability":0.54512,"totals_shortlist":false,"context_verdict":"no_clear_contextual_edge","load":"high/high"},
+    {"match_id":5795494,"fixture":"Sunderland vs Leeds United","side_leader":"away_win","side_probability":0.39082,"side_gap":0.03652,"side_call":"pass","side_best_ask":0.39,"side_edge":0.00082,"side_shortlist":false,"total_call":"pass","over_2_5_probability":0.52374,"totals_shortlist":false,"context_verdict":"baseline_supported","load":"high/medium"}
+  ],
+  "accuracy_shortlist": [
+    {"match_id":5795485,"market":"one_x_two","call":"home_win","probability":0.57988},
+    {"match_id":5795489,"market":"over_under_2_5","call":"over_2_5","probability":0.62318},
+    {"match_id":5795486,"market":"over_under_2_5","call":"over_2_5","probability":0.61216}
+  ],
+  "price_aware_shadow_shortlist": [],
+  "pending_preleague_teams": [
+    "AFC Bournemouth",
+    "Brighton & Hove Albion",
+    "Crystal Palace",
+    "Sunderland"
+  ],
+  "decision_boundaries": {
+    "final_slate_frozen": false,
+    "capital_deployment_ready": false,
+    "wallet_used": false,
+    "orders_placed": false
+  }
+}
