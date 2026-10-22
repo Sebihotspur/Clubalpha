@@ -230,6 +230,11 @@ class WebHolyGrailTests(unittest.TestCase):
         )
         self.assertEqual(provisional["price_aware_shadow_shortlist"], [])
 
+        app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
+        self.assertIn("Matchweek ${esc(provisional.round)} provisional predictions", app_js)
+        index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
+        self.assertIn('/app.js?v=0.12.1-mw8', index_html)
+
     def test_ipswich_liverpool_result_scores_markets_independently(self):
         predictions = [
             json.loads(line)

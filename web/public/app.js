@@ -106,6 +106,37 @@ function overview(data) {
   const pick = data.featured_official_pick;
   const officialPredictions = data.official_slate.predictions;
   const current = data.current_matchweek;
+  const provisional = data.provisional_matchweek;
+  const provisionalSideCalls = provisional.predictions.filter(
+    (match) => match.side_call !== "pass",
+  );
+  const provisionalTotalCalls = provisional.predictions.filter(
+    (match) => match.total_call !== "pass",
+  );
+  const provisionalSpotlights = provisional.predictions
+    .filter((match) => match.side_call !== "pass" || match.total_call !== "pass")
+    .map((match) => {
+      const sideLabel = match.side_call === "home_win"
+        ? match.home_team
+        : match.side_call === "away_win"
+          ? match.away_team
+          : "1X2 pass";
+      const totalLabel = match.total_call === "over_2_5"
+        ? `Over 2.5 · ${pct(match.over_2_5_probability)}`
+        : match.total_call === "under_2_5"
+          ? `Under 2.5 · ${pct(1 - match.over_2_5_probability)}`
+          : "Total pass";
+      return `<article class="match-card">
+        <div class="match-time">${esc(dateTime(match.kickoff_utc))}</div>
+        <div class="match-teams"><span>${esc(match.home_team)}</span><span>${esc(match.away_team)}</span></div>
+        <div class="xg-row">
+          <div><span class="panel-label">Projected xG</span><div class="xg-total">${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</div></div>
+          <div class="lean">1X2 decision<strong>${esc(sideLabel)}${match.side_call === "pass" ? "" : ` · ${pct(match.side_probability)}`}</strong><small>${esc(totalLabel)}</small></div>
+        </div>
+      </article>`;
+    })
+    .slice(0, 4)
+    .join("");
   const highLoadTeams = new Set(
     current.predictions.flatMap((match) => [
       ...(match.load_risk.home === "high" ? [match.home_team] : []),
@@ -124,16 +155,40 @@ function overview(data) {
       </div>
       <aside class="hero-note">
         <span class="label">Current operating state</span>
-        <strong>SETTLE · DIAGNOSE · LEARN</strong>
-        <p>All ${esc(current.settled)} Matchweek ${esc(current.round)} results are settled. They update the adaptive research memory while the official capital gate and prior frozen ledgers remain unchanged.</p>
+        <strong>PREPARE · VALIDATE · FREEZE</strong>
+        <p>Matchweek ${esc(provisional.round)} is now live as a provisional shadow slate. The final freeze follows the remaining European evidence; prior results and ledgers remain immutable.</p>
       </aside>
     </section>
 
     <section class="metrics">
       ${metric("Deployment", "NO CAPITAL", "Shadow observations only", "amber")}
-      ${metric("Simulation", data.meta.simulations.toLocaleString(), "Independent Poisson runs", "accent")}
-      ${metric(`MW${current.round} research`, `${current.score.markets.one_x_two.hits}/${current.settled} 1X2`, `${current.score.markets.over_under_2_5.hits}/${current.settled} O/U 2.5`)}
-      ${metric("Promotion gate", `>${pct(data.ledger.hit_rate_gate)}`, `Minimum ${data.ledger.sample_gate} settled picks`)}
+      ${metric(`MW${provisional.round} side calls`, String(provisionalSideCalls.length), `${provisional.fixtures - provisionalSideCalls.length} explicit passes`, "accent")}
+      ${metric(`MW${provisional.round} totals calls`, String(provisionalTotalCalls.length), "O/U 2.5 threshold enforced", "accent")}
+      ${metric("Learning memory", `${data.methodology.research_loop.adaptive.match_learning_cards} matches`, "Completed evidence only")}
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Matchweek ${esc(provisional.round)} provisional predictions</h2><a href="/predictions/">Open all 10 fixtures →</a></div>
+      <article class="pick-card">
+        <div class="pick-main">
+          <div class="pick-tag"><span></span> NOW LIVE · ${esc(provisional.status.replaceAll("_", " "))}</div>
+          <p class="fixture-kicker">CURRENT 60-MATCH LEARNING STATE · PLAYER ALPHA · BOUNDED MATCHUP CONTEXT</p>
+          <h2 class="pick-title">The next slate is visible and still provisional</h2>
+          <div class="pick-market">${provisionalSideCalls.length} directional 1X2 calls · ${provisionalTotalCalls.length} O/U 2.5 calls · ${provisional.price_aware_shadow_shortlist.length} price-qualified positions</div>
+          <div class="pick-reasons">
+            <div class="reason"><strong>${provisional.fixtures}</strong><span>fixtures evaluated</span></div>
+            <div class="reason"><strong>${provisional.fixtures - provisionalSideCalls.length}</strong><span>1X2 passes</span></div>
+            <div class="reason"><strong>0.00u</strong><span>capital authorized</span></div>
+          </div>
+        </div>
+        <div class="pick-numbers">
+          <div class="pick-number"><span class="label">Status</span><strong class="yellow">PROVISIONAL</strong><small>Not the final freeze</small></div>
+          <div class="pick-number"><span class="label">Final refresh</span><strong>${esc(dateOnly(provisional.final_refresh_required_after_utc))}</strong><small>After European matches</small></div>
+          <div class="pick-number"><span class="label">Market focus</span><strong>1X2 + O/U</strong><small>BTTS diagnostic only</small></div>
+          <div class="pick-number"><span class="label">Price shortlist</span><strong>${provisional.price_aware_shadow_shortlist.length}</strong><small>Edge gate enforced</small></div>
+        </div>
+      </article>
+      <div class="card-grid">${provisionalSpotlights}</div>
     </section>
 
     <section class="section">
