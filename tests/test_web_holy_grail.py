@@ -233,7 +233,13 @@ class WebHolyGrailTests(unittest.TestCase):
         app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
         self.assertIn("Matchweek ${esc(provisional.round)} provisional predictions", app_js)
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
-        self.assertIn('/app.js?v=0.12.1-mw8', index_html)
+        self.assertIn('/app.js?v=0.12.2-ledger', index_html)
+
+    def test_latest_settled_research_week_is_prominent_in_ledger(self):
+        app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
+        self.assertIn('LATEST SETTLED RESEARCH · MATCHWEEK', app_js)
+        self.assertIn('index === 0 ? " open"', app_js)
+        self.assertIn('MATCHWEEK ${esc(data.provisional_matchweek.round)} REMAINS PROVISIONAL', app_js)
 
     def test_ipswich_liverpool_result_scores_markets_independently(self):
         predictions = [
@@ -275,7 +281,8 @@ class WebHolyGrailTests(unittest.TestCase):
 
     def test_matchweek_history_uses_collapsible_native_controls(self):
         app = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
-        self.assertIn('<details class="matchweek-fold">', app)
+        self.assertIn('<details class="matchweek-fold"', app)
+        self.assertIn('index === 0 ? " open"', app)
         self.assertIn("Hit rate by matchweek", app)
 
     def test_methodology_exposes_the_append_only_learning_loop(self):

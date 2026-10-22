@@ -557,7 +557,7 @@ function matchweekMarket(metric) {
   </div>`;
 }
 
-function matchweekFold(week) {
+function matchweekFold(week, index) {
   const oneXTwo = week.markets.one_x_two;
   const headline = oneXTwo.hit_rate === null
     ? `${week.pending} pending`
@@ -565,7 +565,7 @@ function matchweekFold(week) {
   const gateLabel = week.counts_toward_promotion_gate
     ? "Its 1X2 results count toward the official promotion gate"
     : "Research backtest · excluded from the official promotion gate";
-  return `<details class="matchweek-fold">
+  return `<details class="matchweek-fold"${index === 0 ? " open" : ""}>
     <summary>
       <div class="matchweek-identity">
         <span>${esc(dateOnly(week.first_kickoff_utc))} – ${esc(dateOnly(week.last_kickoff_utc))}</span>
@@ -592,9 +592,7 @@ function matchweekFold(week) {
 function ledger(data) {
   const progress = Math.min(100, (data.ledger.matches_logged / data.ledger.sample_gate) * 100);
   const displayedRate = data.ledger.hit_rate === null ? "—" : pct(data.ledger.hit_rate);
-  const officialWeek = data.ledger.matchweeks.find(
-    (week) => week.counts_toward_promotion_gate && week.settled > 0,
-  ) || data.ledger.matchweeks.find((week) => week.counts_toward_promotion_gate);
+  const latestWeek = data.ledger.matchweeks[0];
   const diagnostic = data.official_slate.performance_diagnostic;
   const environment = diagnostic.observed_xg_total_range;
   const forecastEnvironment = diagnostic.projected_xg_total_range;
@@ -611,13 +609,14 @@ function ledger(data) {
     .join("");
   const currentMisses = diagnostic.settled - diagnostic.official_1x2_hits;
   const currentPending = data.official_slate.fixtures - diagnostic.settled;
-  return `<section class="page-head"><p class="eyebrow">Immutable public record</p><h1>Official prediction ledger</h1><p>Every Matchweek ${esc(data.official_slate.round)} outcome is published before kickoff. Results append after full time, and the original calls never change.</p></section>
+  return `<section class="page-head"><p class="eyebrow">Immutable public record</p><h1>Prediction and research ledger</h1><p>Every frozen call stays unchanged after kickoff. Official promotion evidence and newer research matchweeks remain visibly separated so learning never rewrites the historical record.</p><div class="notice">LATEST SETTLED RESEARCH · MATCHWEEK ${esc(latestWeek.matchweek)} · ${latestWeek.markets.one_x_two.hits}/${latestWeek.settled} 1X2 · ${latestWeek.markets.over_under_2_5.hits}/${latestWeek.settled} O/U 2.5 · MATCHWEEK ${esc(data.provisional_matchweek.round)} REMAINS PROVISIONAL</div></section>
     <div class="ledger-hero">
       <article class="ledger-panel"><span class="panel-label">Promotion progress</span><h2>${displayedRate} <span>· ${data.ledger.matches_logged}/${data.ledger.sample_gate} settled</span></h2><p>The gate is strictly above ${pct(data.ledger.hit_rate_gate)} with at least ${data.ledger.sample_gate} official results. Passing opens paper allocation and price validation only; real capital remains locked.</p><div class="progress"><span style="width:${progress}%"></span></div></article>
-      <article class="ledger-panel"><span class="panel-label">Current evidence</span><div class="gate-list"><div class="gate-row"><span>Official 1X2</span><span>${data.ledger.hits}/${data.ledger.matches_logged}</span></div><div class="gate-row"><span>Raw probability leader</span><span>${data.ledger.raw_probability_leader_hits}/${data.ledger.matches_logged}</span></div><div class="gate-row"><span>Latest settled O/U 2.5</span><span>${officialWeek.markets.over_under_2_5.hits}/${officialWeek.settled}</span></div><div class="gate-row"><span>BTTS diagnostic · zero weight</span><span>${officialWeek.markets.btts.hits}/${officialWeek.settled}</span></div><div class="gate-row"><span>Prior projected-XI accuracy</span><span>${dec(diagnostic.mean_projected_xi_hits_of_11)}/11</span></div></div></article>
+      <article class="ledger-panel"><span class="panel-label">Current evidence</span><div class="gate-list"><div class="gate-row"><span>Official promotion 1X2</span><span>${data.ledger.hits}/${data.ledger.matches_logged}</span></div><div class="gate-row"><span>Raw probability leader</span><span>${data.ledger.raw_probability_leader_hits}/${data.ledger.matches_logged}</span></div><div class="gate-row"><span>Latest research 1X2 · MW${latestWeek.matchweek}</span><span>${latestWeek.markets.one_x_two.hits}/${latestWeek.settled}</span></div><div class="gate-row"><span>Latest research O/U 2.5 · MW${latestWeek.matchweek}</span><span>${latestWeek.markets.over_under_2_5.hits}/${latestWeek.settled}</span></div><div class="gate-row"><span>BTTS diagnostic · zero weight</span><span>${latestWeek.markets.btts.hits}/${latestWeek.settled}</span></div><div class="gate-row"><span>Prior projected-XI accuracy</span><span>${dec(diagnostic.mean_projected_xi_hits_of_11)}/11</span></div></div></article>
     </div>
     <p class="notice">MODEL READ · Mean total xG is close, but dispersion is not: observed ${dec(environment.mean)} xG vs ${dec(forecastEnvironment.mean)} forecast, with a ${dec(environment.minimum)}–${dec(environment.maximum)} observed range versus ${dec(forecastEnvironment.minimum)}–${dec(forecastEnvironment.maximum)} forecast. ${diagnostic.structural_misses} structural reviews · ${diagnostic.process_supported_outcome_variance} result classified as finishing variance · no recalibration authorized.</p>
-    <section class="section matchweek-section"><div class="section-head"><h2>Hit rate by matchweek</h2><span class="panel-label">Open a week to inspect each market</span></div><div class="matchweek-history">${data.ledger.matchweeks.map(matchweekFold).join("")}</div></section>
+    <section class="section matchweek-section"><div class="section-head"><h2>Hit rate by matchweek</h2><span class="panel-label">Newest settled week opens automatically</span></div><div class="matchweek-history">${data.ledger.matchweeks.map(matchweekFold).join("")}</div></section>
+    <p class="notice">Matchweek ${esc(data.provisional_matchweek.round)} is visible on the Predictions page but cannot enter this ledger until its pre-match slate is frozen and the fixtures are completed.</p>
     <section class="section"><div class="section-head"><h2>Frozen Matchweek ${esc(data.official_slate.round)} slate</h2><span class="panel-label">${diagnostic.official_1x2_hits} hits · ${currentMisses} misses · ${currentPending} pending</span></div><div class="table-shell"><table><thead><tr><th>Fixture</th><th>Official 1X2 call</th><th>Model probability</th><th>Secondary read</th><th>Result</th></tr></thead><tbody>${slateRows}</tbody></table></div></section>`;
 }
 
