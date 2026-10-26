@@ -1,10 +1,53 @@
 # Next session
 
-Updated: 2026-10-15
+Updated: 2026-10-26
 
 Model and website checkpoint: see latest commit on `main`
 
 Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
+
+## October 26 Matchweek 8 settlement and learning upgrade
+
+- The published Matchweek 8 slate is now settled without rewriting its
+  pre-match probabilities. Promoted calls scored 1/5 on 1X2 and 1/2 on O/U
+  2.5; the three-pick accuracy shortlist scored 2/3.
+- Five side passes avoided five losing probability leans. Base leaders scored
+  2/10 and contextual leaders 1/10, so the lesson is not to loosen thresholds:
+  it is to demand more agreement before promoting a side.
+- Projected XIs averaged 8.8/11 correct starters and formation accuracy was
+  95%. The planned final post-Europe refresh was not completed, so the slate is
+  explicitly labeled a settled published-provisional audit rather than a true
+  final freeze.
+- The append-only learning state now contains 70 Match Learning Cards. The
+  calibration layer uses all 70 for descriptive fitting and six strictly
+  chronological cycles for validation.
+- Fixture Calibration v1 now adds a conservative total-xG environment
+  correction: 42-day recency half-life, 30-match prior and 0.945 applied tempo
+  multiplier. Cycle-forward total-xG MAE and O2.5 Brier improve slightly, but
+  1X2 Brier worsens, so it remains shadow-only.
+- Decision Policy v1 is now explicit and downstream. Strong sides require at
+  least 55% probability and a 15-point gap. Medium calls require at least 45%,
+  a 10-point gap, supportive context, reliable lineups, and Club Form plus
+  projected-XI Player Alpha support. Draw-zone fixtures and leaders below 45%
+  pass.
+- No final slate may freeze while a participating club has a pending
+  preleague fixture. This prevents the missing Matchweek 8 refresh from
+  recurring.
+- Player Alpha, the locked 60/30/10 base, and frozen forecasts remain
+  unchanged. Real capital remains unauthorized.
+
+## Start next session here
+
+1. Refresh FotMob, UCL/domestic crossover evidence, Club Form, projected XIs,
+   availability and pre-match load for Matchweek 9.
+2. Build the base and contextual slates, then run the decision packet first as
+   `provisional`.
+3. After all midweek matches finish, refresh again and run `--stage final`.
+   The runner must refuse the freeze if any pending preleague fixture remains.
+4. Preserve the final packet before kickoff, score only promoted 1X2 and O/U
+   calls after full time, and keep BTTS diagnostic-only.
+5. Do not relax the new refusal gates from one matchweek. Judge the policy
+   chronologically over the next evidence block.
 
 ## October 15 Matchweek 7 freeze
 

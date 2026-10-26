@@ -1,0 +1,38 @@
+{
+  "version": "clubalpha_contextual_published_provisional_manifest_v1",
+  "status": "published_provisional_shadow",
+  "as_of": "2026-10-21",
+  "round": 8,
+  "generated_at_utc": "2026-10-21T19:49:14.719498+00:00",
+  "published_at_utc": "2026-10-21T20:33:13+00:00",
+  "manifest_recorded_at_utc": "2026-10-26T21:13:30+00:00",
+  "publication_evidence": {
+    "git_commit": "eebd81f32ee6887f52363038f817f1a29e51a6fc",
+    "commit_subject": "Publish provisional matchweek 8 slate",
+    "predictions_present_before_first_kickoff": true,
+    "final_refresh_completed": false
+  },
+  "inputs": {
+    "baseline_predictions": {
+      "path": "artifacts/current_matchweek/2026-10-21-mw8/predictions.jsonl",
+      "sha256": "e832cf100093011a7b53bb479b387f370f53339f56c46317e78167533d824ff6"
+    },
+    "player_alpha": {
+      "path": "reports/premier-league-alpha-snapshot-2026-10-21.json",
+      "sha256": "7e5faa2c0428d55ac71eedb93c3f109ecf33cc09b2821f11d51c04f3a75e42ef"
+    },
+    "style_matchup": {
+      "path": "artifacts/style_matchup/2026-10-21/style-matchups.json",
+      "sha256": "420d11dd15c13c2cbd3ecc4ef22e30c6f970eb15ee7d39038cdacb80dcbd59a6"
+    }
+  },
+  "outputs": {
+    "predictions": "c9f5ecb0b334c277e6feb8a30741510652980451d87600de1ee790f82ea51b97",
+    "report": "09be61d5254375885e3ae2c5b830b4c28fd211acfe77793013afdfd09e980eb0"
+  },
+  "decision_boundaries": {
+    "counts_toward_official_promotion_gate": false,
+    "capital_deployment_ready": false
+  },
+  "audit_note": "This manifest was recorded after the fixtures. It binds settlement to the byte-identical provisional predictions published before kickoff and does not represent a post-Europe final freeze."
+}

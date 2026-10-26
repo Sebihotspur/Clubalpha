@@ -63,7 +63,7 @@ def log_loss(probabilities: dict[str, float], outcome: str) -> float:
 def score(rows: list[dict[str, Any]]) -> dict[str, Any]:
     if not rows:
         return {"matches": 0}
-    return {
+    scored = {
         "matches": len(rows),
         "one_x_two_brier": round(
             sum(brier(row["probabilities"], row["outcome"]) for row in rows)
@@ -104,6 +104,32 @@ def score(rows: list[dict[str, Any]]) -> dict[str, Any]:
             6,
         ),
     }
+    if all("predicted_total_xg" in row for row in rows):
+        scored.update(
+            {
+                "total_xg_mae": round(
+                    sum(
+                        abs(row["predicted_total_xg"] - row["actual_total_xg"])
+                        for row in rows
+                    )
+                    / len(rows),
+                    6,
+                ),
+                "over_2_5_brier": round(
+                    sum(
+                        (
+                            row["over_2_5_probability"]
+                            - float(row["actual_total_goals_over_2_5"])
+                        )
+                        ** 2
+                        for row in rows
+                    )
+                    / len(rows),
+                    6,
+                ),
+            }
+        )
+    return scored
 
 
 def _forecast(observation: dict[str, Any]) -> dict[str, Any]:
@@ -127,24 +153,41 @@ def _forecast(observation: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _score_row(
+    observation: dict[str, Any],
+    predicted_xg: dict[str, Any],
+    probabilities: dict[str, Any],
+) -> dict[str, Any]:
+    over_probability = (
+        float(probabilities["over"]["2.5"])
+        if "over" in probabilities
+        else float(probabilities["over_2_5"])
+    )
+    return {
+        "probabilities": probabilities,
+        "outcome": observation["outcome"],
+        "predicted_total_xg": float(predicted_xg["total"]),
+        "actual_total_xg": float(observation["actual_xg"]["total"]),
+        "over_2_5_probability": over_probability,
+        "actual_total_goals_over_2_5": (
+            int(observation["actual_goals"]["total"]) > 2.5
+        ),
+    }
+
+
 def calibration_audit(
     observations: list[dict[str, Any]],
     artifact: dict[str, Any],
     config: dict[str, Any],
 ) -> dict[str, Any]:
-    baseline = [
-        {"probabilities": row["probabilities"], "outcome": row["outcome"]}
-        for row in observations
-    ]
+    baseline = [_score_row(row, row["predicted_xg"], row["probabilities"]) for row in observations]
     replay = []
     draw_zone = []
     for row in observations:
         calibrated = calibrate_fixture_forecast(
             _forecast(row), artifact, config, enforce_chronology=False
         )
-        replay.append(
-            {"probabilities": calibrated["probabilities"], "outcome": row["outcome"]}
-        )
+        replay.append(_score_row(row, calibrated["predicted_xg"], calibrated["probabilities"]))
         if calibrated["calibration_read"]["draw_zone"]:
             draw_zone.append(
                 {
@@ -189,12 +232,10 @@ def chronological_audit(
         )
         evaluated_cycles += 1
         for row in holdout:
-            baseline.append(
-                {"probabilities": row["probabilities"], "outcome": row["outcome"]}
-            )
+            baseline.append(_score_row(row, row["predicted_xg"], row["probabilities"]))
             forecast = calibrate_fixture_forecast(_forecast(row), artifact, config)
             calibrated.append(
-                {"probabilities": forecast["probabilities"], "outcome": row["outcome"]}
+                _score_row(row, forecast["predicted_xg"], forecast["probabilities"])
             )
         training.extend(holdout)
     return {

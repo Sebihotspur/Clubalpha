@@ -323,9 +323,10 @@ recommendation, allocation review, or capital decision.
 
 Fixture Calibration v1 now learns from every registered, completed frozen
 fixture. It conservatively updates the current league venue translation, raises
-or lowers draw probability through a bounded logit correction, and marks close
-side-versus-draw forecasts as pass/review zones. It does not modify Player
-Alpha, the 60/30/10 foundation, contextual coefficients, or frozen archives.
+or lowers draw probability through a bounded logit correction, conservatively
+adjusts the total-xG environment, and marks close side-versus-draw forecasts as
+pass/review zones. It does not modify Player Alpha, the 60/30/10 foundation,
+contextual coefficients, or frozen archives.
 See [Fixture Calibration v1](docs/fixture-calibration-v1.md).
 
 ## Current matchweek runner
@@ -347,6 +348,28 @@ projected XI to its real fixture ID, preserves the 60/30/10 weights, and writes
 hashed predictions. Context and fixture calibration stay downstream and
 separately auditable. Team research beliefs do not alter the forecast
 automatically.
+
+After the contextual slate and pre-match load packet exist, the selective
+decision runner translates probabilities into explicit calls or passes:
+
+```bash
+python3 research/build_matchweek_decisions_v1.py \
+  --as-of YYYY-MM-DD \
+  --round N \
+  --stage provisional \
+  --baseline artifacts/current_matchweek/YYYY-MM-DD-mwN/predictions.jsonl \
+  --contextual artifacts/contextual_interaction/YYYY-MM-DD-mwN/predictions.jsonl \
+  --prematch-load artifacts/matchweek_research/YYYY-MM-DD-mwN/prematch-load.json \
+  --calibration artifacts/fixture_calibration/YYYY-MM-DD-goal-environment/calibration.json \
+  --output artifacts/matchweek_research/YYYY-MM-DD-mwN/decisions.json
+```
+
+Side calls require probability, separation, lineup reliability, base/context/
+calibration agreement, and same-side support from both Club Form and projected-
+XI Player Alpha. The final stage is blocked while any participating team still
+has a pending preleague fixture. Over 2.5 requires at least 58%; Under 2.5
+requires Over probability at or below 42%. A price edge can qualify an existing
+call but can never promote a pass. All outputs remain shadow-only.
 
 ## Web dashboard
 

@@ -1,0 +1,40 @@
+{
+  "version": "clubalpha_decision_policy_v1",
+  "status": "shadow_challenger",
+  "side": {
+    "strong_probability_minimum": 0.55,
+    "strong_gap_minimum": 0.15,
+    "strong_lineup_reliability_minimum": 0.70,
+    "aligned_probability_minimum": 0.45,
+    "aligned_probability_maximum": 0.55,
+    "aligned_gap_minimum": 0.10,
+    "aligned_lineup_reliability_minimum": 0.75,
+    "required_foundation_components": [
+      "club_form",
+      "player_quality_lineup"
+    ],
+    "aligned_context_verdicts": [
+      "baseline_reinforced",
+      "baseline_supported"
+    ],
+    "blocked_context_verdicts": [
+      "baseline_fragile"
+    ]
+  },
+  "totals": {
+    "over_2_5_minimum": 0.58,
+    "under_2_5_maximum_over_probability": 0.42
+  },
+  "price": {
+    "minimum_edge": 0.05
+  },
+  "refresh": {
+    "final_post_midweek_refresh_required": true
+  },
+  "locked_boundaries": {
+    "player_alpha_formulas_mutable": false,
+    "base_60_30_10_weights_mutable": false,
+    "frozen_predictions_mutable": false,
+    "automatic_capital_authorization_allowed": false
+  }
+}

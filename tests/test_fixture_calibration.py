@@ -29,6 +29,11 @@ CONFIG = {
         "draw_zone_max_probability_gap": 0.08,
         "draw_zone_max_side_probability": 0.5,
     },
+    "goal_environment": {
+        "prior_match_equivalents": 4.0,
+        "recency_half_life_days": 42.0,
+        "maximum_absolute_log_total_xg_correction": 0.2,
+    },
     "simulation": {
         "draws": 5000,
         "seed": 77,
@@ -60,6 +65,7 @@ def contextual_prediction(index):
                 "home_win": 0.51,
                 "draw": 0.23,
                 "away_win": 0.26,
+                "over": {"2.5": 0.62},
             },
         },
     }
@@ -73,6 +79,8 @@ def result(index):
         "match_id": fixture["match_id"],
         "kickoff_utc": fixture["kickoff_utc"],
         "actual_xg": {"home": 1.0, "away": 1.3, "total": 2.3},
+        "final_home_goals": 1,
+        "final_away_goals": 1 if draw else 2,
         "outcome": "draw" if draw else "away_win",
     }
 
@@ -92,6 +100,12 @@ class FixtureCalibrationTests(unittest.TestCase):
         )
         self.assertGreater(
             artifact["draw_calibration"]["applied_logit_correction"], 0
+        )
+        self.assertLess(
+            artifact["goal_environment_calibration"][
+                "applied_log_total_xg_correction"
+            ],
+            0,
         )
         self.assertEqual(artifact["training_matches"], 8)
         self.assertTrue(
@@ -127,6 +141,7 @@ class FixtureCalibrationTests(unittest.TestCase):
         before_ratio = 1.8 / 1.2
         after_ratio = first["predicted_xg"]["home"] / first["predicted_xg"]["away"]
         self.assertLess(after_ratio, before_ratio)
+        self.assertLess(first["predicted_xg"]["total"], 3.0)
         self.assertGreater(first["probabilities"]["draw"], 0.23)
         self.assertLessEqual(
             abs(

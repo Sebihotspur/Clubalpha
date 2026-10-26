@@ -7,6 +7,7 @@ changing Clubalpha's football-intelligence foundation:
 60% Club Form + 30% Projected-XI Player Alpha + 10% History
     -> contextual xG
     -> evidence-shrunk venue correction
+    -> evidence-shrunk total-xG correction
     -> evidence-shrunk draw correction
     -> 50,000 weighted simulations
     -> calibrated shadow probabilities + draw-risk gate
@@ -38,19 +39,33 @@ four percentage points of the strongest side probability and that side remains
 at or below 50%. The draw zone is a pass/review gate, not an automatic draw
 wager.
 
+## Goal-environment correction
+
+The layer also compares frozen predicted total xG with observed FotMob total
+xG. Log residuals receive a 42-day recency half-life, 30 prior-match
+equivalents, and a strict cap. The resulting multiplier is applied equally to
+home and away xG after the venue-ratio correction, so it changes match tempo
+without inventing a team-strength edge or moving the locked 60/30/10 weights.
+
+The chronological audit reports total-xG MAE and Over 2.5 Brier score alongside
+the existing 1X2 metrics. This correction stays shadow-only even when one
+diagnostic improves; it cannot authorize a recommendation or capital.
+
 ## Current artifact
 
-The first artifact is trained through September 6, 2026 on 20 frozen and
-completed Matchweek 2–3 fixtures. It applies:
+The current artifact is trained through October 25, 2026 on 70 frozen and
+completed fixtures. It applies:
 
-- league home/away log-xG-ratio correction: -0.0538;
-- draw logit correction: +0.5282;
+- league home/away log-xG-ratio correction: -0.0925;
+- draw logit correction: +0.2303;
+- total-xG log correction: -0.0568, a 0.945 multiplier;
 - team-specific venue corrections: none yet eligible.
 
-The cycle-forward audit trains on Matchweek 2 and evaluates Matchweek 3. It
-improves 1X2 Brier score from 0.7416 to 0.7247 and log loss from 1.2099 to
-1.1755, while top-pick accuracy remains 2/10. This is encouraging calibration
-evidence, not probability validation.
+The six-cycle forward audit evaluates 60 later fixtures using only earlier
+cycles for calibration. Top-pick accuracy rises from 38.3% to 43.3%, total-xG
+MAE improves from 0.8236 to 0.8216, and Over 2.5 Brier improves from 0.2552 to
+0.2533. However, 1X2 Brier worsens from 0.6366 to 0.6431. The layer therefore
+remains useful research evidence, not validated probabilities.
 
 ## Boundaries
 
@@ -58,6 +73,7 @@ evidence, not probability validation.
 - Player Alpha formulas remain locked.
 - The 60/30/10 base weights remain locked.
 - Contextual coefficients remain locked.
+- The tempo correction applies symmetrically and cannot manufacture a side.
 - Current-season research is recomputed from the full append-only ledger.
 - The artifact remains shadow-only until at least 100 calibration matches.
 - No price, market, stake, or capital decision is created by this layer.

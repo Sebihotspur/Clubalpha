@@ -39,9 +39,11 @@ def _validate_config(config: dict[str, Any]) -> None:
         raise ValueError("fixture calibration config version is not supported")
     if float(config["xg_floor"]) <= 0:
         raise ValueError("fixture calibration xG floor must be positive")
-    for section in ("venue", "draw"):
+    for section in ("venue", "draw", "goal_environment"):
         if float(config[section]["prior_match_equivalents"]) < 0:
             raise ValueError(f"{section} prior must be non-negative")
+    if float(config["goal_environment"]["recency_half_life_days"]) <= 0:
+        raise ValueError("goal-environment half-life must be positive")
     boundaries = config.get("locked_boundaries") or {}
     forbidden = (
         "player_alpha_formulas_mutable",
@@ -79,15 +81,24 @@ def build_calibration_observations(
                 "predicted_xg": {
                     "home": float(model["predicted_xg"]["home"]),
                     "away": float(model["predicted_xg"]["away"]),
+                    "total": float(model["predicted_xg"]["total"]),
                 },
                 "probabilities": {
                     "home_win": float(model["probabilities"]["home_win"]),
                     "draw": float(model["probabilities"]["draw"]),
                     "away_win": float(model["probabilities"]["away_win"]),
+                    "over_2_5": float(model["probabilities"]["over"]["2.5"]),
                 },
                 "actual_xg": {
                     "home": float(result["actual_xg"]["home"]),
                     "away": float(result["actual_xg"]["away"]),
+                    "total": float(result["actual_xg"]["total"]),
+                },
+                "actual_goals": {
+                    "home": int(result["final_home_goals"]),
+                    "away": int(result["final_away_goals"]),
+                    "total": int(result["final_home_goals"])
+                    + int(result["final_away_goals"]),
                 },
                 "outcome": result["outcome"],
             }
@@ -206,6 +217,34 @@ def fit_fixture_calibration(
         raw_draw_correction,
         float(draw["maximum_absolute_logit_correction"]),
     )
+
+    goal_environment = config["goal_environment"]
+    half_life_days = float(goal_environment["recency_half_life_days"])
+    as_of_day = _day(as_of)
+    weighted_log_residual = 0.0
+    effective_matches = 0.0
+    for row in rows:
+        age_days = max(0, (as_of_day - _day(row["kickoff_utc"])).days)
+        weight = 0.5 ** (age_days / half_life_days)
+        predicted_total = float(row["predicted_xg"]["total"])
+        observed_total = float(row["actual_xg"]["total"])
+        weighted_log_residual += weight * math.log(
+            (observed_total + 2.0 * floor) / (predicted_total + 2.0 * floor)
+        )
+        effective_matches += weight
+    raw_goal_environment_correction = (
+        weighted_log_residual / effective_matches if effective_matches else 0.0
+    )
+    goal_environment_prior = float(
+        goal_environment["prior_match_equivalents"]
+    )
+    goal_environment_confidence = effective_matches / (
+        goal_environment_prior + effective_matches
+    )
+    goal_environment_correction = _clip(
+        raw_goal_environment_correction * goal_environment_confidence,
+        float(goal_environment["maximum_absolute_log_total_xg_correction"]),
+    )
     validation_minimum = int(config["minimum_validation_matches"])
     team_modifiers = _team_venue_modifiers(rows, config)
     return {
@@ -219,6 +258,7 @@ def fit_fixture_calibration(
             "venue": "evidence-shrunk aggregate xG log-ratio residual",
             "draw": "evidence-shrunk draw-rate logit intercept",
             "team_venue": "home-versus-away xG-ratio residual with two-sided evidence gate",
+            "goal_environment": "recency-weighted total-xG log residual with a strong neutral prior",
         },
         "league_venue": {
             "predicted_home_away_xg_ratio": round(predicted_ratio, 6),
@@ -239,6 +279,27 @@ def fit_fixture_calibration(
             "draw_zone_max_side_probability": float(
                 draw["draw_zone_max_side_probability"]
             ),
+        },
+        "goal_environment_calibration": {
+            "predicted_mean_total_xg": round(
+                sum(float(row["predicted_xg"]["total"]) for row in rows)
+                / len(rows),
+                6,
+            ),
+            "observed_mean_total_xg": round(
+                sum(float(row["actual_xg"]["total"]) for row in rows)
+                / len(rows),
+                6,
+            ),
+            "raw_recency_weighted_log_correction": round(
+                raw_goal_environment_correction, 6
+            ),
+            "effective_matches": round(effective_matches, 6),
+            "evidence_confidence": round(goal_environment_confidence, 6),
+            "applied_log_total_xg_correction": round(
+                goal_environment_correction, 6
+            ),
+            "recency_half_life_days": half_life_days,
         },
         "team_venue_modifiers": team_modifiers,
         "decision_boundaries": {
@@ -378,8 +439,22 @@ def calibrate_fixture_forecast(
         float(config["venue"]["maximum_absolute_total_log_ratio_correction"]),
     )
     before = prediction["predicted_xg"]
-    home_xg = float(before["home"]) * math.exp(total_correction / 2.0)
-    away_xg = float(before["away"]) * math.exp(-total_correction / 2.0)
+    goal_environment_correction = float(
+        artifact.get("goal_environment_calibration", {}).get(
+            "applied_log_total_xg_correction", 0.0
+        )
+    )
+    tempo_multiplier = math.exp(goal_environment_correction)
+    home_xg = (
+        float(before["home"])
+        * math.exp(total_correction / 2.0)
+        * tempo_multiplier
+    )
+    away_xg = (
+        float(before["away"])
+        * math.exp(-total_correction / 2.0)
+        * tempo_multiplier
+    )
     simulation = config["simulation"]
     result = _weighted_simulation(
         home_xg,
@@ -429,6 +504,10 @@ def calibrate_fixture_forecast(
             "draw_logit_correction": artifact["draw_calibration"][
                 "applied_logit_correction"
             ],
+            "goal_environment_log_correction": round(
+                goal_environment_correction, 6
+            ),
+            "goal_environment_multiplier": round(tempo_multiplier, 6),
             "raw_draw_probability_after_venue": result["raw_draw_probability"],
             "calibrated_draw_probability": result[
                 "calibrated_draw_probability"

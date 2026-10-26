@@ -49,6 +49,12 @@ PROVISIONAL_MATCHWEEK_PICKS = (
 PROVISIONAL_MATCHWEEK_CONTEXTUAL = (
     ROOT / "artifacts/contextual_interaction/2026-10-21-mw8/predictions.jsonl"
 )
+MATCHWEEK_EIGHT_RESULTS = (
+    ROOT / "artifacts/contextual_interaction/2026-10-21-mw8/results.jsonl"
+)
+MATCHWEEK_EIGHT_BACKTEST = (
+    ROOT / "reports/contextual-interaction-v1-backtest-2026-10-26-mw8.json"
+)
 MARKET_FOCUS_CONFIG = ROOT / "config/market-focus-v1.json"
 PUBLIC_DIR = ROOT / "web/public"
 
@@ -158,6 +164,7 @@ def load_latest_fixture_calibration():
             (
                 str(artifact.get("as_of") or ""),
                 int(artifact.get("training_matches") or 0),
+                "goal_environment_calibration" in artifact,
                 str(path),
                 artifact,
                 load_json(audit_path),
@@ -165,8 +172,8 @@ def load_latest_fixture_calibration():
         )
     if not candidates:
         raise ValueError("website requires a fixture-calibration artifact")
-    selected = max(candidates, key=lambda row: row[:3])
-    return selected[3], selected[4]
+    selected = max(candidates, key=lambda row: row[:4])
+    return selected[4], selected[5]
 
 
 def _hit_rate(hits: int, settled: int):
@@ -292,6 +299,69 @@ def score_market_snapshot(snapshot, results, *, btts_diagnostic):
     }
 
 
+def score_research_picks(picks, contextual_predictions, results):
+    """Score only promoted calls while retaining BTTS as a full-slate diagnostic."""
+
+    result_by_id = {int(row["match_id"]): row for row in results}
+    context_by_id = {
+        int(row["fixture"]["match_id"]): row for row in contextual_predictions
+    }
+    side_hits = side_calls = total_hits = total_calls = 0
+    btts_hits = settled = 0
+    for pick in picks["fixtures"]:
+        match_id = int(pick["match_id"])
+        result = result_by_id.get(match_id)
+        if result is None:
+            continue
+        settled += 1
+        if pick["side_call"] != "pass":
+            side_calls += 1
+            side_hits += pick["side_call"] == result["outcome"]
+        goals = int(result["final_home_goals"]) + int(result["final_away_goals"])
+        actual_total = "over_2_5" if goals > 2 else "under_2_5"
+        if pick["total_call"] != "pass":
+            total_calls += 1
+            total_hits += pick["total_call"] == actual_total
+        probabilities = context_by_id[match_id]["contextual"]["probabilities"]
+        predicted_btts = float(probabilities["btts_yes"]) >= 0.5
+        actual_btts = (
+            int(result["final_home_goals"]) > 0
+            and int(result["final_away_goals"]) > 0
+        )
+        btts_hits += predicted_btts == actual_btts
+    kickoffs = sorted(
+        context_by_id[int(row["match_id"])]["fixture"]["kickoff_utc"]
+        for row in picks["fixtures"]
+    )
+    return {
+        "fixtures": len(picks["fixtures"]),
+        "first_kickoff_utc": kickoffs[0],
+        "last_kickoff_utc": kickoffs[-1],
+        "settled": settled,
+        "pending": len(picks["fixtures"]) - settled,
+        "markets": {
+            "one_x_two": {
+                "label": "1X2 promoted calls",
+                "hits": side_hits,
+                "settled": side_calls,
+                "hit_rate": _hit_rate(side_hits, side_calls),
+            },
+            "over_under_2_5": {
+                "label": "O/U 2.5 promoted calls",
+                "hits": total_hits,
+                "settled": total_calls,
+                "hit_rate": _hit_rate(total_hits, total_calls),
+            },
+            "btts": {
+                "label": "BTTS diagnostic",
+                "hits": btts_hits,
+                "settled": settled,
+                "hit_rate": _hit_rate(btts_hits, settled),
+            },
+        },
+    }
+
+
 def build():
     report = load_json(ARTIFACT_DIR / "report.json")
     predictions = load_jsonl(ARTIFACT_DIR / "predictions.jsonl")
@@ -331,6 +401,8 @@ def build():
     )
     provisional_picks = load_json(PROVISIONAL_MATCHWEEK_PICKS)
     provisional_contextual = load_jsonl(PROVISIONAL_MATCHWEEK_CONTEXTUAL)
+    matchweek_eight_results = load_jsonl(MATCHWEEK_EIGHT_RESULTS)
+    matchweek_eight_backtest = load_json(MATCHWEEK_EIGHT_BACKTEST)
     market_focus = load_json(MARKET_FOCUS_CONFIG)
     if market_focus.get("version") != "clubalpha_market_focus_v1":
         raise ValueError("website requires the locked market-focus contract")
@@ -371,6 +443,11 @@ def build():
         matchweek_seven_predictions,
         matchweek_seven_results,
         official=False,
+    )
+    matchweek_eight_score = score_research_picks(
+        provisional_picks,
+        provisional_contextual,
+        matchweek_eight_results,
     )
     result_validation = validate_results(
         round_robin_predictions, round_robin_results
@@ -770,12 +847,74 @@ def build():
         key=lambda row: (row["kickoff_utc"], row["match_id"])
     )
 
+    matchweek_eight_result_by_id = {
+        int(row["match_id"]): row for row in matchweek_eight_results
+    }
+    matchweek_eight_backtest_by_id = {
+        int(row["match_id"]): row
+        for row in matchweek_eight_backtest["fixtures"]
+    }
+    latest_matchweek_predictions = []
+    for row in provisional_predictions:
+        match_id = int(row["match_id"])
+        result = matchweek_eight_result_by_id[match_id]
+        backtest = matchweek_eight_backtest_by_id[match_id]
+        actual_over = (
+            int(result["final_home_goals"])
+            + int(result["final_away_goals"])
+        ) > 2
+        total_hit = None
+        if row["total_call"] != "pass":
+            total_hit = (row["total_call"] == "over_2_5") == actual_over
+        latest_matchweek_predictions.append(
+            {
+                **row,
+                "status": "settled",
+                "result": {
+                    "final_home_goals": int(result["final_home_goals"]),
+                    "final_away_goals": int(result["final_away_goals"]),
+                    "outcome": result["outcome"],
+                    "actual_xg": result["actual_xg"],
+                    "side_hit": (
+                        None
+                        if row["side_call"] == "pass"
+                        else row["side_call"] == result["outcome"]
+                    ),
+                    "total_hit": total_hit,
+                    "review_class": backtest["review_class"],
+                    "xg_process_outcome": backtest["xg_process_outcome"],
+                },
+            }
+        )
+
+    accuracy_shortlist_hits = 0
+    for shortlist in provisional_picks["accuracy_shortlist"]:
+        match_id = int(shortlist["match_id"])
+        result = matchweek_eight_result_by_id[match_id]
+        if shortlist["market"] == "one_x_two":
+            hit = shortlist["call"] == result["outcome"]
+        else:
+            actual_over = (
+                int(result["final_home_goals"])
+                + int(result["final_away_goals"])
+            ) > 2
+            hit = (shortlist["call"] == "over_2_5") == actual_over
+        accuracy_shortlist_hits += hit
+    latest_shortlist_score = {
+        "hits": accuracy_shortlist_hits,
+        "settled": len(provisional_picks["accuracy_shortlist"]),
+        "hit_rate": _hit_rate(
+            accuracy_shortlist_hits,
+            len(provisional_picks["accuracy_shortlist"]),
+        ),
+    }
+
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_12_matchweek_8_provisional",
+            "site_version": "clubalpha_web_v0_13_matchweek_8_settled",
             "prediction_version": official_report["report_version"],
             "as_of": official_report["as_of_utc"],
-            "generated_at_utc": current_matchweek_backtest["generated_at_utc"],
+            "generated_at_utc": matchweek_eight_backtest["generated_at_utc"],
             "context_as_of": "2026-08-26",
             "context_version": contextual_report["report_version"],
             "simulations": 50000,
@@ -784,6 +923,52 @@ def build():
             "scale_validation_sides": 200,
             "goal_training_matches": report["counts"]["goal_training_matches"],
             "goal_validation_matches": 100,
+        },
+        "latest_matchweek": {
+            "status": "settled_published_provisional_shadow",
+            "round": provisional_picks["round"],
+            "as_of": matchweek_eight_backtest["generated_at_utc"],
+            "fixtures": len(latest_matchweek_predictions),
+            "settled": matchweek_eight_score["settled"],
+            "score": matchweek_eight_score,
+            "backtest_summary": {
+                "contextual_outcome_hits": matchweek_eight_backtest[
+                    "diagnostics"
+                ]["outcome_hits"],
+                "base_outcome_hits": round(
+                    matchweek_eight_backtest["metrics"]["baseline"][
+                        "one_x_two_top_pick_accuracy"
+                    ]
+                    * matchweek_eight_backtest["sample"]["matches"]
+                ),
+                "process_supported_outcome_variance": matchweek_eight_backtest[
+                    "diagnostics"
+                ]["process_supported_outcome_variance"],
+                "structural_misses": matchweek_eight_backtest["diagnostics"][
+                    "structural_misses"
+                ],
+                "mean_projected_xi_hits_of_11": matchweek_eight_backtest[
+                    "lineup_projection"
+                ]["mean_xi_hits_of_11"],
+                "formation_accuracy": matchweek_eight_backtest[
+                    "lineup_projection"
+                ]["formation_accuracy"],
+                "predicted_mean_total_xg": matchweek_eight_backtest[
+                    "diagnostics"
+                ]["goal_environment_dispersion"]["contextual_predicted_xg_total"][
+                    "mean"
+                ],
+                "observed_mean_total_xg": matchweek_eight_backtest[
+                    "diagnostics"
+                ]["goal_environment_dispersion"]["observed_xg_total"]["mean"],
+            },
+            "shortlist_score": latest_shortlist_score,
+            "audit_caveat": (
+                "The published pre-match slate was provisional; the planned "
+                "post-Europe final refresh was not completed."
+            ),
+            "capital_deployment_ready": False,
+            "predictions": latest_matchweek_predictions,
         },
         "current_matchweek": {
             "status": "settled_research_shadow",
@@ -1023,6 +1208,14 @@ def build():
             ],
             "matchweeks": [
                 {
+                    "matchweek": 8,
+                    "name": "Research Matchweek 8",
+                    "source": "Published provisional contextual slate",
+                    "status": "settled",
+                    "counts_toward_promotion_gate": False,
+                    **matchweek_eight_score,
+                },
+                {
                     "matchweek": 7,
                     "name": "Research Matchweek 7",
                     "source": "Pre-match contextual research slate",
@@ -1092,6 +1285,9 @@ def build():
                     6,
                 ),
                 "draw_calibration": fixture_calibration["draw_calibration"],
+                "goal_environment_calibration": fixture_calibration[
+                    "goal_environment_calibration"
+                ],
                 "active_team_venue_modifiers": sum(
                     bool(row["eligible"])
                     for row in fixture_calibration["team_venue_modifiers"]

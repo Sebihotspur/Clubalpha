@@ -1,0 +1,104 @@
+{
+  "version": "clubalpha_fixture_calibration_audit_v1",
+  "generated_at_utc": "2026-10-26T00:00:00+00:00",
+  "as_of": "2026-10-26",
+  "cycle_ids": [
+    "2026-08-26-matchweek-2",
+    "2026-08-31-matchweek-3-official",
+    "2026-09-08-matchweek-4-official",
+    "2026-09-17-matchweek-5-contextual",
+    "2026-10-06-matchweek-6-contextual",
+    "2026-10-15-matchweek-7-contextual",
+    "2026-10-21-matchweek-8-published-provisional"
+  ],
+  "training_matches": 70,
+  "same_sample_sensitivity": {
+    "interpretation": "same-sample sensitivity only; not validation",
+    "baseline": {
+      "matches": 70,
+      "one_x_two_brier": 0.637493,
+      "one_x_two_log_loss": 1.056048,
+      "top_pick_accuracy": 0.385714,
+      "home_probability_leader_rate": 0.7,
+      "mean_draw_probability": 0.254956,
+      "total_xg_mae": 0.870048,
+      "over_2_5_brier": 0.254886
+    },
+    "calibrated": {
+      "matches": 70,
+      "one_x_two_brier": 0.62991,
+      "one_x_two_log_loss": 1.0445,
+      "top_pick_accuracy": 0.442857,
+      "home_probability_leader_rate": 0.614286,
+      "mean_draw_probability": 0.295398,
+      "total_xg_mae": 0.8514,
+      "over_2_5_brier": 0.24804
+    },
+    "draw_zone": {
+      "flagged": 4,
+      "actual_draws_flagged": 2,
+      "rows": [
+        {
+          "match_id": 5795433,
+          "fixture": "Sunderland vs Fulham",
+          "outcome": "home_win",
+          "draw_probability": 0.311165,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795446,
+          "fixture": "Aston Villa vs Nottingham Forest",
+          "outcome": "away_win",
+          "draw_probability": 0.321223,
+          "correct_draw_flag": false
+        },
+        {
+          "match_id": 5795454,
+          "fixture": "Tottenham Hotspur vs Everton",
+          "outcome": "draw",
+          "draw_probability": 0.311782,
+          "correct_draw_flag": true
+        },
+        {
+          "match_id": 5795470,
+          "fixture": "Hull City vs Everton",
+          "outcome": "draw",
+          "draw_probability": 0.327999,
+          "correct_draw_flag": true
+        }
+      ]
+    }
+  },
+  "chronological_audit": {
+    "interpretation": "cycle-forward; each calibration uses only earlier cycles",
+    "evaluated_cycles": 6,
+    "baseline": {
+      "matches": 60,
+      "one_x_two_brier": 0.636582,
+      "one_x_two_log_loss": 1.054104,
+      "top_pick_accuracy": 0.383333,
+      "home_probability_leader_rate": 0.7,
+      "mean_draw_probability": 0.257898,
+      "total_xg_mae": 0.823621,
+      "over_2_5_brier": 0.255249
+    },
+    "calibrated": {
+      "matches": 60,
+      "one_x_two_brier": 0.643122,
+      "one_x_two_log_loss": 1.061368,
+      "top_pick_accuracy": 0.433333,
+      "home_probability_leader_rate": 0.566667,
+      "mean_draw_probability": 0.3102,
+      "total_xg_mae": 0.821563,
+      "over_2_5_brier": 0.253315
+    }
+  },
+  "decision_boundaries": {
+    "same_sample_metrics_are_validation": false,
+    "core_architecture_changed": false,
+    "player_alpha_changed": false,
+    "base_weights_changed": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  }
+}
