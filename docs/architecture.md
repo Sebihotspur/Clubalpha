@@ -24,6 +24,13 @@ learning samples never cross buckets: a UCL performance by an English club can
 update what is known about the club and its likely XI, but it is not recorded as
 a Premier League prediction or Premier League calibration result.
 
+Club Form v1.1 translates competition-relative domestic performance through
+the same locked league-quality ladder already used by Player Quality and
+Historical Fixtures. The translation is applied once after the within-league
+opponent adjustment, so dominance in a weaker domestic competition cannot be
+treated as equivalent to dominance in the Premier League or LaLiga. This does
+not change any Player Alpha formula or its 30% projected-XI role.
+
 As of October 27, the same fixture-specific projected-XI Player Alpha generator
 is active for all 36 UCL clubs. The formulas, five-match selection window,
 three-lineup shape vote, 990-minute allocation and attach-Alpha-after-selection

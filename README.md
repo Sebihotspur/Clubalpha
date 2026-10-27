@@ -110,6 +110,11 @@ the dated availability snapshot. Preseason begins at one-quarter weight and is
 capped at 20%; injuries are annotated with Alpha Ability but do not move the
 score without a projected lineup.
 
+Club Form v1.1 also reuses Player Quality's locked league-quality ladder after
+competition normalization and opponent adjustment. The ladder changes only
+the cross-league comparability of current team form; Player Alpha formulas,
+positions, metrics, and the 30% projected-XI weight remain unchanged.
+
 See [Club Form](docs/club-form-spec.md) for the exact formulas and boundaries.
 
 ## Club Dynamics v1

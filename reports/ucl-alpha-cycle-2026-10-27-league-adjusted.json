@@ -1,0 +1,1912 @@
+{
+  "version": "clubalpha_ucl_alpha_cycle_v1_1_league_strength",
+  "status": "provisional_research_uncalibrated",
+  "as_of": "2026-10-27",
+  "generated_at_utc": "2026-10-27T17:38:05.859841+00:00",
+  "competition": "Champions League",
+  "season": "2026/2027",
+  "completed_evidence": {
+    "matchdays": [
+      1,
+      2,
+      3
+    ],
+    "matches": 54,
+    "goals": 221,
+    "total_xg": 189.58,
+    "home_wins": 32,
+    "draws": 6,
+    "away_wins": 16,
+    "over_2_5": 40,
+    "score_xg_winner_alignment": 40,
+    "alpha_minute_coverage_by_matchday": [
+      {
+        "matchday": 1,
+        "coverage": 0.8485,
+        "rating_alpha_correlation": 0.387
+      },
+      {
+        "matchday": 2,
+        "coverage": 0.8372,
+        "rating_alpha_correlation": 0.284
+      },
+      {
+        "matchday": 3,
+        "coverage": 0.8366,
+        "rating_alpha_correlation": 0.236
+      }
+    ]
+  },
+  "domestic_evidence": {
+    "as_of": "2026-10-27",
+    "competitions": 15,
+    "foreign_ucl_clubs": 31,
+    "completed_matches": 286,
+    "matches_with_player_detail": 268,
+    "player_detail_coverage_pct": 93.7,
+    "player_match_rows": 4535,
+    "league_strength_application": "once after competition normalisation and opponent adjustment",
+    "league_strength_offsets_used": {
+      "Austrian Bundesliga": -0.6,
+      "Bundesliga": 0.3,
+      "Champions League": 0.36,
+      "Championship": -0.42,
+      "Czech First League": -0.6,
+      "Eredivisie": -0.15,
+      "Greek Super League": -0.6,
+      "Jupiler Pro": -0.3,
+      "La Liga": 0.36,
+      "Ligue 1": 0.15,
+      "Norway": -0.72,
+      "Other": -0.9,
+      "PL": 0.45,
+      "Preseason neutral": 0.0,
+      "Primeira": -0.12,
+      "Serie A": 0.24,
+      "Slovak First League": -0.84,
+      "Super Lig": -0.54
+    }
+  },
+  "projected_xi_alpha": {
+    "clubs": 36,
+    "rated_clubs": 34,
+    "unrated_clubs": [
+      "Sabah FK",
+      "Shakhtar Donetsk"
+    ],
+    "top_clubs": [
+      {
+        "rank": 1,
+        "team": "Barcelona",
+        "grade": "S",
+        "strength_index": 78.8,
+        "alpha_z": 1.031408,
+        "coverage": 0.9991
+      },
+      {
+        "rank": 2,
+        "team": "Real Madrid",
+        "grade": "A+",
+        "strength_index": 72.0,
+        "alpha_z": 0.796768,
+        "coverage": 0.9957
+      },
+      {
+        "rank": 3,
+        "team": "Manchester City",
+        "grade": "A+",
+        "strength_index": 71.1,
+        "alpha_z": 0.76314,
+        "coverage": 0.9505
+      },
+      {
+        "rank": 4,
+        "team": "Bayern München",
+        "grade": "A+",
+        "strength_index": 67.9,
+        "alpha_z": 0.652043,
+        "coverage": 1.0
+      },
+      {
+        "rank": 5,
+        "team": "Arsenal",
+        "grade": "A+",
+        "strength_index": 65.7,
+        "alpha_z": 0.576456,
+        "coverage": 1.0
+      },
+      {
+        "rank": 6,
+        "team": "VfB Stuttgart",
+        "grade": "A",
+        "strength_index": 63.7,
+        "alpha_z": 0.507836,
+        "coverage": 0.8121
+      },
+      {
+        "rank": 7,
+        "team": "Manchester United",
+        "grade": "A",
+        "strength_index": 63.3,
+        "alpha_z": 0.492981,
+        "coverage": 0.9967
+      },
+      {
+        "rank": 8,
+        "team": "Inter",
+        "grade": "A",
+        "strength_index": 62.8,
+        "alpha_z": 0.474276,
+        "coverage": 0.9721
+      },
+      {
+        "rank": 9,
+        "team": "Borussia Dortmund",
+        "grade": "A",
+        "strength_index": 60.7,
+        "alpha_z": 0.404028,
+        "coverage": 0.9556
+      },
+      {
+        "rank": 10,
+        "team": "Liverpool",
+        "grade": "A",
+        "strength_index": 58.4,
+        "alpha_z": 0.323118,
+        "coverage": 0.8913
+      }
+    ]
+  },
+  "upcoming": {
+    "matchday": 4,
+    "fixtures": 18,
+    "simulations": 900000,
+    "predictions": [
+      {
+        "match_id": 6106335,
+        "kickoff_utc": "2026-11-03T17:45:00Z",
+        "home_team": "Shakhtar Donetsk",
+        "away_team": "Sporting CP",
+        "predicted_xg": {
+          "home": 1.631017,
+          "away": 1.360684,
+          "total": 2.991701
+        },
+        "probabilities": {
+          "home_win": 0.44048,
+          "draw": 0.24356,
+          "away_win": 0.31596,
+          "over": {
+            "2.5": 0.5713,
+            "3.5": 0.34868
+          },
+          "under": {
+            "2.5": 0.4287,
+            "3.5": 0.65132
+          },
+          "btts_yes": 0.5978,
+          "btts_no": 0.4022
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "home_win",
+          "leader_probability": 0.44048,
+          "leader_gap": 0.12452,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "club_form_and_player_alpha_do_not_both_support_side",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "home_win",
+            "calibrated_leader": "home_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": false,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": false,
+            "context_verdict": "no_clear_contextual_edge",
+            "lineup_reliability": 0.5,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.5713,
+          "call": "pass",
+          "call_probability": 0.5713,
+          "reason": "inside_totals_pass_band",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "no_clear_contextual_edge",
+        "home_preferred_route": {
+          "key": "set_pieces",
+          "label": "Set pieces",
+          "evidence_tier": "measured",
+          "route_expression_z": -0.088,
+          "opponent_exposure_z": -0.054,
+          "xi_execution_edge_z": 0.112,
+          "challenger_signal_z": -0.016,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.211749,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.211749,
+          "bounded_signal": -0.045682
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.253,
+          "opponent_exposure_z": -0.218,
+          "xi_execution_edge_z": -0.085,
+          "challenger_signal_z": -0.013,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.273846,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.273846,
+          "bounded_signal": -0.037126
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106341,
+        "kickoff_utc": "2026-11-03T17:45:00Z",
+        "home_team": "Galatasaray",
+        "away_team": "VfB Stuttgart",
+        "predicted_xg": {
+          "home": 1.52002,
+          "away": 1.832948,
+          "total": 3.352968
+        },
+        "probabilities": {
+          "home_win": 0.32456,
+          "draw": 0.22508,
+          "away_win": 0.45036,
+          "over": {
+            "2.5": 0.64962,
+            "3.5": 0.43032
+          },
+          "under": {
+            "2.5": 0.35038,
+            "3.5": 0.56968
+          },
+          "btts_yes": 0.65344,
+          "btts_no": 0.34656
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "away_win",
+          "leader_probability": 0.45036,
+          "leader_gap": 0.1258,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "projected_xi_reliability_below_gate",
+          "evidence": {
+            "base_leader": "away_win",
+            "contextual_leader": "away_win",
+            "calibrated_leader": "away_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": true,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": true,
+            "context_verdict": "baseline_supported",
+            "lineup_reliability": 0.612372,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.64962,
+          "call": "over_2_5",
+          "call_probability": 0.64962,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_supported",
+        "home_preferred_route": {
+          "key": "set_pieces",
+          "label": "Set pieces",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.406,
+          "opponent_exposure_z": 0.074,
+          "xi_execution_edge_z": -0.653,
+          "challenger_signal_z": -0.028,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.252176,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.252176,
+          "bounded_signal": -0.07983
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.236,
+          "opponent_exposure_z": -0.222,
+          "xi_execution_edge_z": 0.621,
+          "challenger_signal_z": 0.191,
+          "verdict": "leans_favorable",
+          "route_preference": 0.233281,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.233281,
+          "bounded_signal": 0.497301
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106263,
+        "kickoff_utc": "2026-11-03T20:00:00Z",
+        "home_team": "Barcelona",
+        "away_team": "Aston Villa",
+        "predicted_xg": {
+          "home": 2.568295,
+          "away": 1.161718,
+          "total": 3.730013
+        },
+        "probabilities": {
+          "home_win": 0.67536,
+          "draw": 0.1734,
+          "away_win": 0.15124,
+          "over": {
+            "2.5": 0.71994,
+            "3.5": 0.51008
+          },
+          "under": {
+            "2.5": 0.28006,
+            "3.5": 0.48992
+          },
+          "btts_yes": 0.63466,
+          "btts_no": 0.36534
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "home_win",
+          "leader_probability": 0.67536,
+          "leader_gap": 0.50196,
+          "call": "home_win",
+          "tier": "strong",
+          "reason": "strong_probability_with_foundation_alignment",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "home_win",
+            "calibrated_leader": "home_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": true,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": true,
+            "context_verdict": "baseline_reinforced",
+            "lineup_reliability": 0.866025,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.71994,
+          "call": "over_2_5",
+          "call_probability": 0.71994,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_reinforced",
+        "home_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.606,
+          "opponent_exposure_z": 0.145,
+          "xi_execution_edge_z": 0.419,
+          "challenger_signal_z": 0.389,
+          "verdict": "strong_route",
+          "route_preference": 0.281049,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.281049,
+          "bounded_signal": 0.804567
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": -0.081,
+          "opponent_exposure_z": -0.45,
+          "xi_execution_edge_z": -0.542,
+          "challenger_signal_z": -0.349,
+          "verdict": "likely_resisted",
+          "route_preference": 0.220188,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.220188,
+          "bounded_signal": -0.760392
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106266,
+        "kickoff_utc": "2026-11-03T20:00:00Z",
+        "home_team": "Atlético Madrid",
+        "away_team": "Bayern München",
+        "predicted_xg": {
+          "home": 1.545829,
+          "away": 1.650537,
+          "total": 3.196366
+        },
+        "probabilities": {
+          "home_win": 0.3614,
+          "draw": 0.23476,
+          "away_win": 0.40384,
+          "over": {
+            "2.5": 0.61856,
+            "3.5": 0.3951
+          },
+          "under": {
+            "2.5": 0.38144,
+            "3.5": 0.6049
+          },
+          "btts_yes": 0.63434,
+          "btts_no": 0.36566
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "away_win",
+          "leader_probability": 0.40384,
+          "leader_gap": 0.04244,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "base_context_calibration_disagree",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "away_win",
+            "calibrated_leader": "away_win",
+            "leaders_aligned": false,
+            "foundation_support": {
+              "club_form": true,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": true,
+            "context_verdict": "baseline_fragile",
+            "lineup_reliability": 1.0,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.61856,
+          "call": "over_2_5",
+          "call_probability": 0.61856,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_fragile",
+        "home_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.032,
+          "opponent_exposure_z": -0.433,
+          "xi_execution_edge_z": 0.021,
+          "challenger_signal_z": -0.134,
+          "verdict": "likely_resisted",
+          "route_preference": 0.236464,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.236464,
+          "bounded_signal": -0.365186
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.91,
+          "opponent_exposure_z": -0.232,
+          "xi_execution_edge_z": 0.576,
+          "challenger_signal_z": 0.41,
+          "verdict": "strong_route",
+          "route_preference": 0.278612,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.278612,
+          "bounded_signal": 0.82473
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106291,
+        "kickoff_utc": "2026-11-03T20:00:00Z",
+        "home_team": "Manchester United",
+        "away_team": "Roma",
+        "predicted_xg": {
+          "home": 1.907827,
+          "away": 1.341753,
+          "total": 3.249579
+        },
+        "probabilities": {
+          "home_win": 0.5063,
+          "draw": 0.2223,
+          "away_win": 0.2714,
+          "over": {
+            "2.5": 0.63132,
+            "3.5": 0.40892
+          },
+          "under": {
+            "2.5": 0.36868,
+            "3.5": 0.59108
+          },
+          "btts_yes": 0.63096,
+          "btts_no": 0.36904
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "home_win",
+          "leader_probability": 0.5063,
+          "leader_gap": 0.2349,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "club_form_and_player_alpha_do_not_both_support_side",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "home_win",
+            "calibrated_leader": "home_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": false,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": false,
+            "context_verdict": "baseline_supported",
+            "lineup_reliability": 0.707107,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.63132,
+          "call": "over_2_5",
+          "call_probability": 0.63132,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_supported",
+        "home_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.17,
+          "opponent_exposure_z": -0.228,
+          "xi_execution_edge_z": 0.165,
+          "challenger_signal_z": 0.029,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.274655,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.274655,
+          "bounded_signal": 0.082668
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.451,
+          "opponent_exposure_z": -0.149,
+          "xi_execution_edge_z": -0.231,
+          "challenger_signal_z": 0.036,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.271437,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.271437,
+          "bounded_signal": 0.102496
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106306,
+        "kickoff_utc": "2026-11-03T20:00:00Z",
+        "home_team": "Feyenoord",
+        "away_team": "Inter",
+        "predicted_xg": {
+          "home": 1.712515,
+          "away": 1.741814,
+          "total": 3.454329
+        },
+        "probabilities": {
+          "home_win": 0.3853,
+          "draw": 0.22034,
+          "away_win": 0.39436,
+          "over": {
+            "2.5": 0.67312,
+            "3.5": 0.45366
+          },
+          "under": {
+            "2.5": 0.32688,
+            "3.5": 0.54634
+          },
+          "btts_yes": 0.67686,
+          "btts_no": 0.32314
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "away_win",
+          "leader_probability": 0.39436,
+          "leader_gap": 0.00906,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "base_context_calibration_disagree",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "away_win",
+            "calibrated_leader": "away_win",
+            "leaders_aligned": false,
+            "foundation_support": {
+              "club_form": true,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": true,
+            "context_verdict": "no_clear_contextual_edge",
+            "lineup_reliability": 0.707107,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.67312,
+          "call": "over_2_5",
+          "call_probability": 0.67312,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "no_clear_contextual_edge",
+        "home_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.225,
+          "opponent_exposure_z": -0.15,
+          "xi_execution_edge_z": -0.023,
+          "challenger_signal_z": 0.019,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.234739,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.234739,
+          "bounded_signal": 0.054232
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.69,
+          "opponent_exposure_z": -0.221,
+          "xi_execution_edge_z": 0.426,
+          "challenger_signal_z": 0.292,
+          "verdict": "strong_route",
+          "route_preference": 0.313121,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.313121,
+          "bounded_signal": 0.682771
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106316,
+        "kickoff_utc": "2026-11-03T20:00:00Z",
+        "home_team": "Bodø/Glimt",
+        "away_team": "Lille",
+        "predicted_xg": {
+          "home": 1.622708,
+          "away": 1.454864,
+          "total": 3.077572
+        },
+        "probabilities": {
+          "home_win": 0.41834,
+          "draw": 0.2387,
+          "away_win": 0.34296,
+          "over": {
+            "2.5": 0.5941,
+            "3.5": 0.3721
+          },
+          "under": {
+            "2.5": 0.4059,
+            "3.5": 0.6279
+          },
+          "btts_yes": 0.61394,
+          "btts_no": 0.38606
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "home_win",
+          "leader_probability": 0.41834,
+          "leader_gap": 0.07538,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "club_form_and_player_alpha_do_not_both_support_side",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "home_win",
+            "calibrated_leader": "home_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": false,
+              "player_quality_lineup": false
+            },
+            "foundation_aligned": false,
+            "context_verdict": "baseline_supported",
+            "lineup_reliability": 0.866025,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.5941,
+          "call": "over_2_5",
+          "call_probability": 0.5941,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_supported",
+        "home_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.666,
+          "opponent_exposure_z": 0.003,
+          "xi_execution_edge_z": -0.224,
+          "challenger_signal_z": 0.167,
+          "verdict": "leans_favorable",
+          "route_preference": 0.337096,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.337096,
+          "bounded_signal": 0.443953
+        },
+        "away_preferred_route": {
+          "key": "set_pieces",
+          "label": "Set pieces",
+          "evidence_tier": "measured",
+          "route_expression_z": -0.07,
+          "opponent_exposure_z": -0.365,
+          "xi_execution_edge_z": 0.621,
+          "challenger_signal_z": 0.034,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.204356,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.204356,
+          "bounded_signal": 0.096838
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106326,
+        "kickoff_utc": "2026-11-03T20:00:00Z",
+        "home_team": "Villarreal",
+        "away_team": "Paris Saint-Germain",
+        "predicted_xg": {
+          "home": 1.829685,
+          "away": 1.589279,
+          "total": 3.418964
+        },
+        "probabilities": {
+          "home_win": 0.43764,
+          "draw": 0.22114,
+          "away_win": 0.34122,
+          "over": {
+            "2.5": 0.66556,
+            "3.5": 0.44664
+          },
+          "under": {
+            "2.5": 0.33444,
+            "3.5": 0.55336
+          },
+          "btts_yes": 0.66952,
+          "btts_no": 0.33048
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "home_win",
+          "leader_probability": 0.43764,
+          "leader_gap": 0.09642,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "club_form_and_player_alpha_do_not_both_support_side",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "home_win",
+            "calibrated_leader": "home_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": false,
+              "player_quality_lineup": false
+            },
+            "foundation_aligned": false,
+            "context_verdict": "no_clear_contextual_edge",
+            "lineup_reliability": 1.0,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.66556,
+          "call": "over_2_5",
+          "call_probability": 0.66556,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "no_clear_contextual_edge",
+        "home_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.23,
+          "opponent_exposure_z": -0.138,
+          "xi_execution_edge_z": 0.009,
+          "challenger_signal_z": 0.035,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.274537,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.274537,
+          "bounded_signal": 0.099668
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.49,
+          "opponent_exposure_z": -0.089,
+          "xi_execution_edge_z": 0.215,
+          "challenger_signal_z": 0.205,
+          "verdict": "leans_favorable",
+          "route_preference": 0.25861,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.25861,
+          "bounded_signal": 0.526806
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106408,
+        "kickoff_utc": "2026-11-03T20:00:00Z",
+        "home_team": "LASK",
+        "away_team": "Slovan Bratislava",
+        "predicted_xg": {
+          "home": 2.399303,
+          "away": 1.251466,
+          "total": 3.650769
+        },
+        "probabilities": {
+          "home_win": 0.62924,
+          "draw": 0.1856,
+          "away_win": 0.18516,
+          "over": {
+            "2.5": 0.70784,
+            "3.5": 0.49642
+          },
+          "under": {
+            "2.5": 0.29216,
+            "3.5": 0.50358
+          },
+          "btts_yes": 0.64898,
+          "btts_no": 0.35102
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "home_win",
+          "leader_probability": 0.62924,
+          "leader_gap": 0.44364,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "projected_xi_reliability_below_gate",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "home_win",
+            "calibrated_leader": "home_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": true,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": true,
+            "context_verdict": "baseline_reinforced",
+            "lineup_reliability": 0.612372,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.70784,
+          "call": "over_2_5",
+          "call_probability": 0.70784,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_reinforced",
+        "home_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.416,
+          "opponent_exposure_z": 0.076,
+          "xi_execution_edge_z": 0.574,
+          "challenger_signal_z": 0.344,
+          "verdict": "strong_route",
+          "route_preference": 0.237843,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.237843,
+          "bounded_signal": 0.7543
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": -0.083,
+          "opponent_exposure_z": -0.19,
+          "xi_execution_edge_z": -0.024,
+          "challenger_signal_z": -0.103,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.205684,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.205684,
+          "bounded_signal": -0.286075
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106330,
+        "kickoff_utc": "2026-11-04T17:45:00Z",
+        "home_team": "Fenerbahçe",
+        "away_team": "Liverpool",
+        "predicted_xg": {
+          "home": 1.345841,
+          "away": 1.770889,
+          "total": 3.11673
+        },
+        "probabilities": {
+          "home_win": 0.28982,
+          "draw": 0.23116,
+          "away_win": 0.47902,
+          "over": {
+            "2.5": 0.60338,
+            "3.5": 0.38298
+          },
+          "under": {
+            "2.5": 0.39662,
+            "3.5": 0.61702
+          },
+          "btts_yes": 0.61304,
+          "btts_no": 0.38696
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "away_win",
+          "leader_probability": 0.47902,
+          "leader_gap": 0.1892,
+          "call": "away_win",
+          "tier": "aligned",
+          "reason": "medium_probability_with_full_evidence_alignment",
+          "evidence": {
+            "base_leader": "away_win",
+            "contextual_leader": "away_win",
+            "calibrated_leader": "away_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": true,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": true,
+            "context_verdict": "baseline_reinforced",
+            "lineup_reliability": 0.75,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.60338,
+          "call": "over_2_5",
+          "call_probability": 0.60338,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_reinforced",
+        "home_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.152,
+          "opponent_exposure_z": -0.086,
+          "xi_execution_edge_z": -0.533,
+          "challenger_signal_z": -0.137,
+          "verdict": "likely_resisted",
+          "route_preference": 0.228738,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.228738,
+          "bounded_signal": -0.372591
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.381,
+          "opponent_exposure_z": -0.105,
+          "xi_execution_edge_z": 0.544,
+          "challenger_signal_z": 0.26,
+          "verdict": "strong_route",
+          "route_preference": 0.240501,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.240501,
+          "bounded_signal": 0.630868
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106401,
+        "kickoff_utc": "2026-11-04T17:45:00Z",
+        "home_team": "AEK Athens",
+        "away_team": "Real Madrid",
+        "predicted_xg": {
+          "home": 1.35102,
+          "away": 1.941418,
+          "total": 3.292438
+        },
+        "probabilities": {
+          "home_win": 0.26748,
+          "draw": 0.21622,
+          "away_win": 0.5163,
+          "over": {
+            "2.5": 0.63752,
+            "3.5": 0.41606
+          },
+          "under": {
+            "2.5": 0.36248,
+            "3.5": 0.58394
+          },
+          "btts_yes": 0.6324,
+          "btts_no": 0.3676
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "away_win",
+          "leader_probability": 0.5163,
+          "leader_gap": 0.24882,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "projected_xi_reliability_below_gate",
+          "evidence": {
+            "base_leader": "away_win",
+            "contextual_leader": "away_win",
+            "calibrated_leader": "away_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": true,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": true,
+            "context_verdict": "baseline_reinforced",
+            "lineup_reliability": 0.707107,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.63752,
+          "call": "over_2_5",
+          "call_probability": 0.63752,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_reinforced",
+        "home_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.092,
+          "opponent_exposure_z": -0.107,
+          "xi_execution_edge_z": -0.85,
+          "challenger_signal_z": -0.26,
+          "verdict": "likely_resisted",
+          "route_preference": 0.208408,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.208408,
+          "bounded_signal": -0.630868
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.343,
+          "opponent_exposure_z": -0.298,
+          "xi_execution_edge_z": 1.327,
+          "challenger_signal_z": 0.414,
+          "verdict": "strong_route",
+          "route_preference": 0.255927,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.255927,
+          "bounded_signal": 0.82835
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106271,
+        "kickoff_utc": "2026-11-04T20:00:00Z",
+        "home_team": "Borussia Dortmund",
+        "away_team": "Real Betis",
+        "predicted_xg": {
+          "home": 1.829328,
+          "away": 1.138826,
+          "total": 2.968154
+        },
+        "probabilities": {
+          "home_win": 0.53452,
+          "draw": 0.22804,
+          "away_win": 0.23744,
+          "over": {
+            "2.5": 0.57076,
+            "3.5": 0.34436
+          },
+          "under": {
+            "2.5": 0.42924,
+            "3.5": 0.65564
+          },
+          "btts_yes": 0.57146,
+          "btts_no": 0.42854
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "home_win",
+          "leader_probability": 0.53452,
+          "leader_gap": 0.29708,
+          "call": "home_win",
+          "tier": "aligned",
+          "reason": "medium_probability_with_full_evidence_alignment",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "home_win",
+            "calibrated_leader": "home_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": true,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": true,
+            "context_verdict": "baseline_supported",
+            "lineup_reliability": 0.866025,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.57076,
+          "call": "pass",
+          "call_probability": 0.57076,
+          "reason": "inside_totals_pass_band",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_supported",
+        "home_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.194,
+          "opponent_exposure_z": -0.031,
+          "xi_execution_edge_z": 0.085,
+          "challenger_signal_z": 0.083,
+          "verdict": "leans_favorable",
+          "route_preference": 0.212998,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.212998,
+          "bounded_signal": 0.232795
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.081,
+          "opponent_exposure_z": -0.369,
+          "xi_execution_edge_z": -0.109,
+          "challenger_signal_z": -0.133,
+          "verdict": "likely_resisted",
+          "route_preference": 0.223652,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.223652,
+          "bounded_signal": -0.362707
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106288,
+        "kickoff_utc": "2026-11-04T20:00:00Z",
+        "home_team": "FC Porto",
+        "away_team": "Napoli",
+        "predicted_xg": {
+          "home": 1.687867,
+          "away": 1.440685,
+          "total": 3.128551
+        },
+        "probabilities": {
+          "home_win": 0.43286,
+          "draw": 0.23838,
+          "away_win": 0.32876,
+          "over": {
+            "2.5": 0.60162,
+            "3.5": 0.37928
+          },
+          "under": {
+            "2.5": 0.39838,
+            "3.5": 0.62072
+          },
+          "btts_yes": 0.6211,
+          "btts_no": 0.3789
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "home_win",
+          "leader_probability": 0.43286,
+          "leader_gap": 0.1041,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "club_form_and_player_alpha_do_not_both_support_side",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "home_win",
+            "calibrated_leader": "home_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": false,
+              "player_quality_lineup": false
+            },
+            "foundation_aligned": false,
+            "context_verdict": "baseline_supported",
+            "lineup_reliability": 0.866025,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.60162,
+          "call": "over_2_5",
+          "call_probability": 0.60162,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_supported",
+        "home_preferred_route": {
+          "key": "set_pieces",
+          "label": "Set pieces",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.16,
+          "opponent_exposure_z": 0.069,
+          "xi_execution_edge_z": -0.126,
+          "challenger_signal_z": 0.042,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.211518,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.211518,
+          "bounded_signal": 0.119427
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.178,
+          "opponent_exposure_z": -0.265,
+          "xi_execution_edge_z": 0.162,
+          "challenger_signal_z": 0.018,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.256483,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.256483,
+          "bounded_signal": 0.051383
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106303,
+        "kickoff_utc": "2026-11-04T20:00:00Z",
+        "home_team": "PSV Eindhoven",
+        "away_team": "Club Brugge",
+        "predicted_xg": {
+          "home": 2.006679,
+          "away": 1.401662,
+          "total": 3.408341
+        },
+        "probabilities": {
+          "home_win": 0.51622,
+          "draw": 0.21806,
+          "away_win": 0.26572,
+          "over": {
+            "2.5": 0.65862,
+            "3.5": 0.4403
+          },
+          "under": {
+            "2.5": 0.34138,
+            "3.5": 0.5597
+          },
+          "btts_yes": 0.65382,
+          "btts_no": 0.34618
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "home_win",
+          "leader_probability": 0.51622,
+          "leader_gap": 0.2505,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "club_form_and_player_alpha_do_not_both_support_side",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "home_win",
+            "calibrated_leader": "home_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": false,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": false,
+            "context_verdict": "baseline_supported",
+            "lineup_reliability": 0.612372,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.65862,
+          "call": "over_2_5",
+          "call_probability": 0.65862,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_supported",
+        "home_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.295,
+          "opponent_exposure_z": -0.03,
+          "xi_execution_edge_z": 0.242,
+          "challenger_signal_z": 0.165,
+          "verdict": "leans_favorable",
+          "route_preference": 0.246067,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.246067,
+          "bounded_signal": 0.439353
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.35,
+          "opponent_exposure_z": -0.293,
+          "xi_execution_edge_z": -0.078,
+          "challenger_signal_z": -0.004,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.244646,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.244646,
+          "bounded_signal": -0.011428
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106322,
+        "kickoff_utc": "2026-11-04T20:00:00Z",
+        "home_team": "RB Leipzig",
+        "away_team": "Manchester City",
+        "predicted_xg": {
+          "home": 1.633095,
+          "away": 1.793456,
+          "total": 3.426551
+        },
+        "probabilities": {
+          "home_win": 0.35292,
+          "draw": 0.22678,
+          "away_win": 0.4203,
+          "over": {
+            "2.5": 0.66356,
+            "3.5": 0.45094
+          },
+          "under": {
+            "2.5": 0.33644,
+            "3.5": 0.54906
+          },
+          "btts_yes": 0.67154,
+          "btts_no": 0.32846
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "away_win",
+          "leader_probability": 0.4203,
+          "leader_gap": 0.06738,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "leader_below_45_percent",
+          "evidence": {
+            "base_leader": "away_win",
+            "contextual_leader": "away_win",
+            "calibrated_leader": "away_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": true,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": true,
+            "context_verdict": "baseline_supported",
+            "lineup_reliability": 0.866025,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.66356,
+          "call": "over_2_5",
+          "call_probability": 0.66356,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_supported",
+        "home_preferred_route": {
+          "key": "set_pieces",
+          "label": "Set pieces",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.318,
+          "opponent_exposure_z": -0.07,
+          "xi_execution_edge_z": -0.295,
+          "challenger_signal_z": -0.002,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.258232,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.258232,
+          "bounded_signal": -0.005714
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.674,
+          "opponent_exposure_z": 0.032,
+          "xi_execution_edge_z": 0.373,
+          "challenger_signal_z": 0.359,
+          "verdict": "strong_route",
+          "route_preference": 0.239124,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.239124,
+          "bounded_signal": 0.772184
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106389,
+        "kickoff_utc": "2026-11-04T20:00:00Z",
+        "home_team": "Slavia Prague",
+        "away_team": "Arsenal",
+        "predicted_xg": {
+          "home": 1.175969,
+          "away": 1.723274,
+          "total": 2.899243
+        },
+        "probabilities": {
+          "home_win": 0.25994,
+          "draw": 0.23886,
+          "away_win": 0.5012,
+          "over": {
+            "2.5": 0.553,
+            "3.5": 0.33316
+          },
+          "under": {
+            "2.5": 0.447,
+            "3.5": 0.66684
+          },
+          "btts_yes": 0.56738,
+          "btts_no": 0.43262
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "away_win",
+          "leader_probability": 0.5012,
+          "leader_gap": 0.24126,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "projected_xi_reliability_below_gate",
+          "evidence": {
+            "base_leader": "away_win",
+            "contextual_leader": "away_win",
+            "calibrated_leader": "away_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": true,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": true,
+            "context_verdict": "baseline_reinforced",
+            "lineup_reliability": 0.707107,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.553,
+          "call": "pass",
+          "call_probability": 0.553,
+          "reason": "inside_totals_pass_band",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_reinforced",
+        "home_preferred_route": {
+          "key": "set_pieces",
+          "label": "Set pieces",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.314,
+          "opponent_exposure_z": -0.401,
+          "xi_execution_edge_z": -0.589,
+          "challenger_signal_z": -0.207,
+          "verdict": "likely_resisted",
+          "route_preference": 0.237911,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.237911,
+          "bounded_signal": -0.530922
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.532,
+          "opponent_exposure_z": -0.211,
+          "xi_execution_edge_z": 0.453,
+          "challenger_signal_z": 0.248,
+          "verdict": "leans_favorable",
+          "route_preference": 0.203639,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.203639,
+          "bounded_signal": 0.60978
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106416,
+        "kickoff_utc": "2026-11-04T20:00:00Z",
+        "home_team": "Lens",
+        "away_team": "Como",
+        "predicted_xg": {
+          "home": 1.749413,
+          "away": 1.453396,
+          "total": 3.202809
+        },
+        "probabilities": {
+          "home_win": 0.44606,
+          "draw": 0.2279,
+          "away_win": 0.32604,
+          "over": {
+            "2.5": 0.61782,
+            "3.5": 0.3955
+          },
+          "under": {
+            "2.5": 0.38218,
+            "3.5": 0.6045
+          },
+          "btts_yes": 0.63116,
+          "btts_no": 0.36884
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "home_win",
+          "leader_probability": 0.44606,
+          "leader_gap": 0.12002,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "club_form_and_player_alpha_do_not_both_support_side",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "home_win",
+            "calibrated_leader": "home_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": false,
+              "player_quality_lineup": true
+            },
+            "foundation_aligned": false,
+            "context_verdict": "baseline_supported",
+            "lineup_reliability": 0.5,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.61782,
+          "call": "over_2_5",
+          "call_probability": 0.61782,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "baseline_supported",
+        "home_preferred_route": {
+          "key": "set_pieces",
+          "label": "Set pieces",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.093,
+          "opponent_exposure_z": -0.229,
+          "xi_execution_edge_z": 0.095,
+          "challenger_signal_z": -0.019,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.203378,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.203378,
+          "bounded_signal": -0.054232
+        },
+        "away_preferred_route": {
+          "key": "box_pressure",
+          "label": "Box pressure",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.211,
+          "opponent_exposure_z": -0.146,
+          "xi_execution_edge_z": 0.039,
+          "challenger_signal_z": 0.034,
+          "verdict": "no_clear_edge",
+          "route_preference": 0.247807,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.247807,
+          "bounded_signal": 0.096838
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      },
+      {
+        "match_id": 6106420,
+        "kickoff_utc": "2026-11-04T20:00:00Z",
+        "home_team": "Viking",
+        "away_team": "Sabah FK",
+        "predicted_xg": {
+          "home": 1.705769,
+          "away": 1.623901,
+          "total": 3.329669
+        },
+        "probabilities": {
+          "home_win": 0.40454,
+          "draw": 0.22672,
+          "away_win": 0.36874,
+          "over": {
+            "2.5": 0.64802,
+            "3.5": 0.42466
+          },
+          "under": {
+            "2.5": 0.35198,
+            "3.5": 0.57534
+          },
+          "btts_yes": 0.65446,
+          "btts_no": 0.34554
+        },
+        "side_research_candidate": {
+          "market": "one_x_two",
+          "leader": "home_win",
+          "leader_probability": 0.40454,
+          "leader_gap": 0.0358,
+          "call": "pass",
+          "tier": "pass",
+          "reason": "club_form_and_player_alpha_do_not_both_support_side",
+          "evidence": {
+            "base_leader": "home_win",
+            "contextual_leader": "home_win",
+            "calibrated_leader": "home_win",
+            "leaders_aligned": true,
+            "foundation_support": {
+              "club_form": false,
+              "player_quality_lineup": false
+            },
+            "foundation_aligned": false,
+            "context_verdict": "no_clear_contextual_edge",
+            "lineup_reliability": 0.5,
+            "draw_zone": false
+          },
+          "decision_boundaries": {
+            "player_alpha_changed": false,
+            "base_60_30_10_changed": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "total_research_candidate": {
+          "market": "over_under_2_5",
+          "over_probability": 0.64802,
+          "call": "over_2_5",
+          "call_probability": 0.64802,
+          "reason": "over_probability_clears_gate",
+          "decision_boundaries": {
+            "goal_environment_calibration_applied": false,
+            "capital_deployment_ready": false
+          }
+        },
+        "context_verdict": "no_clear_contextual_edge",
+        "home_preferred_route": {
+          "key": "set_pieces",
+          "label": "Set pieces",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.221,
+          "opponent_exposure_z": 0.348,
+          "xi_execution_edge_z": -0.128,
+          "challenger_signal_z": 0.161,
+          "verdict": "leans_favorable",
+          "route_preference": 0.213924,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.213924,
+          "bounded_signal": 0.430084
+        },
+        "away_preferred_route": {
+          "key": "set_pieces",
+          "label": "Set pieces",
+          "evidence_tier": "measured",
+          "route_expression_z": 0.07,
+          "opponent_exposure_z": -0.082,
+          "xi_execution_edge_z": 0.495,
+          "challenger_signal_z": 0.144,
+          "verdict": "leans_favorable",
+          "route_preference": 0.208673,
+          "evidence_reliability": 1.0,
+          "effective_weight": 0.208673,
+          "bounded_signal": 0.389685
+        },
+        "ucl_calibrated": false,
+        "final_call_eligible": false
+      }
+    ],
+    "summary": {
+      "side_research_candidates": 3,
+      "side_passes": 15,
+      "total_research_candidates": 15,
+      "total_passes": 3
+    }
+  },
+  "integrity": {
+    "same_player_alpha_formulas_as_premier_league": true,
+    "same_squad_selection_policy_as_premier_league": true,
+    "same_60_30_10_foundation": true,
+    "club_form_league_strength_adjusted": true,
+    "ucl_calibration_separate": true,
+    "ucl_specific_calibration_available": false,
+    "retroactive_prediction_record_created": false,
+    "research_candidates_are_promoted_calls": false,
+    "capital_deployment_ready": false
+  }
+}

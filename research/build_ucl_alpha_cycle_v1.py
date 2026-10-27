@@ -75,6 +75,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--baseline", type=Path, required=True)
     parser.add_argument("--contextual", type=Path, required=True)
     parser.add_argument(
+        "--domestic-coverage",
+        type=Path,
+        default=ROOT / "reports/domestic-current-coverage.json",
+    )
+    parser.add_argument(
+        "--club-form-audit",
+        type=Path,
+        default=ROOT / "reports/club-form-v1-audit.json",
+    )
+    parser.add_argument(
         "--decision-config",
         type=Path,
         default=ROOT / "config/decision-policy-v1.json",
@@ -100,6 +110,17 @@ def main() -> int:
         raise ValueError("UCL Alpha snapshot date does not match cycle date")
     baseline = load_jsonl(args.baseline)
     contextual = load_jsonl(args.contextual)
+    domestic_coverage = load_json(args.domestic_coverage)
+    club_form_audit = load_json(args.club_form_audit)
+    if domestic_coverage.get("as_of") != args.as_of:
+        raise ValueError("foreign domestic coverage date does not match cycle date")
+    if club_form_audit.get("as_of") != args.as_of:
+        raise ValueError("Club Form audit date does not match cycle date")
+    league_strength = (
+        (club_form_audit.get("normalisation") or {}).get("league_strength") or {}
+    )
+    if not league_strength.get("enabled"):
+        raise ValueError("UCL cycle requires league-strength-adjusted Club Form")
     baseline_by_id = {int(row["fixture"]["match_id"]): row for row in baseline}
     contextual_by_id = {
         int(row["fixture"]["match_id"]): row for row in contextual
@@ -155,7 +176,7 @@ def main() -> int:
         if row["alpha"]["overall_alpha_ability"]["z"] is not None
     ]
     payload = {
-        "version": "clubalpha_ucl_alpha_cycle_v1",
+        "version": "clubalpha_ucl_alpha_cycle_v1_1_league_strength",
         "status": "provisional_research_uncalibrated",
         "as_of": args.as_of,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -183,6 +204,23 @@ def main() -> int:
                 }
                 for row in sorted(reviews, key=lambda item: item["matchday"])
             ],
+        },
+        "domestic_evidence": {
+            "as_of": domestic_coverage["as_of"],
+            "competitions": domestic_coverage["counts"]["competitions"],
+            "foreign_ucl_clubs": domestic_coverage["counts"]["target_teams"],
+            "completed_matches": domestic_coverage["counts"][
+                "finished_selected_fixtures"
+            ],
+            "matches_with_player_detail": domestic_coverage["counts"][
+                "matches_with_target_player_stats"
+            ],
+            "player_detail_coverage_pct": domestic_coverage["counts"][
+                "target_player_detail_coverage_pct"
+            ],
+            "player_match_rows": domestic_coverage["counts"]["match_player_rows"],
+            "league_strength_application": league_strength.get("application"),
+            "league_strength_offsets_used": league_strength.get("offsets_used"),
         },
         "projected_xi_alpha": {
             "clubs": len(alpha_clubs),
@@ -230,6 +268,7 @@ def main() -> int:
             "same_player_alpha_formulas_as_premier_league": True,
             "same_squad_selection_policy_as_premier_league": True,
             "same_60_30_10_foundation": True,
+            "club_form_league_strength_adjusted": True,
             "ucl_calibration_separate": True,
             "ucl_specific_calibration_available": False,
             "retroactive_prediction_record_created": False,

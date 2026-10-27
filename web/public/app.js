@@ -309,6 +309,7 @@ function uclLegacy(data) {
 function ucl(data) {
   const cycle = data.ucl_alpha_cycle;
   const evidence = cycle.completed_evidence;
+  const domestic = cycle.domestic_evidence;
   const upcoming = cycle.upcoming;
   const candidateRows = upcoming.predictions.map((match) => {
     const side = match.side_research_candidate;
@@ -336,17 +337,18 @@ function ucl(data) {
   </tr>`).join("");
   const matchdayRows = evidence.alpha_minute_coverage_by_matchday.map((row) => `<div class="gate-row"><span>Matchday ${row.matchday}</span><span>${pct(row.coverage)} coverage · ${dec(row.rating_alpha_correlation, 3)} rating correlation</span></div>`).join("");
   return `<section class="page-head ucl-page-head">
-      <p class="eyebrow">Champions League · Matchdays 1–3 learned · Matchday ${upcoming.matchday} provisional</p>
+      <p class="eyebrow">Champions League · ${domestic.completed_matches} domestic matches refreshed · Matchday ${upcoming.matchday} provisional</p>
       <h1>UCL Alpha intelligence</h1>
-      <p>The Champions League now runs through the same projected-XI Player Alpha generator, 60/30/10 fixture foundation, matchup context and 50,000-match simulation used for the Premier League.</p>
-      <div class="notice">SHARED PLAYER ALPHA · SEPARATE UCL CALIBRATION · RESEARCH CANDIDATES ARE NOT PROMOTED CALLS · ZERO CAPITAL</div>
+      <p>The Champions League runs through the same projected-XI Player Alpha generator, 60/30/10 fixture foundation, matchup context and 50,000-match simulation used for the Premier League. Current domestic form is translated through the locked league-quality ladder before clubs are compared.</p>
+      <div class="notice">SHARED PLAYER ALPHA · LEAGUE-STRENGTH-ADJUSTED FORM · SEPARATE UCL CALIBRATION · ZERO CAPITAL</div>
     </section>
     <section class="metrics">
-      ${metric("Completed evidence", `${evidence.matches} matches`, "UCL Matchdays 1–3", "accent")}
+      ${metric("Completed evidence", `${evidence.matches} UCL · ${domestic.completed_matches} domestic`, `${domestic.competitions} leagues · ${domestic.foreign_ucl_clubs} foreign clubs`, "accent")}
       ${metric("Projected-XI Alpha", `${cycle.projected_xi_alpha.rated_clubs}/${cycle.projected_xi_alpha.clubs} rated`, `${cycle.projected_xi_alpha.unrated_clubs.length} explicit coverage gaps`, "amber")}
       ${metric("Matchday 4", `${upcoming.simulations.toLocaleString()} simulations`, `${upcoming.fixtures} fixtures`)}
       ${metric("Deployment", "NO CAPITAL", "UCL calibration not yet available", "amber")}
     </section>
+    <p class="notice">LEAGUE TRANSLATION · ${domestic.matches_with_player_detail}/${domestic.completed_matches} domestic matches include target-club player detail (${dec(domestic.player_detail_coverage_pct, 1)}%). Club Form applies the locked league-quality offset exactly once after within-league opponent adjustment; Player Alpha formulas are unchanged.</p>
     <section class="section"><div class="section-head"><h2>What the first 54 matches taught us</h2><span class="panel-label">Observed results · never retroactive predictions</span></div><div class="foundation-grid">
       <article class="foundation-card"><span class="foundation-num">GOAL ENVIRONMENT</span><h3>${evidence.goals} goals · ${dec(evidence.total_xg)} xG</h3><p>${pct(evidence.over_2_5 / evidence.matches)} finished Over 2.5. The ${signed(evidence.goals - evidence.total_xg)} goals-minus-xG gap is finishing heat, not an automatic model coefficient.</p></article>
       <article class="foundation-card"><span class="foundation-num">RESULT SHAPE</span><h3>${evidence.home_wins}H · ${evidence.draws}D · ${evidence.away_wins}A</h3><p>Score and xG winner aligned in ${evidence.score_xg_winner_alignment}/${evidence.matches} fixtures. Process remains the primary learning signal.</p></article>

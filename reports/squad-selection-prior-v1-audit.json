@@ -1,27 +1,27 @@
 {
   "selection_prior_version": "clubalpha_squad_selection_prior_v1",
-  "generated_at_utc": "2026-10-21T19:45:19.643022+00:00",
-  "as_of": "2026-10-21",
+  "generated_at_utc": "2026-10-27T17:25:40.539702+00:00",
+  "as_of": "2026-10-27",
   "counts": {
     "teams": 51,
     "lineup_prior_ready": 49,
     "teams_with_recent_match_detail": 51,
     "teams_with_exact_recent_lineup": 51,
     "teams_using_default_shape": 0,
-    "players": 1365,
-    "unavailable_players": 142,
-    "questionable_players": 43,
+    "players": 1367,
+    "unavailable_players": 147,
+    "questionable_players": 47,
     "unknown_availability_players": 5,
     "players_over_90_expected_minutes": 0,
     "teams_with_partial_recent_minute_coverage": 2,
     "teams_without_selection_evidence": 2,
-    "teams_with_availability_adjustment": 43
+    "teams_with_availability_adjustment": 44
   },
   "quality_flags": {
     "no_selection_evidence": 2,
     "partial_alpha_context": 50,
     "partial_recent_minute_coverage": 2,
-    "unknown_availability": 4
+    "unknown_availability": 5
   },
   "expected_minute_sum_exceptions": [
     {
@@ -56,22 +56,22 @@
           "MID": 5,
           "FWD": 1
         },
-        "source_match_id": 5795483,
+        "source_match_id": 5795485,
         "used_default_shape": false
       },
       "evidence": {
-        "recent_matches": 13,
-        "current_competitive_matches": 9,
+        "recent_matches": 15,
+        "current_competitive_matches": 11,
         "preseason_matches": 4,
-        "exact_lineup_matches": 13,
-        "weighted_recent_matches": 4.8845,
-        "coverage_adjusted_recent_matches": 4.8255,
-        "current_squad_minute_coverage": 0.9879,
+        "exact_lineup_matches": 15,
+        "weighted_recent_matches": 6.0558,
+        "coverage_adjusted_recent_matches": 6.0044,
+        "current_squad_minute_coverage": 0.9915,
         "historical_players_with_minutes": 23,
         "historical_workload_coverage": 1.0,
         "historical_prior_strength": 2.0,
         "alpha_context_coverage": 0.9583,
-        "latest_match_utc": "2026-10-18T15:30:00Z"
+        "latest_match_utc": "2026-10-24T14:00:00Z"
       },
       "expected_starting_xi_prior": [
         {
@@ -82,8 +82,8 @@
           "scoring_position": "GK",
           "current_position": "GK",
           "availability_status": "available",
-          "expected_minutes_prior": 85.908,
-          "weighted_start_rate": 0.9639,
+          "expected_minutes_prior": 86.647,
+          "weighted_start_rate": 0.9746,
           "alpha_ability_z": 0.826
         },
         {
@@ -94,8 +94,8 @@
           "scoring_position": "CB",
           "current_position": "CB",
           "availability_status": "available",
-          "expected_minutes_prior": 87.424,
-          "weighted_start_rate": 0.9835,
+          "expected_minutes_prior": 87.451,
+          "weighted_start_rate": 0.9884,
           "alpha_ability_z": 0.971
         },
         {
@@ -106,8 +106,8 @@
           "scoring_position": "CB",
           "current_position": "CB",
           "availability_status": "available",
-          "expected_minutes_prior": 75.331,
-          "weighted_start_rate": 0.8508,
+          "expected_minutes_prior": 78.181,
+          "weighted_start_rate": 0.8953,
           "alpha_ability_z": 0.521
         },
         {
@@ -118,9 +118,9 @@
           "scoring_position": "FB",
           "current_position": "LB,CB",
           "availability_status": "available",
-          "expected_minutes_prior": 59.014,
-          "weighted_start_rate": 0.7421,
-          "alpha_ability_z": 0.694
+          "expected_minutes_prior": 57.338,
+          "weighted_start_rate": 0.6648,
+          "alpha_ability_z": 0.708
         },
         {
           "player_id": 776151,
@@ -130,9 +130,9 @@
           "scoring_position": "FB",
           "current_position": "RB",
           "availability_status": "available",
-          "expected_minutes_prior": 47.85,
-          "weighted_start_rate": 0.7219,
-          "alpha_ability_z": -0.036
+          "expected_minutes_prior": 46.799,
+          "weighted_start_rate": 0.661,
+          "alpha_ability_z": -0.028
         },
         {
           "player_id": 654096,
@@ -142,21 +142,9 @@
           "scoring_position": "CM",
           "current_position": "CDM,CM",
           "availability_status": "available",
-          "expected_minutes_prior": 89.729,
-          "weighted_start_rate": 0.9639,
-          "alpha_ability_z": 1.188
-        },
-        {
-          "player_id": 961995,
-          "player": "Bukayo Saka",
-          "selection_role": "MID",
-          "alpha_position": "FW",
-          "scoring_position": "FW",
-          "current_position": "RW,CAM",
-          "availability_status": "available",
-          "expected_minutes_prior": 73.075,
-          "weighted_start_rate": 0.7937,
-          "alpha_ability_z": 1.084
+          "expected_minutes_prior": 90.0,
+          "weighted_start_rate": 0.9746,
+          "alpha_ability_z": 1.18
         },
         {
           "player_id": 534670,
@@ -166,9 +154,33 @@
           "scoring_position": "CM",
           "current_position": "CM,CAM",
           "availability_status": "available",
-          "expected_minutes_prior": 66.188,
-          "weighted_start_rate": 0.8032,
-          "alpha_ability_z": 0.997
+          "expected_minutes_prior": 82.296,
+          "weighted_start_rate": 0.8618,
+          "alpha_ability_z": 0.988
+        },
+        {
+          "player_id": 818975,
+          "player": "Eberechi Eze",
+          "selection_role": "MID",
+          "alpha_position": "FW",
+          "scoring_position": "FW",
+          "current_position": "CAM,LW,CM,CDM",
+          "availability_status": "available",
+          "expected_minutes_prior": 60.2,
+          "weighted_start_rate": 0.4693,
+          "alpha_ability_z": 0.066
+        },
+        {
+          "player_id": 1084981,
+          "player": "Noni Madueke",
+          "selection_role": "MID",
+          "alpha_position": "FW",
+          "scoring_position": "FW",
+          "current_position": "RW,LW",
+          "availability_status": "available",
+          "expected_minutes_prior": 59.931,
+          "weighted_start_rate": 0.5288,
+          "alpha_ability_z": 0.259
         },
         {
           "player_id": 850354,
@@ -176,23 +188,11 @@
           "selection_role": "MID",
           "alpha_position": "CM",
           "scoring_position": "CM",
-          "current_position": "CM,CDM",
+          "current_position": "CM,CDM,CAM",
           "availability_status": "available",
-          "expected_minutes_prior": 52.413,
-          "weighted_start_rate": 0.4589,
-          "alpha_ability_z": 0.865
-        },
-        {
-          "player_id": 1406436,
-          "player": "Myles Lewis-Skelly",
-          "selection_role": "MID",
-          "alpha_position": "FB",
-          "scoring_position": "FB",
-          "current_position": "LB,CDM,CM",
-          "availability_status": "available",
-          "expected_minutes_prior": 43.38,
-          "weighted_start_rate": 0.6337,
-          "alpha_ability_z": -0.263
+          "expected_minutes_prior": 59.289,
+          "weighted_start_rate": 0.466,
+          "alpha_ability_z": 0.858
         },
         {
           "player_id": 749736,
@@ -202,26 +202,34 @@
           "scoring_position": "FW",
           "current_position": "ST,CAM,CM",
           "availability_status": "available",
-          "expected_minutes_prior": 48.452,
-          "weighted_start_rate": 0.7421,
-          "alpha_ability_z": 0.514
+          "expected_minutes_prior": 46.381,
+          "weighted_start_rate": 0.6648,
+          "alpha_ability_z": 0.517
         }
       ],
       "unavailable_players": [
+        {
+          "player_id": 961995,
+          "player": "Bukayo Saka",
+          "selection_role": "MID",
+          "alpha_position": "FW",
+          "baseline_expected_minutes": 52.136,
+          "expected_minutes_prior": 0.0
+        },
         {
           "player_id": 1157237,
           "player": "Christos Tzolis",
           "selection_role": "MID",
           "alpha_position": "FW",
-          "baseline_expected_minutes": 41.339,
+          "baseline_expected_minutes": 32.817,
           "expected_minutes_prior": 0.0
         },
         {
-          "player_id": 1137667,
-          "player": "Piero Hincapié",
+          "player_id": 955406,
+          "player": "William Saliba",
           "selection_role": "DEF",
-          "alpha_position": "FB",
-          "baseline_expected_minutes": 21.177,
+          "alpha_position": "CB",
+          "baseline_expected_minutes": 16.161,
           "expected_minutes_prior": 0.0
         }
       ],
@@ -232,29 +240,29 @@
     "Chelsea": {
       "team_id": 8455,
       "shape_prior": {
-        "formation": "4-2-3-1",
+        "formation": "3-4-2-1",
         "role_slots": {
           "GK": 1,
-          "DEF": 4,
-          "MID": 5,
+          "DEF": 3,
+          "MID": 6,
           "FWD": 1
         },
-        "source_match_id": 5795478,
+        "source_match_id": 5795487,
         "used_default_shape": false
       },
       "evidence": {
-        "recent_matches": 11,
-        "current_competitive_matches": 7,
+        "recent_matches": 12,
+        "current_competitive_matches": 8,
         "preseason_matches": 4,
-        "exact_lineup_matches": 11,
-        "weighted_recent_matches": 3.6629,
-        "coverage_adjusted_recent_matches": 3.5774,
-        "current_squad_minute_coverage": 0.9766,
+        "exact_lineup_matches": 12,
+        "weighted_recent_matches": 4.1218,
+        "coverage_adjusted_recent_matches": 4.0379,
+        "current_squad_minute_coverage": 0.9796,
         "historical_players_with_minutes": 20,
         "historical_workload_coverage": 1.0,
         "historical_prior_strength": 2.0,
         "alpha_context_coverage": 0.7407,
-        "latest_match_utc": "2026-10-17T11:30:00Z"
+        "latest_match_utc": "2026-10-24T16:30:00Z"
       },
       "expected_starting_xi_prior": [
         {
@@ -265,8 +273,8 @@
           "scoring_position": "GK",
           "current_position": "GK",
           "availability_status": "available",
-          "expected_minutes_prior": 62.958,
-          "weighted_start_rate": 0.0,
+          "expected_minutes_prior": 77.026,
+          "weighted_start_rate": 0.2264,
           "alpha_ability_z": null
         },
         {
@@ -277,8 +285,8 @@
           "scoring_position": "CB",
           "current_position": "CB",
           "availability_status": "available",
-          "expected_minutes_prior": 77.699,
-          "weighted_start_rate": 0.8526,
+          "expected_minutes_prior": 79.651,
+          "weighted_start_rate": 0.886,
           "alpha_ability_z": 1.069
         },
         {
@@ -289,8 +297,8 @@
           "scoring_position": "CB",
           "current_position": "CB",
           "availability_status": "available",
-          "expected_minutes_prior": 52.128,
-          "weighted_start_rate": 0.867,
+          "expected_minutes_prior": 56.065,
+          "weighted_start_rate": 0.8971,
           "alpha_ability_z": 0.385
         },
         {
@@ -301,33 +309,9 @@
           "scoring_position": "CB",
           "current_position": "CB,RB",
           "availability_status": "available",
-          "expected_minutes_prior": 48.683,
-          "weighted_start_rate": 0.641,
+          "expected_minutes_prior": 53.96,
+          "weighted_start_rate": 0.7223,
           "alpha_ability_z": -0.059
-        },
-        {
-          "player_id": 1413846,
-          "player": "Jorrel Hato",
-          "selection_role": "DEF",
-          "alpha_position": "FB",
-          "scoring_position": "FB",
-          "current_position": "LB,CB,LWB",
-          "availability_status": "available",
-          "expected_minutes_prior": 43.902,
-          "weighted_start_rate": 0.6338,
-          "alpha_ability_z": 0.014
-        },
-        {
-          "player_id": 883080,
-          "player": "Morgan Rogers",
-          "selection_role": "MID",
-          "alpha_position": "FW",
-          "scoring_position": "FW",
-          "current_position": "CAM,LW,RW",
-          "availability_status": "available",
-          "expected_minutes_prior": 90.0,
-          "weighted_start_rate": 0.9635,
-          "alpha_ability_z": 0.269
         },
         {
           "player_id": 843040,
@@ -337,9 +321,21 @@
           "scoring_position": "FW",
           "current_position": "RW,LW,RWB,CAM,RM",
           "availability_status": "available",
-          "expected_minutes_prior": 87.923,
-          "weighted_start_rate": 0.9044,
-          "alpha_ability_z": -0.162
+          "expected_minutes_prior": 90.0,
+          "weighted_start_rate": 0.926,
+          "alpha_ability_z": -0.144
+        },
+        {
+          "player_id": 883080,
+          "player": "Morgan Rogers",
+          "selection_role": "MID",
+          "alpha_position": "FW",
+          "scoring_position": "FW",
+          "current_position": "CAM,LW,RW,ST",
+          "availability_status": "available",
+          "expected_minutes_prior": 89.999,
+          "weighted_start_rate": 0.9718,
+          "alpha_ability_z": 0.281
         },
         {
           "player_id": 1096353,
@@ -349,9 +345,9 @@
           "scoring_position": "FW",
           "current_position": "CAM,RW",
           "availability_status": "available",
-          "expected_minutes_prior": 85.297,
-          "weighted_start_rate": 0.9758,
-          "alpha_ability_z": 0.428
+          "expected_minutes_prior": 87.824,
+          "weighted_start_rate": 0.9813,
+          "alpha_ability_z": 0.437
         },
         {
           "player_id": 1137668,
@@ -361,9 +357,9 @@
           "scoring_position": "CM",
           "current_position": "CDM,CM",
           "availability_status": "available",
-          "expected_minutes_prior": 66.163,
-          "weighted_start_rate": 0.499,
-          "alpha_ability_z": 0.112
+          "expected_minutes_prior": 75.408,
+          "weighted_start_rate": 0.6124,
+          "alpha_ability_z": 0.1
         },
         {
           "player_id": 156008,
@@ -373,9 +369,21 @@
           "scoring_position": "CM",
           "current_position": "CDM,CM",
           "availability_status": "available",
-          "expected_minutes_prior": 57.53,
-          "weighted_start_rate": 0.588,
-          "alpha_ability_z": 0.433
+          "expected_minutes_prior": 66.133,
+          "weighted_start_rate": 0.6813,
+          "alpha_ability_z": 0.421
+        },
+        {
+          "player_id": 1413846,
+          "player": "Jorrel Hato",
+          "selection_role": "MID",
+          "alpha_position": "FB",
+          "scoring_position": "FB",
+          "current_position": "LB,CB,LWB",
+          "availability_status": "available",
+          "expected_minutes_prior": 53.916,
+          "weighted_start_rate": 0.7167,
+          "alpha_ability_z": 0.016
         },
         {
           "player_id": 1021382,
@@ -384,19 +392,27 @@
           "alpha_position": "FW",
           "scoring_position": "FW",
           "current_position": "ST,CAM",
-          "availability_status": "available",
-          "expected_minutes_prior": 76.273,
-          "weighted_start_rate": 0.86,
-          "alpha_ability_z": 0.351
+          "availability_status": "questionable",
+          "expected_minutes_prior": 64.724,
+          "weighted_start_rate": 0.6653,
+          "alpha_ability_z": 0.361
         }
       ],
       "unavailable_players": [
+        {
+          "player_id": 1183148,
+          "player": "Emanuel Emegha",
+          "selection_role": "FWD",
+          "alpha_position": "FW",
+          "baseline_expected_minutes": 0.001,
+          "expected_minutes_prior": 0.0
+        },
         {
           "player_id": 268375,
           "player": "Emiliano Martínez",
           "selection_role": "GK",
           "alpha_position": "GK",
-          "baseline_expected_minutes": 74.466,
+          "baseline_expected_minutes": 62.877,
           "expected_minutes_prior": 0.0
         },
         {
@@ -404,7 +420,15 @@
           "player": "Jamie Gittens",
           "selection_role": "MID",
           "alpha_position": "FW",
-          "baseline_expected_minutes": 8.495,
+          "baseline_expected_minutes": 7.687,
+          "expected_minutes_prior": 0.0
+        },
+        {
+          "player_id": 988805,
+          "player": "Pep Chavarría",
+          "selection_role": "MID",
+          "alpha_position": "FB",
+          "baseline_expected_minutes": 22.113,
           "expected_minutes_prior": 0.0
         },
         {
@@ -412,7 +436,7 @@
           "player": "Reece James",
           "selection_role": "MID",
           "alpha_position": "CM",
-          "baseline_expected_minutes": 40.573,
+          "baseline_expected_minutes": 35.295,
           "expected_minutes_prior": 0.0
         }
       ],
@@ -430,22 +454,22 @@
           "MID": 5,
           "FWD": 1
         },
-        "source_match_id": 5795484,
+        "source_match_id": 5795488,
         "used_default_shape": false
       },
       "evidence": {
-        "recent_matches": 7,
-        "current_competitive_matches": 7,
+        "recent_matches": 8,
+        "current_competitive_matches": 8,
         "preseason_matches": 0,
-        "exact_lineup_matches": 7,
-        "weighted_recent_matches": 3.5438,
-        "coverage_adjusted_recent_matches": 3.5283,
-        "current_squad_minute_coverage": 0.9956,
+        "exact_lineup_matches": 8,
+        "weighted_recent_matches": 4.0181,
+        "coverage_adjusted_recent_matches": 4.0046,
+        "current_squad_minute_coverage": 0.9966,
         "historical_players_with_minutes": 24,
         "historical_workload_coverage": 1.0,
         "historical_prior_strength": 2.0,
         "alpha_context_coverage": 0.8276,
-        "latest_match_utc": "2026-10-19T19:00:00Z"
+        "latest_match_utc": "2026-10-24T14:00:00Z"
       },
       "expected_starting_xi_prior": [
         {
@@ -470,7 +494,19 @@
           "availability_status": "available",
           "expected_minutes_prior": 90.0,
           "weighted_start_rate": 1.0,
-          "alpha_ability_z": -1.232
+          "alpha_ability_z": -1.235
+        },
+        {
+          "player_id": 1074750,
+          "player": "Milan van Ewijk",
+          "selection_role": "DEF",
+          "alpha_position": "FB",
+          "scoring_position": "FB",
+          "current_position": "RB,RW,RM",
+          "availability_status": "available",
+          "expected_minutes_prior": 90.0,
+          "weighted_start_rate": 0.8966,
+          "alpha_ability_z": -1.049
         },
         {
           "player_id": 1161885,
@@ -479,22 +515,10 @@
           "alpha_position": "CB",
           "scoring_position": "CB",
           "current_position": "CB",
-          "availability_status": "available",
-          "expected_minutes_prior": 90.0,
+          "availability_status": "questionable",
+          "expected_minutes_prior": 85.219,
           "weighted_start_rate": 1.0,
           "alpha_ability_z": -0.958
-        },
-        {
-          "player_id": 1074750,
-          "player": "Milan van Ewijk",
-          "selection_role": "DEF",
-          "alpha_position": "FB",
-          "scoring_position": "FB",
-          "current_position": "RB,RM,RW",
-          "availability_status": "available",
-          "expected_minutes_prior": 90.0,
-          "weighted_start_rate": 0.8653,
-          "alpha_ability_z": -1.04
         },
         {
           "player_id": 711357,
@@ -504,8 +528,8 @@
           "scoring_position": "CB",
           "current_position": "CB",
           "availability_status": "available",
-          "expected_minutes_prior": 59.447,
-          "weighted_start_rate": 0.8481,
+          "expected_minutes_prior": 61.911,
+          "weighted_start_rate": 0.8834,
           "alpha_ability_z": 0.246
         },
         {
@@ -518,7 +542,7 @@
           "availability_status": "available",
           "expected_minutes_prior": 90.0,
           "weighted_start_rate": 1.0,
-          "alpha_ability_z": -0.433
+          "alpha_ability_z": -0.447
         },
         {
           "player_id": 1030830,
@@ -528,9 +552,9 @@
           "scoring_position": "FW",
           "current_position": "CAM,RW,CDM",
           "availability_status": "available",
-          "expected_minutes_prior": 67.75,
-          "weighted_start_rate": 0.9311,
-          "alpha_ability_z": -0.4
+          "expected_minutes_prior": 70.769,
+          "weighted_start_rate": 0.9471,
+          "alpha_ability_z": -0.384
         },
         {
           "player_id": 776184,
@@ -538,11 +562,11 @@
           "selection_role": "MID",
           "alpha_position": "FW",
           "scoring_position": "FW",
-          "current_position": "LW,RW,ST,CAM",
+          "current_position": "LW,ST,RW,CAM",
           "availability_status": "available",
-          "expected_minutes_prior": 59.428,
-          "weighted_start_rate": 0.7023,
-          "alpha_ability_z": -0.469
+          "expected_minutes_prior": 60.165,
+          "weighted_start_rate": 0.7714,
+          "alpha_ability_z": -0.456
         },
         {
           "player_id": 1025603,
@@ -552,9 +576,9 @@
           "scoring_position": "FW",
           "current_position": "RW,RM",
           "availability_status": "available",
-          "expected_minutes_prior": 41.596,
-          "weighted_start_rate": 0.2694,
-          "alpha_ability_z": -1.481
+          "expected_minutes_prior": 49.626,
+          "weighted_start_rate": 0.4391,
+          "alpha_ability_z": -1.458
         },
         {
           "player_id": 1615927,
@@ -564,8 +588,8 @@
           "scoring_position": "CM",
           "current_position": "CM,CB,CDM,RWB,CAM",
           "availability_status": "available",
-          "expected_minutes_prior": 40.558,
-          "weighted_start_rate": 0.7852,
+          "expected_minutes_prior": 43.188,
+          "weighted_start_rate": 0.8351,
           "alpha_ability_z": null
         },
         {
@@ -576,9 +600,9 @@
           "scoring_position": "FW",
           "current_position": "LW,LM",
           "availability_status": "available",
-          "expected_minutes_prior": 60.258,
-          "weighted_start_rate": 0.6616,
-          "alpha_ability_z": -0.707
+          "expected_minutes_prior": 55.367,
+          "weighted_start_rate": 0.508,
+          "alpha_ability_z": -0.689
         }
       ],
       "unavailable_players": [
@@ -587,7 +611,7 @@
           "player": "Aurèle Amenda",
           "selection_role": "DEF",
           "alpha_position": "CB",
-          "baseline_expected_minutes": 23.005,
+          "baseline_expected_minutes": 18.656,
           "expected_minutes_prior": 0.0
         },
         {
@@ -595,7 +619,7 @@
           "player": "Haji Wright",
           "selection_role": "FWD",
           "alpha_position": "FW",
-          "baseline_expected_minutes": 21.434,
+          "baseline_expected_minutes": 19.734,
           "expected_minutes_prior": 0.0
         },
         {
@@ -603,7 +627,7 @@
           "player": "Josh Eccles",
           "selection_role": "MID",
           "alpha_position": "FW",
-          "baseline_expected_minutes": 12.515,
+          "baseline_expected_minutes": 11.522,
           "expected_minutes_prior": 0.0
         },
         {
@@ -611,7 +635,7 @@
           "player": "Luke Woolfenden",
           "selection_role": "DEF",
           "alpha_position": "CB",
-          "baseline_expected_minutes": 8.861,
+          "baseline_expected_minutes": 8.158,
           "expected_minutes_prior": 0.0
         }
       ],
@@ -629,22 +653,22 @@
           "MID": 5,
           "FWD": 1
         },
-        "source_match_id": 6106257,
+        "source_match_id": 5795486,
         "used_default_shape": false
       },
       "evidence": {
-        "recent_matches": 12,
-        "current_competitive_matches": 10,
+        "recent_matches": 13,
+        "current_competitive_matches": 11,
         "preseason_matches": 2,
-        "exact_lineup_matches": 12,
-        "weighted_recent_matches": 5.781,
-        "coverage_adjusted_recent_matches": 5.6538,
-        "current_squad_minute_coverage": 0.978,
+        "exact_lineup_matches": 13,
+        "weighted_recent_matches": 5.9657,
+        "coverage_adjusted_recent_matches": 5.855,
+        "current_squad_minute_coverage": 0.9814,
         "historical_players_with_minutes": 20,
         "historical_workload_coverage": 1.0,
         "historical_prior_strength": 2.0,
         "alpha_context_coverage": 0.8,
-        "latest_match_utc": "2026-10-20T19:00:00Z"
+        "latest_match_utc": "2026-10-24T11:30:00Z"
       },
       "expected_starting_xi_prior": [
         {
@@ -655,7 +679,7 @@
           "scoring_position": "GK",
           "current_position": "GK",
           "availability_status": "available",
-          "expected_minutes_prior": 86.703,
+          "expected_minutes_prior": 86.788,
           "weighted_start_rate": 1.0,
           "alpha_ability_z": 0.304
         },
@@ -667,8 +691,8 @@
           "scoring_position": "CB",
           "current_position": "CB",
           "availability_status": "available",
-          "expected_minutes_prior": 75.595,
-          "weighted_start_rate": 0.9933,
+          "expected_minutes_prior": 76.559,
+          "weighted_start_rate": 0.9944,
           "alpha_ability_z": 0.735
         },
         {
@@ -679,8 +703,8 @@
           "scoring_position": "CB",
           "current_position": "CB",
           "availability_status": "available",
-          "expected_minutes_prior": 72.781,
-          "weighted_start_rate": 0.8163,
+          "expected_minutes_prior": 69.24,
+          "weighted_start_rate": 0.845,
           "alpha_ability_z": 1.082
         },
         {
@@ -691,21 +715,21 @@
           "scoring_position": "CB",
           "current_position": "CB,LB",
           "availability_status": "available",
-          "expected_minutes_prior": 58.336,
-          "weighted_start_rate": 0.705,
+          "expected_minutes_prior": 61.376,
+          "weighted_start_rate": 0.7511,
           "alpha_ability_z": 1.004
         },
         {
-          "player_id": 955529,
-          "player": "Matheus Nunes",
+          "player_id": 1362998,
+          "player": "Abdukodir Khusanov",
           "selection_role": "DEF",
-          "alpha_position": "FB",
-          "scoring_position": "FB",
-          "current_position": "RB",
-          "availability_status": "questionable",
-          "expected_minutes_prior": 57.349,
-          "weighted_start_rate": 0.5235,
-          "alpha_ability_z": 0.648
+          "alpha_position": "CB",
+          "scoring_position": "CB",
+          "current_position": "CB,RB",
+          "availability_status": "available",
+          "expected_minutes_prior": 51.251,
+          "weighted_start_rate": 0.5584,
+          "alpha_ability_z": 0.884
         },
         {
           "player_id": 1089691,
@@ -715,9 +739,9 @@
           "scoring_position": "CM",
           "current_position": "CDM,CM",
           "availability_status": "available",
-          "expected_minutes_prior": 82.962,
-          "weighted_start_rate": 0.7636,
-          "alpha_ability_z": 1.489
+          "expected_minutes_prior": 83.802,
+          "weighted_start_rate": 0.8006,
+          "alpha_ability_z": 1.482
         },
         {
           "player_id": 1137705,
@@ -727,9 +751,9 @@
           "scoring_position": "FW",
           "current_position": "CAM,CDM,CM,LW",
           "availability_status": "available",
-          "expected_minutes_prior": 82.155,
-          "weighted_start_rate": 0.7337,
-          "alpha_ability_z": 0.607
+          "expected_minutes_prior": 83.534,
+          "weighted_start_rate": 0.7753,
+          "alpha_ability_z": 0.624
         },
         {
           "player_id": 1104053,
@@ -739,9 +763,9 @@
           "scoring_position": "FW",
           "current_position": "CAM,RW,LW,CM",
           "availability_status": "available",
-          "expected_minutes_prior": 64.297,
-          "weighted_start_rate": 0.7834,
-          "alpha_ability_z": 1.817
+          "expected_minutes_prior": 61.271,
+          "weighted_start_rate": 0.8173,
+          "alpha_ability_z": 1.821
         },
         {
           "player_id": 965764,
@@ -751,9 +775,9 @@
           "scoring_position": "FW",
           "current_position": "RW,LW,CAM",
           "availability_status": "available",
-          "expected_minutes_prior": 56.759,
-          "weighted_start_rate": 0.4393,
-          "alpha_ability_z": -0.147
+          "expected_minutes_prior": 58.727,
+          "weighted_start_rate": 0.527,
+          "alpha_ability_z": -0.131
         },
         {
           "player_id": 815006,
@@ -763,9 +787,9 @@
           "scoring_position": "FW",
           "current_position": "CAM,RW,LW,ST",
           "availability_status": "available",
-          "expected_minutes_prior": 55.091,
-          "weighted_start_rate": 0.5713,
-          "alpha_ability_z": 0.556
+          "expected_minutes_prior": 53.924,
+          "weighted_start_rate": 0.4819,
+          "alpha_ability_z": 0.568
         },
         {
           "player_id": 737066,
@@ -775,9 +799,9 @@
           "scoring_position": "FW",
           "current_position": "ST",
           "availability_status": "available",
-          "expected_minutes_prior": 73.978,
-          "weighted_start_rate": 0.8163,
-          "alpha_ability_z": 0.682
+          "expected_minutes_prior": 75.893,
+          "weighted_start_rate": 0.845,
+          "alpha_ability_z": 0.686
         }
       ],
       "unavailable_players": [
@@ -786,7 +810,7 @@
           "player": "Antoine Semenyo",
           "selection_role": "MID",
           "alpha_position": "FW",
-          "baseline_expected_minutes": 63.043,
+          "baseline_expected_minutes": 55.639,
           "expected_minutes_prior": 0.0
         }
       ],
@@ -804,22 +828,22 @@
           "MID": 5,
           "FWD": 1
         },
-        "source_match_id": 6106337,
+        "source_match_id": 6106252,
         "used_default_shape": false
       },
       "evidence": {
-        "recent_matches": 2,
-        "current_competitive_matches": 2,
+        "recent_matches": 3,
+        "current_competitive_matches": 3,
         "preseason_matches": 0,
-        "exact_lineup_matches": 2,
-        "weighted_recent_matches": 1.2385,
+        "exact_lineup_matches": 3,
+        "weighted_recent_matches": 1.9487,
         "coverage_adjusted_recent_matches": 0.0,
         "current_squad_minute_coverage": 0.0,
         "historical_players_with_minutes": 0,
         "historical_workload_coverage": 0.0,
         "historical_prior_strength": 0.0,
         "alpha_context_coverage": 0.0,
-        "latest_match_utc": "2026-10-14T19:00:00Z"
+        "latest_match_utc": "2026-10-21T19:00:00Z"
       },
       "expected_starting_xi_prior": [],
       "unavailable_players": [],

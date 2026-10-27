@@ -110,6 +110,16 @@ def build_audit(
             for metric, values in metrics.items()
         }
 
+    league_strength_rows = Counter(
+        str(row.get("league_strength_key") or "unknown") for row in observations
+    )
+    league_strength_offsets = {
+        str(row.get("league_strength_key") or "unknown"): float(
+            row.get("league_strength_offset_z") or 0.0
+        )
+        for row in observations
+    }
+
     return {
         "form_version": config["version"],
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -131,6 +141,12 @@ def build_audit(
         "normalisation": {
             "groups": competition_groups,
             "team_reference": reference,
+            "league_strength": {
+                "enabled": bool(config.get("league_strength", {}).get("enabled")),
+                "application": config.get("league_strength", {}).get("application"),
+                "team_match_rows_by_key": dict(sorted(league_strength_rows.items())),
+                "offsets_used": dict(sorted(league_strength_offsets.items())),
+            },
         },
         "quality_flags": dict(sorted(flags.items())),
         "availability_snapshot": dict(availability),
@@ -180,6 +196,12 @@ def main() -> int:
     args = parser.parse_args()
 
     config = load_json(args.config)
+    league_strength_config = config.get("league_strength") or {}
+    league_policy = None
+    if league_strength_config.get("enabled"):
+        policy_path = ROOT / str(league_strength_config["config_path"])
+        policy_config = load_json(policy_path)
+        league_policy = policy_config[str(league_strength_config["policy_key"])]
     foundation_coverage = load_json(args.foundation_dir / "coverage.json")
     as_of = date.fromisoformat(args.as_of or foundation_coverage["as_of"])
 
@@ -222,7 +244,9 @@ def main() -> int:
     for row in [*processed_rows, *fallback_rows]:
         observations_by_key.setdefault((int(row["match_id"]), int(row["team_id"])), row)
     observations = list(observations_by_key.values())
-    scored, scales = score_match_observations(observations, as_of, config)
+    scored, scales = score_match_observations(
+        observations, as_of, config, league_policy=league_policy
+    )
     print(
         f"      {len(scored)} team-match rows across "
         f"{len({row['match_id'] for row in scored})} finished matches "

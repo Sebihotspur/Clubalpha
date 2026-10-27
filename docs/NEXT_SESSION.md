@@ -25,6 +25,21 @@ Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
   18 fixtures, freeze the first honest UCL slate, then begin the separate UCL
   ledger. Real capital remains unauthorized.
 
+### October 27 domestic and league-strength refresh
+
+- Current foreign-domestic evidence now contains 286 completed matches across
+  15 leagues and 31 foreign UCL clubs; 268 matches have target-club player
+  detail (93.7%).
+- Club Form v1.1 now applies the locked Player Quality league-strength ladder
+  once after competition normalization and opponent adjustment. Player Alpha
+  formulas and the 60/30/10 weights remain unchanged.
+- The revised Matchday 4 slate preserves the original snapshot separately.
+  The clearest correction is Bodø/Glimt–Lille: the home probability moved from
+  55.8% to 41.8%. Fenerbahçe–Liverpool changed leader, with Liverpool now at
+  47.9%.
+- Raw side research candidates are Barcelona, Liverpool and Borussia Dortmund.
+  They remain unpromoted until the independent UCL calibration bucket exists.
+
 ## October 26 Matchweek 9 provisional slate
 
 - The refreshed engine covers all ten Matchweek 9 fixtures with 500,000 total

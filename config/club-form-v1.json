@@ -1,5 +1,5 @@
 {
-  "version": "clubalpha_club_form_v1",
+  "version": "clubalpha_club_form_v1_1_league_strength",
   "source": "FotMob match details and normalized Clubalpha fixtures",
   "question": "What condition and configuration is this club in now?",
   "form_metrics": [
@@ -25,6 +25,14 @@
     "method": "leave-one-match-out opponent attack and defence baseline",
     "prior_matches": 5.0,
     "adjustment_cap": 0.75
+  },
+  "league_strength": {
+    "enabled": true,
+    "config_path": "config/player-quality-clubalpha-v2.json",
+    "policy_key": "league_quality",
+    "application": "once after competition normalisation and opponent adjustment",
+    "preseason_offset": 0.0,
+    "note": "Reuse the locked Player Quality v2 league ladder so domestic dominance is translated to a common level without changing Player Alpha. The offset is applied after opponent adjustment to prevent double counting through same-league opponents."
   },
   "recency": {
     "half_life_days": 60.0,

@@ -1,0 +1,907 @@
+{
+  "report_version": "clubalpha_contextual_next_round_2026_08_26_v1",
+  "generated_at_utc": "2026-10-27T17:37:15.139971+00:00",
+  "status": "shadow_sensitivity_not_validated",
+  "fixtures": 18,
+  "source_provenance": {
+    "baseline": {
+      "filename": "predictions.jsonl",
+      "sha256": "f122bb5448aa854bc4e3614566b51ff2014128d53de9552dedf5ded2c5429f97"
+    },
+    "style_snapshot": {
+      "filename": "style-matchups.json",
+      "sha256": "f6cac265d54ba047da3ae985e7e0c87afbbd61c7262e0eaa94a91934cc712d1f"
+    },
+    "config": {
+      "filename": "contextual-interaction-v1.json",
+      "sha256": "159888c285f53d7b29d9b9ebb4d0caf1ea593f899f61f971ec2dc9b716dbd924"
+    },
+    "competition": "Champions League",
+    "fixture_schedule_verified_against": "FotMob normalized competition schedule"
+  },
+  "method": {
+    "base_model_unchanged": true,
+    "archetype_labels_used_in_math": false,
+    "directional": true,
+    "continuous": true,
+    "reliability_shrunk": true,
+    "link": "contextual_xg = base_xg * exp(bounded_context_signal * reliability * maximum_log_sensitivity)",
+    "maximum_absolute_log_xg_adjustment": 0.1,
+    "simulations_per_fixture": 50000,
+    "same_deterministic_seed_as_baseline": true,
+    "common_random_numbers_with_baseline": false,
+    "probability_deltas_are_unpaired_monte_carlo_comparisons": true
+  },
+  "fixtures_summary": [
+    {
+      "match_id": 6106335,
+      "kickoff_utc": "2026-11-03T17:45:00Z",
+      "fixture": "Shakhtar Donetsk vs Sporting CP",
+      "home_archetype": "Promoted / forming",
+      "away_archetype": "Developing possession",
+      "base_xg": {
+        "home": 1.640291,
+        "away": 1.364792,
+        "total": 3.005083
+      },
+      "contextual_xg": {
+        "home": 1.631017,
+        "away": 1.360684,
+        "total": 2.991701
+      },
+      "base_1x2": {
+        "home_win": 0.4413,
+        "draw": 0.2426,
+        "away_win": 0.3161
+      },
+      "contextual_1x2": {
+        "home_win": 0.44048,
+        "draw": 0.24356,
+        "away_win": 0.31596
+      },
+      "probability_change_percentage_points": {
+        "home_win": -0.082,
+        "draw": 0.096,
+        "away_win": -0.014,
+        "btts_yes": -0.148
+      },
+      "home_preferred_route": "Set pieces",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.303529,
+      "away_context_reliability": 0.352465,
+      "base_favorite_side": "home",
+      "base_favorite": "Shakhtar Donetsk",
+      "favorite_probability_delta": -0.00082,
+      "verdict": "no_clear_contextual_edge",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106341,
+      "kickoff_utc": "2026-11-03T17:45:00Z",
+      "fixture": "Galatasaray vs VfB Stuttgart",
+      "home_archetype": "Adaptive hybrid",
+      "away_archetype": "Territorial controller",
+      "base_xg": {
+        "home": 1.537225,
+        "away": 1.79696,
+        "total": 3.334185
+      },
+      "contextual_xg": {
+        "home": 1.52002,
+        "away": 1.832948,
+        "total": 3.352968
+      },
+      "base_1x2": {
+        "home_win": 0.33422,
+        "draw": 0.22508,
+        "away_win": 0.4407
+      },
+      "contextual_1x2": {
+        "home_win": 0.32456,
+        "draw": 0.22508,
+        "away_win": 0.45036
+      },
+      "probability_change_percentage_points": {
+        "home_win": -0.966,
+        "draw": 0.0,
+        "away_win": 0.966,
+        "btts_yes": -0.052
+      },
+      "home_preferred_route": "Set pieces",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.422466,
+      "away_context_reliability": 0.410324,
+      "base_favorite_side": "away",
+      "base_favorite": "VfB Stuttgart",
+      "favorite_probability_delta": 0.00966,
+      "verdict": "baseline_supported",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106263,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "fixture": "Barcelona vs Aston Villa",
+      "home_archetype": "Territorial controller",
+      "away_archetype": "Adaptive hybrid",
+      "base_xg": {
+        "home": 2.47931,
+        "away": 1.205683,
+        "total": 3.684993
+      },
+      "contextual_xg": {
+        "home": 2.568295,
+        "away": 1.161718,
+        "total": 3.730013
+      },
+      "base_1x2": {
+        "home_win": 0.65088,
+        "draw": 0.18112,
+        "away_win": 0.168
+      },
+      "contextual_1x2": {
+        "home_win": 0.67536,
+        "draw": 0.1734,
+        "away_win": 0.15124
+      },
+      "probability_change_percentage_points": {
+        "home_win": 2.448,
+        "draw": -0.772,
+        "away_win": -1.676,
+        "btts_yes": -0.704
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.664292,
+      "away_context_reliability": 0.631269,
+      "base_favorite_side": "home",
+      "base_favorite": "Barcelona",
+      "favorite_probability_delta": 0.02448,
+      "verdict": "baseline_reinforced",
+      "goal_environment": "expansive",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106266,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "fixture": "Atlético Madrid vs Bayern München",
+      "home_archetype": "Developing possession",
+      "away_archetype": "Territorial controller",
+      "base_xg": {
+        "home": 1.558102,
+        "away": 1.568369,
+        "total": 3.12647
+      },
+      "contextual_xg": {
+        "home": 1.545829,
+        "away": 1.650537,
+        "total": 3.196366
+      },
+      "base_1x2": {
+        "home_win": 0.38392,
+        "draw": 0.23642,
+        "away_win": 0.37966
+      },
+      "contextual_1x2": {
+        "home_win": 0.3614,
+        "draw": 0.23476,
+        "away_win": 0.40384
+      },
+      "probability_change_percentage_points": {
+        "home_win": -2.252,
+        "draw": -0.166,
+        "away_win": 2.418,
+        "btts_yes": 1.172
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.746072,
+      "away_context_reliability": 0.710181,
+      "base_favorite_side": "home",
+      "base_favorite": "Atlético Madrid",
+      "favorite_probability_delta": -0.02252,
+      "verdict": "baseline_fragile",
+      "goal_environment": "expansive",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only"
+      ]
+    },
+    {
+      "match_id": 6106291,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "fixture": "Manchester United vs Roma",
+      "home_archetype": "Developing possession",
+      "away_archetype": "Territorial controller",
+      "base_xg": {
+        "home": 1.909851,
+        "away": 1.34402,
+        "total": 3.253871
+      },
+      "contextual_xg": {
+        "home": 1.907827,
+        "away": 1.341753,
+        "total": 3.249579
+      },
+      "base_1x2": {
+        "home_win": 0.50626,
+        "draw": 0.22236,
+        "away_win": 0.27138
+      },
+      "contextual_1x2": {
+        "home_win": 0.5063,
+        "draw": 0.2223,
+        "away_win": 0.2714
+      },
+      "probability_change_percentage_points": {
+        "home_win": 0.004,
+        "draw": -0.006,
+        "away_win": 0.002,
+        "btts_yes": -0.09
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.482744,
+      "away_context_reliability": 0.473902,
+      "base_favorite_side": "home",
+      "base_favorite": "Manchester United",
+      "favorite_probability_delta": 4e-05,
+      "verdict": "baseline_supported",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106306,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "fixture": "Feyenoord vs Inter",
+      "home_archetype": "Promoted / forming",
+      "away_archetype": "Territorial controller",
+      "base_xg": {
+        "home": 1.715436,
+        "away": 1.690691,
+        "total": 3.406127
+      },
+      "contextual_xg": {
+        "home": 1.712515,
+        "away": 1.741814,
+        "total": 3.454329
+      },
+      "base_1x2": {
+        "home_win": 0.39428,
+        "draw": 0.22094,
+        "away_win": 0.38478
+      },
+      "contextual_1x2": {
+        "home_win": 0.3853,
+        "draw": 0.22034,
+        "away_win": 0.39436
+      },
+      "probability_change_percentage_points": {
+        "home_win": -0.898,
+        "draw": -0.06,
+        "away_win": 0.958,
+        "btts_yes": 0.818
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.471294,
+      "away_context_reliability": 0.53412,
+      "base_favorite_side": "home",
+      "base_favorite": "Feyenoord",
+      "favorite_probability_delta": -0.00898,
+      "verdict": "no_clear_contextual_edge",
+      "goal_environment": "expansive",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106316,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "fixture": "Bodø/Glimt vs Lille",
+      "home_archetype": "Territorial controller",
+      "away_archetype": "Promoted / forming",
+      "base_xg": {
+        "home": 1.607119,
+        "away": 1.441193,
+        "total": 3.048312
+      },
+      "contextual_xg": {
+        "home": 1.622708,
+        "away": 1.454864,
+        "total": 3.077572
+      },
+      "base_1x2": {
+        "home_win": 0.41698,
+        "draw": 0.2402,
+        "away_win": 0.34282
+      },
+      "contextual_1x2": {
+        "home_win": 0.41834,
+        "draw": 0.2387,
+        "away_win": 0.34296
+      },
+      "probability_change_percentage_points": {
+        "home_win": 0.136,
+        "draw": -0.15,
+        "away_win": 0.014,
+        "btts_yes": 0.568
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Set pieces",
+      "home_context_reliability": 0.64037,
+      "away_context_reliability": 0.527207,
+      "base_favorite_side": "home",
+      "base_favorite": "Bodø/Glimt",
+      "favorite_probability_delta": 0.00136,
+      "verdict": "baseline_supported",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106326,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "fixture": "Villarreal vs Paris Saint-Germain",
+      "home_archetype": "Developing possession",
+      "away_archetype": "Territorial controller",
+      "base_xg": {
+        "home": 1.828221,
+        "away": 1.543599,
+        "total": 3.37182
+      },
+      "contextual_xg": {
+        "home": 1.829685,
+        "away": 1.589279,
+        "total": 3.418964
+      },
+      "base_1x2": {
+        "home_win": 0.4444,
+        "draw": 0.22338,
+        "away_win": 0.33222
+      },
+      "contextual_1x2": {
+        "home_win": 0.43764,
+        "draw": 0.22114,
+        "away_win": 0.34122
+      },
+      "probability_change_percentage_points": {
+        "home_win": -0.676,
+        "draw": -0.224,
+        "away_win": 0.9,
+        "btts_yes": 0.914
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.76605,
+      "away_context_reliability": 0.740726,
+      "base_favorite_side": "home",
+      "base_favorite": "Villarreal",
+      "favorite_probability_delta": -0.00676,
+      "verdict": "no_clear_contextual_edge",
+      "goal_environment": "expansive",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only"
+      ]
+    },
+    {
+      "match_id": 6106408,
+      "kickoff_utc": "2026-11-03T20:00:00Z",
+      "fixture": "LASK vs Slovan Bratislava",
+      "home_archetype": "Promoted / forming",
+      "away_archetype": "Promoted / forming",
+      "base_xg": {
+        "home": 2.324037,
+        "away": 1.266412,
+        "total": 3.590449
+      },
+      "contextual_xg": {
+        "home": 2.399303,
+        "away": 1.251466,
+        "total": 3.650769
+      },
+      "base_1x2": {
+        "home_win": 0.61118,
+        "draw": 0.19174,
+        "away_win": 0.19708
+      },
+      "contextual_1x2": {
+        "home_win": 0.62924,
+        "draw": 0.1856,
+        "away_win": 0.18516
+      },
+      "probability_change_percentage_points": {
+        "home_win": 1.806,
+        "draw": -0.614,
+        "away_win": -1.192,
+        "btts_yes": 0.172
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.423,
+      "away_context_reliability": 0.379525,
+      "base_favorite_side": "home",
+      "base_favorite": "LASK",
+      "favorite_probability_delta": 0.01806,
+      "verdict": "baseline_reinforced",
+      "goal_environment": "expansive",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106330,
+      "kickoff_utc": "2026-11-04T17:45:00Z",
+      "fixture": "Fenerbahçe vs Liverpool",
+      "home_archetype": "Promoted / forming",
+      "away_archetype": "Territorial controller",
+      "base_xg": {
+        "home": 1.374634,
+        "away": 1.734639,
+        "total": 3.109273
+      },
+      "contextual_xg": {
+        "home": 1.345841,
+        "away": 1.770889,
+        "total": 3.11673
+      },
+      "base_1x2": {
+        "home_win": 0.30072,
+        "draw": 0.2337,
+        "away_win": 0.46558
+      },
+      "contextual_1x2": {
+        "home_win": 0.28982,
+        "draw": 0.23116,
+        "away_win": 0.47902
+      },
+      "probability_change_percentage_points": {
+        "home_win": -1.09,
+        "draw": -0.254,
+        "away_win": 1.344,
+        "btts_yes": -0.164
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.481139,
+      "away_context_reliability": 0.446659,
+      "base_favorite_side": "away",
+      "base_favorite": "Liverpool",
+      "favorite_probability_delta": 0.01344,
+      "verdict": "baseline_reinforced",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106401,
+      "kickoff_utc": "2026-11-04T17:45:00Z",
+      "fixture": "AEK Athens vs Real Madrid",
+      "home_archetype": "Promoted / forming",
+      "away_archetype": "Developing possession",
+      "base_xg": {
+        "home": 1.390923,
+        "away": 1.869216,
+        "total": 3.260139
+      },
+      "contextual_xg": {
+        "home": 1.35102,
+        "away": 1.941418,
+        "total": 3.292438
+      },
+      "base_1x2": {
+        "home_win": 0.28726,
+        "draw": 0.22344,
+        "away_win": 0.4893
+      },
+      "contextual_1x2": {
+        "home_win": 0.26748,
+        "draw": 0.21622,
+        "away_win": 0.5163
+      },
+      "probability_change_percentage_points": {
+        "home_win": -1.978,
+        "draw": -0.722,
+        "away_win": 2.7,
+        "btts_yes": -0.14
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.456135,
+      "away_context_reliability": 0.480174,
+      "base_favorite_side": "away",
+      "base_favorite": "Real Madrid",
+      "favorite_probability_delta": 0.027,
+      "verdict": "baseline_reinforced",
+      "goal_environment": "expansive",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106271,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "fixture": "Borussia Dortmund vs Real Betis",
+      "home_archetype": "Developing possession",
+      "away_archetype": "Promoted / forming",
+      "base_xg": {
+        "home": 1.803991,
+        "away": 1.157187,
+        "total": 2.961177
+      },
+      "contextual_xg": {
+        "home": 1.829328,
+        "away": 1.138826,
+        "total": 2.968154
+      },
+      "base_1x2": {
+        "home_win": 0.52574,
+        "draw": 0.22994,
+        "away_win": 0.24432
+      },
+      "contextual_1x2": {
+        "home_win": 0.53452,
+        "draw": 0.22804,
+        "away_win": 0.23744
+      },
+      "probability_change_percentage_points": {
+        "home_win": 0.878,
+        "draw": -0.19,
+        "away_win": -0.688,
+        "btts_yes": -0.104
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.536536,
+      "away_context_reliability": 0.551464,
+      "base_favorite_side": "home",
+      "base_favorite": "Borussia Dortmund",
+      "favorite_probability_delta": 0.00878,
+      "verdict": "baseline_supported",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106288,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "fixture": "FC Porto vs Napoli",
+      "home_archetype": "Promoted / forming",
+      "away_archetype": "Developing possession",
+      "base_xg": {
+        "home": 1.66617,
+        "away": 1.442326,
+        "total": 3.108496
+      },
+      "contextual_xg": {
+        "home": 1.687867,
+        "away": 1.440685,
+        "total": 3.128551
+      },
+      "base_1x2": {
+        "home_win": 0.42724,
+        "draw": 0.23946,
+        "away_win": 0.3333
+      },
+      "contextual_1x2": {
+        "home_win": 0.43286,
+        "draw": 0.23838,
+        "away_win": 0.32876
+      },
+      "probability_change_percentage_points": {
+        "home_win": 0.562,
+        "draw": -0.108,
+        "away_win": -0.454,
+        "btts_yes": 0.216
+      },
+      "home_preferred_route": "Set pieces",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.568137,
+      "away_context_reliability": 0.607385,
+      "base_favorite_side": "home",
+      "base_favorite": "FC Porto",
+      "favorite_probability_delta": 0.00562,
+      "verdict": "baseline_supported",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106303,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "fixture": "PSV Eindhoven vs Club Brugge",
+      "home_archetype": "Territorial controller",
+      "away_archetype": "Developing possession",
+      "base_xg": {
+        "home": 1.977608,
+        "away": 1.401127,
+        "total": 3.378736
+      },
+      "contextual_xg": {
+        "home": 2.006679,
+        "away": 1.401662,
+        "total": 3.408341
+      },
+      "base_1x2": {
+        "home_win": 0.50864,
+        "draw": 0.2204,
+        "away_win": 0.27096
+      },
+      "contextual_1x2": {
+        "home_win": 0.51622,
+        "draw": 0.21806,
+        "away_win": 0.26572
+      },
+      "probability_change_percentage_points": {
+        "home_win": 0.758,
+        "draw": -0.234,
+        "away_win": -0.524,
+        "btts_yes": 0.246
+      },
+      "home_preferred_route": "Box pressure",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.453788,
+      "away_context_reliability": 0.461201,
+      "base_favorite_side": "home",
+      "base_favorite": "PSV Eindhoven",
+      "favorite_probability_delta": 0.00758,
+      "verdict": "baseline_supported",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106322,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "fixture": "RB Leipzig vs Manchester City",
+      "home_archetype": "Promoted / forming",
+      "away_archetype": "Territorial controller",
+      "base_xg": {
+        "home": 1.649293,
+        "away": 1.75947,
+        "total": 3.408763
+      },
+      "contextual_xg": {
+        "home": 1.633095,
+        "away": 1.793456,
+        "total": 3.426551
+      },
+      "base_1x2": {
+        "home_win": 0.3586,
+        "draw": 0.22772,
+        "away_win": 0.41368
+      },
+      "contextual_1x2": {
+        "home_win": 0.35292,
+        "draw": 0.22678,
+        "away_win": 0.4203
+      },
+      "probability_change_percentage_points": {
+        "home_win": -0.568,
+        "draw": -0.094,
+        "away_win": 0.662,
+        "btts_yes": 0.048
+      },
+      "home_preferred_route": "Set pieces",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.575454,
+      "away_context_reliability": 0.454479,
+      "base_favorite_side": "away",
+      "base_favorite": "Manchester City",
+      "favorite_probability_delta": 0.00662,
+      "verdict": "baseline_supported",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106389,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "fixture": "Slavia Prague vs Arsenal",
+      "home_archetype": "Developing possession",
+      "away_archetype": "Territorial controller",
+      "base_xg": {
+        "home": 1.207649,
+        "away": 1.673449,
+        "total": 2.881097
+      },
+      "contextual_xg": {
+        "home": 1.175969,
+        "away": 1.723274,
+        "total": 2.899243
+      },
+      "base_1x2": {
+        "home_win": 0.27404,
+        "draw": 0.2427,
+        "away_win": 0.48326
+      },
+      "contextual_1x2": {
+        "home_win": 0.25994,
+        "draw": 0.23886,
+        "away_win": 0.5012
+      },
+      "probability_change_percentage_points": {
+        "home_win": -1.41,
+        "draw": -0.384,
+        "away_win": 1.794,
+        "btts_yes": -0.272
+      },
+      "home_preferred_route": "Set pieces",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.529533,
+      "away_context_reliability": 0.476744,
+      "base_favorite_side": "away",
+      "base_favorite": "Arsenal",
+      "favorite_probability_delta": 0.01794,
+      "verdict": "baseline_reinforced",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106416,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "fixture": "Lens vs Como",
+      "home_archetype": "Promoted / forming",
+      "away_archetype": "Promoted / forming",
+      "base_xg": {
+        "home": 1.741191,
+        "away": 1.454972,
+        "total": 3.196163
+      },
+      "contextual_xg": {
+        "home": 1.749413,
+        "away": 1.453396,
+        "total": 3.202809
+      },
+      "base_1x2": {
+        "home_win": 0.44356,
+        "draw": 0.22878,
+        "away_win": 0.32766
+      },
+      "contextual_1x2": {
+        "home_win": 0.44606,
+        "draw": 0.2279,
+        "away_win": 0.32604
+      },
+      "probability_change_percentage_points": {
+        "home_win": 0.25,
+        "draw": -0.088,
+        "away_win": -0.162,
+        "btts_yes": 0.084
+      },
+      "home_preferred_route": "Set pieces",
+      "away_preferred_route": "Box pressure",
+      "home_context_reliability": 0.324692,
+      "away_context_reliability": 0.326677,
+      "base_favorite_side": "home",
+      "base_favorite": "Lens",
+      "favorite_probability_delta": 0.0025,
+      "verdict": "baseline_supported",
+      "goal_environment": "neutral",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "match_id": 6106420,
+      "kickoff_utc": "2026-11-04T20:00:00Z",
+      "fixture": "Viking vs Sabah FK",
+      "home_archetype": "Direct / wide / set-piece",
+      "away_archetype": "Direct / wide / set-piece",
+      "base_xg": {
+        "home": 1.695885,
+        "away": 1.602496,
+        "total": 3.298381
+      },
+      "contextual_xg": {
+        "home": 1.705769,
+        "away": 1.623901,
+        "total": 3.329669
+      },
+      "base_1x2": {
+        "home_win": 0.4053,
+        "draw": 0.22986,
+        "away_win": 0.36484
+      },
+      "contextual_1x2": {
+        "home_win": 0.40454,
+        "draw": 0.22672,
+        "away_win": 0.36874
+      },
+      "probability_change_percentage_points": {
+        "home_win": -0.076,
+        "draw": -0.314,
+        "away_win": 0.39,
+        "btts_yes": 0.31
+      },
+      "home_preferred_route": "Set pieces",
+      "away_preferred_route": "Set pieces",
+      "home_context_reliability": 0.320334,
+      "away_context_reliability": 0.312137,
+      "base_favorite_side": "home",
+      "base_favorite": "Viking",
+      "favorite_probability_delta": -0.00076,
+      "verdict": "no_clear_contextual_edge",
+      "goal_environment": "expansive",
+      "quality_flags": [
+        "context_coefficient_not_learned_from_residuals",
+        "context_shadow_sensitivity_only",
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    }
+  ],
+  "decision_boundaries": {
+    "archetype_label_used_in_math": false,
+    "base_60_30_10_modified": false,
+    "coefficient_learned_from_residuals": false,
+    "probability_validated": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  },
+  "quality_flags": [
+    "first_live_contextual_shadow",
+    "context_coefficient_not_learned_from_residuals",
+    "do_not_use_for_capital_deployment"
+  ]
+}

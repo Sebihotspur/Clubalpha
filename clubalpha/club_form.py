@@ -122,10 +122,41 @@ def _mean(values: Iterable[float | None]) -> float | None:
     return statistics.mean(present) if present else None
 
 
+def league_strength_offset(
+    row: dict[str, Any], league_policy: dict[str, Any] | None
+) -> tuple[str, float]:
+    """Translate competition-relative form onto the locked league ladder.
+
+    The offset is applied once, after the within-competition opponent
+    adjustment.  Applying it before that adjustment would count the same
+    league strength again through the opponent baseline.  Preseason remains
+    neutral because it already has a discounted source weight and does not
+    represent a stable competition level.
+    """
+
+    if not league_policy:
+        return "disabled", 0.0
+    scope = str(row.get("source_scope") or "")
+    if scope == "preseason_2026":
+        return "Preseason neutral", 0.0
+    if scope.startswith("champions_league"):
+        key = "Champions League"
+    else:
+        key = league_policy["fotmob_league_id_to_key"].get(
+            str(row.get("competition_id")), league_policy["default_key"]
+        )
+    return key, float(
+        league_policy["offsets"].get(key, league_policy["default_offset"])
+    )
+
+
 def score_match_observations(
-    rows: list[dict[str, Any]], as_of: date, config: dict[str, Any]
+    rows: list[dict[str, Any]],
+    as_of: date,
+    config: dict[str, Any],
+    league_policy: dict[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, dict[str, dict[str, Any]]]]:
-    """Competition-normalise match metrics and adjust for opponent strength."""
+    """Competition-normalise matches and translate them across league levels."""
 
     metrics = [item["key"] for item in config["form_metrics"]]
     scales = fit_peer_scales(rows, config)
@@ -173,6 +204,9 @@ def score_match_observations(
         row["recency_weight"] = round(0.5 ** (age_days / half_life), 8)
         row["source_weight"] = source_weight
         row["base_match_weight"] = round(row["recency_weight"] * source_weight, 8)
+        league_key, league_offset = league_strength_offset(row, league_policy)
+        row["league_strength_key"] = league_key
+        row["league_strength_offset_z"] = league_offset
         scored.append(row)
 
     by_team_group: dict[tuple[str, int], list[dict[str, Any]]] = defaultdict(list)
@@ -208,12 +242,18 @@ def score_match_observations(
         }
         attack = row.get("attack_match_z_raw")
         defense = row.get("defense_match_z_raw")
-        row["attack_match_z_adjusted"] = (
-            round(float(attack) + opponent_defense, 6) if attack is not None else None
-        )
-        row["defense_match_z_adjusted"] = (
-            round(float(defense) + opponent_attack, 6) if defense is not None else None
-        )
+        league_offset = float(row["league_strength_offset_z"])
+
+        def translated(value: float | None, opponent: float) -> float | None:
+            if value is None:
+                return None
+            adjusted = float(value) + opponent + league_offset
+            if league_policy:
+                adjusted = max(-cap, min(cap, adjusted))
+            return round(adjusted, 6)
+
+        row["attack_match_z_adjusted"] = translated(attack, opponent_defense)
+        row["defense_match_z_adjusted"] = translated(defense, opponent_attack)
     return scored, scales
 
 

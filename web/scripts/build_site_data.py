@@ -27,7 +27,9 @@ RESEARCH_LOOP_DIR = ROOT / "artifacts/research_loop"
 FIXTURE_CALIBRATION_DIR = ROOT / "artifacts/fixture_calibration"
 BACKTEST_REPORT_PATTERN = "contextual-interaction-v1-backtest-*.json"
 UCL_MATCHDAY_REVIEW = ROOT / "reports/ucl-matchday-1-review.json"
-UCL_ALPHA_CYCLE = ROOT / "reports/ucl-alpha-cycle-2026-10-27.json"
+UCL_ALPHA_CYCLE = (
+    ROOT / "reports/ucl-alpha-cycle-2026-10-27-league-adjusted.json"
+)
 PL_MIDWEEK_REVIEW = ROOT / "reports/pl-midweek-review-2026-09-17.json"
 CURRENT_MARKET_SNAPSHOT = (
     ROOT / "artifacts/market_snapshots/2026-10-06-mw6-polymarket.json"
@@ -398,12 +400,18 @@ def build():
         raise ValueError("UCL website requires the shared Player Alpha formulas")
     if not ucl_alpha_cycle["integrity"]["ucl_calibration_separate"]:
         raise ValueError("UCL and Premier League calibration must remain separate")
+    if not ucl_alpha_cycle["integrity"][
+        "club_form_league_strength_adjusted"
+    ]:
+        raise ValueError("UCL website requires league-strength-adjusted Club Form")
     if ucl_alpha_cycle["integrity"]["capital_deployment_ready"]:
         raise ValueError("UCL website refuses capital-ready research")
     if ucl_alpha_cycle["completed_evidence"]["matches"] != 54:
         raise ValueError("UCL catch-up requires 54 completed observations")
     if ucl_alpha_cycle["upcoming"]["fixtures"] != 18:
         raise ValueError("UCL Matchday 4 requires 18 upcoming fixtures")
+    if ucl_alpha_cycle["domestic_evidence"]["completed_matches"] < 286:
+        raise ValueError("UCL website requires the October 27 domestic refresh")
     pl_midweek_review = {"matches": []}
     current_market_snapshot = load_json(CURRENT_MARKET_SNAPSHOT)
     current_matchweek_settlement = load_json(CURRENT_MATCHWEEK_SETTLEMENT)
@@ -977,7 +985,7 @@ def build():
 
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_15_ucl_alpha_cycle",
+            "site_version": "clubalpha_web_v0_16_ucl_league_translation",
             "prediction_version": official_report["report_version"],
             "as_of": official_report["as_of_utc"],
             "generated_at_utc": upcoming_decisions["generated_at_utc"],

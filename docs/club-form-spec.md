@@ -50,6 +50,25 @@ Missing does not mean zero. A score-only friendly supplies goals but not xG,
 shots on target, or big chances, so it retains one-quarter metric coverage and
 substantially less evidence than a detailed match.
 
+### Cross-league translation
+
+Competition-relative dominance is not automatically equivalent across leagues.
+After the within-competition opponent adjustment, Club Form applies the locked
+Player Quality v2 league-quality offset exactly once:
+
+```text
+translated_attack  = adjusted_attack  + league_quality_offset
+translated_defence = adjusted_defence + league_quality_offset
+```
+
+For example, the current ladder assigns the Premier League `+0.45`, LaLiga
+`+0.36`, the Bundesliga `+0.30`, the Norwegian league `-0.72`, and the default
+unresolved level `-0.90`. Champions League matches use `+0.36`. Preseason stays
+neutral because it already has a discounted and capped source weight. The
+offset is applied after opponent adjustment so it is not counted again through
+the opponent's same-league baseline. This changes Club Form comparability only;
+the locked Player Alpha formulas remain untouched.
+
 Total shots and touches in the opposition box are preserved as diagnostics but
 do not yet enter the score. Adding correlated metrics without validation would
 only create hidden weighting.

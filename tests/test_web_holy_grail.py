@@ -277,7 +277,7 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertIn("Liverpool–Arsenal Under 2.5 at 60.0%", app_js)
         self.assertIn("Settled research slate · Matchweek ${esc(latest.round)}", app_js)
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
-        self.assertIn('/app.js?v=0.15.0-ucl-alpha-cycle', index_html)
+        self.assertIn('/app.js?v=0.16.0-ucl-league-translation', index_html)
 
     def test_ucl_uses_shared_alpha_with_separate_calibration(self):
         cycle = self.data["ucl_alpha_cycle"]
@@ -287,6 +287,8 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertEqual(cycle["upcoming"]["simulations"], 900000)
         self.assertEqual(cycle["projected_xi_alpha"]["clubs"], 36)
         self.assertEqual(cycle["projected_xi_alpha"]["rated_clubs"], 34)
+        self.assertEqual(cycle["domestic_evidence"]["completed_matches"], 286)
+        self.assertEqual(cycle["domestic_evidence"]["competitions"], 15)
         self.assertEqual(
             set(cycle["projected_xi_alpha"]["unrated_clubs"]),
             {"Sabah FK", "Shakhtar Donetsk"},
@@ -296,13 +298,14 @@ class WebHolyGrailTests(unittest.TestCase):
             integrity["same_player_alpha_formulas_as_premier_league"]
         )
         self.assertTrue(integrity["same_squad_selection_policy_as_premier_league"])
+        self.assertTrue(integrity["club_form_league_strength_adjusted"])
         self.assertTrue(integrity["ucl_calibration_separate"])
         self.assertFalse(integrity["ucl_specific_calibration_available"])
         self.assertFalse(integrity["research_candidates_are_promoted_calls"])
         self.assertFalse(integrity["capital_deployment_ready"])
         app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
         self.assertIn("UCL Alpha intelligence", app_js)
-        self.assertIn("RESEARCH CANDIDATES ARE NOT PROMOTED CALLS", app_js)
+        self.assertIn("LEAGUE-STRENGTH-ADJUSTED FORM", app_js)
 
     def test_latest_settled_research_week_is_prominent_in_ledger(self):
         app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")

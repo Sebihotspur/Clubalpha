@@ -98,6 +98,64 @@ class TeamMatchNormalizationTests(unittest.TestCase):
 
 
 class FormScoringTests(unittest.TestCase):
+    def test_league_strength_is_applied_once_after_opponent_adjustment(self):
+        config = copy.deepcopy(CONFIG)
+        config["normalisation"]["minimum_peer_team_rows"] = 2
+        policy = {
+            "default_key": "Other",
+            "default_offset": -0.9,
+            "fotmob_league_id_to_key": {"47": "PL"},
+            "offsets": {"PL": 0.45, "Other": -0.9},
+        }
+        rows = []
+        for match_id, score in ((1, "4 - 0"), (2, "0 - 1")):
+            current = fixture(match_id=match_id, score=score)
+            if match_id == 2:
+                current.update(
+                    {
+                        "home_team_id": 10,
+                        "home_team": "Home",
+                        "away_team_id": 30,
+                        "away_team": "Third",
+                    }
+                )
+            rows.extend(flatten_match_team_stats({}, current))
+        without, _ = score_match_observations(rows, date(2026, 8, 18), config)
+        translated, _ = score_match_observations(
+            rows, date(2026, 8, 18), config, league_policy=policy
+        )
+        base = next(
+            row for row in without if row["match_id"] == 1 and row["team_id"] == 10
+        )
+        adjusted = next(
+            row for row in translated if row["match_id"] == 1 and row["team_id"] == 10
+        )
+        self.assertEqual(adjusted["league_strength_key"], "PL")
+        self.assertAlmostEqual(
+            adjusted["attack_match_z_adjusted"]
+            - base["attack_match_z_adjusted"],
+            0.45,
+            places=6,
+        )
+
+    def test_preseason_is_neutral_on_the_league_ladder(self):
+        config = copy.deepcopy(CONFIG)
+        config["normalisation"]["minimum_peer_team_rows"] = 2
+        policy = {
+            "default_key": "Other",
+            "default_offset": -0.9,
+            "fotmob_league_id_to_key": {},
+            "offsets": {"Other": -0.9},
+        }
+        rows = flatten_match_team_stats(
+            {}, {**fixture(), "source_scope": "preseason_2026"}
+        )
+        scored, _ = score_match_observations(
+            rows, date(2026, 8, 18), config, league_policy=policy
+        )
+        self.assertEqual(scored[0]["league_strength_key"], "Preseason neutral")
+        self.assertEqual(scored[0]["league_strength_offset_z"], 0.0)
+
     def test_opponent_baseline_excludes_the_same_match(self):
         config = copy.deepcopy(CONFIG)
         config["normalisation"]["minimum_peer_team_rows"] = 2
