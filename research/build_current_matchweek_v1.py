@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a dated, fixture-specific Premier League shadow baseline.
+"""Build a dated, fixture-specific competition shadow baseline.
 
 This runner reuses the locked component scales and goal model.  It refreshes
 only the pre-match football inputs: Club Form, the v2 projected XI, Player
@@ -71,7 +71,10 @@ def display_path(path: Path) -> str:
 
 def lineup_inputs(alpha_club: dict[str, Any]) -> tuple[float, float]:
     alpha = alpha_club["alpha"]["overall_alpha_ability"]
-    quality = float(alpha["z"])
+    # Missing Alpha must remain neutral and reduce coverage.  Treating an
+    # unmapped foreign XI as a negative grade would manufacture an opponent
+    # advantage from a source gap.
+    quality = float(alpha.get("z") or 0.0)
     coverage = float(alpha.get("coverage") or 0.0)
     weighted_matches = float(
         (alpha_club.get("evidence") or {}).get("weighted_matches") or 0.0
@@ -91,6 +94,7 @@ def build_state(
     as_of: date,
     fixture_config: dict[str, Any],
     historical_config: dict[str, Any],
+    competition_family: str,
 ) -> dict[str, Any]:
     history = historical_residuals(
         historical,
@@ -139,7 +143,7 @@ def build_state(
         ),
         "goal_model_handoff": {
             "competition_baseline": {
-                "competition_family": "premier_league",
+                "competition_family": competition_family,
                 "home_xg": baseline["home_mean"],
                 "away_xg": baseline["away_mean"],
             }
@@ -173,6 +177,10 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--as-of", required=True)
     parser.add_argument("--round", type=int, required=True)
+    parser.add_argument("--competition", default="Premier League")
+    parser.add_argument("--source-scope", default="premier_league_current")
+    parser.add_argument("--competition-family", default="premier_league")
+    parser.add_argument("--expected-fixtures", type=int, default=10)
     parser.add_argument(
         "--fixtures",
         type=Path,
@@ -183,7 +191,13 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=ROOT / "data/processed/club_form/club_form.jsonl",
     )
-    parser.add_argument("--premier-league-alpha", type=Path, required=True)
+    parser.add_argument(
+        "--projected-xi-alpha",
+        "--premier-league-alpha",
+        dest="projected_xi_alpha",
+        type=Path,
+        required=True,
+    )
     parser.add_argument(
         "--historical-fixtures",
         type=Path,
@@ -239,20 +253,21 @@ def main() -> int:
     fixtures = [
         row
         for row in load_jsonl(args.fixtures)
-        if row.get("source_scope") == "premier_league_current"
+        if row.get("source_scope") == args.source_scope
         and int(row.get("round") or -1) == args.round
         and not row.get("finished")
         and not row.get("cancelled")
         and str(row.get("kickoff_utc") or "")[:10] > args.as_of
     ]
-    if len(fixtures) != 10:
+    if len(fixtures) != args.expected_fixtures:
         raise ValueError(
-            f"expected ten future Premier League fixtures in round {args.round}; "
+            f"expected {args.expected_fixtures} future {args.competition} fixtures "
+            f"in round {args.round}; "
             f"found {len(fixtures)}"
         )
 
     forms = {row["team"]: row for row in load_jsonl(args.club_form)}
-    alpha_report = load_json(args.premier_league_alpha)
+    alpha_report = load_json(args.projected_xi_alpha)
     if alpha_report.get("as_of") != args.as_of:
         raise ValueError("projected-XI Alpha snapshot date does not match slate date")
     alpha = {row["team"]: row for row in alpha_report["clubs"]}
@@ -293,6 +308,7 @@ def main() -> int:
                 as_of,
                 fixture_config,
                 historical_config,
+                args.competition_family,
             )
         )
 
@@ -334,6 +350,8 @@ def main() -> int:
             "version": "clubalpha_current_matchweek_v1",
             "status": "shadow_only",
             "as_of": args.as_of,
+            "competition": args.competition,
+            "source_scope": args.source_scope,
             "round": args.round,
             "fixtures": len(predictions),
             "simulations_per_fixture": prediction_config["simulation"]["draws"],
@@ -351,7 +369,7 @@ def main() -> int:
     input_paths = {
         "fixtures": args.fixtures,
         "club_form": args.club_form,
-        "premier_league_alpha": args.premier_league_alpha,
+        "projected_xi_alpha": args.projected_xi_alpha,
         "historical_fixtures": args.historical_fixtures,
         "scored_history": args.scored_history,
         "component_scales": args.component_scales,

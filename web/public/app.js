@@ -238,7 +238,7 @@ function uclPlayerRows(players) {
     .join("");
 }
 
-function ucl(data) {
+function uclLegacy(data) {
   const review = data.ucl_matchday;
   const aggregate = review.aggregate;
   const alpha = review.player_alpha;
@@ -304,6 +304,56 @@ function ucl(data) {
     ${watch ? `<section class="section"><div class="section-head"><h2>Chelsea research watch</h2><span class="panel-label">EFL Cup · excluded from PL/UCL ledgers</span></div><article class="pick-card cup-watch"><div class="pick-main"><div class="pick-tag"><span></span> CROSS-COMPETITION EVIDENCE</div><p class="fixture-kicker">${esc(dateTime(watch.kickoff_utc))}</p><h2 class="pick-title">${esc(watch.home_team)} ${esc(watch.score)} ${esc(watch.away_team)}</h2><div class="pick-market">xG ${dec(watch.xg.home)}–${dec(watch.xg.away)}</div><p class="cup-read">${esc(watch.model_read)}</p><div class="pick-reasons">${watchPlayers}</div></div><div class="pick-numbers"><div class="pick-number"><span class="label">Chelsea SOT</span><strong class="green">${dec(watch.team_stats.home.shots_on_target, 0)}</strong><small>${dec(watch.team_stats.home.big_chances, 0)} big chances</small></div><div class="pick-number"><span class="label">Leeds box touches</span><strong class="yellow">${dec(watch.team_stats.away.box_touches, 0)}</strong><small>Defensive warning</small></div><div class="pick-number"><span class="label">Leeds set-piece xG</span><strong class="yellow">${dec(watch.team_stats.away.set_piece_xg)}</strong><small>Repeatable matchup signal</small></div><div class="pick-number"><span class="label">Ledger impact</span><strong>NONE</strong><small>Research evidence only</small></div></div></article></section>` : ""}
 
     <p class="notice">LEARNING BOUNDARY · UCL Matchday 1 can update shared form, style, lineup and player-role evidence. It cannot rewrite Player Alpha, the 60/30/10 foundation, UCL goal calibration, or capital status after one round.</p>`;
+}
+
+function ucl(data) {
+  const cycle = data.ucl_alpha_cycle;
+  const evidence = cycle.completed_evidence;
+  const upcoming = cycle.upcoming;
+  const candidateRows = upcoming.predictions.map((match) => {
+    const side = match.side_research_candidate;
+    const total = match.total_research_candidate;
+    const leader = side.leader === "home_win" ? match.home_team : side.leader === "away_win" ? match.away_team : "Draw";
+    const sideRead = side.call === "pass" ? `Pass · ${leader} lean` : `Candidate · ${leader}`;
+    const totalRead = total.call === "over_2_5"
+      ? `Candidate · Over 2.5 ${pct(total.call_probability)}`
+      : total.call === "under_2_5"
+        ? `Candidate · Under 2.5 ${pct(total.call_probability)}`
+        : `Pass · O2.5 ${pct(total.over_probability)}`;
+    return `<tr>
+      <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · xG ${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</span></td>
+      <td>${resultPills(match)}</td>
+      <td class="official-call"><strong>${esc(sideRead)}</strong><span>${pct(side.leader_probability)} · ${esc(side.reason.replaceAll("_", " "))}</span></td>
+      <td class="official-call"><strong>${esc(totalRead)}</strong><span>${esc(total.reason.replaceAll("_", " "))}</span></td>
+      <td><span class="status-chip">${esc(match.context_verdict.replaceAll("_", " "))}</span></td>
+    </tr>`;
+  }).join("");
+  const alphaRows = cycle.projected_xi_alpha.top_clubs.map((club) => `<tr>
+    <td>${club.rank}</td>
+    <td class="fixture-cell"><strong>${esc(club.team)}</strong><span>${esc(club.grade)} · ${pct(club.coverage)} coverage</span></td>
+    <td class="prob-main">${dec(club.strength_index, 1)}</td>
+    <td>${signed(club.alpha_z, 3)}</td>
+  </tr>`).join("");
+  const matchdayRows = evidence.alpha_minute_coverage_by_matchday.map((row) => `<div class="gate-row"><span>Matchday ${row.matchday}</span><span>${pct(row.coverage)} coverage · ${dec(row.rating_alpha_correlation, 3)} rating correlation</span></div>`).join("");
+  return `<section class="page-head ucl-page-head">
+      <p class="eyebrow">Champions League · Matchdays 1–3 learned · Matchday ${upcoming.matchday} provisional</p>
+      <h1>UCL Alpha intelligence</h1>
+      <p>The Champions League now runs through the same projected-XI Player Alpha generator, 60/30/10 fixture foundation, matchup context and 50,000-match simulation used for the Premier League.</p>
+      <div class="notice">SHARED PLAYER ALPHA · SEPARATE UCL CALIBRATION · RESEARCH CANDIDATES ARE NOT PROMOTED CALLS · ZERO CAPITAL</div>
+    </section>
+    <section class="metrics">
+      ${metric("Completed evidence", `${evidence.matches} matches`, "UCL Matchdays 1–3", "accent")}
+      ${metric("Projected-XI Alpha", `${cycle.projected_xi_alpha.rated_clubs}/${cycle.projected_xi_alpha.clubs} rated`, `${cycle.projected_xi_alpha.unrated_clubs.length} explicit coverage gaps`, "amber")}
+      ${metric("Matchday 4", `${upcoming.simulations.toLocaleString()} simulations`, `${upcoming.fixtures} fixtures`)}
+      ${metric("Deployment", "NO CAPITAL", "UCL calibration not yet available", "amber")}
+    </section>
+    <section class="section"><div class="section-head"><h2>What the first 54 matches taught us</h2><span class="panel-label">Observed results · never retroactive predictions</span></div><div class="foundation-grid">
+      <article class="foundation-card"><span class="foundation-num">GOAL ENVIRONMENT</span><h3>${evidence.goals} goals · ${dec(evidence.total_xg)} xG</h3><p>${pct(evidence.over_2_5 / evidence.matches)} finished Over 2.5. The ${signed(evidence.goals - evidence.total_xg)} goals-minus-xG gap is finishing heat, not an automatic model coefficient.</p></article>
+      <article class="foundation-card"><span class="foundation-num">RESULT SHAPE</span><h3>${evidence.home_wins}H · ${evidence.draws}D · ${evidence.away_wins}A</h3><p>Score and xG winner aligned in ${evidence.score_xg_winner_alignment}/${evidence.matches} fixtures. Process remains the primary learning signal.</p></article>
+      <article class="foundation-card"><span class="foundation-num">PLAYER ALPHA</span><h3>Coverage stable near 84%</h3><div class="gate-list">${matchdayRows}</div></article>
+    </div></section>
+    <section class="section"><div class="section-head"><h2>Matchday ${upcoming.matchday} provisional research slate</h2><span class="panel-label">${upcoming.summary.side_research_candidates} side candidates · ${upcoming.summary.total_research_candidates} totals candidates</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>H · D · A</th><th>1X2 research</th><th>O/U 2.5 research</th><th>Context</th></tr></thead><tbody>${candidateRows}</tbody></table></div><p class="notice">CALIBRATION GATE · These are raw research candidates from the shared football stack. No UCL-specific venue, draw or tempo calibration exists yet, so none is a promoted prediction or allocation.</p></section>
+    <section class="section"><div class="section-head"><h2>Current projected-XI Alpha leaders</h2><span class="panel-label">Same position formulas as Premier League · UCL-relative display index</span></div><div class="table-shell"><table><thead><tr><th>#</th><th>Club</th><th>Strength index</th><th>Projected-XI Alpha z</th></tr></thead><tbody>${alphaRows}</tbody></table></div><p class="notice">COVERAGE QUEUE · ${esc(cycle.projected_xi_alpha.unrated_clubs.join(" and "))} currently have zero mapped projected-XI Alpha coverage. They remain neutral and cannot qualify a foundation-aligned side candidate.</p></section>`;
 }
 
 function verdictLabel(value) {

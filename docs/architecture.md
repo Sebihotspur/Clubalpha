@@ -24,6 +24,15 @@ learning samples never cross buckets: a UCL performance by an English club can
 update what is known about the club and its likely XI, but it is not recorded as
 a Premier League prediction or Premier League calibration result.
 
+As of October 27, the same fixture-specific projected-XI Player Alpha generator
+is active for all 36 UCL clubs. The formulas, five-match selection window,
+three-lineup shape vote, 990-minute allocation and attach-Alpha-after-selection
+rule are identical to the Premier League path. UCL Matchdays 1–3 are retained
+as observational learning evidence; Matchday 4 is the first 18-fixture slate
+built through the shared stack. Its research candidates remain unpromoted until
+UCL-specific venue, draw and tempo calibration can be learned chronologically
+from genuinely frozen forecasts.
+
 ## 1. Data Sources
 
 Purpose: supply trustworthy and traceable football data.

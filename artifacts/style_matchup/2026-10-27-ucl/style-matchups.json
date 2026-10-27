@@ -1,0 +1,1132 @@
+{
+  "snapshot_version": "clubalpha_style_matchup_v0",
+  "as_of": "2026-10-27",
+  "generated_at_utc": "2026-10-27T15:41:19.994841+00:00",
+  "status": "research_challenger",
+  "composite_weight": 0,
+  "question": "By which route can one team make the next opponent vulnerable?",
+  "method": {
+    "matchup_read": "70% route fit plus 30% projected-XI execution edge",
+    "route_fit": "mean of attacking route expression and opponent exposure",
+    "decision_boundaries": {
+      "strong_route": 0.25,
+      "leans_favorable": 0.08,
+      "likely_resisted": -0.12
+    },
+    "safeguards": [
+      "No signal modifies the locked 60/30/10 composite.",
+      "High-press and direct-transition exposures are style invitations, not observed defensive failures.",
+      "Wide delivery is partial until aerial and cross-defending player evidence is joined.",
+      "Every route must pass chronological walk-forward validation before receiving model weight."
+    ]
+  },
+  "channels": [
+    {
+      "key": "box_pressure",
+      "label": "Box pressure",
+      "evidence_tier": "measured",
+      "exposure_type": "defensive_exposure",
+      "xi_execution": "chance creation plus scoring threat versus defensive prevention"
+    },
+    {
+      "key": "set_pieces",
+      "label": "Set pieces",
+      "evidence_tier": "measured",
+      "exposure_type": "defensive_exposure",
+      "xi_execution": "scoring threat versus defensive prevention"
+    },
+    {
+      "key": "wide_delivery",
+      "label": "Wide delivery",
+      "evidence_tier": "partial",
+      "exposure_type": "defensive_exposure",
+      "xi_execution": "chance creation versus defensive prevention"
+    },
+    {
+      "key": "high_press",
+      "label": "High press",
+      "evidence_tier": "hypothesis",
+      "exposure_type": "style_invitation",
+      "xi_execution": "defensive prevention versus opponent chance creation"
+    },
+    {
+      "key": "direct_transition",
+      "label": "Direct transition",
+      "evidence_tier": "hypothesis",
+      "exposure_type": "style_invitation",
+      "xi_execution": "scoring threat versus defensive prevention"
+    }
+  ],
+  "teams": [
+    {
+      "team_id": 8563,
+      "team": "AEK Athens",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": 0.002,
+        "set_pieces": 0.056,
+        "wide_delivery": 0.022,
+        "high_press": 0.0,
+        "direct_transition": -0.079
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.26,
+        "set_pieces": -0.071,
+        "wide_delivery": -0.277,
+        "high_press": 0.252,
+        "direct_transition": -0.026
+      },
+      "projected_xi": {
+        "attacking_unit": -0.575,
+        "scoring_threat": -0.435,
+        "chance_creation": -0.297,
+        "defensive_prevention": -0.856,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 9825,
+      "team": "Arsenal",
+      "archetype_key": "territorial_controller",
+      "archetype": "Territorial controller",
+      "route_expression": {
+        "box_pressure": 0.534,
+        "set_pieces": 0.215,
+        "wide_delivery": 0.027,
+        "high_press": 1.254,
+        "direct_transition": -0.12
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.449,
+        "set_pieces": -0.402,
+        "wide_delivery": -0.475,
+        "high_press": 0.502,
+        "direct_transition": 0.603
+      },
+      "projected_xi": {
+        "attacking_unit": 0.555,
+        "scoring_threat": 0.286,
+        "chance_creation": 0.346,
+        "defensive_prevention": 0.442,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 10252,
+      "team": "Aston Villa",
+      "archetype_key": "adaptive_hybrid",
+      "archetype": "Adaptive hybrid",
+      "route_expression": {
+        "box_pressure": -0.081,
+        "set_pieces": -0.175,
+        "wide_delivery": -0.23,
+        "high_press": -0.336,
+        "direct_transition": -0.088
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.146,
+        "set_pieces": -0.166,
+        "wide_delivery": 0.156,
+        "high_press": 0.04,
+        "direct_transition": -0.153
+      },
+      "projected_xi": {
+        "attacking_unit": 0.255,
+        "scoring_threat": 0.014,
+        "chance_creation": 0.275,
+        "defensive_prevention": 0.089,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 9906,
+      "team": "Atlético Madrid",
+      "archetype_key": "adaptive_hybrid",
+      "archetype": "Adaptive hybrid",
+      "route_expression": {
+        "box_pressure": 0.034,
+        "set_pieces": -0.046,
+        "wide_delivery": -0.109,
+        "high_press": -0.428,
+        "direct_transition": -0.066
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.211,
+        "set_pieces": -0.253,
+        "wide_delivery": -0.197,
+        "high_press": 0.156,
+        "direct_transition": 0.081
+      },
+      "projected_xi": {
+        "attacking_unit": 0.165,
+        "scoring_threat": 0.506,
+        "chance_creation": 0.074,
+        "defensive_prevention": -0.014,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 8634,
+      "team": "Barcelona",
+      "archetype_key": "developing_possession",
+      "archetype": "Developing possession",
+      "route_expression": {
+        "box_pressure": 0.589,
+        "set_pieces": 0.301,
+        "wide_delivery": 0.046,
+        "high_press": 0.247,
+        "direct_transition": -0.042
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.447,
+        "set_pieces": -0.36,
+        "wide_delivery": -0.43,
+        "high_press": 0.923,
+        "direct_transition": 0.664
+      },
+      "projected_xi": {
+        "attacking_unit": 1.149,
+        "scoring_threat": 0.194,
+        "chance_creation": 0.834,
+        "defensive_prevention": 0.692,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 9823,
+      "team": "Bayern München",
+      "archetype_key": "territorial_controller",
+      "archetype": "Territorial controller",
+      "route_expression": {
+        "box_pressure": 0.933,
+        "set_pieces": 0.226,
+        "wide_delivery": 0.155,
+        "high_press": 1.113,
+        "direct_transition": 0.01
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.445,
+        "set_pieces": 0.036,
+        "wide_delivery": -0.455,
+        "high_press": 0.754,
+        "direct_transition": 0.94
+      },
+      "projected_xi": {
+        "attacking_unit": 1.009,
+        "scoring_threat": 0.715,
+        "chance_creation": 0.408,
+        "defensive_prevention": 0.269,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 8402,
+      "team": "Bodø/Glimt",
+      "archetype_key": "territorial_controller",
+      "archetype": "Territorial controller",
+      "route_expression": {
+        "box_pressure": 0.612,
+        "set_pieces": 0.092,
+        "wide_delivery": -0.008,
+        "high_press": -0.455,
+        "direct_transition": 0.015
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.367,
+        "set_pieces": -0.367,
+        "wide_delivery": -0.37,
+        "high_press": 0.488,
+        "direct_transition": 0.641
+      },
+      "projected_xi": {
+        "attacking_unit": -0.35,
+        "scoring_threat": 0.165,
+        "chance_creation": -0.376,
+        "defensive_prevention": -0.697,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 9789,
+      "team": "Borussia Dortmund",
+      "archetype_key": "developing_possession",
+      "archetype": "Developing possession",
+      "route_expression": {
+        "box_pressure": 0.201,
+        "set_pieces": 0.042,
+        "wide_delivery": 0.08,
+        "high_press": 0.289,
+        "direct_transition": -0.049
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.285,
+        "set_pieces": 0.086,
+        "wide_delivery": -0.309,
+        "high_press": 0.223,
+        "direct_transition": 0.231
+      },
+      "projected_xi": {
+        "attacking_unit": 0.309,
+        "scoring_threat": 0.272,
+        "chance_creation": 0.49,
+        "defensive_prevention": 0.067,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 8342,
+      "team": "Club Brugge",
+      "archetype_key": "developing_possession",
+      "archetype": "Developing possession",
+      "route_expression": {
+        "box_pressure": 0.342,
+        "set_pieces": 0.315,
+        "wide_delivery": 0.113,
+        "high_press": -0.153,
+        "direct_transition": 0.099
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.015,
+        "set_pieces": -0.099,
+        "wide_delivery": -0.071,
+        "high_press": 0.476,
+        "direct_transition": 0.206
+      },
+      "projected_xi": {
+        "attacking_unit": -0.375,
+        "scoring_threat": -0.214,
+        "chance_creation": -0.217,
+        "defensive_prevention": -0.289,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 10171,
+      "team": "Como",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": 0.251,
+        "set_pieces": -0.002,
+        "wide_delivery": -0.08,
+        "high_press": 0.0,
+        "direct_transition": -0.194
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.161,
+        "set_pieces": -0.307,
+        "wide_delivery": -0.192,
+        "high_press": 0.568,
+        "direct_transition": 0.346
+      },
+      "projected_xi": {
+        "attacking_unit": -0.026,
+        "scoring_threat": 0.041,
+        "chance_creation": 0.197,
+        "defensive_prevention": 0.021,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 9773,
+      "team": "FC Porto",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": 0.159,
+        "set_pieces": 0.183,
+        "wide_delivery": 0.254,
+        "high_press": 0.0,
+        "direct_transition": -0.007
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.237,
+        "set_pieces": -0.127,
+        "wide_delivery": -0.317,
+        "high_press": 0.18,
+        "direct_transition": 0.03
+      },
+      "projected_xi": {
+        "attacking_unit": -0.4,
+        "scoring_threat": -0.212,
+        "chance_creation": -0.083,
+        "defensive_prevention": -0.1,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8695,
+      "team": "Fenerbahçe",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": 0.127,
+        "set_pieces": 0.012,
+        "wide_delivery": 0.001,
+        "high_press": 0.0,
+        "direct_transition": -0.107
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.154,
+        "set_pieces": -0.295,
+        "wide_delivery": -0.219,
+        "high_press": 0.279,
+        "direct_transition": 0.175
+      },
+      "projected_xi": {
+        "attacking_unit": -0.304,
+        "scoring_threat": -0.386,
+        "chance_creation": -0.215,
+        "defensive_prevention": -0.28,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 10235,
+      "team": "Feyenoord",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": 0.234,
+        "set_pieces": 0.141,
+        "wide_delivery": -0.058,
+        "high_press": 0.0,
+        "direct_transition": -0.153
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.286,
+        "set_pieces": -0.342,
+        "wide_delivery": -0.314,
+        "high_press": 0.259,
+        "direct_transition": 0.163
+      },
+      "projected_xi": {
+        "attacking_unit": 0.165,
+        "scoring_threat": -0.099,
+        "chance_creation": 0.141,
+        "defensive_prevention": 0.092,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8637,
+      "team": "Galatasaray",
+      "archetype_key": "adaptive_hybrid",
+      "archetype": "Adaptive hybrid",
+      "route_expression": {
+        "box_pressure": 0.188,
+        "set_pieces": 0.4,
+        "wide_delivery": 0.197,
+        "high_press": -0.104,
+        "direct_transition": 0.041
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.175,
+        "set_pieces": -0.119,
+        "wide_delivery": -0.216,
+        "high_press": 0.191,
+        "direct_transition": 0.181
+      },
+      "projected_xi": {
+        "attacking_unit": -0.495,
+        "scoring_threat": -0.396,
+        "chance_creation": -0.658,
+        "defensive_prevention": -0.245,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8636,
+      "team": "Inter",
+      "archetype_key": "developing_possession",
+      "archetype": "Developing possession",
+      "route_expression": {
+        "box_pressure": 0.563,
+        "set_pieces": 0.262,
+        "wide_delivery": 0.352,
+        "high_press": -0.596,
+        "direct_transition": -0.036
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.066,
+        "set_pieces": -0.239,
+        "wide_delivery": -0.063,
+        "high_press": 0.497,
+        "direct_transition": 0.341
+      },
+      "projected_xi": {
+        "attacking_unit": 0.616,
+        "scoring_threat": 0.556,
+        "chance_creation": 0.481,
+        "defensive_prevention": 0.044,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 9977,
+      "team": "LASK",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": 0.334,
+        "set_pieces": 0.318,
+        "wide_delivery": 0.235,
+        "high_press": 0.0,
+        "direct_transition": 0.076
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.115,
+        "set_pieces": -0.188,
+        "wide_delivery": -0.128,
+        "high_press": -0.041,
+        "direct_transition": 0.152
+      },
+      "projected_xi": {
+        "attacking_unit": -0.797,
+        "scoring_threat": -0.115,
+        "chance_creation": -0.563,
+        "defensive_prevention": -0.73,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8588,
+      "team": "Lens",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": 0.13,
+        "set_pieces": 0.2,
+        "wide_delivery": 0.306,
+        "high_press": 0.0,
+        "direct_transition": -0.093
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.079,
+        "set_pieces": 0.047,
+        "wide_delivery": -0.072,
+        "high_press": 0.18,
+        "direct_transition": 0.025
+      },
+      "projected_xi": {
+        "attacking_unit": 0.209,
+        "scoring_threat": 0.116,
+        "chance_creation": 0.314,
+        "defensive_prevention": 0.082,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8639,
+      "team": "Lille",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": -0.205,
+        "set_pieces": -0.153,
+        "wide_delivery": -0.21,
+        "high_press": 0.0,
+        "direct_transition": -0.071
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.019,
+        "set_pieces": -0.165,
+        "wide_delivery": -0.026,
+        "high_press": 0.104,
+        "direct_transition": -0.112
+      },
+      "projected_xi": {
+        "attacking_unit": -0.069,
+        "scoring_threat": -0.076,
+        "chance_creation": 0.066,
+        "defensive_prevention": 0.119,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8650,
+      "team": "Liverpool",
+      "archetype_key": "territorial_controller",
+      "archetype": "Territorial controller",
+      "route_expression": {
+        "box_pressure": 0.383,
+        "set_pieces": 0.084,
+        "wide_delivery": -0.043,
+        "high_press": 0.52,
+        "direct_transition": -0.111
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.086,
+        "set_pieces": -0.277,
+        "wide_delivery": -0.07,
+        "high_press": 0.269,
+        "direct_transition": 0.459
+      },
+      "projected_xi": {
+        "attacking_unit": 0.262,
+        "scoring_threat": 0.306,
+        "chance_creation": 0.222,
+        "defensive_prevention": 0.233,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8456,
+      "team": "Manchester City",
+      "archetype_key": "territorial_controller",
+      "archetype": "Territorial controller",
+      "route_expression": {
+        "box_pressure": 0.676,
+        "set_pieces": 0.169,
+        "wide_delivery": 0.106,
+        "high_press": 1.131,
+        "direct_transition": -0.163
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.331,
+        "set_pieces": -0.071,
+        "wide_delivery": -0.417,
+        "high_press": 0.815,
+        "direct_transition": 0.687
+      },
+      "projected_xi": {
+        "attacking_unit": 0.804,
+        "scoring_threat": 0.234,
+        "chance_creation": 0.887,
+        "defensive_prevention": 0.326,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 10260,
+      "team": "Manchester United",
+      "archetype_key": "developing_possession",
+      "archetype": "Developing possession",
+      "route_expression": {
+        "box_pressure": 0.17,
+        "set_pieces": -0.162,
+        "wide_delivery": -0.196,
+        "high_press": -0.336,
+        "direct_transition": -0.3
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.15,
+        "set_pieces": -0.043,
+        "wide_delivery": -0.163,
+        "high_press": 0.282,
+        "direct_transition": 0.263
+      },
+      "projected_xi": {
+        "attacking_unit": 0.392,
+        "scoring_threat": 0.035,
+        "chance_creation": 0.284,
+        "defensive_prevention": 0.375,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 9875,
+      "team": "Napoli",
+      "archetype_key": "developing_possession",
+      "archetype": "Developing possession",
+      "route_expression": {
+        "box_pressure": 0.127,
+        "set_pieces": -0.056,
+        "wide_delivery": -0.098,
+        "high_press": -0.55,
+        "direct_transition": -0.118
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.165,
+        "set_pieces": 0.075,
+        "wide_delivery": 0.159,
+        "high_press": 0.221,
+        "direct_transition": 0.169
+      },
+      "projected_xi": {
+        "attacking_unit": -0.262,
+        "scoring_threat": 0.091,
+        "chance_creation": 0.065,
+        "defensive_prevention": -0.109,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 8640,
+      "team": "PSV Eindhoven",
+      "archetype_key": "territorial_controller",
+      "archetype": "Territorial controller",
+      "route_expression": {
+        "box_pressure": 0.295,
+        "set_pieces": -0.076,
+        "wide_delivery": 0.063,
+        "high_press": 0.062,
+        "direct_transition": -0.068
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.259,
+        "set_pieces": -0.096,
+        "wide_delivery": -0.315,
+        "high_press": 0.538,
+        "direct_transition": 0.505
+      },
+      "projected_xi": {
+        "attacking_unit": 0.038,
+        "scoring_threat": -0.132,
+        "chance_creation": 0.039,
+        "defensive_prevention": -0.137,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 9847,
+      "team": "Paris Saint-Germain",
+      "archetype_key": "developing_possession",
+      "archetype": "Developing possession",
+      "route_expression": {
+        "box_pressure": 0.472,
+        "set_pieces": 0.254,
+        "wide_delivery": -0.075,
+        "high_press": 0.399,
+        "direct_transition": 0.032
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.098,
+        "set_pieces": -0.126,
+        "wide_delivery": -0.116,
+        "high_press": 0.574,
+        "direct_transition": 0.501
+      },
+      "projected_xi": {
+        "attacking_unit": 0.509,
+        "scoring_threat": 0.214,
+        "chance_creation": 0.156,
+        "defensive_prevention": 0.069,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 178475,
+      "team": "RB Leipzig",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": 0.154,
+        "set_pieces": 0.299,
+        "wide_delivery": -0.003,
+        "high_press": 0.0,
+        "direct_transition": -0.094
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.009,
+        "set_pieces": -0.24,
+        "wide_delivery": -0.037,
+        "high_press": 0.194,
+        "direct_transition": 0.073
+      },
+      "projected_xi": {
+        "attacking_unit": 0.082,
+        "scoring_threat": 0.027,
+        "chance_creation": 0.243,
+        "defensive_prevention": 0.182,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8603,
+      "team": "Real Betis",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": 0.138,
+        "set_pieces": -0.009,
+        "wide_delivery": -0.07,
+        "high_press": 0.0,
+        "direct_transition": -0.122
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.068,
+        "set_pieces": 0.227,
+        "wide_delivery": -0.09,
+        "high_press": 0.148,
+        "direct_transition": 0.126
+      },
+      "projected_xi": {
+        "attacking_unit": 0.147,
+        "scoring_threat": -0.188,
+        "chance_creation": 0.104,
+        "defensive_prevention": 0.296,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8633,
+      "team": "Real Madrid",
+      "archetype_key": "developing_possession",
+      "archetype": "Developing possession",
+      "route_expression": {
+        "box_pressure": 0.388,
+        "set_pieces": 0.158,
+        "wide_delivery": 0.119,
+        "high_press": -0.17,
+        "direct_transition": 0.018
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.118,
+        "set_pieces": -0.096,
+        "wide_delivery": -0.133,
+        "high_press": 0.266,
+        "direct_transition": 0.186
+      },
+      "projected_xi": {
+        "attacking_unit": 1.009,
+        "scoring_threat": 0.402,
+        "chance_creation": 0.619,
+        "defensive_prevention": 0.463,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    },
+    {
+      "team_id": 8686,
+      "team": "Roma",
+      "archetype_key": "territorial_controller",
+      "archetype": "Territorial controller",
+      "route_expression": {
+        "box_pressure": 0.408,
+        "set_pieces": -0.029,
+        "wide_delivery": 0.148,
+        "high_press": 0.0,
+        "direct_transition": 0.057
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.24,
+        "set_pieces": 0.071,
+        "wide_delivery": -0.224,
+        "high_press": 0.269,
+        "direct_transition": 0.359
+      },
+      "projected_xi": {
+        "attacking_unit": 0.098,
+        "scoring_threat": 0.223,
+        "chance_creation": 0.064,
+        "defensive_prevention": -0.006,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 951893,
+      "team": "Sabah FK",
+      "archetype_key": "direct_wide_set_piece",
+      "archetype": "Direct / wide / set-piece",
+      "route_expression": {
+        "box_pressure": -0.128,
+        "set_pieces": 0.07,
+        "wide_delivery": 0.084,
+        "high_press": 0.0,
+        "direct_transition": 0.095
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.347,
+        "set_pieces": 0.351,
+        "wide_delivery": 0.346,
+        "high_press": -0.258,
+        "direct_transition": -0.249
+      },
+      "projected_xi": {
+        "attacking_unit": null,
+        "scoring_threat": null,
+        "chance_creation": null,
+        "defensive_prevention": null,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 9728,
+      "team": "Shakhtar Donetsk",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": -0.226,
+        "set_pieces": -0.088,
+        "wide_delivery": -0.298,
+        "high_press": 0.0,
+        "direct_transition": -0.145
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.206,
+        "set_pieces": -0.133,
+        "wide_delivery": -0.169,
+        "high_press": 0.3,
+        "direct_transition": 0.172
+      },
+      "projected_xi": {
+        "attacking_unit": null,
+        "scoring_threat": null,
+        "chance_creation": null,
+        "defensive_prevention": null,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 7787,
+      "team": "Slavia Prague",
+      "archetype_key": "adaptive_hybrid",
+      "archetype": "Adaptive hybrid",
+      "route_expression": {
+        "box_pressure": 0.061,
+        "set_pieces": 0.317,
+        "wide_delivery": 0.235,
+        "high_press": 0.011,
+        "direct_transition": -0.049
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.174,
+        "set_pieces": -0.04,
+        "wide_delivery": -0.206,
+        "high_press": 0.15,
+        "direct_transition": 0.032
+      },
+      "projected_xi": {
+        "attacking_unit": -0.339,
+        "scoring_threat": -0.147,
+        "chance_creation": -0.362,
+        "defensive_prevention": -0.137,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 6019,
+      "team": "Slovan Bratislava",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": -0.13,
+        "set_pieces": -0.163,
+        "wide_delivery": -0.085,
+        "high_press": 0.0,
+        "direct_transition": -0.249
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.159,
+        "set_pieces": 0.436,
+        "wide_delivery": 0.137,
+        "high_press": 0.159,
+        "direct_transition": -0.006
+      },
+      "projected_xi": {
+        "attacking_unit": -1.108,
+        "scoring_threat": -0.786,
+        "chance_creation": -0.723,
+        "defensive_prevention": -0.913,
+        "grade_confidence": "medium"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 9768,
+      "team": "Sporting CP",
+      "archetype_key": "developing_possession",
+      "archetype": "Developing possession",
+      "route_expression": {
+        "box_pressure": 0.15,
+        "set_pieces": -0.172,
+        "wide_delivery": -0.07,
+        "high_press": -0.631,
+        "direct_transition": 0.023
+      },
+      "opponent_exposure": {
+        "box_pressure": -0.243,
+        "set_pieces": -0.008,
+        "wide_delivery": -0.258,
+        "high_press": 0.416,
+        "direct_transition": 0.177
+      },
+      "projected_xi": {
+        "attacking_unit": -0.114,
+        "scoring_threat": 0.209,
+        "chance_creation": -0.379,
+        "defensive_prevention": -0.112,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 10269,
+      "team": "VfB Stuttgart",
+      "archetype_key": "promoted_forming",
+      "archetype": "Promoted / forming",
+      "route_expression": {
+        "box_pressure": 0.2,
+        "set_pieces": 0.215,
+        "wide_delivery": 0.05,
+        "high_press": 0.0,
+        "direct_transition": -0.102
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.05,
+        "set_pieces": -0.042,
+        "wide_delivery": 0.017,
+        "high_press": 0.298,
+        "direct_transition": 0.3
+      },
+      "projected_xi": {
+        "attacking_unit": 0.548,
+        "scoring_threat": 0.346,
+        "chance_creation": 0.406,
+        "defensive_prevention": 0.257,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 8478,
+      "team": "Viking",
+      "archetype_key": "direct_wide_set_piece",
+      "archetype": "Direct / wide / set-piece",
+      "route_expression": {
+        "box_pressure": 0.028,
+        "set_pieces": 0.281,
+        "wide_delivery": 0.276,
+        "high_press": 0.0,
+        "direct_transition": 0.257
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.197,
+        "set_pieces": -0.013,
+        "wide_delivery": 0.116,
+        "high_press": -0.328,
+        "direct_transition": -0.059
+      },
+      "projected_xi": {
+        "attacking_unit": -0.552,
+        "scoring_threat": -0.128,
+        "chance_creation": -0.526,
+        "defensive_prevention": -0.495,
+        "grade_confidence": "low"
+      },
+      "quality_flags": [
+        "pressing_evidence_missing",
+        "projected_xi_alpha_provisional"
+      ]
+    },
+    {
+      "team_id": 10205,
+      "team": "Villarreal",
+      "archetype_key": "adaptive_hybrid",
+      "archetype": "Adaptive hybrid",
+      "route_expression": {
+        "box_pressure": 0.151,
+        "set_pieces": -0.085,
+        "wide_delivery": -0.052,
+        "high_press": -0.805,
+        "direct_transition": -0.042
+      },
+      "opponent_exposure": {
+        "box_pressure": 0.017,
+        "set_pieces": 0.012,
+        "wide_delivery": 0.045,
+        "high_press": 0.156,
+        "direct_transition": 0.05
+      },
+      "projected_xi": {
+        "attacking_unit": 0.075,
+        "scoring_threat": 0.053,
+        "chance_creation": 0.104,
+        "defensive_prevention": -0.03,
+        "grade_confidence": "high"
+      },
+      "quality_flags": []
+    }
+  ]
+}

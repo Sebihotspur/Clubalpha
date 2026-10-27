@@ -27,6 +27,7 @@ RESEARCH_LOOP_DIR = ROOT / "artifacts/research_loop"
 FIXTURE_CALIBRATION_DIR = ROOT / "artifacts/fixture_calibration"
 BACKTEST_REPORT_PATTERN = "contextual-interaction-v1-backtest-*.json"
 UCL_MATCHDAY_REVIEW = ROOT / "reports/ucl-matchday-1-review.json"
+UCL_ALPHA_CYCLE = ROOT / "reports/ucl-alpha-cycle-2026-10-27.json"
 PL_MIDWEEK_REVIEW = ROOT / "reports/pl-midweek-review-2026-09-17.json"
 CURRENT_MARKET_SNAPSHOT = (
     ROOT / "artifacts/market_snapshots/2026-10-06-mw6-polymarket.json"
@@ -390,6 +391,19 @@ def build():
         load_latest_fixture_calibration()
     )
     ucl_matchday = load_json(UCL_MATCHDAY_REVIEW)
+    ucl_alpha_cycle = load_json(UCL_ALPHA_CYCLE)
+    if not ucl_alpha_cycle["integrity"][
+        "same_player_alpha_formulas_as_premier_league"
+    ]:
+        raise ValueError("UCL website requires the shared Player Alpha formulas")
+    if not ucl_alpha_cycle["integrity"]["ucl_calibration_separate"]:
+        raise ValueError("UCL and Premier League calibration must remain separate")
+    if ucl_alpha_cycle["integrity"]["capital_deployment_ready"]:
+        raise ValueError("UCL website refuses capital-ready research")
+    if ucl_alpha_cycle["completed_evidence"]["matches"] != 54:
+        raise ValueError("UCL catch-up requires 54 completed observations")
+    if ucl_alpha_cycle["upcoming"]["fixtures"] != 18:
+        raise ValueError("UCL Matchday 4 requires 18 upcoming fixtures")
     pl_midweek_review = {"matches": []}
     current_market_snapshot = load_json(CURRENT_MARKET_SNAPSHOT)
     current_matchweek_settlement = load_json(CURRENT_MATCHWEEK_SETTLEMENT)
@@ -963,7 +977,7 @@ def build():
 
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_14_matchweek_9_provisional",
+            "site_version": "clubalpha_web_v0_15_ucl_alpha_cycle",
             "prediction_version": official_report["report_version"],
             "as_of": official_report["as_of_utc"],
             "generated_at_utc": upcoming_decisions["generated_at_utc"],
@@ -1125,6 +1139,7 @@ def build():
             ],
         },
         "ucl_matchday": ucl_matchday,
+        "ucl_alpha_cycle": ucl_alpha_cycle,
         "featured_official_pick": {
             "match_id": featured_match_id,
             "fixture": f"{featured['home_team']} vs {featured['away_team']}",

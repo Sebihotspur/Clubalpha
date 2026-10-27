@@ -5,6 +5,7 @@ from research.current_premier_league_alpha import (
     collect_shared_selection_rows,
     merge_current_selection_rows,
 )
+from research.build_current_matchweek_v1 import lineup_inputs
 
 
 def row(match_id, team_id=10, competition_id=47, kickoff="2026-09-12T14:00:00Z"):
@@ -20,6 +21,18 @@ def row(match_id, team_id=10, competition_id=47, kickoff="2026-09-12T14:00:00Z")
 
 
 class CurrentSelectionEvidenceTests(unittest.TestCase):
+    def test_unrated_foreign_xi_is_neutral_not_negative(self):
+        quality, confidence = lineup_inputs(
+            {
+                "alpha": {
+                    "overall_alpha_ability": {"z": None, "coverage": 0.0}
+                },
+                "evidence": {"weighted_matches": 5.0},
+            }
+        )
+        self.assertEqual(quality, 0.0)
+        self.assertEqual(confidence, 0.0)
+
     def test_supplementary_collection_is_past_only_and_deduplicated(self):
         fixtures = [
             {**row(1, competition_id=133), "finished": True},

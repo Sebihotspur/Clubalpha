@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Build a dated projected-XI Player Quality table for the Premier League."""
+"""Build a dated projected-XI Player Alpha table for one competition.
+
+The module name is retained for backward compatibility, but the implementation
+is shared by Premier League and Champions League runs.  Player formulas and XI
+selection are therefore identical; only the target schedule changes.
+"""
 
 from __future__ import annotations
 
@@ -41,19 +46,19 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
 
 def merge_current_selection_rows(
     cached_rows: list[dict[str, Any]],
-    fresh_pl_rows: list[dict[str, Any]],
+    fresh_competition_rows: list[dict[str, Any]],
     team_ids: set[int],
     as_of: str,
 ) -> list[dict[str, Any]]:
-    """Reuse current European appearances without duplicating PL evidence.
+    """Reuse current cross-competition appearances without duplicates.
 
     Competition identity is retained so the locked selection policy still
     discounts cross-competition evidence and suppresses latest-XI persistence
-    on a competition switch. Fresh PL rows take precedence over cached copies.
+    on a competition switch. Fresh target rows take precedence over cached copies.
     """
 
     indexed = {}
-    for row in [*cached_rows, *fresh_pl_rows]:
+    for row in [*cached_rows, *fresh_competition_rows]:
         team_id = int(row.get("team_id") or -1)
         kickoff = str(row.get("kickoff_utc") or "")
         if team_id not in team_ids or not kickoff or kickoff[:10] > as_of:
@@ -144,6 +149,8 @@ def main() -> None:
     parser.add_argument("--as-of", required=True)
     parser.add_argument("--season", default="2026/2027")
     parser.add_argument("--league-id", type=int, default=47)
+    parser.add_argument("--competition-name", default="Premier League")
+    parser.add_argument("--source-scope", default=None)
     parser.add_argument("--foundation-dir", type=Path, required=True)
     parser.add_argument("--grades", type=Path, required=True)
     parser.add_argument(
@@ -156,6 +163,14 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
+    source_scope = args.source_scope or (
+        "premier_league_current"
+        if args.league_id == 47
+        else "champions_league_current"
+        if args.league_id == 42
+        else "competition_current"
+    )
+
     client = FotMobClient(
         args.cache_dir,
         refresh=args.refresh,
@@ -165,9 +180,9 @@ def main() -> None:
     fixtures = []
     team_names: dict[int, str] = {}
     for source in league_matches(league):
-        fixture = normalize_fixture(source, source_scope="premier_league_current")
+        fixture = normalize_fixture(source, source_scope=source_scope)
         fixture["competition_id"] = args.league_id
-        fixture["competition"] = "Premier League"
+        fixture["competition"] = args.competition_name
         fixtures.append(fixture)
         team_names[int(fixture["home_team_id"])] = fixture["home_team"]
         team_names[int(fixture["away_team_id"])] = fixture["away_team"]
@@ -185,7 +200,7 @@ def main() -> None:
                     **row,
                     "kickoff_utc": fixture["kickoff_utc"],
                     "competition_id": args.league_id,
-                    "competition": "Premier League",
+                    "competition": args.competition_name,
                     "selection_source": "current_season",
                 }
             )
@@ -308,35 +323,57 @@ def main() -> None:
         )
 
     alpha_values = [
-        float(club["alpha"]["overall_alpha_ability"]["z"]) for club in clubs
+        float(club["alpha"]["overall_alpha_ability"]["z"])
+        for club in clubs
+        if club["alpha"]["overall_alpha_ability"]["z"] is not None
     ]
+    if len(alpha_values) < 2:
+        raise ValueError("projected-XI Alpha requires at least two rated clubs")
     league_mean = statistics.mean(alpha_values)
     league_sd = statistics.stdev(alpha_values)
     for club in clubs:
+        alpha_value = club["alpha"]["overall_alpha_ability"]["z"]
+        coverage = float(club["alpha"]["overall_alpha_ability"]["coverage"])
+        if alpha_value is None:
+            club["league_relative_strength_index"] = None
+            club["display_grade"] = "UNRATED"
+            club["grade_confidence"] = "low"
+            club["grade_provisional"] = True
+            continue
         relative_z = (
-            float(club["alpha"]["overall_alpha_ability"]["z"]) - league_mean
+            float(alpha_value) - league_mean
         ) / league_sd
         score = max(0.0, min(100.0, 50.0 + 15.0 * relative_z))
         club["league_relative_strength_index"] = round(score, 1)
         club["display_grade"] = display_grade(score)
-        coverage = float(club["alpha"]["overall_alpha_ability"]["coverage"])
         club["grade_confidence"] = coverage_confidence(coverage)
         club["grade_provisional"] = coverage < 0.95
     clubs.sort(
         key=lambda club: (
-            -float(club["alpha"]["overall_alpha_ability"]["z"]),
+            club["alpha"]["overall_alpha_ability"]["z"] is None,
+            -float(club["alpha"]["overall_alpha_ability"]["z"] or 0.0),
             club["team"],
         )
     )
     for rank, club in enumerate(clubs, 1):
         club["rank"] = rank
 
+    competition_slug = (
+        args.competition_name.lower().replace("&", "and").replace(" ", "_")
+    )
     report = {
         "snapshot_version": (
-            f"clubalpha_premier_league_projected_xi_alpha_{args.as_of.replace('-', '_')}"
+            f"clubalpha_{competition_slug}_projected_xi_alpha_"
+            f"{args.as_of.replace('-', '_')}"
         ),
         "as_of": args.as_of,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "competition": {
+            "id": args.league_id,
+            "name": args.competition_name,
+            "source_scope": source_scope,
+            "season": args.season,
+        },
         "source": (
             "FotMob current squads, injuries, current-season declared lineups, "
             "shared cup/European appearances, preseason detail, and 2025/26 match history"
@@ -375,6 +412,8 @@ def main() -> None:
         "league_distribution": {
             "mean_team_alpha_z": round(league_mean, 6),
             "sample_sd": round(league_sd, 6),
+            "rated_clubs": len(alpha_values),
+            "unrated_clubs": len(clubs) - len(alpha_values),
         },
         "clubs": clubs,
         "decision_boundaries": {

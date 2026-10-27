@@ -225,13 +225,22 @@ def build_style_matchup_snapshot(
     alpha_clubs: Iterable[dict[str, Any]],
     *,
     as_of: str,
+    target_team_ids: set[int] | None = None,
 ) -> dict[str, Any]:
-    """Join current PL club style with projected-XI execution quality."""
+    """Join current club style with projected-XI execution quality.
+
+    Premier League remains the backward-compatible default.  A competition
+    runner can pass its explicit team universe so UCL uses the identical style
+    and projected-XI bridge without silently dropping foreign clubs.
+    """
 
     alpha_by_team = {str(row["team"]): row for row in alpha_clubs}
     teams = []
     for profile in profiles:
-        if not profile.get("premier_league_2026_27"):
+        team_id = int(profile["team_id"])
+        if target_team_ids is None and not profile.get("premier_league_2026_27"):
+            continue
+        if target_team_ids is not None and team_id not in target_team_ids:
             continue
         team = str(profile["team"])
         alpha_row = alpha_by_team.get(team)
@@ -248,7 +257,7 @@ def build_style_matchup_snapshot(
             quality_flags.append("projected_xi_alpha_provisional")
         teams.append(
             {
-                "team_id": int(profile["team_id"]),
+                "team_id": team_id,
                 "team": team,
                 "archetype_key": archetype_key,
                 "archetype": ARCHETYPE_LABELS[archetype_key],

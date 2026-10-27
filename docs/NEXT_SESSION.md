@@ -6,6 +6,25 @@ Model and website checkpoint: see latest commit on `main`
 
 Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
 
+## October 27 UCL Alpha catch-up
+
+- UCL now uses the exact Premier League projected-XI Player Alpha generator:
+  identical positional formulas, latest-five selection evidence, formation
+  vote, 990-minute allocation and attach-Alpha-after-selection boundary.
+- Matchdays 1–3 contribute 54 completed observational matches: 221 goals from
+  189.58 xG, 40/54 Over 2.5, and score/xG winner alignment in 40/54. These
+  describe the competition but never become retroactive prediction results.
+- Matchday 4 has 18 provisional fixtures and 900,000 simulations. Shared
+  decision thresholds expose two side and fifteen totals research candidates,
+  but none is promoted because UCL-specific venue, draw and tempo calibration
+  does not yet exist.
+- Projected-XI Alpha rates 34/36 UCL clubs. Sabah FK and Shakhtar Donetsk remain
+  explicit zero-coverage gaps; they enter the lineup component neutrally and
+  cannot manufacture an opponent advantage.
+- Before Matchday 4, refresh domestic/cup lineups and availability, rebuild the
+  18 fixtures, freeze the first honest UCL slate, then begin the separate UCL
+  ledger. Real capital remains unauthorized.
+
 ## October 26 Matchweek 9 provisional slate
 
 - The refreshed engine covers all ten Matchweek 9 fixtures with 500,000 total

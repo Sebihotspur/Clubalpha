@@ -349,6 +349,33 @@ hashed predictions. Context and fixture calibration stay downstream and
 separately auditable. Team research beliefs do not alter the forecast
 automatically.
 
+The same generator now supports the Champions League without changing the
+Player Alpha formulas, projected-XI policy, or 60/30/10 foundation:
+
+```bash
+python3 research/current_premier_league_alpha.py \
+  --as-of YYYY-MM-DD \
+  --league-id 42 \
+  --competition-name "Champions League" \
+  --source-scope ucl_current \
+  --output reports/champions-league-alpha-snapshot-YYYY-MM-DD.json
+
+python3 research/build_current_matchweek_v1.py \
+  --as-of YYYY-MM-DD \
+  --round N \
+  --competition "Champions League" \
+  --source-scope ucl_current \
+  --competition-family ucl \
+  --expected-fixtures 18 \
+  --projected-xi-alpha reports/champions-league-alpha-snapshot-YYYY-MM-DD.json \
+  --output-dir artifacts/current_ucl/YYYY-MM-DD-mdN
+```
+
+UCL forecast records, decision thresholds, ledgers, and calibration are learned
+inside their own chronological bucket. Completed UCL matches may strengthen
+shared team and player evidence, but Premier League calibration residuals are
+never applied to a UCL probability.
+
 After the contextual slate and pre-match load packet exist, the selective
 decision runner translates probabilities into explicit calls or passes:
 

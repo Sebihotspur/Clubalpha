@@ -73,6 +73,7 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=ROOT / "artifacts/contextual_interaction/2026-08-26",
     )
+    parser.add_argument("--competition", default="Premier League")
     return parser.parse_args()
 
 
@@ -154,10 +155,8 @@ def main() -> int:
                 "filename": args.config.name,
                 "sha256": sha256(args.config),
             },
-            "fixture_schedule_verified_against": (
-                "https://www.premierleague.com/en/news/4678381/"
-                "fixture-amendments-for-premier-league-matches-in-august-and-september/"
-            ),
+            "competition": args.competition,
+            "fixture_schedule_verified_against": "FotMob normalized competition schedule",
         },
         "method": {
             "base_model_unchanged": True,

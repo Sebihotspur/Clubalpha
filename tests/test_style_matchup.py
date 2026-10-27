@@ -74,6 +74,31 @@ class StyleMatchupTests(unittest.TestCase):
         self.assertEqual(snapshot["status"], "research_challenger")
         self.assertEqual(snapshot["teams"][0]["projected_xi"]["attacking_unit"], 0.5)
 
+    def test_explicit_competition_universe_includes_foreign_club(self):
+        foreign = profile()
+        foreign["team_id"] = 2
+        foreign["team"] = "Example Europe"
+        foreign["premier_league_2026_27"] = False
+        alpha = {
+            "team_id": 2,
+            "team": "Example Europe",
+            "grade_confidence": "medium",
+            "grade_provisional": True,
+            "alpha": {
+                "attacking_unit_alpha_ability": metric(0.2),
+                "scoring_threat": metric(0.1),
+                "chance_creation": metric(0.3),
+                "defensive_prevention": metric(0.0),
+            },
+        }
+        snapshot = build_style_matchup_snapshot(
+            [foreign],
+            [alpha],
+            as_of="2026-10-27",
+            target_team_ids={2},
+        )
+        self.assertEqual([row["team"] for row in snapshot["teams"]], ["Example Europe"])
+
     def test_directional_matchup_keeps_probability_modifier_null(self):
         alpha = {
             "team": "Example City",

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a frozen Premier League Style Matchup v0 research artifact."""
+"""Build a frozen competition Style Matchup v0 research artifact."""
 
 from __future__ import annotations
 
@@ -39,7 +39,9 @@ def main() -> int:
         default=ROOT / "data/processed/club_dynamics/club_dynamics.jsonl",
     )
     parser.add_argument(
+        "--projected-xi-alpha",
         "--premier-league-alpha",
+        dest="projected_xi_alpha",
         type=Path,
         default=ROOT / "reports/premier-league-alpha-snapshot-2026-08-25.json",
     )
@@ -52,8 +54,14 @@ def main() -> int:
     args = parser.parse_args()
 
     profiles = load_profiles(args.club_dynamics)
-    alpha = load_json(args.premier_league_alpha)
-    snapshot = build_style_matchup_snapshot(profiles, alpha["clubs"], as_of=args.as_of)
+    alpha = load_json(args.projected_xi_alpha)
+    target_team_ids = {int(row["team_id"]) for row in alpha["clubs"]}
+    snapshot = build_style_matchup_snapshot(
+        profiles,
+        alpha["clubs"],
+        as_of=args.as_of,
+        target_team_ids=target_team_ids,
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
         json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n",

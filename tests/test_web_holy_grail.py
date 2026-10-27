@@ -277,7 +277,32 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertIn("Liverpool–Arsenal Under 2.5 at 60.0%", app_js)
         self.assertIn("Settled research slate · Matchweek ${esc(latest.round)}", app_js)
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
-        self.assertIn('/app.js?v=0.14.0-mw9-provisional', index_html)
+        self.assertIn('/app.js?v=0.15.0-ucl-alpha-cycle', index_html)
+
+    def test_ucl_uses_shared_alpha_with_separate_calibration(self):
+        cycle = self.data["ucl_alpha_cycle"]
+        self.assertEqual(cycle["completed_evidence"]["matches"], 54)
+        self.assertEqual(cycle["upcoming"]["matchday"], 4)
+        self.assertEqual(cycle["upcoming"]["fixtures"], 18)
+        self.assertEqual(cycle["upcoming"]["simulations"], 900000)
+        self.assertEqual(cycle["projected_xi_alpha"]["clubs"], 36)
+        self.assertEqual(cycle["projected_xi_alpha"]["rated_clubs"], 34)
+        self.assertEqual(
+            set(cycle["projected_xi_alpha"]["unrated_clubs"]),
+            {"Sabah FK", "Shakhtar Donetsk"},
+        )
+        integrity = cycle["integrity"]
+        self.assertTrue(
+            integrity["same_player_alpha_formulas_as_premier_league"]
+        )
+        self.assertTrue(integrity["same_squad_selection_policy_as_premier_league"])
+        self.assertTrue(integrity["ucl_calibration_separate"])
+        self.assertFalse(integrity["ucl_specific_calibration_available"])
+        self.assertFalse(integrity["research_candidates_are_promoted_calls"])
+        self.assertFalse(integrity["capital_deployment_ready"])
+        app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
+        self.assertIn("UCL Alpha intelligence", app_js)
+        self.assertIn("RESEARCH CANDIDATES ARE NOT PROMOTED CALLS", app_js)
 
     def test_latest_settled_research_week_is_prominent_in_ledger(self):
         app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
