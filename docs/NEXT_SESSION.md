@@ -6,6 +6,25 @@ Model and website checkpoint: see latest commit on `main`
 
 Production: <https://clubalpha-club-form-v1.vercel.app/predictions/>
 
+## October 26 Matchweek 9 provisional slate
+
+- The refreshed engine covers all ten Matchweek 9 fixtures with 500,000 total
+  simulations. The selective decision policy promotes zero 1X2 calls and passes
+  all ten sides rather than manufacturing conviction.
+- Two provisional totals clear the 58% decision boundary: Manchester City–
+  Brighton Over 2.5 at 58.1%, and Liverpool–Arsenal Under 2.5 at 60.0%.
+- Thirteen participating clubs still have EFL Cup fixtures from October 27–29.
+  Final-call eligibility is therefore blocked by design, even for the two
+  provisional totals. Real allocation remains 0.00u.
+- The current refresh includes 80 completed Premier League matches, 54 current
+  Champions League matches, 4,602 current player-match rows, rebuilt Club Form
+  and Dynamics, 1,051 Player Alpha grades, projected XIs, historical evidence,
+  pre-match load, contextual interaction and downstream calibration.
+- Start the next session after the October 29 EFL Cup matches: refresh FotMob,
+  availability, minutes and projected XIs; rebuild the MW9 slate; compare every
+  changed probability and decision with this preserved provisional artifact;
+  then freeze only if no preleague fixture remains pending.
+
 ## October 26 Matchweek 8 settlement and learning upgrade
 
 - The published Matchweek 8 slate is now settled without rewriting its

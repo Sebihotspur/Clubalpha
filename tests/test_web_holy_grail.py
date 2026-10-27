@@ -234,14 +234,22 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertTrue(chelsea["result"]["base_1x2_hit"])
         self.assertTrue(chelsea["result"]["market_1x2_hit"])
 
-    def test_matchweek_eight_is_settled_without_rewriting_prematch_slate(self):
+    def test_matchweek_nine_provisional_and_matchweek_eight_settled_are_separate(self):
         provisional = self.data["provisional_matchweek"]
         settled = self.data["latest_matchweek"]
-        self.assertEqual(provisional["round"], 8)
+        self.assertEqual(provisional["round"], 9)
         self.assertEqual(provisional["fixtures"], 10)
         self.assertEqual(len(provisional["predictions"]), 10)
+        self.assertEqual(provisional["summary"]["side_calls"], 0)
+        self.assertEqual(provisional["summary"]["side_passes"], 10)
+        self.assertEqual(provisional["summary"]["totals_calls"], 2)
+        self.assertEqual(provisional["summary"]["totals_passes"], 8)
+        self.assertEqual(len(provisional["pending_preleague_teams"]), 13)
         self.assertFalse(
             provisional["decision_boundaries"]["final_slate_frozen"]
+        )
+        self.assertFalse(
+            provisional["decision_boundaries"]["final_call_eligible"]
         )
         self.assertFalse(
             provisional["decision_boundaries"]["capital_deployment_ready"]
@@ -264,9 +272,12 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertFalse(settled["capital_deployment_ready"])
 
         app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
+        self.assertIn("Provisional research slate · Matchweek ${esc(upcoming.round)}", app_js)
+        self.assertIn("Manchester City–Brighton Over 2.5 at 58.1%", app_js)
+        self.assertIn("Liverpool–Arsenal Under 2.5 at 60.0%", app_js)
         self.assertIn("Settled research slate · Matchweek ${esc(latest.round)}", app_js)
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
-        self.assertIn('/app.js?v=0.13.0-mw8-settled', index_html)
+        self.assertIn('/app.js?v=0.14.0-mw9-provisional', index_html)
 
     def test_latest_settled_research_week_is_prominent_in_ledger(self):
         app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")

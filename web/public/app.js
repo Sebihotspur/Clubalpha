@@ -104,6 +104,7 @@ function currentResearchCards(matches) {
 
 function overview(data) {
   const latest = data.latest_matchweek;
+  const upcoming = data.provisional_matchweek;
   const side = latest.score.markets.one_x_two;
   const totals = latest.score.markets.over_under_2_5;
   const contextReinforcements = data.holy_grail.predictions.filter(
@@ -118,8 +119,8 @@ function overview(data) {
       </div>
       <aside class="hero-note">
         <span class="label">Current operating state</span>
-        <strong>SETTLE · DIAGNOSE · REINFORCE</strong>
-        <p>All ${latest.settled} Matchweek ${esc(latest.round)} fixtures are settled. The 70-match learning state now strengthens future refusal gates without rewriting the published calls.</p>
+        <strong>PROJECT · REFUSE · REFRESH</strong>
+        <p>Matchweek ${esc(upcoming.round)} is provisional. Thirteen clubs still play EFL Cup fixtures before the league slate, so the model has published directions but blocked the final freeze.</p>
       </aside>
     </section>
 
@@ -128,6 +129,16 @@ function overview(data) {
       ${metric(`MW${latest.round} 1X2 calls`, `${side.hits}/${side.settled}`, pct(side.hit_rate), "amber")}
       ${metric(`MW${latest.round} totals calls`, `${totals.hits}/${totals.settled}`, pct(totals.hit_rate), totals.hit_rate >= 0.5 ? "accent" : "amber")}
       ${metric("Learning memory", `${data.methodology.research_loop.adaptive.match_learning_cards} matches`, "Completed evidence only")}
+    </section>
+
+    <section class="section">
+      <div class="section-head"><h2>Matchweek ${esc(upcoming.round)} provisional slate</h2><a href="/predictions/">Open all 10 forecasts →</a></div>
+      <div class="foundation-grid">
+        <article class="foundation-card"><span class="foundation-num">1X2</span><h3>${upcoming.summary.side_calls} calls · ${upcoming.summary.side_passes} passes</h3><p>No side currently satisfies every probability, separation, Club Form, Player Alpha, context and lineup gate.</p></article>
+        <article class="foundation-card"><span class="foundation-num">O/U 2.5</span><h3>${upcoming.summary.totals_calls} calls · ${upcoming.summary.totals_passes} passes</h3><p>Manchester City–Brighton Over and Liverpool–Arsenal Under are the only provisional totals above the 58% boundary.</p></article>
+        <article class="foundation-card"><span class="foundation-num">REFRESH GATE</span><h3>${upcoming.pending_preleague_teams.length} teams pending</h3><p>Final predictions wait until every October 27–29 EFL Cup fixture and its lineup evidence is ingested.</p></article>
+      </div>
+      <p class="notice">PROVISIONAL ONLY · Final call eligibility is ${upcoming.decision_boundaries.final_call_eligible ? "open" : "blocked"} · Real allocation remains 0.00u.</p>
     </section>
 
     <section class="section">
@@ -394,12 +405,33 @@ function holyGrail(data) {
 }
 
 function predictions(data) {
+  const upcoming = data.provisional_matchweek;
   const latest = data.latest_matchweek;
   const outcomeLabel = (match, outcome) => {
     if (outcome === "home_win") return match.home_team;
     if (outcome === "away_win") return match.away_team;
     return "Draw";
   };
+  const upcomingRows = upcoming.predictions
+    .map((match) => {
+      const sideRead = match.side_call === "pass"
+        ? `Pass · ${esc(outcomeLabel(match, match.side_leader))} lean`
+        : esc(outcomeLabel(match, match.side_call));
+      const totalRead = match.total_call === "over_2_5"
+        ? `Over 2.5 · ${pct(match.over_2_5_probability)}`
+        : match.total_call === "under_2_5"
+          ? `Under 2.5 · ${pct(1 - match.over_2_5_probability)}`
+          : `Pass · O2.5 ${pct(match.over_2_5_probability)}`;
+      const totalTone = match.total_call === "pass" ? "" : "hit";
+      return `<tr>
+        <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · xG ${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</span></td>
+        <td>${resultPills(match)}</td>
+        <td class="official-call"><strong>${sideRead}</strong><span>${pct(match.side_probability)} leader · ${pct(match.side_gap)} gap</span><small>${esc(match.side_reason.replaceAll("_", " "))}</small></td>
+        <td class="official-call"><strong>${totalRead}</strong><span class="status-chip ${totalTone}">${match.total_call === "pass" ? "pass" : "provisional call"}</span><small>${esc(match.total_reason.replaceAll("_", " "))}</small></td>
+        <td><span class="status-chip">${esc(match.load)}</span><small>${esc(match.context_verdict.replaceAll("_", " "))}</small></td>
+      </tr>`;
+    })
+    .join("");
   const rows = latest.predictions
     .map((match) => {
       const result = match.result;
@@ -439,7 +471,16 @@ function predictions(data) {
     )
     .join("");
 
-  return `<section class="page-head"><p class="eyebrow">Settled research slate · Matchweek ${esc(latest.round)}</p><h1>Predictions vs reality</h1><p>The published calls, passes and pre-match probabilities remain frozen beside the final score and xG process. Matchweek 8 adds evidence to the next forecast; it does not rewrite this one.</p><div class="notice">SETTLED PUBLISHED PROVISIONAL SLATE · 1X2 + O/U 2.5 scored only when promoted · Zero capital authorized</div></section>
+  return `<section class="page-head"><p class="eyebrow">Provisional research slate · Matchweek ${esc(upcoming.round)}</p><h1>Next-matchweek predictions</h1><p>The refreshed engine has projected all ten fixtures through ${esc(dateOnly(upcoming.as_of))}. Thirteen clubs still play EFL Cup matches before the league slate, so every direction remains provisional until the final post-cup lineup and availability refresh.</p><div class="notice">PROVISIONAL THROUGH OCTOBER 26 · FINAL REFRESH AFTER OCTOBER 29 · ZERO CAPITAL AUTHORIZED</div></section>
+    <section class="metrics">
+      ${metric("1X2", `${upcoming.summary.side_calls} calls · ${upcoming.summary.side_passes} passes`, "Every side fails at least one promotion gate", "amber")}
+      ${metric("O/U 2.5", `${upcoming.summary.totals_calls} calls · ${upcoming.summary.totals_passes} passes`, "Only probabilities at or beyond 58%", "accent")}
+      ${metric("Refresh gate", `${upcoming.pending_preleague_teams.length} clubs pending`, "EFL Cup evidence still to ingest", "amber")}
+      ${metric("Deployment", "NO CAPITAL", "Research predictions only", "amber")}
+    </section>
+    <section class="section"><div class="section-head"><h2>Matchweek ${esc(upcoming.round)} provisional slate</h2><span class="panel-label">${esc(dateTime(upcoming.generated_at_utc))}</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>H · D · A</th><th>1X2 decision</th><th>O/U 2.5</th><th>Load + context</th></tr></thead><tbody>${upcomingRows}</tbody></table></div></section>
+    <p class="notice">CURRENT TOTALS SHORTLIST · Manchester City–Brighton Over 2.5 at 58.1% · Liverpool–Arsenal Under 2.5 at 60.0% · No side call is promoted. Final freeze eligibility is blocked until the post-cup refresh.</p>
+    <section class="page-head"><p class="eyebrow">Settled research slate · Matchweek ${esc(latest.round)}</p><h1>Predictions vs reality</h1><p>The published calls, passes and pre-match probabilities remain frozen beside the final score and xG process. Matchweek 8 adds evidence to the next forecast; it does not rewrite this one.</p><div class="notice">SETTLED PUBLISHED PROVISIONAL SLATE · 1X2 + O/U 2.5 scored only when promoted · Zero capital authorized</div></section>
     <section class="metrics">
       ${metric("Promoted 1X2", `${latest.score.markets.one_x_two.hits}/${latest.score.markets.one_x_two.settled}`, pct(latest.score.markets.one_x_two.hit_rate), "amber")}
       ${metric("Promoted O/U 2.5", `${latest.score.markets.over_under_2_5.hits}/${latest.score.markets.over_under_2_5.settled}`, pct(latest.score.markets.over_under_2_5.hit_rate), latest.score.markets.over_under_2_5.hit_rate >= 0.5 ? "accent" : "amber")}

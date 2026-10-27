@@ -1,0 +1,721 @@
+{
+  "version": "clubalpha_matchweek_decisions_v1",
+  "status": "provisional_shadow",
+  "generated_at_utc": "2026-10-26T21:54:14.232553+00:00",
+  "as_of": "2026-10-26",
+  "round": 9,
+  "refresh_gate": {
+    "stage": "provisional",
+    "pending_preleague_teams": [
+      "AFC Bournemouth",
+      "Arsenal",
+      "Aston Villa",
+      "Brentford",
+      "Brighton & Hove Albion",
+      "Chelsea",
+      "Crystal Palace",
+      "Everton",
+      "Fulham",
+      "Liverpool",
+      "Manchester City",
+      "Newcastle United",
+      "Sunderland"
+    ],
+    "final_refresh_required": true,
+    "final_refresh_complete": false,
+    "final_call_eligible": false
+  },
+  "fixtures": [
+    {
+      "match_id": 5795498,
+      "fixture": "Chelsea vs Manchester United",
+      "kickoff_utc": "2026-10-31T12:30:00Z",
+      "home_team": "Chelsea",
+      "away_team": "Manchester United",
+      "calibrated_predicted_xg": {
+        "home": 1.433883,
+        "away": 1.340316,
+        "total": 2.774199
+      },
+      "calibrated_probabilities": {
+        "home_win": 0.373513,
+        "draw": 0.297269,
+        "away_win": 0.329218,
+        "over": {
+          "2.5": 0.50849,
+          "3.5": 0.297248
+        },
+        "under": {
+          "2.5": 0.49151,
+          "3.5": 0.702752
+        },
+        "btts_yes": 0.575953,
+        "btts_no": 0.424047
+      },
+      "side_decision": {
+        "market": "one_x_two",
+        "leader": "home_win",
+        "leader_probability": 0.373513,
+        "leader_gap": 0.044295,
+        "call": "pass",
+        "tier": "pass",
+        "reason": "club_form_and_player_alpha_do_not_both_support_side",
+        "evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": false
+          },
+          "foundation_aligned": false,
+          "context_verdict": "no_clear_contextual_edge",
+          "lineup_reliability": 0.866025,
+          "draw_zone": false
+        },
+        "decision_boundaries": {
+          "player_alpha_changed": false,
+          "base_60_30_10_changed": false,
+          "capital_deployment_ready": false
+        }
+      },
+      "total_decision": {
+        "market": "over_under_2_5",
+        "over_probability": 0.50849,
+        "call": "pass",
+        "call_probability": 0.50849,
+        "reason": "inside_totals_pass_band",
+        "decision_boundaries": {
+          "goal_environment_calibration_applied": true,
+          "capital_deployment_ready": false
+        }
+      },
+      "final_call_eligible": false
+    },
+    {
+      "match_id": 5795495,
+      "fixture": "AFC Bournemouth vs Leeds United",
+      "kickoff_utc": "2026-10-31T15:00:00Z",
+      "home_team": "AFC Bournemouth",
+      "away_team": "Leeds United",
+      "calibrated_predicted_xg": {
+        "home": 1.497376,
+        "away": 1.084427,
+        "total": 2.581803
+      },
+      "calibrated_probabilities": {
+        "home_win": 0.439993,
+        "draw": 0.303785,
+        "away_win": 0.256222,
+        "over": {
+          "2.5": 0.462866,
+          "3.5": 0.258675
+        },
+        "under": {
+          "2.5": 0.537134,
+          "3.5": 0.741325
+        },
+        "btts_yes": 0.528129,
+        "btts_no": 0.471871
+      },
+      "side_decision": {
+        "market": "one_x_two",
+        "leader": "home_win",
+        "leader_probability": 0.439993,
+        "leader_gap": 0.136208,
+        "call": "pass",
+        "tier": "pass",
+        "reason": "leader_below_45_percent",
+        "evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": true
+          },
+          "foundation_aligned": true,
+          "context_verdict": "baseline_supported",
+          "lineup_reliability": 0.707107,
+          "draw_zone": false
+        },
+        "decision_boundaries": {
+          "player_alpha_changed": false,
+          "base_60_30_10_changed": false,
+          "capital_deployment_ready": false
+        }
+      },
+      "total_decision": {
+        "market": "over_under_2_5",
+        "over_probability": 0.462866,
+        "call": "pass",
+        "call_probability": 0.537134,
+        "reason": "inside_totals_pass_band",
+        "decision_boundaries": {
+          "goal_environment_calibration_applied": true,
+          "capital_deployment_ready": false
+        }
+      },
+      "final_call_eligible": false
+    },
+    {
+      "match_id": 5795497,
+      "fixture": "Brentford vs Nottingham Forest",
+      "kickoff_utc": "2026-10-31T15:00:00Z",
+      "home_team": "Brentford",
+      "away_team": "Nottingham Forest",
+      "calibrated_predicted_xg": {
+        "home": 1.380864,
+        "away": 1.305112,
+        "total": 2.685976
+      },
+      "calibrated_probabilities": {
+        "home_win": 0.363729,
+        "draw": 0.303873,
+        "away_win": 0.332398,
+        "over": {
+          "2.5": 0.489267,
+          "3.5": 0.281575
+        },
+        "under": {
+          "2.5": 0.510733,
+          "3.5": 0.718425
+        },
+        "btts_yes": 0.560182,
+        "btts_no": 0.439818
+      },
+      "side_decision": {
+        "market": "one_x_two",
+        "leader": "home_win",
+        "leader_probability": 0.363729,
+        "leader_gap": 0.031331,
+        "call": "pass",
+        "tier": "pass",
+        "reason": "club_form_and_player_alpha_do_not_both_support_side",
+        "evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": false,
+            "player_quality_lineup": true
+          },
+          "foundation_aligned": false,
+          "context_verdict": "baseline_supported",
+          "lineup_reliability": 1.0,
+          "draw_zone": false
+        },
+        "decision_boundaries": {
+          "player_alpha_changed": false,
+          "base_60_30_10_changed": false,
+          "capital_deployment_ready": false
+        }
+      },
+      "total_decision": {
+        "market": "over_under_2_5",
+        "over_probability": 0.489267,
+        "call": "pass",
+        "call_probability": 0.510733,
+        "reason": "inside_totals_pass_band",
+        "decision_boundaries": {
+          "goal_environment_calibration_applied": true,
+          "capital_deployment_ready": false
+        }
+      },
+      "final_call_eligible": false
+    },
+    {
+      "match_id": 5795499,
+      "fixture": "Coventry City vs Sunderland",
+      "kickoff_utc": "2026-10-31T15:00:00Z",
+      "home_team": "Coventry City",
+      "away_team": "Sunderland",
+      "calibrated_predicted_xg": {
+        "home": 1.321804,
+        "away": 1.212895,
+        "total": 2.534699
+      },
+      "calibrated_probabilities": {
+        "home_win": 0.368959,
+        "draw": 0.314053,
+        "away_win": 0.316988,
+        "over": {
+          "2.5": 0.449325,
+          "3.5": 0.24928
+        },
+        "under": {
+          "2.5": 0.550675,
+          "3.5": 0.75072
+        },
+        "btts_yes": 0.530544,
+        "btts_no": 0.469456
+      },
+      "side_decision": {
+        "market": "one_x_two",
+        "leader": "home_win",
+        "leader_probability": 0.368959,
+        "leader_gap": 0.051971,
+        "call": "pass",
+        "tier": "pass",
+        "reason": "club_form_and_player_alpha_do_not_both_support_side",
+        "evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": false
+          },
+          "foundation_aligned": false,
+          "context_verdict": "no_clear_contextual_edge",
+          "lineup_reliability": 0.75,
+          "draw_zone": false
+        },
+        "decision_boundaries": {
+          "player_alpha_changed": false,
+          "base_60_30_10_changed": false,
+          "capital_deployment_ready": false
+        }
+      },
+      "total_decision": {
+        "market": "over_under_2_5",
+        "over_probability": 0.449325,
+        "call": "pass",
+        "call_probability": 0.550675,
+        "reason": "inside_totals_pass_band",
+        "decision_boundaries": {
+          "goal_environment_calibration_applied": true,
+          "capital_deployment_ready": false
+        }
+      },
+      "final_call_eligible": false
+    },
+    {
+      "match_id": 5795500,
+      "fixture": "Hull City vs Ipswich Town",
+      "kickoff_utc": "2026-10-31T15:00:00Z",
+      "home_team": "Hull City",
+      "away_team": "Ipswich Town",
+      "calibrated_predicted_xg": {
+        "home": 1.34213,
+        "away": 1.415421,
+        "total": 2.757551
+      },
+      "calibrated_probabilities": {
+        "home_win": 0.3354,
+        "draw": 0.299,
+        "away_win": 0.3656,
+        "over": {
+          "2.5": 0.504657,
+          "3.5": 0.297005
+        },
+        "under": {
+          "2.5": 0.495343,
+          "3.5": 0.702995
+        },
+        "btts_yes": 0.572857,
+        "btts_no": 0.427143
+      },
+      "side_decision": {
+        "market": "one_x_two",
+        "leader": "away_win",
+        "leader_probability": 0.3656,
+        "leader_gap": 0.0302,
+        "call": "pass",
+        "tier": "pass",
+        "reason": "base_context_calibration_disagree",
+        "evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "away_win",
+          "leaders_aligned": false,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": true
+          },
+          "foundation_aligned": true,
+          "context_verdict": "no_clear_contextual_edge",
+          "lineup_reliability": 0.5,
+          "draw_zone": false
+        },
+        "decision_boundaries": {
+          "player_alpha_changed": false,
+          "base_60_30_10_changed": false,
+          "capital_deployment_ready": false
+        }
+      },
+      "total_decision": {
+        "market": "over_under_2_5",
+        "over_probability": 0.504657,
+        "call": "pass",
+        "call_probability": 0.504657,
+        "reason": "inside_totals_pass_band",
+        "decision_boundaries": {
+          "goal_environment_calibration_applied": true,
+          "capital_deployment_ready": false
+        }
+      },
+      "final_call_eligible": false
+    },
+    {
+      "match_id": 5795502,
+      "fixture": "Manchester City vs Brighton & Hove Albion",
+      "kickoff_utc": "2026-10-31T15:00:00Z",
+      "home_team": "Manchester City",
+      "away_team": "Brighton & Hove Albion",
+      "calibrated_predicted_xg": {
+        "home": 1.760966,
+        "away": 1.334559,
+        "total": 3.095525
+      },
+      "calibrated_probabilities": {
+        "home_win": 0.447218,
+        "draw": 0.276624,
+        "away_win": 0.276158,
+        "over": {
+          "2.5": 0.58054,
+          "3.5": 0.370644
+        },
+        "under": {
+          "2.5": 0.41946,
+          "3.5": 0.629356
+        },
+        "btts_yes": 0.616721,
+        "btts_no": 0.383279
+      },
+      "side_decision": {
+        "market": "one_x_two",
+        "leader": "home_win",
+        "leader_probability": 0.447218,
+        "leader_gap": 0.170594,
+        "call": "pass",
+        "tier": "pass",
+        "reason": "leader_below_45_percent",
+        "evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": true
+          },
+          "foundation_aligned": true,
+          "context_verdict": "baseline_supported",
+          "lineup_reliability": 0.707107,
+          "draw_zone": false
+        },
+        "decision_boundaries": {
+          "player_alpha_changed": false,
+          "base_60_30_10_changed": false,
+          "capital_deployment_ready": false
+        }
+      },
+      "total_decision": {
+        "market": "over_under_2_5",
+        "over_probability": 0.58054,
+        "call": "over_2_5",
+        "call_probability": 0.58054,
+        "reason": "over_probability_clears_gate",
+        "decision_boundaries": {
+          "goal_environment_calibration_applied": true,
+          "capital_deployment_ready": false
+        }
+      },
+      "final_call_eligible": false
+    },
+    {
+      "match_id": 5795504,
+      "fixture": "Tottenham Hotspur vs Crystal Palace",
+      "kickoff_utc": "2026-10-31T17:30:00Z",
+      "home_team": "Tottenham Hotspur",
+      "away_team": "Crystal Palace",
+      "calibrated_predicted_xg": {
+        "home": 1.566616,
+        "away": 1.09933,
+        "total": 2.665945
+      },
+      "calibrated_probabilities": {
+        "home_win": 0.451114,
+        "draw": 0.299598,
+        "away_win": 0.249288,
+        "over": {
+          "2.5": 0.478333,
+          "3.5": 0.273092
+        },
+        "under": {
+          "2.5": 0.521667,
+          "3.5": 0.726908
+        },
+        "btts_yes": 0.54085,
+        "btts_no": 0.45915
+      },
+      "side_decision": {
+        "market": "one_x_two",
+        "leader": "home_win",
+        "leader_probability": 0.451114,
+        "leader_gap": 0.151516,
+        "call": "pass",
+        "tier": "pass",
+        "reason": "club_form_and_player_alpha_do_not_both_support_side",
+        "evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": false
+          },
+          "foundation_aligned": false,
+          "context_verdict": "baseline_supported",
+          "lineup_reliability": 1.0,
+          "draw_zone": false
+        },
+        "decision_boundaries": {
+          "player_alpha_changed": false,
+          "base_60_30_10_changed": false,
+          "capital_deployment_ready": false
+        }
+      },
+      "total_decision": {
+        "market": "over_under_2_5",
+        "over_probability": 0.478333,
+        "call": "pass",
+        "call_probability": 0.521667,
+        "reason": "inside_totals_pass_band",
+        "decision_boundaries": {
+          "goal_environment_calibration_applied": true,
+          "capital_deployment_ready": false
+        }
+      },
+      "final_call_eligible": false
+    },
+    {
+      "match_id": 5795496,
+      "fixture": "Aston Villa vs Fulham",
+      "kickoff_utc": "2026-10-31T20:00:00Z",
+      "home_team": "Aston Villa",
+      "away_team": "Fulham",
+      "calibrated_predicted_xg": {
+        "home": 1.390655,
+        "away": 1.177319,
+        "total": 2.567974
+      },
+      "calibrated_probabilities": {
+        "home_win": 0.394008,
+        "draw": 0.309311,
+        "away_win": 0.296681,
+        "over": {
+          "2.5": 0.459087,
+          "3.5": 0.254095
+        },
+        "under": {
+          "2.5": 0.540913,
+          "3.5": 0.745905
+        },
+        "btts_yes": 0.529989,
+        "btts_no": 0.470011
+      },
+      "side_decision": {
+        "market": "one_x_two",
+        "leader": "home_win",
+        "leader_probability": 0.394008,
+        "leader_gap": 0.084697,
+        "call": "pass",
+        "tier": "pass",
+        "reason": "club_form_and_player_alpha_do_not_both_support_side",
+        "evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": false
+          },
+          "foundation_aligned": false,
+          "context_verdict": "no_clear_contextual_edge",
+          "lineup_reliability": 0.5,
+          "draw_zone": false
+        },
+        "decision_boundaries": {
+          "player_alpha_changed": false,
+          "base_60_30_10_changed": false,
+          "capital_deployment_ready": false
+        }
+      },
+      "total_decision": {
+        "market": "over_under_2_5",
+        "over_probability": 0.459087,
+        "call": "pass",
+        "call_probability": 0.540913,
+        "reason": "inside_totals_pass_band",
+        "decision_boundaries": {
+          "goal_environment_calibration_applied": true,
+          "capital_deployment_ready": false
+        }
+      },
+      "final_call_eligible": false
+    },
+    {
+      "match_id": 5795501,
+      "fixture": "Liverpool vs Arsenal",
+      "kickoff_utc": "2026-11-01T16:30:00Z",
+      "home_team": "Liverpool",
+      "away_team": "Arsenal",
+      "calibrated_predicted_xg": {
+        "home": 1.079304,
+        "away": 1.258108,
+        "total": 2.337411
+      },
+      "calibrated_probabilities": {
+        "home_win": 0.296104,
+        "draw": 0.327321,
+        "away_win": 0.376575,
+        "over": {
+          "2.5": 0.399786,
+          "3.5": 0.208869
+        },
+        "under": {
+          "2.5": 0.600214,
+          "3.5": 0.791131
+        },
+        "btts_yes": 0.485601,
+        "btts_no": 0.514399
+      },
+      "side_decision": {
+        "market": "one_x_two",
+        "leader": "away_win",
+        "leader_probability": 0.376575,
+        "leader_gap": 0.049254,
+        "call": "pass",
+        "tier": "pass",
+        "reason": "leader_below_45_percent",
+        "evidence": {
+          "base_leader": "away_win",
+          "contextual_leader": "away_win",
+          "calibrated_leader": "away_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": true
+          },
+          "foundation_aligned": true,
+          "context_verdict": "baseline_supported",
+          "lineup_reliability": 0.866025,
+          "draw_zone": false
+        },
+        "decision_boundaries": {
+          "player_alpha_changed": false,
+          "base_60_30_10_changed": false,
+          "capital_deployment_ready": false
+        }
+      },
+      "total_decision": {
+        "market": "over_under_2_5",
+        "over_probability": 0.399786,
+        "call": "under_2_5",
+        "call_probability": 0.600214,
+        "reason": "under_probability_clears_gate",
+        "decision_boundaries": {
+          "goal_environment_calibration_applied": true,
+          "capital_deployment_ready": false
+        }
+      },
+      "final_call_eligible": false
+    },
+    {
+      "match_id": 5795503,
+      "fixture": "Newcastle United vs Everton",
+      "kickoff_utc": "2026-11-02T20:00:00Z",
+      "home_team": "Newcastle United",
+      "away_team": "Everton",
+      "calibrated_predicted_xg": {
+        "home": 1.366986,
+        "away": 1.365381,
+        "total": 2.732367
+      },
+      "calibrated_probabilities": {
+        "home_win": 0.347799,
+        "draw": 0.299842,
+        "away_win": 0.352359,
+        "over": {
+          "2.5": 0.500876,
+          "3.5": 0.291931
+        },
+        "under": {
+          "2.5": 0.499124,
+          "3.5": 0.708069
+        },
+        "btts_yes": 0.563459,
+        "btts_no": 0.436541
+      },
+      "side_decision": {
+        "market": "one_x_two",
+        "leader": "away_win",
+        "leader_probability": 0.352359,
+        "leader_gap": 0.00456,
+        "call": "pass",
+        "tier": "pass",
+        "reason": "base_context_calibration_disagree",
+        "evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "away_win",
+          "leaders_aligned": false,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": false
+          },
+          "foundation_aligned": false,
+          "context_verdict": "baseline_supported",
+          "lineup_reliability": 0.75,
+          "draw_zone": false
+        },
+        "decision_boundaries": {
+          "player_alpha_changed": false,
+          "base_60_30_10_changed": false,
+          "capital_deployment_ready": false
+        }
+      },
+      "total_decision": {
+        "market": "over_under_2_5",
+        "over_probability": 0.500876,
+        "call": "pass",
+        "call_probability": 0.500876,
+        "reason": "inside_totals_pass_band",
+        "decision_boundaries": {
+          "goal_environment_calibration_applied": true,
+          "capital_deployment_ready": false
+        }
+      },
+      "final_call_eligible": false
+    }
+  ],
+  "summary": {
+    "side_calls": 0,
+    "side_passes": 10,
+    "totals_calls": 2,
+    "totals_passes": 8,
+    "capital_deployment_ready": false
+  },
+  "provenance": {
+    "artifacts/current_matchweek/2026-10-26-mw9/predictions.jsonl": "8627456dc70a3a2908b05e4a686934a3d99aa21a4fba9ab5f408d2724c5c829e",
+    "artifacts/contextual_interaction/2026-10-26-mw9/predictions.jsonl": "c4f818b8282005e6ca4e70661e19e416d8520b8cb1d1bd59780ad9f82c39ff00",
+    "artifacts/prematch_load/2026-10-26-mw9.json": "8aa867ccbe8f2218da55eeaf2c0e214dec83c6abb0d08475499ae1ae06ebe0f5",
+    "artifacts/fixture_calibration/2026-10-26-goal-environment/calibration.json": "4009232d1fa10fc31bc9f85a4e30aaf9a851a1f3b5e9d90d18d825406345b398",
+    "config/fixture-calibration-v1.json": "d5e818b4b29beb3200814cda4ec488ae31a6d3864e47304c6d7d7ea332a82f50",
+    "config/decision-policy-v1.json": "267e5ae41783e1e12373a47c639f3f4124476928fa8516c56708d9e9f4c4a2e1"
+  },
+  "locked_boundaries": {
+    "player_alpha_formulas_mutable": false,
+    "base_60_30_10_weights_mutable": false,
+    "frozen_predictions_mutable": false,
+    "automatic_capital_authorization_allowed": false
+  }
+}
