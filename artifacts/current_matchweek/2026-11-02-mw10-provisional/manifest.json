@@ -1,0 +1,51 @@
+{
+  "version": "clubalpha_current_matchweek_manifest_v1",
+  "as_of": "2026-11-02",
+  "round": 10,
+  "inputs": {
+    "fixtures": {
+      "path": "data/processed/foundation/fixtures.jsonl",
+      "sha256": "b105b858472039df0fa3cc6751577dd43edd30a887e2cac7b37b807c2e9cd494"
+    },
+    "club_form": {
+      "path": "data/processed/club_form/club_form.jsonl",
+      "sha256": "0857428ae836eb3ddde001e63e69a0999d9674981e44f9228b386da1461200de"
+    },
+    "projected_xi_alpha": {
+      "path": "reports/premier-league-alpha-snapshot-2026-11-02.json",
+      "sha256": "111cb5cb9a1616df3a523e046c7169f9d6c45be74117a41c358cf432b27de699"
+    },
+    "historical_fixtures": {
+      "path": "data/processed/historical_fixtures_v2/historical_fixture_intelligence.jsonl",
+      "sha256": "e30a42f86aa4e0b7e1f7ae3d6db4bc068801078c8eb87b6d9c2a3c2dee9a6bc1"
+    },
+    "scored_history": {
+      "path": "data/processed/historical_fixtures_v2/scored_history_observations.jsonl",
+      "sha256": "963d8f82ee50606bacc0e8978589689fa83f0cd8acee8f3f43f8d749eb3ac252"
+    },
+    "component_scales": {
+      "path": "artifacts/prediction_lab/2026-08-24/component-scales.json",
+      "sha256": "64ff9a93520649cdf893c1e9fcd5d81e58840252faec38b250f8d6b3ad86f0d9"
+    },
+    "goal_model": {
+      "path": "artifacts/prediction_lab/2026-08-24/goal-model.json",
+      "sha256": "db1ad39c296423b54f2258a2514149bc9e63b15b86d95664bc39532b930e1f13"
+    },
+    "prediction_config": {
+      "path": "config/prediction-lab-v0.json",
+      "sha256": "a5e7caadf60c973fd0b9a94c919134c59c8540a540ec4a9a95454de25a3fac0c"
+    },
+    "fixture_config": {
+      "path": "config/fixture-state-v1.json",
+      "sha256": "018ab193d5a1ec025d62c8402e020822ef8d16eb4d3978fcf61647e7d13fd28e"
+    },
+    "historical_config": {
+      "path": "config/historical-fixtures-v2.json",
+      "sha256": "21cb51453fd732dabea7c5673882032218946e1d9cd9348e4eb165585e4f985a"
+    }
+  },
+  "outputs": {
+    "predictions": "28fb5a0eebdc05062e760ca777c56ce37c060983b7a668e0c7908680437f3aaa",
+    "report": "9b1b18687ae7acc4f7e2e9543ab64b480314478527a0d39a447bdef37b87e74f"
+  }
+}

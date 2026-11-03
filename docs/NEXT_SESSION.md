@@ -1,5 +1,34 @@
 # Next session
 
+## November 2 Matchweek 10 provisional slate
+
+- The refreshed provisional slate covers all ten fixtures with 500,000 total
+  simulations. It promotes one side call and one totals call: Arsenal over
+  Hull at 60.7%, and Leeds–Tottenham Under 2.5 at 58.2%.
+- Arsenal is an accuracy call but not a price edge: the captured best ask was
+  85 cents versus the model's 60.7% probability.
+- Leeds–Tottenham Under is the only call that also clears the five-point price
+  gate: 58.2% model probability versus a 52-cent ask, or +6.2 percentage
+  points. It remains shadow-only with 0.00u authorized.
+- Nine clubs play in Europe before the league round. The final refresh is
+  blocked until the November 3–5 UCL/Europa/Conference matches are complete.
+- The foundation contains all 90 completed league matches, 1,051 Player Alpha
+  grades, and 4,686 normalized Club Form/Dynamics team-match rows.
+- Canonical packet:
+  `artifacts/matchweek_research/2026-11-02-mw10-provisional/README.md`.
+
+### Start next session here
+
+1. After the November 5 European slate, refresh FotMob and current foreign
+   domestic evidence.
+2. Rebuild Club Form, Dynamics, projected XIs, Player Alpha attachment,
+   pre-match load, base/context/calibrated forecasts and market prices.
+3. Compare every probability and decision with the preserved November 2
+   artifact. Freeze a separate final packet only if no preleague fixture is
+   pending.
+4. Record decision-time and closing prices for the price-aware paper ledger.
+   Do not promote a pass from price alone and keep real capital at zero.
+
 ## November 2 Matchweek 9 settlement and learning checkpoint
 
 - Matchweek 9 is settled as a published-provisional shadow slate. The forecast

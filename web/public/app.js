@@ -124,7 +124,7 @@ function overview(data) {
     : `<section class="section">
       <div class="section-head"><h2>Matchweek ${esc(upcoming.round)} provisional slate</h2><a href="/predictions/">Open all 10 forecasts →</a></div>
       <div class="foundation-grid">
-        <article class="foundation-card"><span class="foundation-num">1X2</span><h3>${upcoming.summary.side_calls} calls · ${upcoming.summary.side_passes} passes</h3><p>No side currently satisfies every probability, separation, Club Form, Player Alpha, context and lineup gate.</p></article>
+        <article class="foundation-card"><span class="foundation-num">1X2</span><h3>${upcoming.summary.side_calls} calls · ${upcoming.summary.side_passes} passes</h3><p>Only sides satisfying probability, separation, Club Form, Player Alpha, context and lineup gates are exposed.</p></article>
         <article class="foundation-card"><span class="foundation-num">O/U 2.5</span><h3>${upcoming.summary.totals_calls} calls · ${upcoming.summary.totals_passes} passes</h3><p>Only probabilities at or beyond the locked 58% boundary are promoted.</p></article>
         <article class="foundation-card"><span class="foundation-num">REFRESH GATE</span><h3>${upcoming.pending_preleague_teams.length} teams pending</h3><p>Final predictions wait for the last preleague evidence and lineup refresh.</p></article>
       </div>
@@ -472,6 +472,7 @@ function predictions(data) {
   const upcoming = data.provisional_matchweek;
   const latest = data.latest_matchweek;
   const awaitingNextSlate = upcoming.status === "awaiting_refresh";
+  const priceWatches = upcoming.price_aware_shadow_shortlist || [];
   const outcomeLabel = (match, outcome) => {
     if (outcome === "home_win") return match.home_team;
     if (outcome === "away_win") return match.away_team;
@@ -488,11 +489,14 @@ function predictions(data) {
           ? `Under 2.5 · ${pct(1 - match.over_2_5_probability)}`
           : `Pass · O2.5 ${pct(match.over_2_5_probability)}`;
       const totalTone = match.total_call === "pass" ? "" : "hit";
+      const totalPrice = match.total_best_ask == null
+        ? ""
+        : ` · ask ${pct(match.total_best_ask)} · edge ${pp(match.total_edge)}`;
       return `<tr>
         <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · xG ${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</span></td>
         <td>${resultPills(match)}</td>
         <td class="official-call"><strong>${sideRead}</strong><span>${pct(match.side_probability)} leader · ${pct(match.side_gap)} gap</span><small>${esc(match.side_reason.replaceAll("_", " "))}</small></td>
-        <td class="official-call"><strong>${totalRead}</strong><span class="status-chip ${totalTone}">${match.total_call === "pass" ? "pass" : "provisional call"}</span><small>${esc(match.total_reason.replaceAll("_", " "))}</small></td>
+        <td class="official-call"><strong>${totalRead}</strong><span class="status-chip ${totalTone}">${match.total_call === "pass" ? "pass" : "provisional call"}</span><small>${esc(match.total_reason.replaceAll("_", " "))}${esc(totalPrice)}</small></td>
         <td><span class="status-chip">${esc(match.load)}</span><small>${esc(match.context_verdict.replaceAll("_", " "))}</small></td>
       </tr>`;
     })
@@ -551,7 +555,8 @@ function predictions(data) {
         ${metric("Refresh gate", `${upcoming.pending_preleague_teams.length} clubs pending`, "Latest evidence still to ingest", "amber")}
         ${metric("Deployment", "NO CAPITAL", "Research predictions only", "amber")}
       </section>
-      <section class="section"><div class="section-head"><h2>Matchweek ${esc(upcoming.round)} provisional slate</h2><span class="panel-label">${esc(dateTime(upcoming.generated_at_utc))}</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>H · D · A</th><th>1X2 decision</th><th>O/U 2.5</th><th>Load + context</th></tr></thead><tbody>${upcomingRows}</tbody></table></div></section>`;
+      <section class="section"><div class="section-head"><h2>Matchweek ${esc(upcoming.round)} provisional slate</h2><span class="panel-label">${esc(dateTime(upcoming.generated_at_utc))}</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>H · D · A</th><th>1X2 decision</th><th>O/U 2.5</th><th>Load + context</th></tr></thead><tbody>${upcomingRows}</tbody></table></div></section>
+      <section class="section"><div class="section-head"><h2>Price-aware shadow watch</h2><span class="panel-label">Captured ${esc(dateTime(upcoming.market_captured_at_utc))}</span></div>${priceWatches.length ? `<div class="gate-list">${priceWatches.map((watch) => `<div class="gate-row"><span>${esc(watch.fixture)} · ${esc(watch.call.replaceAll("_", " "))}</span><span>${pct(watch.probability)} model · ${pct(watch.best_ask)} ask · ${pp(watch.edge)}</span></div>`).join("")}</div>` : `<p class="notice">No football call also clears the five-point executable-price gate.</p>`}<p class="notice">SHADOW ONLY · A price discrepancy can qualify an existing football call; it can never promote a pass or authorize capital.</p></section>`;
 
   return `${upcomingPanel}
     <section class="page-head"><p class="eyebrow">Settled research slate · Matchweek ${esc(latest.round)}</p><h1>Predictions vs reality</h1><p>The published calls, passes and pre-match probabilities remain frozen beside the final score and xG process. Matchweek ${esc(latest.round)} adds evidence to the next forecast; it does not rewrite this one.</p><div class="notice">SETTLED PUBLISHED PROVISIONAL SLATE · 1X2 + O/U 2.5 scored only when promoted · Zero capital authorized</div></section>

@@ -246,18 +246,18 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertTrue(chelsea["result"]["base_1x2_hit"])
         self.assertTrue(chelsea["result"]["market_1x2_hit"])
 
-    def test_matchweek_nine_settled_and_next_slate_waiting_are_separate(self):
+    def test_matchweek_nine_settled_and_matchweek_ten_provisional_are_separate(self):
         provisional = self.data["provisional_matchweek"]
         settled = self.data["latest_matchweek"]
-        self.assertEqual(provisional["status"], "awaiting_refresh")
+        self.assertEqual(provisional["status"], "provisional_shadow")
         self.assertEqual(provisional["round"], 10)
-        self.assertEqual(provisional["fixtures"], 0)
-        self.assertEqual(len(provisional["predictions"]), 0)
-        self.assertEqual(provisional["summary"]["side_calls"], 0)
-        self.assertEqual(provisional["summary"]["side_passes"], 0)
-        self.assertEqual(provisional["summary"]["totals_calls"], 0)
-        self.assertEqual(provisional["summary"]["totals_passes"], 0)
-        self.assertEqual(len(provisional["pending_preleague_teams"]), 0)
+        self.assertEqual(provisional["fixtures"], 10)
+        self.assertEqual(len(provisional["predictions"]), 10)
+        self.assertEqual(provisional["summary"]["side_calls"], 1)
+        self.assertEqual(provisional["summary"]["side_passes"], 9)
+        self.assertEqual(provisional["summary"]["totals_calls"], 1)
+        self.assertEqual(provisional["summary"]["totals_passes"], 9)
+        self.assertEqual(len(provisional["pending_preleague_teams"]), 9)
         self.assertFalse(
             provisional["decision_boundaries"]["final_slate_frozen"]
         )
@@ -267,7 +267,13 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertFalse(
             provisional["decision_boundaries"]["capital_deployment_ready"]
         )
-        self.assertEqual(provisional["price_aware_shadow_shortlist"], [])
+        self.assertEqual(len(provisional["price_aware_shadow_shortlist"]), 1)
+        price_watch = provisional["price_aware_shadow_shortlist"][0]
+        self.assertEqual(price_watch["match_id"], 5795511)
+        self.assertEqual(price_watch["call"], "under_2_5")
+        self.assertAlmostEqual(price_watch["probability"], 0.58208)
+        self.assertAlmostEqual(price_watch["best_ask"], 0.52)
+        self.assertAlmostEqual(price_watch["edge"], 0.06208)
         self.assertEqual(settled["round"], 9)
         self.assertEqual(settled["settled"], 10)
         self.assertEqual(settled["score"]["markets"]["one_x_two"]["hits"], 0)
@@ -286,11 +292,11 @@ class WebHolyGrailTests(unittest.TestCase):
 
         app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
         self.assertIn("Next cycle · Matchweek ${esc(upcoming.round)}", app_js)
-        self.assertIn("NO MATCHWEEK ${esc(upcoming.round)} FORECAST FROZEN", app_js)
+        self.assertIn("Price-aware shadow watch", app_js)
         self.assertIn("Calibrated 1X2 leader", app_js)
         self.assertIn("Settled research slate · Matchweek ${esc(latest.round)}", app_js)
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
-        self.assertIn('/app.js?v=0.17.0-mw9-learning', index_html)
+        self.assertIn('/app.js?v=0.18.0-mw10-provisional', index_html)
 
     def test_ucl_uses_shared_alpha_with_separate_calibration(self):
         cycle = self.data["ucl_alpha_cycle"]
