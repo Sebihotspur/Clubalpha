@@ -1,0 +1,38 @@
+{
+  "version": "clubalpha_contextual_published_provisional_manifest_v1",
+  "status": "published_provisional_shadow",
+  "as_of": "2026-10-26",
+  "round": 9,
+  "generated_at_utc": "2026-10-26T21:54:13.718003+00:00",
+  "published_at_utc": "2026-10-27T13:25:46+00:00",
+  "manifest_recorded_at_utc": "2026-11-03T01:58:58Z",
+  "publication_evidence": {
+    "git_commit": "570c2d786400c6a5a845f61dfc4ebfeca650283e",
+    "commit_subject": "Publish provisional matchweek 9 predictions",
+    "predictions_present_before_first_kickoff": true,
+    "final_refresh_completed": false
+  },
+  "inputs": {
+    "baseline_predictions": {
+      "path": "artifacts/current_matchweek/2026-10-26-mw9/predictions.jsonl",
+      "sha256": "8627456dc70a3a2908b05e4a686934a3d99aa21a4fba9ab5f408d2724c5c829e"
+    },
+    "player_alpha": {
+      "path": "reports/premier-league-alpha-snapshot-2026-10-26.json",
+      "sha256": "8161d82337bbd2a174cd1cf4e86268c6d7992d9f426445c9c8b6bb40c45980f3"
+    },
+    "style_matchup": {
+      "path": "artifacts/style_matchup/2026-10-26/style-matchups.json",
+      "sha256": "f7bca0e330419a99386f0e4ea061fdbb9844af383bf41b911f42b19930ccf805"
+    }
+  },
+  "outputs": {
+    "predictions": "c4f818b8282005e6ca4e70661e19e416d8520b8cb1d1bd59780ad9f82c39ff00",
+    "report": "fa101b60b285d162fb50e6a2833cdc79ce09eb7651d496ead29b8d761199d6d6"
+  },
+  "decision_boundaries": {
+    "counts_toward_official_promotion_gate": false,
+    "capital_deployment_ready": false
+  },
+  "audit_note": "This manifest was recorded after the fixtures. It binds settlement to the byte-identical provisional predictions published before kickoff and does not represent the required post-cup final freeze."
+}

@@ -1,5 +1,43 @@
 # Next session
 
+## November 2 Matchweek 9 settlement and learning checkpoint
+
+- Matchweek 9 is settled as a published-provisional shadow slate. The forecast
+  was committed before kickoff, but the required post-cup final refresh was not
+  completed, so it does not count as an official freeze or authorize capital.
+- The slate promoted no 1X2 calls. Its two totals calls finished 1/2:
+  Liverpool–Arsenal Under 2.5 hit and Manchester City–Brighton Over 2.5
+  missed. The calibrated probability leaders scored 7/10 on 1X2 and 6/10 on
+  totals direction, both diagnostic-only.
+- All ten FotMob results, team xG, team statistics and declared lineups are now
+  in `artifacts/contextual_interaction/2026-10-26-mw9/results.jsonl`.
+- The append-only learning checkpoint is now 80/80 completed fixtures and 80
+  Match Learning Cards at
+  `artifacts/research_loop/2026-11-02-80-completed/`.
+- Goals averaged 2.10, but observed xG averaged 2.79 versus 2.67 calibrated
+  predicted xG. Do not learn an aggressive Under bias from the scorelines;
+  finishing variance explains much of the gap.
+- Fixture Calibration v1 now uses 80 matches. The home log-ratio correction is
+  -0.0821, the draw logit correction is +0.1864, and the total-xG log
+  correction is -0.0556. All remain shadow-only.
+- The adaptive challenger improves O/U Brier by 0.003589 but worsens side-xG
+  MAE and 1X2 Brier, so the champion remains in place.
+- Archetype memory now contains 160 team-perspective observations, 96
+  team-versus-opponent-archetype rows and 33 league interaction rows. It still
+  has zero live weight.
+- Full audit: `artifacts/matchweek_research/2026-10-26-mw9-provisional/review.md`.
+
+### Start next session here
+
+1. Build the next Premier League slate only after refreshing all completed
+   domestic and European matches, availability and projected XIs.
+2. Use the 80-match calibration artifact and 80-card research state as
+   challenger evidence; do not auto-apply the medium-memory residuals.
+3. Review the four persistent lineup flags: Tottenham starting-XI accuracy and
+   Chelsea, Manchester City and Leeds formation accuracy.
+4. Keep capital at zero until a true final freeze and the chronological market
+   gates both pass.
+
 Updated: 2026-10-26
 
 Model and website checkpoint: see latest commit on `main`

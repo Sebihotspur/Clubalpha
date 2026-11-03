@@ -114,7 +114,7 @@ class WebHolyGrailTests(unittest.TestCase):
         weeks = {
             row["matchweek"]: row for row in self.data["ledger"]["matchweeks"]
         }
-        self.assertEqual(set(weeks), {2, 3, 4, 5, 6, 7, 8})
+        self.assertEqual(set(weeks), {2, 3, 4, 5, 6, 7, 8, 9})
         completed = weeks[2]
         self.assertEqual(completed["settled"], 10)
         self.assertEqual(completed["markets"]["one_x_two"]["hit_rate"], 0.4)
@@ -204,6 +204,18 @@ class WebHolyGrailTests(unittest.TestCase):
         )
         self.assertEqual(matchweek_eight["markets"]["btts"]["hits"], 4)
         self.assertFalse(matchweek_eight["counts_toward_promotion_gate"])
+        matchweek_nine = weeks[9]
+        self.assertEqual(matchweek_nine["settled"], 10)
+        self.assertEqual(matchweek_nine["pending"], 0)
+        self.assertEqual(matchweek_nine["markets"]["one_x_two"]["hits"], 0)
+        self.assertEqual(matchweek_nine["markets"]["one_x_two"]["settled"], 0)
+        self.assertEqual(
+            matchweek_nine["markets"]["over_under_2_5"]["hits"], 1
+        )
+        self.assertEqual(
+            matchweek_nine["markets"]["over_under_2_5"]["settled"], 2
+        )
+        self.assertFalse(matchweek_nine["counts_toward_promotion_gate"])
 
     def test_matchweek_six_results_preserve_prematch_calls(self):
         current = self.data["current_matchweek"]
@@ -234,17 +246,18 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertTrue(chelsea["result"]["base_1x2_hit"])
         self.assertTrue(chelsea["result"]["market_1x2_hit"])
 
-    def test_matchweek_nine_provisional_and_matchweek_eight_settled_are_separate(self):
+    def test_matchweek_nine_settled_and_next_slate_waiting_are_separate(self):
         provisional = self.data["provisional_matchweek"]
         settled = self.data["latest_matchweek"]
-        self.assertEqual(provisional["round"], 9)
-        self.assertEqual(provisional["fixtures"], 10)
-        self.assertEqual(len(provisional["predictions"]), 10)
+        self.assertEqual(provisional["status"], "awaiting_refresh")
+        self.assertEqual(provisional["round"], 10)
+        self.assertEqual(provisional["fixtures"], 0)
+        self.assertEqual(len(provisional["predictions"]), 0)
         self.assertEqual(provisional["summary"]["side_calls"], 0)
-        self.assertEqual(provisional["summary"]["side_passes"], 10)
-        self.assertEqual(provisional["summary"]["totals_calls"], 2)
-        self.assertEqual(provisional["summary"]["totals_passes"], 8)
-        self.assertEqual(len(provisional["pending_preleague_teams"]), 13)
+        self.assertEqual(provisional["summary"]["side_passes"], 0)
+        self.assertEqual(provisional["summary"]["totals_calls"], 0)
+        self.assertEqual(provisional["summary"]["totals_passes"], 0)
+        self.assertEqual(len(provisional["pending_preleague_teams"]), 0)
         self.assertFalse(
             provisional["decision_boundaries"]["final_slate_frozen"]
         )
@@ -255,11 +268,11 @@ class WebHolyGrailTests(unittest.TestCase):
             provisional["decision_boundaries"]["capital_deployment_ready"]
         )
         self.assertEqual(provisional["price_aware_shadow_shortlist"], [])
-        self.assertEqual(settled["round"], 8)
+        self.assertEqual(settled["round"], 9)
         self.assertEqual(settled["settled"], 10)
-        self.assertEqual(settled["score"]["markets"]["one_x_two"]["hits"], 1)
+        self.assertEqual(settled["score"]["markets"]["one_x_two"]["hits"], 0)
         self.assertEqual(
-            settled["score"]["markets"]["one_x_two"]["settled"], 5
+            settled["score"]["markets"]["one_x_two"]["settled"], 0
         )
         self.assertEqual(
             settled["score"]["markets"]["over_under_2_5"]["hits"], 1
@@ -267,17 +280,17 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertEqual(
             settled["score"]["markets"]["over_under_2_5"]["settled"], 2
         )
-        self.assertEqual(settled["shortlist_score"]["hits"], 2)
-        self.assertEqual(settled["shortlist_score"]["settled"], 3)
+        self.assertEqual(settled["shortlist_score"]["hits"], 7)
+        self.assertEqual(settled["shortlist_score"]["settled"], 10)
         self.assertFalse(settled["capital_deployment_ready"])
 
         app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
-        self.assertIn("Provisional research slate · Matchweek ${esc(upcoming.round)}", app_js)
-        self.assertIn("Manchester City–Brighton Over 2.5 at 58.1%", app_js)
-        self.assertIn("Liverpool–Arsenal Under 2.5 at 60.0%", app_js)
+        self.assertIn("Next cycle · Matchweek ${esc(upcoming.round)}", app_js)
+        self.assertIn("NO MATCHWEEK ${esc(upcoming.round)} FORECAST FROZEN", app_js)
+        self.assertIn("Calibrated 1X2 leader", app_js)
         self.assertIn("Settled research slate · Matchweek ${esc(latest.round)}", app_js)
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
-        self.assertIn('/app.js?v=0.16.0-ucl-league-translation', index_html)
+        self.assertIn('/app.js?v=0.17.0-mw9-learning', index_html)
 
     def test_ucl_uses_shared_alpha_with_separate_calibration(self):
         cycle = self.data["ucl_alpha_cycle"]
@@ -316,7 +329,7 @@ class WebHolyGrailTests(unittest.TestCase):
     def test_methodology_exposes_goal_environment_and_selective_decisions(self):
         calibration = self.data["methodology"]["fixture_calibration"]
         goal_environment = calibration["goal_environment_calibration"]
-        self.assertEqual(calibration["training_matches"], 70)
+        self.assertEqual(calibration["training_matches"], 80)
         self.assertLess(
             goal_environment["applied_log_total_xg_correction"], 0.0
         )
@@ -393,15 +406,17 @@ class WebHolyGrailTests(unittest.TestCase):
                 / "artifacts/contextual_interaction/2026-10-15-mw7/results.jsonl",
                 ROOT
                 / "artifacts/contextual_interaction/2026-10-21-mw8/results.jsonl",
+                ROOT
+                / "artifacts/contextual_interaction/2026-10-26-mw9/results.jsonl",
             )
         )
         self.assertEqual(learning["completed_results"], completed_results)
-        self.assertEqual(learning["frozen_fixtures"], 70)
+        self.assertEqual(learning["frozen_fixtures"], 80)
         self.assertEqual(
             learning["pending_results"],
             learning["frozen_fixtures"] - completed_results,
         )
-        self.assertEqual(learning["promotion_candidates"], 26)
+        self.assertEqual(learning["promotion_candidates"], 21)
         self.assertEqual(learning["automatically_applied"], 0)
         self.assertFalse(learning["capital_deployment_ready"])
         adaptive = learning["adaptive"]

@@ -1,9 +1,9 @@
 {
   "meta": {
-    "site_version": "clubalpha_web_v0_16_ucl_league_translation",
+    "site_version": "clubalpha_web_v0_17_mw9_learning",
     "prediction_version": "clubalpha_official_shadow_mw4_v1",
     "as_of": "2026-09-08T16:28:02Z",
-    "generated_at_utc": "2026-10-26T21:54:14.232553+00:00",
+    "generated_at_utc": "2026-11-03T01:59:20.237528+00:00",
     "context_as_of": "2026-08-26",
     "context_version": "clubalpha_contextual_next_round_2026_08_26_v1",
     "simulations": 50000,
@@ -15,22 +15,22 @@
   },
   "latest_matchweek": {
     "status": "settled_published_provisional_shadow",
-    "round": 8,
-    "as_of": "2026-10-26T21:14:15.662960+00:00",
+    "round": 9,
+    "as_of": "2026-11-03T01:59:20.237528+00:00",
     "fixtures": 10,
     "settled": 10,
     "score": {
       "fixtures": 10,
-      "first_kickoff_utc": "2026-10-23T19:00:00Z",
-      "last_kickoff_utc": "2026-10-25T16:30:00Z",
+      "first_kickoff_utc": "2026-10-31T12:30:00Z",
+      "last_kickoff_utc": "2026-11-02T20:00:00Z",
       "settled": 10,
       "pending": 0,
       "markets": {
         "one_x_two": {
           "label": "1X2 promoted calls",
-          "hits": 1,
-          "settled": 5,
-          "hit_rate": 0.2
+          "hits": 0,
+          "settled": 0,
+          "hit_rate": null
         },
         "over_under_2_5": {
           "label": "O/U 2.5 promoted calls",
@@ -47,284 +47,421 @@
       }
     },
     "backtest_summary": {
-      "contextual_outcome_hits": 1,
-      "base_outcome_hits": 2,
-      "process_supported_outcome_variance": 3,
-      "structural_misses": 6,
-      "mean_projected_xi_hits_of_11": 8.8,
+      "contextual_outcome_hits": 6,
+      "base_outcome_hits": 6,
+      "calibrated_outcome_hits": 7,
+      "process_supported_outcome_variance": 1,
+      "structural_misses": 3,
+      "mean_projected_xi_hits_of_11": 9.3,
       "formation_accuracy": 0.95,
-      "predicted_mean_total_xg": 2.890344,
-      "observed_mean_total_xg": 2.306
+      "predicted_mean_total_xg": 2.673345,
+      "observed_mean_total_xg": 2.79,
+      "observed_mean_total_goals": 2.1
     },
     "shortlist_score": {
-      "hits": 2,
-      "settled": 3,
-      "hit_rate": 0.666667
+      "hits": 7,
+      "settled": 10,
+      "hit_rate": 0.7,
+      "diagnostic_only": true
     },
-    "audit_caveat": "The published pre-match slate was provisional; the planned post-Europe final refresh was not completed.",
+    "audit_caveat": "The published pre-match slate was provisional; the planned post-cup final refresh was not completed.",
     "capital_deployment_ready": false,
     "predictions": [
       {
-        "match_id": 5795491,
-        "fixture": "Ipswich Town vs Nottingham Forest",
-        "side_leader": "away_win",
-        "side_probability": 0.3823,
-        "side_gap": 0.01082,
+        "match_id": 5795498,
+        "kickoff_utc": "2026-10-31T12:30:00Z",
+        "home_team": "Chelsea",
+        "away_team": "Manchester United",
+        "probabilities": {
+          "home_win": 0.373513,
+          "draw": 0.297269,
+          "away_win": 0.329218,
+          "over": {
+            "2.5": 0.50849,
+            "3.5": 0.297248
+          },
+          "under": {
+            "2.5": 0.49151,
+            "3.5": 0.702752
+          },
+          "btts_yes": 0.575953,
+          "btts_no": 0.424047
+        },
+        "predicted_xg": {
+          "home": 1.433883,
+          "away": 1.340316,
+          "total": 2.774199
+        },
         "side_call": "pass",
-        "side_best_ask": 0.44,
-        "side_edge": -0.0577,
-        "side_shortlist": false,
-        "total_call": "pass",
-        "over_2_5_probability": 0.56802,
-        "totals_shortlist": false,
-        "context_verdict": "no_clear_contextual_edge",
-        "load": "medium/medium",
-        "kickoff_utc": "2026-10-23T19:00:00Z",
-        "home_team": "Ipswich Town",
-        "away_team": "Nottingham Forest",
-        "probabilities": {
-          "home_win": 0.37148,
-          "draw": 0.24622,
-          "away_win": 0.3823
-        },
-        "predicted_xg": {
-          "home": 1.469686,
-          "away": 1.488909,
-          "total": 2.958595
-        },
-        "status": "settled",
-        "result": {
-          "final_home_goals": 1,
-          "final_away_goals": 1,
-          "outcome": "draw",
-          "actual_xg": {
-            "home": 0.46,
-            "away": 2.29,
-            "total": 2.75
-          },
-          "side_hit": null,
-          "total_hit": null,
-          "review_class": "process_supported_outcome_variance",
-          "xg_process_outcome": "away_win"
-        }
-      },
-      {
-        "match_id": 5795486,
-        "fixture": "Aston Villa vs Manchester City",
-        "side_leader": "away_win",
-        "side_probability": 0.46638,
-        "side_gap": 0.16306,
-        "side_call": "away_win",
-        "side_best_ask": 0.57,
-        "side_edge": -0.10362,
-        "side_shortlist": false,
-        "total_call": "over_2_5",
-        "over_2_5_probability": 0.61216,
-        "total_best_ask": 0.63,
-        "total_edge": -0.01784,
-        "totals_shortlist": false,
-        "context_verdict": "baseline_reinforced",
-        "load": "medium/medium",
-        "kickoff_utc": "2026-10-24T11:30:00Z",
-        "home_team": "Aston Villa",
-        "away_team": "Manchester City",
-        "probabilities": {
-          "home_win": 0.30332,
-          "draw": 0.2303,
-          "away_win": 0.46638
-        },
-        "predicted_xg": {
-          "home": 1.391373,
-          "away": 1.757177,
-          "total": 3.148551
-        },
-        "status": "settled",
-        "result": {
-          "final_home_goals": 2,
-          "final_away_goals": 1,
-          "outcome": "home_win",
-          "actual_xg": {
-            "home": 0.61,
-            "away": 1.56,
-            "total": 2.17
-          },
-          "side_hit": false,
-          "total_hit": true,
-          "review_class": "process_supported_outcome_variance",
-          "xg_process_outcome": "away_win"
-        }
-      },
-      {
-        "match_id": 5795485,
-        "fixture": "Arsenal vs Everton",
         "side_leader": "home_win",
-        "side_probability": 0.57988,
-        "side_gap": 0.34572,
-        "side_call": "home_win",
-        "side_best_ask": 0.69,
-        "side_edge": -0.11012,
-        "side_shortlist": false,
+        "side_probability": 0.373513,
+        "side_gap": 0.044295,
+        "side_tier": "pass",
+        "side_reason": "club_form_and_player_alpha_do_not_both_support_side",
+        "side_evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": false
+          },
+          "foundation_aligned": false,
+          "context_verdict": "no_clear_contextual_edge",
+          "lineup_reliability": 0.866025,
+          "draw_zone": false
+        },
         "total_call": "pass",
-        "over_2_5_probability": 0.49522,
-        "totals_shortlist": false,
-        "context_verdict": "baseline_reinforced",
-        "load": "medium/low",
-        "kickoff_utc": "2026-10-24T14:00:00Z",
-        "home_team": "Arsenal",
-        "away_team": "Everton",
-        "probabilities": {
-          "home_win": 0.57994,
-          "draw": 0.2342,
-          "away_win": 0.18586
-        },
-        "predicted_xg": {
-          "home": 1.763621,
-          "away": 0.889622,
-          "total": 2.653244
-        },
+        "over_2_5_probability": 0.50849,
+        "total_reason": "inside_totals_pass_band",
+        "context_verdict": "no_clear_contextual_edge",
+        "load": "high / medium",
+        "final_call_eligible": false,
         "status": "settled",
         "result": {
           "final_home_goals": 2,
           "final_away_goals": 0,
           "outcome": "home_win",
           "actual_xg": {
-            "home": 1.96,
-            "away": 0.63,
-            "total": 2.59
+            "home": 3.01,
+            "away": 1.24,
+            "total": 4.25
           },
-          "side_hit": true,
+          "side_hit": null,
           "total_hit": null,
           "review_class": "outcome_hit",
           "xg_process_outcome": "home_win"
         }
       },
       {
-        "match_id": 5795488,
-        "fixture": "Coventry City vs Fulham",
-        "side_leader": "home_win",
-        "side_probability": 0.37388,
-        "side_gap": 0.00678,
-        "side_call": "pass",
-        "side_best_ask": 0.32,
-        "side_edge": 0.05388,
-        "side_shortlist": false,
-        "total_call": "pass",
-        "over_2_5_probability": 0.50042,
-        "totals_shortlist": false,
-        "context_verdict": "baseline_fragile",
-        "load": "medium/medium",
-        "kickoff_utc": "2026-10-24T14:00:00Z",
-        "home_team": "Coventry City",
-        "away_team": "Fulham",
+        "match_id": 5795495,
+        "kickoff_utc": "2026-10-31T15:00:00Z",
+        "home_team": "AFC Bournemouth",
+        "away_team": "Leeds United",
         "probabilities": {
-          "home_win": 0.37388,
-          "draw": 0.259,
-          "away_win": 0.36712
+          "home_win": 0.439993,
+          "draw": 0.303785,
+          "away_win": 0.256222,
+          "over": {
+            "2.5": 0.462866,
+            "3.5": 0.258675
+          },
+          "under": {
+            "2.5": 0.537134,
+            "3.5": 0.741325
+          },
+          "btts_yes": 0.528129,
+          "btts_no": 0.471871
         },
         "predicted_xg": {
-          "home": 1.341413,
-          "away": 1.320979,
-          "total": 2.662392
+          "home": 1.497376,
+          "away": 1.084427,
+          "total": 2.581803
         },
+        "side_call": "pass",
+        "side_leader": "home_win",
+        "side_probability": 0.439993,
+        "side_gap": 0.136208,
+        "side_tier": "pass",
+        "side_reason": "leader_below_45_percent",
+        "side_evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": true
+          },
+          "foundation_aligned": true,
+          "context_verdict": "baseline_supported",
+          "lineup_reliability": 0.707107,
+          "draw_zone": false
+        },
+        "total_call": "pass",
+        "over_2_5_probability": 0.462866,
+        "total_reason": "inside_totals_pass_band",
+        "context_verdict": "baseline_supported",
+        "load": "high / medium",
+        "final_call_eligible": false,
         "status": "settled",
         "result": {
-          "final_home_goals": 0,
-          "final_away_goals": 1,
-          "outcome": "away_win",
+          "final_home_goals": 2,
+          "final_away_goals": 0,
+          "outcome": "home_win",
           "actual_xg": {
-            "home": 0.51,
-            "away": 0.55,
-            "total": 1.06
+            "home": 1.29,
+            "away": 0.71,
+            "total": 2.0
           },
           "side_hit": null,
           "total_hit": null,
-          "review_class": "structural_miss",
-          "xg_process_outcome": "draw"
+          "review_class": "outcome_hit",
+          "xg_process_outcome": "home_win"
         }
       },
       {
-        "match_id": 5795487,
-        "fixture": "Chelsea vs Tottenham Hotspur",
-        "side_leader": "home_win",
-        "side_probability": 0.451,
-        "side_gap": 0.15184,
-        "side_call": "home_win",
-        "side_best_ask": 0.58,
-        "side_edge": -0.129,
-        "side_shortlist": false,
-        "total_call": "pass",
-        "over_2_5_probability": 0.538,
-        "totals_shortlist": false,
-        "context_verdict": "baseline_supported",
-        "load": "low/medium",
-        "kickoff_utc": "2026-10-24T16:30:00Z",
-        "home_team": "Chelsea",
-        "away_team": "Tottenham Hotspur",
+        "match_id": 5795497,
+        "kickoff_utc": "2026-10-31T15:00:00Z",
+        "home_team": "Brentford",
+        "away_team": "Nottingham Forest",
         "probabilities": {
-          "home_win": 0.451,
-          "draw": 0.24982,
-          "away_win": 0.29918
+          "home_win": 0.363729,
+          "draw": 0.303873,
+          "away_win": 0.332398,
+          "over": {
+            "2.5": 0.489267,
+            "3.5": 0.281575
+          },
+          "under": {
+            "2.5": 0.510733,
+            "3.5": 0.718425
+          },
+          "btts_yes": 0.560182,
+          "btts_no": 0.439818
         },
         "predicted_xg": {
-          "home": 1.583908,
-          "away": 1.249241,
-          "total": 2.833149
+          "home": 1.380864,
+          "away": 1.305112,
+          "total": 2.685976
         },
+        "side_call": "pass",
+        "side_leader": "home_win",
+        "side_probability": 0.363729,
+        "side_gap": 0.031331,
+        "side_tier": "pass",
+        "side_reason": "club_form_and_player_alpha_do_not_both_support_side",
+        "side_evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": false,
+            "player_quality_lineup": true
+          },
+          "foundation_aligned": false,
+          "context_verdict": "baseline_supported",
+          "lineup_reliability": 1.0,
+          "draw_zone": false
+        },
+        "total_call": "pass",
+        "over_2_5_probability": 0.489267,
+        "total_reason": "inside_totals_pass_band",
+        "context_verdict": "baseline_supported",
+        "load": "high / medium",
+        "final_call_eligible": false,
         "status": "settled",
         "result": {
-          "final_home_goals": 0,
-          "final_away_goals": 2,
-          "outcome": "away_win",
+          "final_home_goals": 2,
+          "final_away_goals": 0,
+          "outcome": "home_win",
           "actual_xg": {
-            "home": 0.47,
-            "away": 0.74,
-            "total": 1.21
+            "home": 0.46,
+            "away": 0.86,
+            "total": 1.32
           },
-          "side_hit": false,
+          "side_hit": null,
+          "total_hit": null,
+          "review_class": "outcome_hit",
+          "xg_process_outcome": "away_win"
+        }
+      },
+      {
+        "match_id": 5795499,
+        "kickoff_utc": "2026-10-31T15:00:00Z",
+        "home_team": "Coventry City",
+        "away_team": "Sunderland",
+        "probabilities": {
+          "home_win": 0.368959,
+          "draw": 0.314053,
+          "away_win": 0.316988,
+          "over": {
+            "2.5": 0.449325,
+            "3.5": 0.24928
+          },
+          "under": {
+            "2.5": 0.550675,
+            "3.5": 0.75072
+          },
+          "btts_yes": 0.530544,
+          "btts_no": 0.469456
+        },
+        "predicted_xg": {
+          "home": 1.321804,
+          "away": 1.212895,
+          "total": 2.534699
+        },
+        "side_call": "pass",
+        "side_leader": "home_win",
+        "side_probability": 0.368959,
+        "side_gap": 0.051971,
+        "side_tier": "pass",
+        "side_reason": "club_form_and_player_alpha_do_not_both_support_side",
+        "side_evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": false
+          },
+          "foundation_aligned": false,
+          "context_verdict": "no_clear_contextual_edge",
+          "lineup_reliability": 0.75,
+          "draw_zone": false
+        },
+        "total_call": "pass",
+        "over_2_5_probability": 0.449325,
+        "total_reason": "inside_totals_pass_band",
+        "context_verdict": "no_clear_contextual_edge",
+        "load": "low / high",
+        "final_call_eligible": false,
+        "status": "settled",
+        "result": {
+          "final_home_goals": 3,
+          "final_away_goals": 1,
+          "outcome": "home_win",
+          "actual_xg": {
+            "home": 0.69,
+            "away": 1.82,
+            "total": 2.51
+          },
+          "side_hit": null,
+          "total_hit": null,
+          "review_class": "outcome_hit",
+          "xg_process_outcome": "away_win"
+        }
+      },
+      {
+        "match_id": 5795500,
+        "kickoff_utc": "2026-10-31T15:00:00Z",
+        "home_team": "Hull City",
+        "away_team": "Ipswich Town",
+        "probabilities": {
+          "home_win": 0.3354,
+          "draw": 0.299,
+          "away_win": 0.3656,
+          "over": {
+            "2.5": 0.504657,
+            "3.5": 0.297005
+          },
+          "under": {
+            "2.5": 0.495343,
+            "3.5": 0.702995
+          },
+          "btts_yes": 0.572857,
+          "btts_no": 0.427143
+        },
+        "predicted_xg": {
+          "home": 1.34213,
+          "away": 1.415421,
+          "total": 2.757551
+        },
+        "side_call": "pass",
+        "side_leader": "away_win",
+        "side_probability": 0.3656,
+        "side_gap": 0.0302,
+        "side_tier": "pass",
+        "side_reason": "base_context_calibration_disagree",
+        "side_evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "away_win",
+          "leaders_aligned": false,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": true
+          },
+          "foundation_aligned": true,
+          "context_verdict": "no_clear_contextual_edge",
+          "lineup_reliability": 0.5,
+          "draw_zone": false
+        },
+        "total_call": "pass",
+        "over_2_5_probability": 0.504657,
+        "total_reason": "inside_totals_pass_band",
+        "context_verdict": "no_clear_contextual_edge",
+        "load": "medium / medium",
+        "final_call_eligible": false,
+        "status": "settled",
+        "result": {
+          "final_home_goals": 2,
+          "final_away_goals": 2,
+          "outcome": "draw",
+          "actual_xg": {
+            "home": 0.78,
+            "away": 1.06,
+            "total": 1.84
+          },
+          "side_hit": null,
           "total_hit": null,
           "review_class": "structural_miss",
           "xg_process_outcome": "away_win"
         }
       },
       {
-        "match_id": 5795489,
-        "fixture": "Crystal Palace vs Newcastle United",
-        "side_leader": "home_win",
-        "side_probability": 0.40666,
-        "side_gap": 0.04676,
-        "side_call": "pass",
-        "side_best_ask": 0.34,
-        "side_edge": 0.06666,
-        "side_shortlist": false,
-        "total_call": "over_2_5",
-        "over_2_5_probability": 0.62318,
-        "total_best_ask": 0.6,
-        "total_edge": 0.02318,
-        "totals_shortlist": false,
-        "context_verdict": "no_clear_contextual_edge",
-        "load": "high/low",
-        "kickoff_utc": "2026-10-25T14:00:00Z",
-        "home_team": "Crystal Palace",
-        "away_team": "Newcastle United",
+        "match_id": 5795502,
+        "kickoff_utc": "2026-10-31T15:00:00Z",
+        "home_team": "Manchester City",
+        "away_team": "Brighton & Hove Albion",
         "probabilities": {
-          "home_win": 0.4067,
-          "draw": 0.2334,
-          "away_win": 0.3599
+          "home_win": 0.447218,
+          "draw": 0.276624,
+          "away_win": 0.276158,
+          "over": {
+            "2.5": 0.58054,
+            "3.5": 0.370644
+          },
+          "under": {
+            "2.5": 0.41946,
+            "3.5": 0.629356
+          },
+          "btts_yes": 0.616721,
+          "btts_no": 0.383279
         },
         "predicted_xg": {
-          "home": 1.661821,
-          "away": 1.55347,
-          "total": 3.215291
+          "home": 1.760966,
+          "away": 1.334559,
+          "total": 3.095525
         },
+        "side_call": "pass",
+        "side_leader": "home_win",
+        "side_probability": 0.447218,
+        "side_gap": 0.170594,
+        "side_tier": "pass",
+        "side_reason": "leader_below_45_percent",
+        "side_evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": true
+          },
+          "foundation_aligned": true,
+          "context_verdict": "baseline_supported",
+          "lineup_reliability": 0.707107,
+          "draw_zone": false
+        },
+        "total_call": "over_2_5",
+        "over_2_5_probability": 0.58054,
+        "total_reason": "over_probability_clears_gate",
+        "context_verdict": "baseline_supported",
+        "load": "high / high",
+        "final_call_eligible": false,
         "status": "settled",
         "result": {
           "final_home_goals": 0,
-          "final_away_goals": 2,
+          "final_away_goals": 1,
           "outcome": "away_win",
           "actual_xg": {
-            "home": 1.59,
-            "away": 0.95,
-            "total": 2.54
+            "home": 1.64,
+            "away": 1.0,
+            "total": 2.6399999999999997
           },
           "side_hit": null,
           "total_hit": false,
@@ -333,179 +470,271 @@
         }
       },
       {
-        "match_id": 5795490,
-        "fixture": "Hull City vs Brentford",
-        "side_leader": "away_win",
-        "side_probability": 0.42814,
-        "side_gap": 0.1057,
-        "side_call": "away_win",
-        "side_best_ask": 0.57,
-        "side_edge": -0.14186,
-        "side_shortlist": false,
-        "total_call": "pass",
-        "over_2_5_probability": 0.52984,
-        "totals_shortlist": false,
-        "context_verdict": "baseline_reinforced",
-        "load": "medium/medium",
-        "kickoff_utc": "2026-10-25T14:00:00Z",
-        "home_team": "Hull City",
-        "away_team": "Brentford",
+        "match_id": 5795504,
+        "kickoff_utc": "2026-10-31T17:30:00Z",
+        "home_team": "Tottenham Hotspur",
+        "away_team": "Crystal Palace",
         "probabilities": {
-          "home_win": 0.32236,
-          "draw": 0.24954,
-          "away_win": 0.4281
-        },
-        "predicted_xg": {
-          "home": 1.290059,
-          "away": 1.523837,
-          "total": 2.813896
-        },
-        "status": "settled",
-        "result": {
-          "final_home_goals": 1,
-          "final_away_goals": 1,
-          "outcome": "draw",
-          "actual_xg": {
-            "home": 1.57,
-            "away": 1.74,
-            "total": 3.31
+          "home_win": 0.451114,
+          "draw": 0.299598,
+          "away_win": 0.249288,
+          "over": {
+            "2.5": 0.478333,
+            "3.5": 0.273092
           },
-          "side_hit": false,
-          "total_hit": null,
-          "review_class": "structural_miss",
-          "xg_process_outcome": "draw"
-        }
-      },
-      {
-        "match_id": 5795492,
-        "fixture": "Liverpool vs Brighton & Hove Albion",
-        "side_leader": "away_win",
-        "side_probability": 0.3805,
-        "side_gap": 0.00494,
-        "side_call": "pass",
-        "side_best_ask": 0.32,
-        "side_edge": 0.0605,
-        "side_shortlist": false,
-        "total_call": "pass",
-        "over_2_5_probability": 0.57728,
-        "totals_shortlist": false,
-        "context_verdict": "no_clear_contextual_edge",
-        "load": "medium/high",
-        "kickoff_utc": "2026-10-25T14:00:00Z",
-        "home_team": "Liverpool",
-        "away_team": "Brighton & Hove Albion",
-        "probabilities": {
-          "home_win": 0.37556,
-          "draw": 0.24396,
-          "away_win": 0.38048
+          "under": {
+            "2.5": 0.521667,
+            "3.5": 0.726908
+          },
+          "btts_yes": 0.54085,
+          "btts_no": 0.45915
         },
         "predicted_xg": {
-          "home": 1.498668,
-          "away": 1.49763,
-          "total": 2.996298
+          "home": 1.566616,
+          "away": 1.09933,
+          "total": 2.665945
         },
+        "side_call": "pass",
+        "side_leader": "home_win",
+        "side_probability": 0.451114,
+        "side_gap": 0.151516,
+        "side_tier": "pass",
+        "side_reason": "club_form_and_player_alpha_do_not_both_support_side",
+        "side_evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": false
+          },
+          "foundation_aligned": false,
+          "context_verdict": "baseline_supported",
+          "lineup_reliability": 1.0,
+          "draw_zone": false
+        },
+        "total_call": "pass",
+        "over_2_5_probability": 0.478333,
+        "total_reason": "inside_totals_pass_band",
+        "context_verdict": "baseline_supported",
+        "load": "medium / high",
+        "final_call_eligible": false,
         "status": "settled",
         "result": {
           "final_home_goals": 2,
           "final_away_goals": 0,
           "outcome": "home_win",
           "actual_xg": {
-            "home": 1.2,
-            "away": 1.32,
-            "total": 2.52
+            "home": 3.47,
+            "away": 0.14,
+            "total": 3.6100000000000003
           },
           "side_hit": null,
           "total_hit": null,
-          "review_class": "structural_miss",
-          "xg_process_outcome": "draw"
+          "review_class": "outcome_hit",
+          "xg_process_outcome": "home_win"
         }
       },
       {
-        "match_id": 5795493,
-        "fixture": "Manchester United vs AFC Bournemouth",
-        "side_leader": "home_win",
-        "side_probability": 0.4137,
-        "side_gap": 0.07558,
-        "side_call": "home_win",
-        "side_best_ask": 0.48,
-        "side_edge": -0.0663,
-        "side_shortlist": false,
-        "total_call": "pass",
-        "over_2_5_probability": 0.54512,
-        "totals_shortlist": false,
-        "context_verdict": "no_clear_contextual_edge",
-        "load": "high/high",
-        "kickoff_utc": "2026-10-25T14:00:00Z",
-        "home_team": "Manchester United",
-        "away_team": "AFC Bournemouth",
+        "match_id": 5795496,
+        "kickoff_utc": "2026-10-31T20:00:00Z",
+        "home_team": "Aston Villa",
+        "away_team": "Fulham",
         "probabilities": {
-          "home_win": 0.4137,
-          "draw": 0.24818,
-          "away_win": 0.33812
+          "home_win": 0.394008,
+          "draw": 0.309311,
+          "away_win": 0.296681,
+          "over": {
+            "2.5": 0.459087,
+            "3.5": 0.254095
+          },
+          "under": {
+            "2.5": 0.540913,
+            "3.5": 0.745905
+          },
+          "btts_yes": 0.529989,
+          "btts_no": 0.470011
         },
         "predicted_xg": {
-          "home": 1.513025,
-          "away": 1.336925,
-          "total": 2.84995
+          "home": 1.390655,
+          "away": 1.177319,
+          "total": 2.567974
         },
+        "side_call": "pass",
+        "side_leader": "home_win",
+        "side_probability": 0.394008,
+        "side_gap": 0.084697,
+        "side_tier": "pass",
+        "side_reason": "club_form_and_player_alpha_do_not_both_support_side",
+        "side_evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "home_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": false
+          },
+          "foundation_aligned": false,
+          "context_verdict": "no_clear_contextual_edge",
+          "lineup_reliability": 0.5,
+          "draw_zone": false
+        },
+        "total_call": "pass",
+        "over_2_5_probability": 0.459087,
+        "total_reason": "inside_totals_pass_band",
+        "context_verdict": "no_clear_contextual_edge",
+        "load": "high / high",
+        "final_call_eligible": false,
         "status": "settled",
         "result": {
-          "final_home_goals": 0,
-          "final_away_goals": 3,
-          "outcome": "away_win",
+          "final_home_goals": 1,
+          "final_away_goals": 1,
+          "outcome": "draw",
           "actual_xg": {
-            "home": 1.17,
-            "away": 2.15,
-            "total": 3.32
+            "home": 1.83,
+            "away": 2.24,
+            "total": 4.07
           },
-          "side_hit": false,
+          "side_hit": null,
           "total_hit": null,
           "review_class": "structural_miss",
           "xg_process_outcome": "away_win"
         }
       },
       {
-        "match_id": 5795494,
-        "fixture": "Sunderland vs Leeds United",
-        "side_leader": "away_win",
-        "side_probability": 0.39082,
-        "side_gap": 0.03652,
-        "side_call": "pass",
-        "side_best_ask": 0.39,
-        "side_edge": 0.00082,
-        "side_shortlist": false,
-        "total_call": "pass",
-        "over_2_5_probability": 0.52374,
-        "totals_shortlist": false,
-        "context_verdict": "baseline_supported",
-        "load": "high/medium",
-        "kickoff_utc": "2026-10-25T16:30:00Z",
-        "home_team": "Sunderland",
-        "away_team": "Leeds United",
+        "match_id": 5795501,
+        "kickoff_utc": "2026-11-01T16:30:00Z",
+        "home_team": "Liverpool",
+        "away_team": "Arsenal",
         "probabilities": {
-          "home_win": 0.3543,
-          "draw": 0.25488,
-          "away_win": 0.39082
+          "home_win": 0.296104,
+          "draw": 0.327321,
+          "away_win": 0.376575,
+          "over": {
+            "2.5": 0.399786,
+            "3.5": 0.208869
+          },
+          "under": {
+            "2.5": 0.600214,
+            "3.5": 0.791131
+          },
+          "btts_yes": 0.485601,
+          "btts_no": 0.514399
         },
         "predicted_xg": {
-          "home": 1.350197,
-          "away": 1.421881,
-          "total": 2.772078
+          "home": 1.079304,
+          "away": 1.258108,
+          "total": 2.337411
         },
+        "side_call": "pass",
+        "side_leader": "away_win",
+        "side_probability": 0.376575,
+        "side_gap": 0.049254,
+        "side_tier": "pass",
+        "side_reason": "leader_below_45_percent",
+        "side_evidence": {
+          "base_leader": "away_win",
+          "contextual_leader": "away_win",
+          "calibrated_leader": "away_win",
+          "leaders_aligned": true,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": true
+          },
+          "foundation_aligned": true,
+          "context_verdict": "baseline_supported",
+          "lineup_reliability": 0.866025,
+          "draw_zone": false
+        },
+        "total_call": "under_2_5",
+        "over_2_5_probability": 0.399786,
+        "total_reason": "under_probability_clears_gate",
+        "context_verdict": "baseline_supported",
+        "load": "high / high",
+        "final_call_eligible": false,
         "status": "settled",
         "result": {
           "final_home_goals": 0,
-          "final_away_goals": 0,
-          "outcome": "draw",
+          "final_away_goals": 1,
+          "outcome": "away_win",
           "actual_xg": {
-            "home": 0.83,
-            "away": 0.76,
-            "total": 1.5899999999999999
+            "home": 1.05,
+            "away": 0.98,
+            "total": 2.0300000000000002
+          },
+          "side_hit": null,
+          "total_hit": true,
+          "review_class": "outcome_hit",
+          "xg_process_outcome": "draw"
+        }
+      },
+      {
+        "match_id": 5795503,
+        "kickoff_utc": "2026-11-02T20:00:00Z",
+        "home_team": "Newcastle United",
+        "away_team": "Everton",
+        "probabilities": {
+          "home_win": 0.347799,
+          "draw": 0.299842,
+          "away_win": 0.352359,
+          "over": {
+            "2.5": 0.500876,
+            "3.5": 0.291931
+          },
+          "under": {
+            "2.5": 0.499124,
+            "3.5": 0.708069
+          },
+          "btts_yes": 0.563459,
+          "btts_no": 0.436541
+        },
+        "predicted_xg": {
+          "home": 1.366986,
+          "away": 1.365381,
+          "total": 2.732367
+        },
+        "side_call": "pass",
+        "side_leader": "away_win",
+        "side_probability": 0.352359,
+        "side_gap": 0.00456,
+        "side_tier": "pass",
+        "side_reason": "base_context_calibration_disagree",
+        "side_evidence": {
+          "base_leader": "home_win",
+          "contextual_leader": "home_win",
+          "calibrated_leader": "away_win",
+          "leaders_aligned": false,
+          "foundation_support": {
+            "club_form": true,
+            "player_quality_lineup": false
+          },
+          "foundation_aligned": false,
+          "context_verdict": "baseline_supported",
+          "lineup_reliability": 0.75,
+          "draw_zone": false
+        },
+        "total_call": "pass",
+        "over_2_5_probability": 0.500876,
+        "total_reason": "inside_totals_pass_band",
+        "context_verdict": "baseline_supported",
+        "load": "high / high",
+        "final_call_eligible": false,
+        "status": "settled",
+        "result": {
+          "final_home_goals": 0,
+          "final_away_goals": 1,
+          "outcome": "away_win",
+          "actual_xg": {
+            "home": 1.29,
+            "away": 2.34,
+            "total": 3.63
           },
           "side_hit": null,
           "total_hit": null,
           "review_class": "structural_miss",
-          "xg_process_outcome": "draw"
+          "xg_process_outcome": "away_win"
         }
       }
     ]
@@ -1142,573 +1371,23 @@
     }
   },
   "provisional_matchweek": {
-    "status": "provisional_shadow",
-    "round": 9,
-    "as_of": "2026-10-26",
-    "generated_at_utc": "2026-10-26T21:54:14.232553+00:00",
-    "final_refresh_required_after_utc": "2026-10-29T19:45:00.000Z",
-    "fixtures": 10,
-    "predictions": [
-      {
-        "match_id": 5795498,
-        "kickoff_utc": "2026-10-31T12:30:00Z",
-        "home_team": "Chelsea",
-        "away_team": "Manchester United",
-        "probabilities": {
-          "home_win": 0.373513,
-          "draw": 0.297269,
-          "away_win": 0.329218,
-          "over": {
-            "2.5": 0.50849,
-            "3.5": 0.297248
-          },
-          "under": {
-            "2.5": 0.49151,
-            "3.5": 0.702752
-          },
-          "btts_yes": 0.575953,
-          "btts_no": 0.424047
-        },
-        "predicted_xg": {
-          "home": 1.433883,
-          "away": 1.340316,
-          "total": 2.774199
-        },
-        "side_call": "pass",
-        "side_leader": "home_win",
-        "side_probability": 0.373513,
-        "side_gap": 0.044295,
-        "side_tier": "pass",
-        "side_reason": "club_form_and_player_alpha_do_not_both_support_side",
-        "side_evidence": {
-          "base_leader": "home_win",
-          "contextual_leader": "home_win",
-          "calibrated_leader": "home_win",
-          "leaders_aligned": true,
-          "foundation_support": {
-            "club_form": true,
-            "player_quality_lineup": false
-          },
-          "foundation_aligned": false,
-          "context_verdict": "no_clear_contextual_edge",
-          "lineup_reliability": 0.866025,
-          "draw_zone": false
-        },
-        "total_call": "pass",
-        "over_2_5_probability": 0.50849,
-        "total_reason": "inside_totals_pass_band",
-        "context_verdict": "no_clear_contextual_edge",
-        "load": "high / medium",
-        "final_call_eligible": false
-      },
-      {
-        "match_id": 5795495,
-        "kickoff_utc": "2026-10-31T15:00:00Z",
-        "home_team": "AFC Bournemouth",
-        "away_team": "Leeds United",
-        "probabilities": {
-          "home_win": 0.439993,
-          "draw": 0.303785,
-          "away_win": 0.256222,
-          "over": {
-            "2.5": 0.462866,
-            "3.5": 0.258675
-          },
-          "under": {
-            "2.5": 0.537134,
-            "3.5": 0.741325
-          },
-          "btts_yes": 0.528129,
-          "btts_no": 0.471871
-        },
-        "predicted_xg": {
-          "home": 1.497376,
-          "away": 1.084427,
-          "total": 2.581803
-        },
-        "side_call": "pass",
-        "side_leader": "home_win",
-        "side_probability": 0.439993,
-        "side_gap": 0.136208,
-        "side_tier": "pass",
-        "side_reason": "leader_below_45_percent",
-        "side_evidence": {
-          "base_leader": "home_win",
-          "contextual_leader": "home_win",
-          "calibrated_leader": "home_win",
-          "leaders_aligned": true,
-          "foundation_support": {
-            "club_form": true,
-            "player_quality_lineup": true
-          },
-          "foundation_aligned": true,
-          "context_verdict": "baseline_supported",
-          "lineup_reliability": 0.707107,
-          "draw_zone": false
-        },
-        "total_call": "pass",
-        "over_2_5_probability": 0.462866,
-        "total_reason": "inside_totals_pass_band",
-        "context_verdict": "baseline_supported",
-        "load": "high / medium",
-        "final_call_eligible": false
-      },
-      {
-        "match_id": 5795497,
-        "kickoff_utc": "2026-10-31T15:00:00Z",
-        "home_team": "Brentford",
-        "away_team": "Nottingham Forest",
-        "probabilities": {
-          "home_win": 0.363729,
-          "draw": 0.303873,
-          "away_win": 0.332398,
-          "over": {
-            "2.5": 0.489267,
-            "3.5": 0.281575
-          },
-          "under": {
-            "2.5": 0.510733,
-            "3.5": 0.718425
-          },
-          "btts_yes": 0.560182,
-          "btts_no": 0.439818
-        },
-        "predicted_xg": {
-          "home": 1.380864,
-          "away": 1.305112,
-          "total": 2.685976
-        },
-        "side_call": "pass",
-        "side_leader": "home_win",
-        "side_probability": 0.363729,
-        "side_gap": 0.031331,
-        "side_tier": "pass",
-        "side_reason": "club_form_and_player_alpha_do_not_both_support_side",
-        "side_evidence": {
-          "base_leader": "home_win",
-          "contextual_leader": "home_win",
-          "calibrated_leader": "home_win",
-          "leaders_aligned": true,
-          "foundation_support": {
-            "club_form": false,
-            "player_quality_lineup": true
-          },
-          "foundation_aligned": false,
-          "context_verdict": "baseline_supported",
-          "lineup_reliability": 1.0,
-          "draw_zone": false
-        },
-        "total_call": "pass",
-        "over_2_5_probability": 0.489267,
-        "total_reason": "inside_totals_pass_band",
-        "context_verdict": "baseline_supported",
-        "load": "high / medium",
-        "final_call_eligible": false
-      },
-      {
-        "match_id": 5795499,
-        "kickoff_utc": "2026-10-31T15:00:00Z",
-        "home_team": "Coventry City",
-        "away_team": "Sunderland",
-        "probabilities": {
-          "home_win": 0.368959,
-          "draw": 0.314053,
-          "away_win": 0.316988,
-          "over": {
-            "2.5": 0.449325,
-            "3.5": 0.24928
-          },
-          "under": {
-            "2.5": 0.550675,
-            "3.5": 0.75072
-          },
-          "btts_yes": 0.530544,
-          "btts_no": 0.469456
-        },
-        "predicted_xg": {
-          "home": 1.321804,
-          "away": 1.212895,
-          "total": 2.534699
-        },
-        "side_call": "pass",
-        "side_leader": "home_win",
-        "side_probability": 0.368959,
-        "side_gap": 0.051971,
-        "side_tier": "pass",
-        "side_reason": "club_form_and_player_alpha_do_not_both_support_side",
-        "side_evidence": {
-          "base_leader": "home_win",
-          "contextual_leader": "home_win",
-          "calibrated_leader": "home_win",
-          "leaders_aligned": true,
-          "foundation_support": {
-            "club_form": true,
-            "player_quality_lineup": false
-          },
-          "foundation_aligned": false,
-          "context_verdict": "no_clear_contextual_edge",
-          "lineup_reliability": 0.75,
-          "draw_zone": false
-        },
-        "total_call": "pass",
-        "over_2_5_probability": 0.449325,
-        "total_reason": "inside_totals_pass_band",
-        "context_verdict": "no_clear_contextual_edge",
-        "load": "low / high",
-        "final_call_eligible": false
-      },
-      {
-        "match_id": 5795500,
-        "kickoff_utc": "2026-10-31T15:00:00Z",
-        "home_team": "Hull City",
-        "away_team": "Ipswich Town",
-        "probabilities": {
-          "home_win": 0.3354,
-          "draw": 0.299,
-          "away_win": 0.3656,
-          "over": {
-            "2.5": 0.504657,
-            "3.5": 0.297005
-          },
-          "under": {
-            "2.5": 0.495343,
-            "3.5": 0.702995
-          },
-          "btts_yes": 0.572857,
-          "btts_no": 0.427143
-        },
-        "predicted_xg": {
-          "home": 1.34213,
-          "away": 1.415421,
-          "total": 2.757551
-        },
-        "side_call": "pass",
-        "side_leader": "away_win",
-        "side_probability": 0.3656,
-        "side_gap": 0.0302,
-        "side_tier": "pass",
-        "side_reason": "base_context_calibration_disagree",
-        "side_evidence": {
-          "base_leader": "home_win",
-          "contextual_leader": "home_win",
-          "calibrated_leader": "away_win",
-          "leaders_aligned": false,
-          "foundation_support": {
-            "club_form": true,
-            "player_quality_lineup": true
-          },
-          "foundation_aligned": true,
-          "context_verdict": "no_clear_contextual_edge",
-          "lineup_reliability": 0.5,
-          "draw_zone": false
-        },
-        "total_call": "pass",
-        "over_2_5_probability": 0.504657,
-        "total_reason": "inside_totals_pass_band",
-        "context_verdict": "no_clear_contextual_edge",
-        "load": "medium / medium",
-        "final_call_eligible": false
-      },
-      {
-        "match_id": 5795502,
-        "kickoff_utc": "2026-10-31T15:00:00Z",
-        "home_team": "Manchester City",
-        "away_team": "Brighton & Hove Albion",
-        "probabilities": {
-          "home_win": 0.447218,
-          "draw": 0.276624,
-          "away_win": 0.276158,
-          "over": {
-            "2.5": 0.58054,
-            "3.5": 0.370644
-          },
-          "under": {
-            "2.5": 0.41946,
-            "3.5": 0.629356
-          },
-          "btts_yes": 0.616721,
-          "btts_no": 0.383279
-        },
-        "predicted_xg": {
-          "home": 1.760966,
-          "away": 1.334559,
-          "total": 3.095525
-        },
-        "side_call": "pass",
-        "side_leader": "home_win",
-        "side_probability": 0.447218,
-        "side_gap": 0.170594,
-        "side_tier": "pass",
-        "side_reason": "leader_below_45_percent",
-        "side_evidence": {
-          "base_leader": "home_win",
-          "contextual_leader": "home_win",
-          "calibrated_leader": "home_win",
-          "leaders_aligned": true,
-          "foundation_support": {
-            "club_form": true,
-            "player_quality_lineup": true
-          },
-          "foundation_aligned": true,
-          "context_verdict": "baseline_supported",
-          "lineup_reliability": 0.707107,
-          "draw_zone": false
-        },
-        "total_call": "over_2_5",
-        "over_2_5_probability": 0.58054,
-        "total_reason": "over_probability_clears_gate",
-        "context_verdict": "baseline_supported",
-        "load": "high / high",
-        "final_call_eligible": false
-      },
-      {
-        "match_id": 5795504,
-        "kickoff_utc": "2026-10-31T17:30:00Z",
-        "home_team": "Tottenham Hotspur",
-        "away_team": "Crystal Palace",
-        "probabilities": {
-          "home_win": 0.451114,
-          "draw": 0.299598,
-          "away_win": 0.249288,
-          "over": {
-            "2.5": 0.478333,
-            "3.5": 0.273092
-          },
-          "under": {
-            "2.5": 0.521667,
-            "3.5": 0.726908
-          },
-          "btts_yes": 0.54085,
-          "btts_no": 0.45915
-        },
-        "predicted_xg": {
-          "home": 1.566616,
-          "away": 1.09933,
-          "total": 2.665945
-        },
-        "side_call": "pass",
-        "side_leader": "home_win",
-        "side_probability": 0.451114,
-        "side_gap": 0.151516,
-        "side_tier": "pass",
-        "side_reason": "club_form_and_player_alpha_do_not_both_support_side",
-        "side_evidence": {
-          "base_leader": "home_win",
-          "contextual_leader": "home_win",
-          "calibrated_leader": "home_win",
-          "leaders_aligned": true,
-          "foundation_support": {
-            "club_form": true,
-            "player_quality_lineup": false
-          },
-          "foundation_aligned": false,
-          "context_verdict": "baseline_supported",
-          "lineup_reliability": 1.0,
-          "draw_zone": false
-        },
-        "total_call": "pass",
-        "over_2_5_probability": 0.478333,
-        "total_reason": "inside_totals_pass_band",
-        "context_verdict": "baseline_supported",
-        "load": "medium / high",
-        "final_call_eligible": false
-      },
-      {
-        "match_id": 5795496,
-        "kickoff_utc": "2026-10-31T20:00:00Z",
-        "home_team": "Aston Villa",
-        "away_team": "Fulham",
-        "probabilities": {
-          "home_win": 0.394008,
-          "draw": 0.309311,
-          "away_win": 0.296681,
-          "over": {
-            "2.5": 0.459087,
-            "3.5": 0.254095
-          },
-          "under": {
-            "2.5": 0.540913,
-            "3.5": 0.745905
-          },
-          "btts_yes": 0.529989,
-          "btts_no": 0.470011
-        },
-        "predicted_xg": {
-          "home": 1.390655,
-          "away": 1.177319,
-          "total": 2.567974
-        },
-        "side_call": "pass",
-        "side_leader": "home_win",
-        "side_probability": 0.394008,
-        "side_gap": 0.084697,
-        "side_tier": "pass",
-        "side_reason": "club_form_and_player_alpha_do_not_both_support_side",
-        "side_evidence": {
-          "base_leader": "home_win",
-          "contextual_leader": "home_win",
-          "calibrated_leader": "home_win",
-          "leaders_aligned": true,
-          "foundation_support": {
-            "club_form": true,
-            "player_quality_lineup": false
-          },
-          "foundation_aligned": false,
-          "context_verdict": "no_clear_contextual_edge",
-          "lineup_reliability": 0.5,
-          "draw_zone": false
-        },
-        "total_call": "pass",
-        "over_2_5_probability": 0.459087,
-        "total_reason": "inside_totals_pass_band",
-        "context_verdict": "no_clear_contextual_edge",
-        "load": "high / high",
-        "final_call_eligible": false
-      },
-      {
-        "match_id": 5795501,
-        "kickoff_utc": "2026-11-01T16:30:00Z",
-        "home_team": "Liverpool",
-        "away_team": "Arsenal",
-        "probabilities": {
-          "home_win": 0.296104,
-          "draw": 0.327321,
-          "away_win": 0.376575,
-          "over": {
-            "2.5": 0.399786,
-            "3.5": 0.208869
-          },
-          "under": {
-            "2.5": 0.600214,
-            "3.5": 0.791131
-          },
-          "btts_yes": 0.485601,
-          "btts_no": 0.514399
-        },
-        "predicted_xg": {
-          "home": 1.079304,
-          "away": 1.258108,
-          "total": 2.337411
-        },
-        "side_call": "pass",
-        "side_leader": "away_win",
-        "side_probability": 0.376575,
-        "side_gap": 0.049254,
-        "side_tier": "pass",
-        "side_reason": "leader_below_45_percent",
-        "side_evidence": {
-          "base_leader": "away_win",
-          "contextual_leader": "away_win",
-          "calibrated_leader": "away_win",
-          "leaders_aligned": true,
-          "foundation_support": {
-            "club_form": true,
-            "player_quality_lineup": true
-          },
-          "foundation_aligned": true,
-          "context_verdict": "baseline_supported",
-          "lineup_reliability": 0.866025,
-          "draw_zone": false
-        },
-        "total_call": "under_2_5",
-        "over_2_5_probability": 0.399786,
-        "total_reason": "under_probability_clears_gate",
-        "context_verdict": "baseline_supported",
-        "load": "high / high",
-        "final_call_eligible": false
-      },
-      {
-        "match_id": 5795503,
-        "kickoff_utc": "2026-11-02T20:00:00Z",
-        "home_team": "Newcastle United",
-        "away_team": "Everton",
-        "probabilities": {
-          "home_win": 0.347799,
-          "draw": 0.299842,
-          "away_win": 0.352359,
-          "over": {
-            "2.5": 0.500876,
-            "3.5": 0.291931
-          },
-          "under": {
-            "2.5": 0.499124,
-            "3.5": 0.708069
-          },
-          "btts_yes": 0.563459,
-          "btts_no": 0.436541
-        },
-        "predicted_xg": {
-          "home": 1.366986,
-          "away": 1.365381,
-          "total": 2.732367
-        },
-        "side_call": "pass",
-        "side_leader": "away_win",
-        "side_probability": 0.352359,
-        "side_gap": 0.00456,
-        "side_tier": "pass",
-        "side_reason": "base_context_calibration_disagree",
-        "side_evidence": {
-          "base_leader": "home_win",
-          "contextual_leader": "home_win",
-          "calibrated_leader": "away_win",
-          "leaders_aligned": false,
-          "foundation_support": {
-            "club_form": true,
-            "player_quality_lineup": false
-          },
-          "foundation_aligned": false,
-          "context_verdict": "baseline_supported",
-          "lineup_reliability": 0.75,
-          "draw_zone": false
-        },
-        "total_call": "pass",
-        "over_2_5_probability": 0.500876,
-        "total_reason": "inside_totals_pass_band",
-        "context_verdict": "baseline_supported",
-        "load": "high / high",
-        "final_call_eligible": false
-      }
-    ],
+    "status": "awaiting_refresh",
+    "round": 10,
+    "as_of": "2026-11-02",
+    "generated_at_utc": "2026-11-03T01:59:20.237528+00:00",
+    "final_refresh_required_after_utc": null,
+    "fixtures": 0,
+    "predictions": [],
     "summary": {
       "side_calls": 0,
-      "side_passes": 10,
-      "totals_calls": 2,
-      "totals_passes": 8,
+      "side_passes": 0,
+      "totals_calls": 0,
+      "totals_passes": 0,
       "capital_deployment_ready": false
     },
-    "accuracy_shortlist": [
-      {
-        "match_id": 5795502,
-        "fixture": "Manchester City vs Brighton & Hove Albion",
-        "market": "over_under_2_5",
-        "call": "over_2_5",
-        "probability": 0.58054
-      },
-      {
-        "match_id": 5795501,
-        "fixture": "Liverpool vs Arsenal",
-        "market": "over_under_2_5",
-        "call": "under_2_5",
-        "probability": 0.600214
-      }
-    ],
+    "accuracy_shortlist": [],
     "price_aware_shadow_shortlist": [],
-    "pending_preleague_teams": [
-      "AFC Bournemouth",
-      "Arsenal",
-      "Aston Villa",
-      "Brentford",
-      "Brighton & Hove Albion",
-      "Chelsea",
-      "Crystal Palace",
-      "Everton",
-      "Fulham",
-      "Liverpool",
-      "Manchester City",
-      "Newcastle United",
-      "Sunderland"
-    ],
+    "pending_preleague_teams": [],
     "decision_boundaries": {
       "final_slate_frozen": false,
       "final_call_eligible": false,
@@ -24161,6 +23840,38 @@
     ],
     "matchweeks": [
       {
+        "matchweek": 9,
+        "name": "Research Matchweek 9",
+        "source": "Published provisional calibrated decision slate",
+        "status": "settled",
+        "counts_toward_promotion_gate": false,
+        "fixtures": 10,
+        "first_kickoff_utc": "2026-10-31T12:30:00Z",
+        "last_kickoff_utc": "2026-11-02T20:00:00Z",
+        "settled": 10,
+        "pending": 0,
+        "markets": {
+          "one_x_two": {
+            "label": "1X2 promoted calls",
+            "hits": 0,
+            "settled": 0,
+            "hit_rate": null
+          },
+          "over_under_2_5": {
+            "label": "O/U 2.5 promoted calls",
+            "hits": 1,
+            "settled": 2,
+            "hit_rate": 0.5
+          },
+          "btts": {
+            "label": "BTTS diagnostic",
+            "hits": 4,
+            "settled": 10,
+            "hit_rate": 0.4
+          }
+        }
+      },
+      {
         "matchweek": 8,
         "name": "Research Matchweek 8",
         "source": "Published provisional contextual slate",
@@ -24396,81 +24107,81 @@
     "fixture_calibration": {
       "version": "clubalpha_fixture_calibration_v1",
       "status": "shadow_challenger",
-      "as_of": "2026-10-26",
-      "training_matches": 70,
+      "as_of": "2026-11-02",
+      "training_matches": 80,
       "league_venue": {
-        "predicted_home_away_xg_ratio": 1.180366,
-        "observed_home_away_xg_ratio": 1.04805,
-        "raw_log_ratio_correction": -0.118893,
-        "evidence_confidence": 0.777778,
-        "applied_log_ratio_correction": -0.092472
+        "predicted_home_away_xg_ratio": 1.183606,
+        "observed_home_away_xg_ratio": 1.068135,
+        "raw_log_ratio_correction": -0.102651,
+        "evidence_confidence": 0.8,
+        "applied_log_ratio_correction": -0.082121
       },
-      "adjusted_home_away_xg_ratio": 1.07611,
+      "adjusted_home_away_xg_ratio": 1.090291,
       "draw_calibration": {
-        "predicted_draw_rate": 0.254956,
-        "observed_draws": 22,
-        "observed_draw_rate": 0.314286,
-        "posterior_draw_rate": 0.301101,
-        "applied_logit_correction": 0.230292,
+        "predicted_draw_rate": 0.25387,
+        "observed_draws": 24,
+        "observed_draw_rate": 0.3,
+        "posterior_draw_rate": 0.290774,
+        "applied_logit_correction": 0.186448,
         "draw_zone_max_probability_gap": 0.04,
         "draw_zone_max_side_probability": 0.5
       },
       "goal_environment_calibration": {
-        "predicted_mean_total_xg": 2.93581,
-        "observed_mean_total_xg": 2.866286,
-        "raw_recency_weighted_log_correction": -0.094874,
-        "effective_matches": 44.705722,
-        "evidence_confidence": 0.598424,
-        "applied_log_total_xg_correction": -0.056775,
+        "predicted_mean_total_xg": 2.923848,
+        "observed_mean_total_xg": 2.85675,
+        "raw_recency_weighted_log_correction": -0.089188,
+        "effective_matches": 49.552157,
+        "evidence_confidence": 0.622889,
+        "applied_log_total_xg_correction": -0.055554,
         "recency_half_life_days": 42.0
       },
       "active_team_venue_modifiers": 0,
       "chronological_audit": {
         "interpretation": "cycle-forward; each calibration uses only earlier cycles",
-        "evaluated_cycles": 6,
+        "evaluated_cycles": 7,
         "baseline": {
-          "matches": 60,
-          "one_x_two_brier": 0.636582,
-          "one_x_two_log_loss": 1.054104,
-          "top_pick_accuracy": 0.383333,
-          "home_probability_leader_rate": 0.7,
-          "mean_draw_probability": 0.257898,
-          "total_xg_mae": 0.823621,
-          "over_2_5_brier": 0.255249
+          "matches": 70,
+          "one_x_two_brier": 0.631323,
+          "one_x_two_log_loss": 1.046891,
+          "top_pick_accuracy": 0.414286,
+          "home_probability_leader_rate": 0.728571,
+          "mean_draw_probability": 0.256237,
+          "total_xg_mae": 0.831462,
+          "over_2_5_brier": 0.258558
         },
         "calibrated": {
-          "matches": 60,
-          "one_x_two_brier": 0.643122,
-          "one_x_two_log_loss": 1.061368,
-          "top_pick_accuracy": 0.433333,
-          "home_probability_leader_rate": 0.566667,
-          "mean_draw_probability": 0.3102,
-          "total_xg_mae": 0.821563,
-          "over_2_5_brier": 0.253315
+          "matches": 70,
+          "one_x_two_brier": 0.639761,
+          "one_x_two_log_loss": 1.056943,
+          "top_pick_accuracy": 0.457143,
+          "home_probability_leader_rate": 0.6,
+          "mean_draw_probability": 0.309117,
+          "total_xg_mae": 0.825374,
+          "over_2_5_brier": 0.252198
         }
       },
       "probability_validated": false,
       "capital_deployment_ready": false
     },
     "research_loop": {
-      "as_of": "2026-10-26",
-      "learned_through_kickoff_utc": "2026-10-25T16:30:00Z",
-      "completed_results": 70,
-      "frozen_fixtures": 70,
+      "as_of": "2026-11-02",
+      "learned_through_kickoff_utc": "2026-11-02T20:00:00Z",
+      "completed_results": 80,
+      "frozen_fixtures": 80,
       "pending_results": 0,
-      "promotion_candidates": 26,
+      "promotion_candidates": 21,
       "automatically_applied": 0,
       "capital_deployment_ready": false,
       "adaptive": {
         "version": "clubalpha_adaptive_learning_v1",
         "status": "challenger_research_only",
-        "match_learning_cards": 70,
+        "match_learning_cards": 80,
         "error_attribution": {
           "club_form_or_team_strength": 8,
           "draw_calibration_review": 4,
-          "lineup_projection": 15,
-          "model_supported": 9,
-          "outcome_variance": 34
+          "lineup_projection": 18,
+          "model_supported": 10,
+          "outcome_variance": 40
         },
         "memory_policy": {
           "fast": "lineups, formations and short-lived availability state",
@@ -24479,23 +24190,23 @@
         },
         "champion_challenger": {
           "champion": {
-            "fixtures": 50,
-            "xg_side_mae": 0.563853,
-            "one_x_two_brier": 0.61557,
-            "one_x_two_accuracy": 0.42,
-            "over_2_5_brier": 0.252166
+            "fixtures": 60,
+            "xg_side_mae": 0.574837,
+            "one_x_two_brier": 0.612936,
+            "one_x_two_accuracy": 0.45,
+            "over_2_5_brier": 0.256539
           },
           "challenger": {
-            "fixtures": 50,
-            "xg_side_mae": 0.568567,
-            "one_x_two_brier": 0.626317,
-            "one_x_two_accuracy": 0.42,
-            "over_2_5_brier": 0.253233
+            "fixtures": 60,
+            "xg_side_mae": 0.575401,
+            "one_x_two_brier": 0.622232,
+            "one_x_two_accuracy": 0.433333,
+            "over_2_5_brier": 0.25295
           },
           "improvement_positive_is_better": {
-            "xg_side_mae": -0.004714,
-            "one_x_two_brier": -0.010747,
-            "over_2_5_brier": -0.001067
+            "xg_side_mae": -0.000564,
+            "one_x_two_brier": -0.009296,
+            "over_2_5_brier": 0.003589
           },
           "promotion_gate": {
             "minimum_validation_matches": 20,
@@ -24527,7 +24238,7 @@
     ],
     "caveats": [
       "34 of 200 component-scale sides collected",
-      "70 completed fixtures are tentative research evidence",
+      "80 completed fixtures are tentative research evidence",
       "Official MW4 probabilities remain shadow-only",
       "Projected lineups are not confirmed starting XIs",
       "Market prices are not yet an automated model input",

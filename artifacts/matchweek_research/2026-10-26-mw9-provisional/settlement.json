@@ -1,0 +1,143 @@
+{
+  "version": "clubalpha_matchweek_research_settlement_v1",
+  "status": "settled_published_provisional_shadow",
+  "round": 9,
+  "settled_at_utc": "2026-11-03T01:59:10.497297+00:00",
+  "frozen_source": "artifacts/matchweek_research/2026-10-26-mw9-provisional/decisions.json",
+  "result_source": "artifacts/contextual_interaction/2026-10-26-mw9/results.jsonl",
+  "learning_checkpoint": "artifacts/research_loop/2026-11-02-80-completed/state.json",
+  "summary": {
+    "promoted_one_x_two": {
+      "hits": 0,
+      "settled": 0,
+      "hit_rate": null
+    },
+    "promoted_over_under_2_5": {
+      "hits": 1,
+      "settled": 2,
+      "hit_rate": 0.5
+    },
+    "calibrated_probability_leader_one_x_two": {
+      "hits": 7,
+      "settled": 10,
+      "hit_rate": 0.7,
+      "diagnostic_only": true
+    },
+    "calibrated_probability_direction_over_under_2_5": {
+      "hits": 6,
+      "settled": 10,
+      "hit_rate": 0.6,
+      "diagnostic_only": true
+    },
+    "mean_total_goals": 2.1,
+    "mean_observed_xg": 2.79,
+    "mean_calibrated_predicted_xg": 2.673345
+  },
+  "fixtures": [
+    {
+      "match_id": 5795498,
+      "fixture": "Chelsea vs Manchester United",
+      "score": "2-0",
+      "actual_xg": "3.01-1.24",
+      "calibrated_side_leader": "home_win",
+      "side_leader_hit": true,
+      "promoted_total": "pass",
+      "promoted_total_hit": null
+    },
+    {
+      "match_id": 5795495,
+      "fixture": "AFC Bournemouth vs Leeds United",
+      "score": "2-0",
+      "actual_xg": "1.29-0.71",
+      "calibrated_side_leader": "home_win",
+      "side_leader_hit": true,
+      "promoted_total": "pass",
+      "promoted_total_hit": null
+    },
+    {
+      "match_id": 5795497,
+      "fixture": "Brentford vs Nottingham Forest",
+      "score": "2-0",
+      "actual_xg": "0.46-0.86",
+      "calibrated_side_leader": "home_win",
+      "side_leader_hit": true,
+      "promoted_total": "pass",
+      "promoted_total_hit": null
+    },
+    {
+      "match_id": 5795499,
+      "fixture": "Coventry City vs Sunderland",
+      "score": "3-1",
+      "actual_xg": "0.69-1.82",
+      "calibrated_side_leader": "home_win",
+      "side_leader_hit": true,
+      "promoted_total": "pass",
+      "promoted_total_hit": null
+    },
+    {
+      "match_id": 5795500,
+      "fixture": "Hull City vs Ipswich Town",
+      "score": "2-2",
+      "actual_xg": "0.78-1.06",
+      "calibrated_side_leader": "away_win",
+      "side_leader_hit": false,
+      "promoted_total": "pass",
+      "promoted_total_hit": null
+    },
+    {
+      "match_id": 5795502,
+      "fixture": "Manchester City vs Brighton & Hove Albion",
+      "score": "0-1",
+      "actual_xg": "1.64-1.00",
+      "calibrated_side_leader": "home_win",
+      "side_leader_hit": false,
+      "promoted_total": "over_2_5",
+      "promoted_total_hit": false
+    },
+    {
+      "match_id": 5795504,
+      "fixture": "Tottenham Hotspur vs Crystal Palace",
+      "score": "2-0",
+      "actual_xg": "3.47-0.14",
+      "calibrated_side_leader": "home_win",
+      "side_leader_hit": true,
+      "promoted_total": "pass",
+      "promoted_total_hit": null
+    },
+    {
+      "match_id": 5795496,
+      "fixture": "Aston Villa vs Fulham",
+      "score": "1-1",
+      "actual_xg": "1.83-2.24",
+      "calibrated_side_leader": "home_win",
+      "side_leader_hit": false,
+      "promoted_total": "pass",
+      "promoted_total_hit": null
+    },
+    {
+      "match_id": 5795501,
+      "fixture": "Liverpool vs Arsenal",
+      "score": "0-1",
+      "actual_xg": "1.05-0.98",
+      "calibrated_side_leader": "away_win",
+      "side_leader_hit": true,
+      "promoted_total": "under_2_5",
+      "promoted_total_hit": true
+    },
+    {
+      "match_id": 5795503,
+      "fixture": "Newcastle United vs Everton",
+      "score": "0-1",
+      "actual_xg": "1.29-2.34",
+      "calibrated_side_leader": "away_win",
+      "side_leader_hit": true,
+      "promoted_total": "pass",
+      "promoted_total_hit": null
+    }
+  ],
+  "decision_boundaries": {
+    "published_provisional_not_final": true,
+    "counts_toward_official_promotion_gate": false,
+    "capital_deployment_ready": false
+  }
+}
