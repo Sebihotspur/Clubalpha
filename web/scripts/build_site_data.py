@@ -92,7 +92,7 @@ UPCOMING_MATCHWEEK_RESULTS = (
     / "artifacts/contextual_interaction/2026-11-02-mw10-provisional/results.jsonl"
 )
 UPCOMING_MATCHWEEK_BACKTEST = (
-    ROOT / "reports/contextual-interaction-v1-backtest-2026-11-07.json"
+    ROOT / "reports/contextual-interaction-v1-backtest-2026-11-08.json"
 )
 MARKET_FOCUS_CONFIG = ROOT / "config/market-focus-v1.json"
 PUBLIC_DIR = ROOT / "web/public"
@@ -1105,6 +1105,33 @@ def build():
             "xg_process_outcome": review["xg_process_outcome"],
         }
 
+    settled_upcoming = [row for row in upcoming_predictions if row["result"]]
+    upcoming_calibrated_leader_hits = sum(
+        bool(row["result"]["leader_hit"]) for row in settled_upcoming
+    )
+    upcoming_calibrated_leader_score = {
+        "hits": upcoming_calibrated_leader_hits,
+        "settled": len(settled_upcoming),
+        "hit_rate": _hit_rate(
+            upcoming_calibrated_leader_hits,
+            len(settled_upcoming),
+        ),
+    }
+    upcoming_mean_predicted_xg = round(
+        sum(float(row["predicted_xg"]["total"]) for row in settled_upcoming)
+        / len(settled_upcoming),
+        3,
+    )
+    upcoming_mean_total_goals = round(
+        sum(
+            int(row["result"]["final_home_goals"])
+            + int(row["result"]["final_away_goals"])
+            for row in settled_upcoming
+        )
+        / len(settled_upcoming),
+        3,
+    )
+
     matchweek_nine_result_by_id = {
         int(row["match_id"]): row for row in matchweek_nine_results
     }
@@ -1190,7 +1217,7 @@ def build():
 
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_19_mw10_live",
+            "site_version": "clubalpha_web_v0_20_mw10_settled",
             "prediction_version": official_report["report_version"],
             "as_of": official_report["as_of_utc"],
             "generated_at_utc": matchweek_nine_backtest["generated_at_utc"],
@@ -1205,51 +1232,49 @@ def build():
         },
         "latest_matchweek": {
             "status": "settled_published_provisional_shadow",
-            "round": matchweek_nine_decisions["round"],
-            "as_of": matchweek_nine_backtest["generated_at_utc"],
-            "fixtures": len(latest_matchweek_predictions),
-            "settled": matchweek_nine_score["settled"],
-            "score": matchweek_nine_score,
+            "round": upcoming_decisions["round"],
+            "as_of": upcoming_backtest["generated_at_utc"],
+            "fixtures": len(upcoming_predictions),
+            "settled": upcoming_score["settled"],
+            "score": upcoming_score,
             "backtest_summary": {
-                "contextual_outcome_hits": matchweek_nine_backtest[
-                    "diagnostics"
-                ]["outcome_hits"],
+                "contextual_outcome_hits": upcoming_backtest["diagnostics"][
+                    "outcome_hits"
+                ],
                 "base_outcome_hits": round(
-                    matchweek_nine_backtest["metrics"]["baseline"][
+                    upcoming_backtest["metrics"]["baseline"][
                         "one_x_two_top_pick_accuracy"
                     ]
-                    * matchweek_nine_backtest["sample"]["matches"]
+                    * upcoming_backtest["sample"]["matches"]
                 ),
-                "calibrated_outcome_hits": latest_shortlist_score["hits"],
-                "process_supported_outcome_variance": matchweek_nine_backtest[
+                "calibrated_outcome_hits": upcoming_calibrated_leader_score[
+                    "hits"
+                ],
+                "process_supported_outcome_variance": upcoming_backtest[
                     "diagnostics"
                 ]["process_supported_outcome_variance"],
-                "structural_misses": matchweek_nine_backtest["diagnostics"][
+                "structural_misses": upcoming_backtest["diagnostics"][
                     "structural_misses"
                 ],
-                "mean_projected_xi_hits_of_11": matchweek_nine_backtest[
+                "mean_projected_xi_hits_of_11": upcoming_backtest[
                     "lineup_projection"
                 ]["mean_xi_hits_of_11"],
-                "formation_accuracy": matchweek_nine_backtest[
+                "formation_accuracy": upcoming_backtest[
                     "lineup_projection"
                 ]["formation_accuracy"],
-                "predicted_mean_total_xg": matchweek_nine_settlement["summary"][
-                    "mean_calibrated_predicted_xg"
-                ],
-                "observed_mean_total_xg": matchweek_nine_backtest[
+                "predicted_mean_total_xg": upcoming_mean_predicted_xg,
+                "observed_mean_total_xg": upcoming_backtest[
                     "diagnostics"
                 ]["goal_environment_dispersion"]["observed_xg_total"]["mean"],
-                "observed_mean_total_goals": matchweek_nine_settlement[
-                    "summary"
-                ]["mean_total_goals"],
+                "observed_mean_total_goals": upcoming_mean_total_goals,
             },
-            "shortlist_score": latest_shortlist_score,
+            "shortlist_score": upcoming_calibrated_leader_score,
             "audit_caveat": (
                 "The published pre-match slate was provisional; the planned "
-                "post-cup final refresh was not completed."
+                "post-Europe final refresh was not completed."
             ),
             "capital_deployment_ready": False,
-            "predictions": latest_matchweek_predictions,
+            "predictions": upcoming_predictions,
         },
         "current_matchweek": {
             "status": "settled_research_shadow",
@@ -1292,32 +1317,30 @@ def build():
             "midweek_review": pl_midweek_review,
         },
         "provisional_matchweek": {
-            "status": "in_progress_published_provisional_shadow",
-            "round": upcoming_decisions["round"],
-            "as_of": upcoming_decisions["as_of"],
-            "generated_at_utc": upcoming_decisions["generated_at_utc"],
-            "market_captured_at_utc": upcoming_market["captured_at_utc"],
-            "final_refresh_required_after_utc": (
-                max(pending_preleague_kickoffs)
-                if pending_preleague_kickoffs
-                else None
-            ),
-            "fixtures": len(upcoming_predictions),
-            "settled": upcoming_score["settled"],
-            "pending": upcoming_score["pending"],
-            "score": upcoming_score,
-            "predictions": upcoming_predictions,
-            "summary": upcoming_decisions["summary"],
-            "accuracy_shortlist": upcoming_accuracy_shortlist,
-            "price_aware_shadow_shortlist": upcoming_price_shortlist,
-            "pending_preleague_teams": upcoming_decisions["refresh_gate"][
-                "pending_preleague_teams"
-            ],
+            "status": "awaiting_refresh",
+            "round": 11,
+            "as_of": "2026-11-08",
+            "generated_at_utc": upcoming_backtest["generated_at_utc"],
+            "market_captured_at_utc": None,
+            "final_refresh_required_after_utc": None,
+            "fixtures": 0,
+            "settled": 0,
+            "pending": 0,
+            "score": None,
+            "predictions": [],
+            "summary": {
+                "side_calls": 0,
+                "side_passes": 0,
+                "totals_calls": 0,
+                "totals_passes": 0,
+                "capital_deployment_ready": False,
+            },
+            "accuracy_shortlist": [],
+            "price_aware_shadow_shortlist": [],
+            "pending_preleague_teams": [],
             "decision_boundaries": {
                 "final_slate_frozen": False,
-                "final_call_eligible": upcoming_decisions["refresh_gate"][
-                    "final_call_eligible"
-                ],
+                "final_call_eligible": False,
                 "capital_deployment_ready": False,
                 "wallet_used": False,
                 "orders_placed": False,
@@ -1504,7 +1527,7 @@ def build():
                     "matchweek": 10,
                     "name": "Research Matchweek 10",
                     "source": "Published provisional calibrated decision slate",
-                    "status": "collecting",
+                    "status": "settled",
                     "counts_toward_promotion_gate": False,
                     **upcoming_score,
                 },

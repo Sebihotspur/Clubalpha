@@ -133,7 +133,7 @@ function overview(data) {
         <article class="foundation-card"><span class="foundation-num">SELECTIVE CALLS</span><h3>${upcoming.score.markets.one_x_two.hits}/${upcoming.score.markets.one_x_two.settled} 1X2 · ${upcoming.score.markets.over_under_2_5.hits}/${upcoming.score.markets.over_under_2_5.settled} totals</h3><p>Only promoted calls are scored here; probability leaders remain a separate diagnostic.</p></article>
         <article class="foundation-card"><span class="foundation-num">LEARNING</span><h3>${data.methodology.research_loop.completed_results} matches</h3><p>Completed evidence has entered the research memory without rewriting pending predictions.</p></article>
       </div>
-      <p class="notice">PARTIAL MATCHWEEK · FIVE FIXTURES PENDING · Real allocation remains 0.00u.</p>
+      <p class="notice">PARTIAL MATCHWEEK · ${upcoming.pending} FIXTURES PENDING · Real allocation remains 0.00u.</p>
     </section>`
       : `<section class="section">
       <div class="section-head"><h2>Matchweek ${esc(upcoming.round)} provisional slate</h2><a href="/predictions/">Open all 10 forecasts →</a></div>
@@ -173,8 +173,8 @@ function overview(data) {
         <div class="pick-main">
           <div class="pick-tag"><span></span> SETTLED · PUBLISHED PROVISIONAL SLATE</div>
           <p class="fixture-kicker">RESULT · XG PROCESS · LINEUP ACCURACY · ERROR ATTRIBUTION</p>
-          <h2 class="pick-title">Direction improved; promotion remained selective</h2>
-          <div class="pick-market">No 1X2 side was promoted. The calibrated probability leader finished ${latest.shortlist_score.hits}/${latest.shortlist_score.settled}, while the two promoted totals split 1–1.</div>
+          <h2 class="pick-title">Selective promotion held; the broader slate stayed mixed</h2>
+          <div class="pick-market">Promoted calls finished ${side.hits}/${side.settled} on 1X2 and ${totals.hits}/${totals.settled} on O/U 2.5. The calibrated probability leader finished ${latest.shortlist_score.hits}/${latest.shortlist_score.settled} across the full slate.</div>
           <div class="pick-reasons">
             <div class="reason"><strong>${side.hits}/${side.settled}</strong><span>promoted sides</span></div>
             <div class="reason"><strong>${totals.hits}/${totals.settled}</strong><span>promoted totals</span></div>
@@ -581,7 +581,7 @@ function predictions(data) {
     .join("");
 
   const upcomingPanel = awaitingNextSlate
-    ? `<section class="page-head"><p class="eyebrow">Next cycle · Matchweek ${esc(upcoming.round)}</p><h1>Refresh before prediction</h1><p>Matchweek ${esc(latest.round)} has been settled and absorbed into the 80-match learning state. The next slate will appear only after completed domestic and European evidence, availability and projected XIs are refreshed.</p><div class="notice">NO MATCHWEEK ${esc(upcoming.round)} FORECAST FROZEN · ZERO CAPITAL AUTHORIZED</div></section>
+    ? `<section class="page-head"><p class="eyebrow">Next cycle · Matchweek ${esc(upcoming.round)}</p><h1>Refresh before prediction</h1><p>Matchweek ${esc(latest.round)} has been settled and absorbed into the ${data.methodology.research_loop.completed_results}-match learning state. The next slate will appear only after completed domestic and European evidence, availability and projected XIs are refreshed.</p><div class="notice">NO MATCHWEEK ${esc(upcoming.round)} FORECAST FROZEN · ZERO CAPITAL AUTHORIZED</div></section>
       <section class="metrics">
         ${metric("Completed evidence", `${data.methodology.research_loop.completed_results} matches`, "Append-only research ledger", "accent")}
         ${metric("Next 1X2", "AWAITING", "No pre-match call exists yet", "amber")}
@@ -608,7 +608,7 @@ function predictions(data) {
     </section>
     <section class="section"><div class="section-head"><h2>Matchweek ${esc(latest.round)} result review</h2><span class="panel-label">Updated ${esc(dateTime(latest.as_of))}</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>1X2 decision</th><th>O/U 2.5</th><th>Result + xG</th><th>Error attribution</th></tr></thead><tbody>${rows}</tbody></table></div></section>
     <p class="notice">AUDIT CAVEAT · ${esc(latest.audit_caveat)}</p>
-    <p class="notice">No 1X2 side cleared the promotion gate. Calibrated leaders scored ${latest.backtest_summary.calibrated_outcome_hits}/10, while raw base and contextual leaders each scored ${latest.backtest_summary.base_outcome_hits}/10 and ${latest.backtest_summary.contextual_outcome_hits}/10. Goals averaged ${dec(latest.backtest_summary.observed_mean_total_goals)}, but observed xG averaged ${dec(latest.backtest_summary.observed_mean_total_xg)} versus ${dec(latest.backtest_summary.predicted_mean_total_xg)} predicted, so the engine does not learn an aggressive Under bias from finishing noise.</p>
+    <p class="notice">Selective calls scored ${latest.score.markets.one_x_two.hits}/${latest.score.markets.one_x_two.settled} on 1X2 and ${latest.score.markets.over_under_2_5.hits}/${latest.score.markets.over_under_2_5.settled} on O/U 2.5. Calibrated leaders scored ${latest.backtest_summary.calibrated_outcome_hits}/10, while raw base and contextual leaders each scored ${latest.backtest_summary.base_outcome_hits}/10 and ${latest.backtest_summary.contextual_outcome_hits}/10. Goals averaged ${dec(latest.backtest_summary.observed_mean_total_goals)}, while observed xG averaged ${dec(latest.backtest_summary.observed_mean_total_xg)} versus ${dec(latest.backtest_summary.predicted_mean_total_xg)} predicted.</p>
     <section class="section"><div class="section-head"><h2>Latest settled official archive</h2><a href="/ledger/">Open the immutable ledger →</a></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>Model xG</th><th>1X2 probability</th><th>O2.5</th><th>Official call</th><th>Why</th></tr></thead><tbody>${archivedRows}</tbody></table></div></section>`;
 }
 

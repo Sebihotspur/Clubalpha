@@ -217,9 +217,9 @@ class WebHolyGrailTests(unittest.TestCase):
         )
         self.assertFalse(matchweek_nine["counts_toward_promotion_gate"])
         matchweek_ten = weeks[10]
-        self.assertEqual(matchweek_ten["status"], "collecting")
-        self.assertEqual(matchweek_ten["settled"], 5)
-        self.assertEqual(matchweek_ten["pending"], 5)
+        self.assertEqual(matchweek_ten["status"], "settled")
+        self.assertEqual(matchweek_ten["settled"], 10)
+        self.assertEqual(matchweek_ten["pending"], 0)
         self.assertEqual(matchweek_ten["markets"]["one_x_two"]["hits"], 1)
         self.assertEqual(matchweek_ten["markets"]["one_x_two"]["settled"], 1)
         self.assertEqual(
@@ -259,23 +259,20 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertTrue(chelsea["result"]["base_1x2_hit"])
         self.assertTrue(chelsea["result"]["market_1x2_hit"])
 
-    def test_matchweek_nine_settled_and_matchweek_ten_live_are_separate(self):
+    def test_matchweek_ten_settled_and_matchweek_eleven_awaits_refresh(self):
         provisional = self.data["provisional_matchweek"]
         settled = self.data["latest_matchweek"]
-        self.assertEqual(
-            provisional["status"],
-            "in_progress_published_provisional_shadow",
-        )
-        self.assertEqual(provisional["round"], 10)
-        self.assertEqual(provisional["fixtures"], 10)
-        self.assertEqual(provisional["settled"], 5)
-        self.assertEqual(provisional["pending"], 5)
-        self.assertEqual(len(provisional["predictions"]), 10)
-        self.assertEqual(provisional["summary"]["side_calls"], 1)
-        self.assertEqual(provisional["summary"]["side_passes"], 9)
-        self.assertEqual(provisional["summary"]["totals_calls"], 1)
-        self.assertEqual(provisional["summary"]["totals_passes"], 9)
-        self.assertEqual(len(provisional["pending_preleague_teams"]), 9)
+        self.assertEqual(provisional["status"], "awaiting_refresh")
+        self.assertEqual(provisional["round"], 11)
+        self.assertEqual(provisional["fixtures"], 0)
+        self.assertEqual(provisional["settled"], 0)
+        self.assertEqual(provisional["pending"], 0)
+        self.assertEqual(len(provisional["predictions"]), 0)
+        self.assertEqual(provisional["summary"]["side_calls"], 0)
+        self.assertEqual(provisional["summary"]["side_passes"], 0)
+        self.assertEqual(provisional["summary"]["totals_calls"], 0)
+        self.assertEqual(provisional["summary"]["totals_passes"], 0)
+        self.assertEqual(len(provisional["pending_preleague_teams"]), 0)
         self.assertFalse(
             provisional["decision_boundaries"]["final_slate_frozen"]
         )
@@ -285,38 +282,21 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertFalse(
             provisional["decision_boundaries"]["capital_deployment_ready"]
         )
-        self.assertEqual(len(provisional["price_aware_shadow_shortlist"]), 1)
-        price_watch = provisional["price_aware_shadow_shortlist"][0]
-        self.assertEqual(price_watch["match_id"], 5795511)
-        self.assertEqual(price_watch["call"], "under_2_5")
-        self.assertAlmostEqual(price_watch["probability"], 0.58208)
-        self.assertAlmostEqual(price_watch["best_ask"], 0.52)
-        self.assertAlmostEqual(price_watch["edge"], 0.06208)
-        self.assertEqual(
-            provisional["score"]["markets"]["one_x_two"]["hits"], 1
-        )
-        self.assertEqual(
-            provisional["score"]["markets"]["one_x_two"]["settled"], 1
-        )
-        self.assertEqual(
-            provisional["score"]["markets"]["over_under_2_5"]["hits"], 1
-        )
-        self.assertEqual(
-            provisional["score"]["markets"]["over_under_2_5"]["settled"], 1
-        )
-        self.assertEqual(settled["round"], 9)
+        self.assertEqual(len(provisional["price_aware_shadow_shortlist"]), 0)
+        self.assertIsNone(provisional["score"])
+        self.assertEqual(settled["round"], 10)
         self.assertEqual(settled["settled"], 10)
-        self.assertEqual(settled["score"]["markets"]["one_x_two"]["hits"], 0)
+        self.assertEqual(settled["score"]["markets"]["one_x_two"]["hits"], 1)
         self.assertEqual(
-            settled["score"]["markets"]["one_x_two"]["settled"], 0
+            settled["score"]["markets"]["one_x_two"]["settled"], 1
         )
         self.assertEqual(
             settled["score"]["markets"]["over_under_2_5"]["hits"], 1
         )
         self.assertEqual(
-            settled["score"]["markets"]["over_under_2_5"]["settled"], 2
+            settled["score"]["markets"]["over_under_2_5"]["settled"], 1
         )
-        self.assertEqual(settled["shortlist_score"]["hits"], 7)
+        self.assertEqual(settled["shortlist_score"]["hits"], 6)
         self.assertEqual(settled["shortlist_score"]["settled"], 10)
         self.assertFalse(settled["capital_deployment_ready"])
 
@@ -326,7 +306,7 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertIn("Calibrated 1X2 leader", app_js)
         self.assertIn("Settled research slate · Matchweek ${esc(latest.round)}", app_js)
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
-        self.assertIn('/app.js?v=0.19.0-mw10-live', index_html)
+        self.assertIn('/app.js?v=0.20.0-mw10-settled', index_html)
 
     def test_ucl_uses_shared_alpha_with_separate_calibration(self):
         cycle = self.data["ucl_alpha_cycle"]
@@ -371,12 +351,12 @@ class WebHolyGrailTests(unittest.TestCase):
         app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
         self.assertIn('LATEST RESEARCH · MATCHWEEK', app_js)
         self.assertIn('index === 0 ? " open"', app_js)
-        self.assertIn('PARTIAL MATCHWEEK · FIVE FIXTURES PENDING', app_js)
+        self.assertIn('Completed results are appended to the frozen slate', app_js)
 
     def test_methodology_exposes_goal_environment_and_selective_decisions(self):
         calibration = self.data["methodology"]["fixture_calibration"]
         goal_environment = calibration["goal_environment_calibration"]
-        self.assertEqual(calibration["training_matches"], 85)
+        self.assertEqual(calibration["training_matches"], 90)
         self.assertLess(
             goal_environment["applied_log_total_xg_correction"], 0.0
         )
