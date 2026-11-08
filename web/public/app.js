@@ -106,8 +106,12 @@ function overview(data) {
   const latest = data.latest_matchweek;
   const upcoming = data.provisional_matchweek;
   const awaitingNextSlate = upcoming.status === "awaiting_refresh";
+  const inProgress = upcoming.status === "in_progress_published_provisional_shadow";
   const side = latest.score.markets.one_x_two;
   const totals = latest.score.markets.over_under_2_5;
+  const headlineSide = inProgress ? upcoming.score.markets.one_x_two : side;
+  const headlineTotals = inProgress ? upcoming.score.markets.over_under_2_5 : totals;
+  const headlineRound = inProgress ? upcoming.round : latest.round;
   const contextReinforcements = data.holy_grail.predictions.filter(
     (match) => match.verdict === "baseline_reinforced",
   ).length;
@@ -121,7 +125,17 @@ function overview(data) {
       </div>
       <p class="notice">NEXT SLATE AWAITS REFRESH · Real allocation remains 0.00u.</p>
     </section>`
-    : `<section class="section">
+    : inProgress
+      ? `<section class="section">
+      <div class="section-head"><h2>Matchweek ${esc(upcoming.round)} live settlement</h2><a href="/predictions/">Open frozen slate →</a></div>
+      <div class="foundation-grid">
+        <article class="foundation-card"><span class="foundation-num">SETTLED</span><h3>${upcoming.settled}/${upcoming.fixtures} fixtures</h3><p>Friday and Saturday results are attached to the unchanged November 2 forecast. Sunday remains pending.</p></article>
+        <article class="foundation-card"><span class="foundation-num">SELECTIVE CALLS</span><h3>${upcoming.score.markets.one_x_two.hits}/${upcoming.score.markets.one_x_two.settled} 1X2 · ${upcoming.score.markets.over_under_2_5.hits}/${upcoming.score.markets.over_under_2_5.settled} totals</h3><p>Only promoted calls are scored here; probability leaders remain a separate diagnostic.</p></article>
+        <article class="foundation-card"><span class="foundation-num">LEARNING</span><h3>${data.methodology.research_loop.completed_results} matches</h3><p>Completed evidence has entered the research memory without rewriting pending predictions.</p></article>
+      </div>
+      <p class="notice">PARTIAL MATCHWEEK · FIVE FIXTURES PENDING · Real allocation remains 0.00u.</p>
+    </section>`
+      : `<section class="section">
       <div class="section-head"><h2>Matchweek ${esc(upcoming.round)} provisional slate</h2><a href="/predictions/">Open all 10 forecasts →</a></div>
       <div class="foundation-grid">
         <article class="foundation-card"><span class="foundation-num">1X2</span><h3>${upcoming.summary.side_calls} calls · ${upcoming.summary.side_passes} passes</h3><p>Only sides satisfying probability, separation, Club Form, Player Alpha, context and lineup gates are exposed.</p></article>
@@ -140,14 +154,14 @@ function overview(data) {
       <aside class="hero-note">
         <span class="label">Current operating state</span>
         <strong>PROJECT · REFUSE · REFRESH</strong>
-        <p>${awaitingNextSlate ? `Matchweek ${esc(latest.round)} is settled and absorbed. Matchweek ${esc(upcoming.round)} remains empty until the evidence and lineup refresh is complete.` : `Matchweek ${esc(upcoming.round)} is provisional and blocked from final-call status until its refresh gate is complete.`}</p>
+        <p>${awaitingNextSlate ? `Matchweek ${esc(latest.round)} is settled and absorbed. Matchweek ${esc(upcoming.round)} remains empty until the evidence and lineup refresh is complete.` : inProgress ? `Matchweek ${esc(upcoming.round)} is halfway settled. The frozen pre-match slate is being scored without changing the five Sunday forecasts.` : `Matchweek ${esc(upcoming.round)} is provisional and blocked from final-call status until its refresh gate is complete.`}</p>
       </aside>
     </section>
 
     <section class="metrics">
       ${metric("Deployment", "NO CAPITAL", "Shadow observations only", "amber")}
-      ${metric(`MW${latest.round} 1X2 calls`, `${side.hits}/${side.settled}`, side.hit_rate === null ? "No calls" : pct(side.hit_rate), "amber")}
-      ${metric(`MW${latest.round} totals calls`, `${totals.hits}/${totals.settled}`, pct(totals.hit_rate), totals.hit_rate >= 0.5 ? "accent" : "amber")}
+      ${metric(`MW${headlineRound} 1X2 calls`, `${headlineSide.hits}/${headlineSide.settled}`, headlineSide.hit_rate === null ? "No calls" : pct(headlineSide.hit_rate), "amber")}
+      ${metric(`MW${headlineRound} totals calls`, `${headlineTotals.hits}/${headlineTotals.settled}`, headlineTotals.hit_rate === null ? "No calls" : pct(headlineTotals.hit_rate), headlineTotals.hit_rate >= 0.5 ? "accent" : "amber")}
       ${metric("Learning memory", `${data.methodology.research_loop.adaptive.match_learning_cards} matches`, "Completed evidence only")}
     </section>
 
@@ -322,10 +336,26 @@ function ucl(data) {
   const cycle = data.ucl_alpha_cycle;
   const evidence = cycle.completed_evidence;
   const domestic = cycle.domestic_evidence;
+  const currentDomestic = cycle.current_domestic_evidence;
   const upcoming = cycle.upcoming;
+  const review = cycle.settled_matchday;
+  const settlement = review.forecast_settlement;
+  const reviewedById = new Map(review.matches.map((match) => [match.match_id, match]));
+  const completedEvidence = {
+    matches: evidence.matches + review.scope.completed_matches,
+    goals: evidence.goals + review.aggregate.goals,
+    totalXg: evidence.total_xg + review.aggregate.total_xg,
+    homeWins: evidence.home_wins + review.aggregate.home_wins,
+    draws: evidence.draws + review.aggregate.draws,
+    awayWins: evidence.away_wins + review.aggregate.away_wins,
+    over25: evidence.over_2_5 + review.aggregate.over_2_5,
+    alignment: evidence.score_xg_winner_alignment + review.aggregate.score_xg_winner_alignment,
+  };
   const candidateRows = upcoming.predictions.map((match) => {
     const side = match.side_research_candidate;
     const total = match.total_research_candidate;
+    const reviewed = reviewedById.get(match.match_id);
+    const frozen = reviewed.frozen_forecast;
     const leader = side.leader === "home_win" ? match.home_team : side.leader === "away_win" ? match.away_team : "Draw";
     const sideRead = side.call === "pass" ? `Pass · ${leader} lean` : `Candidate · ${leader}`;
     const totalRead = total.call === "over_2_5"
@@ -333,12 +363,14 @@ function ucl(data) {
       : total.call === "under_2_5"
         ? `Candidate · Under 2.5 ${pct(total.call_probability)}`
         : `Pass · O2.5 ${pct(total.over_probability)}`;
+    const sideStatus = side.call === "pass" ? "pass" : frozen.side_research_hit ? "hit" : "miss";
+    const totalStatus = total.call === "pass" ? "pass" : frozen.total_research_hit ? "hit" : "miss";
     return `<tr>
-      <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · xG ${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</span></td>
+      <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · forecast xG ${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</span></td>
       <td>${resultPills(match)}</td>
-      <td class="official-call"><strong>${esc(sideRead)}</strong><span>${pct(side.leader_probability)} · ${esc(side.reason.replaceAll("_", " "))}</span></td>
-      <td class="official-call"><strong>${esc(totalRead)}</strong><span>${esc(total.reason.replaceAll("_", " "))}</span></td>
-      <td><span class="status-chip">${esc(match.context_verdict.replaceAll("_", " "))}</span></td>
+      <td class="official-call"><strong>${esc(sideRead)}</strong><span>${pct(side.leader_probability)} · <span class="status-chip ${sideStatus}">${sideStatus}</span></span></td>
+      <td class="official-call"><strong>${esc(totalRead)}</strong><span><span class="status-chip ${totalStatus}">${totalStatus}</span> · ${esc(total.reason.replaceAll("_", " "))}</span></td>
+      <td><div class="ledger-result"><strong>${reviewed.score.home}–${reviewed.score.away}</strong><small>xG ${dec(reviewed.xg.home)}–${dec(reviewed.xg.away)}</small></div></td>
     </tr>`;
   }).join("");
   const alphaRows = cycle.projected_xi_alpha.top_clubs.map((club) => `<tr>
@@ -347,27 +379,28 @@ function ucl(data) {
     <td class="prob-main">${dec(club.strength_index, 1)}</td>
     <td>${signed(club.alpha_z, 3)}</td>
   </tr>`).join("");
-  const matchdayRows = evidence.alpha_minute_coverage_by_matchday.map((row) => `<div class="gate-row"><span>Matchday ${row.matchday}</span><span>${pct(row.coverage)} coverage · ${dec(row.rating_alpha_correlation, 3)} rating correlation</span></div>`).join("");
+  const matchdayRows = [...evidence.alpha_minute_coverage_by_matchday, { matchday: 4, coverage: review.player_alpha.actual_minute_coverage, rating_alpha_correlation: review.player_alpha.rating_alpha_correlation }].map((row) => `<div class="gate-row"><span>Matchday ${row.matchday}</span><span>${pct(row.coverage)} coverage · ${dec(row.rating_alpha_correlation, 3)} rating correlation</span></div>`).join("");
   return `<section class="page-head ucl-page-head">
-      <p class="eyebrow">Champions League · ${domestic.completed_matches} domestic matches refreshed · Matchday ${upcoming.matchday} provisional</p>
+      <p class="eyebrow">Champions League · Matchday ${upcoming.matchday} settled · frozen pre-match slate</p>
       <h1>UCL Alpha intelligence</h1>
-      <p>The Champions League runs through the same projected-XI Player Alpha generator, 60/30/10 fixture foundation, matchup context and 50,000-match simulation used for the Premier League. Current domestic form is translated through the locked league-quality ladder before clubs are compared.</p>
+      <p>The Champions League runs through the same projected-XI Player Alpha generator, 60/30/10 fixture foundation, matchup context and 50,000-match simulation used for the Premier League. Matchday 4 is now settled against the probabilities frozen before kickoff.</p>
       <div class="notice">SHARED PLAYER ALPHA · LEAGUE-STRENGTH-ADJUSTED FORM · SEPARATE UCL CALIBRATION · ZERO CAPITAL</div>
     </section>
     <section class="metrics">
-      ${metric("Completed evidence", `${evidence.matches} UCL · ${domestic.completed_matches} domestic`, `${domestic.competitions} leagues · ${domestic.foreign_ucl_clubs} foreign clubs`, "accent")}
-      ${metric("Projected-XI Alpha", `${cycle.projected_xi_alpha.rated_clubs}/${cycle.projected_xi_alpha.clubs} rated`, `${cycle.projected_xi_alpha.unrated_clubs.length} explicit coverage gaps`, "amber")}
-      ${metric("Matchday 4", `${upcoming.simulations.toLocaleString()} simulations`, `${upcoming.fixtures} fixtures`)}
+      ${metric("Completed evidence", `${completedEvidence.matches} UCL · ${currentDomestic.completed_matches} domestic`, `${currentDomestic.competitions} leagues · ${currentDomestic.foreign_ucl_clubs} foreign clubs`, "accent")}
+      ${metric("Raw 1X2 leader", `${settlement.raw_probability_leader.hits}/${settlement.raw_probability_leader.settled}`, pct(settlement.raw_probability_leader.hit_rate), "accent")}
+      ${metric("Totals candidates", `${settlement.total_research_candidates.hits}/${settlement.total_research_candidates.settled}`, pct(settlement.total_research_candidates.hit_rate), "accent")}
       ${metric("Deployment", "NO CAPITAL", "UCL calibration not yet available", "amber")}
     </section>
-    <p class="notice">LEAGUE TRANSLATION · ${domestic.matches_with_player_detail}/${domestic.completed_matches} domestic matches include target-club player detail (${dec(domestic.player_detail_coverage_pct, 1)}%). Club Form applies the locked league-quality offset exactly once after within-league opponent adjustment; Player Alpha formulas are unchanged.</p>
-    <section class="section"><div class="section-head"><h2>What the first 54 matches taught us</h2><span class="panel-label">Observed results · never retroactive predictions</span></div><div class="foundation-grid">
-      <article class="foundation-card"><span class="foundation-num">GOAL ENVIRONMENT</span><h3>${evidence.goals} goals · ${dec(evidence.total_xg)} xG</h3><p>${pct(evidence.over_2_5 / evidence.matches)} finished Over 2.5. The ${signed(evidence.goals - evidence.total_xg)} goals-minus-xG gap is finishing heat, not an automatic model coefficient.</p></article>
-      <article class="foundation-card"><span class="foundation-num">RESULT SHAPE</span><h3>${evidence.home_wins}H · ${evidence.draws}D · ${evidence.away_wins}A</h3><p>Score and xG winner aligned in ${evidence.score_xg_winner_alignment}/${evidence.matches} fixtures. Process remains the primary learning signal.</p></article>
+    <p class="notice">CURRENT DOMESTIC REFRESH · ${currentDomestic.matches_with_player_detail}/${currentDomestic.completed_matches} target-club matches include player detail (${dec(currentDomestic.player_detail_coverage_pct, 1)}%) through ${esc(dateOnly(currentDomestic.as_of))}. These update future form and lineup research; the Matchday 4 forecast itself remains frozen to its October 27 inputs.</p>
+    <p class="notice">AUDIT BOUNDARY · The Matchday 4 artifact was committed on October 27, before the November 3 kickoff. Settlement scores that byte-identical research slate; it does not manufacture a retroactive forecast.</p>
+    <section class="section"><div class="section-head"><h2>What 72 UCL matches taught us</h2><span class="panel-label">Observed process + honest pre-match settlement</span></div><div class="foundation-grid">
+      <article class="foundation-card"><span class="foundation-num">GOAL ENVIRONMENT</span><h3>${completedEvidence.goals} goals · ${dec(completedEvidence.totalXg)} xG</h3><p>${pct(completedEvidence.over25 / completedEvidence.matches)} finished Over 2.5. The ${signed(completedEvidence.goals - completedEvidence.totalXg)} goals-minus-xG gap remains finishing heat, not an automatic coefficient.</p></article>
+      <article class="foundation-card"><span class="foundation-num">RESULT SHAPE</span><h3>${completedEvidence.homeWins}H · ${completedEvidence.draws}D · ${completedEvidence.awayWins}A</h3><p>Score and xG winner aligned in ${completedEvidence.alignment}/${completedEvidence.matches} fixtures. Process remains the primary learning signal.</p></article>
       <article class="foundation-card"><span class="foundation-num">PLAYER ALPHA</span><h3>Coverage stable near 84%</h3><div class="gate-list">${matchdayRows}</div></article>
     </div></section>
-    <section class="section"><div class="section-head"><h2>Matchday ${upcoming.matchday} provisional research slate</h2><span class="panel-label">${upcoming.summary.side_research_candidates} side candidates · ${upcoming.summary.total_research_candidates} totals candidates</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>H · D · A</th><th>1X2 research</th><th>O/U 2.5 research</th><th>Context</th></tr></thead><tbody>${candidateRows}</tbody></table></div><p class="notice">CALIBRATION GATE · These are raw research candidates from the shared football stack. No UCL-specific venue, draw or tempo calibration exists yet, so none is a promoted prediction or allocation.</p></section>
-    <section class="section"><div class="section-head"><h2>Current projected-XI Alpha leaders</h2><span class="panel-label">Same position formulas as Premier League · UCL-relative display index</span></div><div class="table-shell"><table><thead><tr><th>#</th><th>Club</th><th>Strength index</th><th>Projected-XI Alpha z</th></tr></thead><tbody>${alphaRows}</tbody></table></div><p class="notice">COVERAGE QUEUE · ${esc(cycle.projected_xi_alpha.unrated_clubs.join(" and "))} currently have zero mapped projected-XI Alpha coverage. They remain neutral and cannot qualify a foundation-aligned side candidate.</p></section>`;
+    <section class="section"><div class="section-head"><h2>Matchday ${upcoming.matchday} predictions vs reality</h2><span class="panel-label">${settlement.side_research_candidates.hits}/${settlement.side_research_candidates.settled} sides · ${settlement.total_research_candidates.hits}/${settlement.total_research_candidates.settled} totals</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>H · D · A</th><th>1X2 research</th><th>O/U 2.5 research</th><th>Result + xG</th></tr></thead><tbody>${candidateRows}</tbody></table></div><p class="notice">CALIBRATION GATE · These were uncalibrated research candidates, not promoted bets. They remain excluded from the Premier League promotion gate and from capital deployment.</p></section>
+    <section class="section"><div class="section-head"><h2>Pre-Matchday 4 projected-XI Alpha leaders</h2><span class="panel-label">Same position formulas as Premier League · frozen display</span></div><div class="table-shell"><table><thead><tr><th>#</th><th>Club</th><th>Strength index</th><th>Projected-XI Alpha z</th></tr></thead><tbody>${alphaRows}</tbody></table></div><p class="notice">COVERAGE QUEUE · ${esc(cycle.projected_xi_alpha.unrated_clubs.join(" and "))} entered the slate with zero mapped projected-XI Alpha coverage. They remained neutral and could not qualify a foundation-aligned side candidate.</p></section>`;
 }
 
 function verdictLabel(value) {
@@ -472,6 +505,7 @@ function predictions(data) {
   const upcoming = data.provisional_matchweek;
   const latest = data.latest_matchweek;
   const awaitingNextSlate = upcoming.status === "awaiting_refresh";
+  const inProgress = upcoming.status === "in_progress_published_provisional_shadow";
   const priceWatches = upcoming.price_aware_shadow_shortlist || [];
   const outcomeLabel = (match, outcome) => {
     if (outcome === "home_win") return match.home_team;
@@ -480,6 +514,7 @@ function predictions(data) {
   };
   const upcomingRows = upcoming.predictions
     .map((match) => {
+      const result = match.result;
       const sideRead = match.side_call === "pass"
         ? `Pass · ${esc(outcomeLabel(match, match.side_leader))} lean`
         : esc(outcomeLabel(match, match.side_call));
@@ -488,16 +523,21 @@ function predictions(data) {
         : match.total_call === "under_2_5"
           ? `Under 2.5 · ${pct(1 - match.over_2_5_probability)}`
           : `Pass · O2.5 ${pct(match.over_2_5_probability)}`;
-      const totalTone = match.total_call === "pass" ? "" : "hit";
+      const sideStatus = match.side_call === "pass"
+        ? "pass"
+        : result ? (result.side_hit ? "hit" : "miss") : "provisional call";
+      const totalStatus = match.total_call === "pass"
+        ? "pass"
+        : result ? (result.total_hit ? "hit" : "miss") : "provisional call";
       const totalPrice = match.total_best_ask == null
         ? ""
         : ` · ask ${pct(match.total_best_ask)} · edge ${pp(match.total_edge)}`;
       return `<tr>
-        <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · xG ${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</span></td>
+        <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · forecast xG ${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</span>${result ? `<small>Final ${result.final_home_goals}–${result.final_away_goals} · xG ${dec(result.actual_xg.home)}–${dec(result.actual_xg.away)}</small>` : ""}</td>
         <td>${resultPills(match)}</td>
-        <td class="official-call"><strong>${sideRead}</strong><span>${pct(match.side_probability)} leader · ${pct(match.side_gap)} gap</span><small>${esc(match.side_reason.replaceAll("_", " "))}</small></td>
-        <td class="official-call"><strong>${totalRead}</strong><span class="status-chip ${totalTone}">${match.total_call === "pass" ? "pass" : "provisional call"}</span><small>${esc(match.total_reason.replaceAll("_", " "))}${esc(totalPrice)}</small></td>
-        <td><span class="status-chip">${esc(match.load)}</span><small>${esc(match.context_verdict.replaceAll("_", " "))}</small></td>
+        <td class="official-call"><strong>${sideRead}</strong><span>${pct(match.side_probability)} leader · ${pct(match.side_gap)} gap</span><small><span class="status-chip ${sideStatus}">${sideStatus}</span> · ${esc(match.side_reason.replaceAll("_", " "))}</small></td>
+        <td class="official-call"><strong>${totalRead}</strong><span class="status-chip ${totalStatus}">${totalStatus}</span><small>${esc(match.total_reason.replaceAll("_", " "))}${esc(totalPrice)}</small></td>
+        <td>${result ? `<span class="status-chip ${result.review_class === "process_supported_outcome_variance" ? "hit" : result.review_class === "structural_miss" ? "miss" : ""}">${esc(result.review_class.replaceAll("_", " "))}</span><small>${esc(result.xg_process_outcome.replaceAll("_", " "))} xG process</small>` : `<span class="status-chip">${esc(match.load)}</span><small>${esc(match.context_verdict.replaceAll("_", " "))}</small>`}</td>
       </tr>`;
     })
     .join("");
@@ -548,14 +588,14 @@ function predictions(data) {
         ${metric("Next O/U 2.5", "AWAITING", "No pre-match call exists yet", "amber")}
         ${metric("Deployment", "NO CAPITAL", "Research predictions only", "amber")}
       </section>`
-    : `<section class="page-head"><p class="eyebrow">Provisional research slate · Matchweek ${esc(upcoming.round)}</p><h1>Next-matchweek predictions</h1><p>The refreshed engine has projected all ten fixtures through ${esc(dateOnly(upcoming.as_of))}. Every direction remains provisional until the final lineup and availability refresh.</p><div class="notice">PROVISIONAL · FINAL REFRESH REQUIRED · ZERO CAPITAL AUTHORIZED</div></section>
+    : `<section class="page-head"><p class="eyebrow">${inProgress ? "Live frozen research slate" : "Provisional research slate"} · Matchweek ${esc(upcoming.round)}</p><h1>${inProgress ? "Predictions vs results in progress" : "Next-matchweek predictions"}</h1><p>The November 2 probabilities remain frozen. ${inProgress ? `${upcoming.settled}/${upcoming.fixtures} fixtures are final and scored; ${upcoming.pending} remain pending.` : `Every direction remains provisional until the final lineup and availability refresh.`}</p><div class="notice">${inProgress ? "FROZEN PRE-MATCH SLATE · PARTIAL SETTLEMENT" : "PROVISIONAL · FINAL REFRESH REQUIRED"} · ZERO CAPITAL AUTHORIZED</div></section>
       <section class="metrics">
-        ${metric("1X2", `${upcoming.summary.side_calls} calls · ${upcoming.summary.side_passes} passes`, "Every side must clear every promotion gate", "amber")}
-        ${metric("O/U 2.5", `${upcoming.summary.totals_calls} calls · ${upcoming.summary.totals_passes} passes`, "Only probabilities at or beyond 58%", "accent")}
-        ${metric("Refresh gate", `${upcoming.pending_preleague_teams.length} clubs pending`, "Latest evidence still to ingest", "amber")}
+        ${metric("Promoted 1X2", `${upcoming.score.markets.one_x_two.hits}/${upcoming.score.markets.one_x_two.settled}`, upcoming.score.markets.one_x_two.hit_rate === null ? "No settled call" : pct(upcoming.score.markets.one_x_two.hit_rate), "accent")}
+        ${metric("Promoted O/U 2.5", `${upcoming.score.markets.over_under_2_5.hits}/${upcoming.score.markets.over_under_2_5.settled}`, upcoming.score.markets.over_under_2_5.hit_rate === null ? "No settled call" : pct(upcoming.score.markets.over_under_2_5.hit_rate), "accent")}
+        ${metric("Slate progress", `${upcoming.settled}/${upcoming.fixtures} final`, `${upcoming.pending} fixtures pending`, "amber")}
         ${metric("Deployment", "NO CAPITAL", "Research predictions only", "amber")}
       </section>
-      <section class="section"><div class="section-head"><h2>Matchweek ${esc(upcoming.round)} provisional slate</h2><span class="panel-label">${esc(dateTime(upcoming.generated_at_utc))}</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>H · D · A</th><th>1X2 decision</th><th>O/U 2.5</th><th>Load + context</th></tr></thead><tbody>${upcomingRows}</tbody></table></div></section>
+      <section class="section"><div class="section-head"><h2>Matchweek ${esc(upcoming.round)} ${inProgress ? "live settlement" : "provisional slate"}</h2><span class="panel-label">Frozen ${esc(dateTime(upcoming.generated_at_utc))}</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>H · D · A</th><th>1X2 decision</th><th>O/U 2.5</th><th>Result / context</th></tr></thead><tbody>${upcomingRows}</tbody></table></div></section>
       <section class="section"><div class="section-head"><h2>Price-aware shadow watch</h2><span class="panel-label">Captured ${esc(dateTime(upcoming.market_captured_at_utc))}</span></div>${priceWatches.length ? `<div class="gate-list">${priceWatches.map((watch) => `<div class="gate-row"><span>${esc(watch.fixture)} · ${esc(watch.call.replaceAll("_", " "))}</span><span>${pct(watch.probability)} model · ${pct(watch.best_ask)} ask · ${pp(watch.edge)}</span></div>`).join("")}</div>` : `<p class="notice">No football call also clears the five-point executable-price gate.</p>`}<p class="notice">SHADOW ONLY · A price discrepancy can qualify an existing football call; it can never promote a pass or authorize capital.</p></section>`;
 
   return `${upcomingPanel}
@@ -640,14 +680,14 @@ function ledger(data) {
     .join("");
   const currentMisses = diagnostic.settled - diagnostic.official_1x2_hits;
   const currentPending = data.official_slate.fixtures - diagnostic.settled;
-  return `<section class="page-head"><p class="eyebrow">Immutable public record</p><h1>Prediction and research ledger</h1><p>Every frozen call stays unchanged after kickoff. Official promotion evidence and newer research matchweeks remain visibly separated so learning never rewrites the historical record.</p><div class="notice">LATEST SETTLED RESEARCH · MATCHWEEK ${esc(latestWeek.matchweek)} · ${latestWeek.markets.one_x_two.hits}/${latestWeek.markets.one_x_two.settled} PROMOTED 1X2 · ${latestWeek.markets.over_under_2_5.hits}/${latestWeek.markets.over_under_2_5.settled} PROMOTED O/U 2.5 · NEXT SLATE AWAITS FINAL REFRESH</div></section>
+  return `<section class="page-head"><p class="eyebrow">Immutable public record</p><h1>Prediction and research ledger</h1><p>Every frozen call stays unchanged after kickoff. Official promotion evidence and newer research matchweeks remain visibly separated so learning never rewrites the historical record.</p><div class="notice">LATEST RESEARCH · MATCHWEEK ${esc(latestWeek.matchweek)} · ${latestWeek.settled}/${latestWeek.fixtures} FIXTURES SETTLED · ${latestWeek.markets.one_x_two.hits}/${latestWeek.markets.one_x_two.settled} PROMOTED 1X2 · ${latestWeek.markets.over_under_2_5.hits}/${latestWeek.markets.over_under_2_5.settled} PROMOTED O/U 2.5</div></section>
     <div class="ledger-hero">
       <article class="ledger-panel"><span class="panel-label">Promotion progress</span><h2>${displayedRate} <span>· ${data.ledger.matches_logged}/${data.ledger.sample_gate} settled</span></h2><p>The gate is strictly above ${pct(data.ledger.hit_rate_gate)} with at least ${data.ledger.sample_gate} official results. Passing opens paper allocation and price validation only; real capital remains locked.</p><div class="progress"><span style="width:${progress}%"></span></div></article>
       <article class="ledger-panel"><span class="panel-label">Current evidence</span><div class="gate-list"><div class="gate-row"><span>Official promotion 1X2</span><span>${data.ledger.hits}/${data.ledger.matches_logged}</span></div><div class="gate-row"><span>Raw probability leader</span><span>${data.ledger.raw_probability_leader_hits}/${data.ledger.matches_logged}</span></div><div class="gate-row"><span>Latest research 1X2 · MW${latestWeek.matchweek}</span><span>${latestWeek.markets.one_x_two.hits}/${latestWeek.markets.one_x_two.settled}</span></div><div class="gate-row"><span>Latest research O/U 2.5 · MW${latestWeek.matchweek}</span><span>${latestWeek.markets.over_under_2_5.hits}/${latestWeek.markets.over_under_2_5.settled}</span></div><div class="gate-row"><span>BTTS diagnostic · zero weight</span><span>${latestWeek.markets.btts.hits}/${latestWeek.markets.btts.settled}</span></div><div class="gate-row"><span>Prior projected-XI accuracy</span><span>${dec(diagnostic.mean_projected_xi_hits_of_11)}/11</span></div></div></article>
     </div>
     <p class="notice">MODEL READ · Mean total xG is close, but dispersion is not: observed ${dec(environment.mean)} xG vs ${dec(forecastEnvironment.mean)} forecast, with a ${dec(environment.minimum)}–${dec(environment.maximum)} observed range versus ${dec(forecastEnvironment.minimum)}–${dec(forecastEnvironment.maximum)} forecast. ${diagnostic.structural_misses} structural reviews · ${diagnostic.process_supported_outcome_variance} result classified as finishing variance · no recalibration authorized.</p>
     <section class="section matchweek-section"><div class="section-head"><h2>Hit rate by matchweek</h2><span class="panel-label">Newest settled week opens automatically</span></div><div class="matchweek-history">${data.ledger.matchweeks.map(matchweekFold).join("")}</div></section>
-    <p class="notice">Matchweek ${esc(latestWeek.matchweek)} is settled and preserved above. The next matchweek will not enter the ledger until its post-midweek data refresh is complete, its projected lineups are rebuilt, and its slate is frozen before kickoff.</p>
+    <p class="notice">Matchweek ${esc(latestWeek.matchweek)} is ${latestWeek.pending ? `collecting with ${latestWeek.pending} fixtures pending` : "settled"}. Completed results are appended to the frozen slate; pending probabilities remain unchanged.</p>
     <section class="section"><div class="section-head"><h2>Frozen Matchweek ${esc(data.official_slate.round)} slate</h2><span class="panel-label">${diagnostic.official_1x2_hits} hits · ${currentMisses} misses · ${currentPending} pending</span></div><div class="table-shell"><table><thead><tr><th>Fixture</th><th>Official 1X2 call</th><th>Model probability</th><th>Secondary read</th><th>Result</th></tr></thead><tbody>${slateRows}</tbody></table></div></section>`;
 }
 

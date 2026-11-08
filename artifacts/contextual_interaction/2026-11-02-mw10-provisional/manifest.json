@@ -1,0 +1,38 @@
+{
+  "version": "clubalpha_contextual_published_provisional_manifest_v1",
+  "status": "published_provisional_shadow",
+  "as_of": "2026-11-02",
+  "round": 10,
+  "generated_at_utc": "2026-11-03T02:21:03.334438+00:00",
+  "published_at_utc": "2026-11-03T02:24:37+00:00",
+  "manifest_recorded_at_utc": "2026-11-07T23:43:29Z",
+  "publication_evidence": {
+    "git_commit": "0467e02070000a57b6ffc273fbbe95824936dcd0",
+    "commit_subject": "Prepare Matchweek 10 provisional slate",
+    "predictions_present_before_first_kickoff": true,
+    "final_refresh_completed": false
+  },
+  "inputs": {
+    "baseline_predictions": {
+      "path": "artifacts/current_matchweek/2026-11-02-mw10-provisional/predictions.jsonl",
+      "sha256": "28fb5a0eebdc05062e760ca777c56ce37c060983b7a668e0c7908680437f3aaa"
+    },
+    "player_alpha": {
+      "path": "reports/premier-league-alpha-snapshot-2026-11-02.json",
+      "sha256": "111cb5cb9a1616df3a523e046c7169f9d6c45be74117a41c358cf432b27de699"
+    },
+    "style_matchup": {
+      "path": "artifacts/style_matchup/2026-11-02/style-matchups.json",
+      "sha256": "0e50cdc938534152c1c419bb990426c3fa6b70098369b2049d5c6f28175bb006"
+    }
+  },
+  "outputs": {
+    "predictions": "5032df904306b65622b4bfbc98bdf573622e03cf7c57d0ed12db4b8713d6a57b",
+    "report": "937e0dc801b7c227b3ccd791a9a797736ba3ed3acaf72e8f543c9d5757683c2b"
+  },
+  "decision_boundaries": {
+    "counts_toward_official_promotion_gate": false,
+    "capital_deployment_ready": false
+  },
+  "audit_note": "This manifest was recorded after kickoff. It binds settlement to the byte-identical provisional predictions published before kickoff and does not represent the required post-Europe final freeze."
+}

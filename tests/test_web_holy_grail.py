@@ -114,7 +114,7 @@ class WebHolyGrailTests(unittest.TestCase):
         weeks = {
             row["matchweek"]: row for row in self.data["ledger"]["matchweeks"]
         }
-        self.assertEqual(set(weeks), {2, 3, 4, 5, 6, 7, 8, 9})
+        self.assertEqual(set(weeks), {2, 3, 4, 5, 6, 7, 8, 9, 10})
         completed = weeks[2]
         self.assertEqual(completed["settled"], 10)
         self.assertEqual(completed["markets"]["one_x_two"]["hit_rate"], 0.4)
@@ -216,6 +216,19 @@ class WebHolyGrailTests(unittest.TestCase):
             matchweek_nine["markets"]["over_under_2_5"]["settled"], 2
         )
         self.assertFalse(matchweek_nine["counts_toward_promotion_gate"])
+        matchweek_ten = weeks[10]
+        self.assertEqual(matchweek_ten["status"], "collecting")
+        self.assertEqual(matchweek_ten["settled"], 5)
+        self.assertEqual(matchweek_ten["pending"], 5)
+        self.assertEqual(matchweek_ten["markets"]["one_x_two"]["hits"], 1)
+        self.assertEqual(matchweek_ten["markets"]["one_x_two"]["settled"], 1)
+        self.assertEqual(
+            matchweek_ten["markets"]["over_under_2_5"]["hits"], 1
+        )
+        self.assertEqual(
+            matchweek_ten["markets"]["over_under_2_5"]["settled"], 1
+        )
+        self.assertFalse(matchweek_ten["counts_toward_promotion_gate"])
 
     def test_matchweek_six_results_preserve_prematch_calls(self):
         current = self.data["current_matchweek"]
@@ -246,12 +259,17 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertTrue(chelsea["result"]["base_1x2_hit"])
         self.assertTrue(chelsea["result"]["market_1x2_hit"])
 
-    def test_matchweek_nine_settled_and_matchweek_ten_provisional_are_separate(self):
+    def test_matchweek_nine_settled_and_matchweek_ten_live_are_separate(self):
         provisional = self.data["provisional_matchweek"]
         settled = self.data["latest_matchweek"]
-        self.assertEqual(provisional["status"], "provisional_shadow")
+        self.assertEqual(
+            provisional["status"],
+            "in_progress_published_provisional_shadow",
+        )
         self.assertEqual(provisional["round"], 10)
         self.assertEqual(provisional["fixtures"], 10)
+        self.assertEqual(provisional["settled"], 5)
+        self.assertEqual(provisional["pending"], 5)
         self.assertEqual(len(provisional["predictions"]), 10)
         self.assertEqual(provisional["summary"]["side_calls"], 1)
         self.assertEqual(provisional["summary"]["side_passes"], 9)
@@ -274,6 +292,18 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertAlmostEqual(price_watch["probability"], 0.58208)
         self.assertAlmostEqual(price_watch["best_ask"], 0.52)
         self.assertAlmostEqual(price_watch["edge"], 0.06208)
+        self.assertEqual(
+            provisional["score"]["markets"]["one_x_two"]["hits"], 1
+        )
+        self.assertEqual(
+            provisional["score"]["markets"]["one_x_two"]["settled"], 1
+        )
+        self.assertEqual(
+            provisional["score"]["markets"]["over_under_2_5"]["hits"], 1
+        )
+        self.assertEqual(
+            provisional["score"]["markets"]["over_under_2_5"]["settled"], 1
+        )
         self.assertEqual(settled["round"], 9)
         self.assertEqual(settled["settled"], 10)
         self.assertEqual(settled["score"]["markets"]["one_x_two"]["hits"], 0)
@@ -296,7 +326,7 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertIn("Calibrated 1X2 leader", app_js)
         self.assertIn("Settled research slate · Matchweek ${esc(latest.round)}", app_js)
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
-        self.assertIn('/app.js?v=0.18.0-mw10-provisional', index_html)
+        self.assertIn('/app.js?v=0.19.0-mw10-live', index_html)
 
     def test_ucl_uses_shared_alpha_with_separate_calibration(self):
         cycle = self.data["ucl_alpha_cycle"]
@@ -308,6 +338,17 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertEqual(cycle["projected_xi_alpha"]["rated_clubs"], 34)
         self.assertEqual(cycle["domestic_evidence"]["completed_matches"], 286)
         self.assertEqual(cycle["domestic_evidence"]["competitions"], 15)
+        self.assertEqual(
+            cycle["current_domestic_evidence"]["completed_matches"], 330
+        )
+        settled = cycle["settled_matchday"]["forecast_settlement"]
+        self.assertEqual(settled["settled"], 18)
+        self.assertEqual(settled["raw_probability_leader"]["hits"], 11)
+        self.assertEqual(settled["raw_over_under_2_5"]["hits"], 14)
+        self.assertEqual(settled["side_research_candidates"]["hits"], 2)
+        self.assertEqual(settled["side_research_candidates"]["settled"], 3)
+        self.assertEqual(settled["total_research_candidates"]["hits"], 12)
+        self.assertEqual(settled["total_research_candidates"]["settled"], 15)
         self.assertEqual(
             set(cycle["projected_xi_alpha"]["unrated_clubs"]),
             {"Sabah FK", "Shakhtar Donetsk"},
@@ -328,14 +369,14 @@ class WebHolyGrailTests(unittest.TestCase):
 
     def test_latest_settled_research_week_is_prominent_in_ledger(self):
         app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
-        self.assertIn('LATEST SETTLED RESEARCH · MATCHWEEK', app_js)
+        self.assertIn('LATEST RESEARCH · MATCHWEEK', app_js)
         self.assertIn('index === 0 ? " open"', app_js)
-        self.assertIn('NEXT SLATE AWAITS FINAL REFRESH', app_js)
+        self.assertIn('PARTIAL MATCHWEEK · FIVE FIXTURES PENDING', app_js)
 
     def test_methodology_exposes_goal_environment_and_selective_decisions(self):
         calibration = self.data["methodology"]["fixture_calibration"]
         goal_environment = calibration["goal_environment_calibration"]
-        self.assertEqual(calibration["training_matches"], 80)
+        self.assertEqual(calibration["training_matches"], 85)
         self.assertLess(
             goal_environment["applied_log_total_xg_correction"], 0.0
         )
@@ -414,15 +455,17 @@ class WebHolyGrailTests(unittest.TestCase):
                 / "artifacts/contextual_interaction/2026-10-21-mw8/results.jsonl",
                 ROOT
                 / "artifacts/contextual_interaction/2026-10-26-mw9/results.jsonl",
+                ROOT
+                / "artifacts/contextual_interaction/2026-11-02-mw10-provisional/results.jsonl",
             )
         )
         self.assertEqual(learning["completed_results"], completed_results)
-        self.assertEqual(learning["frozen_fixtures"], 80)
+        self.assertEqual(learning["frozen_fixtures"], 90)
         self.assertEqual(
             learning["pending_results"],
             learning["frozen_fixtures"] - completed_results,
         )
-        self.assertEqual(learning["promotion_candidates"], 21)
+        self.assertEqual(learning["promotion_candidates"], 22)
         self.assertEqual(learning["automatically_applied"], 0)
         self.assertFalse(learning["capital_deployment_ready"])
         adaptive = learning["adaptive"]

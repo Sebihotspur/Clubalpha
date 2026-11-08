@@ -1,33 +1,30 @@
 {
   "historical_fixtures_version": "clubalpha_historical_fixtures_v2_deep",
-  "generated_at_utc": "2026-11-03T02:18:35.290342+00:00",
-  "as_of": "2026-11-02",
+  "generated_at_utc": "2026-11-08T00:06:43.016452+00:00",
+  "as_of": "2026-11-07",
   "counts": {
-    "target_fixtures": 28,
+    "target_fixtures": 12,
     "fixture_scopes": {
-      "champions_league_current": 18,
-      "premier_league_current": 10
+      "premier_league_current": 12
     },
-    "historical_team_match_rows": 8506,
+    "historical_team_match_rows": 8552,
     "fixtures_with_direct_history": 11,
-    "fixtures_without_direct_history": 17,
-    "fixtures_with_xg_baseline": 28,
-    "fixtures_with_complete_attack_signals": 28,
-    "fixtures_with_competition_baseline": 28
+    "fixtures_without_direct_history": 1,
+    "fixtures_with_xg_baseline": 12,
+    "fixtures_with_complete_attack_signals": 12,
+    "fixtures_with_competition_baseline": 12
   },
   "coverage": {
     "direct_meeting_distribution": {
-      "0": 17,
-      "1": 2,
-      "2": 4,
-      "5": 1,
+      "0": 1,
+      "2": 5,
+      "5": 2,
       "6": 4
     },
     "quality_flags": {
-      "low_away_venue_confidence": 1,
-      "low_direct_head_to_head_confidence": 4,
-      "no_direct_head_to_head": 17,
-      "raw_xg_mixed_competition_context": 26
+      "low_direct_head_to_head_confidence": 2,
+      "no_direct_head_to_head": 1,
+      "raw_xg_mixed_competition_context": 8
     }
   },
   "normalisation": {
@@ -43,167 +40,79 @@
   },
   "examples": [
     {
-      "match_id": 6106335,
-      "kickoff_utc": "2026-11-03T17:45:00.000Z",
-      "fixture": "Shakhtar Donetsk vs Sporting CP",
-      "direct_meetings": 0,
-      "direct_signal_share": 0.0,
+      "match_id": 5795506,
+      "kickoff_utc": "2026-11-08T14:00:00Z",
+      "fixture": "Brighton & Hove Albion vs Brentford",
+      "direct_meetings": 6,
+      "direct_signal_share": 0.15,
       "historical_signals": {
-        "home_attack_z": -0.2554,
-        "away_attack_z": 0.1356,
-        "home_edge_z": -0.391,
-        "total_goal_environment_z": -0.0599,
+        "home_attack_z": 0.2612,
+        "away_attack_z": -0.0782,
+        "home_edge_z": 0.3394,
+        "total_goal_environment_z": 0.0915,
         "descriptive_xg_baseline": {
-          "home": 1.203,
-          "away": 1.502,
-          "total": 2.705,
+          "home": 1.626,
+          "away": 1.263,
+          "total": 2.889,
           "league_strength_adjusted": false
         },
         "empirical_rates": {
-          "over_2_5": 0.593,
-          "btts": 0.5323
+          "over_2_5": 0.5616,
+          "btts": 0.5435
         },
-        "confidence": 0.6298
+        "confidence": 0.6936
+      },
+      "quality_flags": []
+    },
+    {
+      "match_id": 5795507,
+      "kickoff_utc": "2026-11-08T14:00:00Z",
+      "fixture": "Crystal Palace vs Liverpool",
+      "direct_meetings": 6,
+      "direct_signal_share": 0.15,
+      "historical_signals": {
+        "home_attack_z": 0.1761,
+        "away_attack_z": 0.2597,
+        "home_edge_z": -0.0836,
+        "total_goal_environment_z": 0.2179,
+        "descriptive_xg_baseline": {
+          "home": 1.56,
+          "away": 1.627,
+          "total": 3.187,
+          "league_strength_adjusted": false
+        },
+        "empirical_rates": {
+          "over_2_5": 0.6261,
+          "btts": 0.6479
+        },
+        "confidence": 0.7239
       },
       "quality_flags": [
-        "no_direct_head_to_head",
         "raw_xg_mixed_competition_context"
       ]
     },
     {
-      "match_id": 6106341,
-      "kickoff_utc": "2026-11-03T17:45:00.000Z",
-      "fixture": "Galatasaray vs VfB Stuttgart",
-      "direct_meetings": 0,
-      "direct_signal_share": 0.0,
-      "historical_signals": {
-        "home_attack_z": 0.046,
-        "away_attack_z": 0.1473,
-        "home_edge_z": -0.1013,
-        "total_goal_environment_z": 0.0966,
-        "descriptive_xg_baseline": {
-          "home": 2.161,
-          "away": 1.396,
-          "total": 3.557,
-          "league_strength_adjusted": false
-        },
-        "empirical_rates": {
-          "over_2_5": 0.7737,
-          "btts": 0.6711
-        },
-        "confidence": 0.6922
-      },
-      "quality_flags": [
-        "no_direct_head_to_head",
-        "raw_xg_mixed_competition_context"
-      ]
-    },
-    {
-      "match_id": 6106263,
-      "kickoff_utc": "2026-11-03T20:00:00.000Z",
-      "fixture": "Barcelona vs Aston Villa",
-      "direct_meetings": 0,
-      "direct_signal_share": 0.0,
-      "historical_signals": {
-        "home_attack_z": 0.3907,
-        "away_attack_z": -0.232,
-        "home_edge_z": 0.6227,
-        "total_goal_environment_z": 0.0793,
-        "descriptive_xg_baseline": {
-          "home": 2.095,
-          "away": 1.163,
-          "total": 3.258,
-          "league_strength_adjusted": false
-        },
-        "empirical_rates": {
-          "over_2_5": 0.6723,
-          "btts": 0.5629
-        },
-        "confidence": 0.7289
-      },
-      "quality_flags": [
-        "no_direct_head_to_head",
-        "raw_xg_mixed_competition_context"
-      ]
-    },
-    {
-      "match_id": 6106266,
-      "kickoff_utc": "2026-11-03T20:00:00.000Z",
-      "fixture": "Atlético Madrid vs Bayern München",
-      "direct_meetings": 0,
-      "direct_signal_share": 0.0,
-      "historical_signals": {
-        "home_attack_z": 0.0632,
-        "away_attack_z": 0.1178,
-        "home_edge_z": -0.0546,
-        "total_goal_environment_z": 0.0905,
-        "descriptive_xg_baseline": {
-          "home": 1.7,
-          "away": 2.028,
-          "total": 3.728,
-          "league_strength_adjusted": false
-        },
-        "empirical_rates": {
-          "over_2_5": 0.7134,
-          "btts": 0.6297
-        },
-        "confidence": 0.7352
-      },
-      "quality_flags": [
-        "no_direct_head_to_head",
-        "raw_xg_mixed_competition_context"
-      ]
-    },
-    {
-      "match_id": 6106291,
-      "kickoff_utc": "2026-11-03T20:00:00.000Z",
-      "fixture": "Manchester United vs Roma",
-      "direct_meetings": 0,
-      "direct_signal_share": 0.0,
-      "historical_signals": {
-        "home_attack_z": 0.2399,
-        "away_attack_z": -0.0901,
-        "home_edge_z": 0.33,
-        "total_goal_environment_z": 0.0749,
-        "descriptive_xg_baseline": {
-          "home": 1.674,
-          "away": 1.465,
-          "total": 3.139,
-          "league_strength_adjusted": false
-        },
-        "empirical_rates": {
-          "over_2_5": 0.5186,
-          "btts": 0.5024
-        },
-        "confidence": 0.6973
-      },
-      "quality_flags": [
-        "no_direct_head_to_head",
-        "raw_xg_mixed_competition_context"
-      ]
-    },
-    {
-      "match_id": 6106306,
-      "kickoff_utc": "2026-11-03T20:00:00.000Z",
-      "fixture": "Feyenoord vs Inter",
+      "match_id": 5795510,
+      "kickoff_utc": "2026-11-08T14:00:00Z",
+      "fixture": "Ipswich Town vs AFC Bournemouth",
       "direct_meetings": 2,
-      "direct_signal_share": 0.0871,
+      "direct_signal_share": 0.0794,
       "historical_signals": {
-        "home_attack_z": -0.0915,
-        "away_attack_z": 0.1651,
-        "home_edge_z": -0.2566,
-        "total_goal_environment_z": 0.0368,
+        "home_attack_z": -0.0115,
+        "away_attack_z": 0.2177,
+        "home_edge_z": -0.2292,
+        "total_goal_environment_z": 0.1031,
         "descriptive_xg_baseline": {
-          "home": 1.643,
-          "away": 1.572,
-          "total": 3.215,
+          "home": 1.61,
+          "away": 1.443,
+          "total": 3.053,
           "league_strength_adjusted": false
         },
         "empirical_rates": {
-          "over_2_5": 0.6176,
-          "btts": 0.598
+          "over_2_5": 0.6701,
+          "btts": 0.6745
         },
-        "confidence": 0.6875
+        "confidence": 0.699
       },
       "quality_flags": [
         "low_direct_head_to_head_confidence",
@@ -211,27 +120,185 @@
       ]
     },
     {
-      "match_id": 6106316,
-      "kickoff_utc": "2026-11-03T20:00:00.000Z",
-      "fixture": "Bodø/Glimt vs Lille",
-      "direct_meetings": 0,
-      "direct_signal_share": 0.0,
+      "match_id": 5795514,
+      "kickoff_utc": "2026-11-08T14:00:00Z",
+      "fixture": "Sunderland vs Chelsea",
+      "direct_meetings": 2,
+      "direct_signal_share": 0.15,
       "historical_signals": {
-        "home_attack_z": 0.0214,
-        "away_attack_z": -0.1346,
-        "home_edge_z": 0.156,
-        "total_goal_environment_z": -0.0566,
+        "home_attack_z": 0.0741,
+        "away_attack_z": -0.0041,
+        "home_edge_z": 0.0782,
+        "total_goal_environment_z": 0.035,
         "descriptive_xg_baseline": {
-          "home": 2.233,
-          "away": 1.016,
-          "total": 3.249,
+          "home": 1.37,
+          "away": 1.271,
+          "total": 2.641,
           "league_strength_adjusted": false
         },
         "empirical_rates": {
-          "over_2_5": 0.5771,
-          "btts": 0.3641
+          "over_2_5": 0.5924,
+          "btts": 0.5436
         },
-        "confidence": 0.7054
+        "confidence": 0.6871
+      },
+      "quality_flags": [
+        "raw_xg_mixed_competition_context"
+      ]
+    },
+    {
+      "match_id": 5795512,
+      "kickoff_utc": "2026-11-08T16:30:00Z",
+      "fixture": "Manchester United vs Aston Villa",
+      "direct_meetings": 6,
+      "direct_signal_share": 0.15,
+      "historical_signals": {
+        "home_attack_z": 0.3476,
+        "away_attack_z": -0.0909,
+        "home_edge_z": 0.4385,
+        "total_goal_environment_z": 0.1284,
+        "descriptive_xg_baseline": {
+          "home": 1.791,
+          "away": 1.292,
+          "total": 3.083,
+          "league_strength_adjusted": false
+        },
+        "empirical_rates": {
+          "over_2_5": 0.627,
+          "btts": 0.5766
+        },
+        "confidence": 0.7274
+      },
+      "quality_flags": []
+    },
+    {
+      "match_id": 5795522,
+      "kickoff_utc": "2026-11-21T12:30:00Z",
+      "fixture": "Manchester City vs Fulham",
+      "direct_meetings": 5,
+      "direct_signal_share": 0.15,
+      "historical_signals": {
+        "home_attack_z": 0.4499,
+        "away_attack_z": -0.1227,
+        "home_edge_z": 0.5726,
+        "total_goal_environment_z": 0.1636,
+        "descriptive_xg_baseline": {
+          "home": 1.861,
+          "away": 1.28,
+          "total": 3.141,
+          "league_strength_adjusted": false
+        },
+        "empirical_rates": {
+          "over_2_5": 0.5936,
+          "btts": 0.5181
+        },
+        "confidence": 0.7365
+      },
+      "quality_flags": [
+        "raw_xg_mixed_competition_context"
+      ]
+    },
+    {
+      "match_id": 5795515,
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "fixture": "AFC Bournemouth vs Nottingham Forest",
+      "direct_meetings": 6,
+      "direct_signal_share": 0.15,
+      "historical_signals": {
+        "home_attack_z": 0.1766,
+        "away_attack_z": -0.0923,
+        "home_edge_z": 0.2689,
+        "total_goal_environment_z": 0.0422,
+        "descriptive_xg_baseline": {
+          "home": 1.58,
+          "away": 1.217,
+          "total": 2.797,
+          "league_strength_adjusted": false
+        },
+        "empirical_rates": {
+          "over_2_5": 0.4629,
+          "btts": 0.5753
+        },
+        "confidence": 0.7097
+      },
+      "quality_flags": []
+    },
+    {
+      "match_id": 5795516,
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "fixture": "Aston Villa vs Sunderland",
+      "direct_meetings": 2,
+      "direct_signal_share": 0.15,
+      "historical_signals": {
+        "home_attack_z": 0.4602,
+        "away_attack_z": 0.0475,
+        "home_edge_z": 0.4127,
+        "total_goal_environment_z": 0.2539,
+        "descriptive_xg_baseline": {
+          "home": 1.814,
+          "away": 1.327,
+          "total": 3.141,
+          "league_strength_adjusted": false
+        },
+        "empirical_rates": {
+          "over_2_5": 0.6016,
+          "btts": 0.706
+        },
+        "confidence": 0.7089
+      },
+      "quality_flags": [
+        "raw_xg_mixed_competition_context"
+      ]
+    },
+    {
+      "match_id": 5795518,
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "fixture": "Chelsea vs Leeds United",
+      "direct_meetings": 2,
+      "direct_signal_share": 0.15,
+      "historical_signals": {
+        "home_attack_z": 0.2882,
+        "away_attack_z": -0.0026,
+        "home_edge_z": 0.2908,
+        "total_goal_environment_z": 0.1428,
+        "descriptive_xg_baseline": {
+          "home": 1.788,
+          "away": 1.331,
+          "total": 3.119,
+          "league_strength_adjusted": false
+        },
+        "empirical_rates": {
+          "over_2_5": 0.5684,
+          "btts": 0.6099
+        },
+        "confidence": 0.7056
+      },
+      "quality_flags": [
+        "raw_xg_mixed_competition_context"
+      ]
+    },
+    {
+      "match_id": 5795519,
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "fixture": "Coventry City vs Crystal Palace",
+      "direct_meetings": 0,
+      "direct_signal_share": 0.0,
+      "historical_signals": {
+        "home_attack_z": 0.0321,
+        "away_attack_z": -0.0187,
+        "home_edge_z": 0.0508,
+        "total_goal_environment_z": 0.0067,
+        "descriptive_xg_baseline": {
+          "home": 1.752,
+          "away": 1.238,
+          "total": 2.99,
+          "league_strength_adjusted": false
+        },
+        "empirical_rates": {
+          "over_2_5": 0.6018,
+          "btts": 0.4877
+        },
+        "confidence": 0.7048
       },
       "quality_flags": [
         "no_direct_head_to_head",
@@ -239,144 +306,57 @@
       ]
     },
     {
-      "match_id": 6106326,
-      "kickoff_utc": "2026-11-03T20:00:00.000Z",
-      "fixture": "Villarreal vs Paris Saint-Germain",
-      "direct_meetings": 0,
-      "direct_signal_share": 0.0,
+      "match_id": 5795524,
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "fixture": "Tottenham Hotspur vs Ipswich Town",
+      "direct_meetings": 2,
+      "direct_signal_share": 0.0733,
       "historical_signals": {
-        "home_attack_z": 0.1103,
-        "away_attack_z": 0.0681,
-        "home_edge_z": 0.0422,
-        "total_goal_environment_z": 0.0892,
+        "home_attack_z": 0.3182,
+        "away_attack_z": -0.1978,
+        "home_edge_z": 0.516,
+        "total_goal_environment_z": 0.0602,
         "descriptive_xg_baseline": {
-          "home": 1.672,
-          "away": 1.685,
-          "total": 3.357,
+          "home": 1.585,
+          "away": 1.31,
+          "total": 2.895,
           "league_strength_adjusted": false
         },
         "empirical_rates": {
-          "over_2_5": 0.7244,
-          "btts": 0.6803
+          "over_2_5": 0.6189,
+          "btts": 0.6397
         },
-        "confidence": 0.7202
+        "confidence": 0.731
       },
       "quality_flags": [
-        "no_direct_head_to_head",
+        "low_direct_head_to_head_confidence",
         "raw_xg_mixed_competition_context"
       ]
     },
     {
-      "match_id": 6106408,
-      "kickoff_utc": "2026-11-03T20:00:00.000Z",
-      "fixture": "LASK vs Slovan Bratislava",
-      "direct_meetings": 0,
-      "direct_signal_share": 0.0,
+      "match_id": 5795523,
+      "kickoff_utc": "2026-11-21T17:30:00Z",
+      "fixture": "Newcastle United vs Arsenal",
+      "direct_meetings": 5,
+      "direct_signal_share": 0.15,
       "historical_signals": {
-        "home_attack_z": 0.1981,
-        "away_attack_z": -0.1349,
-        "home_edge_z": 0.333,
-        "total_goal_environment_z": 0.0316,
+        "home_attack_z": -0.1192,
+        "away_attack_z": 0.0966,
+        "home_edge_z": -0.2158,
+        "total_goal_environment_z": -0.0113,
         "descriptive_xg_baseline": {
-          "home": 2.906,
-          "away": 0.995,
-          "total": 3.901,
+          "home": 1.349,
+          "away": 1.545,
+          "total": 2.894,
           "league_strength_adjusted": false
         },
         "empirical_rates": {
-          "over_2_5": 0.7277,
-          "btts": 0.5752
+          "over_2_5": 0.531,
+          "btts": 0.527
         },
-        "confidence": 0.6802
+        "confidence": 0.7614
       },
-      "quality_flags": [
-        "no_direct_head_to_head",
-        "raw_xg_mixed_competition_context"
-      ]
-    },
-    {
-      "match_id": 6106330,
-      "kickoff_utc": "2026-11-04T17:45:00Z",
-      "fixture": "Fenerbahçe vs Liverpool",
-      "direct_meetings": 0,
-      "direct_signal_share": 0.0,
-      "historical_signals": {
-        "home_attack_z": -0.1351,
-        "away_attack_z": 0.2149,
-        "home_edge_z": -0.35,
-        "total_goal_environment_z": 0.0399,
-        "descriptive_xg_baseline": {
-          "home": 1.747,
-          "away": 1.36,
-          "total": 3.107,
-          "league_strength_adjusted": false
-        },
-        "empirical_rates": {
-          "over_2_5": 0.6657,
-          "btts": 0.6652
-        },
-        "confidence": 0.7208
-      },
-      "quality_flags": [
-        "no_direct_head_to_head",
-        "raw_xg_mixed_competition_context"
-      ]
-    },
-    {
-      "match_id": 6106401,
-      "kickoff_utc": "2026-11-04T17:45:00Z",
-      "fixture": "AEK Athens vs Real Madrid",
-      "direct_meetings": 0,
-      "direct_signal_share": 0.0,
-      "historical_signals": {
-        "home_attack_z": -0.0274,
-        "away_attack_z": 0.0748,
-        "home_edge_z": -0.1022,
-        "total_goal_environment_z": 0.0237,
-        "descriptive_xg_baseline": {
-          "home": 1.847,
-          "away": 1.243,
-          "total": 3.09,
-          "league_strength_adjusted": false
-        },
-        "empirical_rates": {
-          "over_2_5": 0.6556,
-          "btts": 0.4128
-        },
-        "confidence": 0.7082
-      },
-      "quality_flags": [
-        "no_direct_head_to_head",
-        "raw_xg_mixed_competition_context"
-      ]
-    },
-    {
-      "match_id": 6106271,
-      "kickoff_utc": "2026-11-04T20:00:00Z",
-      "fixture": "Borussia Dortmund vs Real Betis",
-      "direct_meetings": 0,
-      "direct_signal_share": 0.0,
-      "historical_signals": {
-        "home_attack_z": 0.0902,
-        "away_attack_z": -0.2596,
-        "home_edge_z": 0.3498,
-        "total_goal_environment_z": -0.0847,
-        "descriptive_xg_baseline": {
-          "home": 1.829,
-          "away": 1.228,
-          "total": 3.057,
-          "league_strength_adjusted": false
-        },
-        "empirical_rates": {
-          "over_2_5": 0.5636,
-          "btts": 0.5761
-        },
-        "confidence": 0.7014
-      },
-      "quality_flags": [
-        "no_direct_head_to_head",
-        "raw_xg_mixed_competition_context"
-      ]
+      "quality_flags": []
     }
   ],
   "decision_boundaries": {

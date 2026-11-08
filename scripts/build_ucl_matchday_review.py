@@ -16,7 +16,7 @@ import sys
 from collections import defaultdict
 from datetime import date, datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -268,7 +268,109 @@ def competition_watch(
     }
 
 
-def build(matchday: int, start_date: str, end_date: str) -> dict[str, Any]:
+def score_frozen_cycle(
+    matches: list[dict[str, Any]],
+    cycle: dict[str, Any],
+    matchday: int,
+) -> dict[str, Any]:
+    """Score a pre-kickoff UCL research slate without promoting it retroactively."""
+
+    upcoming = cycle.get("upcoming") or {}
+    if int(upcoming.get("matchday") or -1) != matchday:
+        raise ValueError("frozen UCL cycle does not match the requested matchday")
+    predictions = upcoming.get("predictions") or []
+    prediction_by_id = {int(row["match_id"]): row for row in predictions}
+    match_by_id = {int(row["match_id"]): row for row in matches}
+    if set(prediction_by_id) != set(match_by_id):
+        raise ValueError("frozen UCL cycle does not reconcile with matchday fixtures")
+
+    raw_hits = raw_over_hits = 0
+    side_hits = side_calls = total_hits = total_calls = 0
+    for match_id, match in match_by_id.items():
+        if match.get("status") != "completed":
+            continue
+        prediction = prediction_by_id[match_id]
+        probabilities = prediction["probabilities"]
+        raw_leader = max(
+            ("home_win", "draw", "away_win"),
+            key=lambda key: float(probabilities[key]),
+        )
+        actual = str(match["result"])
+        raw_hit = raw_leader == actual
+        raw_hits += int(raw_hit)
+        actual_over = int(match["score"]["home"]) + int(match["score"]["away"]) > 2
+        raw_over = float(probabilities["over"]["2.5"]) >= 0.5
+        raw_over_hit = raw_over == actual_over
+        raw_over_hits += int(raw_over_hit)
+
+        side = prediction["side_research_candidate"]
+        total = prediction["total_research_candidate"]
+        side_hit = None
+        if side["call"] != "pass":
+            side_calls += 1
+            side_hit = str(side["call"]) == actual
+            side_hits += int(side_hit)
+        total_hit = None
+        if total["call"] != "pass":
+            total_calls += 1
+            total_hit = (str(total["call"]) == "over_2_5") == actual_over
+            total_hits += int(total_hit)
+
+        match["frozen_forecast"] = {
+            "predicted_xg": prediction["predicted_xg"],
+            "probabilities": probabilities,
+            "raw_leader": raw_leader,
+            "raw_leader_hit": raw_hit,
+            "raw_total_direction": "over_2_5" if raw_over else "under_2_5",
+            "raw_total_hit": raw_over_hit,
+            "side_research_call": side["call"],
+            "side_research_hit": side_hit,
+            "total_research_call": total["call"],
+            "total_research_hit": total_hit,
+            "context_verdict": prediction["context_verdict"],
+        }
+
+    settled = sum(row.get("status") == "completed" for row in matches)
+    return {
+        "status": "settled" if settled == len(matches) else "collecting",
+        "matchday": matchday,
+        "fixtures": len(matches),
+        "settled": settled,
+        "pending": len(matches) - settled,
+        "simulations": upcoming.get("simulations"),
+        "raw_probability_leader": {
+            "hits": raw_hits,
+            "settled": settled,
+            "hit_rate": round(raw_hits / settled, 4) if settled else None,
+        },
+        "raw_over_under_2_5": {
+            "hits": raw_over_hits,
+            "settled": settled,
+            "hit_rate": round(raw_over_hits / settled, 4) if settled else None,
+        },
+        "side_research_candidates": {
+            "hits": side_hits,
+            "settled": side_calls,
+            "hit_rate": round(side_hits / side_calls, 4) if side_calls else None,
+        },
+        "total_research_candidates": {
+            "hits": total_hits,
+            "settled": total_calls,
+            "hit_rate": round(total_hits / total_calls, 4) if total_calls else None,
+        },
+        "decision_boundary": (
+            "Pre-match UCL research candidates remain uncalibrated and do not count "
+            "toward Premier League promotion or capital gates."
+        ),
+    }
+
+
+def build(
+    matchday: int,
+    start_date: str,
+    end_date: str,
+    frozen_cycle: Optional[Path] = None,
+) -> dict[str, Any]:
     fixtures = load_jsonl(FOUNDATION_DIR / "fixtures.jsonl")
     team_rows = load_jsonl(FOUNDATION_DIR / "current_match_team_stats.jsonl")
     player_rows = load_jsonl(FOUNDATION_DIR / "current_match_player_stats.jsonl")
@@ -473,6 +575,14 @@ def build(matchday: int, start_date: str, end_date: str) -> dict[str, Any]:
         key=lambda row: str(row["team"]),
     )
 
+    forecast_settlement = None
+    if frozen_cycle is not None:
+        forecast_settlement = score_frozen_cycle(
+            matches,
+            load_json(frozen_cycle),
+            matchday,
+        )
+
     report = {
         "version": "clubalpha_ucl_matchday_review_v1",
         "competition": "Champions League",
@@ -489,7 +599,7 @@ def build(matchday: int, start_date: str, end_date: str) -> dict[str, Any]:
             "end_date": end_date,
         },
         "integrity": {
-            "predictions_frozen_before_kickoff": False,
+            "predictions_frozen_before_kickoff": frozen_cycle is not None,
             "retroactive_hit_rate_created": False,
             "pl_and_ucl_calibration_separate": True,
             "player_alpha_formula_changed": False,
@@ -585,6 +695,7 @@ def build(matchday: int, start_date: str, end_date: str) -> dict[str, Any]:
             ),
         },
         "matches": matches,
+        "forecast_settlement": forecast_settlement,
         "cross_competition_watch": competition_watch(6099342, grades),
         "learning_policy": [
             "Completed UCL evidence may update shared team form, style, lineup and player-role research.",
@@ -611,8 +722,18 @@ def main() -> None:
     parser.add_argument("--start-date", default="2026-09-08")
     parser.add_argument("--end-date", default="2026-09-10")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--frozen-cycle",
+        type=Path,
+        help="Optional pre-kickoff UCL Alpha cycle to settle against final results.",
+    )
     args = parser.parse_args()
-    report = build(args.matchday, args.start_date, args.end_date)
+    report = build(
+        args.matchday,
+        args.start_date,
+        args.end_date,
+        args.frozen_cycle,
+    )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(

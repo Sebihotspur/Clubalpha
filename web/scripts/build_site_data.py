@@ -26,10 +26,11 @@ OFFICIAL_ROOT = ROOT / "artifacts/official_shadow"
 RESEARCH_LOOP_DIR = ROOT / "artifacts/research_loop"
 FIXTURE_CALIBRATION_DIR = ROOT / "artifacts/fixture_calibration"
 BACKTEST_REPORT_PATTERN = "contextual-interaction-v1-backtest-*.json"
-UCL_MATCHDAY_REVIEW = ROOT / "reports/ucl-matchday-1-review.json"
+UCL_MATCHDAY_REVIEW = ROOT / "reports/ucl-matchday-4-review.json"
 UCL_ALPHA_CYCLE = (
     ROOT / "reports/ucl-alpha-cycle-2026-10-27-league-adjusted.json"
 )
+UCL_CURRENT_DOMESTIC_COVERAGE = ROOT / "reports/domestic-current-coverage.json"
 PL_MIDWEEK_REVIEW = ROOT / "reports/pl-midweek-review-2026-09-17.json"
 CURRENT_MARKET_SNAPSHOT = (
     ROOT / "artifacts/market_snapshots/2026-10-06-mw6-polymarket.json"
@@ -85,6 +86,13 @@ UPCOMING_MATCHWEEK_LOAD = (
 UPCOMING_MATCHWEEK_MARKET = (
     ROOT
     / "artifacts/market_snapshots/2026-11-02-mw10-provisional-polymarket.json"
+)
+UPCOMING_MATCHWEEK_RESULTS = (
+    ROOT
+    / "artifacts/contextual_interaction/2026-11-02-mw10-provisional/results.jsonl"
+)
+UPCOMING_MATCHWEEK_BACKTEST = (
+    ROOT / "reports/contextual-interaction-v1-backtest-2026-11-07.json"
 )
 MARKET_FOCUS_CONFIG = ROOT / "config/market-focus-v1.json"
 PUBLIC_DIR = ROOT / "web/public"
@@ -476,6 +484,7 @@ def build():
     )
     ucl_matchday = load_json(UCL_MATCHDAY_REVIEW)
     ucl_alpha_cycle = load_json(UCL_ALPHA_CYCLE)
+    ucl_current_domestic = load_json(UCL_CURRENT_DOMESTIC_COVERAGE)
     if not ucl_alpha_cycle["integrity"][
         "same_player_alpha_formulas_as_premier_league"
     ]:
@@ -489,11 +498,32 @@ def build():
     if ucl_alpha_cycle["integrity"]["capital_deployment_ready"]:
         raise ValueError("UCL website refuses capital-ready research")
     if ucl_alpha_cycle["completed_evidence"]["matches"] != 54:
-        raise ValueError("UCL catch-up requires 54 completed observations")
+        raise ValueError("UCL pre-Matchday 4 cycle requires 54 completed observations")
     if ucl_alpha_cycle["upcoming"]["fixtures"] != 18:
         raise ValueError("UCL Matchday 4 requires 18 upcoming fixtures")
     if ucl_alpha_cycle["domestic_evidence"]["completed_matches"] < 286:
         raise ValueError("UCL website requires the October 27 domestic refresh")
+    if ucl_matchday["scope"]["completed_matches"] != 18:
+        raise ValueError("UCL Matchday 4 settlement requires 18 completed fixtures")
+    if not ucl_matchday["integrity"]["predictions_frozen_before_kickoff"]:
+        raise ValueError("UCL Matchday 4 settlement requires a frozen forecast")
+    if not ucl_matchday.get("forecast_settlement"):
+        raise ValueError("UCL Matchday 4 forecast settlement is missing")
+    ucl_alpha_cycle["settled_matchday"] = ucl_matchday
+    ucl_alpha_cycle["current_domestic_evidence"] = {
+        "as_of": ucl_current_domestic["as_of"],
+        "competitions": ucl_current_domestic["counts"]["competitions"],
+        "foreign_ucl_clubs": ucl_current_domestic["counts"]["target_teams"],
+        "completed_matches": ucl_current_domestic["counts"][
+            "finished_selected_fixtures"
+        ],
+        "matches_with_player_detail": ucl_current_domestic["counts"][
+            "matches_with_target_player_stats"
+        ],
+        "player_detail_coverage_pct": ucl_current_domestic["counts"][
+            "target_player_detail_coverage_pct"
+        ],
+    }
     pl_midweek_review = {"matches": []}
     current_market_snapshot = load_json(CURRENT_MARKET_SNAPSHOT)
     current_matchweek_settlement = load_json(CURRENT_MATCHWEEK_SETTLEMENT)
@@ -522,6 +552,8 @@ def build():
     upcoming_decisions = load_json(UPCOMING_MATCHWEEK_DECISIONS)
     upcoming_load = load_json(UPCOMING_MATCHWEEK_LOAD)
     upcoming_market = load_json(UPCOMING_MATCHWEEK_MARKET)
+    upcoming_results = load_jsonl(UPCOMING_MATCHWEEK_RESULTS)
+    upcoming_backtest = load_json(UPCOMING_MATCHWEEK_BACKTEST)
     market_focus = load_json(MARKET_FOCUS_CONFIG)
     if market_focus.get("version") != "clubalpha_market_focus_v1":
         raise ValueError("website requires the locked market-focus contract")
@@ -571,6 +603,10 @@ def build():
     matchweek_nine_score = score_matchweek_decisions(
         matchweek_nine_decisions,
         matchweek_nine_results,
+    )
+    upcoming_score = score_matchweek_decisions(
+        upcoming_decisions,
+        upcoming_results,
     )
     if upcoming_decisions["summary"]["capital_deployment_ready"]:
         raise ValueError("website refuses capital-ready matchweek decisions")
@@ -1032,6 +1068,42 @@ def build():
         upcoming_load,
         upcoming_market,
     )
+    upcoming_result_by_id = {
+        int(row["match_id"]): row for row in upcoming_results
+    }
+    upcoming_backtest_by_id = {
+        int(row["match_id"]): row for row in upcoming_backtest["fixtures"]
+    }
+    for row in upcoming_predictions:
+        result = upcoming_result_by_id.get(int(row["match_id"]))
+        row["status"] = "settled" if result else "pending"
+        row["result"] = None
+        if result is None:
+            continue
+        actual_over = (
+            int(result["final_home_goals"])
+            + int(result["final_away_goals"])
+        ) > 2
+        total_hit = None
+        if row["total_call"] != "pass":
+            total_hit = (row["total_call"] == "over_2_5") == actual_over
+        leader_hit = row["side_leader"] == result["outcome"]
+        review = upcoming_backtest_by_id[int(row["match_id"])]
+        row["result"] = {
+            "final_home_goals": int(result["final_home_goals"]),
+            "final_away_goals": int(result["final_away_goals"]),
+            "outcome": result["outcome"],
+            "actual_xg": result["actual_xg"],
+            "leader_hit": leader_hit,
+            "side_hit": (
+                None
+                if row["side_call"] == "pass"
+                else row["side_call"] == result["outcome"]
+            ),
+            "total_hit": total_hit,
+            "review_class": review["review_class"],
+            "xg_process_outcome": review["xg_process_outcome"],
+        }
 
     matchweek_nine_result_by_id = {
         int(row["match_id"]): row for row in matchweek_nine_results
@@ -1118,7 +1190,7 @@ def build():
 
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_18_mw10_provisional",
+            "site_version": "clubalpha_web_v0_19_mw10_live",
             "prediction_version": official_report["report_version"],
             "as_of": official_report["as_of_utc"],
             "generated_at_utc": matchweek_nine_backtest["generated_at_utc"],
@@ -1220,7 +1292,7 @@ def build():
             "midweek_review": pl_midweek_review,
         },
         "provisional_matchweek": {
-            "status": upcoming_decisions["status"],
+            "status": "in_progress_published_provisional_shadow",
             "round": upcoming_decisions["round"],
             "as_of": upcoming_decisions["as_of"],
             "generated_at_utc": upcoming_decisions["generated_at_utc"],
@@ -1231,6 +1303,9 @@ def build():
                 else None
             ),
             "fixtures": len(upcoming_predictions),
+            "settled": upcoming_score["settled"],
+            "pending": upcoming_score["pending"],
+            "score": upcoming_score,
             "predictions": upcoming_predictions,
             "summary": upcoming_decisions["summary"],
             "accuracy_shortlist": upcoming_accuracy_shortlist,
@@ -1425,6 +1500,14 @@ def build():
                 "Lineup evidence coverage",
             ],
             "matchweeks": [
+                {
+                    "matchweek": 10,
+                    "name": "Research Matchweek 10",
+                    "source": "Published provisional calibrated decision slate",
+                    "status": "collecting",
+                    "counts_toward_promotion_gate": False,
+                    **upcoming_score,
+                },
                 {
                     "matchweek": 9,
                     "name": "Research Matchweek 9",
