@@ -1,5 +1,35 @@
 # Next session
 
+## November 9 Matchweek 11 provisional slate
+
+- The refreshed provisional slate covers all ten November 21–23 fixtures with
+  500,000 total simulations and the 90-match adaptive/calibration checkpoint.
+- No 1X2 or O/U 2.5 direction clears every locked decision gate. This is a
+  valid refusal slate: zero calls are promoted and real allocation remains
+  0.00u.
+- The closest aligned side is Arsenal away to Newcastle at 44.9%, just below
+  the 45% boundary. Manchester City (52.8%), Brighton (50.5%) and Tottenham
+  (50.0%) are held back by projected-XI reliability.
+- Liverpool–Manchester United Over 2.5 is the strongest total direction at
+  55.4%, below the locked 58% boundary.
+- The normalized foundation now contains all 100 completed league matches,
+  1,051 Player Alpha grades, 4,830 Club Form/Dynamics team-match rows and the
+  full five-season Historical Fixtures v2 layer.
+- Canonical packet:
+  `artifacts/matchweek_research/2026-11-09-mw11-provisional/README.md`.
+
+### Start next session here
+
+1. After the international window, refresh FotMob, declared minutes, injuries,
+   availability and projected XIs for every Matchweek 11 club.
+2. Rebuild base, contextual, calibration and pre-match-load layers as a new
+   dated final candidate; never overwrite the November 9 packet.
+3. Check whether Arsenal crosses 45%, whether City/Brighton/Tottenham clear the
+   lineup reliability gate, and whether Liverpool–United Over reaches 58%.
+4. Capture executable prices only for football calls that survive the final
+   decision policy. Price may validate a call but cannot promote a pass.
+5. Freeze the final packet before November 21 kickoff and keep capital at zero.
+
 ## November 2 Matchweek 10 provisional slate
 
 - The refreshed provisional slate covers all ten fixtures with 500,000 total
