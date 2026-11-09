@@ -64,6 +64,47 @@ Tottenham and Brighton; whether Arsenal remains above Newcastle after
 international duty; and whether Sunderland's strong Chelsea process survives
 opponent adjustment at Aston Villa. Real allocation remains 0.00u.
 
+## Read-only market price audit
+
+Prices were captured on November 9 at 19:51–19:56 UTC. Polymarket exposed
+1X2 and Over/Under 2.5 books for nine fixtures; Kalshi exposed 1X2 books for
+all ten. Kalshi's Matchweek 11 total-goals markets were not open. Both sources
+were queried through public, no-auth endpoints. No wallet, credentials or
+trading endpoint was used.
+
+The two books agree closely: every shared 1X2 best ask is within one cent.
+This is market consensus, not a one-book pricing error. More importantly, the
+best executable ask for every Clubalpha 1X2 leader is above the model
+probability:
+
+| Fixture | Model leader | Model | Best ask | Raw gap |
+|---|---|---:|---:|---:|
+| Manchester City–Fulham | Manchester City | 52.8% | 68¢ | -15.2pp |
+| AFC Bournemouth–Nottingham Forest | Bournemouth | 44.0% | 49¢ | -5.0pp |
+| Aston Villa–Sunderland | Aston Villa | 44.7% | 56¢ | -11.3pp |
+| Chelsea–Leeds United | Chelsea | 39.8% | 51¢ | -11.2pp |
+| Coventry City–Crystal Palace | Coventry | 39.0% | 40¢ | -1.0pp |
+| Tottenham Hotspur–Ipswich Town | Tottenham | 50.0% | 63¢ | -13.0pp |
+| Newcastle United–Arsenal | Arsenal | 44.9% | 62¢ | -17.1pp |
+| Hull City–Brighton & Hove Albion | Brighton | 50.5% | 64¢ | -13.5pp |
+| Liverpool–Manchester United | Liverpool | 43.7% | 57¢ | -13.3pp |
+| Brentford–Everton | Brentford | 39.4% | 48¢ | -8.6pp |
+
+There are raw model-price disagreements on unfavoured sides, draws and some
+unders. The largest totals watch items are Manchester City–Fulham Under 2.5
+(model 47.0%, ask 38¢), Tottenham–Ipswich Under 2.5 (49.6%, 41¢),
+Newcastle–Arsenal Under 2.5 (53.7%, 46¢) and Liverpool–Manchester United Under
+2.5 (44.6%, 37¢). These are diagnostics, not picks. None passed the locked
+football decision gate, the snapshot is twelve days before kickoff, and the
+raw gaps exclude fees and later slippage. Price may validate a football call;
+it cannot promote a pass.
+
+The market evidence therefore promotes zero paper positions today. The next
+valid comparison is after the international-window lineup and availability
+refresh, followed by a second executable-price capture. Closing prices should
+also be archived so Clubalpha can measure calibration and closing-line value,
+not only hit rate.
+
 ## Canonical evidence
 
 - `decisions.json`: calibrated selective decisions and refusal reasons.
@@ -73,4 +114,8 @@ opponent adjustment at Aston Villa. Real allocation remains 0.00u.
 - `../../style_matchup/2026-11-09/style-matchups.json`: tactical routes.
 - `../../../reports/premier-league-alpha-snapshot-2026-11-09.json`: projected-XI Player Alpha.
 - `../../fixture_calibration/2026-11-08/calibration.json`: 90-match calibration.
+- `../../market_snapshots/2026-11-09-mw11-provisional-polymarket.json`:
+  Polymarket event and order-book snapshot.
+- `../../market_snapshots/2026-11-09-mw11-provisional-kalshi.json`: Kalshi
+  1X2 snapshot and fee metadata.
 
