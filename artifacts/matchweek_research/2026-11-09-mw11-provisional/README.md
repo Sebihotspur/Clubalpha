@@ -129,6 +129,32 @@ currently fail the spread gate. Consequently, zero quotes pass the complete
 price-quality gate, zero paper positions are opened and real allocation stays
 at 0.00u.
 
+## Bounded discretionary overlay
+
+Clubalpha now preserves a separate human-football layer between the systematic
+decision and market execution. The systematic probability and refusal reason
+remain frozen. A timestamped analyst review may add or subtract at most three
+percentage points across player state, tactical intent, situational psychology
+and informed intuition. Evidence already represented in Player Alpha, Club
+Form or archetype context cannot be counted again.
+
+Discretion can review an existing call or a structurally clean near miss. It
+cannot override foundation disagreement, weak lineup evidence, wide spreads,
+shallow depth or final-refresh requirements. Approved adjustments become
+active only after the final refresh, and their performance will remain
+separate from the systematic model for attribution.
+
+The provisional Matchweek 11 review queue contains three near misses:
+
+1. Bournemouth to beat Nottingham Forest at 44.0%.
+2. Arsenal to beat Newcastle at 44.9%.
+3. Liverpool–Manchester United Over 2.5 at 55.4%.
+
+They are unreviewed, carry zero adjustment and cannot open a position. The
+qualitative review should be completed closer to kickoff using only new player
+state, tactical and situational evidence; market price cannot be used as the
+football rationale.
+
 ## Canonical evidence
 
 - `decisions.json`: calibrated selective decisions and refusal reasons.
@@ -147,4 +173,8 @@ at 0.00u.
   capture for price-movement evidence.
 - `../../market_gates/2026-11-10-mw11-provisional/gate.json`: combined
   football, price and execution decision gate.
+- `../../discretionary_reviews/2026-11-10-mw11-provisional/review-queue.json`:
+  editable qualitative review journal.
+- `../../discretionary_reviews/2026-11-10-mw11-provisional/scored.json`:
+  inactive provisional overlay preserving systematic probabilities.
 

@@ -204,38 +204,91 @@ def build_market_gate(
     decisions: dict[str, Any],
     market_snapshots: list[dict[str, Any]],
     config: dict[str, Any],
+    discretionary_overlay: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     validate_config(config)
     snapshots = snapshot_index(market_snapshots)
     stage = str(decisions["refresh_gate"]["stage"])
+    overlays = {}
+    if discretionary_overlay:
+        if discretionary_overlay.get("status") != "discretionary_overlay_scored":
+            raise ValueError("discretionary overlay must be scored before market gating")
+        overlays = {
+            (int(fixture["match_id"]), selection["market"]): selection
+            for fixture in discretionary_overlay["fixtures"]
+            for selection in fixture["selections"]
+        }
     fixtures = []
     for decision in decisions["fixtures"]:
         side = decision["side_decision"]
         total = decision["total_decision"]
+        match_id = int(decision["match_id"])
         over_probability = float(total["over_probability"])
         total_direction = "over_2_5" if over_probability >= 0.5 else "under_2_5"
         total_probability = max(over_probability, 1.0 - over_probability)
+        side_overlay = overlays.get((match_id, "one_x_two"))
+        total_overlay = overlays.get((match_id, "over_under_2_5"))
+        side_call = (
+            str(side_overlay["effective_call"])
+            if side_overlay and side_overlay["overlay_active"]
+            else str(side["call"])
+        )
+        side_probability = (
+            float(side_overlay["effective_probability"])
+            if side_overlay and side_overlay["overlay_active"]
+            else float(side["leader_probability"])
+        )
+        total_call = (
+            str(total_overlay["effective_call"])
+            if total_overlay and total_overlay["overlay_active"]
+            else str(total["call"])
+        )
+        effective_total_probability = (
+            float(total_overlay["effective_probability"])
+            if total_overlay and total_overlay["overlay_active"]
+            else total_probability
+        )
         side_gate = evaluate_selection(
-            match_id=int(decision["match_id"]),
+            match_id=match_id,
             market="one_x_two",
-            football_call=str(side["call"]),
+            football_call=side_call,
             diagnostic_outcome=str(side["leader"]),
-            probability=float(side["leader_probability"]),
+            probability=side_probability,
             stage=stage,
             final_call_eligible=bool(decision["final_call_eligible"]),
             snapshots=snapshots,
             config=config,
         )
         total_gate = evaluate_selection(
-            match_id=int(decision["match_id"]),
+            match_id=match_id,
             market="over_under_2_5",
-            football_call=str(total["call"]),
+            football_call=total_call,
             diagnostic_outcome=total_direction,
-            probability=total_probability,
+            probability=effective_total_probability,
             stage=stage,
             final_call_eligible=bool(decision["final_call_eligible"]),
             snapshots=snapshots,
             config=config,
+        )
+        side_gate["systematic_probability"] = side["leader_probability"]
+        side_gate["systematic_call"] = side["call"]
+        side_gate["call_origin"] = (
+            side_overlay["call_origin"]
+            if side_overlay and side_overlay["overlay_active"]
+            else "systematic"
+        )
+        side_gate["discretionary_overlay_active"] = bool(
+            side_overlay and side_overlay["overlay_active"]
+        )
+        total_gate["systematic_probability"] = round(total_probability, 6)
+        total_gate["systematic_call"] = total["call"]
+        total_gate["call_origin"] = (
+            total_overlay["call_origin"]
+            if total_overlay and total_overlay["overlay_active"]
+            else "systematic"
+        )
+        total_gate["discretionary_overlay_active"] = bool(
+            total_overlay and total_overlay["overlay_active"]
         )
         fixtures.append(
             {
@@ -283,6 +336,11 @@ def build_market_gate(
             "paper_positions": sum(len(row["paper_positions"]) for row in fixtures),
             "raw_edge_diagnostics": sum(
                 row["gates"]["minimum_raw_edge"] for row in selections
+            ),
+            "active_discretionary_overlays": sum(
+                row[kind]["discretionary_overlay_active"]
+                for row in fixtures
+                for kind in ("side", "total")
             ),
             "price_quality_diagnostics": sum(
                 all(row["gates"][gate] for gate in price_quality_gates)

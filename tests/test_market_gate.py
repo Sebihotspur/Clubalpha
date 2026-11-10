@@ -1,6 +1,6 @@
 import unittest
 
-from clubalpha.market_gate import evaluate_selection, snapshot_index
+from clubalpha.market_gate import build_market_gate, evaluate_selection, snapshot_index
 
 
 CONFIG = {
@@ -166,6 +166,85 @@ class MarketGateTests(unittest.TestCase):
             ]
         )
         self.assertEqual(set(result), {"polymarket", "kalshi"})
+
+    def test_active_discretionary_near_miss_can_enter_paper_gate(self):
+        decisions = {
+            "as_of": "2026-11-20",
+            "round": 11,
+            "refresh_gate": {"stage": "final"},
+            "fixtures": [
+                {
+                    "match_id": 1,
+                    "fixture": "Home vs Away",
+                    "kickoff_utc": "2026-11-21T15:00:00Z",
+                    "final_call_eligible": True,
+                    "side_decision": {
+                        "leader": "home_win",
+                        "leader_probability": 0.45,
+                        "call": "pass",
+                    },
+                    "total_decision": {
+                        "over_probability": 0.50,
+                        "call": "pass",
+                    },
+                }
+            ],
+        }
+        market_snapshot = {
+            "version": "clubalpha_polymarket_readonly_v1",
+            "captured_at_utc": "2026-11-20T12:00:00Z",
+            "fixtures": [
+                {
+                    "fixture": {"match_id": 1},
+                    "one_x_two": {
+                        "outcomes": {
+                            "home_win": {
+                                "book": {
+                                    "best_bid": 0.49,
+                                    "best_ask": 0.50,
+                                    "spread": 0.01,
+                                    "top_ask_notional": 100.0,
+                                }
+                            }
+                        }
+                    },
+                    "over_under_2_5": {
+                        "over": {
+                            "book": {
+                                "best_bid": 0.49,
+                                "best_ask": 0.50,
+                                "spread": 0.01,
+                                "top_ask_notional": 100.0,
+                            }
+                        }
+                    },
+                }
+            ],
+        }
+        overlay = {
+            "status": "discretionary_overlay_scored",
+            "fixtures": [
+                {
+                    "match_id": 1,
+                    "selections": [
+                        {
+                            "market": "one_x_two",
+                            "overlay_active": True,
+                            "effective_call": "home_win",
+                            "effective_probability": 0.58,
+                            "call_origin": "discretionary_near_miss",
+                        }
+                    ],
+                }
+            ],
+        }
+        result = build_market_gate(
+            decisions, [market_snapshot], CONFIG, overlay
+        )
+        side = result["fixtures"][0]["side"]
+        self.assertTrue(side["paper_eligible"])
+        self.assertEqual(side["call_origin"], "discretionary_near_miss")
+        self.assertEqual(result["summary"]["active_discretionary_overlays"], 1)
 
 
 if __name__ == "__main__":

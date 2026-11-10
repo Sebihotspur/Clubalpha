@@ -25,6 +25,7 @@ def main() -> None:
     parser.add_argument("--polymarket", type=Path, required=True)
     parser.add_argument("--kalshi", type=Path, required=True)
     parser.add_argument("--config", type=Path, required=True)
+    parser.add_argument("--discretionary", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -32,6 +33,7 @@ def main() -> None:
         load_json(args.decisions),
         [load_json(args.polymarket), load_json(args.kalshi)],
         load_json(args.config),
+        load_json(args.discretionary) if args.discretionary else None,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(

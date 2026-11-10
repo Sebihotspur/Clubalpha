@@ -1,0 +1,47 @@
+{
+  "version": "clubalpha_discretionary_overlay_v1",
+  "status": "shadow_paper_only",
+  "maximum_total_adjustment": 0.03,
+  "categories": {
+    "player_state": {
+      "maximum_adjustment": 0.01,
+      "description": "Current sharpness, confidence, body language and role comfort not already captured by Player Alpha or Club Form."
+    },
+    "tactical_intent": {
+      "maximum_adjustment": 0.01,
+      "description": "Manager intent, role changes and matchup-specific tactical readiness not already captured by the archetype layer."
+    },
+    "situational_psychology": {
+      "maximum_adjustment": 0.005,
+      "description": "Motivation, pressure and squad mood supported by observable prematch evidence."
+    },
+    "informed_intuition": {
+      "maximum_adjustment": 0.005,
+      "description": "The analyst's residual football judgment after explicitly considering the systematic evidence."
+    }
+  },
+  "near_miss": {
+    "side_probability_distance": 0.02,
+    "total_probability_distance": 0.03,
+    "side_probability_minimum": 0.45,
+    "total_probability_minimum": 0.58,
+    "lineup_reliability_minimum": 0.75,
+    "allowed_context_verdicts": [
+      "baseline_reinforced",
+      "baseline_supported"
+    ]
+  },
+  "activation": {
+    "approved_review_required": true,
+    "final_refresh_required": true,
+    "nonzero_signal_requires_note": true,
+    "modeled_evidence_cannot_be_counted_twice": true,
+    "market_price_cannot_be_used_as_football_rationale": true
+  },
+  "locked_boundaries": {
+    "systematic_probability_mutable": false,
+    "systematic_decision_mutable": false,
+    "hard_execution_gates_overridable": false,
+    "automatic_real_capital_authorization": false
+  }
+}
