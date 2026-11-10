@@ -105,6 +105,30 @@ refresh, followed by a second executable-price capture. Closing prices should
 also be archived so Clubalpha can measure calibration and closing-line value,
 not only hit rate.
 
+### November 10 execution-gate refresh
+
+The second capture expanded Polymarket coverage to all ten fixtures and all
+ten Over/Under 2.5 books. Kalshi still exposes all ten 1X2 books but no open
+Matchweek 11 totals. Shared 1X2 asks remain within two cents and overnight
+movement was limited to one-cent changes, so there is no meaningful
+cross-book dislocation.
+
+The paper gate now evaluates the best executable quote only after checking:
+
+- a locked football call exists and the final refresh is complete;
+- raw model edge is at least 5 percentage points;
+- 1.5 points are reserved for execution costs;
+- model uncertainty reserves 2.5 points provisionally or 1.5 points finally;
+- at least 1 point remains after reserves;
+- the spread is no wider than 3 cents and top-ask depth is at least $50; and
+- shared books are no more than 3 cents apart.
+
+Only Newcastle–Arsenal Under 2.5 and Hull–Brighton Under 2.5 retain a positive
+edge after the provisional reserves. Both remain football passes and both
+currently fail the spread gate. Consequently, zero quotes pass the complete
+price-quality gate, zero paper positions are opened and real allocation stays
+at 0.00u.
+
 ## Canonical evidence
 
 - `decisions.json`: calibrated selective decisions and refusal reasons.
@@ -118,4 +142,9 @@ not only hit rate.
   Polymarket event and order-book snapshot.
 - `../../market_snapshots/2026-11-09-mw11-provisional-kalshi.json`: Kalshi
   1X2 snapshot and fee metadata.
+- `../../market_snapshots/2026-11-10-mw11-provisional-polymarket.json` and
+  `../../market_snapshots/2026-11-10-mw11-provisional-kalshi.json`: second
+  capture for price-movement evidence.
+- `../../market_gates/2026-11-10-mw11-provisional/gate.json`: combined
+  football, price and execution decision gate.
 

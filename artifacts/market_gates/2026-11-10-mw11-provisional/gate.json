@@ -1,0 +1,1097 @@
+{
+  "version": "clubalpha_market_gate_v1",
+  "status": "shadow_paper_only",
+  "as_of": "2026-11-09",
+  "round": 11,
+  "stage": "provisional",
+  "source_captures": {
+    "polymarket": "2026-11-10T11:04:30.655292+00:00",
+    "kalshi": "2026-11-10T11:04:33.361103+00:00"
+  },
+  "summary": {
+    "fixtures": 10,
+    "football_side_calls": 0,
+    "football_total_calls": 0,
+    "paper_positions": 0,
+    "raw_edge_diagnostics": 2,
+    "price_quality_diagnostics": 0,
+    "real_positions": 0
+  },
+  "fixtures": [
+    {
+      "match_id": 5795522,
+      "fixture": "Manchester City vs Fulham",
+      "kickoff_utc": "2026-11-21T12:30:00Z",
+      "side": {
+        "market": "one_x_two",
+        "football_call": "pass",
+        "evaluated_outcome": "home_win",
+        "diagnostic_only": true,
+        "model_probability": 0.527988,
+        "books": [
+          {
+            "source": "kalshi",
+            "best_bid": 0.67,
+            "best_ask": 0.68,
+            "spread": 0.010000000000000009,
+            "top_ask_notional": 2692.4804000000004,
+            "raw_edge": -0.152012,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.192012
+          },
+          {
+            "source": "polymarket",
+            "best_bid": 0.67,
+            "best_ask": 0.68,
+            "spread": 0.010000000000000009,
+            "top_ask_notional": 3884.9828,
+            "raw_edge": -0.152012,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.192012
+          }
+        ],
+        "best_execution": {
+          "source": "kalshi",
+          "best_bid": 0.67,
+          "best_ask": 0.68,
+          "spread": 0.010000000000000009,
+          "top_ask_notional": 2692.4804000000004,
+          "raw_edge": -0.152012,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.192012
+        },
+        "cross_book_ask_gap": 0.0,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": true,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "total": {
+        "market": "over_under_2_5",
+        "football_call": "pass",
+        "evaluated_outcome": "over_2_5",
+        "diagnostic_only": true,
+        "model_probability": 0.530491,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.62,
+            "best_ask": 0.65,
+            "spread": 0.030000000000000027,
+            "top_ask_notional": 1032.8500000000001,
+            "raw_edge": -0.119509,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.159509
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.62,
+          "best_ask": 0.65,
+          "spread": 0.030000000000000027,
+          "top_ask_notional": 1032.8500000000001,
+          "raw_edge": -0.119509,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.159509
+        },
+        "cross_book_ask_gap": null,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": false,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "paper_positions": []
+    },
+    {
+      "match_id": 5795515,
+      "fixture": "AFC Bournemouth vs Nottingham Forest",
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "side": {
+        "market": "one_x_two",
+        "football_call": "pass",
+        "evaluated_outcome": "home_win",
+        "diagnostic_only": true,
+        "model_probability": 0.439825,
+        "books": [
+          {
+            "source": "kalshi",
+            "best_bid": 0.48,
+            "best_ask": 0.49,
+            "spread": 0.010000000000000009,
+            "top_ask_notional": 1245.4477,
+            "raw_edge": -0.050175,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.090175
+          },
+          {
+            "source": "polymarket",
+            "best_bid": 0.47,
+            "best_ask": 0.49,
+            "spread": 0.020000000000000018,
+            "top_ask_notional": 1117.1902,
+            "raw_edge": -0.050175,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.090175
+          }
+        ],
+        "best_execution": {
+          "source": "kalshi",
+          "best_bid": 0.48,
+          "best_ask": 0.49,
+          "spread": 0.010000000000000009,
+          "top_ask_notional": 1245.4477,
+          "raw_edge": -0.050175,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.090175
+        },
+        "cross_book_ask_gap": 0.0,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": true,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "total": {
+        "market": "over_under_2_5",
+        "football_call": "pass",
+        "evaluated_outcome": "under_2_5",
+        "diagnostic_only": true,
+        "model_probability": 0.538243,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.47,
+            "best_ask": 0.5,
+            "spread": 0.030000000000000027,
+            "top_ask_notional": 500.0,
+            "raw_edge": 0.038243,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.001757
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.47,
+          "best_ask": 0.5,
+          "spread": 0.030000000000000027,
+          "top_ask_notional": 500.0,
+          "raw_edge": 0.038243,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.001757
+        },
+        "cross_book_ask_gap": null,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": false,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "paper_positions": []
+    },
+    {
+      "match_id": 5795516,
+      "fixture": "Aston Villa vs Sunderland",
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "side": {
+        "market": "one_x_two",
+        "football_call": "pass",
+        "evaluated_outcome": "home_win",
+        "diagnostic_only": true,
+        "model_probability": 0.447472,
+        "books": [
+          {
+            "source": "kalshi",
+            "best_bid": 0.54,
+            "best_ask": 0.55,
+            "spread": 0.010000000000000009,
+            "top_ask_notional": 5.258000000000001,
+            "raw_edge": -0.102528,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.142528
+          },
+          {
+            "source": "polymarket",
+            "best_bid": 0.55,
+            "best_ask": 0.56,
+            "spread": 0.010000000000000009,
+            "top_ask_notional": 1174.3200000000002,
+            "raw_edge": -0.112528,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.152528
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.55,
+          "best_ask": 0.56,
+          "spread": 0.010000000000000009,
+          "top_ask_notional": 1174.3200000000002,
+          "raw_edge": -0.112528,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.152528
+        },
+        "cross_book_ask_gap": 0.01,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": true,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "total": {
+        "market": "over_under_2_5",
+        "football_call": "pass",
+        "evaluated_outcome": "over_2_5",
+        "diagnostic_only": true,
+        "model_probability": 0.546456,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.53,
+            "best_ask": 0.56,
+            "spread": 0.030000000000000027,
+            "top_ask_notional": 882.5600000000001,
+            "raw_edge": -0.013544,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.053544
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.53,
+          "best_ask": 0.56,
+          "spread": 0.030000000000000027,
+          "top_ask_notional": 882.5600000000001,
+          "raw_edge": -0.013544,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.053544
+        },
+        "cross_book_ask_gap": null,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": false,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "paper_positions": []
+    },
+    {
+      "match_id": 5795518,
+      "fixture": "Chelsea vs Leeds United",
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "side": {
+        "market": "one_x_two",
+        "football_call": "pass",
+        "evaluated_outcome": "home_win",
+        "diagnostic_only": true,
+        "model_probability": 0.397904,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.5,
+            "best_ask": 0.51,
+            "spread": 0.010000000000000009,
+            "top_ask_notional": 439.1151,
+            "raw_edge": -0.112096,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.152096
+          },
+          {
+            "source": "kalshi",
+            "best_bid": 0.5,
+            "best_ask": 0.52,
+            "spread": 0.020000000000000018,
+            "top_ask_notional": 1353.5496,
+            "raw_edge": -0.122096,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.162096
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.5,
+          "best_ask": 0.51,
+          "spread": 0.010000000000000009,
+          "top_ask_notional": 439.1151,
+          "raw_edge": -0.112096,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.152096
+        },
+        "cross_book_ask_gap": 0.01,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": true,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "total": {
+        "market": "over_under_2_5",
+        "football_call": "pass",
+        "evaluated_outcome": "over_2_5",
+        "diagnostic_only": true,
+        "model_probability": 0.501101,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.53,
+            "best_ask": 0.56,
+            "spread": 0.030000000000000027,
+            "top_ask_notional": 560.0,
+            "raw_edge": -0.058899,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.098899
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.53,
+          "best_ask": 0.56,
+          "spread": 0.030000000000000027,
+          "top_ask_notional": 560.0,
+          "raw_edge": -0.058899,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.098899
+        },
+        "cross_book_ask_gap": null,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": false,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "paper_positions": []
+    },
+    {
+      "match_id": 5795519,
+      "fixture": "Coventry City vs Crystal Palace",
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "side": {
+        "market": "one_x_two",
+        "football_call": "pass",
+        "evaluated_outcome": "home_win",
+        "diagnostic_only": true,
+        "model_probability": 0.390367,
+        "books": [
+          {
+            "source": "kalshi",
+            "best_bid": 0.38,
+            "best_ask": 0.4,
+            "spread": 0.020000000000000018,
+            "top_ask_notional": 1024.584,
+            "raw_edge": -0.009633,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.049633
+          },
+          {
+            "source": "polymarket",
+            "best_bid": 0.39,
+            "best_ask": 0.4,
+            "spread": 0.010000000000000009,
+            "top_ask_notional": 242.8,
+            "raw_edge": -0.009633,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.049633
+          }
+        ],
+        "best_execution": {
+          "source": "kalshi",
+          "best_bid": 0.38,
+          "best_ask": 0.4,
+          "spread": 0.020000000000000018,
+          "top_ask_notional": 1024.584,
+          "raw_edge": -0.009633,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.049633
+        },
+        "cross_book_ask_gap": 0.0,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": true,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "total": {
+        "market": "over_under_2_5",
+        "football_call": "pass",
+        "evaluated_outcome": "over_2_5",
+        "diagnostic_only": true,
+        "model_probability": 0.547507,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.57,
+            "best_ask": 0.6,
+            "spread": 0.030000000000000027,
+            "top_ask_notional": 936.5999999999999,
+            "raw_edge": -0.052493,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.092493
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.57,
+          "best_ask": 0.6,
+          "spread": 0.030000000000000027,
+          "top_ask_notional": 936.5999999999999,
+          "raw_edge": -0.052493,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.092493
+        },
+        "cross_book_ask_gap": null,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": false,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "paper_positions": []
+    },
+    {
+      "match_id": 5795524,
+      "fixture": "Tottenham Hotspur vs Ipswich Town",
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "side": {
+        "market": "one_x_two",
+        "football_call": "pass",
+        "evaluated_outcome": "home_win",
+        "diagnostic_only": true,
+        "model_probability": 0.499998,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.62,
+            "best_ask": 0.63,
+            "spread": 0.010000000000000009,
+            "top_ask_notional": 366.66,
+            "raw_edge": -0.130002,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.170002
+          },
+          {
+            "source": "kalshi",
+            "best_bid": 0.61,
+            "best_ask": 0.64,
+            "spread": 0.030000000000000027,
+            "top_ask_notional": 2469.1328,
+            "raw_edge": -0.140002,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.180002
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.62,
+          "best_ask": 0.63,
+          "spread": 0.010000000000000009,
+          "top_ask_notional": 366.66,
+          "raw_edge": -0.130002,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.170002
+        },
+        "cross_book_ask_gap": 0.01,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": true,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "total": {
+        "market": "over_under_2_5",
+        "football_call": "pass",
+        "evaluated_outcome": "over_2_5",
+        "diagnostic_only": true,
+        "model_probability": 0.504068,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.59,
+            "best_ask": 0.61,
+            "spread": 0.020000000000000018,
+            "top_ask_notional": 42.6817,
+            "raw_edge": -0.105932,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.145932
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.59,
+          "best_ask": 0.61,
+          "spread": 0.020000000000000018,
+          "top_ask_notional": 42.6817,
+          "raw_edge": -0.105932,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.145932
+        },
+        "cross_book_ask_gap": null,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": true,
+          "top_ask_depth": false,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "paper_positions": []
+    },
+    {
+      "match_id": 5795523,
+      "fixture": "Newcastle United vs Arsenal",
+      "kickoff_utc": "2026-11-21T17:30:00Z",
+      "side": {
+        "market": "one_x_two",
+        "football_call": "pass",
+        "evaluated_outcome": "away_win",
+        "diagnostic_only": true,
+        "model_probability": 0.44897,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.61,
+            "best_ask": 0.62,
+            "spread": 0.010000000000000009,
+            "top_ask_notional": 1242.1576,
+            "raw_edge": -0.17103,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.21103
+          },
+          {
+            "source": "kalshi",
+            "best_bid": 0.62,
+            "best_ask": 0.64,
+            "spread": 0.020000000000000018,
+            "top_ask_notional": 1997.92,
+            "raw_edge": -0.19103,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.23103
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.61,
+          "best_ask": 0.62,
+          "spread": 0.010000000000000009,
+          "top_ask_notional": 1242.1576,
+          "raw_edge": -0.17103,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.21103
+        },
+        "cross_book_ask_gap": 0.02,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": true,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "total": {
+        "market": "over_under_2_5",
+        "football_call": "pass",
+        "evaluated_outcome": "under_2_5",
+        "diagnostic_only": true,
+        "model_probability": 0.536673,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.43,
+            "best_ask": 0.46,
+            "spread": 0.030000000000000027,
+            "top_ask_notional": 460.0,
+            "raw_edge": 0.076673,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": 0.036673
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.43,
+          "best_ask": 0.46,
+          "spread": 0.030000000000000027,
+          "top_ask_notional": 460.0,
+          "raw_edge": 0.076673,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": 0.036673
+        },
+        "cross_book_ask_gap": null,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": true,
+          "minimum_edge_after_reserves": true,
+          "spread": false,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "paper_positions": []
+    },
+    {
+      "match_id": 5795520,
+      "fixture": "Hull City vs Brighton & Hove Albion",
+      "kickoff_utc": "2026-11-22T14:00:00Z",
+      "side": {
+        "market": "one_x_two",
+        "football_call": "pass",
+        "evaluated_outcome": "away_win",
+        "diagnostic_only": true,
+        "model_probability": 0.504697,
+        "books": [
+          {
+            "source": "kalshi",
+            "best_bid": 0.63,
+            "best_ask": 0.65,
+            "spread": 0.020000000000000018,
+            "top_ask_notional": 2406.9500000000003,
+            "raw_edge": -0.145303,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.185303
+          },
+          {
+            "source": "polymarket",
+            "best_bid": 0.63,
+            "best_ask": 0.65,
+            "spread": 0.020000000000000018,
+            "top_ask_notional": 1357.1934999999999,
+            "raw_edge": -0.145303,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.185303
+          }
+        ],
+        "best_execution": {
+          "source": "kalshi",
+          "best_bid": 0.63,
+          "best_ask": 0.65,
+          "spread": 0.020000000000000018,
+          "top_ask_notional": 2406.9500000000003,
+          "raw_edge": -0.145303,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.185303
+        },
+        "cross_book_ask_gap": 0.0,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": true,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "total": {
+        "market": "over_under_2_5",
+        "football_call": "pass",
+        "evaluated_outcome": "under_2_5",
+        "diagnostic_only": true,
+        "model_probability": 0.500419,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.41,
+            "best_ask": 0.44,
+            "spread": 0.030000000000000027,
+            "top_ask_notional": 440.0,
+            "raw_edge": 0.060419,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": 0.020419
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.41,
+          "best_ask": 0.44,
+          "spread": 0.030000000000000027,
+          "top_ask_notional": 440.0,
+          "raw_edge": 0.060419,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": 0.020419
+        },
+        "cross_book_ask_gap": null,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": true,
+          "minimum_edge_after_reserves": true,
+          "spread": false,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "paper_positions": []
+    },
+    {
+      "match_id": 5795521,
+      "fixture": "Liverpool vs Manchester United",
+      "kickoff_utc": "2026-11-22T16:30:00Z",
+      "side": {
+        "market": "one_x_two",
+        "football_call": "pass",
+        "evaluated_outcome": "home_win",
+        "diagnostic_only": true,
+        "model_probability": 0.436853,
+        "books": [
+          {
+            "source": "kalshi",
+            "best_bid": 0.56,
+            "best_ask": 0.57,
+            "spread": 0.009999999999999898,
+            "top_ask_notional": 1501.7903999999999,
+            "raw_edge": -0.133147,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.173147
+          },
+          {
+            "source": "polymarket",
+            "best_bid": 0.56,
+            "best_ask": 0.57,
+            "spread": 0.009999999999999898,
+            "top_ask_notional": 1326.5267999999999,
+            "raw_edge": -0.133147,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.173147
+          }
+        ],
+        "best_execution": {
+          "source": "kalshi",
+          "best_bid": 0.56,
+          "best_ask": 0.57,
+          "spread": 0.009999999999999898,
+          "top_ask_notional": 1501.7903999999999,
+          "raw_edge": -0.133147,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.173147
+        },
+        "cross_book_ask_gap": 0.0,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": true,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "total": {
+        "market": "over_under_2_5",
+        "football_call": "pass",
+        "evaluated_outcome": "over_2_5",
+        "diagnostic_only": true,
+        "model_probability": 0.554374,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.63,
+            "best_ask": 0.65,
+            "spread": 0.020000000000000018,
+            "top_ask_notional": 650.0,
+            "raw_edge": -0.095626,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.135626
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.63,
+          "best_ask": 0.65,
+          "spread": 0.020000000000000018,
+          "top_ask_notional": 650.0,
+          "raw_edge": -0.095626,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.135626
+        },
+        "cross_book_ask_gap": null,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": true,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "paper_positions": []
+    },
+    {
+      "match_id": 5795517,
+      "fixture": "Brentford vs Everton",
+      "kickoff_utc": "2026-11-23T20:00:00Z",
+      "side": {
+        "market": "one_x_two",
+        "football_call": "pass",
+        "evaluated_outcome": "home_win",
+        "diagnostic_only": true,
+        "model_probability": 0.393528,
+        "books": [
+          {
+            "source": "kalshi",
+            "best_bid": 0.46,
+            "best_ask": 0.47,
+            "spread": 0.009999999999999953,
+            "top_ask_notional": 27.259999999999998,
+            "raw_edge": -0.076472,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.116472
+          },
+          {
+            "source": "polymarket",
+            "best_bid": 0.46,
+            "best_ask": 0.47,
+            "spread": 0.009999999999999953,
+            "top_ask_notional": 2.3499999999999996,
+            "raw_edge": -0.076472,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.116472
+          }
+        ],
+        "best_execution": {
+          "source": "kalshi",
+          "best_bid": 0.46,
+          "best_ask": 0.47,
+          "spread": 0.009999999999999953,
+          "top_ask_notional": 27.259999999999998,
+          "raw_edge": -0.076472,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.116472
+        },
+        "cross_book_ask_gap": 0.0,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": true,
+          "top_ask_depth": false,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "total": {
+        "market": "over_under_2_5",
+        "football_call": "pass",
+        "evaluated_outcome": "under_2_5",
+        "diagnostic_only": true,
+        "model_probability": 0.505827,
+        "books": [
+          {
+            "source": "polymarket",
+            "best_bid": 0.43,
+            "best_ask": 0.48,
+            "spread": 0.04999999999999999,
+            "top_ask_notional": 733.4399999999999,
+            "raw_edge": 0.025827,
+            "execution_cost_reserve": 0.015,
+            "uncertainty_reserve": 0.025,
+            "edge_after_reserves": -0.014173
+          }
+        ],
+        "best_execution": {
+          "source": "polymarket",
+          "best_bid": 0.43,
+          "best_ask": 0.48,
+          "spread": 0.04999999999999999,
+          "top_ask_notional": 733.4399999999999,
+          "raw_edge": 0.025827,
+          "execution_cost_reserve": 0.015,
+          "uncertainty_reserve": 0.025,
+          "edge_after_reserves": -0.014173
+        },
+        "cross_book_ask_gap": null,
+        "gates": {
+          "price_available": true,
+          "football_call": false,
+          "final_refresh": false,
+          "minimum_raw_edge": false,
+          "minimum_edge_after_reserves": false,
+          "spread": false,
+          "top_ask_depth": true,
+          "cross_book_consensus": true
+        },
+        "paper_eligible": false,
+        "reason": "football_layer_pass",
+        "real_capital_eligible": false
+      },
+      "paper_positions": []
+    }
+  ],
+  "decision_boundaries": {
+    "price_can_promote_football_pass": false,
+    "automatic_real_capital_authorization": false,
+    "frozen_model_probabilities_changed": false
+  }
+}

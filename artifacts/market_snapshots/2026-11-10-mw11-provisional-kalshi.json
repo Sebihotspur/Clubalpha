@@ -1,0 +1,895 @@
+{
+  "version": "clubalpha_kalshi_readonly_v1",
+  "status": "read_only_market_observation",
+  "captured_at_utc": "2026-11-10T11:04:33.361103+00:00",
+  "sources": {
+    "api": "https://api.elections.kalshi.com/trade-api/v2",
+    "game_series": "KXEPLGAME",
+    "total_series": "KXEPLTOTAL",
+    "authentication": "none",
+    "settlement_sources": [
+      {
+        "name": "ESPN",
+        "url": "https://www.espn.com/"
+      },
+      {
+        "name": "Fox Sports",
+        "url": "https://www.foxsports.com/"
+      }
+    ],
+    "fee_type": "quadratic_with_maker_fees",
+    "fee_multiplier": 1
+  },
+  "totals_status": {
+    "open_markets_found": 0,
+    "message": "Kalshi EPL total-goals markets are not open for this slate yet."
+  },
+  "fixtures": [
+    {
+      "fixture": {
+        "match_id": 5795522,
+        "fixture": "Manchester City vs Fulham",
+        "kickoff_utc": "2026-11-21T12:30:00Z",
+        "home_team": "Manchester City",
+        "away_team": "Fulham"
+      },
+      "model": {
+        "home_win": 0.527988,
+        "draw": 0.2601,
+        "away_win": 0.211912
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_ticker": "KXEPLGAME-26NOV21MCIFUL",
+        "event_volume_contracts": 41945.91,
+        "event_open_interest_contracts": 30271.230000000003,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21MCIFUL-MCI",
+              "best_bid": 0.67,
+              "best_ask": 0.68,
+              "midpoint": 0.675,
+              "spread": 0.010000000000000009,
+              "top_ask_contracts": 3959.53,
+              "top_ask_notional": 2692.4804000000004,
+              "volume_contracts": 34107.46,
+              "open_interest_contracts": 24028.58,
+              "close_time": "2026-11-23T12:30:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.527988,
+            "market_no_vig_probability": 0.6783919597989949,
+            "edge_vs_best_ask_before_fees": -0.15201200000000004
+          },
+          "draw": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21MCIFUL-TIE",
+              "best_bid": 0.17,
+              "best_ask": 0.18,
+              "midpoint": 0.175,
+              "spread": 0.009999999999999981,
+              "top_ask_contracts": 568.16,
+              "top_ask_notional": 102.26879999999998,
+              "volume_contracts": 693.11,
+              "open_interest_contracts": 443.18,
+              "close_time": "2026-11-23T12:30:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.2601,
+            "market_no_vig_probability": 0.17587939698492458,
+            "edge_vs_best_ask_before_fees": 0.0801
+          },
+          "away_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21MCIFUL-FUL",
+              "best_bid": 0.14,
+              "best_ask": 0.15,
+              "midpoint": 0.14500000000000002,
+              "spread": 0.009999999999999981,
+              "top_ask_contracts": 3552.61,
+              "top_ask_notional": 532.8915,
+              "volume_contracts": 7145.34,
+              "open_interest_contracts": 5799.47,
+              "close_time": "2026-11-23T12:30:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.211912,
+            "market_no_vig_probability": 0.1457286432160804,
+            "edge_vs_best_ask_before_fees": 0.061911999999999995
+          }
+        }
+      },
+      "over_under_2_5": null,
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795515,
+        "fixture": "AFC Bournemouth vs Nottingham Forest",
+        "kickoff_utc": "2026-11-21T15:00:00Z",
+        "home_team": "AFC Bournemouth",
+        "away_team": "Nottingham Forest"
+      },
+      "model": {
+        "home_win": 0.439825,
+        "draw": 0.291721,
+        "away_win": 0.268454
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_ticker": "KXEPLGAME-26NOV21BOUNFO",
+        "event_volume_contracts": 12769.58,
+        "event_open_interest_contracts": 11067.62,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21BOUNFO-BOU",
+              "best_bid": 0.48,
+              "best_ask": 0.49,
+              "midpoint": 0.485,
+              "spread": 0.010000000000000009,
+              "top_ask_contracts": 2541.73,
+              "top_ask_notional": 1245.4477,
+              "volume_contracts": 10742.83,
+              "open_interest_contracts": 9671.9,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.439825,
+            "market_no_vig_probability": 0.4898989898989899,
+            "edge_vs_best_ask_before_fees": -0.05017499999999997
+          },
+          "draw": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21BOUNFO-TIE",
+              "best_bid": 0.25,
+              "best_ask": 0.27,
+              "midpoint": 0.26,
+              "spread": 0.020000000000000018,
+              "top_ask_contracts": 3157.48,
+              "top_ask_notional": 852.5196000000001,
+              "volume_contracts": 4.52,
+              "open_interest_contracts": 4.52,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.291721,
+            "market_no_vig_probability": 0.26262626262626265,
+            "edge_vs_best_ask_before_fees": 0.02172099999999999
+          },
+          "away_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21BOUNFO-NFO",
+              "best_bid": 0.24,
+              "best_ask": 0.25,
+              "midpoint": 0.245,
+              "spread": 0.010000000000000009,
+              "top_ask_contracts": 73.0,
+              "top_ask_notional": 18.25,
+              "volume_contracts": 2022.23,
+              "open_interest_contracts": 1391.2,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.268454,
+            "market_no_vig_probability": 0.2474747474747475,
+            "edge_vs_best_ask_before_fees": 0.018454000000000026
+          }
+        }
+      },
+      "over_under_2_5": null,
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795516,
+        "fixture": "Aston Villa vs Sunderland",
+        "kickoff_utc": "2026-11-21T15:00:00Z",
+        "home_team": "Aston Villa",
+        "away_team": "Sunderland"
+      },
+      "model": {
+        "home_win": 0.447472,
+        "draw": 0.271664,
+        "away_win": 0.280864
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_ticker": "KXEPLGAME-26NOV21AVLSUN",
+        "event_volume_contracts": 4575.97,
+        "event_open_interest_contracts": 3923.76,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21AVLSUN-AVL",
+              "best_bid": 0.54,
+              "best_ask": 0.55,
+              "midpoint": 0.545,
+              "spread": 0.010000000000000009,
+              "top_ask_contracts": 9.56,
+              "top_ask_notional": 5.258000000000001,
+              "volume_contracts": 2522.09,
+              "open_interest_contracts": 2124.57,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.447472,
+            "market_no_vig_probability": 0.5505050505050505,
+            "edge_vs_best_ask_before_fees": -0.10252800000000006
+          },
+          "draw": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21AVLSUN-TIE",
+              "best_bid": 0.23,
+              "best_ask": 0.25,
+              "midpoint": 0.24,
+              "spread": 0.01999999999999999,
+              "top_ask_contracts": 359.6,
+              "top_ask_notional": 89.9,
+              "volume_contracts": 388.4,
+              "open_interest_contracts": 228.4,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.271664,
+            "market_no_vig_probability": 0.24242424242424243,
+            "edge_vs_best_ask_before_fees": 0.021664000000000017
+          },
+          "away_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21AVLSUN-SUN",
+              "best_bid": 0.19,
+              "best_ask": 0.22,
+              "midpoint": 0.20500000000000002,
+              "spread": 0.03,
+              "top_ask_contracts": 2639.87,
+              "top_ask_notional": 580.7714,
+              "volume_contracts": 1665.48,
+              "open_interest_contracts": 1570.79,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.280864,
+            "market_no_vig_probability": 0.2070707070707071,
+            "edge_vs_best_ask_before_fees": 0.060864
+          }
+        }
+      },
+      "over_under_2_5": null,
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795518,
+        "fixture": "Chelsea vs Leeds United",
+        "kickoff_utc": "2026-11-21T15:00:00Z",
+        "home_team": "Chelsea",
+        "away_team": "Leeds United"
+      },
+      "model": {
+        "home_win": 0.397904,
+        "draw": 0.286214,
+        "away_win": 0.315882
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_ticker": "KXEPLGAME-26NOV21CFCLEE",
+        "event_volume_contracts": 6655.359999999999,
+        "event_open_interest_contracts": 6095.889999999999,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21CFCLEE-CFC",
+              "best_bid": 0.5,
+              "best_ask": 0.52,
+              "midpoint": 0.51,
+              "spread": 0.020000000000000018,
+              "top_ask_contracts": 2602.98,
+              "top_ask_notional": 1353.5496,
+              "volume_contracts": 5296.94,
+              "open_interest_contracts": 4737.47,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.397904,
+            "market_no_vig_probability": 0.5125628140703518,
+            "edge_vs_best_ask_before_fees": -0.12209600000000004
+          },
+          "draw": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21CFCLEE-TIE",
+              "best_bid": 0.24,
+              "best_ask": 0.26,
+              "midpoint": 0.25,
+              "spread": 0.020000000000000018,
+              "top_ask_contracts": 2497.81,
+              "top_ask_notional": 649.4306,
+              "volume_contracts": 165.19,
+              "open_interest_contracts": 165.19,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.286214,
+            "market_no_vig_probability": 0.25125628140703515,
+            "edge_vs_best_ask_before_fees": 0.026214000000000015
+          },
+          "away_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21CFCLEE-LEE",
+              "best_bid": 0.23,
+              "best_ask": 0.24,
+              "midpoint": 0.235,
+              "spread": 0.009999999999999981,
+              "top_ask_contracts": 2553.69,
+              "top_ask_notional": 612.8856,
+              "volume_contracts": 1193.23,
+              "open_interest_contracts": 1193.23,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.315882,
+            "market_no_vig_probability": 0.23618090452261306,
+            "edge_vs_best_ask_before_fees": 0.075882
+          }
+        }
+      },
+      "over_under_2_5": null,
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795519,
+        "fixture": "Coventry City vs Crystal Palace",
+        "kickoff_utc": "2026-11-21T15:00:00Z",
+        "home_team": "Coventry City",
+        "away_team": "Crystal Palace"
+      },
+      "model": {
+        "home_win": 0.390367,
+        "draw": 0.278098,
+        "away_win": 0.331535
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_ticker": "KXEPLGAME-26NOV21COVCRY",
+        "event_volume_contracts": 2601.92,
+        "event_open_interest_contracts": 2601.92,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21COVCRY-COV",
+              "best_bid": 0.38,
+              "best_ask": 0.4,
+              "midpoint": 0.39,
+              "spread": 0.020000000000000018,
+              "top_ask_contracts": 2561.46,
+              "top_ask_notional": 1024.584,
+              "volume_contracts": 2261.69,
+              "open_interest_contracts": 2261.69,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.390367,
+            "market_no_vig_probability": 0.3919597989949749,
+            "edge_vs_best_ask_before_fees": -0.009633000000000003
+          },
+          "draw": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21COVCRY-TIE",
+              "best_bid": 0.26,
+              "best_ask": 0.27,
+              "midpoint": 0.265,
+              "spread": 0.010000000000000009,
+              "top_ask_contracts": 119.26,
+              "top_ask_notional": 32.2002,
+              "volume_contracts": 59.55,
+              "open_interest_contracts": 59.55,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.278098,
+            "market_no_vig_probability": 0.2663316582914573,
+            "edge_vs_best_ask_before_fees": 0.008097999999999994
+          },
+          "away_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21COVCRY-CRY",
+              "best_bid": 0.33,
+              "best_ask": 0.35,
+              "midpoint": 0.33999999999999997,
+              "spread": 0.019999999999999962,
+              "top_ask_contracts": 2562.85,
+              "top_ask_notional": 896.9975,
+              "volume_contracts": 280.68,
+              "open_interest_contracts": 280.68,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.331535,
+            "market_no_vig_probability": 0.3417085427135678,
+            "edge_vs_best_ask_before_fees": -0.018464999999999954
+          }
+        }
+      },
+      "over_under_2_5": null,
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795524,
+        "fixture": "Tottenham Hotspur vs Ipswich Town",
+        "kickoff_utc": "2026-11-21T15:00:00Z",
+        "home_team": "Tottenham Hotspur",
+        "away_team": "Ipswich Town"
+      },
+      "model": {
+        "home_win": 0.499998,
+        "draw": 0.268734,
+        "away_win": 0.231268
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_ticker": "KXEPLGAME-26NOV21TOTIPS",
+        "event_volume_contracts": 1692.7200000000003,
+        "event_open_interest_contracts": 1692.7200000000003,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21TOTIPS-TOT",
+              "best_bid": 0.61,
+              "best_ask": 0.64,
+              "midpoint": 0.625,
+              "spread": 0.030000000000000027,
+              "top_ask_contracts": 3858.02,
+              "top_ask_notional": 2469.1328,
+              "volume_contracts": 1325.88,
+              "open_interest_contracts": 1325.88,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.499998,
+            "market_no_vig_probability": 0.6313131313131313,
+            "edge_vs_best_ask_before_fees": -0.14000200000000002
+          },
+          "draw": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21TOTIPS-TIE",
+              "best_bid": 0.2,
+              "best_ask": 0.22,
+              "midpoint": 0.21000000000000002,
+              "spread": 0.01999999999999999,
+              "top_ask_contracts": 3360.52,
+              "top_ask_notional": 739.3144,
+              "volume_contracts": 76.48,
+              "open_interest_contracts": 76.48,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.268734,
+            "market_no_vig_probability": 0.21212121212121215,
+            "edge_vs_best_ask_before_fees": 0.04873399999999997
+          },
+          "away_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21TOTIPS-IPS",
+              "best_bid": 0.15,
+              "best_ask": 0.16,
+              "midpoint": 0.155,
+              "spread": 0.010000000000000009,
+              "top_ask_contracts": 113.0,
+              "top_ask_notional": 18.080000000000002,
+              "volume_contracts": 290.36,
+              "open_interest_contracts": 290.36,
+              "close_time": "2026-11-23T15:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.231268,
+            "market_no_vig_probability": 0.15656565656565657,
+            "edge_vs_best_ask_before_fees": 0.071268
+          }
+        }
+      },
+      "over_under_2_5": null,
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795523,
+        "fixture": "Newcastle United vs Arsenal",
+        "kickoff_utc": "2026-11-21T17:30:00Z",
+        "home_team": "Newcastle United",
+        "away_team": "Arsenal"
+      },
+      "model": {
+        "home_win": 0.265095,
+        "draw": 0.285935,
+        "away_win": 0.44897
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_ticker": "KXEPLGAME-26NOV21NEWARS",
+        "event_volume_contracts": 30205.359999999997,
+        "event_open_interest_contracts": 28252.62,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21NEWARS-NEW",
+              "best_bid": 0.15,
+              "best_ask": 0.17,
+              "midpoint": 0.16,
+              "spread": 0.020000000000000018,
+              "top_ask_contracts": 2557.82,
+              "top_ask_notional": 434.8294000000001,
+              "volume_contracts": 1584.02,
+              "open_interest_contracts": 1449.56,
+              "close_time": "2026-11-23T17:30:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.265095,
+            "market_no_vig_probability": 0.15841584158415842,
+            "edge_vs_best_ask_before_fees": 0.09509500000000001
+          },
+          "draw": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21NEWARS-TIE",
+              "best_bid": 0.21,
+              "best_ask": 0.23,
+              "midpoint": 0.22,
+              "spread": 0.020000000000000018,
+              "top_ask_contracts": 4054.16,
+              "top_ask_notional": 932.4568,
+              "volume_contracts": 144.33,
+              "open_interest_contracts": 115.46,
+              "close_time": "2026-11-23T17:30:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.285935,
+            "market_no_vig_probability": 0.21782178217821782,
+            "edge_vs_best_ask_before_fees": 0.055934999999999985
+          },
+          "away_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV21NEWARS-ARS",
+              "best_bid": 0.62,
+              "best_ask": 0.64,
+              "midpoint": 0.63,
+              "spread": 0.020000000000000018,
+              "top_ask_contracts": 3121.75,
+              "top_ask_notional": 1997.92,
+              "volume_contracts": 28477.01,
+              "open_interest_contracts": 26687.6,
+              "close_time": "2026-11-23T17:30:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.44897,
+            "market_no_vig_probability": 0.6237623762376238,
+            "edge_vs_best_ask_before_fees": -0.19103000000000003
+          }
+        }
+      },
+      "over_under_2_5": null,
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795520,
+        "fixture": "Hull City vs Brighton & Hove Albion",
+        "kickoff_utc": "2026-11-22T14:00:00Z",
+        "home_team": "Hull City",
+        "away_team": "Brighton & Hove Albion"
+      },
+      "model": {
+        "home_win": 0.221443,
+        "draw": 0.27386,
+        "away_win": 0.504697
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_ticker": "KXEPLGAME-26NOV22HULBRI",
+        "event_volume_contracts": 4691.3,
+        "event_open_interest_contracts": 4691.3,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV22HULBRI-HUL",
+              "best_bid": 0.14,
+              "best_ask": 0.15,
+              "midpoint": 0.14500000000000002,
+              "spread": 0.009999999999999981,
+              "top_ask_contracts": 242.59,
+              "top_ask_notional": 36.3885,
+              "volume_contracts": 232.78,
+              "open_interest_contracts": 232.78,
+              "close_time": "2026-11-24T14:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.221443,
+            "market_no_vig_probability": 0.1457286432160804,
+            "edge_vs_best_ask_before_fees": 0.071443
+          },
+          "draw": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV22HULBRI-TIE",
+              "best_bid": 0.2,
+              "best_ask": 0.22,
+              "midpoint": 0.21000000000000002,
+              "spread": 0.01999999999999999,
+              "top_ask_contracts": 3138.22,
+              "top_ask_notional": 690.4083999999999,
+              "volume_contracts": 81.78,
+              "open_interest_contracts": 81.78,
+              "close_time": "2026-11-24T14:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.27386,
+            "market_no_vig_probability": 0.21105527638190955,
+            "edge_vs_best_ask_before_fees": 0.05385999999999999
+          },
+          "away_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV22HULBRI-BRI",
+              "best_bid": 0.63,
+              "best_ask": 0.65,
+              "midpoint": 0.64,
+              "spread": 0.020000000000000018,
+              "top_ask_contracts": 3703.0,
+              "top_ask_notional": 2406.9500000000003,
+              "volume_contracts": 4376.74,
+              "open_interest_contracts": 4376.74,
+              "close_time": "2026-11-24T14:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.504697,
+            "market_no_vig_probability": 0.64321608040201,
+            "edge_vs_best_ask_before_fees": -0.14530300000000007
+          }
+        }
+      },
+      "over_under_2_5": null,
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795521,
+        "fixture": "Liverpool vs Manchester United",
+        "kickoff_utc": "2026-11-22T16:30:00Z",
+        "home_team": "Liverpool",
+        "away_team": "Manchester United"
+      },
+      "model": {
+        "home_win": 0.436853,
+        "draw": 0.273193,
+        "away_win": 0.289954
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_ticker": "KXEPLGAME-26NOV22LFCMUN",
+        "event_volume_contracts": 11160.669999999998,
+        "event_open_interest_contracts": 11000.48,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV22LFCMUN-LFC",
+              "best_bid": 0.56,
+              "best_ask": 0.57,
+              "midpoint": 0.565,
+              "spread": 0.009999999999999898,
+              "top_ask_contracts": 2634.72,
+              "top_ask_notional": 1501.7903999999999,
+              "volume_contracts": 8025.25,
+              "open_interest_contracts": 7884.03,
+              "close_time": "2026-11-24T16:30:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.436853,
+            "market_no_vig_probability": 0.565,
+            "edge_vs_best_ask_before_fees": -0.13314699999999996
+          },
+          "draw": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV22LFCMUN-TIE",
+              "best_bid": 0.21,
+              "best_ask": 0.24,
+              "midpoint": 0.22499999999999998,
+              "spread": 0.03,
+              "top_ask_contracts": 5726.78,
+              "top_ask_notional": 1374.4271999999999,
+              "volume_contracts": 569.05,
+              "open_interest_contracts": 569.05,
+              "close_time": "2026-11-24T16:30:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.273193,
+            "market_no_vig_probability": 0.22499999999999998,
+            "edge_vs_best_ask_before_fees": 0.03319300000000003
+          },
+          "away_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV22LFCMUN-MUN",
+              "best_bid": 0.2,
+              "best_ask": 0.22,
+              "midpoint": 0.21000000000000002,
+              "spread": 0.01999999999999999,
+              "top_ask_contracts": 2589.87,
+              "top_ask_notional": 569.7714,
+              "volume_contracts": 2566.37,
+              "open_interest_contracts": 2547.4,
+              "close_time": "2026-11-24T16:30:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.289954,
+            "market_no_vig_probability": 0.21000000000000002,
+            "edge_vs_best_ask_before_fees": 0.06995399999999999
+          }
+        }
+      },
+      "over_under_2_5": null,
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    },
+    {
+      "fixture": {
+        "match_id": 5795517,
+        "fixture": "Brentford vs Everton",
+        "kickoff_utc": "2026-11-23T20:00:00Z",
+        "home_team": "Brentford",
+        "away_team": "Everton"
+      },
+      "model": {
+        "home_win": 0.393528,
+        "draw": 0.283253,
+        "away_win": 0.323219
+      },
+      "market_available": true,
+      "one_x_two": {
+        "event_ticker": "KXEPLGAME-26NOV23BREEVE",
+        "event_volume_contracts": 688.01,
+        "event_open_interest_contracts": 643.16,
+        "outcomes": {
+          "home_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV23BREEVE-BRE",
+              "best_bid": 0.46,
+              "best_ask": 0.47,
+              "midpoint": 0.46499999999999997,
+              "spread": 0.009999999999999953,
+              "top_ask_contracts": 58.0,
+              "top_ask_notional": 27.259999999999998,
+              "volume_contracts": 314.55,
+              "open_interest_contracts": 269.7,
+              "close_time": "2026-11-25T20:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.393528,
+            "market_no_vig_probability": 0.47208121827411165,
+            "edge_vs_best_ask_before_fees": -0.07647199999999998
+          },
+          "draw": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV23BREEVE-TIE",
+              "best_bid": 0.25,
+              "best_ask": 0.26,
+              "midpoint": 0.255,
+              "spread": 0.010000000000000009,
+              "top_ask_contracts": 2000.0,
+              "top_ask_notional": 520.0,
+              "volume_contracts": 31.26,
+              "open_interest_contracts": 31.26,
+              "close_time": "2026-11-25T20:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.283253,
+            "market_no_vig_probability": 0.25888324873096447,
+            "edge_vs_best_ask_before_fees": 0.023252999999999968
+          },
+          "away_win": {
+            "book": {
+              "ticker": "KXEPLGAME-26NOV23BREEVE-EVE",
+              "best_bid": 0.25,
+              "best_ask": 0.28,
+              "midpoint": 0.265,
+              "spread": 0.030000000000000027,
+              "top_ask_contracts": 2554.04,
+              "top_ask_notional": 715.1312,
+              "volume_contracts": 342.2,
+              "open_interest_contracts": 342.2,
+              "close_time": "2026-11-25T20:00:00Z",
+              "status": "active"
+            },
+            "model_probability": 0.323219,
+            "market_no_vig_probability": 0.2690355329949239,
+            "edge_vs_best_ask_before_fees": 0.04321899999999995
+          }
+        }
+      },
+      "over_under_2_5": null,
+      "decision_boundaries": {
+        "read_only": true,
+        "wallet_used": false,
+        "credentials_used": false,
+        "trading_endpoint_present": false,
+        "probability_validated": false,
+        "market_ready": false,
+        "capital_deployment_ready": false
+      }
+    }
+  ],
+  "decision_boundaries": {
+    "writes_external_state": false,
+    "can_place_orders": false,
+    "fees_included_in_edge": false,
+    "capital_deployment_ready": false
+  }
+}

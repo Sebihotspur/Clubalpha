@@ -1,0 +1,28 @@
+{
+  "version": "clubalpha_market_gate_v1",
+  "status": "shadow_paper_only",
+  "edge": {
+    "minimum_raw_edge": 0.05,
+    "execution_cost_reserve": 0.015,
+    "uncertainty_reserve": {
+      "provisional": 0.025,
+      "final": 0.015
+    },
+    "minimum_edge_after_reserves": 0.01
+  },
+  "execution": {
+    "maximum_spread": 0.03,
+    "minimum_top_ask_notional": 50.0,
+    "maximum_cross_book_ask_gap": 0.03
+  },
+  "requirements": {
+    "football_call_required": true,
+    "final_refresh_required": true,
+    "executable_best_ask_required": true
+  },
+  "locked_boundaries": {
+    "price_can_promote_football_pass": false,
+    "automatic_real_capital_authorization": false,
+    "frozen_model_probabilities_mutable": false
+  }
+}
