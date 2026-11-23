@@ -36,6 +36,7 @@ def snapshots(ask=0.50, spread=0.02, depth=100.0):
                 "one_x_two": {
                     "outcomes": {
                         "home_win": {
+                            "market_no_vig_probability": 0.48,
                             "book": {
                                 "best_bid": ask - spread,
                                 "best_ask": ask,
@@ -105,6 +106,9 @@ class MarketGateTests(unittest.TestCase):
         self.assertAlmostEqual(
             result["best_execution"]["edge_after_reserves"], 0.05
         )
+        self.assertAlmostEqual(result["market_no_vig_probability"], 0.48)
+        self.assertAlmostEqual(result["model_vs_market_no_vig"], 0.12)
+        self.assertAlmostEqual(result["model_vs_executable_ask"], 0.08)
 
     def test_provisional_refresh_blocks_otherwise_valid_price(self):
         result = evaluate_selection(

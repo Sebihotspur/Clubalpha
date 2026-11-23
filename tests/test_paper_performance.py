@@ -22,7 +22,11 @@ class PaperPerformanceTests(unittest.TestCase):
             market="one_x_two",
             outcome="home_win",
             probability=0.60,
-            best_execution={"source": "polymarket", "best_ask": 0.50},
+            best_execution={
+                "source": "polymarket",
+                "best_ask": 0.50,
+                "market_no_vig_probability": 0.48,
+            },
             result={
                 "outcome": "home_win",
                 "final_home_goals": 2,
@@ -34,6 +38,9 @@ class PaperPerformanceTests(unittest.TestCase):
         )
         self.assertEqual(row["official_gross_pnl_units"], 1.0)
         self.assertEqual(row["official_stake_units"], 1.0)
+        self.assertEqual(row["market_no_vig_probability"], 0.48)
+        self.assertAlmostEqual(row["model_vs_market_no_vig"], 0.12)
+        self.assertAlmostEqual(row["model_vs_executable_ask"], 0.10)
 
     def test_shadow_candidate_never_becomes_official_stake(self):
         row = _selection(

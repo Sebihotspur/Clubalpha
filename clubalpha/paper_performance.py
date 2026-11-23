@@ -54,6 +54,11 @@ def _selection(
         if counterfactual_pnl is not None and official_position
         else None if official_position and not settled else 0.0
     )
+    no_vig = (
+        best_execution.get("market_no_vig_probability")
+        if best_execution
+        else None
+    )
     return {
         "selection_id": f"{fixture['match_id']}:{market}:{outcome}:{book}",
         "match_id": fixture["match_id"],
@@ -62,8 +67,17 @@ def _selection(
         "market": market,
         "outcome": outcome,
         "model_probability": round(float(probability), 6),
+        "market_no_vig_probability": no_vig,
+        "model_vs_market_no_vig": (
+            round(float(probability) - float(no_vig), 6)
+            if no_vig is not None
+            else None
+        ),
         "captured_source": best_execution.get("source") if best_execution else None,
         "captured_best_ask": ask,
+        "model_vs_executable_ask": (
+            round(float(probability) - ask, 6) if ask is not None else None
+        ),
         "book": book,
         "official_position": official_position,
         "official_stake_units": official_stake,

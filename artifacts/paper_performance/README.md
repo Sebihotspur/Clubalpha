@@ -19,6 +19,15 @@ Fees and subsequent slippage are excluded and remain explicit in every ledger.
 Predictions are never backfilled after kickoff, shadow candidates never become
 official retroactively, and this record never authorizes real capital.
 
+## Market-consensus diagnostic
+
+Each priced selection reports the model probability, market no-vig
+probability, executable ask, model-minus-no-vig difference and
+model-minus-ask difference. No-vig removes the market's embedded margin so the
+model can be compared with consensus without confusing bookmaker vig for
+football edge. It is a reporting benchmark only: it adds no model weight and
+does not change selection, sizing or promotion gates.
+
 The current partial Matchweek 11 ledger is stored at
 `2026-11-23-mw11-partial/ledger.json`. It will remain immutable after the final
 fixture; the settled record will be written to a new dated directory.

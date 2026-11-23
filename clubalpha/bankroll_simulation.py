@@ -41,16 +41,35 @@ def _round(snapshot: dict[str, Any]) -> int:
     return rounds.pop()
 
 
-def _book(
+def _market_entry(
     row: dict[str, Any], market: str, outcome: str
 ) -> dict[str, Any] | None:
     if market == "one_x_two":
-        return (
-            (((row.get("one_x_two") or {}).get("outcomes") or {}).get(outcome) or {})
-            .get("book")
-        )
+        return ((row.get("one_x_two") or {}).get("outcomes") or {}).get(outcome)
     key = "over" if outcome == "over_2_5" else "under"
-    return (((row.get("over_under_2_5") or {}).get(key) or {}).get("book"))
+    return (row.get("over_under_2_5") or {}).get(key)
+
+
+def _no_vig_probability(
+    row: dict[str, Any], market: str, outcome: str
+) -> float | None:
+    entry = _market_entry(row, market, outcome)
+    if not entry:
+        return None
+    if entry.get("market_no_vig_probability") is not None:
+        return float(entry["market_no_vig_probability"])
+    if market != "over_under_2_5":
+        return None
+    bundle = row.get("over_under_2_5") or {}
+    over_midpoint = ((bundle.get("over") or {}).get("book") or {}).get("midpoint")
+    under_midpoint = ((bundle.get("under") or {}).get("book") or {}).get("midpoint")
+    if over_midpoint is None or under_midpoint is None:
+        return None
+    denominator = float(over_midpoint) + float(under_midpoint)
+    if denominator <= 0:
+        return None
+    value = float(over_midpoint) if outcome == "over_2_5" else float(under_midpoint)
+    return value / denominator
 
 
 def _selections(model: dict[str, Any]) -> list[tuple[str, str, float]]:
@@ -116,7 +135,8 @@ def build_candidates(
                 books = []
                 for source, rows in indexed.items():
                     row = rows.get(match_id)
-                    book = _book(row, market, outcome) if row else None
+                    entry = _market_entry(row, market, outcome) if row else None
+                    book = (entry or {}).get("book")
                     if not book or book.get("best_ask") is None:
                         continue
                     spread = book.get("spread")
@@ -135,6 +155,9 @@ def build_candidates(
                             "best_ask": float(book["best_ask"]),
                             "spread": float(spread),
                             "top_ask_notional": depth,
+                            "market_no_vig_probability": _no_vig_probability(
+                                row, market, outcome
+                            ),
                         }
                     )
                 if not books:
@@ -172,6 +195,20 @@ def build_candidates(
                         "best_ask": best["best_ask"],
                         "spread": best["spread"],
                         "top_ask_notional": best["top_ask_notional"],
+                        "market_no_vig_probability": (
+                            round(best["market_no_vig_probability"], 6)
+                            if best["market_no_vig_probability"] is not None
+                            else None
+                        ),
+                        "model_vs_market_no_vig": (
+                            round(
+                                probability - best["market_no_vig_probability"],
+                                6,
+                            )
+                            if best["market_no_vig_probability"] is not None
+                            else None
+                        ),
+                        "model_vs_executable_ask": round(edge, 6),
                         "raw_model_edge": round(edge, 6),
                         "settled": result is not None,
                         "won": _won(outcome, result) if result else None,
@@ -281,6 +318,11 @@ def build_bankroll_artifact(
 ) -> dict[str, Any]:
     candidates, coverage = build_candidates(snapshots, results, config)
     simulation = simulate_bankroll(candidates, config)
+    disagreements = [
+        row["model_vs_market_no_vig"]
+        for row in [*simulation["positions"], *simulation["pending"]]
+        if row["model_vs_market_no_vig"] is not None
+    ]
     return {
         "version": VERSION,
         "status": "historical_reconstruction_then_forward_locked",
@@ -299,6 +341,20 @@ def build_bankroll_artifact(
             "price_rule": "lowest executable ask among timestamped books",
         },
         "simulation": simulation,
+        "market_consensus_diagnostic": {
+            "positions_with_no_vig": len(disagreements),
+            "mean_signed_model_minus_no_vig": (
+                round(sum(disagreements) / len(disagreements), 6)
+                if disagreements
+                else None
+            ),
+            "mean_absolute_model_minus_no_vig": (
+                round(sum(abs(value) for value in disagreements) / len(disagreements), 6)
+                if disagreements
+                else None
+            ),
+            "changes_selection_or_sizing": False,
+        },
         "decision_boundaries": {
             "historical_strategy_defined_after_early_results": True,
             "missing_prices_backfilled": False,

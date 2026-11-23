@@ -48,17 +48,39 @@ def snapshot_index(
     return output
 
 
-def _book_for(
+def _market_entry(
     row: dict[str, Any], market: str, outcome: str
 ) -> dict[str, Any] | None:
     if market == "one_x_two":
         bundle = row.get("one_x_two")
-        return ((bundle or {}).get("outcomes") or {}).get(outcome, {}).get("book")
+        return ((bundle or {}).get("outcomes") or {}).get(outcome)
     if market == "over_under_2_5":
         bundle = row.get("over_under_2_5")
         key = "over" if outcome == "over_2_5" else "under"
-        return ((bundle or {}).get(key) or {}).get("book")
+        return (bundle or {}).get(key)
     raise ValueError(f"unsupported market: {market}")
+
+
+def _no_vig_probability(
+    row: dict[str, Any], market: str, outcome: str
+) -> float | None:
+    entry = _market_entry(row, market, outcome)
+    if not entry:
+        return None
+    if entry.get("market_no_vig_probability") is not None:
+        return float(entry["market_no_vig_probability"])
+    if market != "over_under_2_5":
+        return None
+    bundle = row.get("over_under_2_5") or {}
+    over_midpoint = ((bundle.get("over") or {}).get("book") or {}).get("midpoint")
+    under_midpoint = ((bundle.get("under") or {}).get("book") or {}).get("midpoint")
+    if over_midpoint is None or under_midpoint is None:
+        return None
+    denominator = float(over_midpoint) + float(under_midpoint)
+    if denominator <= 0:
+        return None
+    value = float(over_midpoint) if outcome == "over_2_5" else float(under_midpoint)
+    return value / denominator
 
 
 def _candidates(
@@ -76,11 +98,13 @@ def _candidates(
     output = []
     for source, rows in snapshots.items():
         row = rows.get(match_id)
-        book = _book_for(row, market, outcome) if row else None
+        entry = _market_entry(row, market, outcome) if row else None
+        book = (entry or {}).get("book")
         if not book or book.get("best_ask") is None:
             continue
         ask = float(book["best_ask"])
         raw_edge = probability - ask
+        no_vig = _no_vig_probability(row, market, outcome)
         output.append(
             {
                 "source": source,
@@ -88,6 +112,14 @@ def _candidates(
                 "best_ask": ask,
                 "spread": book.get("spread"),
                 "top_ask_notional": book.get("top_ask_notional"),
+                "market_no_vig_probability": (
+                    round(no_vig, 6) if no_vig is not None else None
+                ),
+                "model_vs_market_no_vig": (
+                    round(probability - no_vig, 6)
+                    if no_vig is not None
+                    else None
+                ),
                 "raw_edge": round(raw_edge, 6),
                 "execution_cost_reserve": execution,
                 "uncertainty_reserve": uncertainty,
@@ -190,6 +222,13 @@ def evaluate_selection(
         "model_probability": round(float(probability), 6),
         "books": candidates,
         "best_execution": best,
+        "market_no_vig_probability": (
+            best["market_no_vig_probability"] if best else None
+        ),
+        "model_vs_market_no_vig": (
+            best["model_vs_market_no_vig"] if best else None
+        ),
+        "model_vs_executable_ask": best["raw_edge"] if best else None,
         "cross_book_ask_gap": (
             round(cross_book_gap, 6) if cross_book_gap is not None else None
         ),
