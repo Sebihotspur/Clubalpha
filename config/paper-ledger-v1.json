@@ -1,0 +1,18 @@
+{
+  "version": "clubalpha_paper_ledger_v1",
+  "status": "paper_only",
+  "allocation": {
+    "default_position_stake_units": 1.0,
+    "shadow_candidate_official_stake_units": 0.0
+  },
+  "reporting": {
+    "pnl_basis": "equal_capital_staked_at_captured_best_ask",
+    "fees_and_slippage_in_realized_pnl": false,
+    "separate_official_and_counterfactual_books": true
+  },
+  "locked_boundaries": {
+    "backfilled_predictions_allowed": false,
+    "shadow_candidates_count_as_official_positions": false,
+    "real_capital_authorized": false
+  }
+}
