@@ -1,0 +1,35 @@
+{
+  "version": "clubalpha_bankroll_simulation_v1",
+  "status": "historical_reconstruction_then_forward_locked",
+  "starting_bankroll": 100000.0,
+  "markets": [
+    "one_x_two",
+    "over_under_2_5"
+  ],
+  "selection": {
+    "one_x_two": "highest_model_probability",
+    "over_under_2_5": "higher_of_over_or_under",
+    "minimum_model_edge": 0.05
+  },
+  "execution": {
+    "maximum_spread": 0.03,
+    "minimum_top_ask_notional": 100.0,
+    "choose_lowest_executable_ask": true,
+    "stake_capped_by_top_ask_notional": true
+  },
+  "risk": {
+    "maximum_fraction_of_current_bankroll_per_position": 0.01,
+    "same_kickoff_positions_use_same_pre_kickoff_bankroll": true
+  },
+  "reporting": {
+    "pnl_is_gross_before_fees": true,
+    "missing_historical_prices_are_never_backfilled": true,
+    "historical_rule_was_defined_after_early_results": true
+  },
+  "locked_boundaries": {
+    "real_capital_authorized": false,
+    "missing_prices_may_be_imputed": false,
+    "post_kickoff_prices_allowed": false,
+    "settled_results_may_change_selection": false
+  }
+}

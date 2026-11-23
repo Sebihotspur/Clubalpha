@@ -1,0 +1,28 @@
+{
+  "version": "clubalpha_paper_bankroll_history_v1",
+  "competition": "Premier League",
+  "season": "2026/2027",
+  "market_snapshots": [
+    "artifacts/market_snapshots/2026-09-17-mw5-polymarket.json",
+    "artifacts/market_snapshots/2026-10-06-mw6-polymarket.json",
+    "artifacts/market_snapshots/2026-10-15-mw7-polymarket.json",
+    "artifacts/market_snapshots/2026-10-21-mw8-polymarket.json",
+    "artifacts/market_snapshots/2026-11-02-mw10-provisional-polymarket.json",
+    "artifacts/market_snapshots/2026-11-10-mw11-provisional-polymarket.json",
+    "artifacts/market_snapshots/2026-11-10-mw11-provisional-kalshi.json"
+  ],
+  "result_streams": [
+    "artifacts/contextual_interaction/2026-09-17-mw5/results.jsonl",
+    "artifacts/contextual_interaction/2026-10-06-mw6/results.jsonl",
+    "artifacts/contextual_interaction/2026-10-15-mw7/results.jsonl",
+    "artifacts/contextual_interaction/2026-10-21-mw8/results.jsonl",
+    "artifacts/contextual_interaction/2026-11-02-mw10-provisional/results.jsonl",
+    "artifacts/current_matchweek/2026-11-09-mw11-provisional/results.jsonl"
+  ],
+  "covered_rounds": [5, 6, 7, 8, 10, 11],
+  "excluded_prediction_rounds": {
+    "2-4": "No timestamped pre-match exchange snapshot was saved.",
+    "9": "Predictions and results exist, but no timestamped pre-match exchange snapshot was saved."
+  },
+  "ucl_status": "Excluded until a timestamped pre-match UCL price archive exists."
+}
