@@ -91,7 +91,7 @@ def main() -> None:
             "tag_id": 306,
             "active": "true",
             "closed": "false",
-            "limit": 100,
+            "limit": 50,
             "end_date_min": start,
             "end_date_max": end,
         }

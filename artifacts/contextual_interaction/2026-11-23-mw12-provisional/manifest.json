@@ -1,0 +1,31 @@
+{
+  "version": "clubalpha_contextual_published_provisional_manifest_v1",
+  "status": "published_provisional_shadow",
+  "as_of": "2026-11-23",
+  "round": 12,
+  "frozen_at_utc": "2026-11-24T02:16:22Z",
+  "inputs": {
+    "baseline_predictions": {
+      "path": "artifacts/current_matchweek/2026-11-23-mw12-provisional/predictions.jsonl",
+      "sha256": "6fd571578436af1495d241785f7014d5127307ac0b1ff2397a15819692c1b118"
+    },
+    "player_alpha": {
+      "path": "reports/premier-league-alpha-snapshot-2026-11-23.json",
+      "sha256": "9d3231a2859e555e793550ca3c7378386b9b73e67ceda0b2f99eedbd5151639b"
+    },
+    "style_matchup": {
+      "path": "artifacts/style_matchup/2026-11-23/style-matchups.json",
+      "sha256": "80c549415b565b748c7b89530eff86b59b56a165790df2d3aad56a37fad1055f"
+    }
+  },
+  "outputs": {
+    "predictions": "c245576758211fbb91558ddd928b9c36a3236f26c576de7096457bd15ed4a9ab",
+    "report": "52639ce962d9e10bd1db1e2cf0239e5142354aeb3865dcb795e0841bec1c7867"
+  },
+  "decision_boundaries": {
+    "final_refresh_completed": false,
+    "counts_toward_official_promotion_gate": false,
+    "capital_deployment_ready": false
+  },
+  "audit_note": "Frozen before kickoff as a provisional shadow. Nine teams still had a pending preleague fixture, so a separately dated final refresh remains mandatory."
+}

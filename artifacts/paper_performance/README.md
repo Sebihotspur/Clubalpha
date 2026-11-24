@@ -28,9 +28,12 @@ model can be compared with consensus without confusing bookmaker vig for
 football edge. It is a reporting benchmark only: it adds no model weight and
 does not change selection, sizing or promotion gates.
 
-The current partial Matchweek 11 ledger is stored at
-`2026-11-23-mw11-partial/ledger.json`. It will remain immutable after the final
-fixture; the settled record will be written to a new dated directory.
+The settled Matchweek 11 ledger is stored at
+`2026-11-23-mw11-partial/ledger.json`; the directory name is retained for
+automation compatibility. The round opened no official paper positions. Its
+two raw-price diagnostics finished 1–1 for +0.2727 equal-stake units, while
+three unapproved discretionary candidates finished 2–1 for +0.5793
+counterfactual units. Neither shadow book is official P&L.
 
 ## $100,000 reconstructed bankroll
 
@@ -45,7 +48,7 @@ to every Premier League round with a timestamped pre-match price snapshot:
 - risk at most 1% of the current bankroll per position; and
 - reduce the stake when the top ask cannot fill the full 1% allocation.
 
-Coverage currently spans Matchweeks 5, 6, 7, 8, 10 and 11: 60 fixtures, 59
+Coverage currently spans Matchweeks 5, 6, 7, 8, 10 and 11: 60 fixtures, 60
 completed results and 120 forecast directions. Matchweeks 2–4 and 9 are
 excluded because no timestamped pre-match exchange price was saved. Missing
 prices are never reconstructed from closing or post-match markets.

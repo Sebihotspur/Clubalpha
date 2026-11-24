@@ -1,12 +1,12 @@
 {
   "version": "clubalpha_paper_ledger_v1",
-  "status": "partial",
-  "generated_at_utc": "2026-11-23T20:12:37.402793+00:00",
+  "status": "settled",
+  "generated_at_utc": "2026-11-24T02:10:05.195244+00:00",
   "round": 11,
   "coverage": {
     "fixtures": 10,
-    "completed": 9,
-    "pending": 1
+    "completed": 10,
+    "pending": 0
   },
   "summary": {
     "official_paper": {
@@ -41,9 +41,9 @@
     },
     "model_side_accuracy": {
       "selections": 10,
-      "settled": 9,
-      "pending": 1,
-      "wins": 4,
+      "settled": 10,
+      "pending": 0,
+      "wins": 5,
       "losses": 5,
       "stake_units": 0.0,
       "gross_pnl_units": 0.0,
@@ -51,10 +51,10 @@
     },
     "model_total_accuracy": {
       "selections": 10,
-      "settled": 9,
-      "pending": 1,
+      "settled": 10,
+      "pending": 0,
       "wins": 5,
-      "losses": 4,
+      "losses": 5,
       "stake_units": 0.0,
       "gross_pnl_units": 0.0,
       "gross_roi": null
@@ -589,11 +589,11 @@
         "book": "model_accuracy_diagnostic",
         "official_position": false,
         "official_stake_units": 0.0,
-        "settled": false,
-        "won": null,
-        "score": null,
+        "settled": true,
+        "won": true,
+        "score": "4-0",
         "official_gross_pnl_units": 0.0,
-        "counterfactual_equal_stake_gross_pnl_units": null
+        "counterfactual_equal_stake_gross_pnl_units": 1.12766
       },
       {
         "selection_id": "5795517:over_under_2_5:under_2_5:model_accuracy_diagnostic",
@@ -611,11 +611,11 @@
         "book": "model_accuracy_diagnostic",
         "official_position": false,
         "official_stake_units": 0.0,
-        "settled": false,
-        "won": null,
-        "score": null,
+        "settled": true,
+        "won": false,
+        "score": "4-0",
         "official_gross_pnl_units": 0.0,
-        "counterfactual_equal_stake_gross_pnl_units": null
+        "counterfactual_equal_stake_gross_pnl_units": -1.0
       }
     ]
   },

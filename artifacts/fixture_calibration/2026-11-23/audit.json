@@ -1,0 +1,78 @@
+{
+  "version": "clubalpha_fixture_calibration_audit_v1",
+  "generated_at_utc": "2026-11-23T00:00:00+00:00",
+  "as_of": "2026-11-23",
+  "cycle_ids": [
+    "2026-08-26-matchweek-2",
+    "2026-08-31-matchweek-3-official",
+    "2026-09-08-matchweek-4-official",
+    "2026-09-17-matchweek-5-contextual",
+    "2026-10-06-matchweek-6-contextual",
+    "2026-10-15-matchweek-7-contextual",
+    "2026-10-21-matchweek-8-published-provisional",
+    "2026-10-26-matchweek-9-published-provisional",
+    "2026-11-02-matchweek-10-published-provisional",
+    "2026-11-09-matchweek-11-published-provisional"
+  ],
+  "training_matches": 100,
+  "same_sample_sensitivity": {
+    "interpretation": "same-sample sensitivity only; not validation",
+    "baseline": {
+      "matches": 100,
+      "one_x_two_brier": 0.624239,
+      "one_x_two_log_loss": 1.037684,
+      "top_pick_accuracy": 0.45,
+      "home_probability_leader_rate": 0.73,
+      "mean_draw_probability": 0.251157,
+      "total_xg_mae": 0.887074,
+      "over_2_5_brier": 0.255796
+    },
+    "calibrated": {
+      "matches": 100,
+      "one_x_two_brier": 0.623306,
+      "one_x_two_log_loss": 1.035441,
+      "top_pick_accuracy": 0.49,
+      "home_probability_leader_rate": 0.7,
+      "mean_draw_probability": 0.275148,
+      "total_xg_mae": 0.883876,
+      "over_2_5_brier": 0.250809
+    },
+    "draw_zone": {
+      "flagged": 0,
+      "actual_draws_flagged": 0,
+      "rows": []
+    }
+  },
+  "chronological_audit": {
+    "interpretation": "cycle-forward; each calibration uses only earlier cycles",
+    "evaluated_cycles": 9,
+    "baseline": {
+      "matches": 90,
+      "one_x_two_brier": 0.622159,
+      "one_x_two_log_loss": 1.034348,
+      "top_pick_accuracy": 0.455556,
+      "home_probability_leader_rate": 0.733333,
+      "mean_draw_probability": 0.252696,
+      "total_xg_mae": 0.858015,
+      "over_2_5_brier": 0.256139
+    },
+    "calibrated": {
+      "matches": 90,
+      "one_x_two_brier": 0.632823,
+      "one_x_two_log_loss": 1.047653,
+      "top_pick_accuracy": 0.477778,
+      "home_probability_leader_rate": 0.622222,
+      "mean_draw_probability": 0.303187,
+      "total_xg_mae": 0.86303,
+      "over_2_5_brier": 0.250371
+    }
+  },
+  "decision_boundaries": {
+    "same_sample_metrics_are_validation": false,
+    "core_architecture_changed": false,
+    "player_alpha_changed": false,
+    "base_weights_changed": false,
+    "market_ready": false,
+    "capital_deployment_ready": false
+  }
+}
