@@ -66,6 +66,31 @@ class PaperPerformanceTests(unittest.TestCase):
         self.assertEqual(row["official_gross_pnl_units"], 0.0)
         self.assertEqual(row["counterfactual_equal_stake_gross_pnl_units"], 1.5)
 
+    def test_scaled_paper_position_uses_reduced_official_stake(self):
+        row = _selection(
+            fixture={
+                "match_id": 2,
+                "fixture": "Palace vs Hull",
+                "kickoff_utc": "2026-11-29T14:05:00Z",
+            },
+            market="over_under_2_5",
+            outcome="over_2_5",
+            probability=0.587437,
+            best_execution={
+                "source": "polymarket",
+                "best_ask": 0.56,
+                "market_no_vig_probability": 0.55,
+            },
+            result=None,
+            book="official_paper",
+            official_position=True,
+            position_size_multiplier=0.24874,
+            paper_tier="scaled_provisional",
+            config=CONFIG,
+        )
+        self.assertEqual(row["official_stake_units"], 0.24874)
+        self.assertEqual(row["paper_tier"], "scaled_provisional")
+
     def test_counterfactual_summary_separates_pending(self):
         rows = [
             {

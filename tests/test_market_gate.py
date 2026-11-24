@@ -16,6 +16,24 @@ CONFIG = {
         "minimum_top_ask_notional": 50.0,
         "maximum_cross_book_ask_gap": 0.03,
     },
+    "scaled_paper": {
+        "enabled": True,
+        "minimum_raw_edge": 0.02,
+        "full_size_edge_net_of_execution": 0.05,
+        "maximum_bankroll_fraction": 0.01,
+        "stage_size_cap": {"provisional": 0.25, "final": 1.0},
+        "approved_provisional_entries": [
+            {
+                "match_id": 1,
+                "market": "one_x_two",
+                "outcome": "home_win",
+                "source": "polymarket",
+                "best_ask": 0.56,
+                "captured_at_utc": "2026-11-20T12:00:00Z",
+                "recorded_at_utc": "2026-11-20T13:00:00Z",
+            },
+        ],
+    },
     "requirements": {
         "football_call_required": True,
         "final_refresh_required": True,
@@ -124,6 +142,58 @@ class MarketGateTests(unittest.TestCase):
         )
         self.assertFalse(result["paper_eligible"])
         self.assertEqual(result["reason"], "final_refresh_incomplete")
+
+    def evaluate_approved_quote(self, **overrides):
+        selection = dict(
+            match_id=1,
+            market="one_x_two",
+            football_call="home_win",
+            diagnostic_outcome="home_win",
+            probability=0.587437,
+            stage="provisional",
+            final_call_eligible=False,
+            snapshots=snapshots(ask=0.56, spread=0.02, depth=1000.0),
+            config=CONFIG,
+            decision_frozen_at_utc="2026-11-20T10:00:00Z",
+            kickoff_utc="2026-11-21T12:00:00Z",
+            source_captures={"polymarket": "2026-11-20T12:00:00Z"},
+        )
+        return evaluate_selection(**{**selection, **overrides})
+
+    def test_small_positive_edge_is_expressed_through_scaled_sizing(self):
+        result = self.evaluate_approved_quote()
+        self.assertTrue(result["paper_eligible"])
+        self.assertFalse(result["standard_paper_eligible"])
+        self.assertTrue(result["scaled_paper_eligible"])
+        self.assertEqual(result["paper_tier"], "scaled_provisional")
+        self.assertAlmostEqual(result["position_size_multiplier"], 0.24874)
+        self.assertAlmostEqual(result["paper_bankroll_fraction"], 0.0024874)
+        self.assertEqual(
+            result["paper_entry_recorded_at_utc"], "2026-11-20T13:00:00Z"
+        )
+
+    def test_provisional_approval_only_applies_to_the_saved_prematch_quote(self):
+        for overrides in (
+            {"kickoff_utc": "2026-11-20T12:30:00Z"},
+            {"source_captures": {"polymarket": "2026-11-21T13:00:00Z"}},
+            {"snapshots": snapshots(ask=0.55, depth=1000.0)},
+            {"snapshots": snapshots(ask=0.56, depth=25.0)},
+            {"football_call": "pass"},
+            {"decision_frozen_at_utc": None},
+        ):
+            with self.subTest(overrides=overrides):
+                result = self.evaluate_approved_quote(**overrides)
+                self.assertFalse(result["paper_eligible"])
+                self.assertEqual(result["position_size_multiplier"], 0.0)
+
+    def test_final_scaled_still_requires_fixture_refresh(self):
+        blocked = self.evaluate_approved_quote(stage="final")
+        scaled = self.evaluate_approved_quote(
+            stage="final", final_call_eligible=True
+        )
+        self.assertFalse(blocked["paper_eligible"])
+        self.assertTrue(scaled["paper_eligible"])
+        self.assertEqual(scaled["paper_tier"], "scaled_final")
 
     def test_shallow_book_blocks_paper_gate(self):
         result = evaluate_selection(

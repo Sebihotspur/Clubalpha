@@ -43,9 +43,12 @@ required; no capital authorization
 Crystal Palace–Hull Over 2.5 is the only systematic football direction above
 the locked total threshold, at 58.7%. The current best executable ask is 56¢
 and market no-vig consensus is 55.0%, leaving only +2.7 percentage points
-against execution and +3.7 points against consensus. It therefore fails the
-five-point price gate and remains provisional even before the required final
-availability refresh.
+against execution and +3.7 points against consensus. It enters the paper
+ledger at 0.24874 of a full unit: the small edge is expressed through sizing
+instead of being treated like a full-strength position. The approval applies
+only to this fixture and captured quote; it does not open the provisional gate
+for other calls. It does not debit the standardized bankroll simulation and
+authorizes no real capital.
 
 No 1X2 selection is promoted. The model refuses seemingly attractive prices
 where the football layers do not agree: Forest, Fulham Under and Sunderland
@@ -68,15 +71,15 @@ evidence, foundation disagreement, price quality or the final-refresh gate.
 
 - Kalshi currently exposes all ten 1X2 events and open totals inventory.
 - Polymarket exposes nine of ten match events and nine O/U 2.5 markets.
-- The complete market gate contains zero paper positions and zero real
-  positions.
+- The complete market gate contains one reduced-size paper position and zero
+  real positions.
 - Nine teams have a pending preleague fixture: Bournemouth, Arsenal, Aston
   Villa, Brighton, Crystal Palace, Liverpool, Manchester City, Manchester
   United and Sunderland.
 
 After the European slate, refresh lineups, availability, minutes and prices;
-then rebuild a separately dated final candidate. These probabilities must
-never be overwritten.
+then rebuild a separately dated final candidate. The captured 56¢ paper entry
+and these probabilities must never be overwritten.
 
 ## Canonical evidence
 

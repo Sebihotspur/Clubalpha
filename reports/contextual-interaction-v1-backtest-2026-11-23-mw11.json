@@ -1,0 +1,1900 @@
+{
+  "backtest_version": "clubalpha_contextual_interaction_v1_backtest",
+  "generated_at_utc": "2026-11-24T02:37:36.558433+00:00",
+  "prediction_freeze_date": "2026-11-21",
+  "status": "partial_shadow_backtest",
+  "sources": {
+    "predictions": "artifacts/contextual_interaction/2026-11-09-mw11-provisional/predictions.jsonl",
+    "results": "artifacts/contextual_interaction/2026-11-09-mw11-provisional/results.jsonl",
+    "lineup_snapshot": "reports/premier-league-alpha-snapshot-2026-11-09.json",
+    "base_predictions": "artifacts/current_matchweek/2026-11-09-mw11-provisional/predictions.jsonl",
+    "goal_model_artifact": "artifacts/prediction_lab/2026-08-24/goal-model.json",
+    "observed_match_data": "FotMob final scores, expected goals, team stats, and declared lineups",
+    "score_crosscheck": [
+      "https://www.fotmob.com/matches/-/-#5795515",
+      "https://www.fotmob.com/matches/-/-#5795516",
+      "https://www.fotmob.com/matches/-/-#5795517",
+      "https://www.fotmob.com/matches/-/-#5795518",
+      "https://www.fotmob.com/matches/-/-#5795519",
+      "https://www.fotmob.com/matches/-/-#5795520",
+      "https://www.fotmob.com/matches/-/-#5795521",
+      "https://www.fotmob.com/matches/-/-#5795522",
+      "https://www.fotmob.com/matches/-/-#5795523",
+      "https://www.fotmob.com/matches/-/-#5795524"
+    ]
+  },
+  "interpretation_rules": {
+    "outcomes_and_xg_are_scored_separately": true,
+    "xg_process_draw_gap": 0.25,
+    "positive_improvement_means_holy_grail_beat_base": true,
+    "multiclass_brier_range": [
+      0.0,
+      2.0
+    ],
+    "lower_is_better_except_accuracy": true
+  },
+  "validation": {
+    "frozen_fixtures": 10,
+    "completed_results": 10,
+    "pending_results": 0,
+    "unique_match_ids": 10,
+    "complete": true
+  },
+  "sample": {
+    "matches": 10,
+    "team_attack_directions": 20,
+    "xg_process_draw_threshold": 0.25,
+    "sufficient_to_recalibrate": false
+  },
+  "metrics": {
+    "baseline": {
+      "xg_side_mae": 0.819405,
+      "xg_side_rmse": 0.992497,
+      "xg_total_mae": 0.983993,
+      "goal_side_mae": 1.168739,
+      "one_x_two_brier": 0.641358,
+      "one_x_two_log_loss": 1.061962,
+      "one_x_two_top_pick_accuracy": 0.5,
+      "over_2_5_brier": 0.252422,
+      "over_2_5_log_loss": 0.697985,
+      "btts_brier": 0.27034,
+      "btts_log_loss": 0.734276
+    },
+    "contextual": {
+      "xg_side_mae": 0.815644,
+      "xg_side_rmse": 0.9863,
+      "xg_total_mae": 0.984575,
+      "goal_side_mae": 1.163265,
+      "one_x_two_brier": 0.642864,
+      "one_x_two_log_loss": 1.063247,
+      "one_x_two_top_pick_accuracy": 0.5,
+      "over_2_5_brier": 0.252065,
+      "over_2_5_log_loss": 0.697258,
+      "btts_brier": 0.269268,
+      "btts_log_loss": 0.732132
+    },
+    "holy_grail_improvement_positive_is_better": {
+      "xg_side_mae": 0.003761,
+      "xg_side_rmse": 0.006197,
+      "xg_total_mae": -0.000582,
+      "goal_side_mae": 0.005474,
+      "one_x_two_brier": -0.001506,
+      "one_x_two_log_loss": -0.001285,
+      "over_2_5_brier": 0.000357,
+      "over_2_5_log_loss": 0.000727,
+      "btts_brier": 0.001072,
+      "btts_log_loss": 0.002144,
+      "one_x_two_top_pick_accuracy": 0.0
+    }
+  },
+  "diagnostics": {
+    "outcome_hits": 5,
+    "process_supported_outcome_variance": 3,
+    "structural_misses": 2,
+    "context_improved_actual_outcome_probability": 5,
+    "context_improved_side_xg_mae": 5,
+    "goal_environment_dispersion": {
+      "observed_xg_total": {
+        "minimum": 1.28,
+        "maximum": 5.0,
+        "mean": 3.435,
+        "population_sd": 1.035512
+      },
+      "baseline_predicted_xg_total": {
+        "minimum": 2.633384,
+        "maximum": 3.053028,
+        "mean": 2.881809,
+        "population_sd": 0.141395
+      },
+      "contextual_predicted_xg_total": {
+        "minimum": 2.657915,
+        "maximum": 3.082958,
+        "mean": 2.88077,
+        "population_sd": 0.142395
+      }
+    },
+    "context_adjustment_scale": {
+      "mean_absolute_side_xg_shift": 0.018014,
+      "maximum_absolute_side_xg_shift": 0.050347
+    },
+    "preferred_route_coverage": {
+      "observed": [
+        "box_pressure",
+        "high_press",
+        "set_pieces"
+      ],
+      "missing": [
+        "direct_transition",
+        "wide_delivery"
+      ],
+      "covered_routes": 3,
+      "known_routes": 5
+    },
+    "route_diagnostics": [
+      {
+        "preferred_route": "box_pressure",
+        "attack_directions": 11,
+        "movement_alignment_rate": 0.727273,
+        "mean_xg_mae_improvement": 0.008552
+      },
+      {
+        "preferred_route": "high_press",
+        "attack_directions": 1,
+        "movement_alignment_rate": 1.0,
+        "mean_xg_mae_improvement": 0.011838
+      },
+      {
+        "preferred_route": "set_pieces",
+        "attack_directions": 8,
+        "movement_alignment_rate": 0.625,
+        "mean_xg_mae_improvement": -0.003836
+      }
+    ]
+  },
+  "lineup_projection": {
+    "snapshot_version": "clubalpha_premier_league_projected_xi_alpha_2026_11_09_fixture_bound",
+    "team_lineups": 20,
+    "mean_xi_hits_of_11": 8.75,
+    "xi_hit_rate": 0.795455,
+    "formation_accuracy": 0.75,
+    "rows": [
+      {
+        "match_id": 5795522,
+        "team_id": 8456,
+        "team": "Manchester City",
+        "projected_starters": 11,
+        "xi_hits": 8,
+        "xi_hit_rate": 0.727273,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          1070712,
+          1104053,
+          1137705
+        ],
+        "unprojected_starter_ids": [
+          815006,
+          1300526,
+          1561552
+        ],
+        "missed_projected_players": [
+          "Jo\u0161ko Gvardiol",
+          "Rayan Cherki",
+          "Enzo Fern\u00e1ndez"
+        ],
+        "unprojected_starters": [
+          "Phil Foden",
+          "Nico O'Reilly",
+          "Ayyoub Bouaddi"
+        ]
+      },
+      {
+        "match_id": 5795522,
+        "team_id": 9879,
+        "team": "Fulham",
+        "projected_starters": 11,
+        "xi_hits": 8,
+        "xi_hit_rate": 0.727273,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-3-3",
+        "formation_correct": false,
+        "missed_projected_player_ids": [
+          465750,
+          662428,
+          1413847
+        ],
+        "unprojected_starter_ids": [
+          469804,
+          773991,
+          1128945
+        ],
+        "missed_projected_players": [
+          "Timothy Castagne",
+          "Antonee Robinson",
+          "Gonzalo Garc\u00eda"
+        ],
+        "unprojected_starters": [
+          "Kenny Tete",
+          "Ryan Sessegnon",
+          "Rodrigo Muniz"
+        ]
+      },
+      {
+        "match_id": 5795515,
+        "team_id": 8678,
+        "team": "AFC Bournemouth",
+        "projected_starters": 11,
+        "xi_hits": 11,
+        "xi_hit_rate": 1.0,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [],
+        "unprojected_starter_ids": [],
+        "missed_projected_players": [],
+        "unprojected_starters": []
+      },
+      {
+        "match_id": 5795515,
+        "team_id": 10203,
+        "team": "Nottingham Forest",
+        "projected_starters": 11,
+        "xi_hits": 10,
+        "xi_hit_rate": 0.909091,
+        "projected_formation": "3-4-2-1",
+        "actual_formation": "3-4-2-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          620027
+        ],
+        "unprojected_starter_ids": [
+          1022649
+        ],
+        "missed_projected_players": [
+          "Xaver Schlager"
+        ],
+        "unprojected_starters": [
+          "Dan Ndoye"
+        ]
+      },
+      {
+        "match_id": 5795516,
+        "team_id": 10252,
+        "team": "Aston Villa",
+        "projected_starters": 11,
+        "xi_hits": 9,
+        "xi_hit_rate": 0.818182,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          258269,
+          356406
+        ],
+        "unprojected_starter_ids": [
+          610184,
+          760320
+        ],
+        "missed_projected_players": [
+          "Victor Nilsson Lindel\u00f6f",
+          "John McGinn"
+        ],
+        "unprojected_starters": [
+          "Emiliano Buend\u00eda",
+          "Aaron Wan-Bissaka"
+        ]
+      },
+      {
+        "match_id": 5795516,
+        "team_id": 8472,
+        "team": "Sunderland",
+        "projected_starters": 11,
+        "xi_hits": 9,
+        "xi_hit_rate": 0.818182,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          207236,
+          940446
+        ],
+        "unprojected_starter_ids": [
+          887703,
+          1811265
+        ],
+        "missed_projected_players": [
+          "Granit Xhaka",
+          "Brian Brobbey"
+        ],
+        "unprojected_starters": [
+          "Wilson Isidor",
+          "Jules Ahoka"
+        ]
+      },
+      {
+        "match_id": 5795518,
+        "team_id": 8455,
+        "team": "Chelsea",
+        "projected_starters": 11,
+        "xi_hits": 7,
+        "xi_hit_rate": 0.636364,
+        "projected_formation": "4-3-2-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": false,
+        "missed_projected_player_ids": [
+          156008,
+          843040,
+          1319972,
+          1473806
+        ],
+        "unprojected_starter_ids": [
+          268375,
+          1183148,
+          1400216,
+          1580774
+        ],
+        "missed_projected_players": [
+          "Jordan Henderson",
+          "Pedro Neto",
+          "Mike Penders",
+          "Marco Palestra"
+        ],
+        "unprojected_starters": [
+          "Emiliano Mart\u00ednez",
+          "Emanuel Emegha",
+          "Josh Acheampong",
+          "Est\u00eav\u00e3o"
+        ]
+      },
+      {
+        "match_id": 5795518,
+        "team_id": 8463,
+        "team": "Leeds United",
+        "projected_starters": 11,
+        "xi_hits": 10,
+        "xi_hit_rate": 0.909091,
+        "projected_formation": "3-4-2-1",
+        "actual_formation": "3-4-2-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          861197
+        ],
+        "unprojected_starter_ids": [
+          915797
+        ],
+        "missed_projected_players": [
+          "Lukas Nmecha"
+        ],
+        "unprojected_starters": [
+          "Noah Okafor"
+        ]
+      },
+      {
+        "match_id": 5795519,
+        "team_id": 8669,
+        "team": "Coventry City",
+        "projected_starters": 11,
+        "xi_hits": 9,
+        "xi_hit_rate": 0.818182,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          759814,
+          1615927
+        ],
+        "unprojected_starter_ids": [
+          478357,
+          1161885
+        ],
+        "missed_projected_players": [
+          "Jay Dasilva",
+          "Caleb Yirenkyi"
+        ],
+        "unprojected_starters": [
+          "Matt Grimes",
+          "Bobby Thomas"
+        ]
+      },
+      {
+        "match_id": 5795519,
+        "team_id": 9826,
+        "team": "Crystal Palace",
+        "projected_starters": 11,
+        "xi_hits": 9,
+        "xi_hit_rate": 0.818182,
+        "projected_formation": "3-4-2-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": false,
+        "missed_projected_player_ids": [
+          466672,
+          952095
+        ],
+        "unprojected_starter_ids": [
+          939542,
+          1477878
+        ],
+        "missed_projected_players": [
+          "Jefferson Lerma",
+          "\u00d3scar Mingueza"
+        ],
+        "unprojected_starters": [
+          "Dwight McNeil",
+          "Anan Khalaili"
+        ]
+      },
+      {
+        "match_id": 5795524,
+        "team_id": 8586,
+        "team": "Tottenham Hotspur",
+        "projected_starters": 11,
+        "xi_hits": 5,
+        "xi_hit_rate": 0.454545,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          357880,
+          839204,
+          867414,
+          1097466,
+          1288111,
+          1323305
+        ],
+        "unprojected_starter_ids": [
+          493165,
+          591734,
+          785411,
+          941573,
+          1052898,
+          1636112
+        ],
+        "missed_projected_players": [
+          "Andrew Robertson",
+          "Omar Marmoush",
+          "Sandro Tonali",
+          "Micky van de Ven",
+          "Mathys Tel",
+          "Archie Gray"
+        ],
+        "unprojected_starters": [
+          "James Maddison",
+          "Dominic Solanke",
+          "Marcos Senesi",
+          "Pedro Porro",
+          "Destiny Udogie",
+          "Luc\u00e1 Williams-Barnett"
+        ]
+      },
+      {
+        "match_id": 5795524,
+        "team_id": 9902,
+        "team": "Ipswich Town",
+        "projected_starters": 11,
+        "xi_hits": 8,
+        "xi_hit_rate": 0.727273,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          793255,
+          1089645,
+          1320949
+        ],
+        "unprojected_starter_ids": [
+          556972,
+          609733,
+          873559
+        ],
+        "missed_projected_players": [
+          "Florentino",
+          "Jaden Philogene-Bidace",
+          "Emersonn"
+        ],
+        "unprojected_starters": [
+          "Sa\u0161a Luki\u0107",
+          "Darnell Furlong",
+          "Zian Flemming"
+        ]
+      },
+      {
+        "match_id": 5795523,
+        "team_id": 10261,
+        "team": "Newcastle United",
+        "projected_starters": 11,
+        "xi_hits": 9,
+        "xi_hit_rate": 0.818182,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          666857,
+          1280132
+        ],
+        "unprojected_starter_ids": [
+          860975,
+          1296763
+        ],
+        "missed_projected_players": [
+          "Yoane Wissa",
+          "Nico Gonz\u00e1lez"
+        ],
+        "unprojected_starters": [
+          "Joseph Willock",
+          "Lewis Miley"
+        ]
+      },
+      {
+        "match_id": 5795523,
+        "team_id": 9825,
+        "team": "Arsenal",
+        "projected_starters": 11,
+        "xi_hits": 10,
+        "xi_hit_rate": 0.909091,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          1157237
+        ],
+        "unprojected_starter_ids": [
+          818975
+        ],
+        "missed_projected_players": [
+          "Christos Tzolis"
+        ],
+        "unprojected_starters": [
+          "Eberechi Eze"
+        ]
+      },
+      {
+        "match_id": 5795520,
+        "team_id": 8667,
+        "team": "Hull City",
+        "projected_starters": 11,
+        "xi_hits": 8,
+        "xi_hit_rate": 0.727273,
+        "projected_formation": "5-4-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": false,
+        "missed_projected_player_ids": [
+          295062,
+          933635,
+          1137106
+        ],
+        "unprojected_starter_ids": [
+          280507,
+          1180718,
+          1231090
+        ],
+        "missed_projected_players": [
+          "John Egan",
+          "Ryan Giles",
+          "Lucas Gourna-Douath"
+        ],
+        "unprojected_starters": [
+          "Matt Crooks",
+          "Mohamed-Ali Cho",
+          "Mohamed Belloumi"
+        ]
+      },
+      {
+        "match_id": 5795520,
+        "team_id": 10204,
+        "team": "Brighton & Hove Albion",
+        "projected_starters": 11,
+        "xi_hits": 10,
+        "xi_hit_rate": 0.909091,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          1561249
+        ],
+        "unprojected_starter_ids": [
+          956925
+        ],
+        "missed_projected_players": [
+          "Charalampos Kostoulas"
+        ],
+        "unprojected_starters": [
+          "Georginio Rutter"
+        ]
+      },
+      {
+        "match_id": 5795521,
+        "team_id": 8650,
+        "team": "Liverpool",
+        "projected_starters": 11,
+        "xi_hits": 10,
+        "xi_hit_rate": 0.909091,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          806552
+        ],
+        "unprojected_starter_ids": [
+          1597668
+        ],
+        "missed_projected_players": [
+          "Cody Gakpo"
+        ],
+        "unprojected_starters": [
+          "Rio Ngumoha"
+        ]
+      },
+      {
+        "match_id": 5795521,
+        "team_id": 10260,
+        "team": "Manchester United",
+        "projected_starters": 11,
+        "xi_hits": 8,
+        "xi_hit_rate": 0.727273,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "3-4-2-1",
+        "formation_correct": false,
+        "missed_projected_player_ids": [
+          255610,
+          775539,
+          1070052
+        ],
+        "unprojected_starter_ids": [
+          769895,
+          847983,
+          1526560
+        ],
+        "missed_projected_players": [
+          "Harry Maguire",
+          "Noussair Mazraoui",
+          "Amad Diallo"
+        ],
+        "unprojected_starters": [
+          "Matthijs de Ligt",
+          "Lisandro Mart\u00ednez",
+          "Patrick Dorgu"
+        ]
+      },
+      {
+        "match_id": 5795517,
+        "team_id": 9937,
+        "team": "Brentford",
+        "projected_starters": 11,
+        "xi_hits": 7,
+        "xi_hit_rate": 0.636364,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          650616,
+          1083796,
+          1185211,
+          1302005
+        ],
+        "unprojected_starter_ids": [
+          184321,
+          888912,
+          1157236,
+          1171140
+        ],
+        "missed_projected_players": [
+          "Mathias Jensen",
+          "Kevin Schade",
+          "Mamadou Sangar\u00e9",
+          "Igor Thiago"
+        ],
+        "unprojected_starters": [
+          "Callum Wilson",
+          "Mikkel Damsgaard",
+          "Yehor Yarmoliuk",
+          "Jaidon Anthony"
+        ]
+      },
+      {
+        "match_id": 5795517,
+        "team_id": 8668,
+        "team": "Everton",
+        "projected_starters": 11,
+        "xi_hits": 10,
+        "xi_hit_rate": 0.909091,
+        "projected_formation": "4-2-3-1",
+        "actual_formation": "4-2-3-1",
+        "formation_correct": true,
+        "missed_projected_player_ids": [
+          1292833
+        ],
+        "unprojected_starter_ids": [
+          1098607
+        ],
+        "missed_projected_players": [
+          "Tyler Dibling"
+        ],
+        "unprojected_starters": [
+          "Jake O'Brien"
+        ]
+      }
+    ]
+  },
+  "fixtures": [
+    {
+      "match_id": 5795522,
+      "kickoff_utc": "2026-11-21T12:30:00Z",
+      "fixture": "Manchester City vs Fulham",
+      "score": "1-1",
+      "observed_xg": {
+        "home": 1.87,
+        "away": 0.74,
+        "total": 2.61
+      },
+      "actual_outcome": "draw",
+      "xg_process_outcome": "home_win",
+      "review_class": "process_supported_outcome_variance",
+      "baseline_top_pick": "home_win",
+      "contextual_top_pick": "home_win",
+      "baseline_actual_outcome_probability": 0.22196,
+      "contextual_actual_outcome_probability": 0.21682,
+      "actual_outcome_probability_improvement": -0.00514,
+      "base_predicted_xg": {
+        "home": 1.896206,
+        "away": 1.095549,
+        "total": 2.991756
+      },
+      "contextual_predicted_xg": {
+        "home": 1.938148,
+        "away": 1.064348,
+        "total": 3.002496
+      },
+      "xg_side_mae_improvement": -0.00537,
+      "directional_context_review": [
+        {
+          "side": "home",
+          "attacker": "Manchester City",
+          "defender": "Fulham",
+          "preferred_route": "box_pressure",
+          "continuous_signal": 0.448989,
+          "combined_reliability": 0.487273,
+          "base_xg": 1.896206,
+          "contextual_xg": 1.938148,
+          "observed_xg": 1.87,
+          "context_xg_mae_improvement": -0.041942,
+          "movement_aligned_with_observed_residual": false
+        },
+        {
+          "side": "away",
+          "attacker": "Fulham",
+          "defender": "Manchester City",
+          "preferred_route": "box_pressure",
+          "continuous_signal": -0.521846,
+          "combined_reliability": 0.553682,
+          "base_xg": 1.095549,
+          "contextual_xg": 1.064348,
+          "observed_xg": 0.74,
+          "context_xg_mae_improvement": 0.031201,
+          "movement_aligned_with_observed_residual": true
+        }
+      ],
+      "scores": {
+        "baseline": {
+          "xg_side_absolute_errors": [
+            0.02620599999999995,
+            0.3555490000000001
+          ],
+          "xg_side_squared_errors": [
+            0.0006867544359999974,
+            0.12641509140100007
+          ],
+          "xg_total_absolute_error": 0.3817550000000003,
+          "goal_side_absolute_errors": [
+            0.8962060000000001,
+            0.0955490000000001
+          ],
+          "one_x_two_brier": 0.9670498424,
+          "one_x_two_log_loss": 1.5052580935244366,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": false,
+          "actual_outcome_probability": 0.22196,
+          "over_2_5_brier": 0.32592680999999996,
+          "over_2_5_log_loss": 0.846065286984658,
+          "btts_brier": 0.19222963360000003,
+          "btts_log_loss": 0.5770366538783867
+        },
+        "contextual": {
+          "xg_side_absolute_errors": [
+            0.06814799999999988,
+            0.3243480000000001
+          ],
+          "xg_side_squared_errors": [
+            0.004644149903999983,
+            0.10520162510400005
+          ],
+          "xg_total_absolute_error": 0.39249599999999973,
+          "goal_side_absolute_errors": [
+            0.938148,
+            0.06434800000000007
+          ],
+          "one_x_two_brier": 0.9903163784,
+          "one_x_two_log_loss": 1.5286877627489912,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": false,
+          "actual_outcome_probability": 0.21682,
+          "over_2_5_brier": 0.32901696,
+          "over_2_5_log_loss": 0.8523774061305023,
+          "btts_brier": 0.19706496639999999,
+          "btts_log_loss": 0.5868431101899065
+        }
+      }
+    },
+    {
+      "match_id": 5795515,
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "fixture": "AFC Bournemouth vs Nottingham Forest",
+      "score": "2-0",
+      "observed_xg": {
+        "home": 2.89,
+        "away": 1.99,
+        "total": 4.88
+      },
+      "actual_outcome": "home_win",
+      "xg_process_outcome": "home_win",
+      "review_class": "outcome_hit",
+      "baseline_top_pick": "home_win",
+      "contextual_top_pick": "home_win",
+      "baseline_actual_outcome_probability": 0.47162,
+      "contextual_actual_outcome_probability": 0.48108,
+      "actual_outcome_probability_improvement": 0.00946,
+      "base_predicted_xg": {
+        "home": 1.570004,
+        "away": 1.123405,
+        "total": 2.693409
+      },
+      "contextual_predicted_xg": {
+        "home": 1.581842,
+        "away": 1.099603,
+        "total": 2.681445
+      },
+      "xg_side_mae_improvement": -0.005982,
+      "directional_context_review": [
+        {
+          "side": "home",
+          "attacker": "AFC Bournemouth",
+          "defender": "Nottingham Forest",
+          "preferred_route": "high_press",
+          "continuous_signal": 0.117213,
+          "combined_reliability": 0.640848,
+          "base_xg": 1.570004,
+          "contextual_xg": 1.581842,
+          "observed_xg": 2.89,
+          "context_xg_mae_improvement": 0.011838,
+          "movement_aligned_with_observed_residual": true
+        },
+        {
+          "side": "away",
+          "attacker": "Nottingham Forest",
+          "defender": "AFC Bournemouth",
+          "preferred_route": "set_pieces",
+          "continuous_signal": -0.306704,
+          "combined_reliability": 0.698211,
+          "base_xg": 1.123405,
+          "contextual_xg": 1.099603,
+          "observed_xg": 1.99,
+          "context_xg_mae_improvement": -0.023802,
+          "movement_aligned_with_observed_residual": false
+        }
+      ],
+      "scores": {
+        "baseline": {
+          "xg_side_absolute_errors": [
+            1.3199960000000002,
+            0.866595
+          ],
+          "xg_side_squared_errors": [
+            1.7423894400160005,
+            0.750986894025
+          ],
+          "xg_total_absolute_error": 2.186591,
+          "goal_side_absolute_errors": [
+            0.42999600000000004,
+            1.123405
+          ],
+          "one_x_two_brier": 0.4191529688000001,
+          "one_x_two_log_loss": 0.7515817023971151,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": true,
+          "actual_outcome_probability": 0.47162,
+          "over_2_5_brier": 0.25437900960000004,
+          "over_2_5_log_loss": 0.701905422233845,
+          "btts_brier": 0.28800395560000003,
+          "btts_log_loss": 0.7692941531398141
+        },
+        "contextual": {
+          "xg_side_absolute_errors": [
+            1.3081580000000002,
+            0.8903969999999999
+          ],
+          "xg_side_squared_errors": [
+            1.7112773529640004,
+            0.7928068176089997
+          ],
+          "xg_total_absolute_error": 2.198555,
+          "goal_side_absolute_errors": [
+            0.41815800000000003,
+            1.099603
+          ],
+          "one_x_two_brier": 0.40406832960000005,
+          "one_x_two_log_loss": 0.7317217025397211,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": true,
+          "actual_outcome_probability": 0.48108,
+          "over_2_5_brier": 0.25250624999999993,
+          "over_2_5_log_loss": 0.6981597223834894,
+          "btts_brier": 0.28419561000000004,
+          "btts_log_loss": 0.7616401770052458
+        }
+      }
+    },
+    {
+      "match_id": 5795516,
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "fixture": "Aston Villa vs Sunderland",
+      "score": "0-0",
+      "observed_xg": {
+        "home": 1.03,
+        "away": 0.25,
+        "total": 1.28
+      },
+      "actual_outcome": "draw",
+      "xg_process_outcome": "home_win",
+      "review_class": "process_supported_outcome_variance",
+      "baseline_top_pick": "home_win",
+      "contextual_top_pick": "home_win",
+      "baseline_actual_outcome_probability": 0.22984,
+      "contextual_actual_outcome_probability": 0.22996,
+      "actual_outcome_probability_improvement": 0.00012,
+      "base_predicted_xg": {
+        "home": 1.773702,
+        "away": 1.278552,
+        "total": 3.052254
+      },
+      "contextual_predicted_xg": {
+        "home": 1.769773,
+        "away": 1.269459,
+        "total": 3.039232
+      },
+      "xg_side_mae_improvement": 0.006511,
+      "directional_context_review": [
+        {
+          "side": "home",
+          "attacker": "Aston Villa",
+          "defender": "Sunderland",
+          "preferred_route": "set_pieces",
+          "continuous_signal": -0.049414,
+          "combined_reliability": 0.448817,
+          "base_xg": 1.773702,
+          "contextual_xg": 1.769773,
+          "observed_xg": 1.03,
+          "context_xg_mae_improvement": 0.003929,
+          "movement_aligned_with_observed_residual": true
+        },
+        {
+          "side": "away",
+          "attacker": "Sunderland",
+          "defender": "Aston Villa",
+          "preferred_route": "set_pieces",
+          "continuous_signal": -0.159638,
+          "combined_reliability": 0.447072,
+          "base_xg": 1.278552,
+          "contextual_xg": 1.269459,
+          "observed_xg": 0.25,
+          "context_xg_mae_improvement": 0.009093,
+          "movement_aligned_with_observed_residual": true
+        }
+      ],
+      "scores": {
+        "baseline": {
+          "xg_side_absolute_errors": [
+            0.7437019999999999,
+            1.028552
+          ],
+          "xg_side_squared_errors": [
+            0.5530926648039998,
+            1.057919216704
+          ],
+          "xg_total_absolute_error": 1.7722539999999993,
+          "goal_side_absolute_errors": [
+            1.773702,
+            1.278552
+          ],
+          "one_x_two_brier": 0.9131514336,
+          "one_x_two_log_loss": 1.470371864311103,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": false,
+          "actual_outcome_probability": 0.22984,
+          "over_2_5_brier": 0.34327881,
+          "over_2_5_log_loss": 0.8816477884306154,
+          "btts_brier": 0.3593043363999999,
+          "btts_log_loss": 0.9148417821090504
+        },
+        "contextual": {
+          "xg_side_absolute_errors": [
+            0.739773,
+            1.019459
+          ],
+          "xg_side_squared_errors": [
+            0.547264091529,
+            1.0392966526809997
+          ],
+          "xg_total_absolute_error": 1.759232,
+          "goal_side_absolute_errors": [
+            1.769773,
+            1.269459
+          ],
+          "one_x_two_brier": 0.9130824792000001,
+          "one_x_two_log_loss": 1.469849898227047,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": false,
+          "actual_outcome_probability": 0.22996,
+          "over_2_5_brier": 0.3400289344,
+          "over_2_5_log_loss": 0.8749568683811778,
+          "btts_brier": 0.35619411240000004,
+          "btts_log_loss": 0.9083721666298595
+        }
+      }
+    },
+    {
+      "match_id": 5795518,
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "fixture": "Chelsea vs Leeds United",
+      "score": "1-4",
+      "observed_xg": {
+        "home": 0.64,
+        "away": 2.77,
+        "total": 3.41
+      },
+      "actual_outcome": "away_win",
+      "xg_process_outcome": "away_win",
+      "review_class": "structural_miss",
+      "baseline_top_pick": "home_win",
+      "contextual_top_pick": "home_win",
+      "baseline_actual_outcome_probability": 0.31232,
+      "contextual_actual_outcome_probability": 0.31532,
+      "actual_outcome_probability_improvement": 0.003,
+      "base_predicted_xg": {
+        "home": 1.574478,
+        "away": 1.279674,
+        "total": 2.854152
+      },
+      "contextual_predicted_xg": {
+        "home": 1.555986,
+        "away": 1.280949,
+        "total": 2.836934
+      },
+      "xg_side_mae_improvement": 0.009883,
+      "directional_context_review": [
+        {
+          "side": "home",
+          "attacker": "Chelsea",
+          "defender": "Leeds United",
+          "preferred_route": "box_pressure",
+          "continuous_signal": -0.323858,
+          "combined_reliability": 0.364818,
+          "base_xg": 1.574478,
+          "contextual_xg": 1.555986,
+          "observed_xg": 0.64,
+          "context_xg_mae_improvement": 0.018492,
+          "movement_aligned_with_observed_residual": true
+        },
+        {
+          "side": "away",
+          "attacker": "Leeds United",
+          "defender": "Chelsea",
+          "preferred_route": "set_pieces",
+          "continuous_signal": 0.028796,
+          "combined_reliability": 0.345716,
+          "base_xg": 1.279674,
+          "contextual_xg": 1.280949,
+          "observed_xg": 2.77,
+          "context_xg_mae_improvement": 0.001275,
+          "movement_aligned_with_observed_residual": true
+        }
+      ],
+      "scores": {
+        "baseline": {
+          "xg_side_absolute_errors": [
+            0.934478,
+            1.490326
+          ],
+          "xg_side_squared_errors": [
+            0.873249132484,
+            2.221071586276
+          ],
+          "xg_total_absolute_error": 0.5558480000000001,
+          "goal_side_absolute_errors": [
+            0.574478,
+            2.720326
+          ],
+          "one_x_two_brier": 0.7291880264000001,
+          "one_x_two_log_loss": 1.1637269757574094,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": false,
+          "actual_outcome_probability": 0.31232,
+          "over_2_5_brier": 0.21176563240000004,
+          "over_2_5_log_loss": 0.6165195283250547,
+          "btts_brier": 0.18709085160000002,
+          "btts_log_loss": 0.566585016692232
+        },
+        "contextual": {
+          "xg_side_absolute_errors": [
+            0.9159860000000001,
+            1.4890510000000001
+          ],
+          "xg_side_squared_errors": [
+            0.8390303521960002,
+            2.2172728806010005
+          ],
+          "xg_total_absolute_error": 0.5730650000000002,
+          "goal_side_absolute_errors": [
+            0.5559860000000001,
+            2.7190510000000003
+          ],
+          "one_x_two_brier": 0.7215353335999999,
+          "one_x_two_log_loss": 1.1541672827904297,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": false,
+          "actual_outcome_probability": 0.31532,
+          "over_2_5_brier": 0.21572309159999997,
+          "over_2_5_log_loss": 0.6244796953386968,
+          "btts_brier": 0.1890858256,
+          "btts_log_loss": 0.57064640208453
+        }
+      }
+    },
+    {
+      "match_id": 5795519,
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "fixture": "Coventry City vs Crystal Palace",
+      "score": "3-2",
+      "observed_xg": {
+        "home": 2.06,
+        "away": 1.73,
+        "total": 3.79
+      },
+      "actual_outcome": "home_win",
+      "xg_process_outcome": "home_win",
+      "review_class": "outcome_hit",
+      "baseline_top_pick": "home_win",
+      "contextual_top_pick": "home_win",
+      "baseline_actual_outcome_probability": 0.4322,
+      "contextual_actual_outcome_probability": 0.42838,
+      "actual_outcome_probability_improvement": -0.00382,
+      "base_predicted_xg": {
+        "home": 1.644198,
+        "away": 1.387453,
+        "total": 3.031651
+      },
+      "contextual_predicted_xg": {
+        "home": 1.631016,
+        "away": 1.389533,
+        "total": 3.020549
+      },
+      "xg_side_mae_improvement": -0.005551,
+      "directional_context_review": [
+        {
+          "side": "home",
+          "attacker": "Coventry City",
+          "defender": "Crystal Palace",
+          "preferred_route": "box_pressure",
+          "continuous_signal": -0.215009,
+          "combined_reliability": 0.374385,
+          "base_xg": 1.644198,
+          "contextual_xg": 1.631016,
+          "observed_xg": 2.06,
+          "context_xg_mae_improvement": -0.013182,
+          "movement_aligned_with_observed_residual": false
+        },
+        {
+          "side": "away",
+          "attacker": "Crystal Palace",
+          "defender": "Coventry City",
+          "preferred_route": "set_pieces",
+          "continuous_signal": 0.035606,
+          "combined_reliability": 0.420607,
+          "base_xg": 1.387453,
+          "contextual_xg": 1.389533,
+          "observed_xg": 1.73,
+          "context_xg_mae_improvement": 0.00208,
+          "movement_aligned_with_observed_residual": true
+        }
+      ],
+      "scores": {
+        "baseline": {
+          "xg_side_absolute_errors": [
+            0.415802,
+            0.34254699999999993
+          ],
+          "xg_side_squared_errors": [
+            0.172891303204,
+            0.11733844720899995
+          ],
+          "xg_total_absolute_error": 0.7583489999999999,
+          "goal_side_absolute_errors": [
+            1.355802,
+            0.612547
+          ],
+          "one_x_two_brier": 0.4872692192000001,
+          "one_x_two_log_loss": 0.8388668349093515,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": true,
+          "actual_outcome_probability": 0.4322,
+          "over_2_5_brier": 0.17327238759999997,
+          "over_2_5_log_loss": 0.5382996007667457,
+          "btts_brier": 0.15492095999999997,
+          "btts_log_loss": 0.500215444653975
+        },
+        "contextual": {
+          "xg_side_absolute_errors": [
+            0.42898400000000003,
+            0.3404670000000001
+          ],
+          "xg_side_squared_errors": [
+            0.18402727225600002,
+            0.11591777808900006
+          ],
+          "xg_total_absolute_error": 0.7694510000000001,
+          "goal_side_absolute_errors": [
+            1.368984,
+            0.6104670000000001
+          ],
+          "one_x_two_brier": 0.4938514344,
+          "one_x_two_log_loss": 0.8477446268391409,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": true,
+          "actual_outcome_probability": 0.42838,
+          "over_2_5_brier": 0.17611451560000002,
+          "over_2_5_log_loss": 0.5441411402972649,
+          "btts_brier": 0.15686352359999997,
+          "btts_log_loss": 0.5042804237299873
+        }
+      }
+    },
+    {
+      "match_id": 5795524,
+      "kickoff_utc": "2026-11-21T15:00:00Z",
+      "fixture": "Tottenham Hotspur vs Ipswich Town",
+      "score": "2-0",
+      "observed_xg": {
+        "home": 2.65,
+        "away": 0.47,
+        "total": 3.12
+      },
+      "actual_outcome": "home_win",
+      "xg_process_outcome": "home_win",
+      "review_class": "outcome_hit",
+      "baseline_top_pick": "home_win",
+      "contextual_top_pick": "home_win",
+      "baseline_actual_outcome_probability": 0.53796,
+      "contextual_actual_outcome_probability": 0.54748,
+      "actual_outcome_probability_improvement": 0.00952,
+      "base_predicted_xg": {
+        "home": 1.788246,
+        "away": 1.079482,
+        "total": 2.867728
+      },
+      "contextual_predicted_xg": {
+        "home": 1.807493,
+        "away": 1.060823,
+        "total": 2.868316
+      },
+      "xg_side_mae_improvement": 0.018953,
+      "directional_context_review": [
+        {
+          "side": "home",
+          "attacker": "Tottenham Hotspur",
+          "defender": "Ipswich Town",
+          "preferred_route": "box_pressure",
+          "continuous_signal": 0.245077,
+          "combined_reliability": 0.436808,
+          "base_xg": 1.788246,
+          "contextual_xg": 1.807493,
+          "observed_xg": 2.65,
+          "context_xg_mae_improvement": 0.019247,
+          "movement_aligned_with_observed_residual": true
+        },
+        {
+          "side": "away",
+          "attacker": "Ipswich Town",
+          "defender": "Tottenham Hotspur",
+          "preferred_route": "box_pressure",
+          "continuous_signal": -0.410537,
+          "combined_reliability": 0.424703,
+          "base_xg": 1.079482,
+          "contextual_xg": 1.060823,
+          "observed_xg": 0.47,
+          "context_xg_mae_improvement": 0.018659,
+          "movement_aligned_with_observed_residual": true
+        }
+      ],
+      "scores": {
+        "baseline": {
+          "xg_side_absolute_errors": [
+            0.8617539999999999,
+            0.6094820000000001
+          ],
+          "xg_side_squared_errors": [
+            0.7426199565159999,
+            0.3714683083240001
+          ],
+          "xg_total_absolute_error": 0.25227199999999983,
+          "goal_side_absolute_errors": [
+            0.211754,
+            1.079482
+          ],
+          "one_x_two_brier": 0.3202366776,
+          "one_x_two_log_loss": 0.6199710710267886,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": true,
+          "actual_outcome_probability": 0.53796,
+          "over_2_5_brier": 0.30021632639999996,
+          "over_2_5_log_loss": 0.7938961236605491,
+          "btts_brier": 0.3062736964,
+          "btts_log_loss": 0.8061367233822627
+        },
+        "contextual": {
+          "xg_side_absolute_errors": [
+            0.8425069999999999,
+            0.5908230000000001
+          ],
+          "xg_side_squared_errors": [
+            0.7098180450489998,
+            0.3490718173290001
+          ],
+          "xg_total_absolute_error": 0.2516839999999998,
+          "goal_side_absolute_errors": [
+            0.19250699999999998,
+            1.060823
+          ],
+          "one_x_two_brier": 0.3071961368,
+          "one_x_two_log_loss": 0.6024293476390715,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": true,
+          "actual_outcome_probability": 0.54748,
+          "over_2_5_brier": 0.30021632639999996,
+          "over_2_5_log_loss": 0.7938961236605491,
+          "btts_brier": 0.29964676,
+          "btts_log_loss": 0.7927465457827001
+        }
+      }
+    },
+    {
+      "match_id": 5795523,
+      "kickoff_utc": "2026-11-21T17:30:00Z",
+      "fixture": "Newcastle United vs Arsenal",
+      "score": "2-2",
+      "observed_xg": {
+        "home": 1.71,
+        "away": 1.49,
+        "total": 3.2
+      },
+      "actual_outcome": "draw",
+      "xg_process_outcome": "draw",
+      "review_class": "structural_miss",
+      "baseline_top_pick": "away_win",
+      "contextual_top_pick": "away_win",
+      "baseline_actual_outcome_probability": 0.26192,
+      "contextual_actual_outcome_probability": 0.25804,
+      "actual_outcome_probability_improvement": -0.00388,
+      "base_predicted_xg": {
+        "home": 1.186145,
+        "away": 1.447239,
+        "total": 2.633384
+      },
+      "contextual_predicted_xg": {
+        "home": 1.16033,
+        "away": 1.497586,
+        "total": 2.657915
+      },
+      "xg_side_mae_improvement": 0.00468,
+      "directional_context_review": [
+        {
+          "side": "home",
+          "attacker": "Newcastle United",
+          "defender": "Arsenal",
+          "preferred_route": "box_pressure",
+          "continuous_signal": -0.35806,
+          "combined_reliability": 0.61455,
+          "base_xg": 1.186145,
+          "contextual_xg": 1.16033,
+          "observed_xg": 1.71,
+          "context_xg_mae_improvement": -0.025815,
+          "movement_aligned_with_observed_residual": false
+        },
+        {
+          "side": "away",
+          "attacker": "Arsenal",
+          "defender": "Newcastle United",
+          "preferred_route": "box_pressure",
+          "continuous_signal": 0.593087,
+          "combined_reliability": 0.576586,
+          "base_xg": 1.447239,
+          "contextual_xg": 1.497586,
+          "observed_xg": 1.49,
+          "context_xg_mae_improvement": 0.035175,
+          "movement_aligned_with_observed_residual": true
+        }
+      ],
+      "scores": {
+        "baseline": {
+          "xg_side_absolute_errors": [
+            0.523855,
+            0.04276100000000005
+          ],
+          "xg_side_squared_errors": [
+            0.27442406102499994,
+            0.0018285031210000043
+          ],
+          "xg_total_absolute_error": 0.566616,
+          "goal_side_absolute_errors": [
+            0.813855,
+            0.5527610000000001
+          ],
+          "one_x_two_brier": 0.8246389064,
+          "one_x_two_log_loss": 1.3397161653593124,
+          "one_x_two_top_pick": "away_win",
+          "one_x_two_top_pick_correct": false,
+          "actual_outcome_probability": 0.26192,
+          "over_2_5_brier": 0.26169363360000003,
+          "over_2_5_log_loss": 0.7165386400173159,
+          "btts_brier": 0.21996099999999996,
+          "btts_log_loss": 0.6329932577401982
+        },
+        "contextual": {
+          "xg_side_absolute_errors": [
+            0.5496699999999999,
+            0.007586000000000093
+          ],
+          "xg_side_squared_errors": [
+            0.3021371088999999,
+            5.754739600000141e-05
+          ],
+          "xg_total_absolute_error": 0.5420839999999998,
+          "goal_side_absolute_errors": [
+            0.8396699999999999,
+            0.5024139999999999
+          ],
+          "one_x_two_brier": 0.8380375415999999,
+          "one_x_two_log_loss": 1.3546406673180962,
+          "one_x_two_top_pick": "away_win",
+          "one_x_two_top_pick_correct": false,
+          "actual_outcome_probability": 0.25804,
+          "over_2_5_brier": 0.2536733956,
+          "over_2_5_log_loss": 0.7004941032229988,
+          "btts_brier": 0.21752896000000002,
+          "btts_log_loss": 0.6281087843807232
+        }
+      }
+    },
+    {
+      "match_id": 5795520,
+      "kickoff_utc": "2026-11-22T14:00:00Z",
+      "fixture": "Hull City vs Brighton & Hove Albion",
+      "score": "2-0",
+      "observed_xg": {
+        "home": 1.83,
+        "away": 2.23,
+        "total": 4.06
+      },
+      "actual_outcome": "home_win",
+      "xg_process_outcome": "away_win",
+      "review_class": "process_supported_outcome_variance",
+      "baseline_top_pick": "away_win",
+      "contextual_top_pick": "away_win",
+      "baseline_actual_outcome_probability": 0.2575,
+      "contextual_actual_outcome_probability": 0.25084,
+      "actual_outcome_probability_improvement": -0.00666,
+      "base_predicted_xg": {
+        "home": 1.129994,
+        "away": 1.664935,
+        "total": 2.794929
+      },
+      "contextual_predicted_xg": {
+        "home": 1.112054,
+        "away": 1.679198,
+        "total": 2.791253
+      },
+      "xg_side_mae_improvement": -0.001838,
+      "directional_context_review": [
+        {
+          "side": "home",
+          "attacker": "Hull City",
+          "defender": "Brighton & Hove Albion",
+          "preferred_route": "set_pieces",
+          "continuous_signal": -0.539165,
+          "combined_reliability": 0.296818,
+          "base_xg": 1.129994,
+          "contextual_xg": 1.112054,
+          "observed_xg": 1.83,
+          "context_xg_mae_improvement": -0.01794,
+          "movement_aligned_with_observed_residual": false
+        },
+        {
+          "side": "away",
+          "attacker": "Brighton & Hove Albion",
+          "defender": "Hull City",
+          "preferred_route": "box_pressure",
+          "continuous_signal": 0.491625,
+          "combined_reliability": 0.173522,
+          "base_xg": 1.664935,
+          "contextual_xg": 1.679198,
+          "observed_xg": 2.23,
+          "context_xg_mae_improvement": 0.014263,
+          "movement_aligned_with_observed_residual": true
+        }
+      ],
+      "scores": {
+        "baseline": {
+          "xg_side_absolute_errors": [
+            0.7000060000000001,
+            0.5650649999999999
+          ],
+          "xg_side_squared_errors": [
+            0.49000840003600016,
+            0.3192984542249999
+          ],
+          "xg_total_absolute_error": 1.2650710000000003,
+          "goal_side_absolute_errors": [
+            0.8700060000000001,
+            1.664935
+          ],
+          "one_x_two_brier": 0.8592529447999999,
+          "one_x_two_log_loss": 1.3567355588783463,
+          "one_x_two_top_pick": "away_win",
+          "one_x_two_top_pick_correct": false,
+          "actual_outcome_probability": 0.2575,
+          "over_2_5_brier": 0.27869952639999995,
+          "over_2_5_log_loss": 0.7506068162332236,
+          "btts_brier": 0.30214810239999995,
+          "btts_log_loss": 0.7977968378263658
+        },
+        "contextual": {
+          "xg_side_absolute_errors": [
+            0.717946,
+            0.550802
+          ],
+          "xg_side_squared_errors": [
+            0.5154464589159999,
+            0.303382843204
+          ],
+          "xg_total_absolute_error": 1.268748,
+          "goal_side_absolute_errors": [
+            0.8879459999999999,
+            1.679198
+          ],
+          "one_x_two_brier": 0.8769417656,
+          "one_x_two_log_loss": 1.382939993307317,
+          "one_x_two_top_pick": "away_win",
+          "one_x_two_top_pick_correct": false,
+          "actual_outcome_probability": 0.25084,
+          "over_2_5_brier": 0.2783828644,
+          "over_2_5_log_loss": 0.7499715325577062,
+          "btts_brier": 0.2992527616,
+          "btts_log_loss": 0.7919514576185476
+        }
+      }
+    },
+    {
+      "match_id": 5795521,
+      "kickoff_utc": "2026-11-22T16:30:00Z",
+      "fixture": "Liverpool vs Manchester United",
+      "score": "4-0",
+      "observed_xg": {
+        "home": 4.35,
+        "away": 0.65,
+        "total": 5.0
+      },
+      "actual_outcome": "home_win",
+      "xg_process_outcome": "home_win",
+      "review_class": "outcome_hit",
+      "baseline_top_pick": "home_win",
+      "contextual_top_pick": "home_win",
+      "baseline_actual_outcome_probability": 0.4777,
+      "contextual_actual_outcome_probability": 0.4873,
+      "actual_outcome_probability_improvement": 0.0096,
+      "base_predicted_xg": {
+        "home": 1.738307,
+        "away": 1.314721,
+        "total": 3.053028
+      },
+      "contextual_predicted_xg": {
+        "home": 1.772261,
+        "away": 1.310697,
+        "total": 3.082958
+      },
+      "xg_side_mae_improvement": 0.018989,
+      "directional_context_review": [
+        {
+          "side": "home",
+          "attacker": "Liverpool",
+          "defender": "Manchester United",
+          "preferred_route": "box_pressure",
+          "continuous_signal": 0.305718,
+          "combined_reliability": 0.632747,
+          "base_xg": 1.738307,
+          "contextual_xg": 1.772261,
+          "observed_xg": 4.35,
+          "context_xg_mae_improvement": 0.033954,
+          "movement_aligned_with_observed_residual": true
+        },
+        {
+          "side": "away",
+          "attacker": "Manchester United",
+          "defender": "Liverpool",
+          "preferred_route": "box_pressure",
+          "continuous_signal": -0.046701,
+          "combined_reliability": 0.656525,
+          "base_xg": 1.314721,
+          "contextual_xg": 1.310697,
+          "observed_xg": 0.65,
+          "context_xg_mae_improvement": 0.004024,
+          "movement_aligned_with_observed_residual": true
+        }
+      ],
+      "scores": {
+        "baseline": {
+          "xg_side_absolute_errors": [
+            2.611693,
+            0.664721
+          ],
+          "xg_side_squared_errors": [
+            6.820940326248999,
+            0.441854007841
+          ],
+          "xg_total_absolute_error": 1.9469719999999993,
+          "goal_side_absolute_errors": [
+            2.261693,
+            1.314721
+          ],
+          "one_x_two_brier": 0.41071173679999995,
+          "one_x_two_log_loss": 0.7387723585862208,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": true,
+          "actual_outcome_probability": 0.4777,
+          "over_2_5_brier": 0.16906899239999998,
+          "over_2_5_log_loss": 0.529634744753045,
+          "btts_brier": 0.36235584160000006,
+          "btts_log_loss": 0.9212027762351758
+        },
+        "contextual": {
+          "xg_side_absolute_errors": [
+            2.5777389999999993,
+            0.660697
+          ],
+          "xg_side_squared_errors": [
+            6.644738352120997,
+            0.43652052580899997
+          ],
+          "xg_total_absolute_error": 1.9170419999999995,
+          "goal_side_absolute_errors": [
+            2.2277389999999997,
+            1.310697
+          ],
+          "one_x_two_brier": 0.3957705271999999,
+          "one_x_two_log_loss": 0.7188753291326765,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": true,
+          "actual_outcome_probability": 0.4873,
+          "over_2_5_brier": 0.1640898064,
+          "over_2_5_log_loss": 0.5193283362577399,
+          "btts_brier": 0.3652993600000001,
+          "btts_log_loss": 0.9273516792335801
+        }
+      }
+    },
+    {
+      "match_id": 5795517,
+      "kickoff_utc": "2026-11-23T20:00:00Z",
+      "fixture": "Brentford vs Everton",
+      "score": "4-0",
+      "observed_xg": {
+        "home": 2.77,
+        "away": 0.23,
+        "total": 3.0
+      },
+      "actual_outcome": "home_win",
+      "xg_process_outcome": "home_win",
+      "review_class": "outcome_hit",
+      "baseline_top_pick": "home_win",
+      "contextual_top_pick": "home_win",
+      "baseline_actual_outcome_probability": 0.43404,
+      "contextual_actual_outcome_probability": 0.4311,
+      "actual_outcome_probability_improvement": -0.00294,
+      "base_predicted_xg": {
+        "home": 1.550396,
+        "away": 1.295406,
+        "total": 2.845802
+      },
+      "contextual_predicted_xg": {
+        "home": 1.538137,
+        "away": 1.28847,
+        "total": 2.826607
+      },
+      "xg_side_mae_improvement": -0.002662,
+      "directional_context_review": [
+        {
+          "side": "home",
+          "attacker": "Brentford",
+          "defender": "Everton",
+          "preferred_route": "set_pieces",
+          "continuous_signal": -0.107738,
+          "combined_reliability": 0.736868,
+          "base_xg": 1.550396,
+          "contextual_xg": 1.538137,
+          "observed_xg": 2.77,
+          "context_xg_mae_improvement": -0.012259,
+          "movement_aligned_with_observed_residual": false
+        },
+        {
+          "side": "away",
+          "attacker": "Everton",
+          "defender": "Brentford",
+          "preferred_route": "set_pieces",
+          "continuous_signal": -0.07624,
+          "combined_reliability": 0.704103,
+          "base_xg": 1.295406,
+          "contextual_xg": 1.28847,
+          "observed_xg": 0.23,
+          "context_xg_mae_improvement": 0.006936,
+          "movement_aligned_with_observed_residual": true
+        }
+      ],
+      "scores": {
+        "baseline": {
+          "xg_side_absolute_errors": [
+            1.219604,
+            1.065406
+          ],
+          "xg_side_squared_errors": [
+            1.4874339168159998,
+            1.1350899448360001
+          ],
+          "xg_total_absolute_error": 0.15419800000000008,
+          "goal_side_absolute_errors": [
+            2.449604,
+            1.295406
+          ],
+          "one_x_two_brier": 0.48292729520000005,
+          "one_x_two_log_loss": 0.8346185832301302,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": true,
+          "actual_outcome_probability": 0.43404,
+          "over_2_5_brier": 0.20591628839999995,
+          "over_2_5_log_loss": 0.6047334539889573,
+          "btts_brier": 0.33110817640000006,
+          "btts_log_loss": 0.8566548339782813
+        },
+        "contextual": {
+          "xg_side_absolute_errors": [
+            1.231863,
+            1.05847
+          ],
+          "xg_side_squared_errors": [
+            1.5174864507689998,
+            1.1203587409
+          ],
+          "xg_total_absolute_error": 0.17339299999999994,
+          "goal_side_absolute_errors": [
+            2.461863,
+            1.28847
+          ],
+          "one_x_two_brier": 0.48784441999999995,
+          "one_x_two_log_loss": 0.8414151972290481,
+          "one_x_two_top_pick": "home_win",
+          "one_x_two_top_pick_correct": true,
+          "actual_outcome_probability": 0.4311,
+          "over_2_5_brier": 0.2109013776,
+          "over_2_5_log_loss": 0.6147797214859324,
+          "btts_brier": 0.32755018240000006,
+          "btts_log_loss": 0.8493800265915283
+        }
+      }
+    }
+  ],
+  "pre_match_goal_coefficient_ablation": {
+    "goal_model_version": "clubalpha_goal_model_2026-08-24_v0",
+    "goal_model_trained_through": "2026-08-24",
+    "outcomes_used_to_choose_candidates": false,
+    "reconstruction_assumes_frozen_xg_was_not_clipped": true,
+    "best_side_xg_mae_candidate": "applied_conservative",
+    "candidates": [
+      {
+        "candidate": "zero_coefficient",
+        "coefficient": 0.0,
+        "side_xg_mae": 0.84091,
+        "side_xg_rmse": 1.021605,
+        "total_xg_mae": 0.91898,
+        "predicted_total_xg_distribution": {
+          "minimum": 2.896699,
+          "maximum": 2.8967,
+          "mean": 2.8967,
+          "population_sd": 0.0
+        },
+        "reconstructed_competition_baseline": {
+          "home": 1.5853,
+          "away": 1.3114
+        }
+      },
+      {
+        "candidate": "applied_conservative",
+        "coefficient": 0.146445877,
+        "side_xg_mae": 0.819405,
+        "side_xg_rmse": 0.992497,
+        "total_xg_mae": 0.983993,
+        "predicted_total_xg_distribution": {
+          "minimum": 2.633384,
+          "maximum": 3.053028,
+          "mean": 2.881809,
+          "population_sd": 0.141395
+        },
+        "reconstructed_competition_baseline": {
+          "home": 1.5853,
+          "away": 1.3114
+        }
+      },
+      {
+        "candidate": "frozen_point_estimate",
+        "coefficient": 0.445695839,
+        "side_xg_mae": 0.872003,
+        "side_xg_rmse": 1.028058,
+        "total_xg_mae": 1.017113,
+        "predicted_total_xg_distribution": {
+          "minimum": 2.358087,
+          "maximum": 3.492713,
+          "mean": 3.02746,
+          "population_sd": 0.406744
+        },
+        "reconstructed_competition_baseline": {
+          "home": 1.5853,
+          "away": 1.3114
+        }
+      },
+      {
+        "candidate": "frozen_raw_estimate",
+        "coefficient": 0.513116594,
+        "side_xg_mae": 0.904503,
+        "side_xg_rmse": 1.058264,
+        "total_xg_mae": 1.008883,
+        "predicted_total_xg_distribution": {
+          "minimum": 2.294928,
+          "maximum": 3.667397,
+          "mean": 3.091485,
+          "population_sd": 0.481481
+        },
+        "reconstructed_competition_baseline": {
+          "home": 1.5853,
+          "away": 1.3114
+        }
+      }
+    ]
+  },
+  "audit_read": {
+    "structural_review_queue": [
+      "Chelsea vs Leeds United",
+      "Newcastle United vs Arsenal"
+    ],
+    "evidence_findings": [
+      "The frozen XI averaged 8.75/11 starters; selection error still reaches Player Alpha before kickoff.",
+      "Observed match xG totals spanned 1.28-5.00, while the base forecast spanned only 2.63-3.05; the goal environment is over-compressed in this sample.",
+      "Only 3/5 route families became preferred; missing direct_transition, wide_delivery.",
+      "The best side-xG MAE among coefficient choices frozen before kickoff is applied_conservative; this result does not fit a new coefficient or authorize a change."
+    ],
+    "coefficient_action": "hold_at_shadow_value",
+    "capital_action": "zero_allocation",
+    "next_iteration": "Audit the route and lineup assumptions behind structural misses; do not refit the context coefficient on this partial sample."
+  },
+  "decision_boundaries": {
+    "base_weights_changed": false,
+    "context_coefficient_changed": false,
+    "predictions_mutated": false,
+    "sample_sufficient_for_calibration": false,
+    "capital_deployment_ready": false
+  }
+}

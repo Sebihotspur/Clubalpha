@@ -11,7 +11,9 @@ python3 -m http.server 4173 --directory web/public
 ```
 
 The site deliberately contains no wager form, account state, or capital-sizing
-control. The `/predictions/` route exposes the latest official matchweek
+control. Simulated entries are tracked in a separate paper panel; its dollar
+sizing uses the standardized bankroll for reference and does not debit it.
+The `/predictions/` route exposes the latest official matchweek
 shadow slate: ten immutable 1X2 calls, their original model probabilities,
 audited football verdicts, confidence, and evidence notes. More than 50% 1X2
 accuracy after at least 30 settled official fixtures opens paper allocation and

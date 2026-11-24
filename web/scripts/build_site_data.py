@@ -94,6 +94,40 @@ UPCOMING_MATCHWEEK_RESULTS = (
 UPCOMING_MATCHWEEK_BACKTEST = (
     ROOT / "reports/contextual-interaction-v1-backtest-2026-11-08.json"
 )
+LATEST_MATCHWEEK_DECISIONS = (
+    ROOT
+    / "artifacts/matchweek_research/2026-11-09-mw11-provisional/decisions.json"
+)
+LATEST_MATCHWEEK_LOAD = (
+    ROOT / "artifacts/prematch_load/2026-11-09-mw11/prematch-load.json"
+)
+LATEST_MATCHWEEK_RESULTS = (
+    ROOT
+    / "artifacts/contextual_interaction/2026-11-09-mw11-provisional/results.jsonl"
+)
+LATEST_MATCHWEEK_BACKTEST = (
+    ROOT / "reports/contextual-interaction-v1-backtest-2026-11-23-mw11.json"
+)
+PROVISIONAL_MATCHWEEK_DECISIONS = (
+    ROOT
+    / "artifacts/matchweek_research/2026-11-23-mw12-provisional/decisions.json"
+)
+PROVISIONAL_MATCHWEEK_LOAD = (
+    ROOT / "artifacts/prematch_load/2026-11-23-mw12/prematch-load.json"
+)
+PROVISIONAL_MATCHWEEK_GATE = (
+    ROOT / "artifacts/market_gates/2026-11-23-mw12-provisional/gate.json"
+)
+PROVISIONAL_MATCHWEEK_RESULTS = (
+    ROOT
+    / "artifacts/contextual_interaction/2026-11-23-mw12-provisional/results.jsonl"
+)
+PROVISIONAL_PAPER_LEDGER = (
+    ROOT / "artifacts/paper_performance/2026-11-23-mw12-provisional/ledger.json"
+)
+HISTORICAL_BANKROLL = (
+    ROOT / "artifacts/paper_performance/2026-11-23-historical-bankroll-v1/bankroll.json"
+)
 MARKET_FOCUS_CONFIG = ROOT / "config/market-focus-v1.json"
 PUBLIC_DIR = ROOT / "web/public"
 
@@ -554,6 +588,16 @@ def build():
     upcoming_market = load_json(UPCOMING_MATCHWEEK_MARKET)
     upcoming_results = load_jsonl(UPCOMING_MATCHWEEK_RESULTS)
     upcoming_backtest = load_json(UPCOMING_MATCHWEEK_BACKTEST)
+    latest_decisions = load_json(LATEST_MATCHWEEK_DECISIONS)
+    latest_load = load_json(LATEST_MATCHWEEK_LOAD)
+    latest_results = load_jsonl(LATEST_MATCHWEEK_RESULTS)
+    latest_backtest = load_json(LATEST_MATCHWEEK_BACKTEST)
+    provisional_decisions = load_json(PROVISIONAL_MATCHWEEK_DECISIONS)
+    provisional_load = load_json(PROVISIONAL_MATCHWEEK_LOAD)
+    provisional_gate = load_json(PROVISIONAL_MATCHWEEK_GATE)
+    provisional_results = load_jsonl(PROVISIONAL_MATCHWEEK_RESULTS)
+    provisional_paper_ledger = load_json(PROVISIONAL_PAPER_LEDGER)
+    historical_bankroll = load_json(HISTORICAL_BANKROLL)
     market_focus = load_json(MARKET_FOCUS_CONFIG)
     if market_focus.get("version") != "clubalpha_market_focus_v1":
         raise ValueError("website requires the locked market-focus contract")
@@ -990,7 +1034,7 @@ def build():
         key=lambda row: (row["kickoff_utc"], row["match_id"])
     )
 
-    def build_decision_predictions(decisions, load, market=None):
+    def build_decision_predictions(decisions, load, market=None, market_gate=None):
         load_by_team = {row["team"]: row for row in load["teams"]}
         market_by_id = (
             {
@@ -1000,12 +1044,18 @@ def build():
             if market
             else {}
         )
+        gate_by_id = (
+            {int(row["match_id"]): row for row in market_gate["fixtures"]}
+            if market_gate
+            else {}
+        )
         predictions = []
         for row in decisions["fixtures"]:
             match_id = int(row["match_id"])
             side = row["side_decision"]
             total = row["total_decision"]
             price = market_by_id.get(match_id)
+            gate = gate_by_id.get(match_id)
             side_price = None
             total_price = None
             if price:
@@ -1014,6 +1064,8 @@ def build():
                     total_price = price["over_under_2_5"]["over"]
                 elif total["call"] == "under_2_5":
                     total_price = price["over_under_2_5"]["under"]
+            side_execution = (gate or {}).get("side", {}).get("best_execution")
+            total_execution = (gate or {}).get("total", {}).get("best_execution")
             predictions.append(
                 {
                     "match_id": match_id,
@@ -1030,20 +1082,33 @@ def build():
                     "side_reason": side["reason"],
                     "side_evidence": side["evidence"],
                     "side_best_ask": (
-                        side_price["book"]["best_ask"] if side_price else None
+                        side_execution["best_ask"]
+                        if side_execution
+                        else side_price["book"]["best_ask"] if side_price else None
                     ),
                     "side_edge": (
-                        side_price["edge_vs_best_ask"] if side_price else None
+                        side_execution["raw_edge"]
+                        if side_execution
+                        else side_price["edge_vs_best_ask"] if side_price else None
                     ),
                     "total_call": total["call"],
                     "over_2_5_probability": total["over_probability"],
                     "total_reason": total["reason"],
                     "total_best_ask": (
-                        total_price["book"]["best_ask"] if total_price else None
+                        total_execution["best_ask"]
+                        if total_execution
+                        else total_price["book"]["best_ask"] if total_price else None
                     ),
                     "total_edge": (
-                        total_price["edge_vs_best_ask"] if total_price else None
+                        total_execution["raw_edge"]
+                        if total_execution
+                        else total_price["edge_vs_best_ask"] if total_price else None
                     ),
+                    "total_price_outcome": (
+                        gate["total"]["evaluated_outcome"]
+                        if total_execution else total["call"] if total_price else None
+                    ),
+                    "paper_positions": (gate or {}).get("paper_positions", []),
                     "context_verdict": side["evidence"]["context_verdict"],
                     "load": (
                         f"{load_by_team[row['home_team']]['risk']} / "
@@ -1067,6 +1132,15 @@ def build():
         upcoming_decisions,
         upcoming_load,
         upcoming_market,
+    )
+    latest_predictions = build_decision_predictions(
+        latest_decisions,
+        latest_load,
+    )
+    provisional_predictions = build_decision_predictions(
+        provisional_decisions,
+        provisional_load,
+        market_gate=provisional_gate,
     )
     upcoming_result_by_id = {
         int(row["match_id"]): row for row in upcoming_results
@@ -1104,6 +1178,70 @@ def build():
             "review_class": review["review_class"],
             "xg_process_outcome": review["xg_process_outcome"],
         }
+
+    def attach_decision_results(predictions, results, backtest):
+        result_by_id = {int(row["match_id"]): row for row in results}
+        backtest_by_id = {
+            int(row["match_id"]): row for row in backtest["fixtures"]
+        }
+        for row in predictions:
+            result = result_by_id.get(int(row["match_id"]))
+            row["status"] = "settled" if result else "pending"
+            row["result"] = None
+            if result is None:
+                continue
+            actual_over = (
+                int(result["final_home_goals"])
+                + int(result["final_away_goals"])
+            ) > 2
+            total_hit = None
+            if row["total_call"] != "pass":
+                total_hit = (row["total_call"] == "over_2_5") == actual_over
+            review = backtest_by_id[int(row["match_id"])]
+            row["result"] = {
+                "final_home_goals": int(result["final_home_goals"]),
+                "final_away_goals": int(result["final_away_goals"]),
+                "outcome": result["outcome"],
+                "actual_xg": result["actual_xg"],
+                "leader_hit": row["side_leader"] == result["outcome"],
+                "side_hit": (
+                    None
+                    if row["side_call"] == "pass"
+                    else row["side_call"] == result["outcome"]
+                ),
+                "total_hit": total_hit,
+                "review_class": review["review_class"],
+                "xg_process_outcome": review["xg_process_outcome"],
+            }
+
+    attach_decision_results(latest_predictions, latest_results, latest_backtest)
+    latest_score = score_matchweek_decisions(latest_decisions, latest_results)
+    provisional_score = score_matchweek_decisions(
+        provisional_decisions,
+        provisional_results,
+    )
+    latest_leader_hits = sum(
+        bool(row["result"] and row["result"]["leader_hit"])
+        for row in latest_predictions
+    )
+    settled_latest_shortlist_score = {
+        "hits": latest_leader_hits,
+        "settled": len(latest_results),
+        "hit_rate": _hit_rate(latest_leader_hits, len(latest_results)),
+    }
+    latest_mean_predicted_xg = round(
+        sum(float(row["predicted_xg"]["total"]) for row in latest_predictions)
+        / len(latest_predictions),
+        3,
+    )
+    latest_mean_total_goals = round(
+        sum(
+            int(row["final_home_goals"]) + int(row["final_away_goals"])
+            for row in latest_results
+        )
+        / len(latest_results),
+        3,
+    )
 
     settled_upcoming = [row for row in upcoming_predictions if row["result"]]
     upcoming_calibrated_leader_hits = sum(
@@ -1215,12 +1353,87 @@ def build():
         if row.get("pending_preleague_fixture")
     ]
 
+    provisional_accuracy_shortlist = []
+    for row in provisional_predictions:
+        if row["side_call"] != "pass":
+            provisional_accuracy_shortlist.append(
+                {
+                    "match_id": row["match_id"],
+                    "fixture": f"{row['home_team']} vs {row['away_team']}",
+                    "market": "one_x_two",
+                    "call": row["side_call"],
+                    "probability": row["side_probability"],
+                    "best_ask": row["side_best_ask"],
+                    "edge": row["side_edge"],
+                }
+            )
+        if row["total_call"] != "pass":
+            probability = (
+                row["over_2_5_probability"]
+                if row["total_call"] == "over_2_5"
+                else 1.0 - row["over_2_5_probability"]
+            )
+            provisional_accuracy_shortlist.append(
+                {
+                    "match_id": row["match_id"],
+                    "fixture": f"{row['home_team']} vs {row['away_team']}",
+                    "market": "over_under_2_5",
+                    "call": row["total_call"],
+                    "probability": round(probability, 6),
+                    "best_ask": row["total_best_ask"],
+                    "edge": row["total_edge"],
+                }
+            )
+    gate_by_id = {
+        int(row["match_id"]): row for row in provisional_gate["fixtures"]
+    }
+    bankroll_reference = float(
+        historical_bankroll["simulation"]["ending_bankroll"]
+    )
+    paper_positions = []
+    for row in provisional_paper_ledger["books"]["official_paper"]:
+        gate_key = "side" if row["market"] == "one_x_two" else "total"
+        gate = gate_by_id[int(row["match_id"])][gate_key]
+        bankroll_fraction = float(gate["paper_bankroll_fraction"])
+        paper_positions.append(
+            {
+                **row,
+                "paper_bankroll_fraction": bankroll_fraction,
+                "bankroll_reference": round(bankroll_reference, 2),
+                "paper_risk_units": round(
+                    min(
+                        bankroll_reference * bankroll_fraction,
+                        float(gate["best_execution"]["top_ask_notional"]),
+                    ),
+                    2,
+                ),
+                "maximum_full_risk_units": round(
+                    bankroll_reference * 0.01,
+                    2,
+                ),
+                "real_capital_units": 0.0,
+            }
+        )
+    paper_price_shortlist = [
+        {
+            "match_id": row["match_id"],
+            "fixture": row["fixture"],
+            "market": row["market"],
+            "call": row["outcome"],
+            "probability": row["model_probability"],
+            "best_ask": row["captured_best_ask"],
+            "edge": row["model_vs_executable_ask"],
+            "position_size_multiplier": row["position_size_multiplier"],
+        }
+        for row in paper_positions
+    ]
+
     site = {
         "meta": {
-            "site_version": "clubalpha_web_v0_20_mw10_settled",
+            "site_version": "clubalpha_web_v0_21_1_mw12_paper_position",
             "prediction_version": official_report["report_version"],
             "as_of": official_report["as_of_utc"],
-            "generated_at_utc": matchweek_nine_backtest["generated_at_utc"],
+            "generated_at_utc": provisional_paper_ledger["generated_at_utc"],
             "context_as_of": "2026-08-26",
             "context_version": contextual_report["report_version"],
             "simulations": 50000,
@@ -1232,49 +1445,49 @@ def build():
         },
         "latest_matchweek": {
             "status": "settled_published_provisional_shadow",
-            "round": upcoming_decisions["round"],
-            "as_of": upcoming_backtest["generated_at_utc"],
-            "fixtures": len(upcoming_predictions),
-            "settled": upcoming_score["settled"],
-            "score": upcoming_score,
+            "round": latest_decisions["round"],
+            "as_of": latest_backtest["generated_at_utc"],
+            "fixtures": len(latest_predictions),
+            "settled": latest_score["settled"],
+            "score": latest_score,
             "backtest_summary": {
-                "contextual_outcome_hits": upcoming_backtest["diagnostics"][
+                "contextual_outcome_hits": latest_backtest["diagnostics"][
                     "outcome_hits"
                 ],
                 "base_outcome_hits": round(
-                    upcoming_backtest["metrics"]["baseline"][
+                    latest_backtest["metrics"]["baseline"][
                         "one_x_two_top_pick_accuracy"
                     ]
-                    * upcoming_backtest["sample"]["matches"]
+                    * latest_backtest["sample"]["matches"]
                 ),
-                "calibrated_outcome_hits": upcoming_calibrated_leader_score[
+                "calibrated_outcome_hits": settled_latest_shortlist_score[
                     "hits"
                 ],
-                "process_supported_outcome_variance": upcoming_backtest[
+                "process_supported_outcome_variance": latest_backtest[
                     "diagnostics"
                 ]["process_supported_outcome_variance"],
-                "structural_misses": upcoming_backtest["diagnostics"][
+                "structural_misses": latest_backtest["diagnostics"][
                     "structural_misses"
                 ],
-                "mean_projected_xi_hits_of_11": upcoming_backtest[
+                "mean_projected_xi_hits_of_11": latest_backtest[
                     "lineup_projection"
                 ]["mean_xi_hits_of_11"],
-                "formation_accuracy": upcoming_backtest[
+                "formation_accuracy": latest_backtest[
                     "lineup_projection"
                 ]["formation_accuracy"],
-                "predicted_mean_total_xg": upcoming_mean_predicted_xg,
-                "observed_mean_total_xg": upcoming_backtest[
+                "predicted_mean_total_xg": latest_mean_predicted_xg,
+                "observed_mean_total_xg": latest_backtest[
                     "diagnostics"
                 ]["goal_environment_dispersion"]["observed_xg_total"]["mean"],
-                "observed_mean_total_goals": upcoming_mean_total_goals,
+                "observed_mean_total_goals": latest_mean_total_goals,
             },
-            "shortlist_score": upcoming_calibrated_leader_score,
+            "shortlist_score": settled_latest_shortlist_score,
             "audit_caveat": (
                 "The published pre-match slate was provisional; the planned "
                 "post-Europe final refresh was not completed."
             ),
             "capital_deployment_ready": False,
-            "predictions": upcoming_predictions,
+            "predictions": latest_predictions,
         },
         "current_matchweek": {
             "status": "settled_research_shadow",
@@ -1317,34 +1530,54 @@ def build():
             "midweek_review": pl_midweek_review,
         },
         "provisional_matchweek": {
-            "status": "awaiting_refresh",
-            "round": 11,
-            "as_of": "2026-11-08",
-            "generated_at_utc": upcoming_backtest["generated_at_utc"],
-            "market_captured_at_utc": None,
-            "final_refresh_required_after_utc": None,
-            "fixtures": 0,
+            "status": "provisional_shadow",
+            "round": provisional_decisions["round"],
+            "as_of": provisional_decisions["as_of"],
+            "generated_at_utc": provisional_decisions["generated_at_utc"],
+            "market_captured_at_utc": max(
+                provisional_gate["source_captures"].values()
+            ),
+            "final_refresh_required_after_utc": "2026-11-26T23:59:59Z",
+            "fixtures": len(provisional_predictions),
             "settled": 0,
-            "pending": 0,
-            "score": None,
-            "predictions": [],
+            "pending": len(provisional_predictions),
+            "score": provisional_score,
+            "predictions": provisional_predictions,
             "summary": {
-                "side_calls": 0,
-                "side_passes": 0,
-                "totals_calls": 0,
-                "totals_passes": 0,
+                **provisional_decisions["summary"],
+                "paper_positions": len(paper_positions),
                 "capital_deployment_ready": False,
             },
-            "accuracy_shortlist": [],
-            "price_aware_shadow_shortlist": [],
-            "pending_preleague_teams": [],
+            "accuracy_shortlist": provisional_accuracy_shortlist,
+            "price_aware_shadow_shortlist": paper_price_shortlist,
+            "pending_preleague_teams": provisional_decisions["refresh_gate"][
+                "pending_preleague_teams"
+            ],
             "decision_boundaries": {
                 "final_slate_frozen": False,
-                "final_call_eligible": False,
+                "final_call_eligible": provisional_decisions["refresh_gate"][
+                    "final_call_eligible"
+                ],
+                "paper_positions_active": len(paper_positions),
                 "capital_deployment_ready": False,
                 "wallet_used": False,
                 "orders_placed": False,
             },
+        },
+        "paper_portfolio": {
+            "status": "paper_only",
+            "as_of": provisional_paper_ledger["generated_at_utc"],
+            "starting_reference_bankroll": 100000.0,
+            "current_reference_bankroll": round(bankroll_reference, 2),
+            "full_position_bankroll_fraction": 0.01,
+            "positions": paper_positions,
+            "official_paper_positions": len(paper_positions),
+            "pending_positions": sum(not row["settled"] for row in paper_positions),
+            "real_capital_positions": 0,
+            "sizing_rule": (
+                "Eligible small-edge paper entries scale below the 1% maximum. "
+                "Before the final refresh, only explicitly approved entries qualify."
+            ),
         },
         "official_shadow_pick": {
             "match_id": original_pick_match_id,
@@ -1523,6 +1756,14 @@ def build():
                 "Lineup evidence coverage",
             ],
             "matchweeks": [
+                {
+                    "matchweek": 11,
+                    "name": "Research Matchweek 11",
+                    "source": "Published provisional calibrated decision slate",
+                    "status": "settled",
+                    "counts_toward_promotion_gate": False,
+                    **latest_score,
+                },
                 {
                     "matchweek": 10,
                     "name": "Research Matchweek 10",

@@ -6,15 +6,16 @@
   League matches, 100 frozen learning cards, 4,944 Club Form/Dynamics
   team-match rows and 8,762 historical team-match rows.
 - No 1X2 selection clears the locked football gates. Crystal Palace–Hull Over
-  2.5 is the only systematic total call at 58.7%.
-- Palace–Hull Over is not a price edge at capture: the best ask is 56¢ versus
-  58.7% model probability and 55.0% no-vig consensus. It fails the five-point
-  raw-edge gate.
+  2.5 is the only systematic total call at 58.7% and is now a reduced-size
+  paper position at the captured 56¢ ask (0.24874 of a full unit).
+- Palace–Hull Over carries +2.7 percentage points of raw model edge. It does
+  not clear the original full-size gate, so uncertainty is expressed through
+  reduced paper sizing rather than a full 1% bankroll position.
 - The structured totals review queue contains Man United–Brentford Over,
   Ipswich–Villa Over, Palace–Hull Over and Sunderland–Spurs Under. No
   discretionary adjustment is active.
 - Nine teams still have a European fixture before the league round. The slate
-  is provisional, the complete market gate has zero paper positions and real
+  is provisional, the complete market gate has one paper position and real
   allocation remains 0.00u.
 - Matchweek 11 settled at 5/10 for the frozen 1X2 leaders and 5/10 for O/U 2.5
   direction. No official paper positions existed; raw-price and discretionary
@@ -31,8 +32,8 @@
    availability and projected XIs.
 2. Rebuild the base, contextual, calibration and price layers as a new dated
    final candidate; never overwrite the November 23 packet.
-3. Reassess Palace–Hull Over and the other three totals review candidates.
-   Price cannot promote a football pass.
+3. Reassess the Palace–Hull paper position and the other three totals review
+   candidates. Price cannot promote a football pass.
 4. Capture final executable and closing prices for CLV measurement. Keep real
    capital disabled.
 

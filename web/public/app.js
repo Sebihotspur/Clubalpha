@@ -102,6 +102,44 @@ function currentResearchCards(matches) {
     .join("");
 }
 
+function totalLabel(outcome) {
+  return outcome === "over_2_5" ? "Over 2.5" : outcome === "under_2_5" ? "Under 2.5" : "";
+}
+
+function paperPortfolioPanel(data) {
+  const portfolio = data.paper_portfolio || { positions: [] };
+  if (!portfolio.positions.length) return "";
+  const cards = portfolio.positions.map((position) => {
+    const total = totalLabel(position.outcome);
+    const outcome = total ? `${total} goals` : position.outcome.replaceAll("_", " ");
+    const positionStatus = position.settled ? (position.won ? "Won" : "Lost") : "Pending";
+    return `<article class="pick-card">
+      <div class="pick-main">
+        <div class="pick-tag"><span></span> OFFICIAL PAPER POSITION · ${position.position_size_multiplier < 1 ? "REDUCED SIZE" : "FULL SIZE"} · ${positionStatus}</div>
+        <p class="fixture-kicker">${esc(dateTime(position.kickoff_utc))} · ${esc(position.captured_source)}</p>
+        <h2 class="pick-title">${esc(position.fixture)}</h2>
+        <div class="pick-market">${esc(outcome)} · ${pct(position.model_probability)} model versus ${Math.round(position.captured_best_ask * 100)}¢ captured ask</div>
+        <div class="pick-reasons">
+          <div class="reason"><strong>${pp(position.model_vs_executable_ask)}</strong><span>raw model edge</span></div>
+          <div class="reason"><strong>${dec(position.position_size_multiplier)}×</strong><span>full-position size</span></div>
+          <div class="reason"><strong>$${Number(position.paper_risk_units).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong><span>simulated risk</span></div>
+        </div>
+      </div>
+      <div class="pick-numbers">
+        <div class="pick-number"><span class="label">Paper tier</span><strong>${esc((position.paper_tier || "standard").replaceAll("_", " "))}</strong><small>${position.paper_entry_recorded_at_utc ? `Recorded ${esc(dateTime(position.paper_entry_recorded_at_utc))}` : positionStatus}</small></div>
+        <div class="pick-number"><span class="label">Reference bankroll</span><strong>$${Number(position.bankroll_reference).toLocaleString(undefined, { maximumFractionDigits: 0 })}</strong><small>Separate simulation · reference only</small></div>
+        <div class="pick-number"><span class="label">Maximum full risk</span><strong>$${Number(position.maximum_full_risk_units).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong><small>1% ceiling</small></div>
+        <div class="pick-number"><span class="label">Real allocation</span><strong>$0.00</strong><small>Paper only</small></div>
+      </div>
+    </article>`;
+  }).join("");
+  return `<section class="section">
+    <div class="section-head"><h2>Paper portfolio</h2><span class="panel-label">${portfolio.pending_positions} pending</span></div>
+    ${cards}
+    <p class="notice">PAPER EXECUTION ONLY · Small positive edge is expressed through smaller sizing · No wallet or real order was used.</p>
+  </section>`;
+}
+
 function overview(data) {
   const latest = data.latest_matchweek;
   const upcoming = data.provisional_matchweek;
@@ -159,13 +197,14 @@ function overview(data) {
     </section>
 
     <section class="metrics">
-      ${metric("Deployment", "NO CAPITAL", "Shadow observations only", "amber")}
+      ${metric("Paper deployment", `${data.paper_portfolio.pending_positions} PENDING`, "Real capital remains $0", "accent")}
       ${metric(`MW${headlineRound} 1X2 calls`, `${headlineSide.hits}/${headlineSide.settled}`, headlineSide.hit_rate === null ? "No calls" : pct(headlineSide.hit_rate), "amber")}
       ${metric(`MW${headlineRound} totals calls`, `${headlineTotals.hits}/${headlineTotals.settled}`, headlineTotals.hit_rate === null ? "No calls" : pct(headlineTotals.hit_rate), headlineTotals.hit_rate >= 0.5 ? "accent" : "amber")}
       ${metric("Learning memory", `${data.methodology.research_loop.adaptive.match_learning_cards} matches`, "Completed evidence only")}
     </section>
 
     ${nextSlateSection}
+    ${paperPortfolioPanel(data)}
 
     <section class="section">
       <div class="section-head"><h2>Matchweek ${esc(latest.round)} accuracy review</h2><a href="/predictions/">Open all 10 results →</a></div>
@@ -531,7 +570,7 @@ function predictions(data) {
         : result ? (result.total_hit ? "hit" : "miss") : "provisional call";
       const totalPrice = match.total_best_ask == null
         ? ""
-        : ` · ask ${pct(match.total_best_ask)} · edge ${pp(match.total_edge)}`;
+        : ` · ${totalLabel(match.total_price_outcome)} ask ${pct(match.total_best_ask)} · edge ${pp(match.total_edge)}`;
       return `<tr>
         <td class="fixture-cell"><strong>${esc(match.home_team)} vs ${esc(match.away_team)}</strong><span>${esc(dateTime(match.kickoff_utc))} · forecast xG ${dec(match.predicted_xg.home)}–${dec(match.predicted_xg.away)}</span>${result ? `<small>Final ${result.final_home_goals}–${result.final_away_goals} · xG ${dec(result.actual_xg.home)}–${dec(result.actual_xg.away)}</small>` : ""}</td>
         <td>${resultPills(match)}</td>
@@ -588,17 +627,18 @@ function predictions(data) {
         ${metric("Next O/U 2.5", "AWAITING", "No pre-match call exists yet", "amber")}
         ${metric("Deployment", "NO CAPITAL", "Research predictions only", "amber")}
       </section>`
-    : `<section class="page-head"><p class="eyebrow">${inProgress ? "Live frozen research slate" : "Provisional research slate"} · Matchweek ${esc(upcoming.round)}</p><h1>${inProgress ? "Predictions vs results in progress" : "Next-matchweek predictions"}</h1><p>The November 2 probabilities remain frozen. ${inProgress ? `${upcoming.settled}/${upcoming.fixtures} fixtures are final and scored; ${upcoming.pending} remain pending.` : `Every direction remains provisional until the final lineup and availability refresh.`}</p><div class="notice">${inProgress ? "FROZEN PRE-MATCH SLATE · PARTIAL SETTLEMENT" : "PROVISIONAL · FINAL REFRESH REQUIRED"} · ZERO CAPITAL AUTHORIZED</div></section>
+    : `<section class="page-head"><p class="eyebrow">${inProgress ? "Live frozen research slate" : "Provisional research slate"} · Matchweek ${esc(upcoming.round)}</p><h1>${inProgress ? "Predictions vs results in progress" : "Next-matchweek predictions"}</h1><p>The ${esc(upcoming.as_of)} probabilities remain frozen. ${inProgress ? `${upcoming.settled}/${upcoming.fixtures} fixtures are final and scored; ${upcoming.pending} remain pending.` : `Every direction remains provisional until the final lineup and availability refresh.`}</p><div class="notice">${inProgress ? "FROZEN PRE-MATCH SLATE · PARTIAL SETTLEMENT" : "PROVISIONAL · FINAL REFRESH REQUIRED"} · PAPER ONLY · REAL CAPITAL $0</div></section>
       <section class="metrics">
         ${metric("Promoted 1X2", `${upcoming.score.markets.one_x_two.hits}/${upcoming.score.markets.one_x_two.settled}`, upcoming.score.markets.one_x_two.hit_rate === null ? "No settled call" : pct(upcoming.score.markets.one_x_two.hit_rate), "accent")}
         ${metric("Promoted O/U 2.5", `${upcoming.score.markets.over_under_2_5.hits}/${upcoming.score.markets.over_under_2_5.settled}`, upcoming.score.markets.over_under_2_5.hit_rate === null ? "No settled call" : pct(upcoming.score.markets.over_under_2_5.hit_rate), "accent")}
         ${metric("Slate progress", `${upcoming.settled}/${upcoming.fixtures} final`, `${upcoming.pending} fixtures pending`, "amber")}
-        ${metric("Deployment", "NO CAPITAL", "Research predictions only", "amber")}
+        ${metric("Paper deployment", `${data.paper_portfolio.official_paper_positions} POSITION`, "Reduced-size simulation", "accent")}
       </section>
       <section class="section"><div class="section-head"><h2>Matchweek ${esc(upcoming.round)} ${inProgress ? "live settlement" : "provisional slate"}</h2><span class="panel-label">Frozen ${esc(dateTime(upcoming.generated_at_utc))}</span></div><div class="table-shell official-table"><table><thead><tr><th>Fixture</th><th>H · D · A</th><th>1X2 decision</th><th>O/U 2.5</th><th>Result / context</th></tr></thead><tbody>${upcomingRows}</tbody></table></div></section>
-      <section class="section"><div class="section-head"><h2>Price-aware shadow watch</h2><span class="panel-label">Captured ${esc(dateTime(upcoming.market_captured_at_utc))}</span></div>${priceWatches.length ? `<div class="gate-list">${priceWatches.map((watch) => `<div class="gate-row"><span>${esc(watch.fixture)} · ${esc(watch.call.replaceAll("_", " "))}</span><span>${pct(watch.probability)} model · ${pct(watch.best_ask)} ask · ${pp(watch.edge)}</span></div>`).join("")}</div>` : `<p class="notice">No football call also clears the five-point executable-price gate.</p>`}<p class="notice">SHADOW ONLY · A price discrepancy can qualify an existing football call; it can never promote a pass or authorize capital.</p></section>`;
+      <section class="section"><div class="section-head"><h2>Price-aware paper shortlist</h2><span class="panel-label">Captured ${esc(dateTime(upcoming.market_captured_at_utc))}</span></div>${priceWatches.length ? `<div class="gate-list">${priceWatches.map((watch) => `<div class="gate-row"><span>${esc(watch.fixture)} · ${esc(watch.call.replaceAll("_", " "))} · ${dec(watch.position_size_multiplier)}× size</span><span>${pct(watch.probability)} model · ${pct(watch.best_ask)} ask · ${pp(watch.edge)}</span></div>`).join("")}</div>` : `<p class="notice">No football call has positive executable paper edge.</p>`}<p class="notice">PAPER ONLY · A price discrepancy can qualify an existing football call; it can never promote a football pass or authorize real capital.</p></section>`;
 
   return `${upcomingPanel}
+    ${paperPortfolioPanel(data)}
     <section class="page-head"><p class="eyebrow">Settled research slate · Matchweek ${esc(latest.round)}</p><h1>Predictions vs reality</h1><p>The published calls, passes and pre-match probabilities remain frozen beside the final score and xG process. Matchweek ${esc(latest.round)} adds evidence to the next forecast; it does not rewrite this one.</p><div class="notice">SETTLED PUBLISHED PROVISIONAL SLATE · 1X2 + O/U 2.5 scored only when promoted · Zero capital authorized</div></section>
     <section class="metrics">
       ${metric("Promoted 1X2", `${latest.score.markets.one_x_two.hits}/${latest.score.markets.one_x_two.settled}`, latest.score.markets.one_x_two.hit_rate === null ? "No calls" : pct(latest.score.markets.one_x_two.hit_rate), "amber")}
@@ -681,6 +721,7 @@ function ledger(data) {
   const currentMisses = diagnostic.settled - diagnostic.official_1x2_hits;
   const currentPending = data.official_slate.fixtures - diagnostic.settled;
   return `<section class="page-head"><p class="eyebrow">Immutable public record</p><h1>Prediction and research ledger</h1><p>Every frozen call stays unchanged after kickoff. Official promotion evidence and newer research matchweeks remain visibly separated so learning never rewrites the historical record.</p><div class="notice">LATEST RESEARCH · MATCHWEEK ${esc(latestWeek.matchweek)} · ${latestWeek.settled}/${latestWeek.fixtures} FIXTURES SETTLED · ${latestWeek.markets.one_x_two.hits}/${latestWeek.markets.one_x_two.settled} PROMOTED 1X2 · ${latestWeek.markets.over_under_2_5.hits}/${latestWeek.markets.over_under_2_5.settled} PROMOTED O/U 2.5</div></section>
+    ${paperPortfolioPanel(data)}
     <div class="ledger-hero">
       <article class="ledger-panel"><span class="panel-label">Promotion progress</span><h2>${displayedRate} <span>· ${data.ledger.matches_logged}/${data.ledger.sample_gate} settled</span></h2><p>The gate is strictly above ${pct(data.ledger.hit_rate_gate)} with at least ${data.ledger.sample_gate} official results. Passing opens paper allocation and price validation only; real capital remains locked.</p><div class="progress"><span style="width:${progress}%"></span></div></article>
       <article class="ledger-panel"><span class="panel-label">Current evidence</span><div class="gate-list"><div class="gate-row"><span>Official promotion 1X2</span><span>${data.ledger.hits}/${data.ledger.matches_logged}</span></div><div class="gate-row"><span>Raw probability leader</span><span>${data.ledger.raw_probability_leader_hits}/${data.ledger.matches_logged}</span></div><div class="gate-row"><span>Latest research 1X2 · MW${latestWeek.matchweek}</span><span>${latestWeek.markets.one_x_two.hits}/${latestWeek.markets.one_x_two.settled}</span></div><div class="gate-row"><span>Latest research O/U 2.5 · MW${latestWeek.matchweek}</span><span>${latestWeek.markets.over_under_2_5.hits}/${latestWeek.markets.over_under_2_5.settled}</span></div><div class="gate-row"><span>BTTS diagnostic · zero weight</span><span>${latestWeek.markets.btts.hits}/${latestWeek.markets.btts.settled}</span></div><div class="gate-row"><span>Prior projected-XI accuracy</span><span>${dec(diagnostic.mean_projected_xi_hits_of_11)}/11</span></div></div></article>

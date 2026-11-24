@@ -36,6 +36,8 @@ def _selection(
     result: dict[str, Any] | None,
     book: str,
     official_position: bool,
+    position_size_multiplier: float = 1.0,
+    paper_tier: str | None = None,
     config: dict[str, Any],
 ) -> dict[str, Any]:
     ask = float(best_execution["best_ask"]) if best_execution else None
@@ -46,6 +48,7 @@ def _selection(
         counterfactual_pnl = (1.0 / ask - 1.0) if won else -1.0
     official_stake = (
         float(config["allocation"]["default_position_stake_units"])
+        * float(position_size_multiplier)
         if official_position
         else 0.0
     )
@@ -80,6 +83,12 @@ def _selection(
         ),
         "book": book,
         "official_position": official_position,
+        "paper_tier": paper_tier,
+        "position_size_multiplier": (
+            round(float(position_size_multiplier), 6)
+            if official_position
+            else 0.0
+        ),
         "official_stake_units": official_stake,
         "settled": settled,
         "won": won,
@@ -168,17 +177,27 @@ def build_paper_ledger(
             )
             if row["paper_eligible"]:
                 official.append(
-                    _selection(
-                        fixture=fixture,
-                        market=gate_key,
-                        outcome=row["football_call"],
-                        probability=row["model_probability"],
-                        best_execution=row["best_execution"],
-                        result=result,
-                        book="official_paper",
-                        official_position=True,
-                        config=config,
-                    )
+                    {
+                        **_selection(
+                            fixture=fixture,
+                            market=gate_key,
+                            outcome=row["football_call"],
+                            probability=row["model_probability"],
+                            best_execution=row["best_execution"],
+                            result=result,
+                            book="official_paper",
+                            official_position=True,
+                            position_size_multiplier=row.get(
+                                "position_size_multiplier", 1.0
+                            ),
+                            paper_tier=row.get("paper_tier"),
+                            config=config,
+                        ),
+                        "paper_entry_recorded_at_utc": row.get(
+                            "paper_entry_recorded_at_utc"
+                        ),
+                        "price_captured_at_utc": row.get("price_captured_at_utc"),
+                    }
                 )
             if row["gates"]["minimum_raw_edge"]:
                 raw_diagnostics.append(
