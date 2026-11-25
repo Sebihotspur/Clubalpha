@@ -97,10 +97,27 @@ function paperPosition(position, slate) {
   </article>`;
 }
 
+function homePaperPositions(positions) {
+  const pending = positions.filter((position) => !position.settled)
+    .sort((a, b) => new Date(a.kickoff_utc) - new Date(b.kickoff_utc));
+  const settled = positions.filter((position) => position.settled);
+  return `<section class="home-paper" id="paper-positions" aria-labelledby="home-paper-title">
+    <div class="clean-section-head">
+      <h2 id="home-paper-title">Paper positions</h2>
+      <span>${pending.length} pending · <a href="/ledger/">Full ledger</a></span>
+    </div>
+    ${pending.length ? pending.map((position) => paperPosition(position)).join("")
+      : '<p class="clean-note">No pending positions.</p>'}
+    ${settled.length ? `<details class="clean-fold home-paper-history">
+      <summary>Settled positions <span>${settled.length}</span></summary>
+      <div class="home-paper-history-body">${settled.map((position) => paperPosition(position)).join("")}</div>
+    </details>` : ""}
+  </section>`;
+}
+
 function overview(data) {
   const latest = data.premier_league[0];
   const uclSettled = data.ucl.fixtures.filter((row) => row.status === "final").length;
-  const pending = data.paper.positions.find((position) => !position.settled);
   return `<section class="clean-hero${latest ? " clean-hero-with-slate" : ""}">
     <div>
       <p class="eyebrow">Premier League · Champions League</p>
@@ -114,7 +131,7 @@ function overview(data) {
       <a href="/predictions/">View the slate</a>
     </aside>` : ""}
   </section>
-  ${pending ? paperPosition(pending) : ""}
+  ${homePaperPositions(data.paper.positions)}
   <section class="home-links" aria-label="Explore Clubalpha">
     <a href="/predictions/"><span>Premier League</span><strong>Matchweek ${esc(latest?.round ?? "—")}</strong><small>Fixtures and forecasts</small></a>
     <a href="/ucl/"><span>Champions League</span><strong>Matchday ${esc(data.ucl.matchday)}</strong><small>${uclSettled}/${data.ucl.fixtures.length} final scores</small></a>

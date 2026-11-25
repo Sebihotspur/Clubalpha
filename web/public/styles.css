@@ -413,6 +413,10 @@ tbody tr:hover { background: rgba(23, 37, 31, 0.56); }
 .home-links a span { color: var(--accent); font: 0.8125rem/1.3 var(--mono); }
 .home-links a strong { font-size: 1.125rem; }
 .home-links a small { color: var(--muted); font-size: 0.875rem; }
+.home-paper { scroll-margin-top: 110px; }
+.home-paper .clean-section-head > span a { color: var(--accent); text-underline-offset: 3px; }
+.home-paper .paper-card { margin: 10px 0; }
+.home-paper-history-body { padding: 0 12px 3px; border-top: 1px solid var(--border); }
 .paper-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px; margin: 12px 0; padding: 20px; border: 1px solid #285039; border-radius: 12px; background: linear-gradient(120deg, #102019, #0d1511); }
 .paper-tag { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; color: var(--accent); font: 0.8125rem/1.3 var(--mono); }
 .paper-state { padding: 3px 7px; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); font-size: 0.75rem; }
