@@ -409,7 +409,10 @@ class WebHolyGrailTests(unittest.TestCase):
 
     def test_paper_reason_uses_entry_evidence_not_a_later_forecast(self):
         display, = self.dashboard["paper"]["positions"]
-        expected = "Slate-high 3.08 projected xG. 58.7% model vs 56¢ entry (+2.7 pts); reduced paper stake."
+        expected = (
+            "We expected more goals here than in any other match that week. "
+            "The price only gave us a small advantage, so we kept the paper bet small."
+        )
         self.assertEqual(display["entry_reason"], expected)
 
         date = "2026-11-23-mw12-provisional"
@@ -421,7 +424,7 @@ class WebHolyGrailTests(unittest.TestCase):
         fixture = next(row for row in later["fixtures"] if row["match_id"] == position["match_id"])
         fixture["calibrated_predicted_xg"]["total"] = 5.0
         self.assertEqual(paper_entry_reason(position, [later, frozen]), expected)
-        self.assertNotIn("xG", paper_entry_reason(position, [later]))
+        self.assertNotIn("any other match", paper_entry_reason(position, [later]))
 
     def test_calibration_stays_available_in_the_research_payload(self):
         calibration = self.data["methodology"]["fixture_calibration"]

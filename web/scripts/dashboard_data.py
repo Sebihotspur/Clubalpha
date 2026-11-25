@@ -122,16 +122,31 @@ def paper_entry_reason(position, decisions):
                     or abs(total["call_probability"] - chance) > 1e-6):
                 continue
             xg = fixture["calibrated_predicted_xg"]["total"]
-            if xg == max(row["calibrated_predicted_xg"]["total"] for row in doc["fixtures"]):
-                reasons.append(f"Slate-high {xg:.2f} projected xG.")
-            else:
-                reasons.append(f"{xg:.2f} projected total xG.")
+            others = [
+                row["calibrated_predicted_xg"]["total"]
+                for row in doc["fixtures"] if row is not fixture
+            ]
+            if others and position["outcome"] == "over_2_5" and xg > max(others):
+                reasons.append("We expected more goals here than in any other match that week.")
+            elif others and position["outcome"] == "under_2_5" and xg < min(others):
+                reasons.append("We expected fewer goals here than in any other match that week.")
             break
-    edge = (chance - ask) * 100
-    pricing = f"{chance:.1%} model vs {ask * 100:.0f}¢ entry ({edge:+.1f} pts)"
-    if position.get("position_size_multiplier", 1) < 1:
-        pricing += "; reduced paper stake"
-    reasons.append(f"{pricing}.")
+    if not reasons and chance > 0.5 and market == "over_under_2_5":
+        goals = "three goals or more" if position["outcome"] == "over_2_5" else "two goals or fewer"
+        reasons.append(f"We thought {goals} were more likely than not.")
+    edge = chance - ask
+    reduced = position.get("position_size_multiplier", 1) < 1
+    if 0 < edge < 0.05:
+        reasons.append(
+            "The price only gave us a small advantage, so we kept the paper bet small."
+            if reduced else "The price gave us a small advantage."
+        )
+    elif edge > 0:
+        reasons.append("We thought the outcome was more likely than the price suggested.")
+        if reduced:
+            reasons.append("We kept the paper bet small.")
+    else:
+        reasons.append("The saved price didn't give us an advantage.")
     return " ".join(reasons)
 
 
