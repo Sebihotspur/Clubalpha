@@ -78,19 +78,12 @@ function paperPosition(position, slate) {
     !row.score && `${row.home_team} vs ${row.away_team}` === position.fixture &&
     row.kickoff_utc === position.kickoff_utc
   );
-  const projectedTotal = match?.predicted_xg?.total;
-  const isHighest = Number.isFinite(projectedTotal) && slate.fixtures.every((row) =>
-    (row.predicted_xg?.total ?? -Infinity) <= projectedTotal
-  );
-  const context = Number.isFinite(projectedTotal)
-    ? `${dec(projectedTotal)} projected total xG${isHighest ? ", the highest on this slate" : ""}.${match.side_call === "pass" ? " No winner pick." : ""}`
-    : "";
   return `<article class="paper-card">
     <div>
       <div class="paper-tag"><span>Paper position</span><span class="paper-state">${status}</span></div>
       <h3>${esc(position.fixture)}</h3>
       <p>${esc(market ? `${market} goals` : position.outcome.replaceAll("_", " "))} · ${esc(price)}${position.settled && position.score ? ` · Final ${esc(position.score)}` : ""}</p>
-      ${context ? `<p class="paper-context">${esc(context)} <a href="${matchupLink(match)}">Matchup details</a></p>` : ""}
+      ${position.entry_reason ? `<p class="paper-context"><strong>Why:</strong> ${esc(position.entry_reason)}${match ? ` <a href="${matchupLink(match)}">Matchup details</a>` : ""}</p>` : ""}
     </div>
     <div class="paper-size"><strong>${position.risk_reference == null ? `${dec(position.official_stake_units)}u` : money(position.risk_reference)}</strong>
     <small>${position.risk_reference == null ? "Paper stake" : "Simulated risk at entry"}</small></div>

@@ -96,6 +96,45 @@ def fixture_slates(artifacts):
     return output
 
 
+def paper_entry_reason(position, decisions):
+    """Describe an existing paper entry using only information saved by capture."""
+    chance = position.get("model_probability")
+    ask = position.get("captured_best_ask")
+    if chance is None or ask is None:
+        return None
+    reasons = []
+    capture = position.get("price_captured_at_utc")
+    market = position.get("market")
+    if capture and market == "over_under_2_5":
+        cutoff = timestamp(capture)
+        kickoff = timestamp(position["kickoff_utc"])
+        for doc in decisions:
+            if not timestamp(doc["generated_at_utc"]) <= cutoff < kickoff:
+                continue
+            fixture = next(
+                (row for row in doc["fixtures"] if row["match_id"] == position["match_id"]),
+                None,
+            )
+            if not fixture or timestamp(fixture["kickoff_utc"]) != kickoff:
+                continue
+            total = fixture["total_decision"]
+            if (total["call"] != position["outcome"]
+                    or abs(total["call_probability"] - chance) > 1e-6):
+                continue
+            xg = fixture["calibrated_predicted_xg"]["total"]
+            if xg == max(row["calibrated_predicted_xg"]["total"] for row in doc["fixtures"]):
+                reasons.append(f"Slate-high {xg:.2f} projected xG.")
+            else:
+                reasons.append(f"{xg:.2f} projected total xG.")
+            break
+    edge = (chance - ask) * 100
+    pricing = f"{chance:.1%} model vs {ask * 100:.0f}¢ entry ({edge:+.1f} pts)"
+    if position.get("position_size_multiplier", 1) < 1:
+        pricing += "; reduced paper stake"
+    reasons.append(f"{pricing}.")
+    return " ".join(reasons)
+
+
 def paper_book(artifacts, legacy):
     saved = {}
     for path in sorted((artifacts / "paper_performance").glob("*/ledger.json")):
@@ -118,9 +157,18 @@ def paper_book(artifacts, legacy):
     fields = ("fixture", "kickoff_utc", "outcome", "captured_best_ask", "captured_source",
               "model_probability", "official_stake_units", "settled", "won",
               "official_gross_pnl_units", "score")
+    decisions = sorted(
+        (read_json(path) for path in (artifacts / "matchweek_research").glob("*/decisions.json")),
+        key=lambda doc: timestamp(doc["generated_at_utc"]),
+        reverse=True,
+    )
     return sorted(
         [
-            {**{key: row.get(key) for key in fields}, "risk_reference": reference.get(key)}
+            {
+                **{key: row.get(key) for key in fields},
+                "risk_reference": reference.get(key),
+                "entry_reason": paper_entry_reason(row, decisions),
+            }
             for key, row in saved.items()
         ],
         key=lambda row: row["kickoff_utc"],

@@ -1,10 +1,12 @@
 import json
+from copy import deepcopy
 import subprocess
 import sys
 import unittest
 from pathlib import Path
 
 from web.scripts.build_site_data import score_matchweek
+from web.scripts.dashboard_data import paper_entry_reason
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -327,7 +329,7 @@ class WebHolyGrailTests(unittest.TestCase):
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
         self.assertNotIn('data-route="methodology"', index_html)
         self.assertNotIn('data-route="holy-grail"', index_html)
-        self.assertIn('/app.js?v=0.22.3-home-paper', index_html)
+        self.assertIn('/app.js?v=0.22.4-paper-reason', index_html)
 
     def test_ucl_uses_shared_alpha_with_separate_calibration(self):
         cycle = self.data["ucl_alpha_cycle"]
@@ -404,6 +406,22 @@ class WebHolyGrailTests(unittest.TestCase):
         for week in weeks.values():
             for market in week["markets"].values():
                 self.assertEqual(market["hits"] + market["misses"], market["settled"])
+
+    def test_paper_reason_uses_entry_evidence_not_a_later_forecast(self):
+        display, = self.dashboard["paper"]["positions"]
+        expected = "Slate-high 3.08 projected xG. 58.7% model vs 56¢ entry (+2.7 pts); reduced paper stake."
+        self.assertEqual(display["entry_reason"], expected)
+
+        date = "2026-11-23-mw12-provisional"
+        ledger = json.loads((ROOT / "artifacts/paper_performance" / date / "ledger.json").read_text())
+        position, = ledger["books"]["official_paper"]
+        frozen = json.loads((ROOT / "artifacts/matchweek_research" / date / "decisions.json").read_text())
+        later = deepcopy(frozen)
+        later["generated_at_utc"] = "2026-11-25T12:00:00Z"
+        fixture = next(row for row in later["fixtures"] if row["match_id"] == position["match_id"])
+        fixture["calibrated_predicted_xg"]["total"] = 5.0
+        self.assertEqual(paper_entry_reason(position, [later, frozen]), expected)
+        self.assertNotIn("xG", paper_entry_reason(position, [later]))
 
     def test_calibration_stays_available_in_the_research_payload(self):
         calibration = self.data["methodology"]["fixture_calibration"]
