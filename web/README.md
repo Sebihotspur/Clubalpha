@@ -12,10 +12,12 @@ python3 -m http.server 4173 --directory web/public
 
 Predictions shows the latest saved pre-kickoff decision for each fixture.
 Ledger keeps paper positions, the standardized bankroll, and matchweek hit
-rates separate. The P&L chart adds only settled results, grouped by match
-day (ET). The dashed line averages the last five plotted running totals; it
-does not fill missing days with zero or include pending positions. Matchups retains the full 380-fixture benchmark and uses the
-latest fixture forecast when the exact home/away pairing is on the slate.
+rates separate. The homepage and Ledger share a P&L chart showing only settled
+results, grouped by match day (ET). The dashed line averages the last five
+plotted running totals; it does not fill missing days with zero or include
+pending positions. Until paper positions settle, the homepage opens the
+separately labeled simulation chart by default. Matchups retains the full
+380-fixture benchmark and uses the latest forecast for exact slate pairings.
 Methodology and research detail stay in the repository; the previous
 `/data/site.json` export remains available for existing consumers.
 

@@ -125,6 +125,7 @@ function overview(data) {
     </aside>` : ""}
   </section>
   ${homePaperPositions(data.paper.positions)}
+  ${paperPerformance(data.paper.pnl, { showSimulationWhileEmpty: true })}
   <section class="home-links" aria-label="Explore Clubalpha">
     <a href="/predictions/"><span>Premier League</span><strong>Matchweek ${esc(latest?.round ?? "—")}</strong><small>Fixtures and forecasts</small></a>
     <a href="/ucl/"><span>Champions League</span><strong>Matchday ${esc(data.ucl.matchday)}</strong><small>${uclSettled}/${data.ucl.fixtures.length} final scores</small></a>
@@ -327,9 +328,10 @@ function pnlPlot(track, unit, window) {
   </figure>`;
 }
 
-function paperPerformance(pnl) {
+function paperPerformance(pnl, { showSimulationWhileEmpty = false } = {}) {
   if (!pnl) return "";
   const { official, simulation, moving_average_days: window } = pnl;
+  const openSimulation = showSimulationWhileEmpty && !official.points.length && simulation?.points.length;
   return `<section class="clean-section pnl-section" aria-labelledby="pnl-title">
     <div class="clean-section-head"><h2 id="pnl-title">Paper P&amp;L over time</h2><span>${official.settled_positions} settled · ${official.pending_positions} pending</span></div>
     <div class="pnl-card">
@@ -337,7 +339,7 @@ function paperPerformance(pnl) {
       ${pnlPlot(official, "units", window)}
       <p class="clean-note">Before fees. The moving average smooths the running total over the last ${window} match days with settled positions.</p>
     </div>
-    ${simulation ? `<details class="clean-fold pnl-benchmark">
+    ${simulation ? `<details class="clean-fold pnl-benchmark"${openSimulation ? " open" : ""}>
       <summary>Separate $100k simulation <span>${esc(pnlAmount(simulation.current_pnl, "USD"))} P&amp;L</span></summary>
       <div class="pnl-card">
         <p class="clean-note">This is a separate simulation, not our paper-position record. Its early history was reconstructed using rules chosen after some results were known.</p>
