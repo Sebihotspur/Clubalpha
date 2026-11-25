@@ -1,10 +1,15 @@
 """Small display payload assembled from the newest existing artifacts."""
 
+from collections import defaultdict
 from datetime import datetime
+from decimal import Decimal
 import json
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 LEDGER_MARKETS = ("one_x_two", "over_under_2_5")
+PNL_AVERAGE_DAYS = 5
+MATCH_DAY_ZONE = ZoneInfo("America/New_York")
 
 
 def read_json(path):
@@ -202,6 +207,42 @@ def accuracy(hits, settled):
     }
 
 
+def pnl_history(positions, pnl_key):
+    """Group settled P&L by fixture day, without mixing paper and benchmark."""
+    by_day = defaultdict(lambda: [Decimal(0), 0])
+    pending = 0
+    for row in positions:
+        if not row["settled"]:
+            pending += 1
+            continue
+        day = timestamp(row["kickoff_utc"]).astimezone(MATCH_DAY_ZONE).date().isoformat()
+        by_day[day][0] += Decimal(str(row[pnl_key]))
+        by_day[day][1] += 1
+
+    running = Decimal(0)
+    window = []
+    points = []
+    for day, (daily_pnl, count) in sorted(by_day.items()):
+        running += daily_pnl
+        window.append(running)
+        if len(window) > PNL_AVERAGE_DAYS:
+            window.pop(0)
+        points.append({
+            "date": day,
+            "settled_positions": count,
+            "day_pnl": float(daily_pnl),
+            "running_pnl": float(running),
+            "moving_average": float(round(sum(window) / PNL_AVERAGE_DAYS, 6))
+            if len(window) == PNL_AVERAGE_DAYS else None,
+        })
+    return {
+        "points": points,
+        "settled_positions": sum(point["settled_positions"] for point in points),
+        "pending_positions": pending,
+        "current_pnl": float(running),
+    }
+
+
 def matchweek_record(weeks, official):
     history = []
     for _, row in sorted(weeks.items(), reverse=True):
@@ -301,15 +342,23 @@ def build_dashboard(root, legacy):
         timestamp(row["captured_at_utc"]),
     ))
     rollup = max((artifacts / "paper_performance").glob("*/bankroll.json"), default=None)
+    simulation = read_json(rollup)["simulation"] if rollup else None
+    positions = paper_book(artifacts, legacy["paper_portfolio"])
     return {
         "premier_league": slates[:2],
         "matchweeks": matchweeks,
         "forecast_record": record,
         "paper": {
-            "positions": paper_book(artifacts, legacy["paper_portfolio"]),
-            "standardized_bankroll": (
-                read_json(rollup)["simulation"]["ending_bankroll"] if rollup else None
-            ),
+            "positions": positions,
+            "standardized_bankroll": simulation["ending_bankroll"] if simulation else None,
+            "pnl": {
+                "moving_average_days": PNL_AVERAGE_DAYS,
+                "official": pnl_history(positions, "official_gross_pnl_units"),
+                "simulation": pnl_history(
+                    simulation["positions"] + simulation.get("pending", []),
+                    "gross_pnl_units",
+                ) if simulation else None,
+            },
         },
         "ucl": {
             **scoreboard,

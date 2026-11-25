@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from web.scripts.build_site_data import score_matchweek
-from web.scripts.dashboard_data import paper_entry_reason
+from web.scripts.dashboard_data import paper_entry_reason, pnl_history
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -329,7 +329,7 @@ class WebHolyGrailTests(unittest.TestCase):
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
         self.assertNotIn('data-route="methodology"', index_html)
         self.assertNotIn('data-route="holy-grail"', index_html)
-        self.assertIn('/app.js?v=0.22.4-paper-reason', index_html)
+        self.assertIn('/app.js?v=0.22.5-pnl-chart', index_html)
 
     def test_ucl_uses_shared_alpha_with_separate_calibration(self):
         cycle = self.data["ucl_alpha_cycle"]
@@ -425,6 +425,37 @@ class WebHolyGrailTests(unittest.TestCase):
         fixture["calibrated_predicted_xg"]["total"] = 5.0
         self.assertEqual(paper_entry_reason(position, [later, frozen]), expected)
         self.assertNotIn("any other match", paper_entry_reason(position, [later]))
+
+    def test_pnl_chart_keeps_pending_paper_positions_out_of_the_simulation(self):
+        timeline = self.dashboard["paper"]["pnl"]
+        self.assertEqual(timeline["moving_average_days"], 5)
+        self.assertEqual(timeline["official"], {
+            "points": [], "settled_positions": 0, "pending_positions": 1, "current_pnl": 0,
+        })
+        simulation = timeline["simulation"]
+        self.assertEqual(simulation["settled_positions"], 17)
+        self.assertAlmostEqual(simulation["current_pnl"], -5852.79315)
+        self.assertAlmostEqual(simulation["points"][-1]["running_pnl"], -5852.79315)
+        self.assertIsNone(simulation["points"][3]["moving_average"])
+        self.assertIsNotNone(simulation["points"][4]["moving_average"])
+
+    def test_daily_pnl_combines_same_day_positions_and_averages_five_running_totals(self):
+        rows = [
+            {"kickoff_utc": f"2026-11-{day:02}T14:00:00Z", "settled": True, "pnl": 1}
+            for day in range(1, 7)
+        ]
+        rows += [
+            {"kickoff_utc": "2026-11-02T02:00:00Z", "settled": True, "pnl": -0.5},
+            {"kickoff_utc": "2026-11-04T14:00:00Z", "settled": False, "pnl": None},
+        ]
+        result = pnl_history(rows, "pnl")
+        self.assertEqual(len(result["points"]), 6)
+        self.assertEqual(result["settled_positions"], 7)
+        self.assertEqual(result["pending_positions"], 1)
+        self.assertEqual(result["points"][0]["day_pnl"], 0.5)
+        self.assertIsNone(result["points"][3]["moving_average"])
+        self.assertEqual(result["points"][4]["moving_average"], 2.5)
+        self.assertEqual(result["points"][5]["moving_average"], 3.5)
 
     def test_calibration_stays_available_in_the_research_payload(self):
         calibration = self.data["methodology"]["fixture_calibration"]

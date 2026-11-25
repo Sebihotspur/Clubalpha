@@ -263,12 +263,97 @@ function matchweekFold(week) {
   </details>`;
 }
 
+function pnlAmount(value, unit) {
+  if (value == null) return "—";
+  if (unit === "USD") return `${value > 0 ? "+" : ""}${money(value)}`;
+  return `${value > 0 ? "+" : ""}${dec(value)}u`;
+}
+
+function pnlPlot(track, unit, window) {
+  const { points } = track;
+  const last = points.at(-1);
+  if (!last) return '<p class="pnl-empty">No settled positions yet. Pending positions don’t count toward P&amp;L.</p>';
+  const averages = points.flatMap((point, index) => point.moving_average == null
+    ? [] : [[index + 1, point.moving_average]]);
+  const values = [0, ...points.map((point) => point.running_pnl), ...averages.map(([, v]) => v)];
+  const low = Math.min(...values);
+  const high = Math.max(...values);
+  const range = high - low || (unit === "USD" ? 10 : 1);
+  const scale = 10 ** Math.floor(Math.log10(range / 3));
+  const step = Math.ceil(range / (3 * scale)) * scale;
+  const lo = Math.floor(low / step);
+  const hi = Math.ceil(high / step) || (lo === 0 ? 1 : 0);
+  const ticks = Array.from({ length: hi - lo + 1 }, (_, i) => (lo + i) * step);
+  const x = (index) => 2 + (96 * index) / points.length;
+  const y = (value) => 5 + (90 * (hi * step - value)) / ((hi - lo) * step);
+  const xy = (pairs) => pairs.map(([index, value]) => `${x(index).toFixed(3)},${y(value).toFixed(3)}`).join(" ");
+  const cumulative = [[0, 0], ...points.map((point, i) => [i + 1, point.running_pnl])];
+  const tickLabel = (value) => unit === "USD" ?
+    new Intl.NumberFormat("en-US", { style: "currency", currency: "USD",
+      notation: "compact", maximumFractionDigits: 2 }).format(value || 0) :
+    `${Number(value.toFixed(3))}u`;
+  const averagePoint = averages.length === 1 ? averages[0] : null;
+  const summary = `Running profit and loss through ${dateOnly(last.date)}: ${pnlAmount(last.running_pnl, unit)} across ${points.length} match days.`;
+  return `<figure class="pnl-figure">
+    <div class="pnl-chart">
+      <div class="pnl-y-axis" aria-hidden="true">${ticks.map((value) =>
+        `<span style="top:${y(value)}%">${esc(tickLabel(value))}</span>`).join("")}</div>
+      <div class="pnl-plot">
+        <svg role="img" aria-label="${esc(summary)}" viewBox="0 0 100 100" preserveAspectRatio="none">
+          ${ticks.map((value) => `<line x1="0" x2="100" y1="${y(value)}" y2="${y(value)}" vector-effect="non-scaling-stroke" class="${value === 0 ? "pnl-zero" : "pnl-grid"}"/>`).join("")}
+          <polyline points="${xy(cumulative)}" vector-effect="non-scaling-stroke" class="pnl-running-line"/>
+          ${averages.length > 1 ? `<polyline points="${xy(averages)}" vector-effect="non-scaling-stroke" class="pnl-average-line"/>` : ""}
+        </svg>
+        ${averagePoint ? `<span class="pnl-average-point" aria-hidden="true" style="left:${x(averagePoint[0])}%;top:${y(averagePoint[1])}%"></span>` : ""}
+        <span class="pnl-endpoint" aria-hidden="true" style="left:${x(points.length)}%;top:${y(last.running_pnl)}%"></span>
+      </div>
+    </div>
+    <div class="pnl-x-axis" aria-hidden="true"><span>Start</span><span>${points.length} match ${points.length === 1 ? "day" : "days"}</span><span>${esc(dateOnly(last.date))}</span></div>
+    <figcaption class="pnl-legend">
+      <span><i aria-hidden="true"></i>Running P&amp;L</span>
+      ${averages.length ? `<span class="pnl-average-key"><i aria-hidden="true"></i>${window}-match-day moving average</span>` : ""}
+    </figcaption>
+    <details class="clean-fold pnl-history">
+      <summary>View daily numbers</summary>
+      <div class="table-shell"><table>
+        <thead><tr><th scope="col">Match day</th><th scope="col">Positions</th><th scope="col">Day P&amp;L</th><th scope="col">Running P&amp;L</th><th scope="col">${window}-day avg.</th></tr></thead>
+        <tbody>${points.slice().reverse().map((point) => `<tr>
+          <th scope="row">${esc(dateOnly(point.date))}</th><td>${point.settled_positions}</td>
+          <td>${esc(pnlAmount(point.day_pnl, unit))}</td><td>${esc(pnlAmount(point.running_pnl, unit))}</td>
+          <td>${esc(pnlAmount(point.moving_average, unit))}</td>
+        </tr>`).join("")}</tbody>
+      </table></div>
+    </details>
+  </figure>`;
+}
+
+function paperPerformance(pnl) {
+  if (!pnl) return "";
+  const { official, simulation, moving_average_days: window } = pnl;
+  return `<section class="clean-section pnl-section" aria-labelledby="pnl-title">
+    <div class="clean-section-head"><h2 id="pnl-title">Paper P&amp;L over time</h2><span>${official.settled_positions} settled · ${official.pending_positions} pending</span></div>
+    <div class="pnl-card">
+      <div class="pnl-head"><span>Running paper P&amp;L</span><strong>${esc(pnlAmount(official.current_pnl, "units"))}</strong></div>
+      ${pnlPlot(official, "units", window)}
+      <p class="clean-note">Before fees. The moving average smooths the running total over the last ${window} match days with settled positions.</p>
+    </div>
+    ${simulation ? `<details class="clean-fold pnl-benchmark">
+      <summary>Separate $100k simulation <span>${esc(pnlAmount(simulation.current_pnl, "USD"))} P&amp;L</span></summary>
+      <div class="pnl-card">
+        <p class="clean-note">This is a separate simulation, not our paper-position record. Its early history was reconstructed using rules chosen after some results were known.</p>
+        ${pnlPlot(simulation, "USD", window)}
+      </div>
+    </details>` : ""}
+  </section>`;
+}
+
 function ledger(data) {
   const book = data.paper.positions;
   const settled = book.filter((row) => row.settled);
   const pnl = settled.reduce((sum, row) => sum + (row.official_gross_pnl_units ?? 0), 0);
   return `${pageHead("Paper only", "Ledger", "Frozen forecasts, match results, and simulated positions.")}
     ${forecastRecord(data.forecast_record)}
+    ${paperPerformance(data.paper.pnl)}
     <section class="clean-section"><div class="clean-section-head"><h2>Matchweek hit rates</h2></div>
       ${data.matchweeks.map(matchweekFold).join("")}
     </section>
@@ -276,7 +361,7 @@ function ledger(data) {
       <div class="clean-section-head"><h2>Paper positions</h2><span>${book.length - settled.length} pending · ${settled.length} settled</span></div>
       ${book.length ? book.map((position) => paperPosition(position)).join("") : '<p class="clean-note">No paper positions recorded.</p>'}
       <div class="ledger-totals">
-        <p><span>Settled paper P&amp;L</span><strong>${pnl > 0 ? "+" : ""}${dec(pnl)}u</strong></p>
+        ${data.paper.pnl ? "" : `<p><span>Settled paper P&amp;L</span><strong>${esc(pnlAmount(pnl, "units"))}</strong></p>`}
         ${data.paper.standardized_bankroll == null ? "" : `<p><span>Separate $100k simulation</span><strong>${money(data.paper.standardized_bankroll)}</strong></p>`}
       </div>
       ${data.paper.standardized_bankroll == null ? "" : '<p class="clean-note">The $100k simulation is a separate benchmark. Paper positions do not change its balance.</p>'}

@@ -457,6 +457,33 @@ tbody tr:hover { background: rgba(23, 37, 31, 0.56); }
 .fold-body p, .ledger-totals p { display: flex; justify-content: space-between; gap: 10px; margin: 0; color: var(--muted); font-size: 0.9375rem; }
 .fold-body strong, .ledger-totals strong { white-space: nowrap; color: var(--text); }
 .ledger-totals { display: grid; gap: 8px; margin-top: 13px; padding: 13px 16px; border: 1px solid var(--border); border-radius: 10px; }
+.pnl-card { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); padding: 14px 16px; }
+.pnl-head, .pnl-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
+.pnl-head { justify-content: space-between; }
+.pnl-head span, .pnl-legend { color: var(--muted); font: 0.875rem/1.5 var(--mono); }
+.pnl-head strong { font: 600 1.375rem/1.3 var(--mono); font-variant-numeric: tabular-nums; }
+.pnl-empty { margin: 12px 0 0; }
+.pnl-benchmark .pnl-card { border: 0; border-top: 1px solid var(--border); border-radius: 0 0 12px 12px; }
+.pnl-benchmark .pnl-card > p:first-child { margin-top: 0; }
+.pnl-figure { margin: 16px 0 0; }
+.pnl-chart { display: grid; grid-template-columns: 4.75rem minmax(0, 1fr); min-height: clamp(150px, 23vw, 210px); }
+.pnl-y-axis, .pnl-plot { position: relative; }
+.pnl-y-axis span { position: absolute; right: 8px; transform: translateY(-50%); color: var(--muted); font: 0.8125rem/1 var(--mono); white-space: nowrap; }
+.pnl-plot svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.pnl-grid, .pnl-zero { stroke: var(--border); stroke-width: 1; }
+.pnl-zero { stroke: var(--muted-2); }
+.pnl-running-line, .pnl-average-line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.pnl-average-line { stroke: var(--blue); stroke-dasharray: 5 5; }
+.pnl-endpoint, .pnl-average-point { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); transform: translate(-50%, -50%); }
+.pnl-average-point { background: var(--blue); }
+.pnl-x-axis { margin-left: 4.75rem; display: flex; justify-content: space-between; gap: 6px; color: var(--muted); font: 0.8125rem/1.4 var(--mono); }
+.pnl-legend { margin-top: 13px; }
+.pnl-legend span { display: inline-flex; align-items: center; gap: 7px; }
+.pnl-legend i { width: 20px; border-top: 2px solid var(--accent); }
+.pnl-average-key i { border-top: 2px dashed var(--blue); }
+.pnl-history .table-shell { margin: 0; border: 0; border-top: 1px solid var(--border); border-radius: 0; }
+.pnl-history tbody th { color: var(--text); text-transform: none; letter-spacing: normal; font-size: 0.8125rem; }
+.pnl-history td { font-size: 0.8125rem; }
 .forecast-record { margin-top: 12px; }
 .record-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
 .record-metric { padding: 14px 18px; }
@@ -510,6 +537,7 @@ tbody tr:hover { background: rgba(23, 37, 31, 0.56); }
 }
 
 @media (max-width: 680px) {
+  .pnl-x-axis span:nth-child(2) { display: none; }
   .ledger-week .week-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ledger-week .week-name { grid-column: 1 / -1; }
   .ledger-week .week-rate { text-align: left; }
