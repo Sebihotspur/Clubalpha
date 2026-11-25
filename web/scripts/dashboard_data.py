@@ -4,6 +4,8 @@ from datetime import datetime
 import json
 from pathlib import Path
 
+LEDGER_MARKETS = ("one_x_two", "over_under_2_5")
+
 
 def read_json(path):
     return json.loads(path.read_text(encoding="utf-8"))
@@ -126,14 +128,62 @@ def paper_book(artifacts, legacy):
     )
 
 
+def accuracy(hits, settled):
+    if not 0 <= hits <= settled:
+        raise ValueError("invalid matchweek accuracy counts")
+    return {
+        "hits": hits,
+        "misses": settled - hits,
+        "settled": settled,
+        "hit_rate": round(hits / settled, 6) if settled else None,
+    }
+
+
+def matchweek_record(weeks, official):
+    history = []
+    for _, row in sorted(weeks.items(), reverse=True):
+        basis = row.get("basis")
+        if basis is None:
+            if row["markets"]["one_x_two"]["label"] == "1X2 promoted calls":
+                basis = "selective_calls"
+            elif row.get("counts_toward_promotion_gate"):
+                basis = "official_archive"
+            else:
+                basis = "full_slate"
+        history.append({
+            "matchweek": row["matchweek"],
+            "fixtures": row["fixtures"],
+            "settled": row["settled"],
+            "markets": {
+                key: {
+                    "label": row["markets"][key]["label"],
+                    **accuracy(row["markets"][key]["hits"], row["markets"][key]["settled"]),
+                }
+                for key in LEDGER_MARKETS
+            },
+            "basis": basis,
+            "model_directions": row.get("model_directions"),
+        })
+    selective = [week for week in history if week["basis"] == "selective_calls"]
+    return history, {
+        "from_matchweek": min((week["matchweek"] for week in selective), default=None),
+        "markets": {
+            key: accuracy(
+                sum(week["markets"][key]["hits"] for week in selective),
+                sum(week["markets"][key]["settled"] for week in selective),
+            )
+            for key in LEDGER_MARKETS
+        },
+        "official_archive_1x2": accuracy(official["hits"], official["matches_logged"]),
+    }
+
+
 def build_dashboard(root, legacy):
     artifacts = root / "artifacts"
     slates = fixture_slates(artifacts)
     # Keep all earlier published hit-rate records, including their original denominators.
     weeks = {row["matchweek"]: row for row in legacy["ledger"]["matchweeks"]}
     for slate in slates:
-        if not slate["settled"]:
-            continue
         settled = [row for row in slate["fixtures"] if row["score"] is not None]
         sides = [row for row in settled if row["side_call"] != "pass"]
         totals = [row for row in settled if row["total_call"] != "pass"]
@@ -141,6 +191,7 @@ def build_dashboard(root, legacy):
             "matchweek": slate["round"],
             "settled": slate["settled"],
             "fixtures": len(slate["fixtures"]),
+            "basis": "selective_calls",
             "markets": {
                 "one_x_two": {"label": "1X2 calls", "settled": len(sides),
                               "hits": sum(row["side_call"] == row["actual_side"] for row in sides)},
@@ -149,9 +200,13 @@ def build_dashboard(root, legacy):
                                                for row in totals)},
             },
         })
-        weeks[slate["round"]] = {**week, "model_directions": {
-            "side": slate["leader_hits"], "total": slate["total_direction_hits"],
-        }}
+        weeks[slate["round"]] = {
+            **week,
+            "model_directions": {
+                "side": slate["leader_hits"], "total": slate["total_direction_hits"],
+            } if slate["settled"] else None,
+        }
+    matchweeks, record = matchweek_record(weeks, legacy["ledger"])
     captures = [
         read_json(path) for path in (artifacts / "ucl_research").glob("*/scoreboard.json")
     ]
@@ -185,14 +240,8 @@ def build_dashboard(root, legacy):
     rollup = max((artifacts / "paper_performance").glob("*/bankroll.json"), default=None)
     return {
         "premier_league": slates[:2],
-        "matchweeks": [
-            {
-                "matchweek": row["matchweek"], "fixtures": row["fixtures"], "settled": row["settled"],
-                "markets": {key: row["markets"][key] for key in ("one_x_two", "over_under_2_5")},
-                "model_directions": row.get("model_directions"),
-            }
-            for _, row in sorted(weeks.items(), reverse=True)
-        ],
+        "matchweeks": matchweeks,
+        "forecast_record": record,
         "paper": {
             "positions": paper_book(artifacts, legacy["paper_portfolio"]),
             "standardized_bankroll": (

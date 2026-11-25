@@ -195,11 +195,73 @@ function ucl(data) {
     </details>` : ""}`;
 }
 
+const ledgerMarkets = [
+  ["one_x_two", "1X2", "side"],
+  ["over_under_2_5", "O/U 2.5", "total"],
+];
+
+const hitMiss = (hits, misses) =>
+  `${hits} ${hits === 1 ? "hit" : "hits"} · ${misses} ${misses === 1 ? "miss" : "misses"}`;
+
+function forecastRecord(record) {
+  if (!record) return "";
+  const archive = record.official_archive_1x2;
+  return `<section class="clean-section forecast-record" aria-labelledby="forecast-record-title">
+    <div class="clean-section-head"><h2 id="forecast-record-title">Published call record</h2>
+      <span>${record.from_matchweek ? `MW${esc(record.from_matchweek)} onward` : "Premier League"}</span></div>
+    <div class="record-grid">${ledgerMarkets.map(([key, label]) => {
+      const market = record.markets[key];
+      return `<div class="record-metric"><h3>${label}</h3>
+        <strong>${market.hit_rate == null ? "—" : pct(market.hit_rate)}</strong>
+        <p>${market.settled ? hitMiss(market.hits, market.misses) : "No settled calls"}</p>
+      </div>`;
+    }).join("")}</div>
+    ${archive.settled ? `<p class="clean-note">Earlier official 1X2 archive: ${pct(archive.hit_rate)} · ${hitMiss(archive.hits, archive.misses)}.</p>` : ""}
+  </section>`;
+}
+
+function matchweekFold(week) {
+  const noPublishedCalls = week.settled && ledgerMarkets.every(([key]) => !week.markets[key].settled);
+  const basis = ({
+    selective_calls: noPublishedCalls ? "No settled calls" : "Published calls",
+    official_archive: "Official 1X2 archive · Model totals",
+    full_slate: "Full-slate model record",
+  })[week.basis];
+  return `<details class="clean-fold ledger-week"><summary>
+    <span class="week-row">
+      <span class="week-name"><strong>Matchweek ${esc(week.matchweek)}</strong>
+        <small>${week.settled}/${week.fixtures} final${basis ? ` · ${esc(basis)}` : ""}</small></span>
+      ${ledgerMarkets.map(([key, label, direction]) => {
+        const market = week.markets[key];
+        const modelOnly = !market.settled && week.settled && week.model_directions;
+        const rate = market.settled ? pct(market.hit_rate)
+          : modelOnly ? pct(week.model_directions[direction] / week.settled)
+            : week.settled ? "No calls" : "Pending";
+        const sample = market.settled ? `${market.hits}/${market.settled}`
+          : modelOnly ? `${week.model_directions[direction]}/${week.settled}` : "";
+        return `<span class="week-rate"><small>${label}${modelOnly ? " · model" : ""}</small><strong>${rate}${sample ? ` <em>${sample}</em>` : ""}</strong></span>`;
+      }).join("")}
+    </span>
+  </summary>
+    <div class="fold-body">${ledgerMarkets.map(([key]) => {
+      const market = week.markets[key];
+      return `<p>${esc(market.label)} <strong>
+        ${market.settled ? hitMiss(market.hits, market.misses) : week.settled ? "No calls" : "Awaiting results"}
+      </strong></p>`;
+    }).join("")}</div>
+    ${week.model_directions ? `<p class="fold-note">Model only: 1X2 ${hitMiss(week.model_directions.side, week.settled - week.model_directions.side)}; O/U 2.5 ${hitMiss(week.model_directions.total, week.settled - week.model_directions.total)}.</p>` : ""}
+  </details>`;
+}
+
 function ledger(data) {
   const book = data.paper.positions;
   const settled = book.filter((row) => row.settled);
   const pnl = settled.reduce((sum, row) => sum + (row.official_gross_pnl_units ?? 0), 0);
   return `${pageHead("Paper only", "Ledger", "Frozen forecasts, match results, and simulated positions.")}
+    ${forecastRecord(data.forecast_record)}
+    <section class="clean-section"><div class="clean-section-head"><h2>Matchweek hit rates</h2></div>
+      ${data.matchweeks.map(matchweekFold).join("")}
+    </section>
     <section class="clean-section">
       <div class="clean-section-head"><h2>Paper positions</h2><span>${book.length - settled.length} pending · ${settled.length} settled</span></div>
       ${book.length ? book.map((position) => paperPosition(position)).join("") : '<p class="clean-note">No paper positions recorded.</p>'}
@@ -208,14 +270,6 @@ function ledger(data) {
         ${data.paper.standardized_bankroll == null ? "" : `<p><span>Separate $100k simulation</span><strong>${money(data.paper.standardized_bankroll)}</strong></p>`}
       </div>
       ${data.paper.standardized_bankroll == null ? "" : '<p class="clean-note">The $100k simulation is a separate benchmark. Paper positions do not change its balance.</p>'}
-    </section>
-    <section class="clean-section"><div class="clean-section-head"><h2>Matchweek hit rates</h2></div>
-      ${data.matchweeks.map((week) => `<details class="clean-fold"><summary>Matchweek ${esc(week.matchweek)} <span>${week.settled}/${week.fixtures} final</span></summary>
-        <div class="fold-body">${Object.values(week.markets).map((market) => `<p>${esc(market.label)} <strong>
-          ${market.settled ? `${market.hits}/${market.settled} · ${pct(market.hits / market.settled)}` : "No calls"}
-        </strong></p>`).join("")}</div>
-        ${week.model_directions ? `<p class="fold-note">Model directions: 1X2 ${week.model_directions.side}/${week.settled} · O/U 2.5 ${week.model_directions.total}/${week.settled}</p>` : ""}
-      </details>`).join("")}
     </section>`;
 }
 

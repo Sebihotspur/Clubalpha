@@ -327,7 +327,7 @@ class WebHolyGrailTests(unittest.TestCase):
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
         self.assertNotIn('data-route="methodology"', index_html)
         self.assertNotIn('data-route="holy-grail"', index_html)
-        self.assertIn('/app.js?v=0.22.1-matchweek-context', index_html)
+        self.assertIn('/app.js?v=0.22.2-ledger-accuracy', index_html)
 
     def test_ucl_uses_shared_alpha_with_separate_calibration(self):
         cycle = self.data["ucl_alpha_cycle"]
@@ -378,10 +378,32 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertNotIn("forecast_settlement", scoreboard)
 
     def test_latest_settled_research_week_is_prominent_in_ledger(self):
-        current = self.dashboard["matchweeks"][0]
+        current = next(week for week in self.dashboard["matchweeks"] if week["settled"])
         self.assertEqual(current["matchweek"], 11)
         self.assertEqual(current["settled"], 10)
         self.assertEqual(set(current["markets"]), {"one_x_two", "over_under_2_5"})
+
+    def test_ledger_reports_hits_and_misses_without_blending_scorecards(self):
+        record = self.dashboard["forecast_record"]
+        self.assertEqual(record["from_matchweek"], 8)
+        self.assertEqual(record["markets"]["one_x_two"], {
+            "hits": 2, "misses": 4, "settled": 6, "hit_rate": 0.333333,
+        })
+        self.assertEqual(record["markets"]["over_under_2_5"], {
+            "hits": 3, "misses": 2, "settled": 5, "hit_rate": 0.6,
+        })
+        self.assertEqual(record["official_archive_1x2"], {
+            "hits": 8, "misses": 12, "settled": 20, "hit_rate": 0.4,
+        })
+        weeks = {row["matchweek"]: row for row in self.dashboard["matchweeks"]}
+        self.assertEqual(weeks[12]["settled"], 0)
+        self.assertIsNone(weeks[12]["markets"]["over_under_2_5"]["hit_rate"])
+        self.assertEqual(weeks[12]["markets"]["over_under_2_5"]["misses"], 0)
+        self.assertIsNone(weeks[11]["markets"]["one_x_two"]["hit_rate"])
+        self.assertEqual(weeks[11]["model_directions"], {"side": 5, "total": 5})
+        for week in weeks.values():
+            for market in week["markets"].values():
+                self.assertEqual(market["hits"] + market["misses"], market["settled"])
 
     def test_calibration_stays_available_in_the_research_payload(self):
         calibration = self.data["methodology"]["fixture_calibration"]
@@ -457,7 +479,7 @@ class WebHolyGrailTests(unittest.TestCase):
 
     def test_matchweek_history_uses_collapsible_native_controls(self):
         app = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
-        self.assertIn('<details class="clean-fold"><summary>Matchweek', app)
+        self.assertIn('<details class="clean-fold ledger-week"><summary>', app)
         self.assertIn("Matchweek hit rates", app)
 
     def test_methodology_exposes_the_append_only_learning_loop(self):
