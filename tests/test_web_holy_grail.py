@@ -22,6 +22,8 @@ class WebHolyGrailTests(unittest.TestCase):
             text=True,
         )
         cls.data = json.loads(SITE_DATA.read_text(encoding="utf-8"))
+        cls.dashboard = json.loads(SITE_DATA.with_name("dashboard.json").read_text())
+        cls.matchups = json.loads(SITE_DATA.with_name("matchups.json").read_text())
 
     def test_contextual_slate_reconciles_with_locked_baseline(self):
         baseline = {row["match_id"]: row for row in self.data["predictions"]}
@@ -72,9 +74,9 @@ class WebHolyGrailTests(unittest.TestCase):
     def test_holy_grail_static_route_is_generated(self):
         route = ROOT / "web/public/holy-grail/index.html"
         self.assertTrue(route.is_file())
-        self.assertIn(
-            'data-route="holy-grail"', route.read_text(encoding="utf-8")
-        )
+        html = route.read_text(encoding="utf-8")
+        self.assertIn('id="app"', html)
+        self.assertNotIn('data-route="holy-grail"', html)
 
     def test_latest_official_matchweek_is_a_separate_scoring_stream(self):
         slate = self.data["official_slate"]
@@ -315,14 +317,17 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertEqual(settled["shortlist_score"]["settled"], 10)
         self.assertFalse(settled["capital_deployment_ready"])
 
-        app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
-        self.assertIn("Next cycle · Matchweek ${esc(upcoming.round)}", app_js)
-        self.assertIn("Price-aware paper shortlist", app_js)
-        self.assertIn("OFFICIAL PAPER POSITION", app_js)
-        self.assertIn("Calibrated 1X2 leader", app_js)
-        self.assertIn("Settled research slate · Matchweek ${esc(latest.round)}", app_js)
+        current, previous = self.dashboard["premier_league"]
+        self.assertEqual((current["round"], previous["round"]), (12, 11))
+        self.assertEqual((previous["settled"], previous["leader_hits"]), (10, 5))
+        display, = self.dashboard["paper"]["positions"]
+        self.assertEqual((display["outcome"], display["risk_reference"]), ("over_2_5", 234.18))
+        self.assertFalse(display["settled"])
+        self.assertAlmostEqual(self.dashboard["paper"]["standardized_bankroll"], 94147.20685)
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
-        self.assertIn('/app.js?v=0.21.1-mw12-paper-position', index_html)
+        self.assertNotIn('data-route="methodology"', index_html)
+        self.assertNotIn('data-route="holy-grail"', index_html)
+        self.assertIn('/app.js?v=0.22.0-clean-dashboard', index_html)
 
     def test_ucl_uses_shared_alpha_with_separate_calibration(self):
         cycle = self.data["ucl_alpha_cycle"]
@@ -365,17 +370,20 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertFalse(integrity["ucl_specific_calibration_available"])
         self.assertFalse(integrity["research_candidates_are_promoted_calls"])
         self.assertFalse(integrity["capital_deployment_ready"])
-        app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
-        self.assertIn("UCL Alpha intelligence", app_js)
-        self.assertIn("LEAGUE-STRENGTH-ADJUSTED FORM", app_js)
+        scoreboard = self.dashboard["ucl"]
+        self.assertEqual(scoreboard["matchday"], 5)
+        self.assertEqual(len(scoreboard["fixtures"]), 18)
+        self.assertGreaterEqual(sum(row["status"] == "final" for row in scoreboard["fixtures"]), 9)
+        self.assertEqual(scoreboard["last_forecast_review"]["matchday"], 4)
+        self.assertNotIn("forecast_settlement", scoreboard)
 
     def test_latest_settled_research_week_is_prominent_in_ledger(self):
-        app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
-        self.assertIn('LATEST RESEARCH · MATCHWEEK', app_js)
-        self.assertIn('index === 0 ? " open"', app_js)
-        self.assertIn('Completed results are appended to the frozen slate', app_js)
+        current = self.dashboard["matchweeks"][0]
+        self.assertEqual(current["matchweek"], 11)
+        self.assertEqual(current["settled"], 10)
+        self.assertEqual(set(current["markets"]), {"one_x_two", "over_under_2_5"})
 
-    def test_methodology_exposes_goal_environment_and_selective_decisions(self):
+    def test_calibration_stays_available_in_the_research_payload(self):
         calibration = self.data["methodology"]["fixture_calibration"]
         goal_environment = calibration["goal_environment_calibration"]
         self.assertEqual(
@@ -392,8 +400,22 @@ class WebHolyGrailTests(unittest.TestCase):
             chronological["baseline"]["over_2_5_brier"],
         )
         app_js = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
-        self.assertIn("Promote only aligned evidence", app_js)
-        self.assertIn("Club Form support + Player Alpha support", app_js)
+        self.assertNotIn("Club Form support + Player Alpha support", app_js)
+        self.assertNotIn("goal_environment_calibration", self.dashboard)
+
+    def test_matchup_payload_distinguishes_the_current_slate_and_benchmark(self):
+        self.assertEqual(len(self.matchups["round_robin"]["fixtures"]), 380)
+        self.assertEqual(self.matchups["round_robin"]["meta"]["as_of"], "2026-08-25")
+        self.assertEqual(self.matchups["style_matchup"]["as_of"], "2026-11-23")
+        palace = next(
+            row for row in self.matchups["slate"]["fixtures"] if row["home_team"] == "Crystal Palace"
+        )
+        self.assertEqual(palace["away_team"], "Hull City")
+        self.assertAlmostEqual(palace["probabilities"]["home_win"], 0.464343)
+        self.assertFalse(any(
+            row["home_team"] == "Hull City" and row["away_team"] == "Crystal Palace"
+            for row in self.matchups["slate"]["fixtures"]
+        ))
 
     def test_ipswich_liverpool_result_scores_markets_independently(self):
         predictions = [
@@ -435,9 +457,8 @@ class WebHolyGrailTests(unittest.TestCase):
 
     def test_matchweek_history_uses_collapsible_native_controls(self):
         app = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
-        self.assertIn('<details class="matchweek-fold"', app)
-        self.assertIn('index === 0 ? " open"', app)
-        self.assertIn("Hit rate by matchweek", app)
+        self.assertIn('<details class="clean-fold"><summary>Matchweek', app)
+        self.assertIn("Matchweek hit rates", app)
 
     def test_methodology_exposes_the_append_only_learning_loop(self):
         learning = self.data["methodology"]["research_loop"]
@@ -486,8 +507,8 @@ class WebHolyGrailTests(unittest.TestCase):
             ]
         )
         app = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
-        self.assertIn("05 · Adaptive learning", app)
-        self.assertIn("Diagnose every match before learning from it", app)
+        self.assertNotIn("05 · Adaptive learning", app)
+        self.assertNotIn("Diagnose every match before learning from it", app)
 
     def test_methodology_exposes_fixture_calibration_without_unlocking_capital(self):
         calibration = self.data["methodology"]["fixture_calibration"]
@@ -529,8 +550,8 @@ class WebHolyGrailTests(unittest.TestCase):
             chronological["baseline"]["one_x_two_brier"], 0.0
         )
         app = (ROOT / "web/public/app.js").read_text(encoding="utf-8")
-        self.assertIn("04 · Calibrate + simulate", app)
-        self.assertIn("draw-risk gate", app)
+        self.assertNotIn("04 · Calibrate + simulate", app)
+        self.assertNotIn("draw-risk gate", app)
 
     def test_current_results_expose_outcomes_and_model_diagnostics(self):
         diagnostic = self.data["official_slate"]["performance_diagnostic"]

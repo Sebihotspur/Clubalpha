@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
 
 from clubalpha.official_shadow import score_results, validate_predictions  # noqa: E402
 from clubalpha.round_robin_archive import validate_results  # noqa: E402
+from web.scripts.dashboard_data import build_dashboard  # noqa: E402
 
 
 ARTIFACT_DIR = ROOT / "artifacts/prediction_lab/2026-08-24"
@@ -1970,6 +1971,33 @@ def build():
     data_dir.mkdir(parents=True, exist_ok=True)
     (data_dir / "site.json").write_text(
         json.dumps(site, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    dashboard = build_dashboard(ROOT, site)
+    (data_dir / "dashboard.json").write_text(
+        json.dumps(dashboard, ensure_ascii=False, separators=(",", ":")) + "\n",
+        encoding="utf-8",
+    )
+    club_names = {team["team"] for team in site["style_matchup"]["teams"]}
+    styles = [
+        load_json(path)
+        for path in (ROOT / "artifacts/style_matchup").glob("*/style-matchups.json")
+    ]
+    current_style = max(
+        (snapshot for snapshot in styles if {team["team"] for team in snapshot["teams"]} == club_names),
+        key=lambda snapshot: snapshot["as_of"],
+        default=site["style_matchup"],
+    )
+    (data_dir / "matchups.json").write_text(
+        json.dumps(
+            {
+                "style_matchup": current_style,
+                "round_robin": site["round_robin"],
+                "slate": dashboard["premier_league"][0] if dashboard["premier_league"] else None,
+            },
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ) + "\n",
         encoding="utf-8",
     )
     for route in (

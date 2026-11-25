@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Clubalpha — Premier League and Champions League football intelligence, shadow predictions, and public calibration ledger."
+      content="Clubalpha — Premier League forecasts, Champions League scores, matchup probabilities, and a paper ledger."
     />
     <meta name="theme-color" content="#080d0b" />
     <title>Clubalpha — Football Intelligence</title>
@@ -16,7 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/styles.css?v=0.8.0" />
+    <link rel="stylesheet" href="/styles.css?v=0.9.0" />
   </head>
   <body>
     <header class="topbar">
@@ -30,29 +30,27 @@
           <a data-route="overview" href="/">Overview</a>
           <a data-route="predictions" href="/predictions/">Predictions</a>
           <a data-route="ucl" href="/ucl/">UCL</a>
-          <a data-route="holy-grail" href="/holy-grail/">Holy Grail</a>
           <a data-route="matchups" href="/matchups/">Matchups</a>
           <a data-route="ledger" href="/ledger/">Ledger</a>
-          <a data-route="methodology" href="/methodology/">Methodology</a>
         </nav>
-        <div class="nav-status"><span></span> Shadow</div>
+        <div class="nav-status"><span></span> Paper only</div>
       </div>
     </header>
 
     <main id="app" class="shell main" aria-live="polite">
       <div class="loading">
         <span class="loading-dot"></span>
-        Loading frozen intelligence…
+        Loading Clubalpha…
       </div>
     </main>
 
     <footer class="footer">
       <div class="shell footer-grid">
-        <p>CLUBALPHA · READ-ONLY SHADOW INTELLIGENCE</p>
-        <p>FotMob public data · 50,000 simulations · Zero capital authorized</p>
+        <p>CLUBALPHA · FOOTBALL INTELLIGENCE</p>
+        <p>FotMob data · No real-money positions</p>
       </div>
     </footer>
 
-    <script src="/app.js?v=0.21.1-mw12-paper-position" defer></script>
+    <script src="/app.js?v=0.22.0-clean-dashboard" defer></script>
   </body>
 </html>

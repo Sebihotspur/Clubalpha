@@ -1,0 +1,209 @@
+"""Small display payload assembled from the newest existing artifacts."""
+
+from datetime import datetime
+import json
+from pathlib import Path
+
+
+def read_json(path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def timestamp(value):
+    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+
+
+def scoreline(result):
+    return f"{result['final_home_goals']}–{result['final_away_goals']}"
+
+
+def fixture_slates(artifacts):
+    """Use the newest saved pre-kickoff decision per fixture and append results."""
+    slates = {}
+    results = {}
+    result_streams = set()
+    for path in sorted((artifacts / "matchweek_research").glob("*/decisions.json")):
+        doc = read_json(path)
+        if doc.get("summary", {}).get("capital_deployment_ready"):
+            raise ValueError(f"dashboard is paper only: {path}")
+        freeze = timestamp(doc["generated_at_utc"])
+        fixtures = slates.setdefault(int(doc["round"]), {})
+        result_streams.update(
+            artifacts.parent / Path(source).with_name("results.jsonl")
+            for source in doc.get("provenance", {})
+            if source.startswith("artifacts/contextual_interaction/")
+            and source.endswith("/predictions.jsonl")
+        )
+        for row in doc["fixtures"]:
+            match_id = int(row["match_id"])
+            if freeze >= timestamp(row["kickoff_utc"]):
+                continue
+            old = fixtures.get(match_id)
+            if old is None or freeze > old[0]:
+                fixtures[match_id] = (
+                    freeze, row, bool(row["final_call_eligible"]),
+                )
+    for path in sorted(result_streams):
+        if not path.is_file():
+            continue
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            result = json.loads(line)
+            match_id = int(result["match_id"])
+            old = results.setdefault(match_id, result)
+            if scoreline(old) != scoreline(result):
+                raise ValueError(f"conflicting settled score for {match_id}")
+    output = []
+    for round_number, fixtures in sorted(slates.items(), reverse=True):
+        if not fixtures:
+            continue
+        rows = []
+        for match_id, (freeze, row, final) in fixtures.items():
+            side, total = row["side_decision"], row["total_decision"]
+            result = results.get(match_id)
+            rows.append({
+                **{key: row[key] for key in ("home_team", "away_team", "kickoff_utc")},
+                "match_id": match_id,
+                "frozen_at": freeze.isoformat(),
+                "final_forecast": final,
+                "probabilities": {key: row["calibrated_probabilities"][key]
+                                  for key in ("home_win", "draw", "away_win")},
+                "predicted_xg": row["calibrated_predicted_xg"],
+                "side_call": side["call"],
+                "side_leader": side["leader"],
+                "over_probability": total["over_probability"],
+                "total_call": total["call"],
+                "score": scoreline(result) if result else None,
+                "actual_side": result["outcome"] if result else None,
+                "actual_over": (result["final_home_goals"] + result["final_away_goals"] > 2)
+                if result else None,
+            })
+        rows.sort(key=lambda row: (row["kickoff_utc"], row["home_team"]))
+        settled = [row for row in rows if row["score"] is not None]
+        output.append({
+            "round": round_number,
+            "fixtures": rows,
+            "settled": len(settled),
+            "updated_at": max(timestamp(row["frozen_at"]) for row in rows).isoformat(),
+            "provisional": any(not row["final_forecast"] for row in rows if not row["score"]),
+            "leader_hits": sum(row["side_leader"] == row["actual_side"] for row in settled),
+            "total_direction_hits": sum((row["over_probability"] >= 0.5) == row["actual_over"]
+                                        for row in settled),
+        })
+    return output
+
+
+def paper_book(artifacts, legacy):
+    saved = {}
+    for path in sorted((artifacts / "paper_performance").glob("*/ledger.json")):
+        doc = read_json(path)
+        for position in doc["books"]["official_paper"]:
+            key = position["selection_id"]
+            if key not in saved:
+                saved[key] = dict(position)
+            elif position["settled"] and not saved[key]["settled"]:
+                original = saved[key]
+                entry_fields = ("captured_best_ask", "captured_source", "official_stake_units")
+                if all(original[field] == position[field] for field in entry_fields):
+                    original.update({field: position[field] for field in (
+                        "settled", "won", "score", "official_gross_pnl_units",
+                    )})
+    reference = {
+        position["selection_id"]: position["paper_risk_units"]
+        for position in legacy.get("positions", [])
+    }
+    fields = ("fixture", "kickoff_utc", "outcome", "captured_best_ask", "captured_source",
+              "model_probability", "official_stake_units", "settled", "won",
+              "official_gross_pnl_units", "score")
+    return sorted(
+        [
+            {**{key: row.get(key) for key in fields}, "risk_reference": reference.get(key)}
+            for key, row in saved.items()
+        ],
+        key=lambda row: row["kickoff_utc"],
+        reverse=True,
+    )
+
+
+def build_dashboard(root, legacy):
+    artifacts = root / "artifacts"
+    slates = fixture_slates(artifacts)
+    # Keep all earlier published hit-rate records, including their original denominators.
+    weeks = {row["matchweek"]: row for row in legacy["ledger"]["matchweeks"]}
+    for slate in slates:
+        if not slate["settled"]:
+            continue
+        settled = [row for row in slate["fixtures"] if row["score"] is not None]
+        sides = [row for row in settled if row["side_call"] != "pass"]
+        totals = [row for row in settled if row["total_call"] != "pass"]
+        week = weeks.setdefault(slate["round"], {
+            "matchweek": slate["round"],
+            "settled": slate["settled"],
+            "fixtures": len(slate["fixtures"]),
+            "markets": {
+                "one_x_two": {"label": "1X2 calls", "settled": len(sides),
+                              "hits": sum(row["side_call"] == row["actual_side"] for row in sides)},
+                "over_under_2_5": {"label": "O/U 2.5 calls", "settled": len(totals),
+                                   "hits": sum((row["total_call"] == "over_2_5") == row["actual_over"]
+                                               for row in totals)},
+            },
+        })
+        weeks[slate["round"]] = {**week, "model_directions": {
+            "side": slate["leader_hits"], "total": slate["total_direction_hits"],
+        }}
+    captures = [
+        read_json(path) for path in (artifacts / "ucl_research").glob("*/scoreboard.json")
+    ]
+    reviews = [
+        read_json(path) for path in (root / "reports").glob("ucl-matchday-*-review.json")
+    ]
+    review = max(reviews, key=lambda row: (int(row["matchday"]), row["as_of"]))
+    scored = max(
+        (row for row in reviews if row.get("forecast_settlement")),
+        key=lambda row: int(row["matchday"]),
+        default=review,
+    )
+    captures.append({
+        "matchday": review["matchday"],
+        "captured_at_utc": review["generated_at_utc"],
+        "source_url": "https://www.fotmob.com/leagues/42/matches/champions-league",
+        "fixtures": [
+            {
+                **{key: row[key] for key in ("home_team", "away_team", "kickoff_utc")},
+                "score": f"{row['score']['home']}–{row['score']['away']}"
+                if row["status"] == "completed" else None,
+                "status": "final" if row["status"] == "completed" else "scheduled",
+            }
+            for row in review["matches"]
+        ],
+    })
+    scoreboard = max(captures, key=lambda row: (
+        int(row["matchday"]), sum(item["status"] == "final" for item in row["fixtures"]),
+        timestamp(row["captured_at_utc"]),
+    ))
+    rollup = max((artifacts / "paper_performance").glob("*/bankroll.json"), default=None)
+    return {
+        "premier_league": slates[:2],
+        "matchweeks": [
+            {
+                "matchweek": row["matchweek"], "fixtures": row["fixtures"], "settled": row["settled"],
+                "markets": {key: row["markets"][key] for key in ("one_x_two", "over_under_2_5")},
+                "model_directions": row.get("model_directions"),
+            }
+            for _, row in sorted(weeks.items(), reverse=True)
+        ],
+        "paper": {
+            "positions": paper_book(artifacts, legacy["paper_portfolio"]),
+            "standardized_bankroll": (
+                read_json(rollup)["simulation"]["ending_bankroll"] if rollup else None
+            ),
+        },
+        "ucl": {
+            **scoreboard,
+            "last_forecast_review": {
+                "matchday": scored["matchday"],
+                "settlement": scored.get("forecast_settlement"),
+            },
+        },
+    }

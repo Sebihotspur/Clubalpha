@@ -10,39 +10,23 @@ python3 web/scripts/build_site_data.py
 python3 -m http.server 4173 --directory web/public
 ```
 
-The site deliberately contains no wager form, account state, or capital-sizing
-control. Simulated entries are tracked in a separate paper panel; its dollar
-sizing uses the standardized bankroll for reference and does not debit it.
-The `/predictions/` route exposes the latest official matchweek
-shadow slate: ten immutable 1X2 calls, their original model probabilities,
-audited football verdicts, confidence, and evidence notes. More than 50% 1X2
-accuracy after at least 30 settled official fixtures opens paper allocation and
-price validation; it does not authorize real capital.
+Predictions shows the latest saved pre-kickoff decision for each fixture.
+Ledger keeps paper positions, the standardized bankroll, and matchweek hit
+rates separate. Matchups retains the full 380-fixture benchmark and uses the
+latest fixture forecast when the exact home/away pairing is on the slate.
+Methodology and research detail stay in the repository; the previous
+`/data/site.json` export remains available for existing consumers.
 
-The `/ledger/` route keeps a collapsible history by matchweek. Every week
-reports 1X2, O/U 2.5, and BTTS separately; research backtests are visibly
-excluded from the official promotion-gate sample.
-
-The `/holy-grail/` route preserves the frozen Contextual Interaction v1 slate
-beside its immutable baseline, including directional routes, reliability, xG
-changes, and rerun probabilities. The `/matchups/` route exposes Style
-Matchup v0 as a zero-weight
-research challenger alongside the frozen 380-fixture W/D/L round robin:
-attacking route, opponent exposure, projected-XI Player Alpha, and official
-60/30/10 probabilities remain visually separate. Vercel serves `web/public` as a static
-export. Regenerate `site.json` and the route entry points whenever a new
-immutable prediction or matchup snapshot is frozen. The current official slate
-lives at `artifacts/official_shadow/2026-09-08-mw4/`.
-
-After completed fixtures appear in FotMob, append them without modifying the
-frozen predictions, then rebuild the static payload:
+For a Champions League scoreboard refresh, capture a new dated snapshot:
 
 ```bash
-python scripts/collect_official_shadow_results.py
-python scripts/run_research_cycle.py --as-of YYYY-MM-DD
-python web/scripts/build_site_data.py
+python3 web/scripts/refresh_ucl_scoreboard.py --matchday 5 \
+  --output artifacts/ucl_research/YYYY-MM-DD-md5/scoreboard.json
 ```
 
-The result collector automatically targets the newest official archive. The
-research runner appends those observations to the cumulative learner and never
-rewrites a frozen prediction.
+After adding a scoreboard, a new frozen decision slate, a style snapshot, or
+settlements via the existing result collectors, regenerate the site with
+`python3 web/scripts/build_site_data.py` and publish `web/public` through the
+linked Vercel project. The display discovers dated artifacts on rebuild; it
+does not place wagers, generate predictions, or treat score-only fixtures as
+scored forecasts.
