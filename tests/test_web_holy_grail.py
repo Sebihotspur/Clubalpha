@@ -329,7 +329,7 @@ class WebHolyGrailTests(unittest.TestCase):
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
         self.assertNotIn('data-route="methodology"', index_html)
         self.assertNotIn('data-route="holy-grail"', index_html)
-        self.assertIn('/app.js?v=0.22.6-home-pnl', index_html)
+        self.assertIn('/app.js?v=0.22.7-chart-only', index_html)
 
     def test_ucl_uses_shared_alpha_with_separate_calibration(self):
         cycle = self.data["ucl_alpha_cycle"]

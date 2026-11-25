@@ -15,8 +15,8 @@ Ledger keeps paper positions, the standardized bankroll, and matchweek hit
 rates separate. The homepage and Ledger share a P&L chart showing only settled
 results, grouped by match day (ET). The dashed line averages the last five
 plotted running totals; it does not fill missing days with zero or include
-pending positions. Until paper positions settle, the homepage opens the
-separately labeled simulation chart by default. Matchups retains the full
+pending positions. The homepage shows just the chart and its legend; until
+paper positions settle, it shows the labeled simulation instead. Matchups retains the full
 380-fixture benchmark and uses the latest forecast for exact slate pairings.
 Methodology and research detail stay in the repository; the previous
 `/data/site.json` export remains available for existing consumers.

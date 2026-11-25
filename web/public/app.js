@@ -125,7 +125,7 @@ function overview(data) {
     </aside>` : ""}
   </section>
   ${homePaperPositions(data.paper.positions)}
-  ${paperPerformance(data.paper.pnl, { showSimulationWhileEmpty: true })}
+  ${homePnlChart(data.paper.pnl)}
   <section class="home-links" aria-label="Explore Clubalpha">
     <a href="/predictions/"><span>Premier League</span><strong>Matchweek ${esc(latest?.round ?? "—")}</strong><small>Fixtures and forecasts</small></a>
     <a href="/ucl/"><span>Champions League</span><strong>Matchday ${esc(data.ucl.matchday)}</strong><small>${uclSettled}/${data.ucl.fixtures.length} final scores</small></a>
@@ -270,7 +270,7 @@ function pnlAmount(value, unit) {
   return `${value > 0 ? "+" : ""}${dec(value)}u`;
 }
 
-function pnlPlot(track, unit, window) {
+function pnlPlot(track, unit, window, { showDailyNumbers = true } = {}) {
   const { points } = track;
   const last = points.at(-1);
   if (!last) return '<p class="pnl-empty">No settled positions yet. Pending positions don’t count toward P&amp;L.</p>';
@@ -314,7 +314,12 @@ function pnlPlot(track, unit, window) {
       <span><i aria-hidden="true"></i>Running P&amp;L</span>
       ${averages.length ? `<span class="pnl-average-key"><i aria-hidden="true"></i>${window}-match-day moving average</span>` : ""}
     </figcaption>
-    <details class="clean-fold pnl-history">
+    ${showDailyNumbers ? pnlDailyNumbers(points, unit, window) : ""}
+  </figure>`;
+}
+
+function pnlDailyNumbers(points, unit, window) {
+  return `<details class="clean-fold pnl-history">
       <summary>View daily numbers</summary>
       <div class="table-shell"><table>
         <thead><tr><th scope="col">Match day</th><th scope="col">Positions</th><th scope="col">Day P&amp;L</th><th scope="col">Running P&amp;L</th><th scope="col">${window}-day avg.</th></tr></thead>
@@ -324,14 +329,25 @@ function pnlPlot(track, unit, window) {
           <td>${esc(pnlAmount(point.moving_average, unit))}</td>
         </tr>`).join("")}</tbody>
       </table></div>
-    </details>
-  </figure>`;
+    </details>`;
 }
 
-function paperPerformance(pnl, { showSimulationWhileEmpty = false } = {}) {
+function homePnlChart(pnl) {
   if (!pnl) return "";
   const { official, simulation, moving_average_days: window } = pnl;
-  const openSimulation = showSimulationWhileEmpty && !official.points.length && simulation?.points.length;
+  const hasPaperHistory = official.points.length > 0;
+  const track = hasPaperHistory ? official : simulation;
+  if (!track?.points.length) return "";
+  const title = hasPaperHistory ? "Paper P&L" : "$100k simulation P&L (partly reconstructed)";
+  return `<section class="clean-section pnl-section" aria-labelledby="pnl-title">
+    <div class="clean-section-head"><h2 id="pnl-title">${esc(title)}</h2></div>
+    <div class="pnl-card">${pnlPlot(track, hasPaperHistory ? "units" : "USD", window, { showDailyNumbers: false })}</div>
+  </section>`;
+}
+
+function paperPerformance(pnl) {
+  if (!pnl) return "";
+  const { official, simulation, moving_average_days: window } = pnl;
   return `<section class="clean-section pnl-section" aria-labelledby="pnl-title">
     <div class="clean-section-head"><h2 id="pnl-title">Paper P&amp;L over time</h2><span>${official.settled_positions} settled · ${official.pending_positions} pending</span></div>
     <div class="pnl-card">
@@ -339,7 +355,7 @@ function paperPerformance(pnl, { showSimulationWhileEmpty = false } = {}) {
       ${pnlPlot(official, "units", window)}
       <p class="clean-note">Before fees. The moving average smooths the running total over the last ${window} match days with settled positions.</p>
     </div>
-    ${simulation ? `<details class="clean-fold pnl-benchmark"${openSimulation ? " open" : ""}>
+    ${simulation ? `<details class="clean-fold pnl-benchmark">
       <summary>Separate $100k simulation <span>${esc(pnlAmount(simulation.current_pnl, "USD"))} P&amp;L</span></summary>
       <div class="pnl-card">
         <p class="clean-note">This is a separate simulation, not our paper-position record. Its early history was reconstructed using rules chosen after some results were known.</p>
