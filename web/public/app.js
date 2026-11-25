@@ -28,6 +28,9 @@ const dateOnly = (value) =>
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(value));
+const kickoffTime = (value) => new Intl.DateTimeFormat("en-US", {
+  hour: "numeric", minute: "2-digit", timeZone: "America/New_York", timeZoneName: "short",
+}).format(new Date(value));
 
 function routeName() {
   const query = new URLSearchParams(location.search).get("view");
@@ -59,15 +62,35 @@ function matchupLink(row) {
   return `/matchups/?home=${encodeURIComponent(row.home_team)}&amp;away=${encodeURIComponent(row.away_team)}`;
 }
 
-function paperPosition(position) {
+function slateSummary(slate) {
+  const pending = slate.fixtures.filter((row) => !row.score);
+  if (!pending.length) return `${slate.settled}/${slate.fixtures.length} results in the ledger.`;
+  const sides = pending.filter((row) => row.side_call !== "pass").length;
+  const totals = pending.filter((row) => totalLabel(row.total_call)).length;
+  return `${pending.length} pending · ${sides || "No"} 1X2 ${sides === 1 ? "pick" : "picks"} · ${totals || "no"} O/U ${totals === 1 ? "pick" : "picks"}`;
+}
+
+function paperPosition(position, slate) {
   const status = position.settled ? (position.won ? "Won" : "Lost") : "Pending";
   const market = totalLabel(position.outcome);
   const price = position.captured_best_ask == null ? "No captured ask" : `${Math.round(position.captured_best_ask * 100)}¢ entry`;
+  const match = !position.settled && slate?.fixtures.find((row) =>
+    !row.score && `${row.home_team} vs ${row.away_team}` === position.fixture &&
+    row.kickoff_utc === position.kickoff_utc
+  );
+  const projectedTotal = match?.predicted_xg?.total;
+  const isHighest = Number.isFinite(projectedTotal) && slate.fixtures.every((row) =>
+    (row.predicted_xg?.total ?? -Infinity) <= projectedTotal
+  );
+  const context = Number.isFinite(projectedTotal)
+    ? `${dec(projectedTotal)} projected total xG${isHighest ? ", the highest on this slate" : ""}.${match.side_call === "pass" ? " No winner pick." : ""}`
+    : "";
   return `<article class="paper-card">
     <div>
       <div class="paper-tag"><span>Paper position</span><span class="paper-state">${status}</span></div>
       <h3>${esc(position.fixture)}</h3>
       <p>${esc(market ? `${market} goals` : position.outcome.replaceAll("_", " "))} · ${esc(price)}${position.settled && position.score ? ` · Final ${esc(position.score)}` : ""}</p>
+      ${context ? `<p class="paper-context">${esc(context)} <a href="${matchupLink(match)}">Matchup details</a></p>` : ""}
     </div>
     <div class="paper-size"><strong>${position.risk_reference == null ? `${dec(position.official_stake_units)}u` : money(position.risk_reference)}</strong>
     <small>${position.risk_reference == null ? "Paper stake" : "Simulated risk at entry"}</small></div>
@@ -78,10 +101,18 @@ function overview(data) {
   const latest = data.premier_league[0];
   const uclSettled = data.ucl.fixtures.filter((row) => row.status === "final").length;
   const pending = data.paper.positions.find((position) => !position.settled);
-  return `<section class="clean-hero">
-    <p class="eyebrow">Premier League · Champions League</p>
-    <h1>Football intelligence,<br><span>earned in public.</span></h1>
-    <p>Upcoming forecasts, final scores, and a transparent paper record.</p>
+  return `<section class="clean-hero${latest ? " clean-hero-with-slate" : ""}">
+    <div>
+      <p class="eyebrow">Premier League · Champions League</p>
+      <h1>Football intelligence,<br><span>earned in public.</span></h1>
+      <p class="hero-intro">Upcoming forecasts, final scores, and a transparent paper record.</p>
+    </div>
+    ${latest ? `<aside class="week-brief" aria-label="Premier League at a glance">
+      <span>Premier League at a glance</span>
+      <strong>Matchweek ${esc(latest.round)}</strong>
+      <p>${esc(slateSummary(latest))}</p>
+      <a href="/predictions/">View the slate</a>
+    </aside>` : ""}
   </section>
   ${pending ? paperPosition(pending) : ""}
   <section class="home-links" aria-label="Explore Clubalpha">
@@ -121,7 +152,7 @@ function predictions(data) {
   });
   return `${pageHead("Premier League", `Matchweek ${latest.round}`,
     `${latest.provisional ? "Provisional forecasts" : "Frozen forecasts"} · Snapshot ${snapshot}.`)}
-  ${pending.map(paperPosition).join("")}
+  ${pending.map((position) => paperPosition(position, latest)).join("")}
   <section class="clean-section"><div class="clean-section-head"><h2>Fixtures</h2><span>${latest.settled}/${latest.fixtures.length} final</span></div>
   ${fixtureList(latest)}</section>
   ${previous ? `<details class="clean-fold">
@@ -136,17 +167,26 @@ function ucl(data) {
   const settled = cup.fixtures.filter((row) => row.status === "final").length;
   const archive = cup.last_forecast_review;
   const review = archive.settlement;
+  const byDay = new Map();
+  for (const row of cup.fixtures) {
+    const day = new Date(row.kickoff_utc).toLocaleDateString("en-US", {
+      weekday: "long", month: "short", day: "numeric", timeZone: "America/New_York",
+    });
+    if (!byDay.has(day)) byDay.set(day, []);
+    byDay.get(day).push(row);
+  }
   return `${pageHead("Champions League", `Matchday ${cup.matchday}`, `${settled}/${cup.fixtures.length} final · Scores checked ${dateTime(cup.captured_at_utc)}.`)}
     ${!review || Number(archive.matchday) !== Number(cup.matchday) ? `<p class="clean-note">Results only. No frozen forecast is scored for this matchday.</p>` : ""}
-    <section class="clean-section">
-      <ul class="scoreboard clean-list">${cup.fixtures.map((row) => `<li>
+    ${[...byDay].map(([day, rows]) => `<section class="clean-section cup-day">
+      <div class="clean-section-head"><h2>${esc(day)}</h2></div>
+      <ul class="scoreboard clean-list">${rows.map((row) => `<li>
         <div class="fixture-name"><strong>${esc(row.home_team)} <span>vs</span> ${esc(row.away_team)}</strong>
-        <small>${esc(dateTime(row.kickoff_utc))}</small></div>
+        <small>${esc(kickoffTime(row.kickoff_utc))}</small></div>
         <div class="cup-result">${row.status === "final" ? `<strong>${esc(String(row.score).replace(/\s*-\s*/g, "–"))}</strong>` :
           `<small>${row.status === "in_progress" ? "In progress" : row.status === "postponed" ? "Postponed" : "Scheduled"}</small>`}</div>
       </li>`).join("")}</ul>
-      <p class="clean-note"><a href="${esc(cup.source_url)}">FotMob scores</a></p>
-    </section>
+    </section>`).join("")}
+    <p class="clean-note"><a href="${esc(cup.source_url)}">FotMob scores</a></p>
     ${review ? `<details class="clean-fold"><summary>Matchday ${esc(archive.matchday)} forecast record</summary>
       <div class="fold-body">
         <p>1X2 leaders: <strong>${review.raw_probability_leader.hits}/${review.raw_probability_leader.settled}</strong></p>
@@ -162,11 +202,12 @@ function ledger(data) {
   return `${pageHead("Paper only", "Ledger", "Frozen forecasts, match results, and simulated positions.")}
     <section class="clean-section">
       <div class="clean-section-head"><h2>Paper positions</h2><span>${book.length - settled.length} pending · ${settled.length} settled</span></div>
-      ${book.length ? book.map(paperPosition).join("") : '<p class="clean-note">No paper positions recorded.</p>'}
+      ${book.length ? book.map((position) => paperPosition(position)).join("") : '<p class="clean-note">No paper positions recorded.</p>'}
       <div class="ledger-totals">
         <p><span>Settled paper P&amp;L</span><strong>${pnl > 0 ? "+" : ""}${dec(pnl)}u</strong></p>
         ${data.paper.standardized_bankroll == null ? "" : `<p><span>Separate $100k simulation</span><strong>${money(data.paper.standardized_bankroll)}</strong></p>`}
       </div>
+      ${data.paper.standardized_bankroll == null ? "" : '<p class="clean-note">The $100k simulation is a separate benchmark. Paper positions do not change its balance.</p>'}
     </section>
     <section class="clean-section"><div class="clean-section-head"><h2>Matchweek hit rates</h2></div>
       ${data.matchweeks.map((week) => `<details class="clean-fold"><summary>Matchweek ${esc(week.matchweek)} <span>${week.settled}/${week.fixtures} final</span></summary>
