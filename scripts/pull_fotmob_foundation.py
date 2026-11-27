@@ -206,6 +206,11 @@ def main() -> int:
     )
     parser.add_argument("--as-of", default=None, help="Inclusive YYYY-MM-DD snapshot date.")
     parser.add_argument("--refresh", action="store_true", help="Ignore cached responses.")
+    parser.add_argument(
+        "--refresh-current-leagues",
+        action="store_true",
+        help="Refresh current PL/UCL fixtures and fetch uncached match details; reuse older inputs.",
+    )
     parser.add_argument("--skip-match-details", action="store_true")
     parser.add_argument("--skip-historical-match-details", action="store_true")
     parser.add_argument("--request-interval", type=float, default=0.25)
@@ -221,6 +226,11 @@ def main() -> int:
         refresh=args.refresh,
         request_interval=args.request_interval,
     )
+    current_league_client = client
+    if args.refresh_current_leagues and not args.refresh:
+        current_league_client = FotMobClient(
+            cache_dir, refresh=True, request_interval=args.request_interval
+        )
 
     print("[1/8] Competition snapshots")
     league_payloads: dict[str, dict[str, Any]] = {}
@@ -229,7 +239,10 @@ def main() -> int:
     current_match_ids: set[int] = set()
     current_pl_teams: dict[int, dict[str, Any]] = {}
     for competition in config["competitions"]:
-        payload = client.league(int(competition["fotmob_id"]), competition["season"])
+        league_client = (
+            current_league_client if competition["key"].endswith("_current") else client
+        )
+        payload = league_client.league(int(competition["fotmob_id"]), competition["season"])
         selected = (payload.get("details") or {}).get("selectedSeason")
         if selected != competition["season"]:
             raise RuntimeError(

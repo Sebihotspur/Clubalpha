@@ -16,6 +16,34 @@ three memory horizons and a chronological challenger replay.
 - A challenger cannot promote itself.
 - Research evidence cannot authorize capital.
 
+## Scheduled research passes
+
+The recurring research pass is separate from the paper settlement job. Reuse
+the existing collectors and forecast builders, and skip rebuilds if their
+inputs and the fixtures in scope have not changed. For a narrow FotMob refresh:
+
+```bash
+python3 scripts/pull_fotmob_foundation.py --refresh-current-leagues \
+  --as-of YYYY-MM-DD --audit /path/to/a/new/dated/foundation-coverage.json
+```
+
+The refresh reuses older match, preseason and leaderboard data. Refresh team
+availability and current foreign-league evidence separately when needed for a
+forecast. Use completed UCL matches as tagged, competition- and opponent-
+adjusted Club Form evidence. Lineups and minutes can inform selection and
+short-rest context, but UCL outcomes never enter the Premier League
+calibration or accuracy ledger. Fixtures without an archived pre-kickoff
+forecast are observational only.
+
+Freeze the next PL and UCL forecast before kickoff in a dated archive. Capture
+timestamped public price snapshots separately, without inferring missing
+quotes. Score 1X2 and O/U 2.5 by competition against historical or naive
+baselines and the saved market consensus where available. Use probability
+scores and calibration as well as hit rate. Track closing-price comparisons
+only when comparable closing quotes exist. Leave paper accounting to its
+existing settlement task. Do not merge, deploy, promote the champion or place
+trades as part of the research pass.
+
 ## Match Learning Card
 
 Each card stores:
