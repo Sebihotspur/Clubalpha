@@ -26,6 +26,9 @@ class WebHolyGrailTests(unittest.TestCase):
         cls.data = json.loads(SITE_DATA.read_text(encoding="utf-8"))
         cls.dashboard = json.loads(SITE_DATA.with_name("dashboard.json").read_text())
         cls.matchups = json.loads(SITE_DATA.with_name("matchups.json").read_text())
+        paper_dir = ROOT / "artifacts/paper_performance"
+        cls.standardized = json.loads(max(paper_dir.glob("*/bankroll.json")).read_text())["simulation"]
+        cls.paper_ledger = json.loads(max(paper_dir.glob("*/ledger.json")).read_text())
 
     def test_contextual_slate_reconciles_with_locked_baseline(self):
         baseline = {row["match_id"]: row for row in self.data["predictions"]}
@@ -324,8 +327,10 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertEqual((previous["settled"], previous["leader_hits"]), (10, 5))
         display, = self.dashboard["paper"]["positions"]
         self.assertEqual((display["outcome"], display["risk_reference"]), ("over_2_5", 234.18))
-        self.assertFalse(display["settled"])
-        self.assertAlmostEqual(self.dashboard["paper"]["standardized_bankroll"], 94147.20685)
+        self.assertEqual(display["settled"], self.paper_ledger["books"]["official_paper"][0]["settled"])
+        self.assertAlmostEqual(
+            self.dashboard["paper"]["standardized_bankroll"], self.standardized["ending_bankroll"]
+        )
         index_html = (ROOT / "web/public/index.html").read_text(encoding="utf-8")
         self.assertNotIn('data-route="methodology"', index_html)
         self.assertNotIn('data-route="holy-grail"', index_html)
@@ -453,13 +458,17 @@ class WebHolyGrailTests(unittest.TestCase):
     def test_pnl_chart_keeps_pending_paper_positions_out_of_the_simulation(self):
         timeline = self.dashboard["paper"]["pnl"]
         self.assertEqual(timeline["moving_average_days"], 5)
-        self.assertEqual(timeline["official"], {
-            "points": [], "settled_positions": 0, "pending_positions": 1, "current_pnl": 0,
-        })
+        official = self.paper_ledger["summary"]["official_paper"]
+        self.assertEqual(timeline["official"]["settled_positions"], official["settled"])
+        self.assertEqual(timeline["official"]["pending_positions"], official["pending"])
+        self.assertAlmostEqual(timeline["official"]["current_pnl"], official["gross_pnl_units"])
+        if not official["settled"]:
+            self.assertEqual(timeline["official"]["points"], [])
         simulation = timeline["simulation"]
-        self.assertEqual(simulation["settled_positions"], 17)
-        self.assertAlmostEqual(simulation["current_pnl"], -5852.79315)
-        self.assertAlmostEqual(simulation["points"][-1]["running_pnl"], -5852.79315)
+        self.assertEqual(simulation["settled_positions"], self.standardized["settled_positions"])
+        self.assertEqual(simulation["pending_positions"], self.standardized["pending_positions"])
+        self.assertAlmostEqual(simulation["current_pnl"], self.standardized["gross_pnl_units"])
+        self.assertAlmostEqual(simulation["points"][-1]["running_pnl"], self.standardized["gross_pnl_units"])
         self.assertIsNone(simulation["points"][3]["moving_average"])
         self.assertIsNotNone(simulation["points"][4]["moving_average"])
 

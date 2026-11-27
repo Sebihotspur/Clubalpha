@@ -63,3 +63,17 @@ defined after some early results were known, even though every probability and
 price used was genuinely captured before kickoff. It is useful diagnostic
 evidence, not a valid out-of-sample profitability claim. The rule is now frozen
 for forward paper tracking. Real capital remains unauthorized.
+
+## Matchweek 12 forward tracking
+
+The November 27 snapshots append the first covered forward result without
+changing the historical reconstruction. Nottingham Forest beat Chelsea 3–2.
+The official ledger still has no settled paper position; Palace–Hull Over 2.5
+remains pending. Forest was a raw-price counterfactual winner at 37¢
+(+1.702703 equal-stake units), not an official position.
+
+Under the separately locked simulation rules, Forest qualified at the same
+37¢ ask. Both venues showed 37¢; Kalshi had more size available at that price.
+The simulated $941.47 stake generated $1,603.05 gross profit, bringing the
+standardized balance to $95,750.25 before fees. The one other Matchweek 12
+simulation candidate is still pending and does not affect that balance.

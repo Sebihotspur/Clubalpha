@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from datetime import datetime
 from typing import Any
 
 
@@ -32,10 +33,24 @@ def source_name(snapshot: dict[str, Any]) -> str:
     raise ValueError(f"unsupported market snapshot: {version}")
 
 
-def _round(snapshot: dict[str, Any]) -> int:
-    rounds = {
-        int(row["fixture"].get("round") or 11) for row in snapshot["fixtures"]
-    }
+def _market_time(value: str) -> datetime:
+    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        raise ValueError("market and kickoff timestamps must include timezone")
+    return parsed
+
+
+def _round(snapshot: dict[str, Any], fixture_rounds: dict[int, int]) -> int:
+    rounds = set()
+    captured_at = _market_time(snapshot["captured_at_utc"])
+    for row in snapshot["fixtures"]:
+        fixture = row["fixture"]
+        match_id = int(fixture["match_id"])
+        if match_id not in fixture_rounds:
+            raise ValueError(f"market snapshot has no saved round for match {match_id}")
+        if captured_at >= _market_time(fixture["kickoff_utc"]):
+            raise ValueError(f"market snapshot is not pre-kickoff for match {match_id}")
+        rounds.add(fixture_rounds[match_id])
     if len(rounds) != 1:
         raise ValueError("market snapshot spans multiple rounds")
     return rounds.pop()
@@ -96,9 +111,18 @@ def build_candidates(
     config: dict[str, Any],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     validate_config(config)
+    fixture_rounds = {}
+    for snapshot in snapshots:
+        for row in snapshot["fixtures"]:
+            fixture = row["fixture"]
+            if fixture.get("round") is None:
+                continue
+            match_id, round_number = int(fixture["match_id"]), int(fixture["round"])
+            if fixture_rounds.setdefault(match_id, round_number) != round_number:
+                raise ValueError(f"conflicting saved rounds for match {match_id}")
     by_round_source = {}
     for snapshot in snapshots:
-        key = (_round(snapshot), source_name(snapshot))
+        key = (_round(snapshot, fixture_rounds), source_name(snapshot))
         if key in by_round_source:
             raise ValueError(f"duplicate snapshot for round/source: {key}")
         by_round_source[key] = snapshot
