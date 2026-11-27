@@ -690,7 +690,7 @@ def build(
                 row for row in coverage_by_team if row["coverage"] == 0.0
             ],
             "action": (
-                "Resolve transferred-player and foreign-league identity gaps before Matchday 2; "
+                "Resolve transferred-player and foreign-league identity gaps before the next forecast; "
                 "missing Alpha remains neutral rather than imputed."
             ),
         },
@@ -701,13 +701,13 @@ def build(
             "Completed UCL evidence may update shared team form, style, lineup and player-role research.",
             "UCL and Premier League ledgers and calibration remain separate.",
             "One matchday cannot rewrite Player Alpha, the 60/30/10 foundation, or goal baselines.",
-            "The first honest UCL prediction hit rate begins with a slate frozen before Matchday 2.",
+            "Only forecasts frozen before kickoff count toward UCL prediction accuracy.",
         ],
         "conservative_recommendations": [
             "Retain the locked Player Alpha formula and 60/30/10 foundation weights.",
-            "Treat 69 goals from 60.05 xG as finishing heat until a larger UCL sample confirms it.",
+            "Treat single-matchday goals versus xG as descriptive, not as a new goals baseline.",
             "Feed team process, lineup minutes and observed routes into shared research, not the PL ledger.",
-            "Freeze the first UCL probabilities before Matchday 2 and calibrate UCL separately.",
+            "Freeze the next UCL probabilities before kickoff and calibrate UCL separately.",
             "Close zero-coverage Alpha identities before using player-prop research for those clubs.",
         ],
     }

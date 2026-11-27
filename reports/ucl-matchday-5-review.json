@@ -1,0 +1,2403 @@
+{
+  "version": "clubalpha_ucl_matchday_review_v1",
+  "competition": "Champions League",
+  "season": "2026/2027",
+  "matchday": 5,
+  "as_of": "2026-11-27",
+  "generated_at_utc": "2026-11-27T14:34:10.357987+00:00",
+  "status": "complete",
+  "scope": {
+    "scheduled_matches": 18,
+    "completed_matches": 18,
+    "pending_matches": 0,
+    "start_date": "2026-11-24",
+    "end_date": "2026-11-25"
+  },
+  "integrity": {
+    "predictions_frozen_before_kickoff": false,
+    "retroactive_hit_rate_created": false,
+    "pl_and_ucl_calibration_separate": true,
+    "player_alpha_formula_changed": false,
+    "foundation_weights_changed": false,
+    "capital_deployment_ready": false
+  },
+  "aggregate": {
+    "home_wins": 8,
+    "draws": 4,
+    "away_wins": 6,
+    "goals": 47,
+    "goals_per_match": 2.61,
+    "total_xg": 54.64,
+    "xg_per_match": 3.04,
+    "goals_minus_xg": -7.64,
+    "over_2_5": 8,
+    "btts": 8,
+    "score_xg_winner_alignment": 12
+  },
+  "player_alpha": {
+    "player_match_rows": 555,
+    "actual_minute_coverage": 0.8422,
+    "rating_sample_minimum_minutes": 30,
+    "rating_alpha_pairs": 352,
+    "rating_alpha_correlation": 0.309,
+    "top_alpha_quartile_average_rating": 7.462,
+    "bottom_alpha_quartile_average_rating": 6.798,
+    "mapped_scorers": 34,
+    "mapped_scorers_with_positive_scoring_threat": 26,
+    "positive_scoring_threat_rate": 0.7647,
+    "lowest_team_coverage": [
+      {
+        "team_id": 951893,
+        "team": "Sabah FK",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 0.0,
+        "coverage": 0.0
+      },
+      {
+        "team_id": 9728,
+        "team": "Shakhtar Donetsk",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 0.0,
+        "coverage": 0.0
+      },
+      {
+        "team_id": 10235,
+        "team": "Feyenoord",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 536.0,
+        "coverage": 0.5414
+      },
+      {
+        "team_id": 8478,
+        "team": "Viking",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 630.0,
+        "coverage": 0.6364
+      },
+      {
+        "team_id": 9768,
+        "team": "Sporting CP",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 684.0,
+        "coverage": 0.6909
+      },
+      {
+        "team_id": 7787,
+        "team": "Slavia Prague",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 703.0,
+        "coverage": 0.7101
+      }
+    ],
+    "top_match_ratings": [
+      {
+        "match_id": 6106243,
+        "team_id": 8633,
+        "team": "Real Madrid",
+        "player_id": 701154,
+        "player": "Kylian Mbapp\u00e9",
+        "minutes": 90.0,
+        "rating": 9.5,
+        "goals": 2,
+        "assists": 1,
+        "xg": 2.62,
+        "xa": 0.3,
+        "chances_created": 4.0,
+        "alpha_available": true,
+        "alpha_ability_z": 2.171,
+        "alpha_position": "FW",
+        "pillars": {
+          "scoring_threat": 2.369728,
+          "chance_creation": 0.885236,
+          "defensive_prevention": 0.455098
+        }
+      },
+      {
+        "match_id": 6106294,
+        "team_id": 8650,
+        "team": "Liverpool",
+        "player_id": 690107,
+        "player": "Alexander Isak",
+        "minutes": 86.0,
+        "rating": 9.22,
+        "goals": 2,
+        "assists": 0,
+        "xg": 1.13,
+        "xa": 0.53,
+        "chances_created": 3.0,
+        "alpha_available": true,
+        "alpha_ability_z": -0.447,
+        "alpha_position": "FW",
+        "pillars": {
+          "scoring_threat": 0.057446,
+          "chance_creation": -0.648792,
+          "defensive_prevention": null
+        }
+      },
+      {
+        "match_id": 6106421,
+        "team_id": 8634,
+        "team": "Barcelona",
+        "player_id": 906937,
+        "player": "Anthony Gordon",
+        "minutes": 76.0,
+        "rating": 9.19,
+        "goals": 2,
+        "assists": 0,
+        "xg": 1.17,
+        "xa": 0.14,
+        "chances_created": 2.0,
+        "alpha_available": true,
+        "alpha_ability_z": 0.389,
+        "alpha_position": "FW",
+        "pillars": {
+          "scoring_threat": 0.349582,
+          "chance_creation": 0.268872,
+          "defensive_prevention": -0.061457
+        }
+      },
+      {
+        "match_id": 6106325,
+        "team_id": 178475,
+        "team": "RB Leipzig",
+        "player_id": 1248482,
+        "player": "Antonio Nusa",
+        "minutes": 90.0,
+        "rating": 9.06,
+        "goals": 2,
+        "assists": 0,
+        "xg": 1.26,
+        "xa": 0.09,
+        "chances_created": 1.0,
+        "alpha_available": true,
+        "alpha_ability_z": 0.11,
+        "alpha_position": "FW",
+        "pillars": {
+          "scoring_threat": -0.181307,
+          "chance_creation": 0.575508,
+          "defensive_prevention": -0.530872
+        }
+      },
+      {
+        "match_id": 6106243,
+        "team_id": 8633,
+        "team": "Real Madrid",
+        "player_id": 743533,
+        "player": "Federico Valverde",
+        "minutes": 90.0,
+        "rating": 8.93,
+        "goals": 1,
+        "assists": 0,
+        "xg": 0.13,
+        "xa": 0.56,
+        "chances_created": 2.0,
+        "alpha_available": true,
+        "alpha_ability_z": 0.721,
+        "alpha_position": "FB",
+        "pillars": {
+          "scoring_threat": 1.263467,
+          "chance_creation": 0.499081,
+          "defensive_prevention": 0.312372
+        }
+      },
+      {
+        "match_id": 6106394,
+        "team_id": 8603,
+        "team": "Real Betis",
+        "player_id": 852071,
+        "player": "Juan Hern\u00e1ndez",
+        "minutes": 63.0,
+        "rating": 8.91,
+        "goals": 2,
+        "assists": 0,
+        "xg": 0.49,
+        "xa": 0.01,
+        "chances_created": 1.0,
+        "alpha_available": true,
+        "alpha_ability_z": 0.133,
+        "alpha_position": "FW",
+        "pillars": {
+          "scoring_threat": 0.319819,
+          "chance_creation": -0.340352,
+          "defensive_prevention": 0.554685
+        }
+      },
+      {
+        "match_id": 6106235,
+        "team_id": 8686,
+        "team": "Roma",
+        "player_id": 671203,
+        "player": "Mario Hermoso",
+        "minutes": 90.0,
+        "rating": 8.9,
+        "goals": 1,
+        "assists": 0,
+        "xg": 1.16,
+        "xa": 0.02,
+        "chances_created": 0.0,
+        "alpha_available": true,
+        "alpha_ability_z": -0.148,
+        "alpha_position": "CB",
+        "pillars": {
+          "scoring_threat": 1.165168,
+          "chance_creation": -0.148854,
+          "defensive_prevention": -0.424103
+        }
+      },
+      {
+        "match_id": 6106279,
+        "team_id": 10260,
+        "team": "Manchester United",
+        "player_id": 422685,
+        "player": "Bruno Fernandes",
+        "minutes": 89.0,
+        "rating": 8.85,
+        "goals": 2,
+        "assists": 0,
+        "xg": 0.87,
+        "xa": 0.05,
+        "chances_created": 0.0,
+        "alpha_available": true,
+        "alpha_ability_z": 1.087,
+        "alpha_position": "FW",
+        "pillars": {
+          "scoring_threat": -0.563185,
+          "chance_creation": 2.18571,
+          "defensive_prevention": -0.199935
+        }
+      },
+      {
+        "match_id": 6106243,
+        "team_id": 8633,
+        "team": "Real Madrid",
+        "player_id": 1253890,
+        "player": "Arda G\u00fcler",
+        "minutes": 70.0,
+        "rating": 8.81,
+        "goals": 0,
+        "assists": 2,
+        "xg": 0.11,
+        "xa": 0.45,
+        "chances_created": 5.0,
+        "alpha_available": true,
+        "alpha_ability_z": 0.762,
+        "alpha_position": "FW",
+        "pillars": {
+          "scoring_threat": -0.556351,
+          "chance_creation": 1.638115,
+          "defensive_prevention": 0.020893
+        }
+      },
+      {
+        "match_id": 6106243,
+        "team_id": 8633,
+        "team": "Real Madrid",
+        "player_id": 1077894,
+        "player": "Jude Bellingham",
+        "minutes": 45.0,
+        "rating": 8.78,
+        "goals": 1,
+        "assists": 1,
+        "xg": 0.37,
+        "xa": 0.2,
+        "chances_created": 3.0,
+        "alpha_available": true,
+        "alpha_ability_z": 0.824,
+        "alpha_position": "FW",
+        "pillars": {
+          "scoring_threat": 0.261452,
+          "chance_creation": 0.892342,
+          "defensive_prevention": 0.305165
+        }
+      },
+      {
+        "match_id": 6106294,
+        "team_id": 8650,
+        "team": "Liverpool",
+        "player_id": 319784,
+        "player": "Alisson Becker",
+        "minutes": 90.0,
+        "rating": 8.77,
+        "goals": 0,
+        "assists": 1,
+        "xg": null,
+        "xa": null,
+        "chances_created": 1.0,
+        "alpha_available": true,
+        "alpha_ability_z": 0.553,
+        "alpha_position": "GK",
+        "pillars": {
+          "scoring_threat": null,
+          "chance_creation": 0.716566,
+          "defensive_prevention": 0.553104
+        }
+      },
+      {
+        "match_id": 6106325,
+        "team_id": 178475,
+        "team": "RB Leipzig",
+        "player_id": 806669,
+        "player": "David Raum",
+        "minutes": 90.0,
+        "rating": 8.66,
+        "goals": 1,
+        "assists": 0,
+        "xg": 0.05,
+        "xa": 0.25,
+        "chances_created": 4.0,
+        "alpha_available": true,
+        "alpha_ability_z": 1.105,
+        "alpha_position": "FB",
+        "pillars": {
+          "scoring_threat": 0.412711,
+          "chance_creation": 2.22,
+          "defensive_prevention": -0.369761
+        }
+      }
+    ]
+  },
+  "premier_league_clubs": {
+    "completed_matches": 5,
+    "wins": 1,
+    "xg_for": 8.02,
+    "xg_against": 6.1,
+    "team_rows": [
+      {
+        "match_id": 6106259,
+        "source": "fotmob",
+        "source_scope": "champions_league_current",
+        "competition_id": 42,
+        "competition_stage_id": 943230,
+        "competition": "Champions League",
+        "season": "2026/2027",
+        "kickoff_utc": "2026-11-24T20:00:00Z",
+        "team_id": 9825,
+        "team": "Arsenal",
+        "opponent_id": 9789,
+        "opponent": "Borussia Dortmund",
+        "venue": "home",
+        "cache_detail_available": true,
+        "goals_for": 1.0,
+        "goals_against": 1.0,
+        "red_cards_for": 0,
+        "red_cards_against": 0,
+        "first_red_card_for": false,
+        "first_red_card_against": false,
+        "first_red_card_minute": null,
+        "estimated_11v11_minutes": 90.0,
+        "expected_goals_for": 2.83,
+        "expected_goals_against": 1.15,
+        "shots_on_target_for": 4.0,
+        "shots_on_target_against": 4.0,
+        "big_chances_for": 4.0,
+        "big_chances_against": 3.0,
+        "total_shots_for": 30.0,
+        "total_shots_against": 13.0,
+        "touches_opp_box_for": 55.0,
+        "touches_opp_box_against": 22.0,
+        "possession_pct_for": 63.0,
+        "possession_pct_against": 37.0,
+        "passes_for": 578.0,
+        "passes_against": 337.0,
+        "accurate_passes_for": 502.0,
+        "accurate_passes_against": 272.0,
+        "own_half_passes_for": 253.0,
+        "own_half_passes_against": 123.0,
+        "opposition_half_passes_for": 249.0,
+        "opposition_half_passes_against": 149.0,
+        "long_balls_completed_for": 24.0,
+        "long_balls_completed_against": 21.0,
+        "crosses_completed_for": 8.0,
+        "crosses_completed_against": 2.0,
+        "expected_goals_open_play_for": 1.96,
+        "expected_goals_open_play_against": 0.82,
+        "expected_goals_set_play_for": 0.87,
+        "expected_goals_set_play_against": 0.33,
+        "tackles_for": 15.0,
+        "tackles_against": 17.0,
+        "interceptions_for": 8.0,
+        "interceptions_against": 9.0,
+        "pass_accuracy_pct_for": 87.0,
+        "pass_accuracy_pct_against": 81.0,
+        "long_ball_accuracy_pct_for": 55.0,
+        "long_ball_accuracy_pct_against": 43.0,
+        "cross_accuracy_pct_for": 31.0,
+        "cross_accuracy_pct_against": 14.0,
+        "long_balls_attempted_est_for": 43.63636363636363,
+        "long_balls_attempted_est_against": 48.83720930232558,
+        "crosses_attempted_est_for": 25.806451612903224,
+        "crosses_attempted_est_against": 14.285714285714286,
+        "detailed_metric_count": 16
+      },
+      {
+        "match_id": 6106339,
+        "source": "fotmob",
+        "source_scope": "champions_league_current",
+        "competition_id": 42,
+        "competition_stage_id": 943230,
+        "competition": "Champions League",
+        "season": "2026/2027",
+        "kickoff_utc": "2026-11-24T17:45:00Z",
+        "team_id": 10252,
+        "team": "Aston Villa",
+        "opponent_id": 8637,
+        "opponent": "Galatasaray",
+        "venue": "away",
+        "cache_detail_available": true,
+        "goals_for": 0.0,
+        "goals_against": 1.0,
+        "red_cards_for": 0,
+        "red_cards_against": 0,
+        "first_red_card_for": false,
+        "first_red_card_against": false,
+        "first_red_card_minute": null,
+        "estimated_11v11_minutes": 90.0,
+        "expected_goals_for": 0.59,
+        "expected_goals_against": 0.49,
+        "shots_on_target_for": 0.0,
+        "shots_on_target_against": 2.0,
+        "big_chances_for": 0.0,
+        "big_chances_against": 1.0,
+        "total_shots_for": 4.0,
+        "total_shots_against": 9.0,
+        "touches_opp_box_for": 12.0,
+        "touches_opp_box_against": 16.0,
+        "possession_pct_for": 55.0,
+        "possession_pct_against": 45.0,
+        "passes_for": 445.0,
+        "passes_against": 357.0,
+        "accurate_passes_for": 387.0,
+        "accurate_passes_against": 290.0,
+        "own_half_passes_for": 250.0,
+        "own_half_passes_against": 156.0,
+        "opposition_half_passes_for": 137.0,
+        "opposition_half_passes_against": 134.0,
+        "long_balls_completed_for": 23.0,
+        "long_balls_completed_against": 20.0,
+        "crosses_completed_for": 2.0,
+        "crosses_completed_against": 7.0,
+        "expected_goals_open_play_for": 0.12,
+        "expected_goals_open_play_against": 0.19,
+        "expected_goals_set_play_for": 0.47,
+        "expected_goals_set_play_against": 0.3,
+        "tackles_for": 11.0,
+        "tackles_against": 23.0,
+        "interceptions_for": 6.0,
+        "interceptions_against": 10.0,
+        "pass_accuracy_pct_for": 87.0,
+        "pass_accuracy_pct_against": 81.0,
+        "long_ball_accuracy_pct_for": 59.0,
+        "long_ball_accuracy_pct_against": 45.0,
+        "cross_accuracy_pct_for": 22.0,
+        "cross_accuracy_pct_against": 33.0,
+        "long_balls_attempted_est_for": 38.983050847457626,
+        "long_balls_attempted_est_against": 44.44444444444444,
+        "crosses_attempted_est_for": 9.090909090909092,
+        "crosses_attempted_est_against": 21.21212121212121,
+        "detailed_metric_count": 16
+      },
+      {
+        "match_id": 6106294,
+        "source": "fotmob",
+        "source_scope": "champions_league_current",
+        "competition_id": 42,
+        "competition_stage_id": 943230,
+        "competition": "Champions League",
+        "season": "2026/2027",
+        "kickoff_utc": "2026-11-25T20:00:00Z",
+        "team_id": 8650,
+        "team": "Liverpool",
+        "opponent_id": 8342,
+        "opponent": "Club Brugge",
+        "venue": "away",
+        "cache_detail_available": true,
+        "goals_for": 3.0,
+        "goals_against": 0.0,
+        "red_cards_for": 0,
+        "red_cards_against": 0,
+        "first_red_card_for": false,
+        "first_red_card_against": false,
+        "first_red_card_minute": null,
+        "estimated_11v11_minutes": 90.0,
+        "expected_goals_for": 2.18,
+        "expected_goals_against": 1.23,
+        "shots_on_target_for": 4.0,
+        "shots_on_target_against": 5.0,
+        "big_chances_for": 3.0,
+        "big_chances_against": 1.0,
+        "total_shots_for": 13.0,
+        "total_shots_against": 17.0,
+        "touches_opp_box_for": 39.0,
+        "touches_opp_box_against": 32.0,
+        "possession_pct_for": 46.0,
+        "possession_pct_against": 54.0,
+        "passes_for": 470.0,
+        "passes_against": 542.0,
+        "accurate_passes_for": 387.0,
+        "accurate_passes_against": 459.0,
+        "own_half_passes_for": 167.0,
+        "own_half_passes_against": 234.0,
+        "opposition_half_passes_for": 220.0,
+        "opposition_half_passes_against": 225.0,
+        "long_balls_completed_for": 20.0,
+        "long_balls_completed_against": 16.0,
+        "crosses_completed_for": 5.0,
+        "crosses_completed_against": 6.0,
+        "expected_goals_open_play_for": 2.08,
+        "expected_goals_open_play_against": 0.76,
+        "expected_goals_set_play_for": 0.11,
+        "expected_goals_set_play_against": 0.47,
+        "tackles_for": 11.0,
+        "tackles_against": 23.0,
+        "interceptions_for": 12.0,
+        "interceptions_against": 6.0,
+        "pass_accuracy_pct_for": 82.0,
+        "pass_accuracy_pct_against": 85.0,
+        "long_ball_accuracy_pct_for": 44.0,
+        "long_ball_accuracy_pct_against": 36.0,
+        "cross_accuracy_pct_for": 36.0,
+        "cross_accuracy_pct_against": 30.0,
+        "long_balls_attempted_est_for": 45.45454545454545,
+        "long_balls_attempted_est_against": 44.44444444444444,
+        "crosses_attempted_est_for": 13.88888888888889,
+        "crosses_attempted_est_against": 20.0,
+        "detailed_metric_count": 16
+      },
+      {
+        "match_id": 6106256,
+        "source": "fotmob",
+        "source_scope": "champions_league_current",
+        "competition_id": 42,
+        "competition_stage_id": 943230,
+        "competition": "Champions League",
+        "season": "2026/2027",
+        "kickoff_utc": "2026-11-24T20:00:00Z",
+        "team_id": 8456,
+        "team": "Manchester City",
+        "opponent_id": 9875,
+        "opponent": "Napoli",
+        "venue": "home",
+        "cache_detail_available": true,
+        "goals_for": 2.0,
+        "goals_against": 2.0,
+        "red_cards_for": 0,
+        "red_cards_against": 0,
+        "first_red_card_for": false,
+        "first_red_card_against": false,
+        "first_red_card_minute": null,
+        "estimated_11v11_minutes": 90.0,
+        "expected_goals_for": 1.34,
+        "expected_goals_against": 0.71,
+        "shots_on_target_for": 7.0,
+        "shots_on_target_against": 3.0,
+        "big_chances_for": 2.0,
+        "big_chances_against": 2.0,
+        "total_shots_for": 18.0,
+        "total_shots_against": 9.0,
+        "touches_opp_box_for": 61.0,
+        "touches_opp_box_against": 20.0,
+        "possession_pct_for": 63.0,
+        "possession_pct_against": 37.0,
+        "passes_for": 667.0,
+        "passes_against": 399.0,
+        "accurate_passes_for": 611.0,
+        "accurate_passes_against": 330.0,
+        "own_half_passes_for": 185.0,
+        "own_half_passes_against": 224.0,
+        "opposition_half_passes_for": 426.0,
+        "opposition_half_passes_against": 106.0,
+        "long_balls_completed_for": 14.0,
+        "long_balls_completed_against": 19.0,
+        "crosses_completed_for": 9.0,
+        "crosses_completed_against": 5.0,
+        "expected_goals_open_play_for": 1.0,
+        "expected_goals_open_play_against": 0.46,
+        "expected_goals_set_play_for": 0.34,
+        "expected_goals_set_play_against": 0.25,
+        "tackles_for": 10.0,
+        "tackles_against": 17.0,
+        "interceptions_for": 8.0,
+        "interceptions_against": 8.0,
+        "pass_accuracy_pct_for": 92.0,
+        "pass_accuracy_pct_against": 83.0,
+        "long_ball_accuracy_pct_for": 74.0,
+        "long_ball_accuracy_pct_against": 44.0,
+        "cross_accuracy_pct_for": 26.0,
+        "cross_accuracy_pct_against": 38.0,
+        "long_balls_attempted_est_for": 18.91891891891892,
+        "long_balls_attempted_est_against": 43.18181818181818,
+        "crosses_attempted_est_for": 34.61538461538461,
+        "crosses_attempted_est_against": 13.157894736842104,
+        "detailed_metric_count": 16
+      },
+      {
+        "match_id": 6106279,
+        "source": "fotmob",
+        "source_scope": "champions_league_current",
+        "competition_id": 42,
+        "competition_stage_id": 943230,
+        "competition": "Champions League",
+        "season": "2026/2027",
+        "kickoff_utc": "2026-11-25T20:00:00Z",
+        "team_id": 10260,
+        "team": "Manchester United",
+        "opponent_id": 9768,
+        "opponent": "Sporting CP",
+        "venue": "away",
+        "cache_detail_available": true,
+        "goals_for": 2.0,
+        "goals_against": 2.0,
+        "red_cards_for": 1,
+        "red_cards_against": 0,
+        "first_red_card_for": true,
+        "first_red_card_against": false,
+        "first_red_card_minute": null,
+        "estimated_11v11_minutes": 90.0,
+        "expected_goals_for": 1.08,
+        "expected_goals_against": 2.52,
+        "shots_on_target_for": 2.0,
+        "shots_on_target_against": 4.0,
+        "big_chances_for": 1.0,
+        "big_chances_against": 3.0,
+        "total_shots_for": 7.0,
+        "total_shots_against": 11.0,
+        "touches_opp_box_for": 15.0,
+        "touches_opp_box_against": 26.0,
+        "possession_pct_for": 49.0,
+        "possession_pct_against": 51.0,
+        "passes_for": 460.0,
+        "passes_against": 470.0,
+        "accurate_passes_for": 395.0,
+        "accurate_passes_against": 413.0,
+        "own_half_passes_for": 183.0,
+        "own_half_passes_against": 246.0,
+        "opposition_half_passes_for": 212.0,
+        "opposition_half_passes_against": 167.0,
+        "long_balls_completed_for": 18.0,
+        "long_balls_completed_against": 29.0,
+        "crosses_completed_for": 0.0,
+        "crosses_completed_against": 2.0,
+        "expected_goals_open_play_for": 0.18,
+        "expected_goals_open_play_against": 0.7,
+        "expected_goals_set_play_for": 0.12,
+        "expected_goals_set_play_against": 0.25,
+        "tackles_for": 20.0,
+        "tackles_against": 13.0,
+        "interceptions_for": 12.0,
+        "interceptions_against": 14.0,
+        "pass_accuracy_pct_for": 86.0,
+        "pass_accuracy_pct_against": 88.0,
+        "long_ball_accuracy_pct_for": 37.0,
+        "long_ball_accuracy_pct_against": 58.0,
+        "cross_accuracy_pct_for": 0.0,
+        "cross_accuracy_pct_against": 13.0,
+        "long_balls_attempted_est_for": 48.648648648648646,
+        "long_balls_attempted_est_against": 50.0,
+        "crosses_attempted_est_for": null,
+        "crosses_attempted_est_against": 15.384615384615385,
+        "detailed_metric_count": 16
+      }
+    ],
+    "research_reads": [
+      {
+        "team_id": 9825,
+        "team": "Arsenal",
+        "opponent": "Borussia Dortmund",
+        "venue": "home",
+        "result": "draw",
+        "score": "1-1",
+        "xg_for": 2.83,
+        "xg_against": 1.15,
+        "xg_difference": 1.68,
+        "possession_pct": 63.0,
+        "box_touches": 55.0,
+        "big_chances": 4.0,
+        "observed_routes": [
+          "box_pressure",
+          "set_piece",
+          "wide_delivery",
+          "territorial_control"
+        ],
+        "club_style_identity": {
+          "descriptors": [
+            "high-regain press",
+            "advanced territory",
+            "lower-cross attack"
+          ],
+          "coverage": 1.0
+        },
+        "evidence_class": "strong_process_reinforcement"
+      },
+      {
+        "team_id": 10252,
+        "team": "Aston Villa",
+        "opponent": "Galatasaray",
+        "venue": "away",
+        "result": "away_win",
+        "score": "0-1",
+        "xg_for": 0.59,
+        "xg_against": 0.49,
+        "xg_difference": 0.1,
+        "possession_pct": 55.0,
+        "box_touches": 12.0,
+        "big_chances": 0.0,
+        "observed_routes": [
+          "balanced_or_unresolved"
+        ],
+        "club_style_identity": {
+          "descriptors": [
+            "mixed width",
+            "mid-range high regains",
+            "balanced territory"
+          ],
+          "coverage": 1.0
+        },
+        "evidence_class": "mixed_process"
+      },
+      {
+        "team_id": 8650,
+        "team": "Liverpool",
+        "opponent": "Club Brugge",
+        "venue": "away",
+        "result": "home_win",
+        "score": "3-0",
+        "xg_for": 2.18,
+        "xg_against": 1.23,
+        "xg_difference": 0.95,
+        "possession_pct": 46.0,
+        "box_touches": 39.0,
+        "big_chances": 3.0,
+        "observed_routes": [
+          "box_pressure"
+        ],
+        "club_style_identity": {
+          "descriptors": [
+            "advanced territory",
+            "high-regain press",
+            "balanced control"
+          ],
+          "coverage": 1.0
+        },
+        "evidence_class": "process_supported"
+      },
+      {
+        "team_id": 8456,
+        "team": "Manchester City",
+        "opponent": "Napoli",
+        "venue": "home",
+        "result": "draw",
+        "score": "2-2",
+        "xg_for": 1.34,
+        "xg_against": 0.71,
+        "xg_difference": 0.63,
+        "possession_pct": 63.0,
+        "box_touches": 61.0,
+        "big_chances": 2.0,
+        "observed_routes": [
+          "wide_delivery",
+          "territorial_control"
+        ],
+        "club_style_identity": {
+          "descriptors": [
+            "high-regain press",
+            "possession-dominant",
+            "shorter build-up"
+          ],
+          "coverage": 1.0
+        },
+        "evidence_class": "process_supported"
+      },
+      {
+        "team_id": 10260,
+        "team": "Manchester United",
+        "opponent": "Sporting CP",
+        "venue": "away",
+        "result": "draw",
+        "score": "2-2",
+        "xg_for": 1.08,
+        "xg_against": 2.52,
+        "xg_difference": -1.44,
+        "possession_pct": 49.0,
+        "box_touches": 15.0,
+        "big_chances": 1.0,
+        "observed_routes": [
+          "balanced_or_unresolved"
+        ],
+        "club_style_identity": {
+          "descriptors": [
+            "mixed width",
+            "mixed progression",
+            "mid-range high regains"
+          ],
+          "coverage": 1.0
+        },
+        "evidence_class": "process_warning"
+      }
+    ]
+  },
+  "tactical_archetype_lessons": {
+    "result_process_alignment": {
+      "aligned_matches": 12,
+      "completed_matches": 18,
+      "variance_watch": [
+        {
+          "match_id": 6106339,
+          "fixture": "Galatasaray vs Aston Villa",
+          "result": "home_win",
+          "xg_result": "away_win"
+        },
+        {
+          "match_id": 6106256,
+          "fixture": "Manchester City vs Napoli",
+          "result": "draw",
+          "xg_result": "home_win"
+        },
+        {
+          "match_id": 6106259,
+          "fixture": "Arsenal vs Borussia Dortmund",
+          "result": "draw",
+          "xg_result": "home_win"
+        },
+        {
+          "match_id": 6106307,
+          "fixture": "Feyenoord vs FC Porto",
+          "result": "away_win",
+          "xg_result": "home_win"
+        },
+        {
+          "match_id": 6106235,
+          "fixture": "Paris Saint-Germain vs Roma",
+          "result": "draw",
+          "xg_result": "away_win"
+        },
+        {
+          "match_id": 6106279,
+          "fixture": "Sporting CP vs Manchester United",
+          "result": "draw",
+          "xg_result": "home_win"
+        }
+      ]
+    },
+    "lower_possession_process_winners": [
+      "Atl\u00e9tico Madrid",
+      "Fenerbah\u00e7e",
+      "Lille",
+      "Liverpool",
+      "Villarreal"
+    ],
+    "set_piece_xg_spikes": [
+      {
+        "team": "Barcelona",
+        "opponent": "Sabah FK",
+        "set_piece_xg": 1.04
+      },
+      {
+        "team": "Arsenal",
+        "opponent": "Borussia Dortmund",
+        "set_piece_xg": 0.87
+      }
+    ],
+    "measured_route_policy": "Observed route tags use match-card box pressure, set-piece xG, wide delivery, possession and xG only. They describe the match and do not change model weight.",
+    "high_pressing_status": "Not promoted from this review because current match-card pressure coverage is incomplete."
+  },
+  "coverage_queue": {
+    "alpha_minute_coverage": 0.8422,
+    "priority_teams": [
+      {
+        "team_id": 951893,
+        "team": "Sabah FK",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 0.0,
+        "coverage": 0.0
+      },
+      {
+        "team_id": 9728,
+        "team": "Shakhtar Donetsk",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 0.0,
+        "coverage": 0.0
+      },
+      {
+        "team_id": 10235,
+        "team": "Feyenoord",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 536.0,
+        "coverage": 0.5414
+      },
+      {
+        "team_id": 8478,
+        "team": "Viking",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 630.0,
+        "coverage": 0.6364
+      },
+      {
+        "team_id": 9768,
+        "team": "Sporting CP",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 684.0,
+        "coverage": 0.6909
+      },
+      {
+        "team_id": 7787,
+        "team": "Slavia Prague",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 703.0,
+        "coverage": 0.7101
+      }
+    ],
+    "zero_coverage_teams": [
+      {
+        "team_id": 951893,
+        "team": "Sabah FK",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 0.0,
+        "coverage": 0.0
+      },
+      {
+        "team_id": 9728,
+        "team": "Shakhtar Donetsk",
+        "actual_minutes": 990.0,
+        "alpha_minutes": 0.0,
+        "coverage": 0.0
+      }
+    ],
+    "action": "Resolve transferred-player and foreign-league identity gaps before the next forecast; missing Alpha remains neutral rather than imputed."
+  },
+  "matches": [
+    {
+      "match_id": 6106317,
+      "kickoff_utc": "2026-11-24T17:45:00Z",
+      "home_team": "Bod\u00f8/Glimt",
+      "away_team": "LASK",
+      "status": "completed",
+      "score": {
+        "home": 1,
+        "away": 0
+      },
+      "xg": {
+        "home": 1.22,
+        "away": 0.33
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 2.0,
+          "big_chances": 1.0,
+          "box_touches": 34.0,
+          "possession_pct": 66.0,
+          "open_play_xg": 1.01,
+          "set_piece_xg": 0.2,
+          "crosses_completed": 1.0,
+          "crosses_attempted_est": 10.0
+        },
+        "away": {
+          "shots_on_target": 0.0,
+          "big_chances": 1.0,
+          "box_touches": 13.0,
+          "possession_pct": 34.0,
+          "open_play_xg": 0.33,
+          "set_piece_xg": 0.0,
+          "crosses_completed": 4.0,
+          "crosses_attempted_est": 14.814814814814815
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "advanced territory",
+              "lower-cross attack",
+              "mid-range high regains"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "territorial_control"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "balanced territory",
+              "balanced chance sources",
+              "mixed progression"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "verdict": "process_backed_result"
+      },
+      "result": "home_win",
+      "xg_result": "home_win",
+      "score_xg_aligned": true,
+      "goal_residual": -0.55
+    },
+    {
+      "match_id": 6106339,
+      "kickoff_utc": "2026-11-24T17:45:00Z",
+      "home_team": "Galatasaray",
+      "away_team": "Aston Villa",
+      "status": "completed",
+      "score": {
+        "home": 1,
+        "away": 0
+      },
+      "xg": {
+        "home": 0.49,
+        "away": 0.59
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 2.0,
+          "big_chances": 1.0,
+          "box_touches": 16.0,
+          "possession_pct": 45.0,
+          "open_play_xg": 0.19,
+          "set_piece_xg": 0.3,
+          "crosses_completed": 7.0,
+          "crosses_attempted_est": 21.21212121212121
+        },
+        "away": {
+          "shots_on_target": 0.0,
+          "big_chances": 0.0,
+          "box_touches": 12.0,
+          "possession_pct": 55.0,
+          "open_play_xg": 0.12,
+          "set_piece_xg": 0.47,
+          "crosses_completed": 2.0,
+          "crosses_attempted_est": 9.090909090909092
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "balanced control",
+              "balanced chance sources",
+              "mid-range high regains"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "wide_delivery"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "mixed width",
+              "mid-range high regains",
+              "balanced territory"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "verdict": "variance_watch"
+      },
+      "result": "home_win",
+      "xg_result": "away_win",
+      "score_xg_aligned": false,
+      "goal_residual": -0.08
+    },
+    {
+      "match_id": 6106243,
+      "kickoff_utc": "2026-11-24T20:00:00Z",
+      "home_team": "Real Madrid",
+      "away_team": "PSV Eindhoven",
+      "status": "completed",
+      "score": {
+        "home": 5,
+        "away": 1
+      },
+      "xg": {
+        "home": 4.89,
+        "away": 1.75
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 9.0,
+          "big_chances": 8.0,
+          "box_touches": 51.0,
+          "possession_pct": 62.0,
+          "open_play_xg": 4.84,
+          "set_piece_xg": 0.05,
+          "crosses_completed": 1.0,
+          "crosses_attempted_est": 3.0303030303030303
+        },
+        "away": {
+          "shots_on_target": 1.0,
+          "big_chances": 4.0,
+          "box_touches": 17.0,
+          "possession_pct": 38.0,
+          "open_play_xg": 0.77,
+          "set_piece_xg": 0.19,
+          "crosses_completed": 3.0,
+          "crosses_attempted_est": 7.894736842105263
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "mixed width",
+              "balanced control",
+              "mixed progression"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "box_pressure",
+            "territorial_control"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "possession-dominant",
+              "balanced territory",
+              "mixed progression"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "verdict": "process_backed_result"
+      },
+      "result": "home_win",
+      "xg_result": "home_win",
+      "score_xg_aligned": true,
+      "goal_residual": -0.64
+    },
+    {
+      "match_id": 6106256,
+      "kickoff_utc": "2026-11-24T20:00:00Z",
+      "home_team": "Manchester City",
+      "away_team": "Napoli",
+      "status": "completed",
+      "score": {
+        "home": 2,
+        "away": 2
+      },
+      "xg": {
+        "home": 1.34,
+        "away": 0.71
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 7.0,
+          "big_chances": 2.0,
+          "box_touches": 61.0,
+          "possession_pct": 63.0,
+          "open_play_xg": 1.0,
+          "set_piece_xg": 0.34,
+          "crosses_completed": 9.0,
+          "crosses_attempted_est": 34.61538461538461
+        },
+        "away": {
+          "shots_on_target": 3.0,
+          "big_chances": 2.0,
+          "box_touches": 20.0,
+          "possession_pct": 37.0,
+          "open_play_xg": 0.46,
+          "set_piece_xg": 0.25,
+          "crosses_completed": 5.0,
+          "crosses_attempted_est": 13.157894736842104
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "high-regain press",
+              "possession-dominant",
+              "shorter build-up"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "wide_delivery",
+            "territorial_control"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "lower high-regain rate",
+              "mixed progression",
+              "balanced control"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "verdict": "variance_watch"
+      },
+      "result": "draw",
+      "xg_result": "home_win",
+      "score_xg_aligned": false,
+      "goal_residual": 1.95
+    },
+    {
+      "match_id": 6106259,
+      "kickoff_utc": "2026-11-24T20:00:00Z",
+      "home_team": "Arsenal",
+      "away_team": "Borussia Dortmund",
+      "status": "completed",
+      "score": {
+        "home": 1,
+        "away": 1
+      },
+      "xg": {
+        "home": 2.83,
+        "away": 1.15
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 4.0,
+          "big_chances": 4.0,
+          "box_touches": 55.0,
+          "possession_pct": 63.0,
+          "open_play_xg": 1.96,
+          "set_piece_xg": 0.87,
+          "crosses_completed": 8.0,
+          "crosses_attempted_est": 25.806451612903224
+        },
+        "away": {
+          "shots_on_target": 4.0,
+          "big_chances": 3.0,
+          "box_touches": 22.0,
+          "possession_pct": 37.0,
+          "open_play_xg": 0.82,
+          "set_piece_xg": 0.33,
+          "crosses_completed": 2.0,
+          "crosses_attempted_est": 14.285714285714286
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "high-regain press",
+              "advanced territory",
+              "lower-cross attack"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "box_pressure",
+            "set_piece",
+            "wide_delivery",
+            "territorial_control"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "mixed progression",
+              "mid-range high regains",
+              "balanced territory"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "verdict": "variance_watch"
+      },
+      "result": "draw",
+      "xg_result": "home_win",
+      "score_xg_aligned": false,
+      "goal_residual": -1.98
+    },
+    {
+      "match_id": 6106307,
+      "kickoff_utc": "2026-11-24T20:00:00Z",
+      "home_team": "Feyenoord",
+      "away_team": "FC Porto",
+      "status": "completed",
+      "score": {
+        "home": 0,
+        "away": 1
+      },
+      "xg": {
+        "home": 1.07,
+        "away": 0.85
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 7.0,
+          "big_chances": 1.0,
+          "box_touches": 31.0,
+          "possession_pct": 57.0,
+          "open_play_xg": 1.02,
+          "set_piece_xg": 0.05,
+          "crosses_completed": 6.0,
+          "crosses_attempted_est": 28.571428571428573
+        },
+        "away": {
+          "shots_on_target": 3.0,
+          "big_chances": 1.0,
+          "box_touches": 18.0,
+          "possession_pct": 43.0,
+          "open_play_xg": 0.79,
+          "set_piece_xg": 0.06,
+          "crosses_completed": 3.0,
+          "crosses_attempted_est": 12.0
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "shorter build-up",
+              "mixed width",
+              "balanced control"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "wide_delivery"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "mixed progression",
+              "mixed width",
+              "balanced control"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "verdict": "variance_watch"
+      },
+      "result": "away_win",
+      "xg_result": "home_win",
+      "score_xg_aligned": false,
+      "goal_residual": -0.92
+    },
+    {
+      "match_id": 6106325,
+      "kickoff_utc": "2026-11-24T20:00:00Z",
+      "home_team": "RB Leipzig",
+      "away_team": "Lens",
+      "status": "completed",
+      "score": {
+        "home": 3,
+        "away": 1
+      },
+      "xg": {
+        "home": 1.86,
+        "away": 1.05
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 7.0,
+          "big_chances": 3.0,
+          "box_touches": 31.0,
+          "possession_pct": 59.0,
+          "open_play_xg": 1.55,
+          "set_piece_xg": 0.3,
+          "crosses_completed": 6.0,
+          "crosses_attempted_est": 20.0
+        },
+        "away": {
+          "shots_on_target": 3.0,
+          "big_chances": 3.0,
+          "box_touches": 19.0,
+          "possession_pct": 41.0,
+          "open_play_xg": 0.79,
+          "set_piece_xg": 0.26,
+          "crosses_completed": 6.0,
+          "crosses_attempted_est": 15.0
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "mixed progression",
+              "mixed width",
+              "balanced control"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "box_pressure",
+            "wide_delivery",
+            "territorial_control"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "cross-oriented",
+              "balanced territory",
+              "mixed progression"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "verdict": "process_backed_result"
+      },
+      "result": "home_win",
+      "xg_result": "home_win",
+      "score_xg_aligned": true,
+      "goal_residual": 1.09
+    },
+    {
+      "match_id": 6106394,
+      "kickoff_utc": "2026-11-24T20:00:00Z",
+      "home_team": "Slovan Bratislava",
+      "away_team": "Real Betis",
+      "status": "completed",
+      "score": {
+        "home": 0,
+        "away": 2
+      },
+      "xg": {
+        "home": 0.65,
+        "away": 1.56
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 2.0,
+          "big_chances": 1.0,
+          "box_touches": 16.0,
+          "possession_pct": 31.0,
+          "open_play_xg": 0.44,
+          "set_piece_xg": 0.2,
+          "crosses_completed": 1.0,
+          "crosses_attempted_est": 7.142857142857143
+        },
+        "away": {
+          "shots_on_target": 6.0,
+          "big_chances": 4.0,
+          "box_touches": 34.0,
+          "possession_pct": 69.0,
+          "open_play_xg": 1.27,
+          "set_piece_xg": 0.29,
+          "crosses_completed": 5.0,
+          "crosses_attempted_est": 17.857142857142858
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "balanced control",
+              "mixed progression",
+              "mixed width"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "mixed width",
+              "mixed progression",
+              "balanced territory"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "box_pressure",
+            "territorial_control"
+          ]
+        },
+        "verdict": "process_backed_result"
+      },
+      "result": "away_win",
+      "xg_result": "away_win",
+      "score_xg_aligned": true,
+      "goal_residual": -0.21
+    },
+    {
+      "match_id": 6106412,
+      "kickoff_utc": "2026-11-24T20:00:00Z",
+      "home_team": "Como",
+      "away_team": "AEK Athens",
+      "status": "completed",
+      "score": {
+        "home": 1,
+        "away": 0
+      },
+      "xg": {
+        "home": 1.83,
+        "away": 0.54
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 4.0,
+          "big_chances": 2.0,
+          "box_touches": 30.0,
+          "possession_pct": 61.0,
+          "open_play_xg": 0.84,
+          "set_piece_xg": 0.2,
+          "crosses_completed": 4.0,
+          "crosses_attempted_est": 23.529411764705884
+        },
+        "away": {
+          "shots_on_target": 3.0,
+          "big_chances": 0.0,
+          "box_touches": 10.0,
+          "possession_pct": 39.0,
+          "open_play_xg": 0.5,
+          "set_piece_xg": 0.04,
+          "crosses_completed": 0.0,
+          "crosses_attempted_est": null
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "shorter build-up",
+              "possession-dominant",
+              "lower-cross attack"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "box_pressure",
+            "wide_delivery",
+            "territorial_control"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "mixed progression",
+              "balanced control",
+              "balanced territory"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "verdict": "process_backed_result"
+      },
+      "result": "home_win",
+      "xg_result": "home_win",
+      "score_xg_aligned": true,
+      "goal_residual": -1.37
+    },
+    {
+      "match_id": 6106391,
+      "kickoff_utc": "2026-11-25T17:45:00Z",
+      "home_team": "Slavia Prague",
+      "away_team": "Villarreal",
+      "status": "completed",
+      "score": {
+        "home": 0,
+        "away": 1
+      },
+      "xg": {
+        "home": 0.97,
+        "away": 1.05
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 1.0,
+          "big_chances": 1.0,
+          "box_touches": 39.0,
+          "possession_pct": 52.0,
+          "open_play_xg": 0.86,
+          "set_piece_xg": 0.11,
+          "crosses_completed": 5.0,
+          "crosses_attempted_est": 41.666666666666664
+        },
+        "away": {
+          "shots_on_target": 5.0,
+          "big_chances": 3.0,
+          "box_touches": 15.0,
+          "possession_pct": 48.0,
+          "open_play_xg": 1.05,
+          "set_piece_xg": 0.0,
+          "crosses_completed": 1.0,
+          "crosses_attempted_est": 5.0
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "set-piece reliant",
+              "balanced control",
+              "mixed width"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "wide_delivery"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "lower high-regain rate",
+              "mixed width",
+              "mixed progression"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "verdict": "process_backed_result"
+      },
+      "result": "away_win",
+      "xg_result": "away_win",
+      "score_xg_aligned": true,
+      "goal_residual": -1.02
+    },
+    {
+      "match_id": 6106421,
+      "kickoff_utc": "2026-11-25T17:45:00Z",
+      "home_team": "Sabah FK",
+      "away_team": "Barcelona",
+      "status": "completed",
+      "score": {
+        "home": 1,
+        "away": 4
+      },
+      "xg": {
+        "home": 1.14,
+        "away": 4.13
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 3.0,
+          "big_chances": 3.0,
+          "box_touches": 18.0,
+          "possession_pct": 29.0,
+          "open_play_xg": 0.94,
+          "set_piece_xg": 0.21,
+          "crosses_completed": 1.0,
+          "crosses_attempted_est": 5.882352941176471
+        },
+        "away": {
+          "shots_on_target": 14.0,
+          "big_chances": 9.0,
+          "box_touches": 42.0,
+          "possession_pct": 71.0,
+          "open_play_xg": 3.09,
+          "set_piece_xg": 1.04,
+          "crosses_completed": 1.0,
+          "crosses_attempted_est": 10.0
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "mixed progression",
+              "balanced territory",
+              "balanced control"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "possession-dominant",
+              "shorter build-up",
+              "lower-cross attack"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "box_pressure",
+            "set_piece",
+            "territorial_control"
+          ]
+        },
+        "verdict": "process_backed_result"
+      },
+      "result": "away_win",
+      "xg_result": "away_win",
+      "score_xg_aligned": true,
+      "goal_residual": -0.27
+    },
+    {
+      "match_id": 6106235,
+      "kickoff_utc": "2026-11-25T20:00:00Z",
+      "home_team": "Paris Saint-Germain",
+      "away_team": "Roma",
+      "status": "completed",
+      "score": {
+        "home": 2,
+        "away": 2
+      },
+      "xg": {
+        "home": 1.73,
+        "away": 2.65
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 4.0,
+          "big_chances": 3.0,
+          "box_touches": 28.0,
+          "possession_pct": 66.0,
+          "open_play_xg": 0.74,
+          "set_piece_xg": 0.21,
+          "crosses_completed": 4.0,
+          "crosses_attempted_est": 8.0
+        },
+        "away": {
+          "shots_on_target": 4.0,
+          "big_chances": 6.0,
+          "box_touches": 27.0,
+          "possession_pct": 34.0,
+          "open_play_xg": 1.61,
+          "set_piece_xg": 0.26,
+          "crosses_completed": 2.0,
+          "crosses_attempted_est": 14.285714285714286
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "lower-cross attack",
+              "possession-dominant",
+              "shorter build-up"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "box_pressure"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "balanced control",
+              "balanced territory",
+              "mixed width"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "box_pressure",
+            "direct_transition"
+          ]
+        },
+        "verdict": "variance_watch"
+      },
+      "result": "draw",
+      "xg_result": "away_win",
+      "score_xg_aligned": false,
+      "goal_residual": -0.38
+    },
+    {
+      "match_id": 6106253,
+      "kickoff_utc": "2026-11-25T20:00:00Z",
+      "home_team": "Inter",
+      "away_team": "VfB Stuttgart",
+      "status": "completed",
+      "score": {
+        "home": 2,
+        "away": 0
+      },
+      "xg": {
+        "home": 2.57,
+        "away": 1.06
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 5.0,
+          "big_chances": 3.0,
+          "box_touches": 41.0,
+          "possession_pct": 51.0,
+          "open_play_xg": 1.17,
+          "set_piece_xg": 0.61,
+          "crosses_completed": 5.0,
+          "crosses_attempted_est": 23.80952380952381
+        },
+        "away": {
+          "shots_on_target": 2.0,
+          "big_chances": 2.0,
+          "box_touches": 28.0,
+          "possession_pct": 49.0,
+          "open_play_xg": 0.43,
+          "set_piece_xg": 0.63,
+          "crosses_completed": 6.0,
+          "crosses_attempted_est": 31.57894736842105
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "lower high-regain rate",
+              "shorter build-up",
+              "balanced control"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "box_pressure",
+            "set_piece",
+            "wide_delivery"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "balanced territory",
+              "balanced control",
+              "mixed progression"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "set_piece",
+            "wide_delivery"
+          ]
+        },
+        "verdict": "process_backed_result"
+      },
+      "result": "home_win",
+      "xg_result": "home_win",
+      "score_xg_aligned": true,
+      "goal_residual": -1.63
+    },
+    {
+      "match_id": 6106269,
+      "kickoff_utc": "2026-11-25T20:00:00Z",
+      "home_team": "Atl\u00e9tico Madrid",
+      "away_team": "Viking",
+      "status": "completed",
+      "score": {
+        "home": 2,
+        "away": 0
+      },
+      "xg": {
+        "home": 1.92,
+        "away": 0.46
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 9.0,
+          "big_chances": 3.0,
+          "box_touches": 27.0,
+          "possession_pct": 49.0,
+          "open_play_xg": 1.57,
+          "set_piece_xg": 0.35,
+          "crosses_completed": 2.0,
+          "crosses_attempted_est": 11.11111111111111
+        },
+        "away": {
+          "shots_on_target": 1.0,
+          "big_chances": 0.0,
+          "box_touches": 18.0,
+          "possession_pct": 51.0,
+          "open_play_xg": 0.43,
+          "set_piece_xg": 0.04,
+          "crosses_completed": 4.0,
+          "crosses_attempted_est": 12.903225806451612
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "mid-range high regains",
+              "mixed width",
+              "balanced control"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "box_pressure"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "cross-oriented",
+              "mixed progression",
+              "balanced chance sources"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "verdict": "process_backed_result"
+      },
+      "result": "home_win",
+      "xg_result": "home_win",
+      "score_xg_aligned": true,
+      "goal_residual": -0.38
+    },
+    {
+      "match_id": 6106279,
+      "kickoff_utc": "2026-11-25T20:00:00Z",
+      "home_team": "Sporting CP",
+      "away_team": "Manchester United",
+      "status": "completed",
+      "score": {
+        "home": 2,
+        "away": 2
+      },
+      "xg": {
+        "home": 2.52,
+        "away": 1.08
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 4.0,
+          "big_chances": 3.0,
+          "box_touches": 26.0,
+          "possession_pct": 51.0,
+          "open_play_xg": 0.7,
+          "set_piece_xg": 0.25,
+          "crosses_completed": 2.0,
+          "crosses_attempted_est": 15.384615384615385
+        },
+        "away": {
+          "shots_on_target": 2.0,
+          "big_chances": 1.0,
+          "box_touches": 15.0,
+          "possession_pct": 49.0,
+          "open_play_xg": 0.18,
+          "set_piece_xg": 0.12,
+          "crosses_completed": 0.0,
+          "crosses_attempted_est": null
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "lower high-regain rate",
+              "balanced control",
+              "mixed width"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "box_pressure"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "mixed width",
+              "mixed progression",
+              "mid-range high regains"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "verdict": "variance_watch"
+      },
+      "result": "draw",
+      "xg_result": "home_win",
+      "score_xg_aligned": false,
+      "goal_residual": 0.4
+    },
+    {
+      "match_id": 6106294,
+      "kickoff_utc": "2026-11-25T20:00:00Z",
+      "home_team": "Club Brugge",
+      "away_team": "Liverpool",
+      "status": "completed",
+      "score": {
+        "home": 0,
+        "away": 3
+      },
+      "xg": {
+        "home": 1.23,
+        "away": 2.18
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 5.0,
+          "big_chances": 1.0,
+          "box_touches": 32.0,
+          "possession_pct": 54.0,
+          "open_play_xg": 0.76,
+          "set_piece_xg": 0.47,
+          "crosses_completed": 6.0,
+          "crosses_attempted_est": 20.0
+        },
+        "away": {
+          "shots_on_target": 4.0,
+          "big_chances": 3.0,
+          "box_touches": 39.0,
+          "possession_pct": 46.0,
+          "open_play_xg": 2.08,
+          "set_piece_xg": 0.11,
+          "crosses_completed": 5.0,
+          "crosses_attempted_est": 13.88888888888889
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "balanced control",
+              "mixed progression",
+              "mixed width"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "wide_delivery"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "advanced territory",
+              "high-regain press",
+              "balanced control"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "box_pressure"
+          ]
+        },
+        "verdict": "process_backed_result"
+      },
+      "result": "away_win",
+      "xg_result": "away_win",
+      "score_xg_aligned": true,
+      "goal_residual": -0.41
+    },
+    {
+      "match_id": 6106310,
+      "kickoff_utc": "2026-11-25T20:00:00Z",
+      "home_team": "Lille",
+      "away_team": "Bayern M\u00fcnchen",
+      "status": "completed",
+      "score": {
+        "home": 2,
+        "away": 1
+      },
+      "xg": {
+        "home": 1.94,
+        "away": 0.95
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 3.0,
+          "big_chances": 4.0,
+          "box_touches": 25.0,
+          "possession_pct": 35.0,
+          "open_play_xg": 1.89,
+          "set_piece_xg": 0.05,
+          "crosses_completed": 2.0,
+          "crosses_attempted_est": 8.0
+        },
+        "away": {
+          "shots_on_target": 7.0,
+          "big_chances": 2.0,
+          "box_touches": 22.0,
+          "possession_pct": 65.0,
+          "open_play_xg": 0.28,
+          "set_piece_xg": 0.66,
+          "crosses_completed": 4.0,
+          "crosses_attempted_est": 19.047619047619047
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "balanced territory",
+              "mixed width",
+              "mixed progression"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "box_pressure",
+            "direct_transition"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "high-regain press",
+              "advanced territory",
+              "possession-dominant"
+            ],
+            "coverage": 1.0
+          },
+          "observed_routes": [
+            "set_piece",
+            "wide_delivery"
+          ]
+        },
+        "verdict": "process_backed_result"
+      },
+      "result": "home_win",
+      "xg_result": "home_win",
+      "score_xg_aligned": true,
+      "goal_residual": 0.11
+    },
+    {
+      "match_id": 6106336,
+      "kickoff_utc": "2026-11-25T20:00:00Z",
+      "home_team": "Shakhtar Donetsk",
+      "away_team": "Fenerbah\u00e7e",
+      "status": "completed",
+      "score": {
+        "home": 0,
+        "away": 1
+      },
+      "xg": {
+        "home": 0.6,
+        "away": 1.75
+      },
+      "team_stats": {
+        "home": {
+          "shots_on_target": 2.0,
+          "big_chances": 1.0,
+          "box_touches": 12.0,
+          "possession_pct": 54.0,
+          "open_play_xg": 0.53,
+          "set_piece_xg": 0.07,
+          "crosses_completed": 1.0,
+          "crosses_attempted_est": 12.5
+        },
+        "away": {
+          "shots_on_target": 5.0,
+          "big_chances": 2.0,
+          "box_touches": 18.0,
+          "possession_pct": 46.0,
+          "open_play_xg": 1.46,
+          "set_piece_xg": 0.29,
+          "crosses_completed": 7.0,
+          "crosses_attempted_est": 23.333333333333332
+        }
+      },
+      "archetype_context": {
+        "home": {
+          "club_style_identity": {
+            "descriptors": [
+              "possession-dominant",
+              "mixed width",
+              "balanced chance sources"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "balanced_or_unresolved"
+          ]
+        },
+        "away": {
+          "club_style_identity": {
+            "descriptors": [
+              "balanced control",
+              "mixed progression",
+              "mixed width"
+            ],
+            "coverage": 0.8333
+          },
+          "observed_routes": [
+            "wide_delivery"
+          ]
+        },
+        "verdict": "process_backed_result"
+      },
+      "result": "away_win",
+      "xg_result": "away_win",
+      "score_xg_aligned": true,
+      "goal_residual": -1.35
+    }
+  ],
+  "forecast_settlement": null,
+  "cross_competition_watch": {
+    "status": "research_only_not_in_pl_or_ucl_ledger",
+    "competition": "EFL Cup",
+    "match_id": 6099342,
+    "kickoff_utc": "2026-09-09T19:15:00.000Z",
+    "home_team": "Chelsea",
+    "away_team": "Leeds",
+    "score": "6 - 3",
+    "xg": {
+      "home": 2.36,
+      "away": 2.7
+    },
+    "team_stats": {
+      "home": {
+        "shots_on_target": 8.0,
+        "big_chances": 5.0,
+        "box_touches": 22.0,
+        "possession_pct": 50.0,
+        "set_piece_xg": 0.21
+      },
+      "away": {
+        "shots_on_target": 6.0,
+        "big_chances": 5.0,
+        "box_touches": 36.0,
+        "possession_pct": 50.0,
+        "set_piece_xg": 1.46
+      }
+    },
+    "top_players": [
+      {
+        "match_id": 6099342,
+        "team_id": 8455,
+        "team": "Chelsea",
+        "player_id": 883080,
+        "player": "Morgan Rogers",
+        "minutes": 45.0,
+        "rating": 9.29,
+        "goals": 0,
+        "assists": 3,
+        "xg": null,
+        "xa": 0.16,
+        "chances_created": 4.0,
+        "alpha_available": true,
+        "alpha_ability_z": 0.267,
+        "alpha_position": "FW",
+        "pillars": {
+          "scoring_threat": -0.029751,
+          "chance_creation": 0.322152,
+          "defensive_prevention": 0.368547
+        }
+      },
+      {
+        "match_id": 6099342,
+        "team_id": 8455,
+        "team": "Chelsea",
+        "player_id": 1096353,
+        "player": "Cole Palmer",
+        "minutes": 45.0,
+        "rating": 9.02,
+        "goals": 2,
+        "assists": 0,
+        "xg": 0.95,
+        "xa": 0.19,
+        "chances_created": 2.0,
+        "alpha_available": true,
+        "alpha_ability_z": 0.451,
+        "alpha_position": "FW",
+        "pillars": {
+          "scoring_threat": 0.031027,
+          "chance_creation": 0.338359,
+          "defensive_prevention": 1.094577
+        }
+      },
+      {
+        "match_id": 6099342,
+        "team_id": 8455,
+        "team": "Chelsea",
+        "player_id": 113836,
+        "player": "Danny Welbeck",
+        "minutes": 90.0,
+        "rating": 8.83,
+        "goals": 2,
+        "assists": 0,
+        "xg": 0.7,
+        "xa": null,
+        "chances_created": 0.0,
+        "alpha_available": true,
+        "alpha_ability_z": -0.066,
+        "alpha_position": "FW",
+        "pillars": {
+          "scoring_threat": 0.54833,
+          "chance_creation": -0.627852,
+          "defensive_prevention": 0.075375
+        }
+      },
+      {
+        "match_id": 6099342,
+        "team_id": 8455,
+        "team": "Chelsea",
+        "player_id": 1272440,
+        "player": "Valent\u00edn Barco",
+        "minutes": 90.0,
+        "rating": 8.75,
+        "goals": 1,
+        "assists": 1,
+        "xg": 0.3,
+        "xa": 0.02,
+        "chances_created": 1.0,
+        "alpha_available": false,
+        "alpha_ability_z": null,
+        "alpha_position": null,
+        "pillars": {
+          "scoring_threat": null,
+          "chance_creation": null,
+          "defensive_prevention": null
+        }
+      },
+      {
+        "match_id": 6099342,
+        "team_id": 8455,
+        "team": "Chelsea",
+        "player_id": 843040,
+        "player": "Pedro Neto",
+        "minutes": 45.0,
+        "rating": 7.7,
+        "goals": 1,
+        "assists": 0,
+        "xg": 0.06,
+        "xa": 0.03,
+        "chances_created": 0.0,
+        "alpha_available": true,
+        "alpha_ability_z": -0.159,
+        "alpha_position": "FW",
+        "pillars": {
+          "scoring_threat": -0.630412,
+          "chance_creation": 0.417084,
+          "defensive_prevention": -0.242176
+        }
+      }
+    ],
+    "model_read": "Chelsea won 6-3 from a virtually even xG contest. The finishing is useful player-role evidence, but 2.42 xG conceded, 36 Leeds box touches, and 1.46 set-piece xG conceded are the more repeatable warning signals."
+  },
+  "learning_policy": [
+    "Completed UCL evidence may update shared team form, style, lineup and player-role research.",
+    "UCL and Premier League ledgers and calibration remain separate.",
+    "One matchday cannot rewrite Player Alpha, the 60/30/10 foundation, or goal baselines.",
+    "Only forecasts frozen before kickoff count toward UCL prediction accuracy."
+  ],
+  "conservative_recommendations": [
+    "Retain the locked Player Alpha formula and 60/30/10 foundation weights.",
+    "Treat single-matchday goals versus xG as descriptive, not as a new goals baseline.",
+    "Feed team process, lineup minutes and observed routes into shared research, not the PL ledger.",
+    "Freeze the next UCL probabilities before kickoff and calibrate UCL separately.",
+    "Close zero-coverage Alpha identities before using player-prop research for those clubs."
+  ]
+}
