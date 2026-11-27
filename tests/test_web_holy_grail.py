@@ -381,8 +381,12 @@ class WebHolyGrailTests(unittest.TestCase):
 
     def test_latest_settled_research_week_is_prominent_in_ledger(self):
         current = next(week for week in self.dashboard["matchweeks"] if week["settled"])
-        self.assertEqual(current["matchweek"], 11)
-        self.assertEqual(current["settled"], 10)
+        latest_scored = max(
+            (slate for slate in self.dashboard["premier_league"] if slate["settled"]),
+            key=lambda slate: slate["round"],
+        )
+        self.assertEqual(current["matchweek"], latest_scored["round"])
+        self.assertEqual(current["settled"], sum(row["score"] is not None for row in latest_scored["fixtures"]))
         self.assertEqual(set(current["markets"]), {"one_x_two", "over_under_2_5"})
 
     def test_ledger_reports_hits_and_misses_without_blending_scorecards(self):
@@ -391,16 +395,36 @@ class WebHolyGrailTests(unittest.TestCase):
         self.assertEqual(record["markets"]["one_x_two"], {
             "hits": 2, "misses": 4, "settled": 6, "hit_rate": 0.333333,
         })
-        self.assertEqual(record["markets"]["over_under_2_5"], {
-            "hits": 3, "misses": 2, "settled": 5, "hit_rate": 0.6,
-        })
         self.assertEqual(record["official_archive_1x2"], {
             "hits": 8, "misses": 12, "settled": 20, "hit_rate": 0.4,
         })
         weeks = {row["matchweek"]: row for row in self.dashboard["matchweeks"]}
-        self.assertEqual(weeks[12]["settled"], 0)
-        self.assertIsNone(weeks[12]["markets"]["over_under_2_5"]["hit_rate"])
-        self.assertEqual(weeks[12]["markets"]["over_under_2_5"]["misses"], 0)
+        decisions = json.loads(
+            (ROOT / "artifacts/matchweek_research/2026-11-23-mw12-provisional/decisions.json").read_text()
+        )
+        result_path = ROOT / "artifacts/contextual_interaction/2026-11-23-mw12-provisional/results.jsonl"
+        results = {
+            row["match_id"]: row
+            for row in (json.loads(line) for line in result_path.read_text().splitlines() if line.strip())
+        }
+        calls = [
+            (fixture["total_decision"]["call"], results[fixture["match_id"]])
+            for fixture in decisions["fixtures"]
+            if fixture["match_id"] in results and fixture["total_decision"]["call"] != "pass"
+        ]
+        hits = sum(
+            (call == "over_2_5") == (result["final_home_goals"] + result["final_away_goals"] > 2)
+            for call, result in calls
+        )
+        self.assertEqual(weeks[12]["settled"], len(results))
+        self.assertEqual(weeks[12]["markets"]["over_under_2_5"]["settled"], len(calls))
+        self.assertEqual(weeks[12]["markets"]["over_under_2_5"]["hits"], hits)
+        recent_totals = [
+            week["markets"]["over_under_2_5"]
+            for week in weeks.values() if week["basis"] == "selective_calls"
+        ]
+        self.assertEqual(record["markets"]["over_under_2_5"]["hits"], sum(row["hits"] for row in recent_totals))
+        self.assertEqual(record["markets"]["over_under_2_5"]["settled"], sum(row["settled"] for row in recent_totals))
         self.assertIsNone(weeks[11]["markets"]["one_x_two"]["hit_rate"])
         self.assertEqual(weeks[11]["model_directions"], {"side": 5, "total": 5})
         for week in weeks.values():
@@ -536,29 +560,15 @@ class WebHolyGrailTests(unittest.TestCase):
 
     def test_methodology_exposes_the_append_only_learning_loop(self):
         learning = self.data["methodology"]["research_loop"]
+        registry = json.loads((ROOT / "config/research-loop-2026-27.json").read_text())
         completed_results = sum(
             sum(
                 bool(line.strip())
                 for line in path.read_text(encoding="utf-8").splitlines()
             )
             for path in (
-                ROOT / "artifacts/contextual_interaction/2026-08-26/results.jsonl",
-                ROOT / "artifacts/official_shadow/2026-08-31-mw3/results.jsonl",
-                ROOT / "artifacts/official_shadow/2026-09-08-mw4/results.jsonl",
-                ROOT
-                / "artifacts/contextual_interaction/2026-09-17-mw5/results.jsonl",
-                ROOT
-                / "artifacts/contextual_interaction/2026-10-06-mw6/results.jsonl",
-                ROOT
-                / "artifacts/contextual_interaction/2026-10-15-mw7/results.jsonl",
-                ROOT
-                / "artifacts/contextual_interaction/2026-10-21-mw8/results.jsonl",
-                ROOT
-                / "artifacts/contextual_interaction/2026-10-26-mw9/results.jsonl",
-                ROOT
-                / "artifacts/contextual_interaction/2026-11-02-mw10-provisional/results.jsonl",
-                ROOT
-                / "artifacts/contextual_interaction/2026-11-09-mw11-provisional/results.jsonl",
+                ROOT / (cycle.get("archive") or cycle["contextual_archive"]) / "results.jsonl"
+                for cycle in registry["cycles"]
             )
         )
         self.assertEqual(learning["completed_results"], completed_results)
