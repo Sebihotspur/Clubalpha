@@ -219,6 +219,8 @@ def chronological_audit(
     training = []
     evaluated_cycles = 0
     for index, holdout in enumerate(cycle_observations):
+        if not holdout:
+            continue
         if index == 0:
             training.extend(holdout)
             continue

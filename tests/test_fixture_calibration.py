@@ -6,6 +6,7 @@ from clubalpha.fixture_calibration import (
     calibrate_fixture_forecast,
     fit_fixture_calibration,
 )
+from research.build_fixture_calibration_v1 import chronological_audit
 
 
 CONFIG = {
@@ -90,6 +91,15 @@ class FixtureCalibrationTests(unittest.TestCase):
         predictions = [contextual_prediction(index) for index in range(8)]
         results = [result(index) for index in range(8)]
         return build_calibration_observations(predictions, results)
+
+    def test_chronological_audit_skips_unsettled_rounds(self):
+        observations = self.observations()
+        training, holdout = observations[:4], observations[4:]
+        normal = chronological_audit([training, holdout], CONFIG)
+        with_unsettled = chronological_audit([training, [], holdout, []], CONFIG)
+        self.assertEqual(with_unsettled, normal)
+        self.assertEqual(with_unsettled["evaluated_cycles"], 1)
+        self.assertEqual(with_unsettled["calibrated"]["matches"], 4)
 
     def test_fit_reduces_observed_home_bias_and_lifts_draw_rate(self):
         artifact = fit_fixture_calibration(
